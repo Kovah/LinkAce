@@ -1,15 +1,13 @@
-<h1 align="center">
+<p align="center">
   <img src="https://i.imgur.com/wtCAJR0.png" title="Linkace">
-</h1>
+</p>
 
 <p>&nbsp;</p>
 
 <p align="center"><b>A small, selfhosted bookmark manager.</b></p>
+<p align="center"><b>:warning: This application is still in development and not save to use! :warning:</b></p>
 
----
-
-
-> :warning: WARNING: This application is still in development and not save to use!
+<p>&nbsp;</p>
 
 
 ## Development
