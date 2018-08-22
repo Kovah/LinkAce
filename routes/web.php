@@ -31,3 +31,9 @@ $this->get('password/reset/{token}', 'Auth\ResetPasswordController@showResetForm
 $this->post('password/reset', 'Auth\ResetPasswordController@reset');
 
 Route::get('/home', 'HomeController@index')->name('home');
+
+// Model routes
+Route::resource('categories', 'CategoryController');
+Route::resource('links', 'LinkController');
+Route::resource('notes', 'NoteController');
+Route::resource('tags', 'TagController');
