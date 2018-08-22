@@ -31,7 +31,7 @@ class Link extends Model
      * @param int $user_id
      * @return mixed
      */
-    public function scopeUser($query, $user_id)
+    public function scopeByUser($query, $user_id)
     {
         return $query->where('user_id', $user_id);
     }
