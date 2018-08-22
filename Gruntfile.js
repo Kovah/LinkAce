@@ -46,7 +46,7 @@ module.exports = grunt => {
   grunt.config('postcss', {
     prod: {
       options: {
-        map: true,
+        map: false,
         processors: [
           autoprefixer({
             browsers: 'last 3 version'
@@ -67,7 +67,7 @@ module.exports = grunt => {
     build: {
       options: {
         outputStyle: 'compressed',
-        sourceMap: true
+        sourceMap: false
       },
       files: {
         '<%= paths.dist %>/app.css': '<%= paths.assets %>/sass/app.scss'
