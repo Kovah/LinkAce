@@ -13,4 +13,18 @@ return [
     'reset_password' => 'Reset Password',
     'send_reset_email' => 'Send Password Reset Link',
     'forgot_password_link' => 'Forgot your password? <a href=":reset_url">Reset it here</a>',
+
+    'added_at' => 'Added at',
+    'updated_at' => 'Updated at',
+    'last_update' => 'Last Update',
+    'deleted_at' => 'Deleted at',
+
+    'add' => 'Add',
+    'show' => 'Show',
+    'edit' => 'Edit',
+    'update' => 'Update',
+    'delete' => 'Delete',
+
+    'private' => 'Private',
+    'is_private' => 'is private',
 ];
