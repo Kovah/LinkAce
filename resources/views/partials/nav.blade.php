@@ -16,7 +16,10 @@
             <a href="{{ route('login') }}" class="navbar-item">
                 @lang('linkace.login')
             </a>
-        @elseguest
+        @else
+            <a href="{{ route('links.index') }}" class="navbar-item">
+                @lang('link.links')
+            </a>
             <a onclick="event.preventDefault();document.getElementById('logout-form').submit();"
                 class="navbar-item">
                 @lang('linkace.logout')

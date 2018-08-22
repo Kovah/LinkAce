@@ -27,4 +27,6 @@ return [
 
     'private' => 'Private',
     'is_private' => 'is private',
+
+    'no_results_found' => 'No :model found.',
 ];

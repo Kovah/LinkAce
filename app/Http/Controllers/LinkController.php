@@ -5,17 +5,18 @@ namespace App\Http\Controllers;
 use App\Http\Requests\LinkDeleteRequest;
 use App\Http\Requests\LinkStoreRequest;
 use App\Http\Requests\LinkUpdateRequest;
+use App\Models\Link;
 
 class LinkController extends Controller
 {
     /**
      * Display a listing of the resource.
      *
-     * @return void
      */
     public function index()
     {
-        //
+        return view('models.links.index')
+            ->with('links', Link::byUser(auth()->user()->id)->paginate(25));
     }
 
     /**
