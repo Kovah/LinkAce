@@ -1,65 +1,79 @@
 @extends('layouts.app')
 
 @section('content')
-<div class="container">
-    <div class="row justify-content-center">
-        <div class="col-md-8">
-            <div class="card">
-                <div class="card-header">{{ __('Reset Password') }}</div>
 
-                <div class="card-body">
-                    <form method="POST" action="{{ route('password.request') }}" aria-label="{{ __('Reset Password') }}">
+    <div class="columns is-centered">
+        <div class="column is-half">
+
+            <div class="card">
+                <div class="card-content">
+
+                    <form method="POST" action="{{ route('password.request') }}"
+                        aria-label="@lang('linkace.reset_password')">
                         @csrf
 
-                        <input type="hidden" name="token" value="{{ $token }}">
-
-                        <div class="form-group row">
-                            <label for="email" class="col-md-4 col-form-label text-md-right">{{ __('E-Mail Address') }}</label>
-
-                            <div class="col-md-6">
-                                <input id="email" type="email" class="form-control{{ $errors->has('email') ? ' is-invalid' : '' }}" name="email" value="{{ $email ?? old('email') }}" required autofocus>
-
-                                @if ($errors->has('email'))
-                                    <span class="invalid-feedback" role="alert">
-                                        <strong>{{ $errors->first('email') }}</strong>
-                                    </span>
-                                @endif
+                        <div class="field">
+                            <label class="label" for="email">@lang('linkace.email')</label>
+                            <div class="control">
+                                <input name="email" id="email"
+                                    class="input{{ $errors->has('email') ? ' is-danger' : '' }}"
+                                    type="email" placeholder="@lang('linkace.email')"
+                                    value="{{ $email ?? old('email') }}"
+                                    required autofocus>
                             </div>
+                            @if ($errors->has('email'))
+                                <p class="help has-text-danger" role="alert">
+                                    {{ $errors->first('email') }}
+                                </p>
+                            @endif
                         </div>
 
-                        <div class="form-group row">
-                            <label for="password" class="col-md-4 col-form-label text-md-right">{{ __('Password') }}</label>
-
-                            <div class="col-md-6">
-                                <input id="password" type="password" class="form-control{{ $errors->has('password') ? ' is-invalid' : '' }}" name="password" required>
-
-                                @if ($errors->has('password'))
-                                    <span class="invalid-feedback" role="alert">
-                                        <strong>{{ $errors->first('password') }}</strong>
-                                    </span>
-                                @endif
+                        <div class="field">
+                            <label class="label" for="password">@lang('linkace.password')</label>
+                            <div class="control">
+                                <input name="password" id="password"
+                                    class="input{{ $errors->has('password') ? ' is-danger' : '' }}"
+                                    type="password" placeholder="@lang('linkace.password')"
+                                    required>
                             </div>
+                            @if ($errors->has('password'))
+                                <p class="help has-text-danger" role="alert">
+                                    {{ $errors->first('password') }}
+                                </p>
+                            @endif
                         </div>
 
-                        <div class="form-group row">
-                            <label for="password-confirm" class="col-md-4 col-form-label text-md-right">{{ __('Confirm Password') }}</label>
-
-                            <div class="col-md-6">
-                                <input id="password-confirm" type="password" class="form-control" name="password_confirmation" required>
+                        <div class="field">
+                            <label class="label" for="password-confirm">@lang('linkace.password_confirm')</label>
+                            <div class="control">
+                                <input name="password_confirmation" id="password-confirm"
+                                    class="input{{ $errors->has('password_confirmation') ? ' is-danger' : '' }}"
+                                    type="email" placeholder="@lang('linkace.password_confirm')"
+                                    required>
                             </div>
+                            @if ($errors->has('password_confirmation'))
+                                <p class="help has-text-danger" role="alert">
+                                    {{ $errors->first('password_confirmation') }}
+                                </p>
+                            @endif
                         </div>
 
-                        <div class="form-group row mb-0">
-                            <div class="col-md-6 offset-md-4">
-                                <button type="submit" class="btn btn-primary">
-                                    {{ __('Reset Password') }}
+                        <br>
+
+                        <div class="field">
+                            <div class="control">
+                                <button type="submit" class="button is-primary">
+                                    <i class="fa fa-save fa-mr"></i> @lang('linkace.reset_password')
                                 </button>
                             </div>
                         </div>
+
                     </form>
+
                 </div>
             </div>
+
         </div>
     </div>
-</div>
+
 @endsection

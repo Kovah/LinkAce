@@ -1,47 +1,46 @@
 @extends('layouts.app')
 
 @section('content')
-<div class="container">
-    <div class="row justify-content-center">
-        <div class="col-md-8">
+
+    <div class="columns is-centered">
+        <div class="column is-half">
+
             <div class="card">
-                <div class="card-header">{{ __('Reset Password') }}</div>
+                <div class="card-content">
 
-                <div class="card-body">
-                    @if (session('status'))
-                        <div class="alert alert-success" role="alert">
-                            {{ session('status') }}
-                        </div>
-                    @endif
-
-                    <form method="POST" action="{{ route('password.email') }}" aria-label="{{ __('Reset Password') }}">
+                    <form method="POST" action="{{ route('password.email') }}" aria-label="@lang('linkace.reset_password')">
                         @csrf
 
-                        <div class="form-group row">
-                            <label for="email" class="col-md-4 col-form-label text-md-right">{{ __('E-Mail Address') }}</label>
-
-                            <div class="col-md-6">
-                                <input id="email" type="email" class="form-control{{ $errors->has('email') ? ' is-invalid' : '' }}" name="email" value="{{ old('email') }}" required>
-
-                                @if ($errors->has('email'))
-                                    <span class="invalid-feedback" role="alert">
-                                        <strong>{{ $errors->first('email') }}</strong>
-                                    </span>
-                                @endif
+                        <div class="field">
+                            <label class="label" for="email">@lang('linkace.email')</label>
+                            <div class="control">
+                                <input name="email" id="email" class="input{{ $errors->has('email') ? ' is-danger' : '' }}"
+                                    type="email" placeholder="@lang('linkace.email')" value="{{ old('email') }}"
+                                    required autofocus>
                             </div>
+                            @if ($errors->has('email'))
+                                <p class="help has-text-danger" role="alert">
+                                    {{ $errors->first('email') }}
+                                </p>
+                            @endif
                         </div>
 
-                        <div class="form-group row mb-0">
-                            <div class="col-md-6 offset-md-4">
-                                <button type="submit" class="btn btn-primary">
-                                    {{ __('Send Password Reset Link') }}
+                        <br>
+
+                        <div class="field">
+                            <div class="control">
+                                <button type="submit" class="button is-primary">
+                                    <i class="fa fa-envelope-open fa-mr"></i> @lang('linkace.send_reset_email')
                                 </button>
                             </div>
                         </div>
+
                     </form>
+
                 </div>
             </div>
+
         </div>
     </div>
-</div>
+
 @endsection

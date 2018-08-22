@@ -1,3 +1,12 @@
-
+// Bulma import
+@import "../../../node_modules/bulma/sass/utilities/functions.sass";
 @import "bulma-variables";
 @import "../../../node_modules/bulma/bulma";
+
+// Custom styles
+@import "custom/layout";
+@import "custom/helper";
+
+// Font Awesome import
+$fa-font-path: "fonts";
+@import "../../../node_modules/font-awesome/scss/font-awesome";
