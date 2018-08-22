@@ -1,0 +1,58 @@
+---
+version: "2"
+
+services:
+
+  # --- MariaDB 10.1
+  db:
+    container_name: "linkace-db"
+    image: bitnami/mariadb:10.1
+    restart: always
+    environment:
+      - MARIADB_ROOT_PASSWORD=${DB_PASSWORD}
+      - MARIADB_USER=${DB_USERNAME}
+      - MARIADB_PASSWORD=${DB_PASSWORD}
+      - MARIADB_DATABASE=${DB_DATABASE}
+    ports:
+      - "127.0.0.1:3306:3306"
+    env_file:
+      - ./.env
+    volumes:
+      - db:/bitnami
+
+  # --- PHP 7.2
+  php:
+    container_name: "linkace-php"
+    image: bitnami/php-fpm:7.1
+    restart: always
+    volumes:
+      - .:/app
+      - ./resources/docker/php/php.ini:/opt/bitnami/php/etc/conf.d/php.ini:ro
+
+  # --- nginx 1.14
+  nginx:
+    container_name: "linkace-nginx"
+    image: bitnami/nginx:1.14
+    restart: always
+    ports:
+      - "127.0.0.1:80:8085"
+    depends_on:
+      - php
+    volumes:
+      - .:/app
+      - ./resources/docker/nginx/site.conf:/bitnami/nginx/conf/vhosts/site.conf:ro
+
+  # --- Redis 4.0
+  redis:
+    container_name: "linkace-redis"
+    image: bitnami/redis:4.0
+    restart: always
+    environment:
+      - REDIS_PASSWORD=${REDIS_PASSWORD}
+    ports:
+      - "127.0.0.1:6379:6379"
+
+volumes:
+
+  db:
+    driver: local
