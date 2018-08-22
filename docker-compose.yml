@@ -23,7 +23,7 @@ services:
   # --- PHP 7.2
   php:
     container_name: "linkace-php"
-    image: bitnami/php-fpm:7.1
+    image: bitnami/php-fpm:7.2
     restart: always
     volumes:
       - .:/app
