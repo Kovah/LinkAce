@@ -1,6 +1,15 @@
-# LinkAce
+<h1 align="center">
+  <img src="https://i.imgur.com/wtCAJR0.png" title="Linkace">
+</h1>
 
-_A small, selfhosted bookmark manager._
+<p>&nbsp;</p>
+
+<p align="center"><b>A small, selfhosted bookmark manager.</b></p>
+
+---
+
+
+> :warning: WARNING: This application is still in development and not save to use!
 
 
 ## Development
