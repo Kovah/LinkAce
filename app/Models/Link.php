@@ -73,4 +73,23 @@ class Link extends Model
     {
         return $this->hasMany('App\Models\Note', 'link_id');
     }
+
+    /*
+     | ========================================================================
+     | METHODS
+     */
+
+    /**
+     * @return null|string
+     */
+    public function tagsForInput()
+    {
+        $tags = $this->tags;
+
+        if ($tags->isEmpty()) {
+            return null;
+        }
+
+        return $tags->implode('name', ',');
+    }
 }

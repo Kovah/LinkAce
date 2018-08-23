@@ -5,9 +5,17 @@ namespace App\Http\Requests;
 use App\Models\Link;
 use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Log;
+use Illuminate\Validation\Rule;
 
 class LinkUpdateRequest extends FormRequest
 {
+    /** @var Link */
+    private $link;
+
+    /** @var bool */
+    private $unique_validation = false;
+
     /**
      * Determine if the user is authorized to make this request.
      *
@@ -21,11 +29,18 @@ class LinkUpdateRequest extends FormRequest
             return false;
         }
 
-        $link = Link::find($request->get('link_id'));
+        $this->link = Link::find($request->get('link_id'));
 
         // Check if the link belongs to the user
-        if ($link->user_id !== auth()->user()->id) {
+        if ($this->link->user_id !== auth()->user()->id) {
             return false;
+        }
+
+        // Enable unique validation if the url was changed
+        Log::debug(json_encode([$this->link->url, $request->get('url')]));
+
+        if ($this->link->url !== $request->get('url')) {
+            $this->unique_validation = true;
         }
 
         return true;
@@ -38,11 +53,20 @@ class LinkUpdateRequest extends FormRequest
      */
     public function rules()
     {
+        if (!$this->unique_validation) {
+            return [
+                'url' => 'required',
+                'is_private' => 'required|boolean',
+            ];
+        }
+
         return [
-            'link_id' => 'required',
-            'category_id' => 'integer',
-            'url' => 'required',
-            'title' => 'required',
+            'url' => [
+                'required',
+                Rule::unique('links')->where(function ($query) {
+                    return $query->where('user_id', auth()->user()->id);
+                }),
+            ],
             'is_private' => 'required|boolean',
         ];
     }

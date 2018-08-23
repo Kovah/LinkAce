@@ -38,13 +38,16 @@
                             <td>
                                 <a href="{{ $link->url }}" target="_blank">
                                     {{ $link->url }}
-                                    <small><sup><i class="fa fa-external-link"></i></sup></small>
+                                    <small><i class="fa fa-external-link"></i></small>
                                 </a>
                             </td>
                             <td>
                                 {{ $link->created_at->format('Y-m-d H:i') }}
                             </td>
                             <td>
+                                <a href="{{ route('links.edit', [$link->id]) }}" class="button is-small">
+                                    <i class="fa fa-pencil"></i>
+                                </a>
                                 <a onclick="event.preventDefault();document.getElementById('link-delete-{{ $link->id }}').submit();"
                                     title=" @lang('link.delete')" class="button is-small is-danger">
                                     <i class="fa fa-trash"></i>

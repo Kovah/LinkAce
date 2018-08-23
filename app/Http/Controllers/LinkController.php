@@ -96,11 +96,19 @@ class LinkController extends Controller
      * Show the form for editing the specified resource.
      *
      * @param  int $id
-     * @return void
+     * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
      */
     public function edit($id)
     {
-        //
+        $link = Link::find($id);
+
+        if (empty($link)) {
+            abort(404);
+        }
+
+        return view('models.links.edit')
+            ->with('categories', Category::parentOnly()->orderBy('name', 'asc')->get())
+            ->with('link', $link);
     }
 
     /**
@@ -108,11 +116,37 @@ class LinkController extends Controller
      *
      * @param LinkUpdateRequest $request
      * @param  int              $id
-     * @return void
+     * @return \Illuminate\Http\RedirectResponse
      */
     public function update(LinkUpdateRequest $request, $id)
     {
-        //
+        $link = Link::find($id);
+
+        if (empty($link)) {
+            abort(404);
+        }
+
+        // Update the existing link with new
+        $link->update($request->except('tags'));
+
+        // Update all tags
+        if ($tags = $request->get('tags')) {
+            $tags = collect(explode(',', $tags));
+            $new_tags = [];
+
+            foreach ($tags as $tag) {
+                $new_tag = Tag::firstOrCreate([
+                    'user_id' => auth()->user()->id,
+                    'name' => $tag,
+                ]);
+
+                $new_tags[] = $new_tag->id;
+            }
+
+            $link->tags()->sync($new_tags);
+        }
+
+        return redirect()->route('links.show', [$link->id]);
     }
 
     /**

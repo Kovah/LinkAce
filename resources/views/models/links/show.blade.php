@@ -38,7 +38,7 @@
             <div class="columns">
                 @if($link->description)
                     <div class="column">
-                        {{ $link->url }}
+                        {{ $link->description }}
                     </div>
                 @endif
 
