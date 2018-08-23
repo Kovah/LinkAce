@@ -22,16 +22,22 @@
                 </a>
             </td>
             <td class="has-text-grey-light">
-               <small>{{ $link->created_at->format('Y-m-d H:i') }}</small>
+                <small>{{ $link->created_at->format('Y-m-d H:i') }}</small>
             </td>
             <td>
-                <a href="{{ route('links.edit', [$link->id]) }}" class="button is-small">
-                    <i class="fa fa-pencil"></i>
-                </a>
-                <a onclick="event.preventDefault();document.getElementById('link-delete-{{ $link->id }}').submit();"
-                    title=" @lang('link.delete')" class="button is-small is-danger">
-                    <i class="fa fa-trash"></i>
-                </a>
+                <div class="field has-addons">
+                    <div class="control">
+                        <a href="{{ route('links.edit', [$link->id]) }}" class="button is-small">
+                            <i class="fa fa-pencil"></i>
+                        </a>
+                    </div>
+                    <div class="control">
+                        <a onclick="event.preventDefault();document.getElementById('link-delete-{{ $link->id }}').submit();"
+                            title=" @lang('link.delete')" class="button is-small is-danger">
+                            <i class="fa fa-trash"></i>
+                        </a>
+                    </div>
+                </div>
                 <form id="link-delete-{{ $link->id }}" method="POST" style="display: none;"
                     action="{{ route('links.destroy', [$link->id]) }}">
                     @method('DELETE')
