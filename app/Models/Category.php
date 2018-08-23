@@ -36,6 +36,15 @@ class Category extends Model
         return $query->where('user_id', $user_id);
     }
 
+    /**
+     * @param $query
+     * @return mixed
+     */
+    public function scopeParentOnly($query)
+    {
+        return $query->where('parent_category', null);
+    }
+
     /*
      | ========================================================================
      | RELATIONSHIPS
@@ -55,5 +64,13 @@ class Category extends Model
     public function links()
     {
         return $this->hasMany('App\Models\Link', 'category_id');
+    }
+
+    /**
+     * @return \Illuminate\Database\Eloquent\Relations\HasMany
+     */
+    public function childCategories()
+    {
+        return $this->hasMany('App\Models\Category', 'parent_category');
     }
 }
