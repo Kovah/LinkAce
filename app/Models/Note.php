@@ -5,6 +5,21 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
 
+/**
+ * Class Note
+ *
+ * @package App\Models
+ * @property int                   $id
+ * @property int                   $user_id
+ * @property int                   $link_id
+ * @property string                $note
+ * @property int                   $is_private
+ * @property \Carbon\Carbon|null   $created_at
+ * @property \Carbon\Carbon|null   $updated_at
+ * @property string|null           $deleted_at
+ * @property-read \App\Models\Link $link
+ * @property-read \App\Models\User $user
+ */
 class Note extends Model
 {
     use SoftDeletes;

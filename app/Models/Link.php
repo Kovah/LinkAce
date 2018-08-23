@@ -5,6 +5,25 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
 
+/**
+ * Class Link
+ *
+ * @package App\Models
+ * @property int                                                              $id
+ * @property int                                                              $user_id
+ * @property int|null                                                         $category_id
+ * @property string                                                           $url
+ * @property string                                                           $title
+ * @property string|null                                                      $description
+ * @property int                                                              $is_private
+ * @property \Carbon\Carbon|null                                              $created_at
+ * @property \Carbon\Carbon|null                                              $updated_at
+ * @property string|null                                                      $deleted_at
+ * @property-read \App\Models\Category|null                                   $category
+ * @property-read \Illuminate\Database\Eloquent\Collection|\App\Models\Note[] $notes
+ * @property-read \Illuminate\Database\Eloquent\Collection|\App\Models\Tag[]  $tags
+ * @property-read \App\Models\User                                            $user
+ */
 class Link extends Model
 {
     use SoftDeletes;
