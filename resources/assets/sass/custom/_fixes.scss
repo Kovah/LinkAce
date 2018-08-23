@@ -1,0 +1,29 @@
+// Bulma fixes
+.select {
+    width: 100%;
+
+    select {
+        width: 100%;
+    }
+}
+
+// Choices.js fixes
+.choices {
+
+    .choices__inner {
+        border-color: $input-border-color;
+        box-shadow: $input-shadow;
+    }
+
+    ::placeholder {
+        color: rgba($input-color, 0.3)
+    }
+
+    &.is-focused {
+
+        .choices__inner {
+            border-color: $input-focus-border-color;
+            box-shadow: $input-focus-box-shadow-size $input-focus-box-shadow-color;
+        }
+    }
+}

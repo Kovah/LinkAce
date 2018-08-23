@@ -1,11 +1,16 @@
 // Bulma import
 @import "../../../node_modules/bulma/sass/utilities/functions.sass";
-@import "bulma-variables";
+@import "third-party/bulma-variables";
 @import "../../../node_modules/bulma/bulma";
+
+// Choices.js import
+@import "third-party/choices-variables";
+@import "../../../node_modules/choices.js/assets/styles/scss/choices.scss";
 
 // Custom styles
 @import "custom/layout";
 @import "custom/helper";
+@import "custom/fixes";
 
 // Font Awesome import
 $fa-font-path: "fonts";

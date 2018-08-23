@@ -35,7 +35,9 @@ module.exports = grunt => {
   // Concat
   grunt.config('concat', {
     js_dependencies: {
-      src: [],
+      src: [
+          'node_modules/choices.js/assets/scripts/dist/choices.min.js'
+      ],
       dest: '<%= paths.dist %>/dependencies.js'
     }
   });
@@ -77,12 +79,18 @@ module.exports = grunt => {
 
   // Copy tasks
   grunt.config('copy', {
-    fontawesome: {
-      expand: true,
-      flatten: true,
-      src: ['node_modules/font-awesome/fonts/*'],
-      dest: '<%= paths.dist %>/fonts/'
-    }
+      fontawesome: {
+          expand: true,
+          flatten: true,
+          src: ['node_modules/font-awesome/fonts/*'],
+          dest: '<%= paths.dist %>/fonts/'
+      },
+      choicesjs: {
+          expand: true,
+          flatten: true,
+          src: ['node_modules/choices.js/assets/icons/*'],
+          dest: '<%= paths.dist %>/icons/'
+      }
   });
 
   // File watcher
@@ -100,7 +108,7 @@ module.exports = grunt => {
   // Tasks
   grunt.registerTask('build', [
     //'browserify',
-    //'concat',
+    'concat',
     'sass',
     'postcss',
     'copy'

@@ -37,6 +37,7 @@
   },
   "dependencies": {
     "bulma": "^0.7.1",
+    "choices.js": "^3.0.4",
     "font-awesome": "^4.7.0"
   }
 }
