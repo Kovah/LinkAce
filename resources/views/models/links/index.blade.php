@@ -21,8 +21,8 @@
                 <table class="table">
                     <thead>
                     <tr>
-                        <th>@lang('link.url')</th>
                         <th>@lang('link.title')</th>
+                        <th>@lang('link.url')</th>
                         <th>@lang('linkace.added_at')</th>
                         <th></th>
                     </tr>
@@ -31,10 +31,15 @@
                     @foreach($links as $link)
                         <tr>
                             <td>
-                                <a href="{{ $link->url }}" target="_blank">{{ $link->url }}</a>
+                                <a href="{{ route('links.show', [$link->id]) }}">
+                                    {{ $link->title }}
+                                </a>
                             </td>
                             <td>
-                                {{ $link->title }}
+                                <a href="{{ $link->url }}" target="_blank">
+                                    {{ $link->url }}
+                                    <small><sup><i class="fa fa-external-link"></i></sup></small>
+                                </a>
                             </td>
                             <td>
                                 {{ $link->created_at->format('Y-m-d H:i') }}
