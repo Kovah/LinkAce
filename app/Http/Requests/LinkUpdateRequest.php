@@ -37,8 +37,6 @@ class LinkUpdateRequest extends FormRequest
         }
 
         // Enable unique validation if the url was changed
-        Log::debug(json_encode([$this->link->url, $request->get('url')]));
-
         if ($this->link->url !== $request->get('url')) {
             $this->unique_validation = true;
         }
