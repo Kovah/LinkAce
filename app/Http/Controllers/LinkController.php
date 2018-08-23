@@ -46,7 +46,7 @@ class LinkController extends Controller
     public function store(LinkStoreRequest $request)
     {
         // Save the new link
-        $data = $request->except('tags');
+        $data = $request->except(['tags', 'reload_view']);
 
         // Try to get the <title> of the URL if no title was provided
         $data['title'] = $data['title'] ?? LinkAce::getTitleFromURL($data['url']);
@@ -71,6 +71,11 @@ class LinkController extends Controller
 
                 $link->tags()->attach($new_tag->id);
             }
+        }
+
+        if ($request->get('reload_view')) {
+            session()->flash('reload_view', true);
+            return redirect()->route('links.create');
         }
 
         return redirect()->route('links.show', [$link->id]);

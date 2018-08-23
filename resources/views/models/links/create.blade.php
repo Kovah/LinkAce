@@ -119,10 +119,18 @@
                 <br>
 
                 <div class="field">
-                    <div class="control has-text-right">
+                    <div class="control is-flex align-items-center has-text-right">
+
+                        <label class="checkbox mr ml-auto has-text-grey-light">
+                            <input type="checkbox" name="reload_view"
+                                @if(session('reload_view')) checked @endif>
+                            @lang('link.continue_adding')
+                        </label>
+
                         <button type="submit" class="button is-primary is-medium">
                             <i class="fa fa-save fa-mr"></i> @lang('link.add')
                         </button>
+
                     </div>
                 </div>
 

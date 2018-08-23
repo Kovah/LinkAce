@@ -6,3 +6,27 @@
 .fa-ml {
     margin-left: $size-7;
 }
+
+.justify-content-between {
+    justify-content: space-between;
+}
+
+.align-items-center {
+    align-items: center;
+}
+
+.mr {
+    margin-right: $size-6;
+}
+
+.ml {
+    margin-left: $size-6;
+}
+
+.mr-auto {
+    margin-right: auto;
+}
+
+.ml-auto {
+    margin-left: auto;
+}
