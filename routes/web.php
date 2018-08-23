@@ -33,7 +33,10 @@ $this->post('password/reset', 'Auth\ResetPasswordController@reset');
 Route::get('/home', 'HomeController@index')->name('home');
 
 // Model routes
-Route::resource('categories', 'CategoryController');
-Route::resource('links', 'LinkController');
-Route::resource('notes', 'NoteController');
-Route::resource('tags', 'TagController');
+Route::group(['middleware' => ['auth']], function () {
+    Route::resource('categories', 'CategoryController');
+    Route::resource('links', 'LinkController');
+    Route::resource('notes', 'NoteController');
+    Route::resource('tags', 'TagController');
+});
+
