@@ -2,16 +2,20 @@
 
 namespace App\Http\Controllers;
 
+use App\Helper\LinkAce;
 use App\Http\Requests\LinkDeleteRequest;
 use App\Http\Requests\LinkStoreRequest;
 use App\Http\Requests\LinkUpdateRequest;
+use App\Models\Category;
 use App\Models\Link;
+use App\Models\Tag;
 
 class LinkController extends Controller
 {
     /**
      * Display a listing of the resource.
      *
+     * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
      */
     public function index()
     {
@@ -22,33 +26,70 @@ class LinkController extends Controller
     /**
      * Show the form for creating a new resource.
      *
-     * @return void
+     * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
      */
     public function create()
     {
-        //
+        return view('models.links.create')
+            ->with('categories', Category::parentOnly()->orderBy('name', 'asc')->get())
+            ->with('links', Link::byUser(auth()->user()->id)->paginate(25));
     }
 
     /**
      * Store a newly created resource in storage.
      *
      * @param LinkStoreRequest $request
-     * @return void
+     * @return \Illuminate\Http\RedirectResponse
      */
     public function store(LinkStoreRequest $request)
     {
-        //
+        // Save the new link
+        $data = $request->except('tags');
+
+        // Try to get the <title> of the URL if no title was provided
+        $data['title'] = $data['title'] ?? LinkAce::getTitleFromURL($data['url']);
+
+        // Set the user ID
+        $data['user_id'] = auth()->user()->id;
+
+        $data['category_id'] = $data['category_id'] > 0 ?: null;
+
+        // Create the new link
+        $link = Link::create($data);
+
+        // Get all tags
+        if ($tags = $request->get('tags')) {
+            $tags = explode(',', $tags);
+
+            foreach ($tags as $tag) {
+                $new_tag = Tag::firstOrCreate([
+                    'user_id' => auth()->user()->id,
+                    'name' => $tag,
+                ]);
+
+                $link->tags()->attach($new_tag->id);
+            }
+        }
+
+        return redirect()->route('links.show', [$link->id]);
     }
 
     /**
      * Display the specified resource.
      *
      * @param  int $id
-     * @return void
+     * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
      */
     public function show($id)
     {
-        //
+        $link = Link::find($id);
+
+        if (empty($link)) {
+            abort(404);
+        }
+
+        return view('models.links.show')
+            ->with('link', $link);
     }
 
     /**

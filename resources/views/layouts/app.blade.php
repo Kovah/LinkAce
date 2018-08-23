@@ -20,6 +20,9 @@
         @yield('content')
     </main>
 
+    <script src="{{ asset('assets/dependencies.js') }}"></script>
+    @stack('scripts')
+
 </div>
 </body>
 </html>

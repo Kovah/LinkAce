@@ -3,6 +3,7 @@
 namespace App\Http\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
+use Illuminate\Validation\Rule;
 
 class LinkStoreRequest extends FormRequest
 {
@@ -24,8 +25,12 @@ class LinkStoreRequest extends FormRequest
     public function rules()
     {
         return [
-            'url' => 'required',
-            'title' => 'required',
+            'url' => [
+                'required',
+                Rule::unique('links')->where(function ($query) {
+                    return $query->where('user_id', auth()->user()->id);
+                }),
+            ],
             'is_private' => 'required|boolean',
         ];
     }

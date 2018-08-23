@@ -40,6 +40,7 @@ class LinkUpdateRequest extends FormRequest
     {
         return [
             'link_id' => 'required',
+            'category_id' => 'integer',
             'url' => 'required',
             'title' => 'required',
             'is_private' => 'required|boolean',

@@ -26,7 +26,10 @@ return [
     'delete' => 'Delete',
 
     'private' => 'Private',
-    'is_private' => 'is private',
+    'is_private' => 'Is private',
+
+    'yes' => 'Yes',
+    'no' => 'No',
 
     'no_results_found' => 'No :model found.',
 ];
