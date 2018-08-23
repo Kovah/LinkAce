@@ -20,7 +20,9 @@ class LinkController extends Controller
     public function index()
     {
         return view('models.links.index')
-            ->with('links', Link::byUser(auth()->user()->id)->paginate(25));
+            ->with('links', Link::byUser(auth()->user()->id)
+                ->paginate(config('linkace.default.pagination'))
+            );
     }
 
     /**
