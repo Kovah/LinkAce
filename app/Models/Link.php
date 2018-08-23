@@ -13,6 +13,7 @@ class Link extends Model
 
     public $fillable = [
         'user_id',
+        'category_id',
         'url',
         'title',
         'description',

@@ -13,6 +13,7 @@ class Note extends Model
 
     public $fillable = [
         'user_id',
+        'link_id',
         'note',
         'is_private',
     ];
