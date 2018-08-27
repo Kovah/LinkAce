@@ -4,6 +4,7 @@ return [
     'links' => 'Links',
 
     'add' => 'Add Link',
+    'add_quick' => 'Quick Add Link',
     'show' => 'Show Link',
     'edit' => 'Edit Link',
     'update' => 'Update Link',
