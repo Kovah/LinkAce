@@ -54,7 +54,7 @@ class LinkController extends Controller
         // Set the user ID
         $data['user_id'] = auth()->user()->id;
 
-        $data['category_id'] = $data['category_id'] > 0 ?: null;
+        $data['category_id'] = isset($data['category_id']) && $data['category_id'] > 0 ?: null;
 
         // Create the new link
         $link = Link::create($data);
