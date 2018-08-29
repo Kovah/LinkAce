@@ -17,9 +17,20 @@
                 @lang('linkace.login')
             </a>
         @else
-            <a href="{{ route('links.index') }}" class="navbar-item">
-                @lang('link.links')
-            </a>
+            <div class="navbar-item has-dropdown is-hoverable">
+                <a class="navbar-link">
+                    @lang('link.links')
+                </a>
+                <div class="navbar-dropdown">
+                    <a href="{{ route('links.index') }}" class="navbar-item">
+                        @lang('link.all_links')
+                    </a>
+                    <a href="{{ route('links.create') }}" class="navbar-item">
+                        @lang('link.add')
+                    </a>
+                </div>
+            </div>
+
             <a onclick="event.preventDefault();document.getElementById('logout-form').submit();"
                 class="navbar-item">
                 @lang('linkace.logout')
