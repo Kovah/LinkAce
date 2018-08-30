@@ -78,6 +78,13 @@
                                                 @if($link->category_id === $category->id) selected @endif>
                                                 {{ $category->name }}
                                             </option>
+                                            @if($category->childCategories)
+                                                @foreach($category->childCategories as $child_category)
+                                                    <option value="{{ $child_category->id }}">
+                                                        &rightarrow; {{ $child_category->name }}
+                                                    </option>
+                                                @endforeach
+                                            @endif
                                         @endforeach
                                     </select>
                                 </div>
