@@ -2,6 +2,7 @@
 return [
     'category' => 'Category',
     'categories' => 'Categories',
+    'all_categories' => 'All Categories',
 
     'add' => 'Add Category',
     'show' => 'Show Category',

@@ -90,4 +90,12 @@ class Category extends Model
     {
         return $this->hasMany('App\Models\Category', 'parent_category');
     }
+
+    /**
+     * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
+     */
+    public function parentCategory()
+    {
+        return $this->belongsTo('App\Models\Category', 'parent_category');
+    }
 }

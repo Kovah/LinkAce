@@ -16,6 +16,4 @@ return [
     'url' => 'URL',
     'title' => 'Title',
     'description' => 'Description',
-
-    'continue_adding' => 'Continue Adding',
 ];

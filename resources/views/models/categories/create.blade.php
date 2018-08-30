@@ -5,24 +5,24 @@
     <div class="card">
         <header class="card-header">
             <p class="card-header-title">
-                @lang('link.add')
+                @lang('category.add')
             </p>
         </header>
         <div class="card-content">
 
-            <form action="{{ route('links.store') }}" method="POST">
+            <form action="{{ route('categories.store') }}" method="POST">
                 @csrf
 
                 <div class="field">
-                    <label class="label" for="url">@lang('link.url')</label>
+                    <label class="label" for="name">@lang('category.name')</label>
                     <div class="control">
-                        <input name="url" id="url" class="input is-large{{ $errors->has('url') ? ' is-danger' : '' }}"
-                            type="url" placeholder="@lang('link.url')" value="{{ old('url') }}"
+                        <input name="name" id="name" class="input is-large{{ $errors->has('name') ? ' is-danger' : '' }}"
+                            type="text" placeholder="@lang('category.name')" value="{{ old('name') }}"
                             required autofocus>
                     </div>
-                    @if ($errors->has('url'))
+                    @if ($errors->has('name'))
                         <p class="help has-text-danger" role="alert">
-                            {{ $errors->first('url') }}
+                            {{ $errors->first('name') }}
                         </p>
                     @endif
                 </div>
@@ -33,24 +33,10 @@
                     <div class="column is-half">
 
                         <div class="field">
-                            <label class="label" for="title">@lang('link.title')</label>
-                            <div class="control">
-                                <input name="title" id="title"
-                                    class="input{{ $errors->has('title') ? ' is-danger' : '' }}"
-                                    type="text" placeholder="@lang('link.title')" value="{{ old('title') }}">
-                            </div>
-                            @if ($errors->has('title'))
-                                <p class="help has-text-danger" role="alert">
-                                    {{ $errors->first('title') }}
-                                </p>
-                            @endif
-                        </div>
-
-                        <div class="field">
-                            <label class="label" for="description">@lang('link.description')</label>
+                            <label class="label" for="description">@lang('category.description')</label>
                             <div class="control">
                                 <textarea name="description" id="description" rows="4" class="textarea"
-                                    placeholder="@lang('link.description')">{{ old('description') }}</textarea>
+                                    placeholder="@lang('category.description')">{{ old('description') }}</textarea>
                             </div>
                             @if ($errors->has('description'))
                                 <p class="help has-text-danger" role="alert">
@@ -63,11 +49,11 @@
                     <div class="column is-half">
 
                         <div class="field">
-                            <label class="label" for="category_id">@lang('category.category')</label>
+                            <label class="label" for="parent_category">@lang('category.parent_category')</label>
                             <div class="control">
-                                <div class="select{{ $errors->has('category_id') ? ' is-danger' : '' }}">
-                                    <select id="category_id" name="category_id">
-                                        <option value="0">@lang('category.select_category')</option>
+                                <div class="select{{ $errors->has('parent_category') ? ' is-danger' : '' }}">
+                                    <select id="parent_category" name="parent_category">
+                                        <option value="0">@lang('category.select_parent_category')</option>
                                         @foreach($categories as $category)
                                             <option value="{{ $category->id }}">
                                                 {{ $category->name }}
@@ -76,22 +62,9 @@
                                     </select>
                                 </div>
                             </div>
-                            @if ($errors->has('category_id'))
+                            @if ($errors->has('parent_category'))
                                 <p class="help has-text-danger" role="alert">
-                                    {{ $errors->first('category_id') }}
-                                </p>
-                            @endif
-                        </div>
-
-                        <div class="field">
-                            <label class="label" for="tags">@lang('tag.tags')</label>
-                            <div class="control">
-                                <input name="tags" id="tags" type="text" placeholder="@lang('tag.tags')"
-                                    value="{{ old('tags') }}">
-                            </div>
-                            @if ($errors->has('url'))
-                                <p class="help has-text-danger" role="alert">
-                                    {{ $errors->first('tags') }}
+                                    {{ $errors->first('parent_category') }}
                                 </p>
                             @endif
                         </div>
@@ -128,7 +101,7 @@
                         </label>
 
                         <button type="submit" class="button is-primary is-medium">
-                            <i class="fa fa-save fa-mr"></i> @lang('link.add')
+                            <i class="fa fa-save fa-mr"></i> @lang('category.add')
                         </button>
 
                     </div>
@@ -138,15 +111,5 @@
 
         </div>
     </div>
-
-    @push('scripts')
-        <script>
-            var tagSelect = new Choices(document.getElementById('tags'), {
-                delimiter: ',',
-                editItems: true,
-                removeItemButton: true
-            });
-        </script>
-    @endpush
 
 @endsection
