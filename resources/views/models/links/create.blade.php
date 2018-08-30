@@ -100,7 +100,7 @@
                             <label class="label" for="is_private">@lang('linkace.is_private')</label>
                             <div class="control">
                                 <div class="select{{ $errors->has('is_private') ? ' is-danger' : '' }}">
-                                    <select id="category" name="is_private">
+                                    <select id="is_private" name="is_private">
                                         <option value="0">@lang('linkace.no')</option>
                                         <option value="1">@lang('linkace.yes')</option>
                                     </select>

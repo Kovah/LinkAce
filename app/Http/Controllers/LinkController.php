@@ -34,8 +34,7 @@ class LinkController extends Controller
     public function create()
     {
         return view('models.links.create')
-            ->with('categories', Category::parentOnly()->orderBy('name', 'asc')->get())
-            ->with('links', Link::byUser(auth()->user()->id)->paginate(25));
+            ->with('categories', Category::parentOnly()->orderBy('name', 'asc')->get());
     }
 
     /**
