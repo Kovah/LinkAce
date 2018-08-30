@@ -31,6 +31,20 @@
                 </div>
             </div>
 
+            <div class="navbar-item has-dropdown is-hoverable">
+                <a class="navbar-link">
+                    @lang('category.categories')
+                </a>
+                <div class="navbar-dropdown">
+                    <a href="{{ route('categories.index') }}" class="navbar-item">
+                        @lang('category.all_categories')
+                    </a>
+                    <a href="{{ route('categories.create') }}" class="navbar-item">
+                        @lang('category.add')
+                    </a>
+                </div>
+            </div>
+
             <a onclick="event.preventDefault();document.getElementById('logout-form').submit();"
                 class="navbar-item">
                 @lang('linkace.logout')
