@@ -17,6 +17,7 @@
     @include('partials.nav')
 
     <main class="main container">
+        @include('partials.alerts')
         @yield('content')
     </main>
 
