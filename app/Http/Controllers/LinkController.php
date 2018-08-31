@@ -73,6 +73,8 @@ class LinkController extends Controller
             }
         }
 
+        alert(trans('link.added_successfully'), 'success');
+
         if ($request->get('reload_view')) {
             session()->flash('reload_view', true);
             return redirect()->route('links.create');
@@ -153,6 +155,8 @@ class LinkController extends Controller
             $link->tags()->sync($new_tags);
         }
 
+        alert(trans('link.updated_successfully'), 'success');
+
         return redirect()->route('links.show', [$link->id]);
     }
 
@@ -161,10 +165,21 @@ class LinkController extends Controller
      *
      * @param LinkDeleteRequest $request
      * @param  int              $id
-     * @return void
+     * @return \Illuminate\Http\RedirectResponse
+     * @throws \Exception
      */
     public function destroy(LinkDeleteRequest $request, $id)
     {
-        //
+        $link = Link::find($id);
+
+        if (empty($link)) {
+            abort(404);
+        }
+
+        $link->delete();
+
+        alert(trans('link.deleted_successfully'), 'warning');
+
+        return redirect()->route('links.index');
     }
 }

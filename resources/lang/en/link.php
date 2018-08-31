@@ -16,4 +16,8 @@ return [
     'url' => 'URL',
     'title' => 'Title',
     'description' => 'Description',
+
+    'added_successfully' => 'Link added successfully.',
+    'updated_successfully' => 'Link updated successfully.',
+    'deleted_successfully' => 'Link deleted successfully.',
 ];
