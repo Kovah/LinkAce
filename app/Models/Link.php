@@ -23,6 +23,7 @@ use Illuminate\Database\Eloquent\SoftDeletes;
  * @property-read \Illuminate\Database\Eloquent\Collection|\App\Models\Note[] $notes
  * @property-read \Illuminate\Database\Eloquent\Collection|\App\Models\Tag[]  $tags
  * @property-read \App\Models\User                                            $user
+ * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\Link byUser($user_id)
  */
 class Link extends Model
 {
@@ -47,8 +48,8 @@ class Link extends Model
     /**
      * Scope for the user relation
      *
-     * @param     $query
-     * @param int $user_id
+     * @param    \Illuminate\Database\Eloquent\Builder $query
+     * @param int                                      $user_id
      * @return mixed
      */
     public function scopeByUser($query, $user_id)

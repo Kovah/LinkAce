@@ -21,6 +21,8 @@ use Illuminate\Database\Eloquent\SoftDeletes;
  * @property-read \Illuminate\Database\Eloquent\Collection|\App\Models\Category[] $childCategories
  * @property-read \Illuminate\Database\Eloquent\Collection|\App\Models\Link[]     $links
  * @property-read \App\Models\User                                                $user
+ * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\Category parentOnly()
+ * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\Category byUser($user_id)
  */
 class Category extends Model
 {
@@ -44,8 +46,8 @@ class Category extends Model
     /**
      * Scope for the user relation
      *
-     * @param     $query
-     * @param int $user_id
+     * @param  \Illuminate\Database\Eloquent\Builder $query
+     * @param int                                    $user_id
      * @return mixed
      */
     public function scopeByUser($query, $user_id)
@@ -54,7 +56,7 @@ class Category extends Model
     }
 
     /**
-     * @param $query
+     * @param \Illuminate\Database\Eloquent\Builder $query
      * @return mixed
      */
     public function scopeParentOnly($query)

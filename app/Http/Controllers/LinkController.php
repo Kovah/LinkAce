@@ -133,7 +133,7 @@ class LinkController extends Controller
             abort(404);
         }
 
-        // Update the existing link with new
+        // Update the existing link with new data
         $link->update($request->except('tags'));
 
         // Update all tags
