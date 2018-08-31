@@ -83,11 +83,19 @@ class CategoryController extends Controller
      * Show the form for editing the specified resource.
      *
      * @param  int $id
-     * @return
+     * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
      */
     public function edit($id)
     {
-        //
+        $category = Category::find($id);
+
+        if (empty($category)) {
+            abort(404);
+        }
+
+        return view('models.categories.edit')
+            ->with('categories', Category::parentOnly()->orderBy('name', 'asc')->get())
+            ->with('category', $category);
     }
 
     /**
@@ -99,7 +107,21 @@ class CategoryController extends Controller
      */
     public function update(CategoryUpdateRequest $request, $id)
     {
-        //
+        $category = Category::find($id);
+
+        if (empty($category)) {
+            abort(404);
+        }
+
+        $data = $request->all();
+
+        // Set the correct parent category
+        $data['parent_category'] = isset($data['parent_category']) && $data['parent_category'] > 0 ?: null;
+
+        // Update the existing category with new data
+        $category->update($data);
+
+        return redirect()->route('categories.show', [$category->id]);
     }
 
     /**
@@ -107,10 +129,27 @@ class CategoryController extends Controller
      *
      * @param CategoryDeleteRequest $request
      * @param  int                  $id
-     * @return
+     * @return \Illuminate\Http\RedirectResponse
+     * @throws \Exception
      */
     public function destroy(CategoryDeleteRequest $request, $id)
     {
-        //
+        $category = Category::find($id);
+
+        if (empty($category)) {
+            abort(404);
+        }
+
+        // Remove the category as a parent from all child categories
+        if ($category->childCategories->count()) {
+            foreach ($category->childCategories as $child) {
+                $child->parent_category = null;
+                $child->save();
+            }
+        }
+
+        $category->delete();
+
+        return redirect()->route('categories.index');
     }
 }
