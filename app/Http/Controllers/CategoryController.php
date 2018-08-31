@@ -53,6 +53,8 @@ class CategoryController extends Controller
         // Create the new link
         $link = Category::create($data);
 
+        alert(trans('category.added_successfully'), 'success');
+
         if ($request->get('reload_view')) {
             session()->flash('reload_view', true);
             return redirect()->route('categories.create');
@@ -121,6 +123,8 @@ class CategoryController extends Controller
         // Update the existing category with new data
         $category->update($data);
 
+        alert(trans('category.updated_successfully'), 'success');
+
         return redirect()->route('categories.show', [$category->id]);
     }
 
@@ -149,6 +153,8 @@ class CategoryController extends Controller
         }
 
         $category->delete();
+
+        alert(trans('category.deleted_successfully'), 'warning');
 
         return redirect()->route('categories.index');
     }

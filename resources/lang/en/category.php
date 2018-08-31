@@ -18,4 +18,8 @@ return [
 
     'select_category' => 'Select a Category',
     'select_parent_category' => 'Select Parent Category',
+
+    'added_successfully' => 'Category added successfully.',
+    'updated_successfully' => 'Category updated successfully.',
+    'deleted_successfully' => 'Category deleted successfully.',
 ];
