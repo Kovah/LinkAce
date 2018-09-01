@@ -2,6 +2,7 @@
 return [
     'tag' => 'Tag',
     'tags' => 'Tags',
+    'all_tags' => 'All Tags',
 
     'add' => 'Add Tag',
     'show' => 'Show Tag',
@@ -11,5 +12,9 @@ return [
 
     'private' => 'Private Tag',
 
-    'tag_name' => 'Tag Name',
+    'name' => 'Tag Name',
+
+    'added_successfully' => 'Tag added successfully.',
+    'updated_successfully' => 'Tag updated successfully.',
+    'deleted_successfully' => 'Tag deleted successfully.',
 ];
