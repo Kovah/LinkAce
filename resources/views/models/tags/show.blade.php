@@ -34,4 +34,19 @@
         </div>
     </div>
 
+    <br>
+
+    <div class="card">
+        <div class="card-header">
+            <p class="card-header-title">
+                @lang('link.links')
+            </p>
+        </div>
+        <div class="card-content">
+            @include('models.links._table', [
+                'links' => $tag->links()->paginate(config('linkace.default.pagination')),
+            ])
+        </div>
+    </div>
+
 @endsection
