@@ -45,6 +45,20 @@
                 </div>
             </div>
 
+            <div class="navbar-item has-dropdown is-hoverable">
+                <a class="navbar-link">
+                    @lang('tag.tags')
+                </a>
+                <div class="navbar-dropdown">
+                    <a href="{{ route('tags.index') }}" class="navbar-item">
+                        @lang('tag.all_tags')
+                    </a>
+                    <a href="{{ route('tags.create') }}" class="navbar-item">
+                        @lang('tag.add')
+                    </a>
+                </div>
+            </div>
+
             <a onclick="event.preventDefault();document.getElementById('logout-form').submit();"
                 class="navbar-item">
                 @lang('linkace.logout')
