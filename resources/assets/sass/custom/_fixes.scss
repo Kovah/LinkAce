@@ -11,6 +11,14 @@
     width: 100%;
 }
 
+.card-panel {
+
+    .panel-block {
+        border-left: 0;
+        border-right: 0;
+    }
+}
+
 // Choices.js fixes
 .choices {
 

@@ -42,4 +42,37 @@
         </div>
     </div>
 
+    <br>
+
+    <div class="columns">
+        <div class="column">
+
+            <div class="card">
+                <div class="card-header">
+                    <p class="card-header-title">
+                        @lang('link.recent_links')
+                    </p>
+                </div>
+                <div class="card-panel">
+
+                    @forelse($recent_links as $link)
+                        <a href="{{ route('links.show', [$link->id]) }}" class="panel-block">
+                            {{ $link->title }}
+                        </a>
+                    @empty
+                        <div class="panel-block is-warning">
+                            @lang('linkace.no_results_found', ['model' => trans('link.links')])
+                        </div>
+                    @endforelse
+
+                </div>
+            </div>
+
+        </div>
+        <div class="column">
+
+
+        </div>
+    </div>
+
 @endsection

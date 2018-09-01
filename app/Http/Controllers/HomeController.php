@@ -2,7 +2,7 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Category;
+use App\Models\Link;
 
 class HomeController extends Controller
 {
@@ -23,7 +23,12 @@ class HomeController extends Controller
      */
     public function index()
     {
+        $recent_links = Link::byUser(auth()->user()->id)
+            ->orderBy('created_at', 'asc')
+            ->limit(10)
+            ->get();
+
         return view('home')
-            ->with('categories', Category::parentOnly()->orderBy('name', 'asc')->get());
+            ->with('recent_links', $recent_links);
     }
 }

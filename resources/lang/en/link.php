@@ -3,6 +3,7 @@ return [
     'link' => 'Link',
     'links' => 'Links',
     'all_links' => 'All Links',
+    'recent_links' => 'Recent Links',
 
     'add' => 'Add Link',
     'add_quick' => 'Quick Add Link',
