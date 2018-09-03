@@ -4,9 +4,12 @@ namespace Tests\Unit;
 
 use App\Helper\LinkAce;
 use Tests\TestCase;
-use Illuminate\Foundation\Testing\WithFaker;
-use Illuminate\Foundation\Testing\RefreshDatabase;
 
+/**
+ * Class LinkaceHelperTest
+ *
+ * @package Tests\Unit
+ */
 class LinkaceHelperTest extends TestCase
 {
     /**
@@ -15,7 +18,7 @@ class LinkaceHelperTest extends TestCase
      *
      * @return void
      */
-    public function testTitleFromValidURL()
+    public function testTitleFromValidURL(): void
     {
         $url = 'https://google.com/';
 
@@ -30,7 +33,7 @@ class LinkaceHelperTest extends TestCase
      *
      * @return void
      */
-    public function testTitleFromInvalidURL()
+    public function testTitleFromInvalidURL(): void
     {
         $url = 'https://a-google-url-that-does-not-exist.comcom/';
 
