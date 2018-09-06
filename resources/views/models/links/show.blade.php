@@ -45,7 +45,7 @@
                 <div class="column">
                     @if($link->category)
                         <div class="field">
-                            <label>@lang('category.category')</label>
+                            <label>@lang('category.category')</label><br/>
                             <a href="{{ route('categories.show', [$link->category->id]) }}">
                                 {{ $link->category->name }}
                             </a>
@@ -53,7 +53,7 @@
                     @endif
                     @if(!$link->tags->isEmpty())
                         <div class="field">
-                            <label>@lang('tag.tags')</label>
+                            <label>@lang('tag.tags')</label><br/>
                             @foreach($link->tags as $tag)
                                 <a href="{{ route('tags.show', [$tag->id]) }}" class="tag is-primary">
                                     {{ $tag->name }}
