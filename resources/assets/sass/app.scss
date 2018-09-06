@@ -3,9 +3,8 @@
 @import "third-party/bulma-variables";
 @import "../../../node_modules/bulma/bulma";
 
-// Choices.js import
-@import "third-party/choices-variables";
-@import "../../../node_modules/choices.js/assets/styles/scss/choices.scss";
+// Selectize
+@import "third-party/selectize";
 
 // Custom styles
 @import "custom/layout";

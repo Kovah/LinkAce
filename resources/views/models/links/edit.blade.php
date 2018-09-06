@@ -149,13 +149,7 @@
     </div>
 
     @push('scripts')
-        <script>
-            var tagSelect = new Choices(document.getElementById('tags'), {
-                delimiter: ',',
-                editItems: true,
-                removeItemButton: true
-            });
-        </script>
+        @include('models.links._tags-js')
     @endpush
 
 @endsection

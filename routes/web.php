@@ -45,5 +45,7 @@ Route::group(['middleware' => ['auth']], function () {
 
     Route::get('search', 'SearchController@getSearch')->name('get-search');
     Route::post('search', 'SearchController@doSearch')->name('do-search');
+
+    Route::post('ajax/tags', 'AjaxController@getTags')->name('ajax-tags');
 });
 

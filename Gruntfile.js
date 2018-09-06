@@ -36,7 +36,8 @@ module.exports = grunt => {
   grunt.config('concat', {
     js_dependencies: {
       src: [
-          'node_modules/choices.js/assets/scripts/dist/choices.min.js'
+          'node_modules/jquery/dist/jquery.min.js',
+          'node_modules/selectize/dist/js/standalone/selectize.min.js'
       ],
       dest: '<%= paths.dist %>/dependencies.js'
     }
