@@ -61,8 +61,12 @@
                     </div>
                 </div>
 
+                <a href="{{ route('get-search') }}" class="navbar-item ml-auto">
+                    @lang('search.search')
+                </a>
+
                 <a onclick="event.preventDefault();document.getElementById('logout-form').submit();"
-                    class="navbar-item ml-auto">
+                    class="navbar-item">
                     @lang('linkace.logout')
                 </a>
 

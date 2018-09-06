@@ -42,5 +42,8 @@ Route::group(['middleware' => ['auth']], function () {
     Route::resource('links', 'LinkController');
     Route::resource('notes', 'NoteController');
     Route::resource('tags', 'TagController');
+
+    Route::get('search', 'SearchController@getSearch')->name('get-search');
+    Route::post('search', 'SearchController@doSearch')->name('do-search');
 });
 
