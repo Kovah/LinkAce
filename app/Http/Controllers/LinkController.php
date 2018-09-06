@@ -34,7 +34,10 @@ class LinkController extends Controller
     public function create()
     {
         return view('models.links.create')
-            ->with('categories', Category::parentOnly()->orderBy('name', 'asc')->get());
+            ->with('categories', Category::parentOnly()
+                ->byUser(auth()->user()->id)
+                ->orderBy('name', 'asc')
+                ->get());
     }
 
     /**
@@ -116,7 +119,10 @@ class LinkController extends Controller
         }
 
         return view('models.links.edit')
-            ->with('categories', Category::parentOnly()->orderBy('name', 'asc')->get())
+            ->with('categories', Category::parentOnly()
+                ->byUser(auth()->user()->id)
+                ->orderBy('name', 'asc')
+                ->get())
             ->with('link', $link);
     }
 
