@@ -6,7 +6,6 @@ use App\Http\Requests\SearchRequest;
 use App\Models\Category;
 use App\Models\Link;
 use App\Models\Tag;
-use Illuminate\Database\Query\Builder;
 
 /**
  * Class SearchController
@@ -15,12 +14,24 @@ use Illuminate\Database\Query\Builder;
  */
 class SearchController extends Controller
 {
+    /** @var array */
+    public $order_by_options = [
+        'title:asc',
+        'title:desc',
+        'url:asc',
+        'url:desc',
+        'created_at:asc',
+        'created_at:desc',
+    ];
+
     /**
      * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
      */
-    public function getSearch() {
+    public function getSearch()
+    {
         return view('actions.search.search')
             ->with('results', collect([]))
+            ->with('order_by_options', $this->order_by_options)
             ->with('query_settings', [
                 'old_query' => null,
                 'search_title' => false,
@@ -28,6 +39,7 @@ class SearchController extends Controller
                 'private_only' => false,
                 'only_category' => 0,
                 'only_tag' => 0,
+                'order_by' => $this->order_by_options[0],
             ])
             ->with('categories', Category::byUser(auth()->user()->id)
                 ->orderBy('name', 'asc')->get())
@@ -80,9 +92,9 @@ class SearchController extends Controller
         }
 
         // Order the results if applicable
-        if ($orderby_column = $request->get('orderby_column', '')) {
-            $direction = $request->get('orderby_direction', 'ASC');
-            $search->orderBy($orderby_column, $direction);
+        if ($orderby = $request->get('orderby', $this->order_by_options[0])) {
+            $order_by = explode(':', $orderby);
+            $search->orderBy($order_by[0], $order_by[1]);
         }
 
         // Get the results
@@ -90,6 +102,7 @@ class SearchController extends Controller
 
         return view('actions.search.search')
             ->with('results', $results)
+            ->with('order_by_options', $this->order_by_options)
             ->with('query_settings', [
                 'old_query' => $raw_query,
                 'search_title' => $search_title,
@@ -97,6 +110,7 @@ class SearchController extends Controller
                 'private_only' => $private_only,
                 'only_category' => $category_id,
                 'only_tag' => $tag_id,
+                'order_by' => $orderby,
             ])
             ->with('categories', Category::byUser(auth()->user()->id)
                 ->orderBy('name', 'asc')->get())

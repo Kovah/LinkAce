@@ -103,6 +103,27 @@
                         </div>
                     </div>
 
+                    <div class="column">
+                        <div class="field">
+                            <div class="control">
+                                <div class="select is-small">
+                                    <label for="order_by" class="is-hidden" aria-hidden="true">
+                                        @lang('search.filter_by_tag')
+                                    </label>
+                                    <select id="order_by" name="order_by">
+                                        <option value="0">@lang('search.order_by')</option>
+                                        @foreach($order_by_options as $order_by)
+                                            <option value="{{ $order_by }}"
+                                                @if($query_settings['order_by'] == $order_by) selected @endif>
+                                                @lang('search.order_by.' . $order_by)
+                                            </option>
+                                        @endforeach
+                                    </select>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
                 </div>
 
             </form>
