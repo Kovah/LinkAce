@@ -30,7 +30,7 @@
                             <div class="control">
                                 <input name="password" id="password"
                                     class="input{{ $errors->has('password') ? ' is-danger' : '' }}"
-                                    type="text" placeholder="@lang('linkace.password')" required>
+                                    type="password" placeholder="@lang('linkace.password')" required>
                             </div>
                             @if ($errors->has('password'))
                                 <p class="help has-text-danger" role="alert">
