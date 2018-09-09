@@ -14,8 +14,11 @@
         </small>
     </td>
     <td class="has-text-grey-light">
-        <small title="{{ $link->created_at->format('Y-m-d H:i') }}">
-            {{ $link->created_at->diffForHumans() }}
+        <small title="">
+            <time-ago class="has-cursor-help" datetime="{{ $link->created_at->toIso8601String() }}"
+                title="{{ $link->created_at->format('Y-m-d H:i') }}">
+                {{ $link->created_at->diffForHumans() }}
+            </time-ago>
         </small>
     </td>
 </tr>
