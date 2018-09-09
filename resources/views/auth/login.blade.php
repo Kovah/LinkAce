@@ -65,7 +65,9 @@
 
             <br>
 
-            <small class="has-text-grey">@lang('linkace.forgot_password_link', ['reset_url' => route('password.request')])</small>
+            <small class="has-text-grey">
+                {!! trans('linkace.forgot_password_link', ['reset_url' => route('password.request')]) !!}
+            </small>
 
         </div>
     </div>
