@@ -18,6 +18,8 @@ return [
     'title' => 'Title',
     'description' => 'Description',
 
+    'external_link' => 'External Link',
+
     'added_successfully' => 'Link added successfully.',
     'updated_successfully' => 'Link updated successfully.',
     'deleted_successfully' => 'Link deleted successfully.',

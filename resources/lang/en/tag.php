@@ -14,6 +14,8 @@ return [
 
     'name' => 'Tag Name',
 
+    'no_tags' => 'No Tags',
+
     'added_successfully' => 'Tag added successfully.',
     'updated_successfully' => 'Tag updated successfully.',
     'deleted_successfully' => 'Tag deleted successfully.',
