@@ -2,7 +2,7 @@
     <div class="container">
 
         <div class="navbar-brand">
-            <a class="navbar-item" href="{{ auth()->guest() ? route('front') : route('home') }}">
+            <a class="navbar-item" href="{{ auth()->guest() ? route('front') : route('dashboard') }}">
                 <img src="{{ asset('assets/img/logo_linkace.svg') }}" alt="@lang('linkace.linkace')"
                     width="76" height="28">
             </a>

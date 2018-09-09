@@ -5,18 +5,8 @@ namespace App\Http\Controllers\App;
 use App\Http\Controllers\Controller;
 use App\Models\Link;
 
-class HomeController extends Controller
+class DashboardController extends Controller
 {
-    /**
-     * Create a new controller instance.
-     *
-     * @return void
-     */
-    public function __construct()
-    {
-        $this->middleware('auth');
-    }
-
     /**
      * Show the application dashboard.
      *
@@ -29,7 +19,7 @@ class HomeController extends Controller
             ->limit(10)
             ->get();
 
-        return view('home')
+        return view('dashboard')
             ->with('recent_links', $recent_links);
     }
 }

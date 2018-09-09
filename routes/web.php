@@ -13,7 +13,7 @@
 
 Route::get('/', function () {
     if (auth()->check()) {
-        return redirect()->route('home');
+        return redirect()->route('dashboard');
     }
 
     return view('welcome');
@@ -34,10 +34,10 @@ $this->post('password/email', 'Auth\ForgotPasswordController@sendResetLinkEmail'
 $this->get('password/reset/{token}', 'Auth\ResetPasswordController@showResetForm')->name('password.reset');
 $this->post('password/reset', 'Auth\ResetPasswordController@reset');
 
-Route::get('/home', 'App\HomeController@index')->name('home');
-
 // Model routes
 Route::group(['middleware' => ['auth']], function () {
+    Route::get('/dashboard', 'App\DashboardController@index')->name('dashboard');
+
     Route::resource('categories', 'Models\CategoryController');
     Route::resource('links', 'Models\LinkController');
     Route::resource('notes', 'Models\NoteController');
