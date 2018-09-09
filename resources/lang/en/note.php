@@ -12,4 +12,8 @@ return [
     'private' => 'Private Note',
 
     'note_content' => 'Note Content',
+
+    'added_successfully' => 'Note added successfully.',
+    'updated_successfully' => 'Note updated successfully.',
+    'deleted_successfully' => 'Note deleted successfully.',
 ];
