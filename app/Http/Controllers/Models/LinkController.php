@@ -1,8 +1,9 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace App\Http\Controllers\Models;
 
 use App\Helper\LinkAce;
+use App\Http\Controllers\Controller;
 use App\Http\Requests\LinkDeleteRequest;
 use App\Http\Requests\LinkStoreRequest;
 use App\Http\Requests\LinkUpdateRequest;

@@ -1,7 +1,8 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace App\Http\Controllers\API;
 
+use App\Http\Controllers\Controller;
 use App\Models\Tag;
 use Illuminate\Http\Request;
 
@@ -16,7 +17,8 @@ class AjaxController extends Controller
      * @param Request $request
      * @return \Illuminate\Http\JsonResponse
      */
-    public function getTags(Request $request) {
+    public function getTags(Request $request)
+    {
         $query = $request->get('query', false);
 
         if (!$query) {
@@ -31,7 +33,7 @@ class AjaxController extends Controller
 
         if (!$tags->isEmpty()) {
             // Properly format the results
-            $tags = $tags->map(function ($item){
+            $tags = $tags->map(function ($item) {
                 return [
                     'value' => $item->name,
                     'text' => $item->name,

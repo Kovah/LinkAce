@@ -34,18 +34,18 @@ $this->post('password/email', 'Auth\ForgotPasswordController@sendResetLinkEmail'
 $this->get('password/reset/{token}', 'Auth\ResetPasswordController@showResetForm')->name('password.reset');
 $this->post('password/reset', 'Auth\ResetPasswordController@reset');
 
-Route::get('/home', 'HomeController@index')->name('home');
+Route::get('/home', 'App\HomeController@index')->name('home');
 
 // Model routes
 Route::group(['middleware' => ['auth']], function () {
-    Route::resource('categories', 'CategoryController');
-    Route::resource('links', 'LinkController');
-    Route::resource('notes', 'NoteController');
-    Route::resource('tags', 'TagController');
+    Route::resource('categories', 'Models\CategoryController');
+    Route::resource('links', 'Models\LinkController');
+    Route::resource('notes', 'Models\NoteController');
+    Route::resource('tags', 'Models\TagController');
 
-    Route::get('search', 'SearchController@getSearch')->name('get-search');
-    Route::post('search', 'SearchController@doSearch')->name('do-search');
+    Route::get('search', 'App\SearchController@getSearch')->name('get-search');
+    Route::post('search', 'App\SearchController@doSearch')->name('do-search');
 
-    Route::post('ajax/tags', 'AjaxController@getTags')->name('ajax-tags');
+    Route::post('ajax/tags', 'API\AjaxController@getTags')->name('ajax-tags');
 });
 

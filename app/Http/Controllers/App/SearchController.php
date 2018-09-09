@@ -1,7 +1,8 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace App\Http\Controllers\App;
 
+use App\Http\Controllers\Controller;
 use App\Http\Requests\SearchRequest;
 use App\Models\Category;
 use App\Models\Link;
