@@ -19,6 +19,14 @@
     }
 }
 
+.card-footer.is-narrow {
+
+    .card-footer-item {
+        font-size: $size-7;
+        padding: .4rem .6rem;
+    }
+}
+
 // Choices.js fixes
 .choices {
 
