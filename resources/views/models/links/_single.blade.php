@@ -23,7 +23,7 @@
     <td width="30%">
         <small>
             @if($link->category)
-                <label class="is-fullwidth">@lang('category.category')</label>
+                <label>@lang('category.category'):</label>
                 <a href="{{ route('categories.show', [$link->category->id]) }}">
                     {{ $link->category->name }}
                 </a>
@@ -35,7 +35,7 @@
     <td>
         <small>
             @if($link->tags->count() > 0)
-                <label class="is-fullwidth">@lang('tag.tags')</label>
+                <label>@lang('tag.tags'):</label>
                 @foreach($link->tags as $tag)
                     <a href="{{ route('tags.show', [$tag->id]) }}" class="tag is-light">
                         {{ $tag->name }}
