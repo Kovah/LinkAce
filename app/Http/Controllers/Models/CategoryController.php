@@ -79,7 +79,10 @@ class CategoryController extends Controller
         }
 
         return view('models.categories.show')
-            ->with('category', $category);
+            ->with('category', $category)
+            ->with('category_links', $category->links()
+                ->paginate(config('linkace.default.pagination'))
+            );
     }
 
     /**

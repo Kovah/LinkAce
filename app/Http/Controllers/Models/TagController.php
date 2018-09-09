@@ -73,7 +73,11 @@ class TagController extends Controller
             abort(404);
         }
 
-        return view('models.tags.show')->with('tag', $tag);
+        return view('models.tags.show')
+            ->with('tag', $tag)
+            ->with('tag_links', $tag->links()
+                ->paginate(config('linkace.default.pagination'))
+            );
     }
 
     /**

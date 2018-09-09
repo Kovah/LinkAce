@@ -78,10 +78,9 @@
             </p>
         </div>
         <div class="card-content">
-            @include('models.links._table', [
-                'links' => $category->links()->paginate(config('linkace.default.pagination')),
-            ])
+            @include('models.links._table', ['links' => $category_links])
         </div>
+        @include('partials.card-pagination', ['$paginator' => $category_links])
     </div>
 
 @endsection
