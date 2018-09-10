@@ -1,20 +1,4 @@
 // Layout styles
 .main {
-    padding: $size-3 0;
-}
-
-.navbar {
-    box-shadow: $card-shadow;
-}
-
-.link-table {
-    border-collapse: collapse;
-
-    tbody {
-        box-shadow: 0 2px 0 $grey-lighter inset;
-
-        & + tbody {
-            border-top: 30px solid transparent;
-        }
-    }
+    padding: $spacer 0;
 }

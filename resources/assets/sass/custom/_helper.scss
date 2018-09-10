@@ -1,36 +1,12 @@
 // Helper styles
 .fa-mr {
-    margin-right: $size-7;
+    margin-right: $spacer / 2;
 }
 
 .fa-ml {
-    margin-left: $size-7;
+    margin-left: $spacer / 2;
 }
 
 .has-cursor-help {
     cursor: help;
-}
-
-.justify-content-between {
-    justify-content: space-between;
-}
-
-.align-items-center {
-    align-items: center;
-}
-
-.mr {
-    margin-right: $size-6;
-}
-
-.ml {
-    margin-left: $size-6;
-}
-
-.mr-auto {
-    margin-right: auto;
-}
-
-.ml-auto {
-    margin-left: auto;
 }

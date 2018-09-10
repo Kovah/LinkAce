@@ -37,6 +37,7 @@ module.exports = grunt => {
     js_dependencies: {
       src: [
           'node_modules/jquery/dist/jquery.min.js',
+          'node_modules/bootstrap/dist/js/bootstrap.bundle.min.js',
           'node_modules/selectize/dist/js/standalone/selectize.min.js'
       ],
       dest: '<%= paths.dist %>/dependencies.js'
@@ -86,12 +87,6 @@ module.exports = grunt => {
           src: ['node_modules/font-awesome/fonts/*'],
           dest: '<%= paths.dist %>/fonts/'
       },
-      choicesjs: {
-          expand: true,
-          flatten: true,
-          src: ['node_modules/choices.js/assets/icons/*'],
-          dest: '<%= paths.dist %>/icons/'
-      }
   });
 
   // File watcher
