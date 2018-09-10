@@ -27,7 +27,7 @@
                             </div>
 
                             @if ($errors->has('email'))
-                                <p class="help small text-danger" role="alert">
+                                <p class="invalid-feedback" role="alert">
                                     {{ $errors->first('email') }}
                                 </p>
                             @endif
@@ -44,7 +44,7 @@
                                     placeholder="@lang('linkace.password')" aria-label="@lang('linkace.password')">
                             </div>
                             @if ($errors->has('password'))
-                                <p class="help small text-danger" role="alert">
+                                <p class="invalid-feedback" role="alert">
                                     {{ $errors->first('password') }}
                                 </p>
                             @endif
