@@ -15,24 +15,17 @@
 <div id="app">
 
     <main class="main container">
-        <div class="columns is-centered">
-            <div class="column is-half">
-
-                <br>
+        <div class="row justify-content-center">
+            <div class="col-12 col-md-8 text-center">
 
                 <img src="{{ asset('assets/img/logo_linkace.svg') }}" alt="@lang('linkace.linkace')"
-                    width="400" height="147">
+                    width="400" height="147" class="mt-5 mb-5">
 
                 <br>
-                <br>
 
-                <div class="card">
-                    <div class="card-content has-text-centered">
-                        <a href="{{ route('login') }}" class="button is-primary">
-                            <i class="fa fa-unlock fa-mr"></i> @lang('linkace.login')
-                        </a>
-                    </div>
-                </div>
+                <a href="{{ route('login') }}" class="btn btn-lg btn-primary">
+                    <i class="fa fa-unlock fa-mr"></i> @lang('linkace.login')
+                </a>
 
             </div>
         </div>
