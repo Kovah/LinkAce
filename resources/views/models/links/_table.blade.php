@@ -1,6 +1,6 @@
 <table class="link-table table">
     @foreach($links as $link)
-        @include('models.links._single')
+        @include('models.links._single-table')
     @endforeach
 </table>
 

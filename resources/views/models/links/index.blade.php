@@ -2,38 +2,34 @@
 
 @section('content')
 
-    <div class="card">
-        <header class="card-header">
-            <p class="card-header-title">
-                @lang('link.links')
-            </p>
-            <a href="{{ route('links.create') }}" class="card-header-icon" aria-label="@lang('link.add')">
-                <div class="icon">
-                    <i class="fa fa-plus fa-mr" aria-hidden="true"></i>
-                </div>
-                @lang('linkace.add')
-            </a>
-        </header>
-        <div class="card-content">
+    <div class="d-flex align-items-center justify-content-between">
+        <h3 class="mb-0">
+            @lang('link.links')
+        </h3>
+        <a href="{{ route('links.create') }}" class="btn btn-sm btn-primary" aria-label="@lang('link.add')">
+            <i class="fa fa-plus fa-mr"></i>
+            @lang('linkace.add')
+        </a>
+    </div>
 
-            @if(!$links->isEmpty())
-
-                @include('models.links._table')
-
-            @else
-
-                <div class="message is-warning">
-                    <div class="message-body">
-                        @lang('linkace.no_results_found', ['model' => trans('link.links')])
-                    </div>
-                </div>
-
-            @endif
-
-        </div>
+    <div class="link-wrapper my-3">
         @if(!$links->isEmpty())
-            {!! $links->links('partials.card-pagination', ['paginator' => $links]) !!}
+
+            @foreach($links as $link)
+                @include('models.links._single')
+            @endforeach
+
+        @else
+
+            <div class="alert alert-warning">
+                @lang('linkace.no_results_found', ['model' => trans('link.links')])
+            </div>
+
         @endif
     </div>
+
+    @if(!$links->isEmpty())
+        {!! $links->links('partials.card-pagination', ['paginator' => $links]) !!}
+    @endif
 
 @endsection
