@@ -1,4 +1,8 @@
 // Layout styles
+body {
+    padding-top: $nav-link-height + ($navbar-padding-y * 2);
+}
+
 .main {
     padding: ($spacer * 2) 0;
 }

@@ -1,4 +1,4 @@
-<nav class="navbar navbar-expand-md navbar-light shadow-sm">
+<nav class="navbar navbar-expand-md navbar-light bg-white shadow-sm fixed-top px-0">
     <div class="container">
         <a class="navbar-brand" href="{{ auth()->guest() ? route('front') : route('dashboard') }}">
             <img src="{{ asset('assets/img/logo_linkace.svg') }}" alt="@lang('linkace.linkace')"
