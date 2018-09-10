@@ -4,73 +4,61 @@
 
     <div class="card">
         <div class="card-header">
-            <p class="card-header-title">
-                @lang('link.add_quick')
-            </p>
+            @lang('link.add_quick')
         </div>
-        <div class="card-content">
+        <div class="card-body">
 
             <form action="{{ route('links.store') }}" method="POST">
                 @csrf
 
                 <input type="hidden" name="is_private" value="0">
 
-                <div class="field">
-                    <div class="field has-addons">
-                        <div class="control is-expanded">
-                            <input name="url" id="url" class="input{{ $errors->has('url') ? ' is-danger' : '' }}"
-                                type="url" placeholder="@lang('link.url')" value="{{ old('url') }}"
-                                required>
-                        </div>
-                        <div class="control">
-                            <button type="submit" class="button is-primary">
-                                @lang('linkace.add')
-                            </button>
-                        </div>
+                <div class="input-group">
+                    <input type="text" id="url" name="url" required
+                        class="form-control{{ $errors->has('url') ? ' is-invalid' : '' }}"
+                        placeholder="@lang('link.url')" value="{{ old('url') }}"
+                        aria-label="@lang('link.url')">
+                    <div class="input-group-append">
+                        <button class="btn btn-primary" type="submit">
+                            @lang('linkace.add')
+                        </button>
                     </div>
-
-                    @if ($errors->has('url'))
-                        <p class="help has-text-danger" role="alert">
-                            {{ $errors->first('url') }}
-                        </p>
-                    @endif
-
                 </div>
+
+                @if ($errors->has('url'))
+                    <p class="invalid-feedback" role="alert">
+                        {{ $errors->first('url') }}
+                    </p>
+                @endif
 
             </form>
 
         </div>
     </div>
 
-    <br>
-
-    <div class="columns">
-        <div class="column">
+    <div class="row mt-4">
+        <div class="col">
 
             <div class="card">
                 <div class="card-header">
-                    <p class="card-header-title">
-                        @lang('link.recent_links')
-                    </p>
+                    @lang('link.recent_links')
                 </div>
-                <div class="card-panel">
 
+                <ul class="list-group list-group-flush">
                     @forelse($recent_links as $link)
-                        <a href="{{ route('links.show', [$link->id]) }}" class="panel-block">
+                        <a href="{{ route('links.show', [$link->id]) }}" class="list-group-item list-group-item-action">
                             {{ $link->title }}
                         </a>
                     @empty
-                        <div class="panel-block is-warning">
+                        <li class="list-group-item text-danger">
                             @lang('linkace.no_results_found', ['model' => trans('link.links')])
-                        </div>
+                        </li>
                     @endforelse
-
-                </div>
+                </ul>
             </div>
 
         </div>
-        <div class="column">
-
+        <div class="col">
 
         </div>
     </div>
