@@ -3,23 +3,22 @@
 @section('content')
 
     <div class="card">
-        <header class="card-header">
-            <p class="card-header-title">
+        <header class="card-header d-flex align-items-center">
+            <span class="mr-3">
                 @lang('link.link')
-            </p>
-            <a href="{{ route('links.edit', [$link->id]) }}" class="card-header-icon" aria-label="@lang('link.edit')">
-                <div class="icon">
+            </span>
+            <div class="ml-auto">
+                <a href="{{ route('links.edit', [$link->id]) }}" class="btn btn-sm btn-primary"
+                    aria-label="@lang('link.edit')">
                     <i class="fa fa-pencil fa-mr" aria-hidden="true"></i>
-                </div>
-                @lang('linkace.edit')
-            </a>
-            <a onclick="event.preventDefault();document.getElementById('link-delete-{{ $link->id }}').submit();"
-                class="card-header-icon has-text-danger" aria-label="@lang('link.delete')">
-                <div class="icon">
+                    @lang('linkace.edit')
+                </a>
+                <a onclick="event.preventDefault();document.getElementById('link-delete-{{ $link->id }}').submit();"
+                    class="btn btn-sm btn-outline-danger" aria-label="@lang('link.delete')">
                     <i class="fa fa-trash fa-mr" aria-hidden="true"></i>
-                </div>
-                @lang('linkace.delete')
-            </a>
+                    @lang('linkace.delete')
+                </a>
+            </div>
             <form id="link-delete-{{ $link->id }}" method="POST" style="display: none;"
                 action="{{ route('links.destroy', [$link->id]) }}">
                 @method('DELETE')
@@ -27,40 +26,46 @@
                 <input type="hidden" name="link_id" value="{{ $link->id }}">
             </form>
         </header>
-        <div class="card-content">
+        <div class="card-body">
 
-            <a href="{{ $link->url }}" class="is-size-3">{{ $link->title }}</a>
+            <div>
+                <a href="{{ $link->url }}" class="h2">{{ $link->title }}</a>
+            </div>
 
-            <p class="has-text-grey"><a href="{{ $link->url }}">{{ $link->url }}</a></p>
+            <div class="text-muted">
+                <a href="{{ $link->url }}">{{ $link->url }}</a>
+            </div>
 
-            <br>
-
-            <div class="columns">
+            <div class="row mt-3">
                 @if($link->description)
-                    <div class="column">
+                    <div class="col">
                         {{ $link->description }}
                     </div>
                 @endif
 
-                <div class="column">
-                    @if($link->category)
-                        <div class="field">
-                            <label>@lang('category.category')</label><br/>
-                            <a href="{{ route('categories.show', [$link->category->id]) }}">
-                                {{ $link->category->name }}
-                            </a>
-                        </div>
-                    @endif
-                    @if(!$link->tags->isEmpty())
-                        <div class="field">
-                            <label>@lang('tag.tags')</label><br/>
-                            @foreach($link->tags as $tag)
-                                <a href="{{ route('tags.show', [$tag->id]) }}" class="tag is-primary">
-                                    {{ $tag->name }}
+                <div class="col">
+
+                    <div class="row">
+                        <div class="col">
+                            @if($link->category)
+                                <label>@lang('category.category'):</label>
+                                <a href="{{ route('categories.show', [$link->category->id]) }}">
+                                    {{ $link->category->name }}
                                 </a>
-                            @endforeach
+                            @endif
                         </div>
-                    @endif
+                        <div class="col">
+                            @if(!$link->tags->isEmpty())
+                                <label>@lang('tag.tags')</label>
+                                @foreach($link->tags as $tag)
+                                    <a href="{{ route('tags.show', [$tag->id]) }}" class="badge badge-light">
+                                        {{ $tag->name }}
+                                    </a>
+                                @endforeach
+                            @endif
+                        </div>
+                    </div>
+
                 </div>
             </div>
 
