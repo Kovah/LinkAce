@@ -4,5 +4,13 @@ body {
 }
 
 .main {
-    padding: ($spacer * 2) 0;
+    padding-top: ($spacer * 2);
+    padding-bottom: ($spacer * 2);
+}
+
+@media (max-width: 991px) {
+    .container {
+        width: 100%;
+        max-width: none;
+    }
 }
