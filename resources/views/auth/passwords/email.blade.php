@@ -2,38 +2,37 @@
 
 @section('content')
 
-    <div class="columns is-centered">
-        <div class="column is-half">
+    <div class="row justify-content-center">
+        <div class="col-12 col-md-8">
 
             <div class="card">
-                <div class="card-content">
+                <div class="card-header">
+                    @lang('linkace.reset_password')
+                </div>
+                <div class="card-body">
 
-                    <form method="POST" action="{{ route('password.email') }}" aria-label="@lang('linkace.reset_password')">
+                    <form method="POST" action="{{ route('password.email') }}"
+                        aria-label="@lang('linkace.reset_password')">
                         @csrf
 
-                        <div class="field">
-                            <label class="label" for="email">@lang('linkace.email')</label>
+                        <div class="form-group">
+                            <label for="email">@lang('linkace.email')</label>
                             <div class="control">
-                                <input name="email" id="email" class="input{{ $errors->has('email') ? ' is-danger' : '' }}"
+                                <input name="email" id="email"
+                                    class="form-control{{ $errors->has('email') ? ' is-invalid' : '' }}"
                                     type="email" placeholder="@lang('linkace.email')" value="{{ old('email') }}"
                                     required autofocus>
                             </div>
                             @if ($errors->has('email'))
-                                <p class="help has-text-danger" role="alert">
+                                <p class="invalid-feedback" role="alert">
                                     {{ $errors->first('email') }}
                                 </p>
                             @endif
                         </div>
 
-                        <br>
-
-                        <div class="field">
-                            <div class="control">
-                                <button type="submit" class="button is-primary">
-                                    <i class="fa fa-envelope-open fa-mr"></i> @lang('linkace.send_reset_email')
-                                </button>
-                            </div>
-                        </div>
+                        <button type="submit" class="btn btn-primary">
+                            <i class="fa fa-envelope-open fa-mr"></i> @lang('linkace.send_reset_email')
+                        </button>
 
                     </form>
 
