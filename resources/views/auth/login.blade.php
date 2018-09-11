@@ -77,9 +77,9 @@
                 </div>
             </div>
 
-            <small class="text-muted mt-3">
+            <div class="text-muted mt-2 small">
                 {!! trans('linkace.forgot_password_link', ['reset_url' => route('password.request')]) !!}
-            </small>
+            </div>
 
         </div>
     </div>
