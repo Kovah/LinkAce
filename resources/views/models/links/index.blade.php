@@ -2,11 +2,11 @@
 
 @section('content')
 
-    <header class="d-flex align-items-center justify-content-between">
+    <header class="d-flex align-items-center">
         <h3 class="mb-0">
             @lang('link.links')
         </h3>
-        <a href="{{ route('links.create') }}" class="btn btn-sm btn-primary" aria-label="@lang('link.add')">
+        <a href="{{ route('links.create') }}" class="btn btn-sm btn-primary ml-auto" aria-label="@lang('link.add')">
             <i class="fa fa-plus fa-mr"></i>
             @lang('linkace.add')
         </a>
@@ -29,7 +29,7 @@
     </section>
 
     @if(!$links->isEmpty())
-        {!! $links->links('partials.card-pagination', ['paginator' => $links]) !!}
+        {!! $links->links() !!}
     @endif
 
 @endsection

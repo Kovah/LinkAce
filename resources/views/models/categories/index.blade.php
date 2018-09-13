@@ -3,7 +3,9 @@
 @section('content')
 
     <header class="d-flex align-items-center">
-        <h3 class="mb-0">@lang('category.categories')</h3>
+        <h3 class="mb-0">
+            @lang('category.categories')
+        </h3>
         <a href="{{ route('categories.create') }}" class="btn btn-sm btn-primary ml-auto"
             aria-label="@lang('category.add')">
             <i class="fa fa-plus fa-mr"></i>
@@ -12,7 +14,6 @@
     </header>
 
     <div class="card my-3">
-
         <div class="card-table">
 
             @if(!$categories->isEmpty())
@@ -22,9 +23,7 @@
             @else
 
                 <div class="alert alert-info m-3">
-                    <div class="message-body">
-                        @lang('linkace.no_results_found', ['model' => trans('category.categories')])
-                    </div>
+                    @lang('linkace.no_results_found', ['model' => trans('category.categories')])
                 </div>
 
             @endif
@@ -33,7 +32,7 @@
     </div>
 
     @if(!$categories->isEmpty())
-        {!! $categories->links('partials.card-pagination', ['paginator' => $categories]) !!}
+        {!! $categories->links() !!}
     @endif
 
 @endsection
