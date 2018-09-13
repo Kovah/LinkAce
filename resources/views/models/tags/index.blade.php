@@ -2,19 +2,18 @@
 
 @section('content')
 
-    <div class="card">
-        <header class="card-header">
-            <p class="card-header-title">
-                @lang('tag.tags')
-            </p>
-            <a href="{{ route('tags.create') }}" class="card-header-icon" aria-label="@lang('tag.add')">
-                <div class="icon">
-                    <i class="fa fa-plus fa-mr" aria-hidden="true"></i>
-                </div>
-                @lang('linkace.add')
-            </a>
-        </header>
-        <div class="card-content">
+    <header class="d-flex align-items-center">
+        <h3 class="mb-0">
+            @lang('link.links')
+        </h3>
+        <a href="{{ route('tags.create') }}" class="btn btn-sm btn-primary ml-auto" aria-label="@lang('link.add')">
+            <i class="fa fa-plus fa-mr"></i>
+            @lang('linkace.add')
+        </a>
+    </header>
+
+    <div class="card my-3">
+        <div class="card-table">
 
             @if(!$tags->isEmpty())
 
@@ -22,18 +21,17 @@
 
             @else
 
-                <div class="message is-warning">
-                    <div class="message-body">
-                        @lang('linkace.no_results_found', ['model' => trans('tag.tags')])
-                    </div>
+                <div class="alert alert-info m-3">
+                    @lang('linkace.no_results_found', ['model' => trans('tag.tags')])
                 </div>
 
             @endif
 
         </div>
-        @if(!$tags->isEmpty())
-            {!! $tags->links('partials.card-pagination', ['paginator' => $tags]) !!}
-        @endif
     </div>
+
+    @if(!$tags->isEmpty())
+        {!! $tags->links() !!}
+    @endif
 
 @endsection
