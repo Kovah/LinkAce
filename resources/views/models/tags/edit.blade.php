@@ -4,11 +4,9 @@
 
     <div class="card">
         <header class="card-header">
-            <p class="card-header-title">
-                @lang('tag.add')
-            </p>
+            @lang('tag.add')
         </header>
-        <div class="card-content">
+        <div class="card-body">
 
             <form action="{{ route('tags.update', [$tag->id]) }}" method="POST">
                 @method('PATCH')
@@ -16,28 +14,29 @@
 
                 <input type="hidden" name="tag_id" value="{{ $tag->id }}">
 
-                <div class="field">
-                    <label class="label" for="name">@lang('tag.name')</label>
-                    <div class="control">
-                        <input name="name" id="name"
-                            class="input is-large{{ $errors->has('name') ? ' is-danger' : '' }}"
-                            type="text" placeholder="@lang('tag.name')" value="{{ old('name') ?: $tag->name }}"
-                            required autofocus>
+                <div class="row">
+                    <div class="col">
+                        <div class="form-group">
+                            <label for="name">@lang('tag.name')</label>
+
+                            <input name="name" id="name"
+                                class="form-control{{ $errors->has('name') ? ' is-invalid' : '' }}"
+                                type="text" placeholder="@lang('tag.name')" value="{{ old('name') ?: $tag->name }}"
+                                required autofocus>
+
+                            @if ($errors->has('name'))
+                                <p class="invalid-feedback" role="alert">
+                                    {{ $errors->first('name') }}
+                                </p>
+                            @endif
+                        </div>
                     </div>
-                    @if ($errors->has('name'))
-                        <p class="help has-text-danger" role="alert">
-                            {{ $errors->first('name') }}
-                        </p>
-                    @endif
-                </div>
+                    <div class="col">
+                        <div class="form-group">
+                            <label for="is_private">@lang('linkace.is_private')</label>
 
-                <br>
-
-                <div class="field">
-                    <label class="label" for="is_private">@lang('linkace.is_private')</label>
-                    <div class="control">
-                        <div class="select{{ $errors->has('is_private') ? ' is-danger' : '' }}">
-                            <select id="is_private" name="is_private">
+                            <select id="is_private" name="is_private"
+                                class="custom-select{{ $errors->has('is_private') ? ' is-invalid' : '' }}">
                                 <option value="0" @if($tag->is_private === 0) selected @endif>
                                     @lang('linkace.no')
                                 </option>
@@ -45,21 +44,20 @@
                                     @lang('linkace.yes')
                                 </option>
                             </select>
+
+                            @if ($errors->has('is_private'))
+                                <p class="invalid-feedback" role="alert">
+                                    {{ $errors->first('is_private') }}
+                                </p>
+                            @endif
                         </div>
                     </div>
-                    @if ($errors->has('is_private'))
-                        <p class="help has-text-danger" role="alert">
-                            {{ $errors->first('is_private') }}
-                        </p>
-                    @endif
                 </div>
 
-                <br>
+                <div class="mt-3 text-right">
 
-                <div class="field has-text-right">
-
-                    <button type="submit" class="button is-primary is-medium">
-                        <i class="fa fa-save fa-mr"></i> @lang('tag.update')
+                    <button type="submit" class="btn btn-primary">
+                        <i class="fa fa-save fa-mr"></i> @lang('tag.edit')
                     </button>
 
                 </div>
