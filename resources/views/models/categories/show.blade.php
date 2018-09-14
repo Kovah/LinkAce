@@ -3,24 +3,22 @@
 @section('content')
 
     <div class="card">
-        <header class="card-header">
-            <p class="card-header-title">
+        <header class="card-header d-flex align-items-center">
+            <span class="mr-3">
                 @lang('category.category')
-            </p>
-            <a href="{{ route('categories.edit', [$category->id]) }}" class="card-header-icon"
-                aria-label="@lang('category.edit')">
-                <div class="icon">
-                    <i class="fa fa-pencil fa-mr" aria-hidden="true"></i>
-                </div>
-                @lang('linkace.edit')
-            </a>
-            <a onclick="event.preventDefault();document.getElementById('category-delete-{{ $category->id }}').submit();"
-                class="card-header-icon has-text-danger" aria-label="@lang('category.delete')">
-                <div class="icon">
-                    <i class="fa fa-trash fa-mr" aria-hidden="true"></i>
-                </div>
-                @lang('linkace.delete')
-            </a>
+            </span>
+            <div class="ml-auto">
+                <a href="{{ route('categories.edit', [$category->id]) }}" class="btn btn-sm btn-primary"
+                    aria-label="@lang('category.edit')">
+                    <i class="fa fa-pencil fa-mr"></i>
+                    @lang('linkace.edit')
+                </a>
+                <a onclick="event.preventDefault();document.getElementById('category-delete-{{ $category->id }}').submit();"
+                    class="btn btn-sm btn-outline-danger" aria-label="@lang('category.delete')">
+                    <i class="fa fa-trash fa-mr"></i>
+                    @lang('linkace.delete')
+                </a>
+            </div>
             <form id="category-delete-{{ $category->id }}" method="POST" style="display: none;"
                 action="{{ route('categories.destroy', [$category->id]) }}">
                 @method('DELETE')
@@ -28,40 +26,36 @@
                 <input type="hidden" name="category_id" value="{{ $category->id }}">
             </form>
         </header>
-        <div class="card-content">
+        <div class="card-body">
 
-            <div class="is-flex align-items-center">
+            <div class="d-flex align-items-center">
                 @if($category->parentCategory)
-                    <small class="mr">
+                    <p class="mr-2 mb-0">
                         <a href="{{ route('categories.show', [$category->parentCategory->id]) }}"
-                            class="tag is-primary">
+                            class="badge badge-primary">
                             {{ $category->parentCategory->name }} &leftarrow;
                         </a>
-                    </small>
+                    </p>
                 @endif
-                <h2 class="is-size-3">{{ $category->name }}</h2>
+                <h2 class="mb-0">{{ $category->name }}</h2>
             </div>
 
-            <br>
-
-            <div class="columns">
+            <div class="row">
                 @if($category->description)
-                    <div class="column">
+                    <div class="col">
                         {{ $category->description }}
                     </div>
                 @endif
 
-                <div class="column">
+                <div class="col">
                     @if(!$category->childCategories->isEmpty())
-                        <div class="field">
-                            <label>@lang('category.categories')</label>
-                            <br>
-                            @foreach($category->childCategories as $category)
-                                <a href="{{ route('categories.show', [$category->id]) }}" class="tag is-primary">
-                                    {{ $category->name }}
-                                </a>
-                            @endforeach
-                        </div>
+                        <label>@lang('category.categories')</label>
+                        <br>
+                        @foreach($category->childCategories as $category)
+                            <a href="{{ route('categories.show', [$category->id]) }}" class="badge badge-light">
+                                {{ $category->name }}
+                            </a>
+                        @endforeach
                     @endif
                 </div>
             </div>
@@ -73,14 +67,15 @@
 
     <div class="card">
         <div class="card-header">
-            <p class="card-header-title">
-                @lang('link.links')
-            </p>
+            @lang('link.links')
         </div>
-        <div class="card-content">
+        <div class="card-table">
+
             @include('models.links._table', ['links' => $category_links])
+
         </div>
-        @include('partials.card-pagination', ['$paginator' => $category_links])
     </div>
+
+    {!! $category_links->links() !!}
 
 @endsection
