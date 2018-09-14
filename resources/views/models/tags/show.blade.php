@@ -3,23 +3,22 @@
 @section('content')
 
     <div class="card">
-        <header class="card-header">
-            <p class="card-header-title">
+        <header class="card-header d-flex align-items-center">
+            <span class="mr-3">
                 @lang('tag.tag')
-            </p>
-            <a href="{{ route('tags.edit', [$tag->id]) }}" class="card-header-icon" aria-label="@lang('tag.edit')">
-                <div class="icon">
-                    <i class="fa fa-pencil fa-mr" aria-hidden="true"></i>
-                </div>
-                @lang('linkace.edit')
-            </a>
-            <a onclick="event.preventDefault();document.getElementById('tag-delete-{{ $tag->id }}').submit();"
-                class="card-header-icon has-text-danger" aria-label="@lang('tag.delete')">
-                <div class="icon">
-                    <i class="fa fa-trash fa-mr" aria-hidden="true"></i>
-                </div>
-                @lang('linkace.delete')
-            </a>
+            </span>
+            <div class="ml-auto">
+                <a href="{{ route('tags.edit', [$tag->id]) }}" class="btn btn-sm btn-primary"
+                    aria-label="@lang('tag.edit')">
+                    <i class="fa fa-pencil fa-mr"></i>
+                    @lang('linkace.edit')
+                </a>
+                <a onclick="event.preventDefault();document.getElementById('tag-delete-{{ $tag->id }}').submit();"
+                    class="btn btn-sm btn-outline-danger" aria-label="@lang('tag.delete')">
+                    <i class="fa fa-trash fa-mr"></i>
+                    @lang('linkace.delete')
+                </a>
+            </div>
             <form id="tag-delete-{{ $tag->id }}" method="POST" style="display: none;"
                 action="{{ route('tags.destroy', [$tag->id]) }}">
                 @method('DELETE')
@@ -27,25 +26,24 @@
                 <input type="hidden" name="tag_id" value="{{ $tag->id }}">
             </form>
         </header>
-        <div class="card-content">
+        <div class="card-body">
 
-            <h2 class="is-size-3">{{ $tag->name }}</h2>
+            <h2 class="mb-0">{{ $tag->name }}</h2>
 
         </div>
     </div>
 
-    <br>
-
-    <div class="card">
+    <div class="card mt-3">
         <div class="card-header">
-            <p class="card-header-title">
-                @lang('link.links')
-            </p>
+            @lang('link.links')
         </div>
-        <div class="card-content">
+        <div class="card-table">
+
             @include('models.links._table', ['links' => $tag_links])
+
         </div>
-        @include('partials.card-pagination', ['paginator' => $tag_links])
     </div>
+
+    {!! $tag_links->links() !!}
 
 @endsection
