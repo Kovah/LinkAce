@@ -42,12 +42,12 @@
 
             <div class="row">
                 @if($category->description)
-                    <div class="col">
+                    <div class="col mt-3">
                         {{ $category->description }}
                     </div>
                 @endif
 
-                <div class="col">
+                <div class="col mt-3">
                     @if(!$category->childCategories->isEmpty())
                         <label>@lang('category.categories')</label>
                         <br>
