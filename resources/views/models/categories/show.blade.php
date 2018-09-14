@@ -63,9 +63,7 @@
         </div>
     </div>
 
-    <br>
-
-    <div class="card">
+    <div class="card mt-3">
         <div class="card-header">
             @lang('link.links')
         </div>

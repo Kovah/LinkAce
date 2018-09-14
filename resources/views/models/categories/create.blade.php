@@ -55,7 +55,7 @@
                             </label>
 
                             <select id="parent_category" name="parent_category"
-                                class="form-control{{ $errors->has('parent_category') ? ' is-invalid' : '' }}">
+                                class="custom-select{{ $errors->has('parent_category') ? ' is-invalid' : '' }}">
                                 <option value="0">@lang('category.select_parent_category')</option>
                                 @foreach($categories as $category)
                                     <option value="{{ $category->id }}">
@@ -78,7 +78,7 @@
                             </label>
 
                             <select id="is_private" name="is_private"
-                                class="form-control{{ $errors->has('parent_category') ? ' is-invalid' : '' }}">
+                                class="custom-select{{ $errors->has('parent_category') ? ' is-invalid' : '' }}">
                                 <option value="0">@lang('linkace.no')</option>
                                 <option value="1">@lang('linkace.yes')</option>
                             </select>
