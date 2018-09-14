@@ -112,4 +112,19 @@ class Link extends Model
 
         return $tags->implode('name', ',');
     }
+
+    /**
+     * Output a relative time inside a span with real time information
+     * @return string
+     */
+    public function addedAt()
+    {
+        $output = '<time-ago class="cursor-help"';
+        $output .= ' datetime="' . $this->created_at->toIso8601String() . '"';
+        $output .= ' title="' . $this->created_at->format('Y-m-d H:i') . '">';
+        $output .= $this->created_at->diffForHumans();
+        $output .= '</time-ago>';
+
+        return $output;
+    }
 }

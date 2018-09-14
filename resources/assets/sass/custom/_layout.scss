@@ -14,3 +14,14 @@ body {
         max-width: none;
     }
 }
+
+.card-table {
+    margin: -#{$card-border-width};
+
+    .table {
+
+        border-bottom-left-radius: $border-radius;
+        border-bottom-right-radius: $border-radius;
+        overflow: hidden;
+    }
+}

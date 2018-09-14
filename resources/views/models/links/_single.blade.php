@@ -47,10 +47,7 @@
             <div class="col d-flex align-items-center">
 
                 <small class="text-muted">
-                    <time-ago class="has-cursor-help" datetime="{{ $link->created_at->toIso8601String() }}"
-                        title="{{ $link->created_at->format('Y-m-d H:i') }}">
-                        {{ $link->created_at->diffForHumans() }}
-                    </time-ago>
+                    {!! $link->addedAt() !!}
                 </small>
 
             </div>
