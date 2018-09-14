@@ -28,9 +28,9 @@
         </header>
         <div class="card-body">
 
-            <div>
-                <a href="{{ $link->url }}" class="h2">{{ $link->title }}</a>
-            </div>
+            <h2>
+                <a href="{{ $link->url }}">{{ $link->title }}</a>
+            </h2>
 
             <div class="text-muted">
                 <a href="{{ $link->url }}">{{ $link->url }}</a>
