@@ -41,4 +41,27 @@ class User extends Authenticatable
         'password',
         'remember_token',
     ];
+
+    /*
+     | ========================================================================
+     | RELATIONSHIPS
+     */
+
+    /**
+     * @return \Illuminate\Database\Eloquent\Relations\HasMany
+     */
+    public function rawSettings()
+    {
+        return $this->hasMany(Setting::class, 'user_id', 'id');
+    }
+
+    /**
+     * @return mixed
+     */
+    public function settings()
+    {
+        return $this->rawSettings->mapWithKeys(function ($item) {
+            return [$item['key'] => $item['value']];
+        });
+    }
 }
