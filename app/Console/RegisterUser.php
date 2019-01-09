@@ -21,7 +21,7 @@ class RegisterUser extends Command
      *
      * @var string
      */
-    protected $signature = 'registeruser {name : Username} {email : User email address} {password : User password}';
+    protected $signature = 'registeruser {name : Username} {email : User email address}';
 
     /**
      * The console command description.
@@ -47,7 +47,6 @@ class RegisterUser extends Command
     {
         $name = $this->argument('name');
         $email = $this->argument('email');
-        $password = $this->argument('password');
 
         if (empty($name)) {
             $this->warn('Name is missing!');
@@ -59,10 +58,7 @@ class RegisterUser extends Command
             return;
         }
 
-        if (empty($password)) {
-            $this->warn('Password is missing!');
-            return;
-        }
+        $password = $this->secret('Please enter a password for ' . $name);
 
         // Check if the user exists
         if (User::where('email', $email)->first()) {
@@ -77,5 +73,6 @@ class RegisterUser extends Command
         ]);
 
         $this->info('User ' . $name . ' registered.');
+        return;
     }
 }
