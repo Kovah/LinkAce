@@ -48,6 +48,14 @@ used. To do so, use the following example command:
 $ docker exec linkace-php bash -c "php artisan migrate"
 ```
 
+### Registering a new user
+
+Currently you can do this by using the command line:
+
+```
+$ docker exec -it linkace-php bash -c "php artisan registeruser [user name] [user email]"
+```
+
 ---
 
 LinkAce is a project by [Kovah](https://kovah.de) | [Contributors](https://github.com/Kovah/LinkAce/graphs/contributors)
