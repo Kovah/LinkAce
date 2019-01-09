@@ -11,7 +11,7 @@
             <form action="{{ route('links.store') }}" method="POST">
                 @csrf
 
-                <input type="hidden" name="is_private" value="0">
+                <input type="hidden" name="is_private" value="{{ usersettings('private_default') }}">
 
                 <div class="input-group">
                     <input type="text" id="url" name="url" required
