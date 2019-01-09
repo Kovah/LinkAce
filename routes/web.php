@@ -46,6 +46,10 @@ Route::group(['middleware' => ['auth']], function () {
     Route::get('search', 'App\SearchController@getSearch')->name('get-search');
     Route::post('search', 'App\SearchController@doSearch')->name('do-search');
 
+    Route::get('settings', 'App\UserSettingsController@getUserSettings')->name('get-usersettings');
+    Route::post('settings', 'App\UserSettingsController@saveUserSettings')->name('save-usersettings');
+    Route::post('settings/change-password', 'App\UserSettingsController@changeUserPassword')->name('change-user-password');
+
     Route::post('ajax/tags', 'API\AjaxController@getTags')->name('ajax-tags');
 });
 

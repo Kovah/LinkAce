@@ -70,11 +70,20 @@
                             @lang('search.search')
                         </a>
                     </li>
-                    <li class="nav-item">
-                        <a class="nav-link"
-                            onclick="event.preventDefault();document.getElementById('logout-form').submit();">
-                            @lang('linkace.logout')
+                    <li class="nav-item dropdown">
+                        <a class="nav-link dropdown-toggle" href="#" id="navbar-user-dd" role="button"
+                            data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                            {{ auth()->user()->name }}
                         </a>
+                        <div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbar-user-dd">
+                            <a href="{{ route('get-usersettings') }}" class="dropdown-item">
+                                @lang('settings.settings')
+                            </a>
+                            <a class="dropdown-item"
+                                onclick="event.preventDefault();document.getElementById('logout-form').submit();">
+                                @lang('linkace.logout')
+                            </a>
+                        </div>
                     </li>
                 @endguest
             </ul>
