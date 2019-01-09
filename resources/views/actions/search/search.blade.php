@@ -14,7 +14,7 @@
                 <div class="form-group">
                     <div class="input-group">
                         <input type="text" name="query" id="query" required
-                            class="form-control form-control-lg{{ $errors->has('url') ? ' is-invalid' : '' }}"
+                            class="form-control form-control-lg{{ $errors->has('query') ? ' is-invalid' : '' }}"
                             placeholder="@lang('search.query')"
                             value="{{ old('query') ?: $query_settings['old_query'] }}">
                         <div class="input-group-append">
