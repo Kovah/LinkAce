@@ -3,6 +3,9 @@
         <a href="{{ route('links.show', [$link->id]) }}">
             {{ $link->title }}
         </a>
+        @if($link->is_private)
+            <i class="fa fa-lock text-muted" title="@lang('link.private')"></i>
+        @endif
     </td>
     <td>
         <a href="{{ $link->url }}" target="_blank">

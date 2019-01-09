@@ -6,6 +6,9 @@
         <header class="card-header d-flex align-items-center">
             <span class="mr-3">
                 @lang('link.link')
+                @if($link->is_private)
+                    <i class="fa fa-lock" title="@lang('link.private')"></i>
+                @endif
             </span>
             <div class="ml-auto">
                 <a href="{{ route('links.edit', [$link->id]) }}" class="btn btn-sm btn-primary"
