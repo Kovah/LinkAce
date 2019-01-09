@@ -28,6 +28,9 @@
             "database/seeds",
             "database/factories"
         ],
+        "files": [
+            "app/Helper/functions.php"
+        ],
         "psr-4": {
             "App\\": "app/"
         }
