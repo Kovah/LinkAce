@@ -73,6 +73,10 @@ class TagController extends Controller
             abort(404);
         }
 
+        if ($tag->user_id !== auth()->id()) {
+            abort(403);
+        }
+
         return view('models.tags.show')
             ->with('tag', $tag)
             ->with('tag_links', $tag->links()
@@ -94,6 +98,10 @@ class TagController extends Controller
             abort(404);
         }
 
+        if ($tag->user_id !== auth()->id()) {
+            abort(403);
+        }
+
         return view('models.tags.edit')->with('tag', $tag);
     }
 
@@ -110,6 +118,10 @@ class TagController extends Controller
 
         if (empty($tag)) {
             abort(404);
+        }
+
+        if ($tag->user_id !== auth()->id()) {
+            abort(403);
         }
 
         $data = $request->all();
@@ -135,6 +147,10 @@ class TagController extends Controller
 
         if (empty($tag)) {
             abort(404);
+        }
+
+        if ($tag->user_id !== auth()->id()) {
+            abort(403);
         }
 
         // Delete all attached links

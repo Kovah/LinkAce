@@ -78,6 +78,10 @@ class CategoryController extends Controller
             abort(404);
         }
 
+        if ($category->user_id !== auth()->id()) {
+            abort(403);
+        }
+
         return view('models.categories.show')
             ->with('category', $category)
             ->with('category_links', $category->links()
@@ -99,6 +103,10 @@ class CategoryController extends Controller
             abort(404);
         }
 
+        if ($category->user_id !== auth()->id()) {
+            abort(403);
+        }
+
         return view('models.categories.edit')
             ->with('categories', Category::parentOnly()->orderBy('name', 'asc')->get())
             ->with('category', $category);
@@ -117,6 +125,10 @@ class CategoryController extends Controller
 
         if (empty($category)) {
             abort(404);
+        }
+
+        if ($category->user_id !== auth()->id()) {
+            abort(403);
         }
 
         $data = $request->all();
@@ -146,6 +158,10 @@ class CategoryController extends Controller
 
         if (empty($category)) {
             abort(404);
+        }
+
+        if ($category->user_id !== auth()->id()) {
+            abort(403);
         }
 
         // Remove the category as a parent from all child categories

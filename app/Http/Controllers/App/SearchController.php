@@ -60,7 +60,7 @@ class SearchController extends Controller
         $query = '%' . $raw_query . '%';
 
         // Start building the search
-        $search = Link::byUser(auth()->user()->id)
+        $search = Link::byUser(auth()->id())
             ->where('url', 'like', $query);
 
         // Also search for the title if applicable

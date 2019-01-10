@@ -112,6 +112,10 @@ class LinkController extends Controller
             abort(404);
         }
 
+        if ($link->user_id !== auth()->id()) {
+            abort(403);
+        }
+
         return view('models.links.show')
             ->with('link', $link);
     }
@@ -128,6 +132,10 @@ class LinkController extends Controller
 
         if (empty($link)) {
             abort(404);
+        }
+
+        if ($link->user_id !== auth()->id()) {
+            abort(403);
         }
 
         return view('models.links.edit')
@@ -151,6 +159,10 @@ class LinkController extends Controller
 
         if (empty($link)) {
             abort(404);
+        }
+
+        if ($link->user_id !== auth()->id()) {
+            abort(403);
         }
 
         // Update the existing link with new data
@@ -192,6 +204,10 @@ class LinkController extends Controller
 
         if (empty($link)) {
             abort(404);
+        }
+
+        if ($link->user_id !== auth()->id()) {
+            abort(403);
         }
 
         $link->delete();
