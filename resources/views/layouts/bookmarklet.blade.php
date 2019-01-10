@@ -7,7 +7,7 @@
 
     <meta name="csrf-token" content="{{ csrf_token() }}">
 
-    <title>{{ config('app.name', 'LinkAce') }}</title>
+    <title>{{ env('PAGE_TITLE') ?: config('app.name', 'LinkAce') }}</title>
 
     <link href="{{ asset('assets/app.css') }}" rel="stylesheet">
 </head>
