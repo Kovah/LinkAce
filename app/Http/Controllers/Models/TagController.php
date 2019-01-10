@@ -20,7 +20,7 @@ class TagController extends Controller
         return view('models.tags.index')
             ->with('tags', Tag::byUser(auth()->user()->id)
                 ->orderBy('name', 'ASC')
-                ->paginate(config('linkace.default.pagination'))
+                ->paginate(getPaginationLimit())
             );
     }
 
@@ -76,7 +76,7 @@ class TagController extends Controller
         return view('models.tags.show')
             ->with('tag', $tag)
             ->with('tag_links', $tag->links()
-                ->paginate(config('linkace.default.pagination'))
+                ->paginate(getPaginationLimit())
             );
     }
 

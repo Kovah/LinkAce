@@ -23,7 +23,7 @@ class LinkController extends Controller
         return view('models.links.index')
             ->with('links', Link::byUser(auth()->user()->id)
                 ->orderBy('created_at', 'DESC')
-                ->paginate(config('linkace.default.pagination'))
+                ->paginate(getPaginationLimit())
             );
     }
 

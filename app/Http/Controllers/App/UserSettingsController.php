@@ -39,7 +39,13 @@ class UserSettingsController extends Controller
         ]));
 
         // Save all user settings or update them
-        $settings = $request->only(['timezone', 'private_default']);
+        $settings = $request->only([
+            'timezone',
+            'private_default',
+            'date_format',
+            'time_format',
+            'listitem_count',
+        ]);
 
         foreach ($settings as $key => $value) {
             Setting::updateOrCreate([

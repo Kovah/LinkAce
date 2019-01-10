@@ -25,6 +25,8 @@ return [
     'update' => 'Update',
     'delete' => 'Delete',
 
+    'entries' => 'Entries',
+
     'continue_adding' => 'Continue Adding',
 
     'private' => 'Private',

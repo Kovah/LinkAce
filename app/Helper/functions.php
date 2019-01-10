@@ -46,3 +46,19 @@ function formatDateTime(\Carbon\Carbon $date, bool $use_relational = false)
 
     return $date->setTimezone($timezone)->format($format);
 }
+
+/**
+ * Get the correct pagination limit
+ *
+ * @return \Illuminate\Config\Repository|mixed
+ */
+function getPaginationLimit()
+{
+    $user_limit = usersettings('listitem_count');
+
+    if ($user_limit) {
+        return $user_limit;
+    }
+
+    return config('linkace.default.pagination');
+}

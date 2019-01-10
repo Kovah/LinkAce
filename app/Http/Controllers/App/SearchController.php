@@ -99,7 +99,7 @@ class SearchController extends Controller
         }
 
         // Get the results
-        $results = $search->paginate(config('linkace.default.pagination'));
+        $results = $search->paginate(getPaginationLimit());
 
         return view('actions.search.search')
             ->with('results', $results)

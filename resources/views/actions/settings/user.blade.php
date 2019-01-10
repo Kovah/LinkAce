@@ -46,7 +46,8 @@
                     <select id="timezone" name="timezone"
                         class="custom-select{{ $errors->has('timezone') ? ' is-invalid' : '' }}">
                         @foreach(timezone_identifiers_list() as $key => $zone)
-                            <option value="{{ $zone }}" @if($user->settings()->get('timezone') === $zone) selected @endif>
+                            <option value="{{ $zone }}"
+                                @if($user->settings()->get('timezone') === $zone) selected @endif>
                                 {{ $zone }}
                             </option>
                         @endforeach
@@ -77,6 +78,81 @@
                             {{ $errors->first('private_default') }}
                         </p>
                     @endif
+                </div>
+
+                <div class="row">
+                    <div class="col">
+
+                        <div class="form-group">
+                            <label for="date_format">
+                                @lang('settings.date_format')
+                            </label>
+                            <select id="date_format" name="date_format"
+                                class="custom-select{{ $errors->has('date_format') ? ' is-invalid' : '' }}">
+                                @foreach(config('linkace.formats.date') as $date_format)
+                                    <option value="{{ $date_format }}"
+                                        @if($user->settings()->get('date_format') === $date_format) selected @endif>
+                                        {{ $date_format }} ({{ date($date_format) }})
+                                    </option>
+                                @endforeach
+                            </select>
+                            @if ($errors->has('date_format'))
+                                <p class="invalid-feedback" role="alert">
+                                    {{ $errors->first('date_format') }}
+                                </p>
+                            @endif
+                        </div>
+
+                    </div>
+                    <div class="col">
+
+                        <div class="form-group">
+                            <label for="time_format">
+                                @lang('settings.time_format')
+                            </label>
+                            <select id="time_format" name="time_format"
+                                class="custom-select{{ $errors->has('time_format') ? ' is-invalid' : '' }}">
+                                @foreach(config('linkace.formats.time') as $time_format)
+                                    <option value="{{ $time_format }}"
+                                        @if($user->settings()->get('time_format') === $time_format) selected @endif>
+                                        {{ $time_format }} ({{ date($time_format) }})
+                                    </option>
+                                @endforeach
+                            </select>
+                            @if ($errors->has('time_format'))
+                                <p class="invalid-feedback" role="alert">
+                                    {{ $errors->first('time_format') }}
+                                </p>
+                            @endif
+                        </div>
+
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="col">
+
+                        <div class="form-group">
+                            <label for="listitem_count">
+                                @lang('settings.listitem_count')
+                            </label>
+                            <select id="listitem_count" name="listitem_count"
+                                class="custom-select{{ $errors->has('listitem_count') ? ' is-invalid' : '' }}">
+                                @foreach(config('linkace.listitem_count_values') as $item_count)
+                                    <option value="{{ $item_count }}"
+                                        @if($user->settings()->get('listitem_count') == $item_count) selected @endif>
+                                        {{ $item_count }} @lang('linkace.entries')
+                                    </option>
+                                @endforeach
+                            </select>
+                            @if ($errors->has('listitem_count'))
+                                <p class="invalid-feedback" role="alert">
+                                    {{ $errors->first('listitem_count') }}
+                                </p>
+                            @endif
+                        </div>
+
+                    </div>
                 </div>
 
                 <button type="submit" class="btn btn-primary">

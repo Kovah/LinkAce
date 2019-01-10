@@ -21,7 +21,7 @@ class CategoryController extends Controller
             ->with('categories', Category::byUser(auth()->user()->id)
                 ->parentOnly()
                 ->orderBy('name', 'ASC')
-                ->paginate(config('linkace.default.pagination'))
+                ->paginate(getPaginationLimit())
             );
     }
 
@@ -81,7 +81,7 @@ class CategoryController extends Controller
         return view('models.categories.show')
             ->with('category', $category)
             ->with('category_links', $category->links()
-                ->paginate(config('linkace.default.pagination'))
+                ->paginate(getPaginationLimit())
             );
     }
 
