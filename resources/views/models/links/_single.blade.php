@@ -1,6 +1,6 @@
 <div class="card mb-3">
 
-    <div class="card-header clearfix">
+    <div class="card-header">
         <a href="{{ route('links.show', [$link->id]) }}">
             {{ $link->title }}
         </a>
