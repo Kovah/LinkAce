@@ -1,5 +1,5 @@
 // Layout styles
-body {
+body:not(.bookmarklet) {
     padding-top: $nav-link-height + ($navbar-padding-y * 2);
 }
 

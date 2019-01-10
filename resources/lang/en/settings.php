@@ -13,6 +13,10 @@ return [
     'save_settings' => 'Save Settings',
     'settings_saved' => 'Settings successfully updated!',
 
+    'bookmarklet' => 'Bookmarklet',
+    'bookmarklet_button' => 'Drag this to your Bookmarks or right-click and save it as a bookmark',
+    'bookmarklet_help' => 'Add this Bookmarklet to your browser to quickly add links from the sites you visit without having to open LinkAce manually.',
+
     'change_password' => 'Change Password',
     'old_password' => 'Old Password',
     'new_password' => 'New Password',

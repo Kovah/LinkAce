@@ -23,9 +23,18 @@ class LoginController extends Controller
     /**
      * Where to redirect users after login.
      *
-     * @var string
+     * @return string
      */
-    protected $redirectTo = '/dashboard';
+    protected function redirectTo()
+    {
+        // Redirect to the bookmarklet form after login from the bookmarklet
+        if (session('bookmarklet.login_redirect')) {
+            session()->remove('bookmarklet.login_redirect');
+            return route('bookmarklet-add');
+        }
+
+        return '/dashboard';
+    }
 
     /**
      * Create a new controller instance.

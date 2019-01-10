@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\App;
 
+use App\Helper\LinkAce;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\UserSettingsUpdateRequest;
 use App\Models\Setting;
@@ -22,7 +23,12 @@ class UserSettingsController extends Controller
      */
     public function getUserSettings()
     {
-        return view('actions.settings.user', ['user' => auth()->user()]);
+        $bookmarklet_code = LinkAce::generateBookmarkletCode();
+
+        return view('actions.settings.user', [
+            'user' => auth()->user(),
+            'bookmarklet_code' => $bookmarklet_code,
+        ]);
     }
 
     /**

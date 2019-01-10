@@ -4,6 +4,23 @@
 
     <div class="card">
         <div class="card-header">
+            @lang('settings.bookmarklet')
+        </div>
+        <div class="card-body">
+
+            <p>@lang('settings.bookmarklet_help')</p>
+
+            <a href="{{ $bookmarklet_code }}" class="btn btn-primary">
+                @lang('settings.bookmarklet')
+            </a>
+
+            <p class="small">@lang('settings.bookmarklet_button')</p>
+
+        </div>
+    </div>
+
+    <div class="card mt-4">
+        <div class="card-header">
             @lang('settings.user_settings')
         </div>
         <div class="card-body">
@@ -164,7 +181,7 @@
         </div>
     </div>
 
-    <div class="card mt-5">
+    <div class="card mt-4">
         <div class="card-header">
             @lang('settings.change_password')
         </div>

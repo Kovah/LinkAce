@@ -11,6 +11,7 @@ class LinkAce
 {
     /**
      * Get the title of an HTML page b
+     *
      * @param string $url
      * @return string|string[]
      */
@@ -39,5 +40,19 @@ class LinkAce
         $title = trim($title);
 
         return $title;
+    }
+
+    /**
+     * Generate the code for the bookmarklet
+     *
+     * @return mixed|string
+     */
+    public static function generateBookmarkletCode()
+    {
+        $bm_code = "javascript:javascript:(function(){var%20url%20=%20location.href;var%20title%20=%20document.title%20||%20url;window.open('##URL##?u='%20+%20encodeURIComponent(url)+'&t='%20+%20encodeURIComponent(title),'_blank','menubar=no,height=720,width=600,toolbar=no,scrollbars=yes,status=no,dialog=1');})();";
+
+        $bm_code = str_replace('##URL##', route('bookmarklet-add'), $bm_code);
+
+        return $bm_code;
     }
 }

@@ -36,4 +36,7 @@ return [
     'no' => 'No',
 
     'no_results_found' => 'No :model found.',
+
+    'bookmarklet_close' => 'This bookmarklet window automatically closes in <span class="bm-timer">5</span> seconds.',
+    'open_linkace' => 'Open LinkAce',
 ];

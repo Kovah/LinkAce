@@ -79,9 +79,20 @@ class LinkController extends Controller
 
         alert(trans('link.added_successfully'), 'success');
 
+        $is_bookmarklet = session('bookmarklet.create');
+
         if ($request->get('reload_view')) {
             session()->flash('reload_view', true);
+
+            if ($is_bookmarklet) {
+                return redirect()->route('bookmarklet-add');
+            }
+
             return redirect()->route('links.create');
+        }
+
+        if ($is_bookmarklet) {
+            return redirect()->route('bookmarklet-complete');
         }
 
         return redirect()->route('links.show', [$link->id]);
