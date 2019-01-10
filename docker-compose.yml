@@ -32,7 +32,7 @@ services:
   # --- nginx 1.14
   nginx:
     container_name: "linkace-nginx"
-    image: bitnami/nginx:1.14
+    image: bitnami/nginx:latest
     restart: always
     ports:
       - "127.0.0.1:80:8085"
@@ -40,12 +40,12 @@ services:
       - php
     volumes:
       - .:/app
-      - ./resources/docker/nginx/site.conf:/bitnami/nginx/conf/vhosts/site.conf:ro
+      - ./resources/docker/nginx/site.conf:/opt/bitnami/nginx/conf/vhosts/site.conf:ro
 
   # --- Redis 4.0
   redis:
     container_name: "linkace-redis"
-    image: bitnami/redis:4.0
+    image: bitnami/redis:latest
     restart: always
     environment:
       - REDIS_PASSWORD=${REDIS_PASSWORD}
