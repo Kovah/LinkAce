@@ -70,6 +70,11 @@
                             @lang('search.search')
                         </a>
                     </li>
+                    <li class="nav-item">
+                        <a href="{{ route('get-trash') }}" class="nav-link">
+                            @lang('trash.trash')
+                        </a>
+                    </li>
                     <li class="nav-item dropdown">
                         <a class="nav-link dropdown-toggle" href="#" id="navbar-user-dd" role="button"
                             data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">

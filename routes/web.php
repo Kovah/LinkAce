@@ -47,6 +47,10 @@ Route::group(['middleware' => ['auth']], function () {
     Route::get('search', 'App\SearchController@getSearch')->name('get-search');
     Route::post('search', 'App\SearchController@doSearch')->name('do-search');
 
+    Route::get('trash', 'App\TrashController@index')->name('get-trash');
+    Route::get('trash/clear/{model}', 'App\TrashController@clearTrash')->name('clear-trash');
+    Route::get('trash/restore/{model}/{id}', 'App\TrashController@restoreEntry')->name('trash-restore');
+
     Route::get('settings', 'App\UserSettingsController@getUserSettings')
         ->name('get-usersettings');
     Route::post('settings', 'App\UserSettingsController@saveUserSettings')
