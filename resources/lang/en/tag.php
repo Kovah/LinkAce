@@ -14,6 +14,8 @@ return [
 
     'name' => 'Tag Name',
 
+    'author' => 'by :user',
+
     'no_tags' => 'No Tags',
 
     'added_successfully' => 'Tag added successfully.',

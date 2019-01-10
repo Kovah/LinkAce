@@ -95,6 +95,19 @@ return [
 
     /*
     |--------------------------------------------------------------------------
+    | Guest Access
+    |--------------------------------------------------------------------------
+    |
+    | If enabled, guest will have access to all links, categories and tags.
+    | However, they will not see private links and any notes and - obviously -
+    | can't edit any of the entries.
+    |
+    */
+
+    'guest_access' => env('GUEST_ACCESS', false),
+
+    /*
+    |--------------------------------------------------------------------------
     | Encryption Key
     |--------------------------------------------------------------------------
     |

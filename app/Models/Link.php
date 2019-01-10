@@ -2,6 +2,8 @@
 
 namespace App\Models;
 
+use Illuminate\Database\Eloquent\Builder;
+use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
 
@@ -9,21 +11,21 @@ use Illuminate\Database\Eloquent\SoftDeletes;
  * Class Link
  *
  * @package App\Models
- * @property int                                                              $id
- * @property int                                                              $user_id
- * @property int|null                                                         $category_id
- * @property string                                                           $url
- * @property string                                                           $title
- * @property string|null                                                      $description
- * @property int                                                              $is_private
- * @property \Carbon\Carbon|null                                              $created_at
- * @property \Carbon\Carbon|null                                              $updated_at
- * @property string|null                                                      $deleted_at
- * @property-read \App\Models\Category|null                                   $category
- * @property-read \Illuminate\Database\Eloquent\Collection|\App\Models\Note[] $notes
- * @property-read \Illuminate\Database\Eloquent\Collection|\App\Models\Tag[]  $tags
- * @property-read \App\Models\User                                            $user
- * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\Link byUser($user_id)
+ * @property int                                $id
+ * @property int                                $user_id
+ * @property int|null                           $category_id
+ * @property string                             $url
+ * @property string                             $title
+ * @property string|null                        $description
+ * @property int                                $is_private
+ * @property \Carbon\Carbon|null                $created_at
+ * @property \Carbon\Carbon|null                $updated_at
+ * @property string|null                        $deleted_at
+ * @property-read \App\Models\Category|null     $category
+ * @property-read Collection|\App\Models\Note[] $notes
+ * @property-read Collection|\App\Models\Tag[]  $tags
+ * @property-read \App\Models\User              $user
+ * @method static Builder|Link byUser($user_id)
  */
 class Link extends Model
 {
@@ -55,6 +57,18 @@ class Link extends Model
     public function scopeByUser($query, $user_id)
     {
         return $query->where('user_id', $user_id);
+    }
+
+    /**
+     * Scope for the user relation
+     *
+     * @param Builder $query
+     * @param bool    $is_private
+     * @return mixed
+     */
+    public function scopePrivate($query, bool $is_private)
+    {
+        return $query->where('is_private', $is_private);
     }
 
     /*
@@ -115,6 +129,7 @@ class Link extends Model
 
     /**
      * Output a relative time inside a span with real time information
+     *
      * @return string
      */
     public function addedAt()

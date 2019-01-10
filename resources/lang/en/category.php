@@ -16,6 +16,8 @@ return [
     'description' => 'Description',
     'parent_category' => 'Parent Category',
 
+    'author' => 'by :user',
+
     'select_category' => 'Select a Category',
     'select_parent_category' => 'Select Parent Category',
 

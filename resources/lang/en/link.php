@@ -18,6 +18,8 @@ return [
     'title' => 'Title',
     'description' => 'Description',
 
+    'author' => 'by :user',
+
     'external_link' => 'External Link',
 
     'added_successfully' => 'Link added successfully.',
