@@ -21,7 +21,7 @@
                     </a>
                 </td>
                 <td class="text-muted">
-                    <small>{{ $link->created_at->format('Y-m-d H:i') }}</small>
+                    <small>{{ formatDateTime($link->created_at) }}</small>
                 </td>
             </tr>
         @endforeach

@@ -121,8 +121,8 @@ class Link extends Model
     {
         $output = '<time-ago class="cursor-help"';
         $output .= ' datetime="' . $this->created_at->toIso8601String() . '"';
-        $output .= ' title="' . $this->created_at->format('Y-m-d H:i') . '">';
-        $output .= $this->created_at->diffForHumans();
+        $output .= ' title="' . formatDateTime($this->created_at) . '">';
+        $output .= formatDateTime($this->created_at, true);
         $output .= '</time-ago>';
 
         return $output;
