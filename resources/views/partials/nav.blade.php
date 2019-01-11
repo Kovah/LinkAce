@@ -84,6 +84,9 @@
                             <a href="{{ route('get-usersettings') }}" class="dropdown-item">
                                 @lang('settings.settings')
                             </a>
+                            <a href="{{ route('get-import') }}" class="dropdown-item">
+                                @lang('import.import')
+                            </a>
                             <a class="dropdown-item"
                                 onclick="event.preventDefault();document.getElementById('logout-form').submit();">
                                 @lang('linkace.logout')
