@@ -35,7 +35,7 @@ class UserSettingsController extends Controller
      * @param UserSettingsUpdateRequest $request
      * @return \Illuminate\Http\RedirectResponse
      */
-    public function saveUserSettings(UserSettingsUpdateRequest $request)
+    public function saveAccountSettings(UserSettingsUpdateRequest $request)
     {
         $user = auth()->user();
 
@@ -44,21 +44,41 @@ class UserSettingsController extends Controller
             'email',
         ]));
 
-        // Save all user settings or update them
-        $settings = $request->only([
-            'timezone',
-            'private_default',
-            'date_format',
-            'time_format',
-            'listitem_count',
-        ]);
+        alert(trans('settings.settings_saved'), 'success');
+        return redirect()->back();
+    }
 
+    /**
+     * @param UserSettingsUpdateRequest $request
+     * @return \Illuminate\Http\RedirectResponse
+     */
+    public function saveAppSettings(UserSettingsUpdateRequest $request)
+    {
+        $user_id = auth()->id();
+
+        // Save all user settings or update them
+        $settings = $request->except(['_token', 'share']);
         foreach ($settings as $key => $value) {
             Setting::updateOrCreate([
-                'user_id' => $user->id,
+                'user_id' => $user_id,
                 'key' => $key,
             ], [
                 'value' => $value,
+            ]);
+        }
+
+        // Enable / disable sharing services
+        $user_services = $request->only(['share']);
+        $user_services = $user_services['share'] ?? [];
+
+        foreach (config('sharing.services') as $service => $details) {
+            $toggle = array_key_exists($service, $user_services);
+
+            Setting::updateOrCreate([
+                'user_id' => $user_id,
+                'key' => 'share_' . $service,
+            ], [
+                'value' => $toggle,
             ]);
         }
 

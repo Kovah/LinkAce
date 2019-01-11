@@ -74,6 +74,11 @@
 
 
         </div>
+        <div class="card-body">
+
+            @include('models.links._sharing')
+
+        </div>
     </div>
 
 @endsection

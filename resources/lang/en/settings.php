@@ -2,6 +2,8 @@
 return [
     'settings' => 'Settings',
     'user_settings' => 'User Settings',
+    'account_settings' => 'Account Settings',
+    'app_settings' => 'Application Settings',
 
     'timezone' => 'Timezone',
     'private_default' => 'Private Links by default',
@@ -9,6 +11,10 @@ return [
     'date_format' => 'Date Format',
     'time_format' => 'Time Format',
     'listitem_count' => 'Number of Items in Lists',
+
+    'sharing' => 'Link Sharing',
+    'sharing_help' => 'Enable all services you want to display for links, to be able to share them easily with one click.',
+    'sharing_toggle' => 'Toggle all on/off',
 
     'save_settings' => 'Save Settings',
     'settings_saved' => 'Settings successfully updated!',

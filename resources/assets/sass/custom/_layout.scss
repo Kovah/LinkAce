@@ -25,3 +25,27 @@ body:not(.bookmarklet) {
         overflow: hidden;
     }
 }
+
+.sharing-settings {
+    display: flex;
+    flex-wrap: wrap;
+
+    .sharing-checkbox {
+        flex: 0 0 auto;
+        padding: $spacer / 2;
+        font-size: $h4-font-size;
+
+        input {
+            display: none;
+        }
+
+        label {
+            color: $text-muted;
+            cursor: pointer;
+        }
+
+        input:checked + label {
+            color: $success;
+        }
+    }
+}

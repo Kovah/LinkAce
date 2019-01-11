@@ -54,12 +54,10 @@ Route::group(['middleware' => ['auth']], function () {
     Route::get('trash/clear/{model}', 'App\TrashController@clearTrash')->name('clear-trash');
     Route::get('trash/restore/{model}/{id}', 'App\TrashController@restoreEntry')->name('trash-restore');
 
-    Route::get('settings', 'App\UserSettingsController@getUserSettings')
-        ->name('get-usersettings');
-    Route::post('settings', 'App\UserSettingsController@saveUserSettings')
-        ->name('save-usersettings');
-    Route::post('settings/change-password', 'App\UserSettingsController@changeUserPassword')
-        ->name('change-user-password');
+    Route::get('settings', 'App\UserSettingsController@getUserSettings')->name('get-usersettings');
+    Route::post('settings/account', 'App\UserSettingsController@saveAccountSettings')->name('save-settings-account');
+    Route::post('settings/app', 'App\UserSettingsController@saveAppSettings')->name('save-settings-app');
+    Route::post('settings/change-password', 'App\UserSettingsController@changeUserPassword')->name('change-user-password');
 
     Route::post('ajax/tags', 'API\AjaxController@getTags')->name('ajax-tags');
 });
