@@ -11,7 +11,7 @@ use App\Models\Link;
  */
 class Sharing
 {
-    public static $link_classes = 'share-link btn btn-xs btn-outline-primary';
+    public static $link_classes = 'share-link btn btn-xs btn-outline-secondary';
 
     public static $placeholders = [
         '#URL#',
