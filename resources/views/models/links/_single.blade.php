@@ -57,7 +57,7 @@
             <div class="col text-right">
 
                 <a href="{{ route('links.edit', [$link->id]) }}" class="btn btn-sm btn-outline-primary">
-                    <i class="fa fa-pencil"></i>
+                    <i class="fa fa-edit"></i>
                 </a>
                 <a onclick="event.preventDefault();document.getElementById('link-delete-{{ $link->id }}').submit();"
                     title=" @lang('link.delete')" class="btn btn-sm btn-outline-danger">

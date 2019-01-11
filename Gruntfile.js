@@ -10,7 +10,11 @@ module.exports = grunt => {
   grunt.initConfig({
     paths: {
       assets: './resources/assets',
-      dist: './public/assets'
+      dist: {
+          root: './public/assets/dist',
+          css: './public/assets/dist/css',
+          js: './public/assets/dist/js',
+      }
     }
   });
 
@@ -26,7 +30,7 @@ module.exports = grunt => {
       files: [
         {
           src: '<%= paths.assets %>/js/app.js',
-          dest: '<%= paths.dist %>/app.js'
+          dest: '<%= paths.dist.js %>/app.js'
         }
       ]
     }
@@ -40,7 +44,7 @@ module.exports = grunt => {
           'node_modules/bootstrap/dist/js/bootstrap.bundle.min.js',
           'node_modules/selectize/dist/js/standalone/selectize.min.js'
       ],
-      dest: '<%= paths.dist %>/dependencies.js'
+      dest: '<%= paths.dist.js %>/dependencies.js'
     }
   });
 
@@ -57,7 +61,7 @@ module.exports = grunt => {
           })
         ]
       },
-      src: '<%= paths.dist %>/app.css'
+      src: '<%= paths.dist.css %>/app.css'
     }
   });
 
@@ -74,18 +78,22 @@ module.exports = grunt => {
         sourceMap: false
       },
       files: {
-        '<%= paths.dist %>/app.css': '<%= paths.assets %>/sass/app.scss'
+        '<%= paths.dist.css %>/app.css': '<%= paths.assets %>/sass/app.scss'
       }
     }
   });
 
   // Copy tasks
   grunt.config('copy', {
+      fontawesomeCSS: {
+          src: 'node_modules/@fortawesome/fontawesome-free/css/all.min.css',
+          dest: '<%= paths.dist.css %>/fa.min.css',
+      },
       fontawesome: {
           expand: true,
           flatten: true,
-          src: ['node_modules/font-awesome/fonts/*'],
-          dest: '<%= paths.dist %>/fonts/'
+          src: ['node_modules/@fortawesome/fontawesome-free/webfonts/*'],
+          dest: '<%= paths.dist.root %>/webfonts/'
       },
   });
 

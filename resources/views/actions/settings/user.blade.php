@@ -11,7 +11,7 @@
             <p>@lang('settings.bookmarklet_help')</p>
 
             <a href="{{ $bookmarklet_code }}" class="btn btn-primary">
-                @lang('settings.bookmarklet')
+                <i class="fa fa-bookmark fa-mr"></i> @lang('settings.bookmarklet')
             </a>
 
             <p class="small">@lang('settings.bookmarklet_button')</p>
@@ -173,7 +173,7 @@
                 </div>
 
                 <button type="submit" class="btn btn-primary">
-                    @lang('settings.save_settings')
+                    <i class="fa fa-save fa-mr"></i> @lang('settings.save_settings')
                 </button>
 
             </form>
@@ -218,7 +218,7 @@
                 </div>
 
                 <button type="submit" class="btn btn-primary">
-                    @lang('settings.change_password')
+                    <i class="fa fa-key fa-mr"></i> @lang('settings.change_password')
                 </button>
 
             </form>

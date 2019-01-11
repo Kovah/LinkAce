@@ -13,7 +13,7 @@
             <div class="ml-auto">
                 <a href="{{ route('links.edit', [$link->id]) }}" class="btn btn-sm btn-primary"
                     aria-label="@lang('link.edit')">
-                    <i class="fa fa-pencil fa-mr" aria-hidden="true"></i>
+                    <i class="fa fa-edit fa-mr" aria-hidden="true"></i>
                     @lang('linkace.edit')
                 </a>
                 <a onclick="event.preventDefault();document.getElementById('link-delete-{{ $link->id }}').submit();"

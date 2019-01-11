@@ -19,7 +19,7 @@
         <td>
             <div class="btn-group btn-group-sm">
                 <a href="{{ route('links.edit', [$link->id]) }}" class="btn btn-outline-primary">
-                    <i class="fa fa-pencil"></i>
+                    <i class="fa fa-edit"></i>
                 </a>
                 <a onclick="event.preventDefault();document.getElementById('link-delete-{{ $link->id }}').submit();"
                     title=" @lang('link.delete')" class="btn btn-outline-danger">

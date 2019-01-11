@@ -20,7 +20,7 @@
                         aria-label="@lang('link.url')">
                     <div class="input-group-append">
                         <button class="btn btn-primary" type="submit">
-                            @lang('linkace.add')
+                            <i class="fa fa-plus fa-mr"></i> @lang('linkace.add')
                         </button>
                     </div>
                 </div>

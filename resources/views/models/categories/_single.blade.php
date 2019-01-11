@@ -16,7 +16,7 @@
     <td>
         <div class="btn-group btn-group-sm">
             <a href="{{ route('categories.edit', [$category->id]) }}" class="btn  btn-outline-primary">
-                <i class="fa fa-pencil"></i>
+                <i class="fa fa-edit"></i>
             </a>
             <a onclick="event.preventDefault();document.getElementById('category-delete-{{ $category->id }}').submit();"
                 title=" @lang('category.delete')" class="btn btn-outline-danger">

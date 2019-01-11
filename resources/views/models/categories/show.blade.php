@@ -10,7 +10,7 @@
             <div class="ml-auto">
                 <a href="{{ route('categories.edit', [$category->id]) }}" class="btn btn-sm btn-primary"
                     aria-label="@lang('category.edit')">
-                    <i class="fa fa-pencil fa-mr"></i>
+                    <i class="fa fa-edit fa-mr"></i>
                     @lang('linkace.edit')
                 </a>
                 <a onclick="event.preventDefault();document.getElementById('category-delete-{{ $category->id }}').submit();"
