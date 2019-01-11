@@ -76,7 +76,11 @@
         </div>
         <div class="card-body">
 
-            @include('models.links._sharing')
+            <label>@lang('sharing.share_link')</label>
+
+            <div class="share-links">
+                {!! getShareLinks($link) !!}
+            </div>
 
         </div>
     </div>

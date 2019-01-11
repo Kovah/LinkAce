@@ -1,5 +1,9 @@
 <?php
 return [
+    'sharetext' => 'I found this awesome link, go check it out: #URL#',
+    'subject' => 'Check out this cool link',
+    'share' => 'Share link via :service',
+    'share_link' => 'Share this Link',
     'service' => [
         'email' => 'Email',
         'print' => 'Print',

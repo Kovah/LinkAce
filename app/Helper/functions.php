@@ -62,3 +62,23 @@ function getPaginationLimit()
 
     return config('linkace.default.pagination');
 }
+
+/**
+ * Generate all share links for a link, but for enabled services only
+ *
+ * @param \App\Models\Link $link
+ * @return string
+ */
+function getShareLinks(\App\Models\Link $link)
+{
+    $services = config('sharing.services');
+    $links = '';
+
+    foreach ($services as $service => $details) {
+        if (usersettings('share_' . $service)) {
+            $links .= \App\Helper\Sharing::getShareLink($service, $link);
+        }
+    }
+
+    return $links;
+}

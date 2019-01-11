@@ -49,3 +49,13 @@ body:not(.bookmarklet) {
         }
     }
 }
+
+.share-links {
+    display: flex;
+    flex-wrap: wrap;
+
+    .share-link {
+        flex: 0 0 auto;
+        margin: $spacer / 4;
+    }
+}
