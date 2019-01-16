@@ -82,3 +82,26 @@ function getShareLinks(\App\Models\Link $link)
 
     return $links;
 }
+
+/**
+ * Get an SVG from a path and return it as a string
+ *
+ * @param      $path
+ * @param null $width
+ * @param null $height
+ * @return mixed|string|string[]|null
+ */
+function displaySVG($path, $width = null, $height = null)
+{
+    $svg = file_get_contents($path);
+
+    if ($width) {
+        $svg = preg_replace('/width="([\d]+)"/i', "width='$width'", $svg);
+    }
+
+    if ($height) {
+        $svg = preg_replace('/height="([\d]+)"/i', "height='$height'", $svg);
+    }
+
+    return $svg;
+}

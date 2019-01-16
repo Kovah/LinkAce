@@ -1,8 +1,7 @@
-<nav class="navbar navbar-expand-md navbar-light bg-white shadow-sm fixed-top">
+<nav class="navbar navbar-expand-md navbar-dark bg-primary shadow-sm fixed-top">
     <div class="container">
         <a class="navbar-brand" href="{{ auth()->guest() ? route('front') : route('dashboard') }}">
-            <img src="{{ asset('assets/img/logo_linkace.svg') }}" alt="@lang('linkace.linkace')"
-                width="81" height="30">
+            {!! displaySVG(public_path('assets/img/logo_linkace.svg')) !!}
         </a>
 
         <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbar-content"
@@ -66,13 +65,13 @@
                     </li>
                 @else
                     <li class="nav-item">
-                        <a href="{{ route('get-search') }}" class="nav-link">
-                            @lang('search.search')
+                        <a href="{{ route('get-search') }}" class="nav-link" title="@lang('search.search')">
+                            <i class="fa fa-search fa-fw mx-1"></i>
                         </a>
                     </li>
                     <li class="nav-item">
-                        <a href="{{ route('get-trash') }}" class="nav-link">
-                            @lang('trash.trash')
+                        <a href="{{ route('get-trash') }}" class="nav-link" title="@lang('trash.trash')">
+                            <i class="fa fa-trash-alt fa-fw mx-1"></i>
                         </a>
                     </li>
                     <li class="nav-item dropdown">

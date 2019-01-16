@@ -2,3 +2,20 @@
 .custom-control-label {
     cursor: pointer;
 }
+
+// Style fix for the navbar logo
+.navbar-dark {
+
+    .svg {
+        max-height: 30px;
+        max-width: 81px;
+    }
+
+    .svg-path {
+        fill: $white;
+    }
+
+    .svg-stroke {
+        stroke: $white;
+    }
+}
