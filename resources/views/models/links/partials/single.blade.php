@@ -1,68 +1,78 @@
-<div class="card mb-3">
+<div class="card mb-4">
 
     <div class="card-header">
-        <a href="{{ route('links.show', [$link->id]) }}">
-            {{ $link->title }}
-        </a>
-        @if($link->is_private)
-            <i class="fa fa-lock text-muted" title="@lang('link.private')"></i>
-        @endif
+        <div class="d-flex align-items-center">
+            <div class="mr-2">
+                @if($link->is_private)
+                    <i class="fa fa-lock text-muted" title="@lang('link.private')"></i>
+                @endif
+                <a href="{{ $link->url }}">{{ $link->title }}</a>
+                <small>({{ $link->url }})</small>
+            </div>
+            <div class="ml-auto text-right">
+                <button type="button" class="btn btn-xs btn-outline-primary" title="@lang('sharing.share_link')"
+                    data-toggle="collapse" data-target="#sharing-{{ $link->id }}"
+                    aria-expanded="false" aria-controls="sharing-{{ $link->id }}">
+                    <i class="fa fa-share-alt fa-fw"></i>
+                </button>
+            </div>
+        </div>
     </div>
 
     <div class="card-body py-2 px-3">
 
-        <small>
-            <a href="{{ $link->url }}" target="_blank" title="@lang('link.external_link')">
-                {{ $link->url }}
-            </a>
-        </small>
-
-        <div class="row mt-3">
-            <div class="col col-md-4 small">
-
-                @if($link->category)
-                    <label>@lang('category.category'):</label>
-                    <a href="{{ route('categories.show', [$link->category->id]) }}">
-                        {{ $link->category->name }}
-                    </a>
-                @else
-                    @lang('category.no_category')
-                @endif
-
-            </div>
-            <div class="col col-md-8 small">
-
-                @if($link->tags->count() > 0)
-                    <label>@lang('tag.tags'):</label>
-                    @foreach($link->tags as $tag)
-                        <a href="{{ route('tags.show', [$tag->id]) }}" class="badge badge-light">
-                            {{ $tag->name }}
-                        </a>
-                    @endforeach
-                @else
-                    @lang('tag.no_tags')
-                @endif
-
-            </div>
-        </div>
-
         <div class="row">
-            <div class="col d-flex align-items-center">
+            <div class="col-xs-12 col-sm-6 small">
 
-                <small class="text-muted">
-                    {!! $link->addedAt() !!}
-                </small>
+                <div>
+                    @if($link->category)
+                        <label>@lang('category.category'):</label>
+                        <a href="{{ route('categories.show', [$link->category->id]) }}">
+                            {{ $link->category->name }}
+                        </a>
+                    @else
+                        @lang('category.no_category')
+                    @endif
+                </div>
+
+                <div class="mt-2">
+                    @if($link->tags->count() > 0)
+                        <label>@lang('tag.tags'):</label>
+                        @foreach($link->tags as $tag)
+                            <a href="{{ route('tags.show', [$tag->id]) }}" class="badge badge-light">
+                                {{ $tag->name }}
+                            </a>
+                        @endforeach
+                    @else
+                        @lang('tag.no_tags')
+                    @endif
+                </div>
 
             </div>
-            <div class="col text-right">
+            <div class="col-xs-12 col-sm-6 text-md-right">
 
-                <a href="{{ route('links.edit', [$link->id]) }}" class="btn btn-sm btn-outline-primary">
-                    <i class="fa fa-edit"></i>
-                </a>
-                <a onclick="event.preventDefault();document.getElementById('link-delete-{{ $link->id }}').submit();"
-                    title=" @lang('link.delete')" class="btn btn-sm btn-outline-danger">
-                    <i class="fa fa-trash"></i>
-                </a>
+                <div>
+                    <small class="text-muted">
+                        @lang('linkace.added_at') {!! $link->addedAt() !!}
+                    </small>
+                </div>
+
+                <div class="btn-group">
+                    <a href="{{ route('links.show', [$link->id]) }}" class="btn btn-xs btn-outline-secondary"
+                        title="@lang('link.show')">
+                        <i class="fa fa-info fa-fw"></i> @lang('link.show')
+                    </a>
+
+                    <a href="{{ route('links.edit', [$link->id]) }}" class="btn btn-xs btn-outline-secondary"
+                        title="@lang('link.edit')">
+                        <i class="fa fa-edit fa-fw"></i> @lang('link.edit')
+                    </a>
+
+                    <a href="#" title="@lang('link.delete')" class="btn btn-xs btn-outline-secondary"
+                        onclick="event.preventDefault();document.getElementById('link-delete-{{ $link->id }}').submit();">
+                        <i class="fa fa-trash-alt fa-fw"></i> @lang('link.delete')
+                    </a>
+                </div>
 
                 <form id="link-delete-{{ $link->id }}" method="POST" style="display: none;"
                     action="{{ route('links.destroy', [$link->id]) }}">
@@ -74,6 +84,14 @@
             </div>
         </div>
 
+    </div>
+
+    <div class="collapse" id="sharing-{{ $link->id }}">
+        <div class="card-footer">
+            <div class="share-links">
+                {!! getShareLinks($link) !!}
+            </div>
+        </div>
     </div>
 
 </div>

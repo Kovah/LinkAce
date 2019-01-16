@@ -8,6 +8,7 @@ return [
     'add' => 'Add Link',
     'add_quick' => 'Quick Add Link',
     'show' => 'Show Link',
+    'details' => 'Link Details',
     'edit' => 'Edit Link',
     'update' => 'Update Link',
     'delete' => 'Delete Link',

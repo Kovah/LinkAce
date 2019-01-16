@@ -75,7 +75,7 @@ function getShareLinks(\App\Models\Link $link)
     $links = '';
 
     foreach ($services as $service => $details) {
-        if (usersettings('share_' . $service)) {
+        if (usersettings('share_' . $service) || auth()->guest()) {
             $links .= \App\Helper\Sharing::getShareLink($service, $link);
         }
     }
