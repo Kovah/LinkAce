@@ -125,7 +125,7 @@
                     @lang('search.no_results')
                 </div>
             @else
-                @include('actions.search._table', ['results' => $results])
+                @include('actions.search.partials.table', ['results' => $results])
             @endif
 
         </div>
