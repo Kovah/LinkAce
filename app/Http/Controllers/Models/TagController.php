@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Http\Requests\TagDeleteRequest;
 use App\Http\Requests\TagStoreRequest;
 use App\Http\Requests\TagUpdateRequest;
+use App\Models\Link;
 use App\Models\Tag;
 
 class TagController extends Controller
@@ -48,6 +49,8 @@ class TagController extends Controller
         $data['user_id'] = auth()->user()->id;
 
         $tag = Tag::create($data);
+
+        Tag::flushCache();
 
         alert(trans('tag.added_successfully'), 'success');
 
@@ -128,6 +131,8 @@ class TagController extends Controller
 
         $tag->update($data);
 
+        Tag::flushCache();
+
         alert(trans('tag.updated_successfully'), 'success');
 
         return redirect()->route('tags.show', [$tag->id]);
@@ -157,6 +162,9 @@ class TagController extends Controller
         $tag->links()->detach();
 
         $tag->delete();
+
+        Link::flushCache();
+        Tag::flushCache();
 
         return redirect()->route('tags.index');
     }

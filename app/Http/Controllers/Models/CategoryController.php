@@ -54,6 +54,8 @@ class CategoryController extends Controller
         // Create the new link
         $link = Category::create($data);
 
+        Category::flushCache();
+
         alert(trans('category.added_successfully'), 'success');
 
         if ($request->get('reload_view')) {
@@ -139,6 +141,8 @@ class CategoryController extends Controller
         // Update the existing category with new data
         $category->update($data);
 
+        Category::flushCache();
+
         alert(trans('category.updated_successfully'), 'success');
 
         return redirect()->route('categories.show', [$category->id]);
@@ -173,6 +177,8 @@ class CategoryController extends Controller
         }
 
         $category->delete();
+
+        Category::flushCache();
 
         alert(trans('category.deleted_successfully'), 'warning');
 

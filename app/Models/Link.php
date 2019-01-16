@@ -4,27 +4,26 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Collection;
-use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
 
 /**
  * Class Link
  *
  * @package App\Models
- * @property int                                $id
- * @property int                                $user_id
- * @property int|null                           $category_id
- * @property string                             $url
- * @property string                             $title
- * @property string|null                        $description
- * @property int                                $is_private
- * @property \Carbon\Carbon|null                $created_at
- * @property \Carbon\Carbon|null                $updated_at
- * @property string|null                        $deleted_at
- * @property-read \App\Models\Category|null     $category
- * @property-read Collection|\App\Models\Note[] $notes
- * @property-read Collection|\App\Models\Tag[]  $tags
- * @property-read \App\Models\User              $user
+ * @property int                    $id
+ * @property int                    $user_id
+ * @property int|null               $category_id
+ * @property string                 $url
+ * @property string                 $title
+ * @property string|null            $description
+ * @property int                    $is_private
+ * @property \Carbon\Carbon|null    $created_at
+ * @property \Carbon\Carbon|null    $updated_at
+ * @property string|null            $deleted_at
+ * @property-read Category|null     $category
+ * @property-read Collection|Note[] $notes
+ * @property-read Collection|Tag[]  $tags
+ * @property-read User              $user
  * @method static Builder|Link byUser($user_id)
  */
 class Link extends Model
@@ -41,6 +40,8 @@ class Link extends Model
         'description',
         'is_private',
     ];
+
+    public $rememberCacheTag = 'link_queries';
 
     /*
      | ========================================================================

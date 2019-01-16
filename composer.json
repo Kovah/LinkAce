@@ -12,7 +12,8 @@
     "laravel/tinker": "^1.0",
     "predis/predis": "^1.1",
     "shaarli/netscape-bookmark-parser": "^2.1",
-    "vinkla/alert": "^3.0.0"
+    "vinkla/alert": "^3.0.0",
+    "watson/rememberable": "^2.0"
   },
   "require-dev": {
     "barryvdh/laravel-debugbar": "^3.2",

@@ -2,24 +2,24 @@
 
 namespace App\Models;
 
-use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\SoftDeletes;
 
 /**
  * Class Note
  *
  * @package App\Models
- * @property int                   $id
- * @property int                   $user_id
- * @property int                   $link_id
- * @property string                $note
- * @property int                   $is_private
- * @property \Carbon\Carbon|null   $created_at
- * @property \Carbon\Carbon|null   $updated_at
- * @property string|null           $deleted_at
- * @property-read \App\Models\Link $link
- * @property-read \App\Models\User $user
- * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\Link byUser($user_id)
+ * @property int                 $id
+ * @property int                 $user_id
+ * @property int                 $link_id
+ * @property string              $note
+ * @property int                 $is_private
+ * @property \Carbon\Carbon|null $created_at
+ * @property \Carbon\Carbon|null $updated_at
+ * @property string|null         $deleted_at
+ * @property-read Link           $link
+ * @property-read User           $user
+ * @method static Builder|Link byUser($user_id)
  */
 class Note extends Model
 {
@@ -33,6 +33,8 @@ class Note extends Model
         'note',
         'is_private',
     ];
+
+    public $rememberCacheTag = 'note_queries';
 
     /*
      | ========================================================================

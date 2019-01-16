@@ -2,23 +2,24 @@
 
 namespace App\Models;
 
-use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Builder;
+use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Database\Eloquent\SoftDeletes;
 
 /**
  * Class Tag
  *
  * @package App\Models
- * @property int                                                              $id
- * @property int                                                              $user_id
- * @property string                                                           $name
- * @property int                                                              $is_private
- * @property \Carbon\Carbon|null                                              $created_at
- * @property \Carbon\Carbon|null                                              $updated_at
- * @property string|null                                                      $deleted_at
- * @property-read \Illuminate\Database\Eloquent\Collection|\App\Models\Link[] $links
- * @property-read \App\Models\User                                            $user
- * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\Tag byUser($user_id)
+ * @property int                    $id
+ * @property int                    $user_id
+ * @property string                 $name
+ * @property int                    $is_private
+ * @property \Carbon\Carbon|null    $created_at
+ * @property \Carbon\Carbon|null    $updated_at
+ * @property string|null            $deleted_at
+ * @property-read Collection|Link[] $links
+ * @property-read User              $user
+ * @method static Builder|Tag byUser($user_id)
  */
 class Tag extends Model
 {
@@ -32,6 +33,8 @@ class Tag extends Model
         'is_private',
     ];
 
+    public $rememberCacheTag = 'tag_queries';
+
     /*
      | ========================================================================
      | SCOPES
@@ -40,8 +43,8 @@ class Tag extends Model
     /**
      * Scope for the user relation
      *
-     * @param   \Illuminate\Database\Eloquent\Builder $query
-     * @param int                                     $user_id
+     * @param Builder $query
+     * @param int     $user_id
      * @return mixed
      */
     public function scopeByUser($query, $user_id)

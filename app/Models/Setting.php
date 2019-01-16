@@ -12,8 +12,8 @@ use Illuminate\Database\Eloquent\Model;
  * @property int    $user_id
  * @property string $key
  * @property mixed  $value
- * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\Setting byUser($user_id)
- * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\Setting systemOnly()
+ * @method static \Illuminate\Database\Eloquent\Builder|Setting byUser($user_id)
+ * @method static \Illuminate\Database\Eloquent\Builder|Setting systemOnly()
  */
 class Setting extends Model
 {
