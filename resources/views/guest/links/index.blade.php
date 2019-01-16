@@ -12,7 +12,7 @@
         @if(!$links->isEmpty())
 
             @foreach($links as $link)
-                @include('guest.links._single')
+                @include('guest.links.partials.single')
             @endforeach
 
         @else

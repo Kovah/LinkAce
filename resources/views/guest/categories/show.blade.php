@@ -54,7 +54,7 @@
         </div>
         <div class="card-table">
 
-            @include('guest.links._table', ['links' => $category_links])
+            @include('guest.links.partials.table', ['links' => $category_links])
 
         </div>
     </div>

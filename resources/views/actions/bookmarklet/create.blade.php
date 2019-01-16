@@ -2,6 +2,6 @@
 
 @section('content')
 
-    @include('models.links._create-form')
+    @include('models.links.partials.create-form')
 
 @endsection

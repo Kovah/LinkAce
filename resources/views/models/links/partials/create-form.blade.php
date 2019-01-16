@@ -136,5 +136,5 @@
 </div>
 
 @push('scripts')
-    @include('models.links._tags-js')
+    @include('models.links.partials.tags-js')
 @endpush

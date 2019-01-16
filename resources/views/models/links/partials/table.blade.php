@@ -10,7 +10,7 @@
         </thead>
         <tbody>
         @foreach($links as $link)
-            @include('models.links._single-table')
+            @include('models.links.partials.single-table')
         @endforeach
         </tbody>
     </table>

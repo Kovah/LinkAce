@@ -24,7 +24,7 @@
         </div>
         <div class="card-table">
 
-            @include('guest.links._table', ['links' => $tag_links])
+            @include('guest.links.partials.table', ['links' => $tag_links])
 
         </div>
     </div>

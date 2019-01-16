@@ -16,7 +16,7 @@
         @if(!$links->isEmpty())
 
             @foreach($links as $link)
-                @include('models.links._single')
+                @include('models.links.partials.single')
             @endforeach
 
         @else

@@ -69,7 +69,7 @@
         </div>
         <div class="card-table">
 
-            @include('models.links._table', ['links' => $category_links])
+            @include('models.links.partials.table', ['links' => $category_links])
 
         </div>
     </div>

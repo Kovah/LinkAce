@@ -39,7 +39,7 @@
         </div>
         <div class="card-table">
 
-            @include('models.links._table', ['links' => $tag_links])
+            @include('models.links.partials.table', ['links' => $tag_links])
 
         </div>
     </div>
