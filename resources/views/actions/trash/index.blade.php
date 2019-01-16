@@ -10,9 +10,9 @@
 
     <div class="card">
         <div class="card-header d-flex align-items-center">
-           <div>
-               @lang('trash.deleted_links')
-           </div>
+            <div>
+                @lang('trash.deleted_links')
+            </div>
             <div class="ml-auto">
                 <a href="{{ route('clear-trash', ['links']) }}"
                     class="btn btn-sm btn-danger" title="@lang('trash.clear_trash')">

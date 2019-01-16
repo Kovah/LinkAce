@@ -71,16 +71,21 @@ function getPaginationLimit()
  */
 function getShareLinks(\App\Models\Link $link)
 {
-    $services = config('sharing.services');
-    $links = '';
+    $cache_key = 'sharelinks_link_' . $link->id . (auth()->guest() ? '_guest' : '');
+    $cache_duration = config('linkace.default.cache_duration');
 
-    foreach ($services as $service => $details) {
-        if (usersettings('share_' . $service)) {
-            $links .= \App\Helper\Sharing::getShareLink($service, $link);
+    return Cache::remember($cache_key, $cache_duration, function () use ($link) {
+        $services = config('sharing.services');
+        $links = '';
+
+        foreach ($services as $service => $details) {
+            if (usersettings('share_' . $service) || auth()->guest()) {
+                $links .= \App\Helper\Sharing::getShareLink($service, $link);
+            }
         }
-    }
 
-    return $links;
+        return $links;
+    });
 }
 
 /**

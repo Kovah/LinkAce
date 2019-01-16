@@ -1,7 +1,7 @@
 <tr>
     <td>
         @if(isset($is_child))
-            &rightarrow;
+        &rightarrow;
         @endif
         <a href="{{ route('categories.show', [$category->id]) }}">
             {{ $category->name }}
