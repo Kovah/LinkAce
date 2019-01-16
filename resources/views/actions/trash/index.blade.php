@@ -22,7 +22,7 @@
         </div>
         <div class="card-body">
 
-            @include('actions.trash._link-table', ['links' => $links])
+            @include('actions.trash.partials.link-table', ['links' => $links])
 
         </div>
     </div>
@@ -41,7 +41,7 @@
         </div>
         <div class="card-body">
 
-            @include('actions.trash._category-table', ['categories' => $categories])
+            @include('actions.trash.partials.category-table', ['categories' => $categories])
 
         </div>
     </div>
@@ -60,7 +60,7 @@
         </div>
         <div class="card-body">
 
-            @include('actions.trash._tag-table', ['tags' => $tags])
+            @include('actions.trash.partials.tag-table', ['tags' => $tags])
 
         </div>
     </div>
