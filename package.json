@@ -12,6 +12,10 @@
   "bugs": {
     "url": "https://github.com/Kovah/LinkAce/issues"
   },
+  "scripts": {
+    "dev": "grunt dev",
+    "build": "grunt build"
+  },
   "devDependencies": {
     "autoprefixer": "^8.6.5",
     "babel-core": "^6.26.3",

@@ -1,0 +1,6 @@
+.env
+_ide_*
+storage/debugbar/*
+storage/framework/views/*
+storage/logs/*
+node_modules
