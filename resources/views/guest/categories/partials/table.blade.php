@@ -5,15 +5,17 @@
             <th>@lang('category.name')</th>
             <th>@lang('category.description')</th>
             <th class="text-right">@lang('link.links')</th>
-            <th></th>
+            <th>@lang('user.user')</th>
         </tr>
         </thead>
         <tbody>
         @foreach($categories as $category)
-            @include('models.categories._single', ['category' => $category])
+
+            @include('guest.categories.partials.single', ['category' => $category])
+
             @if($category->childCategories)
                 @foreach($category->childCategories as $child_category)
-                    @include('models.categories._single', ['category' => $child_category, 'is_child' => true])
+                    @include('guest.categories.partials.single', ['category' => $child_category, 'is_child' => true])
                 @endforeach
             @endif
         @endforeach

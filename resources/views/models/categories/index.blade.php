@@ -18,7 +18,7 @@
 
             @if(!$categories->isEmpty())
 
-                @include('models.categories._table')
+                @include('models.categories.partials.table')
 
             @else
 

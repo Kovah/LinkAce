@@ -13,7 +13,7 @@
 
             @if(!$categories->isEmpty())
 
-                @include('guest.categories._table')
+                @include('guest.categories.partials.table')
 
             @else
 
