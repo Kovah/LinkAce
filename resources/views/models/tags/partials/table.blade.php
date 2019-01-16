@@ -9,7 +9,7 @@
         </thead>
         <tbody>
         @foreach($tags as $tag)
-            @include('models.tags._single')
+            @include('models.tags.partials.single')
         @endforeach
         </tbody>
     </table>

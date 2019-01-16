@@ -13,7 +13,7 @@
 
             @if(!$tags->isEmpty())
 
-                @include('guest.tags._table')
+                @include('guest.tags.partials.table')
 
             @else
 

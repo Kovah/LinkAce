@@ -17,7 +17,7 @@
 
             @if(!$tags->isEmpty())
 
-                @include('models.tags._table')
+                @include('models.tags.partials.table')
 
             @else
 
