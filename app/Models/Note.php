@@ -73,4 +73,25 @@ class Note extends Model
     {
         return $this->belongsTo('App\Models\Link', 'link_id');
     }
+
+    /*
+     | ========================================================================
+     | METHODS
+     */
+
+    /**
+     * Output a relative time inside a span with real time information
+     *
+     * @return string
+     */
+    public function addedAt()
+    {
+        $output = '<time-ago class="cursor-help"';
+        $output .= ' datetime="' . $this->created_at->toIso8601String() . '"';
+        $output .= ' title="' . formatDateTime($this->created_at) . '">';
+        $output .= formatDateTime($this->created_at, true);
+        $output .= '</time-ago>';
+
+        return $output;
+    }
 }

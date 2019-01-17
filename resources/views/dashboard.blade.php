@@ -2,6 +2,8 @@
 
 @section('content')
 
+    <h3 class="mb-4">@lang('user.hello', ['user' => auth()->user()->name])</h3>
+
     <div class="card">
         <div class="card-header">
             @lang('link.add_quick')
@@ -36,31 +38,22 @@
         </div>
     </div>
 
-    <div class="row mt-4">
-        <div class="col">
-
-            <div class="card">
-                <div class="card-header">
-                    @lang('link.recent_links')
-                </div>
-
-                <ul class="list-group list-group-flush">
-                    @forelse($recent_links as $link)
-                        <a href="{{ route('links.show', [$link->id]) }}" class="list-group-item list-group-item-action">
-                            {{ $link->title }}
-                        </a>
-                    @empty
-                        <li class="list-group-item text-danger">
-                            @lang('linkace.no_results_found', ['model' => trans('link.links')])
-                        </li>
-                    @endforelse
-                </ul>
-            </div>
-
+    <div class="card mt-4">
+        <div class="card-header">
+            @lang('link.recent_links')
         </div>
-        <div class="col">
 
-        </div>
+        <ul class="list-group list-group-flush">
+            @forelse($recent_links as $link)
+                <a href="{{ route('links.show', [$link->id]) }}" class="list-group-item list-group-item-action">
+                    {{ $link->title }}
+                </a>
+            @empty
+                <li class="list-group-item text-danger">
+                    @lang('linkace.no_results_found', ['model' => trans('link.links')])
+                </li>
+            @endforelse
+        </ul>
     </div>
 
 @endsection

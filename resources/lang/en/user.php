@@ -5,4 +5,6 @@ return [
 
     'username' => 'Username',
     'email' => 'Email',
+
+    'hello' => 'Hello :user!',
 ];

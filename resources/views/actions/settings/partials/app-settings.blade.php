@@ -32,6 +32,12 @@
 
                 </div>
                 <div class="col">
+                    
+                </div>
+            </div>
+            
+            <div class="row">
+                <div class="col">
 
                     <div class="form-group">
                         <label for="private_default">
@@ -53,7 +59,31 @@
                             </p>
                         @endif
                     </div>
+                    
+                </div>
+                <div class="col">
 
+                    <div class="form-group">
+                        <label for="notes_private_default">
+                            @lang('settings.notes_private_default')
+                        </label>
+                        <select id="notes_private_default" name="notes_private_default"
+                            class="custom-select{{ $errors->has('notes_private_default') ? ' is-invalid' : '' }}">
+                            <option value="0" @if($user->settings()->get('notes_private_default') === '0') selected @endif>
+                                @lang('linkace.no')
+                            </option>
+                            <option value="1" @if($user->settings()->get('notes_private_default') === '1') selected @endif>
+                                @lang('linkace.yes')
+                            </option>
+                        </select>
+                        <p class="text-muted small">@lang('settings.notes_private_default_help')</p>
+                        @if ($errors->has('notes_private_default'))
+                            <p class="invalid-feedback" role="alert">
+                                {{ $errors->first('notes_private_default') }}
+                            </p>
+                        @endif
+                    </div>
+                    
                 </div>
             </div>
 

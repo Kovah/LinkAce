@@ -65,4 +65,23 @@
         </div>
     </div>
 
+    <div class="card mt-4">
+        <div class="card-header d-flex align-items-center">
+            <div>
+                @lang('trash.deleted_notes')
+            </div>
+            <div class="ml-auto">
+                <a href="{{ route('clear-trash', ['notes']) }}"
+                    class="btn btn-sm btn-danger" title="@lang('trash.clear_trash')">
+                    <i class="fa fa-recycle"></i> @lang('trash.clear_trash')
+                </a>
+            </div>
+        </div>
+        <div class="card-body">
+
+            @include('actions.trash.partials.note-table', ['notes' => $notes])
+
+        </div>
+    </div>
+
 @endsection

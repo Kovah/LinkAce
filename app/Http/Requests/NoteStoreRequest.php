@@ -24,8 +24,9 @@ class NoteStoreRequest extends FormRequest
     public function rules()
     {
         return [
+            'link_id' => 'required',
             'note' => 'required',
-            'is_private' => 'required|integer',
+            'is_private' => 'boolean',
         ];
     }
 }
