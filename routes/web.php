@@ -41,8 +41,8 @@ Route::group(['middleware' => ['auth']], function () {
 
     Route::resource('categories', 'Models\CategoryController');
     Route::resource('links', 'Models\LinkController');
-    Route::resource('notes', 'Models\NoteController');
     Route::resource('tags', 'Models\TagController');
+    Route::resource('notes', 'Models\NoteController')->except(['index', 'show']);
 
     Route::get('search', 'App\SearchController@getSearch')->name('get-search');
     Route::post('search', 'App\SearchController@doSearch')->name('do-search');

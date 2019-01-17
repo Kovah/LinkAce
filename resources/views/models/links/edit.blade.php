@@ -4,7 +4,7 @@
 
     <div class="card">
         <header class="card-header">
-            @lang('link.add')
+            @lang('link.edit')
         </header>
         <div class="card-body">
 

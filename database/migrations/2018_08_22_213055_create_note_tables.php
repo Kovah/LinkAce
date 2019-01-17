@@ -18,7 +18,7 @@ class CreateNoteTables extends Migration
             $table->integer('user_id')->unsigned();
             $table->integer('link_id')->unsigned();
             $table->text('note');
-            $table->boolean('is_private')->default(true);
+            $table->boolean('is_private')->default(false);
             $table->timestamps();
             $table->softDeletes();
         });

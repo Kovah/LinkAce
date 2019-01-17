@@ -41,7 +41,7 @@ class NoteUpdateRequest extends FormRequest
         return [
             'note_id' => 'required',
             'note' => 'required',
-            'is_private' => 'required|integer',
+            'is_private' => 'boolean',
         ];
     }
 }

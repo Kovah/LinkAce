@@ -85,4 +85,18 @@
         </div>
     </div>
 
+    <div class="link-notes mt-4">
+
+        <h3>@lang('note.notes')</h3>
+
+        @if($link->notes->count())
+            @foreach($link->notes as $note)
+                @include('models.notes.partials.single', ['note' =>$note])
+            @endforeach
+        @endif
+
+        @include('models.notes.partials.create', ['link' => $link])
+
+    </div>
+
 @endsection
