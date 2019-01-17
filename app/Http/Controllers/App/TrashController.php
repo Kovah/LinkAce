@@ -5,6 +5,7 @@ namespace App\Http\Controllers\App;
 use App\Http\Controllers\Controller;
 use App\Models\Category;
 use App\Models\Link;
+use App\Models\Note;
 use App\Models\Tag;
 use Illuminate\Http\Request;
 
@@ -29,10 +30,15 @@ class TrashController extends Controller
             ->byUser(auth()->id())
             ->get();
 
+        $notes = Note::onlyTrashed()
+            ->byUser(auth()->id())
+            ->get();
+
         return view('actions.trash.index', [
             'links' => $links,
             'categories' => $categories,
             'tags' => $tags,
+            'notes' => $notes,
         ]);
     }
 
@@ -63,6 +69,11 @@ class TrashController extends Controller
                     ->byUser(auth()->id())
                     ->get();
                 break;
+            case 'notes':
+                $entries = Note::onlyTrashed()
+                    ->byUser(auth()->id())
+                    ->get();
+                break;
         }
 
         if (empty($entries)) {
@@ -72,6 +83,7 @@ class TrashController extends Controller
 
         foreach ($entries as $entry) {
             $entry->forceDelete();
+            $entry->flushCache();
         }
 
         alert(trans('trash.delete_success.' . $model), 'success');
@@ -101,6 +113,9 @@ class TrashController extends Controller
             case 'tag':
                 $entry = Tag::withTrashed()->find($id);
                 break;
+            case 'note':
+                $entry = Note::withTrashed()->find($id);
+                break;
         }
 
         if (empty($entry)) {
@@ -112,8 +127,9 @@ class TrashController extends Controller
         }
 
         $entry->restore();
+        $entry->flushCache();
 
-        alert(trans('trash.delete_success.' . $model), 'success');
+        alert(trans('trash.delete_restore.' . $model), 'success');
 
         return redirect()->route('get-trash');
     }

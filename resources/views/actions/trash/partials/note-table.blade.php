@@ -2,23 +2,29 @@
     <table class="table table-sm table-bordered table-hover mb-0">
         <thead>
         <tr>
-            <th>@lang('category.name')</th>
+            <th>@lang('link.link')</th>
+            <th>@lang('note.note_content')</th>
             <th>@lang('linkace.added_at')</th>
             <th></th>
         </tr>
         </thead>
         <tbody>
 
-        @foreach($categories as $category)
+        @foreach($notes as $note)
             <tr>
                 <td>
-                    {{ $category->name }}
+                    <a href="{{ $note->link->url }}" title="{{ $note->link->title }}" target="_blank">
+                        {{ $note->link->title }}
+                    </a>
                 </td>
                 <td>
-                    {{ formatDateTime($category->created_at) }}
+                    {{ $note->note }}
+                </td>
+                <td>
+                    {{ formatDateTime($note->created_at) }}
                 </td>
                 <td class="text-right">
-                    <a href="{{ route('trash-restore', ['category', $category->id]) }}"
+                    <a href="{{ route('trash-restore', ['note', $note->id]) }}"
                         class="btn btn-sm btn-outline-primary" title="@lang('trash.restore')">
                         <i class="fa fa-reply"></i>
                     </a>
