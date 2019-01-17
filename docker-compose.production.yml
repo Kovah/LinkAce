@@ -14,7 +14,7 @@ services:
       - MARIADB_PASSWORD=${DB_PASSWORD}
       - MARIADB_DATABASE=${DB_DATABASE}
     env_file:
-      - ./.env
+      - ./.env.docker
     volumes:
       - db:/bitnami
 
@@ -25,7 +25,7 @@ services:
     restart: always
     volumes:
       - linkace_app:/app
-      - ./.env:/app/.env:ro
+      - ./.env.docker:/app/.env:ro
 
   # --- nginx
   nginx:
@@ -34,13 +34,15 @@ services:
     restart: always
     ports:
       - "127.0.0.1:80:8085"
+      #- "127.0.0.1:443:8085"
     depends_on:
       - php
     env_file:
-      - ./.env
+      - ./.env.docker
     volumes:
       - linkace_app:/app
-      - site.conf:/opt/bitnami/nginx/conf/vhosts/site.conf:ro
+      - nginx.conf:/opt/bitnami/nginx/conf/vhosts/site.conf:ro
+      #- /path/to/ssl/certificates:/bitnami/nginx/conf/bitnami/certs
 
   # --- Redis
   redis:
@@ -48,7 +50,7 @@ services:
     image: bitnami/redis:latest
     restart: always
     env_file:
-      - ./.env
+      - ./.env.docker
     environment:
       - REDIS_PASSWORD=${REDIS_PASSWORD}
 
