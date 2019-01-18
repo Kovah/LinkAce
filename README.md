@@ -8,15 +8,9 @@
 <p align="center"><b>:warning: This application is still in development! :warning:</b></p>
 
 <p align="center">
-  <a href="https://hub.docker.com/r/linkace/linkace">
-    <img src="https://img.shields.io/badge/Docker-linkace%2Flinkace-2596EC.svg" alt="Docker Repository">
-  </a>
-  <a href="https://github.com/Kovah/LinkAce/releases">
-    <img src="https://img.shields.io/github/release/kovah/linkace.svg" alt="Latest Release">
-  </a>
-  <a href="https://opensource.org/licenses/MIT">
-    <img src="https://img.shields.io/github/license/kovah/linkace.svg" alt="License">
-  </a>
+  <a href="https://hub.docker.com/r/linkace/linkace"><img src="https://img.shields.io/badge/Docker-linkace%2Flinkace-2596EC.svg" alt="Docker Repository"></a>
+  <a href="https://github.com/Kovah/LinkAce/releases"><img src="https://img.shields.io/github/release/kovah/linkace.svg" alt="Latest Release"></a>
+  <a href="https://opensource.org/licenses/MIT"><img src="https://img.shields.io/github/license/kovah/linkace.svg" alt="License"></a>
 </p>
 
 <p>&nbsp;</p>
@@ -24,12 +18,36 @@
 
 ## Contents
 
+* [About LinkAce](#about-linkace)
 * [Setup](#setup)
-* [- Setup with Docker](#setup-with-docker)
-* [- Setup without Docker](#setup-without-docker)
+  * [Setup with Docker](#setup-with-docker)
+  * [Setup without Docker](#setup-without-docker)
 * [Support & Bugreports](#support-and-bugreports)
-* [Contributing](#contributing)
-* [- Development](#developmnent)
+* [Contributions](#Contributions)
+  * [Development](#development)
+
+---
+
+## About LinkAce
+
+> @TODO Screenshot(s)
+
+LinkAce is a bookmark manager similar to Shaarli and other tools. I built this tool to have something that fits my
+actual needs that other bookmark managers couldn't solve, even if most features are almost the same.
+
+### Features
+
+* Bookmark links with automatic title generation
+* Organize bookmarks in categories and tags
+* A bookmarklet to quickly save links from any browser
+* Private or public links so friends or internet stranges can see your collection
+* Add notes to links to add thoughts
+* Advanced search for your bookmarks
+* Import existing bookmarks from HTML exports (other methods planned)
+
+More features are already planned. Take a look at our [project board](https://github.com/Kovah/LinkAce/projects/1)
+for more information. 
+
 
 ---
 
@@ -150,7 +168,7 @@ app will work without any problems and I also won't answer support requests with
 
 ---
 
-## Contribution
+## Contributions
 
 I will gladly welcome any help with the development of the application. If you want to contribute to the project please
 open a [ticket](https://github.com/Kovah/LinkAce/issues) first and describe what you want to do or what your idea is.
@@ -170,48 +188,46 @@ while the `master` branch may contains the stable version (which may be outdated
 * [Docker](https://www.docker.com/products/docker-desktop)
 * [Node](https://nodejs.org/en/) (10 LTS)
 
-### Basic Setup
+### 1. Basic Setup
 
-You should have [Docker](https://www.docker.com/products/docker-desktop)  installed on your machine.
-Then, simply run the following command to build your containers.
+Simply clone the repository to your machine and run the following command to build the container setup:
 
-```
-$ docker-compose up -d --build
+```bash
+docker-compose up -d --build
 ```
 
 Now, install all dependencies from inside the PHP container:
 
-```
-$ docker exec linkace-php bash -c "composer install"
+```bash
+docker exec linkace-php bash -c "composer install"
 ```
 
-Last step: compile all assets. You need [Node](https://nodejs.org/en/) with either NPM or [Yarn](https://yarnpkg.com) 
-installed.  
-Node 10 LTS is the minimum version required and recommended to use.
+Last step: compile all assets. Node 10 LTS is the minimum version required and recommended to use.
+You may use either NPM or Yarn for installing the asset dependencies.
 
-```
-$ npm install
+```bash
+npm install
 OR
-$ yarn install
+yarn install
 
-$ ./node_modules/.bin/grunt build
+./node_modules/.bin/grunt build
 ```
 
-### Working with the Artisan command line
+### 2. Working with the Artisan command line
 
 I recommend using the Artisan command line tool in the PHP container only to make sure that the same environment is 
 used. To do so, use the following example command:
 
-```
-$ docker exec linkace-php bash -c "php artisan migrate"
+```bash
+docker exec linkace-php bash -c "php artisan migrate"
 ```
 
-### Registering a new user
+### 3. Registering a new user
 
 Currently you can do this by using the command line:
 
-```
-$ docker exec -it linkace-php bash -c "php artisan registeruser [user name] [user email]"
+```bash
+docker exec -it linkace-php bash -c "php artisan registeruser [user name] [user email]"
 ```
 
 ---
