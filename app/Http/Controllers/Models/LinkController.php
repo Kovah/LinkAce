@@ -10,21 +10,34 @@ use App\Http\Requests\LinkUpdateRequest;
 use App\Models\Category;
 use App\Models\Link;
 use App\Models\Tag;
+use Illuminate\Http\Request;
 
 class LinkController extends Controller
 {
     /**
      * Display a listing of the resource.
      *
+     * @param Request $request
      * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
      */
-    public function index()
+    public function index(Request $request)
     {
-        return view('models.links.index')
-            ->with('links', Link::byUser(auth()->user()->id)
-                ->orderBy('created_at', 'DESC')
-                ->paginate(getPaginationLimit())
-            );
+        $links = Link::byUser(auth()->id());
+
+        if ($request->has('orderBy') && $request->has('orderDir')) {
+            $links->orderBy($request->get('orderBy'), $request->get('orderDir'));
+        } else {
+            $links->orderBy('created_at', 'DESC');
+        }
+
+        $links = $links->paginate(getPaginationLimit());
+
+        return view('models.links.index', [
+            'links' => $links,
+            'route' => $request->getBaseUrl(),
+            'order_by' => $request->get('orderBy'),
+            'order_dir' => $request->get('orderDir'),
+        ]);
     }
 
     /**

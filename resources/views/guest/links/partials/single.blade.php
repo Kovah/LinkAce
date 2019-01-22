@@ -46,10 +46,10 @@
                 </div>
 
             </div>
-            <div class="col-xs-12 col-sm-6 text-md-right">
+            <div class="col-xs-12 col-sm-6 text-md-right text-muted">
 
                 <div>
-                    <small class="text-muted">
+                    <small>
                         @lang('linkace.added_at') {!! $link->addedAt() !!}
                     </small>
                 </div>

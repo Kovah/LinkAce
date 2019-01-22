@@ -67,7 +67,7 @@ class Link extends Model
      * @param bool    $is_private
      * @return mixed
      */
-    public function scopePrivate($query, bool $is_private)
+    public function scopePrivateOnly($query, bool $is_private)
     {
         return $query->where('is_private', $is_private);
     }

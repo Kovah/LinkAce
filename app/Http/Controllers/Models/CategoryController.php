@@ -7,22 +7,34 @@ use App\Http\Requests\CategoryDeleteRequest;
 use App\Http\Requests\CategoryStoreRequest;
 use App\Http\Requests\CategoryUpdateRequest;
 use App\Models\Category;
+use Illuminate\Http\Request;
 
 class CategoryController extends Controller
 {
     /**
      * Display a listing of the resource.
      *
+     * @param Request $request
      * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
      */
-    public function index()
+    public function index(Request $request)
     {
-        return view('models.categories.index')
-            ->with('categories', Category::byUser(auth()->user()->id)
-                ->parentOnly()
-                ->orderBy('name', 'ASC')
-                ->paginate(getPaginationLimit())
-            );
+        $categories = Category::byUser(auth()->id())->parentOnly();
+
+        if ($request->has('orderBy') && $request->has('orderDir')) {
+            $categories->orderBy($request->get('orderBy'), $request->get('orderDir'));
+        } else {
+            $categories->orderBy('name', 'ASC');
+        }
+
+        $categories = $categories->paginate(getPaginationLimit());
+
+        return view('models.categories.index', [
+            'categories' => $categories,
+            'route' => $request->getBaseUrl(),
+            'order_by' => $request->get('orderBy'),
+            'order_dir' => $request->get('orderDir'),
+        ]);
     }
 
     /**
@@ -69,10 +81,11 @@ class CategoryController extends Controller
     /**
      * Display the specified resource.
      *
-     * @param  int $id
-     * @return
+     * @param Request $request
+     * @param  int    $id
+     * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
      */
-    public function show($id)
+    public function show(Request $request, $id)
     {
         $category = Category::find($id);
 
@@ -84,11 +97,24 @@ class CategoryController extends Controller
             abort(403);
         }
 
-        return view('models.categories.show')
-            ->with('category', $category)
-            ->with('category_links', $category->links()
-                ->paginate(getPaginationLimit())
-            );
+        // Get links of the category
+        $links = $category->links()->byUser(auth()->id());
+
+        if ($request->has('orderBy') && $request->has('orderDir')) {
+            $links->orderBy($request->get('orderBy'), $request->get('orderDir'));
+        } else {
+            $links->orderBy('created_at', 'DESC');
+        }
+
+        $links = $links->paginate(getPaginationLimit());
+
+        return view('models.categories.show', [
+            'category' => $category,
+            'category_links' => $links,
+            'route' => $request->getBaseUrl(),
+            'order_by' => $request->get('orderBy'),
+            'order_dir' => $request->get('orderDir'),
+        ]);
     }
 
     /**

@@ -17,7 +17,7 @@ class FrontController extends Controller
     public function index()
     {
         if (!auth()->check()) {
-            if (config('app.guest_access')) {
+            if (env('GUEST_ACCESS', false)) {
                 return redirect()->route('guest.links.index');
             }
 

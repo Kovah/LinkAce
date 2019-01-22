@@ -8,21 +8,34 @@ use App\Http\Requests\TagStoreRequest;
 use App\Http\Requests\TagUpdateRequest;
 use App\Models\Link;
 use App\Models\Tag;
+use Illuminate\Http\Request;
 
 class TagController extends Controller
 {
     /**
      * Display a listing of the resource.
      *
+     * @param Request $request
      * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
      */
-    public function index()
+    public function index(Request $request)
     {
-        return view('models.tags.index')
-            ->with('tags', Tag::byUser(auth()->user()->id)
-                ->orderBy('name', 'ASC')
-                ->paginate(getPaginationLimit())
-            );
+        $tags = Tag::byUser(auth()->id());
+
+        if ($request->has('orderBy') && $request->has('orderDir')) {
+            $tags->orderBy($request->get('orderBy'), $request->get('orderDir'));
+        } else {
+            $tags->orderBy('name', 'ASC');
+        }
+
+        $tags = $tags->paginate(getPaginationLimit());
+
+        return view('models.tags.index', [
+            'tags' => $tags,
+            'route' => $request->getBaseUrl(),
+            'order_by' => $request->get('orderBy'),
+            'order_dir' => $request->get('orderDir'),
+        ]);
     }
 
     /**
@@ -65,10 +78,11 @@ class TagController extends Controller
     /**
      * Display the specified resource.
      *
-     * @param  int $id
+     * @param Request $request
+     * @param  int    $id
      * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
      */
-    public function show($id)
+    public function show(Request $request, $id)
     {
         $tag = Tag::find($id);
 
@@ -80,11 +94,24 @@ class TagController extends Controller
             abort(403);
         }
 
-        return view('models.tags.show')
-            ->with('tag', $tag)
-            ->with('tag_links', $tag->links()
-                ->paginate(getPaginationLimit())
-            );
+        // Get links of the category
+        $links = $tag->links()->byUser(auth()->id());
+
+        if ($request->has('orderBy') && $request->has('orderDir')) {
+            $links->orderBy($request->get('orderBy'), $request->get('orderDir'));
+        } else {
+            $links->orderBy('created_at', 'DESC');
+        }
+
+        $links = $links->paginate(getPaginationLimit());
+
+        return view('models.tags.show', [
+            'tag' => $tag,
+            'tag_links' => $links,
+            'route' => $request->getBaseUrl(),
+            'order_by' => $request->get('orderBy'),
+            'order_dir' => $request->get('orderDir'),
+        ]);
     }
 
     /**

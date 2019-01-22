@@ -63,25 +63,27 @@ Route::group(['middleware' => ['auth']], function () {
 });
 
 // Guest access routes
-Route::prefix('guest')->middleware(['guest'])->group(function () {
+if (env('GUEST_ACCESS', false)) {
+    Route::prefix('guest')->middleware(['guest'])->group(function () {
 
-    Route::resource('categories', 'Guest\CategoryController')
-        ->only(['index', 'show'])
-        ->names([
-            'index' => 'guest.categories.index',
-            'show' => 'guest.categories.show',
-        ]);
+        Route::resource('categories', 'Guest\CategoryController')
+            ->only(['index', 'show'])
+            ->names([
+                'index' => 'guest.categories.index',
+                'show' => 'guest.categories.show',
+            ]);
 
-    Route::resource('links', 'Guest\LinkController')
-        ->only(['index'])
-        ->names([
-            'index' => 'guest.links.index',
-        ]);
+        Route::resource('links', 'Guest\LinkController')
+            ->only(['index'])
+            ->names([
+                'index' => 'guest.links.index',
+            ]);
 
-    Route::resource('tags', 'Guest\TagController')
-        ->only(['index', 'show'])
-        ->names([
-            'index' => 'guest.tags.index',
-            'show' => 'guest.tags.show',
-        ]);
-});
+        Route::resource('tags', 'Guest\TagController')
+            ->only(['index', 'show'])
+            ->names([
+                'index' => 'guest.tags.index',
+                'show' => 'guest.tags.show',
+            ]);
+    });
+}

@@ -6,16 +6,16 @@
 // Color system
 
 $white: #fff !default;
-$gray-100: #f8f9fa !default;
-$gray-200: #e9ecef !default;
-$gray-300: #dee2e6 !default;
-$gray-400: #ced4da !default;
-$gray-500: #adb5bd !default;
-$gray-600: #6c757d !default;
-$gray-700: #495057 !default;
-$gray-800: #343a40 !default;
-$gray-900: #212529 !default;
-$black: #000 !default;
+$gray-100: #F6F9FE !default;
+$gray-200: #E5EDFB !default;
+$gray-300: #CFDDF5 !default;
+$gray-400: #C6D5EE !default;
+$gray-500: #98B1D8 !default;
+$gray-600: #6686B9 !default;
+$gray-700: #44679F !default;
+$gray-800: #2C528F !default;
+$gray-900: #193C74 !default;
+$black: #17181A !default;
 
 $grays: () !default;
 // stylelint-disable-next-line scss/dollar-variable-default
@@ -99,7 +99,7 @@ $theme-color-interval: 8% !default;
 $yiq-contrasted-threshold: 150 !default;
 
 // Customize the light and dark text colors for use in our YIQ color contrast function.
-$yiq-text-dark: $gray-900 !default;
+$yiq-text-dark: $black !default;
 $yiq-text-light: $white !default;
 
 
@@ -160,7 +160,7 @@ $sizes: map-merge(
 // Settings for the `<body>` element.
 
 $body-bg: $white !default;
-$body-color: $gray-900 !default;
+$body-color: $black !default;
 
 
 // Links
@@ -356,8 +356,8 @@ $table-cell-padding: .75rem !default;
 $table-cell-padding-sm: .3rem !default;
 
 $table-bg: transparent !default;
-$table-accent-bg: rgba($black, .025) !default;
-$table-hover-bg: rgba($black, .05) !default;
+$table-accent-bg: $gray-100 !default;
+$table-hover-bg: $gray-100 !default;
 $table-active-bg: $table-hover-bg !default;
 
 $table-border-width: $border-width !default;
@@ -812,9 +812,9 @@ $card-spacer-y: .75rem !default;
 $card-spacer-x: 1.25rem !default;
 $card-border-width: $border-width !default;
 $card-border-radius: $border-radius !default;
-$card-border-color: rgba($black, .125) !default;
+$card-border-color: $border-color !default;
 $card-inner-border-radius: calc(#{$card-border-radius} - #{$card-border-width}) !default;
-$card-cap-bg: rgba($black, .03) !default;
+$card-cap-bg: $gray-100 !default;
 $card-cap-color: inherit !default;
 $card-bg: $white !default;
 

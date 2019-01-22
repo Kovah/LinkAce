@@ -110,3 +110,43 @@ function displaySVG($path, $width = null, $height = null)
 
     return $svg;
 }
+
+/**
+ * Build sorting links for a table column
+ *
+ * @param string $label
+ * @param string $route
+ * @param string $type
+ * @param string $order_by
+ * @param string $order_dir
+ * @return string
+ */
+function tableSorter($label, $route, $type, $order_by, $order_dir)
+{
+    $out = '<div class="d-flex">';
+    $out .= '<span class="mr-1">' . e($label) . '</span>';
+    $out .= '<span class="table-sorter ml-auto">';
+
+    $order_url = $route . '?orderBy=' . $type . '&orderDir=';
+    $order_icon = 'fa-sort';
+
+    if ($type === $order_by) {
+
+        if ($order_dir === 'asc') {
+            $order_url .= 'desc';
+            $order_icon = 'fa-sort-desc';
+        } else {
+            $order_url .= 'asc';
+            $order_icon = 'fa-sort-asc';
+        }
+
+    } else {
+        $order_url .= 'asc';
+    }
+
+    $out .= '<a href="' . $order_url . '"><i class="fa ' . $order_icon . '"></i></a>';
+    $out .= '</span>';
+    $out .= '</div>';
+
+    return $out;
+}
