@@ -32,8 +32,8 @@
                     </div>
                 @endif
 
-                <div class="col mt-3">
-                    @if(!$category->childCategories->isEmpty())
+                @if(!$category->childCategories->isEmpty())
+                    <div class="col mt-3">
                         <label>@lang('category.categories')</label>
                         <br>
                         @foreach($category->childCategories as $category)
@@ -41,8 +41,9 @@
                                 {{ $category->name }}
                             </a>
                         @endforeach
-                    @endif
-                </div>
+                    </div>
+                @endif
+
             </div>
 
         </div>

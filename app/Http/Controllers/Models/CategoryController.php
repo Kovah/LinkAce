@@ -7,22 +7,34 @@ use App\Http\Requests\CategoryDeleteRequest;
 use App\Http\Requests\CategoryStoreRequest;
 use App\Http\Requests\CategoryUpdateRequest;
 use App\Models\Category;
+use Illuminate\Http\Request;
 
 class CategoryController extends Controller
 {
     /**
      * Display a listing of the resource.
      *
+     * @param Request $request
      * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
      */
-    public function index()
+    public function index(Request $request)
     {
-        return view('models.categories.index')
-            ->with('categories', Category::byUser(auth()->user()->id)
-                ->parentOnly()
-                ->orderBy('name', 'ASC')
-                ->paginate(getPaginationLimit())
-            );
+        $categories = Category::byUser(auth()->id())->parentOnly();
+
+        if ($request->has('orderBy') && $request->has('orderDir')) {
+            $categories->orderBy($request->get('orderBy'), $request->get('orderDir'));
+        } else {
+            $categories->orderBy('name', 'ASC');
+        }
+
+        $categories = $categories->paginate(getPaginationLimit());
+
+        return view('models.categories.index', [
+            'categories' => $categories,
+            'route' => $request->getBaseUrl(),
+            'order_by' => $request->get('orderBy'),
+            'order_dir' => $request->get('orderDir'),
+        ]);
     }
 
     /**

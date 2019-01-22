@@ -18,7 +18,7 @@
         </div>
     </div>
 
-    <div class="card mt-3">
+    <div class="card mt-3 mb-3">
         <div class="card-header">
             @lang('link.links')
         </div>

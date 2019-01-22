@@ -2,7 +2,9 @@
     <table class="table table-bordered table-hover mb-0">
         <thead>
         <tr>
-            <th>@lang('tag.name')</th>
+            <th>
+                {!! tableSorter(trans('tag.name'), $route, 'name', $order_by, $order_dir) !!}
+            </th>
             <th>@lang('link.links')</th>
             <th></th>
         </tr>

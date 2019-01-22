@@ -2,10 +2,18 @@
     <table class="table table-bordered table-hover mb-0">
         <thead>
         <tr>
-            <th>@lang('link.link')</th>
-            <th>@lang('link.url')</th>
-            <th>@lang('linkace.added_at')</th>
-            <th>@lang('user.user')</th>
+            <th>
+                {!! tableSorter(trans('link.link'), $route, 'title', $order_by, $order_dir) !!}
+            </th>
+            <th>
+                {!! tableSorter(trans('link.url'), $route, 'url', $order_by, $order_dir) !!}
+            </th>
+            <th>
+                {!! tableSorter(trans('linkace.added_at'), $route, 'created_at', $order_by, $order_dir) !!}
+            </th>
+            <th>
+                {!! tableSorter(trans('user.user'), $route, 'user_id', $order_by, $order_dir) !!}
+            </th>
         </tr>
         </thead>
         <tbody>

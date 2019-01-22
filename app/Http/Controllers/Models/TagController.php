@@ -8,21 +8,34 @@ use App\Http\Requests\TagStoreRequest;
 use App\Http\Requests\TagUpdateRequest;
 use App\Models\Link;
 use App\Models\Tag;
+use Illuminate\Http\Request;
 
 class TagController extends Controller
 {
     /**
      * Display a listing of the resource.
      *
+     * @param Request $request
      * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
      */
-    public function index()
+    public function index(Request $request)
     {
-        return view('models.tags.index')
-            ->with('tags', Tag::byUser(auth()->user()->id)
-                ->orderBy('name', 'ASC')
-                ->paginate(getPaginationLimit())
-            );
+        $tags = Tag::byUser(auth()->id());
+
+        if ($request->has('orderBy') && $request->has('orderDir')) {
+            $tags->orderBy($request->get('orderBy'), $request->get('orderDir'));
+        } else {
+            $tags->orderBy('name', 'ASC');
+        }
+
+        $tags = $tags->paginate(getPaginationLimit());
+
+        return view('models.tags.index', [
+            'tags' => $tags,
+            'route' => $request->getBaseUrl(),
+            'order_by' => $request->get('orderBy'),
+            'order_dir' => $request->get('orderDir'),
+        ]);
     }
 
     /**

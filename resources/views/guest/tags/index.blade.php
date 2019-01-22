@@ -8,7 +8,7 @@
         </h3>
     </header>
 
-    <div class="card my-3">
+    <div class="card my-3 mb-3">
         <div class="card-table">
 
             @if(!$tags->isEmpty())
