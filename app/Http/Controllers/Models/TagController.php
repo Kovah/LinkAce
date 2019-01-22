@@ -78,10 +78,11 @@ class TagController extends Controller
     /**
      * Display the specified resource.
      *
-     * @param  int $id
+     * @param Request $request
+     * @param  int    $id
      * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
      */
-    public function show($id)
+    public function show(Request $request, $id)
     {
         $tag = Tag::find($id);
 
@@ -93,11 +94,24 @@ class TagController extends Controller
             abort(403);
         }
 
-        return view('models.tags.show')
-            ->with('tag', $tag)
-            ->with('tag_links', $tag->links()
-                ->paginate(getPaginationLimit())
-            );
+        // Get links of the category
+        $links = $tag->links()->byUser(auth()->id());
+
+        if ($request->has('orderBy') && $request->has('orderDir')) {
+            $links->orderBy($request->get('orderBy'), $request->get('orderDir'));
+        } else {
+            $links->orderBy('created_at', 'DESC');
+        }
+
+        $links = $links->paginate(getPaginationLimit());
+
+        return view('models.tags.show', [
+            'tag' => $tag,
+            'tag_links' => $links,
+            'route' => $request->getBaseUrl(),
+            'order_by' => $request->get('orderBy'),
+            'order_dir' => $request->get('orderDir'),
+        ]);
     }
 
     /**
