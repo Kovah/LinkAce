@@ -13,7 +13,7 @@
 
                 <div class="form-group">
                     <div class="input-group">
-                        <input type="text" name="query" id="query" required
+                        <input type="text" name="query" id="query"
                             class="form-control form-control-lg{{ $errors->has('query') ? ' is-invalid' : '' }}"
                             placeholder="@lang('search.query')"
                             value="{{ old('query') ?: $query_settings['old_query'] }}">
@@ -27,7 +27,7 @@
 
                 <div class="row">
 
-                    <div class="col-sm d-flex align-items-center small">
+                    <div class="col-sm d-flex align-items-center">
                         <div class="custom-control custom-checkbox">
                             <input type="checkbox" id="search_title" name="search_title" class="custom-control-input"
                                 @if($query_settings['search_title']) checked @endif>
@@ -37,7 +37,7 @@
                         </div>
                     </div>
 
-                    <div class="col-sm d-flex align-items-center small">
+                    <div class="col-sm d-flex align-items-center">
                         <div class="custom-control custom-checkbox">
                             <input type="checkbox" id="search_description" name="search_description"
                                 class="custom-control-input"
@@ -48,7 +48,7 @@
                         </div>
                     </div>
 
-                    <div class="col-sm d-flex align-items-center small">
+                    <div class="col-sm d-flex align-items-center">
                         <div class="custom-control custom-checkbox">
                             <input type="checkbox" id="private_only" name="private_only" class="custom-control-input"
                                 @if($query_settings['private_only']) checked @endif>
@@ -60,11 +60,11 @@
 
                     <div class="w-100 d-xl-none mb-3"></div>
 
-                    <div class="col-sm small mb-2 mb-sm-0">
+                    <div class="col-sm mb-2 mb-sm-0">
                         <label for="only_category" class="d-none" aria-hidden="true">
                             @lang('search.filter_by_category')
                         </label>
-                        <select id="only_category" name="only_category" class="custom-select custom-select-sm">
+                        <select id="only_category" name="only_category" class="custom-select">
                             <option value="0">@lang('search.filter_by_category')</option>
                             @foreach($categories as $category)
                                 <option value="{{ $category->id }}"
@@ -75,26 +75,19 @@
                         </select>
                     </div>
 
-                    <div class="col-sm small mb-2 mb-sm-0">
-                        <label for="only_tag" class="d-none" aria-hidden="true">
+                    <div class="col-sm mb-2 mb-sm-0">
+                        <label for="only_tags" class="d-none" aria-hidden="true">
                             @lang('search.filter_by_tag')
                         </label>
-                        <select id="only_tag" name="only_tag" class="custom-select custom-select-sm">
-                            <option value="0">@lang('search.filter_by_tag')</option>
-                            @foreach($tags as $tag)
-                                <option value="{{ $tag->id }}"
-                                    @if($query_settings['only_tag'] == $tag->id) selected @endif>
-                                    {{ $tag->name }}
-                                </option>
-                            @endforeach
-                        </select>
+                        <input name="only_tags" id="only_tags" type="text" placeholder="@lang('search.filter_by_tag')"
+                            value="{{ $query_settings['only_tags'] }}">
                     </div>
 
-                    <div class="col-sm small">
+                    <div class="col-sm">
                         <label for="order_by" class="d-none" aria-hidden="true">
                             @lang('search.filter_by_tag')
                         </label>
-                        <select id="order_by" name="order_by" class="custom-select custom-select-sm">
+                        <select id="order_by" name="order_by" class="custom-select">
                             <option value="0">@lang('search.order_by')</option>
                             @foreach($order_by_options as $order_by)
                                 <option value="{{ $order_by }}"
@@ -132,3 +125,7 @@
     </div>
 
 @endsection
+
+@push('scripts')
+    @include('actions.search.partials.tags-js')
+@endpush

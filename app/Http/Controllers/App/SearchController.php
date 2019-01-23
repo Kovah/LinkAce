@@ -39,14 +39,11 @@ class SearchController extends Controller
                 'search_description' => false,
                 'private_only' => false,
                 'only_category' => 0,
-                'only_tag' => 0,
+                'only_tags' => '',
                 'order_by' => $this->order_by_options[0],
             ])
             ->with('categories', Category::byUser(auth()->user()->id)
-                ->orderBy('name', 'asc')->get())
-            ->with('tags', Tag::byUser(auth()->user()->id)
-                ->orderBy('name', 'asc')->get()
-            );
+                ->orderBy('name', 'asc')->get());
     }
 
     /**
@@ -55,22 +52,26 @@ class SearchController extends Controller
      */
     public function doSearch(SearchRequest $request)
     {
-        // Get the query
-        $raw_query = $request->get('query');
-        $query = '%' . $raw_query . '%';
+        $search_title = false;
+        $search_description = false;
 
         // Start building the search
-        $search = Link::byUser(auth()->id())
-            ->where('url', 'like', $query);
+        $search = Link::byUser(auth()->id());
 
-        // Also search for the title if applicable
-        if ($search_title = $request->get('search_title', false)) {
-            $search->orWhere('title', 'like', $query);
-        }
+        // Search for the URL
+        if ($raw_query = $request->get('query', false)) {
+            $query = '%' . $raw_query . '%';
+            $search->where('url', 'like', $query);
 
-        // Also search for the title if applicable
-        if ($search_description = $request->get('search_description', false)) {
-            $search->orWhere('description', 'like', $query);
+            // Also search for the title if applicable
+            if ($search_title = $request->get('search_title', false)) {
+                $search->orWhere('title', 'like', $query);
+            }
+
+            // Also search for the title if applicable
+            if ($search_description = $request->get('search_description', false)) {
+                $search->orWhere('description', 'like', $query);
+            }
         }
 
         // Show private only if applicable
@@ -86,9 +87,9 @@ class SearchController extends Controller
         }
 
         // Show by specific tag only if applicable
-        if ($tag_id = $request->get('only_tag', false)) {
-            $search->whereHas('tags', function ($query) use ($tag_id) {
-                $query->where('id', $tag_id);
+        if ($tag_names = $request->get('only_tags', false)) {
+            $search->whereHas('tags', function ($query) use ($tag_names) {
+                $query->whereIn('name', explode(',', $tag_names));
             });
         }
 
@@ -110,13 +111,10 @@ class SearchController extends Controller
                 'search_description' => $search_description,
                 'private_only' => $private_only,
                 'only_category' => $category_id,
-                'only_tag' => $tag_id,
+                'only_tags' => $tag_names,
                 'order_by' => $orderby,
             ])
             ->with('categories', Category::byUser(auth()->user()->id)
-                ->orderBy('name', 'asc')->get())
-            ->with('tags', Tag::byUser(auth()->user()->id)
-                ->orderBy('name', 'asc')->get()
-            );
+                ->orderBy('name', 'asc')->get());
     }
 }
