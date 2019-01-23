@@ -27,7 +27,7 @@
 
                 <div class="row">
 
-                    <div class="col-sm d-flex align-items-center">
+                    <div class="col-md d-flex align-items-center">
                         <div class="custom-control custom-checkbox">
                             <input type="checkbox" id="search_title" name="search_title" class="custom-control-input"
                                 @if($query_settings['search_title']) checked @endif>
@@ -37,7 +37,7 @@
                         </div>
                     </div>
 
-                    <div class="col-sm d-flex align-items-center">
+                    <div class="col-md d-flex align-items-center">
                         <div class="custom-control custom-checkbox">
                             <input type="checkbox" id="search_description" name="search_description"
                                 class="custom-control-input"
@@ -48,7 +48,7 @@
                         </div>
                     </div>
 
-                    <div class="col-sm d-flex align-items-center">
+                    <div class="col-md d-flex align-items-center">
                         <div class="custom-control custom-checkbox">
                             <input type="checkbox" id="private_only" name="private_only" class="custom-control-input"
                                 @if($query_settings['private_only']) checked @endif>
@@ -58,9 +58,10 @@
                         </div>
                     </div>
 
-                    <div class="w-100 d-xl-none mb-3"></div>
+                </div>
+                <div class="row mt-3">
 
-                    <div class="col-sm mb-2 mb-sm-0">
+                    <div class="col-md mb-2 mb-md-0">
                         <label for="only_category" class="d-none" aria-hidden="true">
                             @lang('search.filter_by_category')
                         </label>
@@ -75,7 +76,7 @@
                         </select>
                     </div>
 
-                    <div class="col-sm mb-2 mb-sm-0">
+                    <div class="col-md mb-2 mb-md-0">
                         <label for="only_tags" class="d-none" aria-hidden="true">
                             @lang('search.filter_by_tag')
                         </label>
@@ -83,7 +84,7 @@
                             value="{{ $query_settings['only_tags'] }}">
                     </div>
 
-                    <div class="col-sm">
+                    <div class="col-md">
                         <label for="order_by" class="d-none" aria-hidden="true">
                             @lang('search.filter_by_tag')
                         </label>

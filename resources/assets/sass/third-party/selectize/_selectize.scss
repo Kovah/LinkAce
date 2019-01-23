@@ -7,17 +7,17 @@ $selectize-font-family: inherit !default;
 $selectize-font-size: inherit !default;
 $selectize-line-height: $input-btn-line-height !default; //formerly line-height-computed
 
-$selectize-color-text: gray("800") !default; //$gray-800
-$selectize-color-highlight: rgba(255, 237, 40, 0.4) !default;
+$selectize-color-text: $input-color !default; //$gray-800
+$selectize-color-highlight: $gray-400 !default;
 $selectize-color-input: $input-bg !default;
 $selectize-color-input-full: $input-bg !default;
 $selectize-color-input-error: theme-color("danger") !default;
 $selectize-color-input-error-focus: darken($selectize-color-input-error, 10%) !default;
 $selectize-color-disabled: $input-bg !default;
-$selectize-color-item: #efefef !default;
-$selectize-color-item-border: #999 !default;
+$selectize-color-item: $gray-300 !default;
+$selectize-color-item-border: $gray-500 !default;
 $selectize-color-item-active: $component-active-bg !default;
-$selectize-color-item-active-text: #fff !default;
+$selectize-color-item-active-text: $white !default;
 $selectize-color-item-active-border: rgba(0, 0, 0, 0) !default;
 $selectize-color-optgroup: $dropdown-bg !default;
 $selectize-color-optgroup-text: $dropdown-header-color !default;
@@ -29,9 +29,9 @@ $selectize-color-dropdown-item-active-text: $dropdown-link-hover-color !default;
 $selectize-color-dropdown-item-create-active-text: $dropdown-link-hover-color !default;
 $selectize-opacity-disabled: 0.5 !default;
 $selectize-shadow-input: none !default;
-$selectize-shadow-input-focus: inset 0 1px 2px rgba(0, 0, 0, 0.15) !default;
-$selectize-shadow-input-error: inset 0 1px 1px rgba(0, 0, 0, .075) !default;
-$selectize-shadow-input-error-focus: inset 0 1px 1px rgba(0, 0, 0, .075), 0 0 6px lighten($selectize-color-input-error, 20%) !default;
+$selectize-shadow-input-focus: inset 0 1px 2px rgba($black, 0.15) !default;
+$selectize-shadow-input-error: inset 0 1px 1px rgba($black, .075) !default;
+$selectize-shadow-input-error-focus: inset 0 1px 1px rgba($black, .075), 0 0 6px lighten($selectize-color-input-error, 20%) !default;
 $selectize-border: 1px solid $input-border-color !default;
 $selectize-border-radius: $input-border-radius !default;
 
@@ -57,10 +57,10 @@ $selectize-font-smoothing: inherit !default;
 $selectize-font-size: 13px !default;
 $selectize-line-height: 18px !default;
 
-$selectize-color-text: #303030 !default;
-$selectize-color-border: #d0d0d0 !default;
-$selectize-color-highlight: rgba(125, 168, 208, 0.2) !default;
-$selectize-color-input: #fff !default;
+$selectize-color-text: $gray-800 !default;
+$selectize-color-border: $gray-300 !default;
+$selectize-color-highlight: rgba($black, 0.2) !default;
+$selectize-color-input: $white !default;
 $selectize-color-input-full: $selectize-color-input !default;
 $selectize-color-disabled: #fafafa !default;
 $selectize-color-item: #f2f2f2 !default;
@@ -69,7 +69,7 @@ $selectize-color-item-border: #d0d0d0 !default;
 $selectize-color-item-active: #e8e8e8 !default;
 $selectize-color-item-active-text: $selectize-color-text !default;
 $selectize-color-item-active-border: #cacaca !default;
-$selectize-color-dropdown: #fff !default;
+$selectize-color-dropdown: $white !default;
 $selectize-color-dropdown-border: $selectize-color-border !default;
 $selectize-color-dropdown-border-top: #f0f0f0 !default;
 $selectize-color-dropdown-item-active: #f5fafd !default;
@@ -102,7 +102,7 @@ $selectize-margin-item-x: 3px !default;
 $selectize-margin-item-y: 3px !default;
 
 $selectize-arrow-size: 5px !default;
-$selectize-arrow-color: #808080 !default;
+$selectize-arrow-color: $gray-600 !default;
 $selectize-arrow-offset: 15px !default;
 
 $selectize-caret-margin: 0 2px 0 0 !default;
@@ -166,7 +166,7 @@ $selectize-caret-margin-rtl: 0 4px 0 -2px !default;
   padding: $selectize-padding-y $selectize-padding-x;
   display: inline-block;
   width: 100%;
-  overflow: hidden;
+  //overflow: hidden;
   position: relative;
   z-index: 1;
   @include selectize-box-sizing(border-box);
@@ -386,7 +386,7 @@ $selectize-caret-margin-rtl: 0 4px 0 -2px !default;
     background: #f2f2f2 !important;
     background: rgba(0, 0, 0, 0.06) !important;
     border: 0 none !important;
-    @include selectize-box-shadow(inset 0 0 12px 4px #fff);
+    @include selectize-box-shadow(inset 0 0 12px 4px $white);
   }
 
   .ui-sortable-placeholder::after {
