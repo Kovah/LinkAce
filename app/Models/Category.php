@@ -5,6 +5,8 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Database\Eloquent\SoftDeletes;
+use App\Models\Link;
+use App\Models\User;
 
 /**
  * Class Category
@@ -64,7 +66,7 @@ class Category extends Model
      */
     public function scopeParentOnly($query)
     {
-        return $query->where('parent_category', null);
+        return $query->whereNull('parent_category');
     }
 
     /*
@@ -77,7 +79,7 @@ class Category extends Model
      */
     public function user()
     {
-        return $this->belongsTo('App\Models\User', 'user_id');
+        return $this->belongsTo(User::class, 'user_id');
     }
 
     /**
@@ -85,7 +87,7 @@ class Category extends Model
      */
     public function links()
     {
-        return $this->hasMany('App\Models\Link', 'category_id');
+        return $this->hasMany(Link::class, 'category_id');
     }
 
     /**
@@ -93,7 +95,7 @@ class Category extends Model
      */
     public function childCategories()
     {
-        return $this->hasMany('App\Models\Category', 'parent_category');
+        return $this->hasMany(Category::class, 'parent_category');
     }
 
     /**
@@ -101,6 +103,6 @@ class Category extends Model
      */
     public function parentCategory()
     {
-        return $this->belongsTo('App\Models\Category', 'parent_category');
+        return $this->belongsTo(Category::class, 'parent_category');
     }
 }
