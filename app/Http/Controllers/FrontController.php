@@ -24,6 +24,6 @@ class FrontController extends Controller
             return view('welcome');
         }
 
-        return view('dashboard');
+        return redirect()->route('dashboard');
     }
 }
