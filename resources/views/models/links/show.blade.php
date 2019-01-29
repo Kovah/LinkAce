@@ -55,8 +55,8 @@
 
                                 @if($link->category->parentCategory)
                                     <a href="{{ route('categories.show', [$link->category->parentCategory->id]) }}">
-                                        {{ $link->category->parentCategory->name }} &leftarrow;
-                                    </a>
+                                        {{ $link->category->parentCategory->name }}
+                                    </a>&nbsp;&leftarrow;&nbsp;
                                 @endif
 
                                 <a href="{{ route('categories.show', [$link->category->id]) }}">
