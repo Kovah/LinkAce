@@ -64,6 +64,8 @@ class ImportController extends Controller
                     'updated_at' => Carbon::now(),
                 ]);
 
+                Link::flushCache();
+
                 // Get all tags
                 if (!empty($link['tags'])) {
                     $tags = explode(' ', $link['tags']);
@@ -75,6 +77,8 @@ class ImportController extends Controller
                         ]);
 
                         $new_link->tags()->attach($new_tag->id);
+
+                        Tag::flushCache();
                     }
                 }
 
