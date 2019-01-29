@@ -4,7 +4,7 @@ return [
     'results' => 'results',
 
     'filter_by_category' => 'Filter by Category',
-    'filter_by_tag' => 'Filter by Tag',
+    'filter_by_tag' => 'Filter by Tag(s)',
     'query' => 'Search for...',
     'search_title' => 'Search Title',
     'search_description' => 'Search Description',

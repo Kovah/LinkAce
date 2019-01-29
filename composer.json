@@ -1,9 +1,9 @@
 {
   "name": "kovah/linkace",
-  "description": "A small, selfhosted bookmark manager.",
+  "description": "A small, selfhosted bookmark manager with advanced features, built with Laravel and Docker",
   "license": "MIT",
   "type": "project",
-  "version": "0.0.3",
+  "version": "0.0.4",
   "require": {
     "php": "^7.1.3",
     "doctrine/dbal": "^2.8",

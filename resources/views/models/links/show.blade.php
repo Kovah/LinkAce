@@ -52,6 +52,13 @@
                         <div class="col">
                             @if($link->category)
                                 <label>@lang('category.category'):</label>
+
+                                @if($link->category->parentCategory)
+                                    <a href="{{ route('categories.show', [$link->category->parentCategory->id]) }}">
+                                        {{ $link->category->parentCategory->name }} &leftarrow;
+                                    </a>
+                                @endif
+
                                 <a href="{{ route('categories.show', [$link->category->id]) }}">
                                     {{ $link->category->name }}
                                 </a>

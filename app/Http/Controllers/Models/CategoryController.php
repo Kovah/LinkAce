@@ -61,7 +61,7 @@ class CategoryController extends Controller
         // Set the user ID
         $data['user_id'] = auth()->user()->id;
 
-        $data['parent_category'] = isset($data['parent_category']) && $data['parent_category'] > 0 ?: null;
+        $data['parent_category'] = isset($data['parent_category']) && $data['parent_category'] > 0 ? $data['parent_category'] : null;
 
         // Create the new link
         $link = Category::create($data);
@@ -162,7 +162,7 @@ class CategoryController extends Controller
         $data = $request->all();
 
         // Set the correct parent category
-        $data['parent_category'] = isset($data['parent_category']) && $data['parent_category'] > 0 ?: null;
+        $data['parent_category'] = isset($data['parent_category']) && $data['parent_category'] > 0 ? $data['parent_category'] : null;
 
         // Update the existing category with new data
         $category->update($data);

@@ -21,7 +21,7 @@
                     </a>
                 </td>
                 <td class="text-muted">
-                    <small>{{ formatDateTime($link->created_at) }}</small>
+                    <small>{!! $link->addedAt() !!}</small>
                 </td>
             </tr>
         @endforeach
