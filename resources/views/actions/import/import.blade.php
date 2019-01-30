@@ -8,7 +8,7 @@
         </div>
         <div class="card-body">
 
-            <form action="{{ route('do-import') }}" method="post" enctype="multipart/form-data">
+            <form id="import-form" action="{{ route('do-import') }}" method="post" enctype="multipart/form-data">
                 @csrf
 
                 <p>@lang('import.import_help')</p>
@@ -26,7 +26,8 @@
                     @endif
                 </div>
 
-                <button type="submit" class="btn btn-primary">
+                <button type="submit" class="btn btn-primary import-submit">
+                    <i class="fa"></i>
                     @lang('import.start_import')
                 </button>
 
@@ -36,3 +37,15 @@
     </div>
 
 @endsection
+
+@push('scripts')
+    <script>
+        $('.import-submit').click(function (e) {
+            if ($('#import-form')[0].checkValidity()) {
+                var $btn = $(e.currentTarget);
+                $btn.prop('disabled', true);
+                $btn.find('.fa').addClass('fa-fw fa-circle-notch fa-spin');
+            }
+        })
+    </script>
+@endpush
