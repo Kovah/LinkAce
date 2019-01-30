@@ -62,7 +62,7 @@
                         <div class="form-group">
                             <label for="category_id">@lang('category.category')</label>
                             <select id="category_id" name="category_id"
-                                class="custom-select{{ $errors->has('category_id') ? ' is-invalid' : '' }}">
+                                class="{{ $errors->has('category_id') ? ' is-invalid' : '' }}">
                                 <option value="0">@lang('category.select_category')</option>
                                 @foreach($categories as $category)
                                     <option value="{{ $category->id }}"
@@ -134,8 +134,13 @@
         </div>
     </div>
 
-    @push('scripts')
-        @include('models.links.partials.tags-js')
-    @endpush
-
 @endsection
+
+@push('scripts')
+    <script>
+        $('#category_id').selectize({
+            create: false
+        });
+    </script>
+    @include('models.links.partials.tags-js')
+@endpush
