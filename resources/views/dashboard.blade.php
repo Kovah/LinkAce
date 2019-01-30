@@ -46,6 +46,7 @@
         <ul class="list-group list-group-flush">
             @forelse($recent_links as $link)
                 <a href="{{ route('links.show', [$link->id]) }}" class="list-group-item list-group-item-action">
+                    {!! $link->getIcon('mr-1') !!}
                     {{ $link->title }}
                 </a>
             @empty

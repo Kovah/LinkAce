@@ -16,6 +16,7 @@ use Illuminate\Database\Eloquent\SoftDeletes;
  * @property string                 $url
  * @property string                 $title
  * @property string|null            $description
+ * @property string|null            $icon
  * @property int                    $is_private
  * @property \Carbon\Carbon|null    $created_at
  * @property \Carbon\Carbon|null    $updated_at
@@ -38,6 +39,7 @@ class Link extends RememberedModel
         'url',
         'title',
         'description',
+        'icon',
         'is_private',
     ];
 
@@ -51,8 +53,8 @@ class Link extends RememberedModel
     /**
      * Scope for the user relation
      *
-     * @param    \Illuminate\Database\Eloquent\Builder $query
-     * @param int                                      $user_id
+     * @param Builder $query
+     * @param int     $user_id
      * @return mixed
      */
     public function scopeByUser($query, $user_id)
@@ -82,7 +84,7 @@ class Link extends RememberedModel
      */
     public function user()
     {
-        return $this->belongsTo('App\Models\User', 'user_id');
+        return $this->belongsTo(User::class, 'user_id');
     }
 
     /**
@@ -90,7 +92,7 @@ class Link extends RememberedModel
      */
     public function category()
     {
-        return $this->belongsTo('App\Models\Category', 'category_id');
+        return $this->belongsTo(Category::class, 'category_id');
     }
 
     /**
@@ -98,7 +100,7 @@ class Link extends RememberedModel
      */
     public function tags()
     {
-        return $this->belongsToMany('App\Models\Tag', 'link_tags', 'link_id', 'tag_id');
+        return $this->belongsToMany(Tag::class, 'link_tags', 'link_id', 'tag_id');
     }
 
     /**
@@ -106,7 +108,7 @@ class Link extends RememberedModel
      */
     public function notes()
     {
-        return $this->hasMany('App\Models\Note', 'link_id');
+        return $this->hasMany(Note::class, 'link_id');
     }
 
     /*
@@ -126,6 +128,21 @@ class Link extends RememberedModel
         }
 
         return $tags->implode('name', ',');
+    }
+
+    /**
+     * @param $additional_classes
+     * @return string
+     */
+    public function getIcon($additional_classes = null): string
+    {
+        if ($this->icon === null) {
+            return '';
+        }
+
+        $classes = 'fa-fw ' . $this->icon . ($additional_classes ? ' ' . $additional_classes : '');
+
+        return '<i class="' . $classes . '"></i>';
     }
 
     /**

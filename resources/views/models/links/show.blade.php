@@ -32,6 +32,7 @@
         <div class="card-body">
 
             <h2>
+                {!! $link->getIcon('mr-1') !!}
                 <a href="{{ $link->url }}">{{ $link->title }}</a>
             </h2>
 

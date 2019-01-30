@@ -3,6 +3,7 @@
     <div class="card-header">
         <div class="d-flex align-items-center">
             <div class="mr-2">
+                {!! $link->getIcon('mr-1') !!}
                 <a href="{{ $link->url }}" target="_blank">{{ $link->title }}</a>
                 <small>({{ $link->url }})</small>
             </div>
