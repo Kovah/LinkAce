@@ -2,7 +2,7 @@
 
 namespace App\Models;
 
-use Illuminate\Database\Eloquent\Model as Eloquent;
+use Illuminate\Database\Eloquent\Model as BaseModel;
 use Watson\Rememberable\Rememberable;
 
 /**
@@ -10,7 +10,7 @@ use Watson\Rememberable\Rememberable;
  *
  * @package App\Models
  */
-abstract class Model extends Eloquent
+abstract class RememberedModel extends BaseModel
 {
     use Rememberable;
 

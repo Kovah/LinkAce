@@ -27,7 +27,7 @@ use App\Models\User;
  * @method static Builder|Category parentOnly()
  * @method static Builder|Category byUser($user_id)
  */
-class Category extends Model
+class Category extends RememberedModel
 {
     use SoftDeletes;
 

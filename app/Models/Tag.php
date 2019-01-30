@@ -21,7 +21,7 @@ use Illuminate\Database\Eloquent\SoftDeletes;
  * @property-read User              $user
  * @method static Builder|Tag byUser($user_id)
  */
-class Tag extends Model
+class Tag extends RememberedModel
 {
     use SoftDeletes;
 
