@@ -32,6 +32,7 @@
         <div class="card-body">
 
             <h2>
+                {!! $link->getIcon('mr-1') !!}
                 <a href="{{ $link->url }}">{{ $link->title }}</a>
             </h2>
 
@@ -55,8 +56,8 @@
 
                                 @if($link->category->parentCategory)
                                     <a href="{{ route('categories.show', [$link->category->parentCategory->id]) }}">
-                                        {{ $link->category->parentCategory->name }} &leftarrow;
-                                    </a>
+                                        {{ $link->category->parentCategory->name }}
+                                    </a>&nbsp;&leftarrow;&nbsp;
                                 @endif
 
                                 <a href="{{ route('categories.show', [$link->category->id]) }}">

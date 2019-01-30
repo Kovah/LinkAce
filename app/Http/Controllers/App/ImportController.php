@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\App;
 
 use App\Helper\LinkAce;
+use App\Helper\LinkIconMapper;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\DoImportRequest;
 use App\Models\Link;
@@ -59,6 +60,7 @@ class ImportController extends Controller
                     'url' => $link['uri'],
                     'title' => $title,
                     'description' => $link['note'],
+                    'icon' => LinkIconMapper::mapLink($link['uri']),
                     'is_private' => $link['pub'],
                     'created_at' => Carbon::createFromTimestamp($link['time']),
                     'updated_at' => Carbon::now(),

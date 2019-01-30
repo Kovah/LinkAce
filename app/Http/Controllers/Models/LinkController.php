@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Models;
 
 use App\Helper\LinkAce;
+use App\Helper\LinkIconMapper;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\LinkDeleteRequest;
 use App\Http\Requests\LinkStoreRequest;
@@ -70,6 +71,7 @@ class LinkController extends Controller
 
         // Set the user ID
         $data['user_id'] = auth()->user()->id;
+        $data['icon'] = LinkIconMapper::mapLink($data['url']);
 
         $data['category_id'] = isset($data['category_id']) && $data['category_id'] > 0 ?: null;
 
@@ -183,7 +185,10 @@ class LinkController extends Controller
         }
 
         // Update the existing link with new data
-        $link->update($request->except('tags'));
+        $data = $request->except('tags');
+        $data['icon'] = LinkIconMapper::mapLink($data['url']);
+
+        $link->update($data);
 
         Link::flushCache();
 

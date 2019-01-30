@@ -13,7 +13,7 @@
             <form action="{{ route('links.store') }}" method="POST">
                 @csrf
 
-                <input type="hidden" name="is_private" value="{{ usersettings('private_default') }}">
+                <input type="hidden" name="is_private" value="{{ usersettings('private_default') ?: 0 }}">
 
                 <div class="input-group">
                     <input type="text" id="url" name="url" required
@@ -46,6 +46,7 @@
         <ul class="list-group list-group-flush">
             @forelse($recent_links as $link)
                 <a href="{{ route('links.show', [$link->id]) }}" class="list-group-item list-group-item-action">
+                    {!! $link->getIcon('mr-1') !!}
                     {{ $link->title }}
                 </a>
             @empty

@@ -4,8 +4,9 @@
         <div class="d-flex align-items-center">
             <div class="mr-2">
                 @if($link->is_private)
-                    <i class="fa fa-lock text-muted" title="@lang('link.private')"></i>
+                    <i class="fa fa-lock text-muted mr-1" title="@lang('link.private')"></i>
                 @endif
+                {!! $link->getIcon('mr-1') !!}
                 <a href="{{ $link->url }}">{{ $link->title }}</a>
                 <small>({{ $link->url }})</small>
             </div>
