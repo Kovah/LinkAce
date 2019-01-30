@@ -71,7 +71,8 @@
                                     </option>
                                     @if($category->childCategories)
                                         @foreach($category->childCategories as $child_category)
-                                            <option value="{{ $child_category->id }}">
+                                            <option value="{{ $child_category->id }}"
+                                                @if($link->category_id === $child_category->id) selected @endif>
                                                 &rightarrow; {{ $child_category->name }}
                                             </option>
                                         @endforeach
