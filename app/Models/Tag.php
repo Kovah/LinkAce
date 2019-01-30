@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use App\Scopes\OrderNameScope;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Database\Eloquent\SoftDeletes;
@@ -34,6 +35,16 @@ class Tag extends RememberedModel
     ];
 
     public $rememberCacheTag = 'tag_queries';
+
+    /**
+     * Add the OrderNameScope to the Tag model
+     */
+    protected static function boot()
+    {
+        parent::boot();
+
+        static::addGlobalScope(new OrderNameScope());
+    }
 
     /*
      | ========================================================================
