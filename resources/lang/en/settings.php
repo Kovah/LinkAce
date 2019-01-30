@@ -6,11 +6,15 @@ return [
     'app_settings' => 'Application Settings',
 
     'timezone' => 'Timezone',
-    'private_default' => 'Private Links by default',
-    'private_default_help' => 'Enabling this will make all new links private by default',
     'date_format' => 'Date Format',
     'time_format' => 'Time Format',
     'listitem_count' => 'Number of Items in Lists',
+
+    'private_default' => 'Private Links by default',
+    'private_default_help' => 'Enabling this will make all new links private by default',
+
+    'notes_private_default' => 'Private Notes by default',
+    'notes_private_default_help' => 'Enabling this will make all new notes private by default',
 
     'sharing' => 'Link Sharing',
     'sharing_help' => 'Enable all services you want to display for links, to be able to share them easily with one click.',

@@ -15,7 +15,7 @@
                             @lang('settings.timezone')
                         </label>
                         <select id="timezone" name="timezone"
-                            class="custom-select{{ $errors->has('timezone') ? ' is-invalid' : '' }}">
+                            class="{{ $errors->has('timezone') ? ' is-invalid' : '' }}">
                             @foreach(timezone_identifiers_list() as $key => $zone)
                                 <option value="{{ $zone }}"
                                     @if($user->settings()->get('timezone') === $zone) selected @endif>
@@ -32,10 +32,10 @@
 
                 </div>
                 <div class="col">
-                    
+
                 </div>
             </div>
-            
+
             <div class="row">
                 <div class="col">
 
@@ -59,7 +59,7 @@
                             </p>
                         @endif
                     </div>
-                    
+
                 </div>
                 <div class="col">
 
@@ -69,10 +69,12 @@
                         </label>
                         <select id="notes_private_default" name="notes_private_default"
                             class="custom-select{{ $errors->has('notes_private_default') ? ' is-invalid' : '' }}">
-                            <option value="0" @if($user->settings()->get('notes_private_default') === '0') selected @endif>
+                            <option value="0"
+                                @if($user->settings()->get('notes_private_default') === '0') selected @endif>
                                 @lang('linkace.no')
                             </option>
-                            <option value="1" @if($user->settings()->get('notes_private_default') === '1') selected @endif>
+                            <option value="1"
+                                @if($user->settings()->get('notes_private_default') === '1') selected @endif>
                                 @lang('linkace.yes')
                             </option>
                         </select>
@@ -83,7 +85,7 @@
                             </p>
                         @endif
                     </div>
-                    
+
                 </div>
             </div>
 
@@ -172,3 +174,11 @@
 
     </div>
 </div>
+
+@push('scripts')
+    <script>
+        $('#timezone').selectize({
+            create: false,
+        });
+    </script>
+@endpush
