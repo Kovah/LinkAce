@@ -15,7 +15,7 @@ class DashboardController extends Controller
     public function index()
     {
         $recent_links = Link::byUser(auth()->user()->id)
-            ->orderBy('created_at', 'asc')
+            ->orderBy('created_at', 'DESC')
             ->limit(10)
             ->get();
 
