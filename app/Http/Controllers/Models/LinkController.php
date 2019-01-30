@@ -73,7 +73,7 @@ class LinkController extends Controller
         $data['user_id'] = auth()->user()->id;
         $data['icon'] = LinkIconMapper::mapLink($data['url']);
 
-        $data['category_id'] = isset($data['category_id']) && $data['category_id'] > 0 ?: null;
+        $data['category_id'] = isset($data['category_id']) && $data['category_id'] > 0 ? $data['category_id'] : null;
 
         // Create the new link
         $link = Link::create($data);
