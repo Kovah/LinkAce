@@ -6,7 +6,7 @@
 
         <p>@lang('settings.bookmarklet_help')</p>
 
-        <a href="{{ $bookmarklet_code }}" class="btn btn-primary">
+        <a href="{{ $bookmarklet_code }}" class="btn btn-primary mb-2">
             <i class="fa fa-bookmark fa-mr"></i> @lang('settings.bookmarklet')
         </a>
 
