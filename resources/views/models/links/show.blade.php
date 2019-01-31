@@ -37,7 +37,7 @@
                 <div class="card-header">
                     @lang('sharing.share_link')
                 </div>
-                <div class="card-body">
+                <div class="card-body py-2">
                     <div class="share-links">
                         {!! getShareLinks($link) !!}
                     </div>
@@ -71,7 +71,7 @@
                 <div class="card-header">
                     @lang('category.category')
                 </div>
-                <div class="card-body">
+                <div class="card-body py-2">
                     @if($link->category)
                         @if($link->category->parentCategory)
                             <a href="{{ route('categories.show', [$link->category->parentCategory->id]) }}">
@@ -91,10 +91,10 @@
                 <div class="card-header">
                     @lang('tag.tags')
                 </div>
-                <div class="card-body">
+                <div class="card-body py-2">
                     @if(!$link->tags->isEmpty())
                         @foreach($link->tags as $tag)
-                            <a href="{{ route('tags.show', [$tag->id]) }}" class="badge badge-light">
+                            <a href="{{ route('tags.show', [$tag->id]) }}" class="badge badge-primary badge-pill">
                                 {{ $tag->name }}
                             </a>
                         @endforeach

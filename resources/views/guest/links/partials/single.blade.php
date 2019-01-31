@@ -37,7 +37,7 @@
                     @if($link->tags->count() > 0)
                         <label>@lang('tag.tags'):</label>
                         @foreach($link->tags as $tag)
-                            <a href="{{ route('guest.tags.show', [$tag->id]) }}" class="badge badge-light">
+                            <a href="{{ route('guest.tags.show', [$tag->id]) }}" class="badge badge-primary badge-pill">
                                 {{ $tag->name }}
                             </a>
                         @endforeach
