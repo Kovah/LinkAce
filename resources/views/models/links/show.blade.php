@@ -5,6 +5,7 @@
     <div class="card">
         <header class="card-header d-flex align-items-center">
             <span class="mr-3">
+                {!! $link->getIcon('mr-2') !!}
                 @lang('link.link')
                 @if($link->is_private)
                     <i class="fa fa-lock" title="@lang('link.private')"></i>
@@ -32,15 +33,13 @@
         <div class="card-body">
 
             <h2>
-                {!! $link->getIcon('mr-1') !!}
                 <a href="{{ $link->url }}">{{ $link->title }}</a>
             </h2>
-
-            <div class="text-muted">
+            <div class="text-muted small mt-1 mb-3">
                 <a href="{{ $link->url }}">{{ $link->url }}</a>
             </div>
 
-            <div class="row mt-3">
+            <div class="row">
                 @if($link->description)
                     <div class="col">
                         {{ $link->description }}
