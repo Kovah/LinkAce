@@ -66,8 +66,13 @@ class LinkController extends Controller
         // Save the new link
         $data = $request->except(['tags', 'reload_view']);
 
-        // Try to get the <title> of the URL if no title was provided
-        $data['title'] = $data['title'] ?? LinkAce::getTitleFromURL($data['url']);
+        // Try to get the meta information of the URL if no title / description was provided
+        $link_meta = LinkAce::getMetaFromURL($data['url']);
+
+        dd($link_meta);
+
+        $data['title'] = $data['title'] ?: $link_meta['title'];
+        $data['description'] = $data['description'] ?: $link_meta['description'];
 
         // Set the user ID
         $data['user_id'] = auth()->user()->id;

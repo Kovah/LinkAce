@@ -52,14 +52,16 @@ class ImportController extends Controller
                 $skipped++;
             } else {
 
-                $title = $link['title'] ?: LinkAce::getTitleFromURL($link['uri']);
+                $link_meta = LinkAce::getMetaFromURL($link['uri']);
+
+                $title = $link['title'] ?: $link_meta['title'];
 
                 $new_link = Link::create([
                     'user_id' => $user_id,
                     'category_id' => null,
                     'url' => $link['uri'],
                     'title' => $title,
-                    'description' => $link['note'],
+                    'description' => $link['note'] ?: $link_meta['description'],
                     'icon' => LinkIconMapper::mapLink($link['uri']),
                     'is_private' => $link['pub'],
                     'created_at' => Carbon::createFromTimestamp($link['time']),
