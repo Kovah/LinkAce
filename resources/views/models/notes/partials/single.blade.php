@@ -1,8 +1,10 @@
-<div class="card card-body p-2 mb-3">
+<div class="card card-body p-3 mb-3">
 
-    <div class="note-content">{{ $note->note }}</div>
+    <div class="note-content small">
+        {{ $note->note }}
+    </div>
     <div class="note-meta mt-2 small d-flex align-items-center">
-        <div class="ml-auto mr-2">
+        <div class="ml-auto mr-2 text-muted">
             @if($note->is_private)
                 <i class="fa fa-lock fa-fw cursor-help" title="@lang('note.private')"></i>
             @endif
