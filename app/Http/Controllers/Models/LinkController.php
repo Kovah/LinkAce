@@ -69,8 +69,6 @@ class LinkController extends Controller
         // Try to get the meta information of the URL if no title / description was provided
         $link_meta = LinkAce::getMetaFromURL($data['url']);
 
-        dd($link_meta);
-
         $data['title'] = $data['title'] ?: $link_meta['title'];
         $data['description'] = $data['description'] ?: $link_meta['description'];
 
