@@ -33,4 +33,11 @@ return [
     'new_password2' => 'Repeat new Password',
     'password_updated' => 'Password changed successfully!',
     'old_password_invalid' => 'The old password is not valid!',
+
+    'api_token' => 'API Token',
+    'api_token_generate' => 'Generate Token',
+    'api_token_generate_confirm' => 'Do you really want to generate a new token?',
+    'api_token_help' => 'The API token can be used to access LinkAce from other application or scripts as well as running the cron job which checks links if they exist and runs the backup tasks.',
+    'api_token_generate_info' => 'Caution: If you already have an API token, generating a new one will break all existing integrations as well as the cron job!',
+    'api_token_generate_failure' => 'A new API token could not be generated. Please check your browser console and application logs for more information.',
 ];

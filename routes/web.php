@@ -61,6 +61,7 @@ Route::group(['middleware' => ['auth']], function () {
     Route::post('settings/account', 'App\UserSettingsController@saveAccountSettings')->name('save-settings-account');
     Route::post('settings/app', 'App\UserSettingsController@saveAppSettings')->name('save-settings-app');
     Route::post('settings/change-password', 'App\UserSettingsController@changeUserPassword')->name('change-user-password');
+    Route::post('settings/generate-api-token', 'App\UserSettingsController@generateApiToken')->name('generate-api-token');
 
     Route::post('ajax/tags', 'API\AjaxController@getTags')->name('ajax-tags');
 });
