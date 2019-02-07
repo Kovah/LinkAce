@@ -29,7 +29,7 @@ RUN npm run build
 
 # ================================
 # Prepare the final image
-FROM bitnami/php-fpm:7.2
+FROM bitnami/php-fpm:7.2-prod
 
 COPY ./ /app
 
