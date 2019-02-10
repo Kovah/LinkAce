@@ -35,6 +35,8 @@ Route::prefix('bookmarklet')->group(function () {
     Route::get('login', 'App\BookmarkletController@getLoginForm')->name('bookmarklet-login');
 });
 
+Route::get('cron/{token}', 'API\CronController@run')->name('cron');
+
 // Model routes
 Route::group(['middleware' => ['auth']], function () {
     Route::get('dashboard', 'App\DashboardController@index')->name('dashboard');
