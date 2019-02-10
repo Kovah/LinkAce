@@ -65,6 +65,10 @@ Route::group(['middleware' => ['auth']], function () {
     Route::post('settings/change-password', 'App\UserSettingsController@changeUserPassword')->name('change-user-password');
     Route::post('settings/generate-api-token', 'App\UserSettingsController@generateApiToken')->name('generate-api-token');
 
+    Route::get('settings/system', 'App\SystemSettingsController@getSystemSettings')->name('get-sysstemsettings');
+    Route::post('settings/system', 'App\SystemSettingsController@saveSystemSettings')->name('save-settings-system');
+    Route::post('settings/generate-cron-token', 'App\SystemSettingsController@generateCronToken')->name('generate-cron-token');
+
     Route::post('ajax/tags', 'API\AjaxController@getTags')->name('ajax-tags');
 });
 

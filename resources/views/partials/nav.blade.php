@@ -94,6 +94,12 @@
                             <a href="{{ route('get-export') }}" class="dropdown-item">
                                 @lang('export.export')
                             </a>
+                            @role('admin')
+                                <div class="dropdown-divider"></div>
+                                <a href="{{ route('get-sysstemsettings') }}" class="dropdown-item">
+                                    @lang('settings.system_settings')
+                                </a>
+                            @endrole
                         </div>
                     </li>
                 @endguest
