@@ -1,5 +1,7 @@
 <?php
 
+use App\Models\Setting;
+
 /**
  * Shorthand for the current user settings
  *
@@ -17,6 +19,21 @@ function usersettings(string $key = '')
     }
 
     return auth()->user()->settings();
+}
+
+/**
+ * Retrieve system settings
+ *
+ * @param string $key
+ * @return mixed
+ */
+function systemsettings(string $key = '')
+{
+    if ($key === '') {
+        return Setting::systemOnly()->get();
+    }
+
+    return Setting::systemOnly()->where('key', $key)->pluck('value')->first() ?: null;
 }
 
 /**

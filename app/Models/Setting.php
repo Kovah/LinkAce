@@ -52,6 +52,6 @@ class Setting extends Model
      */
     public function scopeSystemOnly($query)
     {
-        return $query->where('user_id', null);
+        return $query->whereNull('user_id');
     }
 }
