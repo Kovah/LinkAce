@@ -18,6 +18,7 @@ use Illuminate\Database\Eloquent\SoftDeletes;
  * @property string|null            $description
  * @property string|null            $icon
  * @property int                    $is_private
+ * @property int                    $status
  * @property \Carbon\Carbon|null    $created_at
  * @property \Carbon\Carbon|null    $updated_at
  * @property string|null            $deleted_at
@@ -41,6 +42,7 @@ class Link extends RememberedModel
         'description',
         'icon',
         'is_private',
+        'status',
     ];
 
     public $rememberCacheTag = 'link_queries';
@@ -131,18 +133,34 @@ class Link extends RememberedModel
     }
 
     /**
-     * @param $additional_classes
+     * @param string|null $additional_classes
      * @return string
      */
-    public function getIcon($additional_classes = null): string
+    public function getIcon(?string $additional_classes = null): string
     {
         if ($this->icon === null) {
             return '';
         }
 
-        $classes = 'fa-fw ' . $this->icon . ($additional_classes ? ' ' . $additional_classes : '');
+        $icon = $this->icon;
+        $title = null;
 
-        return '<i class="' . $classes . '"></i>';
+        // Override the icon by status if applicable
+        if ($this->status === 2) {
+            $icon = 'fa fa-external-link-alt text-warning';
+            $title = trans('link.status.2');
+        }
+
+        if ($this->status === 3) {
+            $icon = 'fa fa-unlink text-danger';
+            $title = trans('link.status.3');
+        }
+
+        // Build the correct attributes
+        $classes = 'fa-fw ' . $icon . ($additional_classes ? ' ' . $additional_classes : '');
+        $title = $title ? ' title="' . $title . '"' : '';
+
+        return '<i class="' . $classes . '" ' . $title . '></i>';
     }
 
     /**

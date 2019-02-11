@@ -19,6 +19,12 @@ return [
     'title' => 'Title',
     'description' => 'Description',
 
+    'status' => [
+        '1' => 'Working',
+        '2' => 'Moved',
+        '3' => 'Broken',
+    ],
+
     'author' => 'by :user',
 
     'external_link' => 'External Link',
