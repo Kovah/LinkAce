@@ -35,6 +35,8 @@ Route::prefix('bookmarklet')->group(function () {
     Route::get('login', 'App\BookmarkletController@getLoginForm')->name('bookmarklet-login');
 });
 
+Route::get('cron/{token}', 'API\CronController@run')->name('cron');
+
 // Model routes
 Route::group(['middleware' => ['auth']], function () {
     Route::get('dashboard', 'App\DashboardController@index')->name('dashboard');
@@ -61,6 +63,11 @@ Route::group(['middleware' => ['auth']], function () {
     Route::post('settings/account', 'App\UserSettingsController@saveAccountSettings')->name('save-settings-account');
     Route::post('settings/app', 'App\UserSettingsController@saveAppSettings')->name('save-settings-app');
     Route::post('settings/change-password', 'App\UserSettingsController@changeUserPassword')->name('change-user-password');
+    Route::post('settings/generate-api-token', 'App\UserSettingsController@generateApiToken')->name('generate-api-token');
+
+    Route::get('settings/system', 'App\SystemSettingsController@getSystemSettings')->name('get-sysstemsettings');
+    Route::post('settings/system', 'App\SystemSettingsController@saveSystemSettings')->name('save-settings-system');
+    Route::post('settings/generate-cron-token', 'App\SystemSettingsController@generateCronToken')->name('generate-cron-token');
 
     Route::post('ajax/tags', 'API\AjaxController@getTags')->name('ajax-tags');
 });

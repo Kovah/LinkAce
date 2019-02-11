@@ -10,6 +10,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Validator;
+use Illuminate\Support\Str;
 
 /**
  * Class UserSettingsController
@@ -117,5 +118,24 @@ class UserSettingsController extends Controller
 
         alert(trans('settings.password_updated'), 'success');
         return redirect()->back();
+    }
+
+    /**
+     * Generate a new API token for the current user
+     *
+     * @param Request $request
+     * @return \Illuminate\Http\JsonResponse
+     */
+    public function generateApiToken(Request $request)
+    {
+        $new_token = Str::random(32);
+
+        $user = auth()->user();
+        $user->api_token = $new_token;
+        $user->save();
+
+        return response()->json([
+            'new_token' => $new_token,
+        ]);
     }
 }

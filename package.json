@@ -1,6 +1,6 @@
 {
   "name": "linkace",
-  "version": "0.0.6",
+  "version": "0.0.7",
   "description": "A small, selfhosted bookmark manager with advanced features, built with Laravel and Docker",
   "homepage": "https://github.com/Kovah/LinkAce",
   "repository": {
@@ -40,11 +40,11 @@
     "uglifyify": "^5.0.1"
   },
   "dependencies": {
-    "@fortawesome/fontawesome-free": "^5.6.3",
+    "@fortawesome/fontawesome-free": "^5.7.1",
     "bootstrap": "^4.2.1",
     "font-awesome": "^4.7.0",
     "jquery": "^3.3.1",
-    "popper.js": "^1.14.6",
+    "popper.js": "^1.14.7",
     "selectize": "^0.12.6"
   }
 }

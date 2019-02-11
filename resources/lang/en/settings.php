@@ -4,6 +4,7 @@ return [
     'user_settings' => 'User Settings',
     'account_settings' => 'Account Settings',
     'app_settings' => 'Application Settings',
+    'system_settings' => 'System Settings',
 
     'timezone' => 'Timezone',
     'date_format' => 'Date Format',
@@ -33,4 +34,19 @@ return [
     'new_password2' => 'Repeat new Password',
     'password_updated' => 'Password changed successfully!',
     'old_password_invalid' => 'The old password is not valid!',
+
+    'api_token' => 'API Token',
+    'api_token_generate' => 'Generate Token',
+    'api_token_generate_confirm' => 'Do you really want to generate a new token?',
+    'api_token_help' => 'The API token can be used to access LinkAce from other application or scripts.',
+    'api_token_generate_info' => 'Caution: If you already have an API token, generating a new one will break all existing integrations!',
+    'api_token_generate_failure' => 'A new API token could not be generated. Please check your browser console and application logs for more information.',
+
+    'cron_token' => 'Cron Token',
+    'cron_token_generate' => 'Generate Token',
+    'cron_token_generate_confirm' => 'Do you really want to generate a new token?',
+    'cron_token_help' => 'The cron token is needed to run the cron service which checks for dead links or running backups.',
+    'cron_token_url' => 'Point your cron to the following URL: <span id="cron-url">:route</span>',
+    'cron_token_generate_info' => 'Caution: If you already have an cron token, generating a new one will break the existing cron job!',
+    'cron_token_generate_failure' => 'A new cron token could not be generated. Please check your browser console and application logs for more information.',
 ];

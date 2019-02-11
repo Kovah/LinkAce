@@ -14,14 +14,14 @@ use Illuminate\Support\Facades\Hash;
  *
  * @package App\Console\Commands
  */
-class RegisterUser extends Command
+class RegisterUserCommand extends Command
 {
     /**
      * The name and signature of the console command.
      *
      * @var string
      */
-    protected $signature = 'registeruser {name : Username} {email : User email address}';
+    protected $signature = 'registeruser {name? : Username} {email? : User email address}';
 
     /**
      * The console command description.
@@ -29,6 +29,11 @@ class RegisterUser extends Command
      * @var string
      */
     protected $description = 'Register a new user';
+
+    private $user_roles = [
+        'admin',
+        'user',
+    ];
 
     /**
      * RegisterUser constructor.
@@ -49,16 +54,12 @@ class RegisterUser extends Command
         $email = $this->argument('email');
 
         if (empty($name)) {
-            $this->warn('Name is missing!');
-            return;
+            $name = $this->ask('Please enter the user name:');
         }
 
         if (empty($email)) {
-            $this->warn('Email address is missing!');
-            return;
+            $email = $this->ask('Please enter the user email address:');
         }
-
-        $password = $this->secret('Please enter a password for ' . $name);
 
         // Check if the user exists
         if (User::where('email', $email)->first()) {
@@ -66,11 +67,17 @@ class RegisterUser extends Command
             return;
         }
 
+        $password = $this->secret('Please enter a password for ' . $name);
+
+        $role = $this->choice('Please choose the user role:', $this->user_roles, 'user');
+
         $new_user = User::create([
             'name' => $name,
             'email' => $email,
             'password' => Hash::make($password),
         ]);
+
+        $new_user->assignRole($role);
 
         $this->info('User ' . $name . ' registered.');
         return;
