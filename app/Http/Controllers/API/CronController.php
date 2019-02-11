@@ -16,7 +16,7 @@ class CronController extends Controller
     /**
      * @param Request     $request
      * @param null|string $cron_token
-     * @return void
+     * @return \Illuminate\Contracts\Routing\ResponseFactory|\Illuminate\Http\Response
      */
     public function run(Request $request, $cron_token)
     {
@@ -27,5 +27,7 @@ class CronController extends Controller
 
         // Run all cron tasks
         Artisan::call('schedule:run');
+
+        return response('Cron successfully executed');
     }
 }
