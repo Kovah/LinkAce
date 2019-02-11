@@ -14,7 +14,7 @@ use Illuminate\Support\Facades\Hash;
  *
  * @package App\Console\Commands
  */
-class RegisterUser extends Command
+class RegisterUserCommand extends Command
 {
     /**
      * The name and signature of the console command.
