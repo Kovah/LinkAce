@@ -2,6 +2,8 @@
 
 @section('content')
 
-    @include('actions.settings.partials.cron')
+    @include('actions.settings.partials.system.cron')
+
+    @include('actions.settings.partials.system.general-settings')
 
 @endsection

@@ -19,19 +19,37 @@ class SystemSettingsController extends Controller
      */
     public function getSystemSettings()
     {
-        if (!auth()->user()->hasRole('admin')) {
-            abort(403);
-        }
-
         return view('actions.settings.system');
     }
 
     /**
+     * Syve the new system settings to the database
+     *
      * @param Request $request
+     * @return \Illuminate\Http\RedirectResponse
      */
     public function saveSystemSettings(Request $request)
     {
-        //
+        $request->validate([
+            'system_guest_access' => 'numeric',
+        ]);
+
+        $settings = $request->except(['_token']);
+
+        foreach ($settings as $key => $value) {
+            Setting::updateOrCreate([
+                'key' => $key,
+                'user_id' => null,
+            ], [
+                'key' => $key,
+                'value' => $value,
+                'user_id' => null,
+            ]);
+        }
+
+        alert(trans('settings.settings_saved'));
+
+        return redirect()->back();
     }
 
     /**
@@ -42,10 +60,6 @@ class SystemSettingsController extends Controller
      */
     public function generateCronToken(Request $request)
     {
-        if (!auth()->user()->hasRole('admin')) {
-            abort(403);
-        }
-
         $new_token = Str::random(32);
 
         Setting::updateOrCreate(

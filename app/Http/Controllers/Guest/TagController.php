@@ -9,30 +9,6 @@ use Illuminate\Http\Request;
 class TagController extends Controller
 {
     /**
-     * Display a listing of the resource.
-     *
-     * @param Request $request
-     * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
-     */
-    public function index(Request $request)
-    {
-        if ($request->has('orderBy') && $request->has('orderDir')) {
-            $tags = Tag::orderBy($request->get('orderBy'), $request->get('orderDir'));
-        } else {
-            $tags = Tag::orderBy('name', 'ASC');
-        }
-
-        $tags = $tags->paginate(getPaginationLimit());
-
-        return view('guest.tags.index', [
-            'tags' => $tags,
-            'route' => $request->fullUrl(),
-            'order_by' => $request->get('orderBy'),
-            'order_dir' => $request->get('orderDir'),
-        ]);
-    }
-
-    /**
      * Display the specified resource.
      *
      * @param Request $request

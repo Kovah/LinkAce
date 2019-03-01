@@ -9,32 +9,6 @@ use Illuminate\Http\Request;
 class CategoryController extends Controller
 {
     /**
-     * Display a listing of the resource.
-     *
-     * @param Request $request
-     * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
-     */
-    public function index(Request $request)
-    {
-        $categories = Category::parentOnly();
-
-        if ($request->has('orderBy') && $request->has('orderDir')) {
-            $categories->orderBy($request->get('orderBy'), $request->get('orderDir'));
-        } else {
-            $categories->orderBy('name', 'ASC');
-        }
-
-        $categories = $categories->paginate(getPaginationLimit());
-
-        return view('guest.categories.index', [
-            'categories' => $categories,
-            'route' => $request->fullUrl(),
-            'order_by' => $request->get('orderBy'),
-            'order_dir' => $request->get('orderDir'),
-        ]);
-    }
-
-    /**
      * Display the specified resource.
      *
      * @param Request $request

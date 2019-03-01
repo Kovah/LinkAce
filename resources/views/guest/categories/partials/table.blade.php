@@ -11,9 +11,6 @@
             <th class="text-right">
                 @lang('link.links')
             </th>
-            <th>
-                {!! tableSorter(trans('user.user'), $route, 'user_id', $order_by, $order_dir) !!}
-            </th>
         </tr>
         </thead>
         <tbody>

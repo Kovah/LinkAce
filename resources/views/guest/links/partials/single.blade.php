@@ -55,12 +55,6 @@
                     </small>
                 </div>
 
-                <div>
-                    <small>
-                        @lang('link.author', ['user' => $link->user->name])
-                    </small>
-                </div>
-
             </div>
         </div>
 
