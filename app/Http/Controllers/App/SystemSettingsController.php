@@ -23,11 +23,33 @@ class SystemSettingsController extends Controller
     }
 
     /**
+     * Syve the new system settings to the database
+     *
      * @param Request $request
+     * @return \Illuminate\Http\RedirectResponse
      */
     public function saveSystemSettings(Request $request)
     {
-        //
+        $request->validate([
+            'system_guest_access' => 'numeric',
+        ]);
+
+        $settings = $request->except(['_token']);
+
+        foreach ($settings as $key => $value) {
+            Setting::updateOrCreate([
+                'key' => $key,
+                'user_id' => null,
+            ], [
+                'key' => $key,
+                'value' => $value,
+                'user_id' => null,
+            ]);
+        }
+
+        alert(trans('settings.settings_saved'));
+
+        return redirect()->back();
     }
 
     /**

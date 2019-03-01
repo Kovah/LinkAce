@@ -62,36 +62,37 @@ Route::group(['middleware' => ['auth']], function () {
     Route::get('settings', 'App\UserSettingsController@getUserSettings')->name('get-usersettings');
     Route::post('settings/account', 'App\UserSettingsController@saveAccountSettings')->name('save-settings-account');
     Route::post('settings/app', 'App\UserSettingsController@saveAppSettings')->name('save-settings-app');
-    Route::post('settings/change-password', 'App\UserSettingsController@changeUserPassword')->name('change-user-password');
-    Route::post('settings/generate-api-token', 'App\UserSettingsController@generateApiToken')->name('generate-api-token');
+    Route::post('settings/change-password',
+        'App\UserSettingsController@changeUserPassword')->name('change-user-password');
+    Route::post('settings/generate-api-token',
+        'App\UserSettingsController@generateApiToken')->name('generate-api-token');
 
     Route::get('settings/system', 'App\SystemSettingsController@getSystemSettings')->name('get-sysstemsettings');
     Route::post('settings/system', 'App\SystemSettingsController@saveSystemSettings')->name('save-settings-system');
-    Route::post('settings/generate-cron-token', 'App\SystemSettingsController@generateCronToken')->name('generate-cron-token');
+    Route::post('settings/generate-cron-token',
+        'App\SystemSettingsController@generateCronToken')->name('generate-cron-token');
 
     Route::post('ajax/tags', 'API\AjaxController@getTags')->name('ajax-tags');
 });
 
 // Guest access routes
-if (env('GUEST_ACCESS', false)) {
-    Route::prefix('guest')->middleware(['guest'])->group(function () {
+Route::prefix('guest')->middleware(['guestaccess'])->group(function () {
 
-        Route::resource('categories', 'Guest\CategoryController')
-            ->only(['show'])
-            ->names([
-                'show' => 'guest.categories.show',
-            ]);
+    Route::resource('categories', 'Guest\CategoryController')
+        ->only(['show'])
+        ->names([
+            'show' => 'guest.categories.show',
+        ]);
 
-        Route::resource('links', 'Guest\LinkController')
-            ->only(['index'])
-            ->names([
-                'index' => 'guest.links.index',
-            ]);
+    Route::resource('links', 'Guest\LinkController')
+        ->only(['index'])
+        ->names([
+            'index' => 'guest.links.index',
+        ]);
 
-        Route::resource('tags', 'Guest\TagController')
-            ->only(['show'])
-            ->names([
-                'show' => 'guest.tags.show',
-            ]);
-    });
-}
+    Route::resource('tags', 'Guest\TagController')
+        ->only(['show'])
+        ->names([
+            'show' => 'guest.tags.show',
+        ]);
+});

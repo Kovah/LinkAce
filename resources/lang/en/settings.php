@@ -42,6 +42,10 @@ return [
     'api_token_generate_info' => 'Caution: If you already have an API token, generating a new one will break all existing integrations!',
     'api_token_generate_failure' => 'A new API token could not be generated. Please check your browser console and application logs for more information.',
 
+    'sys_page_title' => 'Page Title',
+    'sys_guest_access' => 'Enable Guest Access',
+    'sys_guest_access_help' => 'If enabled, guest will be able to see all links that are not private.',
+
     'cron_token' => 'Cron Token',
     'cron_token_generate' => 'Generate Token',
     'cron_token_generate_confirm' => 'Do you really want to generate a new token?',
