@@ -3,13 +3,8 @@
 @section('content')
 
     <div class="card">
-        <header class="card-header d-flex align-items-center">
-            <span class="mr-3">
-                @lang('category.category')
-            </span>
-            <div class="ml-auto">
-                @lang('category.author', ['user' => $category->user->name])
-            </div>
+        <header class="card-header">
+            @lang('category.category')
         </header>
         <div class="card-body">
 

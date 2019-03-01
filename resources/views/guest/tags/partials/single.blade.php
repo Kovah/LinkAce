@@ -7,7 +7,4 @@
     <td>
         {{ $tag->links->count() }}
     </td>
-    <td>
-        {{ $tag->user->name }}
-    </td>
 </tr>

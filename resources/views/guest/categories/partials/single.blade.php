@@ -13,7 +13,4 @@
     <td class="text-right">
         <small>{{ $category->links->count() }}</small>
     </td>
-    <td>
-        {{ $category->user->name }}
-    </td>
 </tr>

@@ -12,7 +12,4 @@
             {!! $link->addedAt() !!}
         </small>
     </td>
-    <td>
-        {{ $link->user->name }}
-    </td>
 </tr>
