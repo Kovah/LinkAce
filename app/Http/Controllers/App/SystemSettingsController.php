@@ -19,10 +19,6 @@ class SystemSettingsController extends Controller
      */
     public function getSystemSettings()
     {
-        if (!auth()->user()->hasRole('admin')) {
-            abort(403);
-        }
-
         return view('actions.settings.system');
     }
 
@@ -42,10 +38,6 @@ class SystemSettingsController extends Controller
      */
     public function generateCronToken(Request $request)
     {
-        if (!auth()->user()->hasRole('admin')) {
-            abort(403);
-        }
-
         $new_token = Str::random(32);
 
         Setting::updateOrCreate(

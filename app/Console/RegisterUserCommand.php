@@ -30,11 +30,6 @@ class RegisterUserCommand extends Command
      */
     protected $description = 'Register a new user';
 
-    private $user_roles = [
-        'admin',
-        'user',
-    ];
-
     /**
      * RegisterUser constructor.
      */
@@ -69,15 +64,11 @@ class RegisterUserCommand extends Command
 
         $password = $this->secret('Please enter a password for ' . $name);
 
-        $role = $this->choice('Please choose the user role:', $this->user_roles, 'user');
-
         $new_user = User::create([
             'name' => $name,
             'email' => $email,
             'password' => Hash::make($password),
         ]);
-
-        $new_user->assignRole($role);
 
         $this->info('User ' . $name . ' registered.');
         return;
