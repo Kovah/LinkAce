@@ -77,9 +77,8 @@ if (env('GUEST_ACCESS', false)) {
     Route::prefix('guest')->middleware(['guest'])->group(function () {
 
         Route::resource('categories', 'Guest\CategoryController')
-            ->only(['index', 'show'])
+            ->only(['show'])
             ->names([
-                'index' => 'guest.categories.index',
                 'show' => 'guest.categories.show',
             ]);
 
@@ -90,9 +89,8 @@ if (env('GUEST_ACCESS', false)) {
             ]);
 
         Route::resource('tags', 'Guest\TagController')
-            ->only(['index', 'show'])
+            ->only(['show'])
             ->names([
-                'index' => 'guest.tags.index',
                 'show' => 'guest.tags.show',
             ]);
     });

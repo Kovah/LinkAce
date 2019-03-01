@@ -16,16 +16,6 @@
                         @lang('link.links')
                     </a>
                 </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="{{ route('guest.categories.index') }}">
-                        @lang('category.categories')
-                    </a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="{{ route('guest.tags.index') }}">
-                        @lang('tag.tags')
-                    </a>
-                </li>
             </ul>
             <ul class="navbar-nav ml-auto">
                 <li class="nav-item">
