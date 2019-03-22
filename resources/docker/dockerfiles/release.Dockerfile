@@ -43,6 +43,9 @@ RUN install_packages mysql-client
 COPY --from=builder /app/vendor /app/vendor
 COPY --from=builder /app/bootstrap/cache /app/bootstrap/cache
 
+# Publish package resources
+RUN php artisan vendor:publish --provider="Spatie\Backup\BackupServiceProvider"
+
 # Copy files from the theme build
 COPY --from=npm_builder /srv/public /app/public
 
