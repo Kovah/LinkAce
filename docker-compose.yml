@@ -22,7 +22,9 @@ services:
   # --- PHP 7.2
   php:
     container_name: "linkace-php"
-    image: bitnami/php-fpm:7.2
+    build:
+      context: .
+      dockerfile: ./resources/docker/dockerfiles/development.Dockerfile
     depends_on:
       - db
     volumes:
