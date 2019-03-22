@@ -6,6 +6,8 @@ FROM bitnami/php-fpm:7.2 AS builder
 
 # Make composer files available in the container
 COPY ./ /app
+COPY ./.env.example /app/.env
+
 WORKDIR /app
 
 # Install dependencies using Composer
