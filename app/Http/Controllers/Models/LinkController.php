@@ -48,10 +48,13 @@ class LinkController extends Controller
      */
     public function create()
     {
+        // Reset the bookmarklet session identifier to prevent issues on regular pages
+        session()->forget('bookmarklet.create');
+
         return view('models.links.create')
             ->with('categories', Category::parentOnly()
                 ->byUser(auth()->user()->id)
-                ->orderBy('name', 'asc')
+                ->orderBy('name')
                 ->get());
     }
 
