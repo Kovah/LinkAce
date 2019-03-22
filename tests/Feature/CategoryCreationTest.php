@@ -2,7 +2,7 @@
 
 namespace Tests\Feature;
 
-use App\Http\Controllers\CategoryController;
+use App\Http\Controllers\Models\CategoryController;
 use App\Http\Requests\CategoryStoreRequest;
 use App\Models\User;
 use Illuminate\Foundation\Testing\DatabaseMigrations;

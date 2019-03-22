@@ -36,12 +36,20 @@ COPY ./ /app
 # Copy the PHP config files
 COPY ./resources/docker/php/php.ini /opt/bitnami/php/etc/conf.d/php.ini
 
+# Install MySQL Dump for automated backups
+RUN install_packages mysql-client
+
 # Copy files from the composer build
 COPY --from=builder /app/vendor /app/vendor
 COPY --from=builder /app/bootstrap/cache /app/bootstrap/cache
+
+# Publish package resources
+RUN php artisan vendor:publish --provider="Spatie\Backup\BackupServiceProvider"
 
 # Copy files from the theme build
 COPY --from=npm_builder /srv/public /app/public
 
 # Cleanup dev stuff from final image
 RUN rm -rf /app/node_modules
+
+WORKDIR /app

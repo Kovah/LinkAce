@@ -3,6 +3,7 @@
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Builder;
+use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
 
 /**
@@ -21,7 +22,7 @@ use Illuminate\Database\Eloquent\SoftDeletes;
  * @property-read User           $user
  * @method static Builder|Link byUser($user_id)
  */
-class Note extends RememberedModel
+class Note extends Model
 {
     use SoftDeletes;
 
@@ -33,8 +34,6 @@ class Note extends RememberedModel
         'note',
         'is_private',
     ];
-
-    public $rememberCacheTag = 'note_queries';
 
     /*
      | ========================================================================

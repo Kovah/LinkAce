@@ -5,6 +5,7 @@ namespace App\Models;
 use App\Scopes\OrderNameScope;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Collection;
+use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
 
 /**
@@ -22,7 +23,7 @@ use Illuminate\Database\Eloquent\SoftDeletes;
  * @property-read User              $user
  * @method static Builder|Tag byUser($user_id)
  */
-class Tag extends RememberedModel
+class Tag extends Model
 {
     use SoftDeletes;
 
@@ -33,8 +34,6 @@ class Tag extends RememberedModel
         'name',
         'is_private',
     ];
-
-    public $rememberCacheTag = 'tag_queries';
 
     /**
      * Add the OrderNameScope to the Tag model

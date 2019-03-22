@@ -83,7 +83,6 @@ class TrashController extends Controller
 
         foreach ($entries as $entry) {
             $entry->forceDelete();
-            $entry->flushCache();
         }
 
         alert(trans('trash.delete_success.' . $model), 'success');
@@ -127,7 +126,6 @@ class TrashController extends Controller
         }
 
         $entry->restore();
-        $entry->flushCache();
 
         alert(trans('trash.delete_restore.' . $model), 'success');
 

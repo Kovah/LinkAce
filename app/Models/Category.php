@@ -5,6 +5,7 @@ namespace App\Models;
 use App\Scopes\OrderNameScope;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Collection;
+use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
 
 /**
@@ -26,7 +27,7 @@ use Illuminate\Database\Eloquent\SoftDeletes;
  * @method static Builder|Category parentOnly()
  * @method static Builder|Category byUser($user_id)
  */
-class Category extends RememberedModel
+class Category extends Model
 {
     use SoftDeletes;
 
@@ -39,8 +40,6 @@ class Category extends RememberedModel
         'parent_category',
         'is_private',
     ];
-
-    public $rememberCacheTag = 'category_queries';
 
     /**
      * Add the OrderNameScope to the Tag model

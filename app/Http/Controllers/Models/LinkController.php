@@ -48,10 +48,13 @@ class LinkController extends Controller
      */
     public function create()
     {
+        // Reset the bookmarklet session identifier to prevent issues on regular pages
+        session()->forget('bookmarklet.create');
+
         return view('models.links.create')
             ->with('categories', Category::parentOnly()
                 ->byUser(auth()->user()->id)
-                ->orderBy('name', 'asc')
+                ->orderBy('name')
                 ->get());
     }
 
@@ -81,8 +84,6 @@ class LinkController extends Controller
         // Create the new link
         $link = Link::create($data);
 
-        Link::flushCache();
-
         // Get all tags
         if ($tags = $request->get('tags')) {
             $tags = explode(',', $tags);
@@ -95,8 +96,6 @@ class LinkController extends Controller
 
                 $link->tags()->attach($new_tag->id);
             }
-
-            Tag::flushCache();
         }
 
         alert(trans('link.added_successfully'), 'success');
@@ -193,8 +192,6 @@ class LinkController extends Controller
 
         $link->update($data);
 
-        Link::flushCache();
-
         // Update all tags
         if ($tags = $request->get('tags')) {
             $tags = collect(explode(',', $tags));
@@ -210,8 +207,6 @@ class LinkController extends Controller
             }
 
             $link->tags()->sync($new_tags);
-
-            Tag::flushCache();
         }
 
         alert(trans('link.updated_successfully'), 'success');
@@ -240,8 +235,6 @@ class LinkController extends Controller
         }
 
         $link->delete();
-
-        Link::flushCache();
 
         alert(trans('link.deleted_successfully'), 'warning');
 

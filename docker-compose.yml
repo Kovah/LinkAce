@@ -22,11 +22,13 @@ services:
   # --- PHP 7.2
   php:
     container_name: "linkace-php"
-    image: bitnami/php-fpm:7.2
+    build:
+      context: .
+      dockerfile: ./resources/docker/dockerfiles/development.Dockerfile
     depends_on:
       - db
     volumes:
-      - .:/app:cached
+      - .:/app
       - ./resources/docker/php/php.ini:/opt/bitnami/php/etc/conf.d/php.ini:ro
 
   # --- nginx 1.14
@@ -38,7 +40,7 @@ services:
     depends_on:
       - php
     volumes:
-      - .:/app:cached
+      - .:/app
       - ./resources/docker/nginx/site.conf:/opt/bitnami/nginx/conf/vhosts/site.conf:ro
 
   # --- Redis 4.0

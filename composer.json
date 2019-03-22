@@ -3,7 +3,6 @@
   "description": "A small, selfhosted bookmark manager with advanced features, built with Laravel and Docker",
   "license": "MIT",
   "type": "project",
-  "version": "0.0.8",
   "require": {
     "php": "^7.1.3",
     "doctrine/dbal": "^2.8",
@@ -12,8 +11,8 @@
     "laravel/tinker": "^1.0",
     "predis/predis": "^1.1",
     "shaarli/netscape-bookmark-parser": "^2.1",
-    "vinkla/alert": "^3.0.0",
-    "watson/rememberable": "^2.0"
+    "spatie/laravel-backup": "^5.12.0",
+    "vinkla/alert": "^3.0.0"
   },
   "require-dev": {
     "barryvdh/laravel-debugbar": "^3.2",

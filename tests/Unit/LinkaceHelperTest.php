@@ -22,9 +22,10 @@ class LinkaceHelperTest extends TestCase
     {
         $url = 'https://google.com/';
 
-        $result = LinkAce::getTitleFromURL($url);
+        $result = LinkAce::getMetaFromURL($url);
 
-        $this->assertEquals('Google', $result);
+        $this->assertArrayHasKey('title', $result);
+        $this->assertEquals('Google', $result['title']);
     }
 
     /**
@@ -37,8 +38,9 @@ class LinkaceHelperTest extends TestCase
     {
         $url = 'https://a-google-url-that-does-not-exist.comcom/';
 
-        $result = LinkAce::getTitleFromURL($url);
+        $result = LinkAce::getMetaFromURL($url);
 
-        $this->assertEquals('a-google-url-that-does-not-exist.comcom', $result);
+        $this->assertArrayHasKey('title', $result);
+        $this->assertEquals('a-google-url-that-does-not-exist.comcom', $result['title']);
     }
 }

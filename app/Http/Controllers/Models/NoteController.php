@@ -30,9 +30,6 @@ class NoteController extends Controller
 
         $note = Note::create($data);
 
-        Note::flushCache();
-        Link::flushCache();
-
         alert(trans('note.added_successfully'), 'success');
 
         return redirect()->route('links.show', [$link->id]);
@@ -79,9 +76,6 @@ class NoteController extends Controller
 
         $note->update($data);
 
-        Note::flushCache();
-        Link::flushCache();
-
         alert(trans('note.updated_successfully'), 'success');
 
         return redirect()->route('links.show', [$note->link->id]);
@@ -109,9 +103,6 @@ class NoteController extends Controller
 
         $link = $note->link->id;
         $note->delete();
-
-        Note::flushCache();
-        Link::flushCache();
 
         alert(trans('note.deleted_successfully'), 'success');
 
