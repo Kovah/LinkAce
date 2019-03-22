@@ -3,8 +3,8 @@
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Builder;
+use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
-use Illuminate\Support\Facades\Cache;
 
 /**
  * Class Note
@@ -22,7 +22,7 @@ use Illuminate\Support\Facades\Cache;
  * @property-read User           $user
  * @method static Builder|Link byUser($user_id)
  */
-class Note extends RememberedModel
+class Note extends Model
 {
     use SoftDeletes;
 
@@ -34,20 +34,6 @@ class Note extends RememberedModel
         'note',
         'is_private',
     ];
-
-    /**
-     * Note constructor.
-     *
-     * @param array $attributes
-     */
-    public function __construct(array $attributes = [])
-    {
-        if (useCacheTags()) {
-            $this->rememberCacheTag = 'note_queries';
-        }
-
-        parent::__construct($attributes);
-    }
 
     /*
      | ========================================================================
@@ -106,19 +92,5 @@ class Note extends RememberedModel
         $output .= '</time-ago>';
 
         return $output;
-    }
-
-    /**
-     * Conditionally flush cache based on cache driver
-     *
-     * @return void
-     */
-    public static function flushCache()
-    {
-        if (useCacheTags()) {
-            parent::flushCache();
-        } else {
-            Cache::flush();
-        }
     }
 }

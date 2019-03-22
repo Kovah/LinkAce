@@ -4,8 +4,8 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Collection;
+use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
-use Illuminate\Support\Facades\Cache;
 
 /**
  * Class Link
@@ -29,7 +29,7 @@ use Illuminate\Support\Facades\Cache;
  * @property-read User              $user
  * @method static Builder|Link byUser($user_id)
  */
-class Link extends RememberedModel
+class Link extends Model
 {
     use SoftDeletes;
 
@@ -45,20 +45,6 @@ class Link extends RememberedModel
         'is_private',
         'status',
     ];
-
-    /**
-     * Link constructor.
-     *
-     * @param array $attributes
-     */
-    public function __construct(array $attributes = [])
-    {
-        if (useCacheTags()) {
-            $this->rememberCacheTag = 'link_queries';
-        }
-
-        parent::__construct($attributes);
-    }
 
     /*
      | ========================================================================
@@ -190,19 +176,5 @@ class Link extends RememberedModel
         $output .= '</time-ago>';
 
         return $output;
-    }
-
-    /**
-     * Conditionally flush cache based on cache driver
-     *
-     * @return void
-     */
-    public static function flushCache()
-    {
-        if (useCacheTags()) {
-            parent::flushCache();
-        } else {
-            Cache::flush();
-        }
     }
 }

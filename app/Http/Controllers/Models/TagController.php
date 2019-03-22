@@ -63,8 +63,6 @@ class TagController extends Controller
 
         $tag = Tag::create($data);
 
-        Tag::flushCache();
-
         alert(trans('tag.added_successfully'), 'success');
 
         if ($request->get('reload_view')) {
@@ -158,8 +156,6 @@ class TagController extends Controller
 
         $tag->update($data);
 
-        Tag::flushCache();
-
         alert(trans('tag.updated_successfully'), 'success');
 
         return redirect()->route('tags.show', [$tag->id]);
@@ -189,9 +185,6 @@ class TagController extends Controller
         $tag->links()->detach();
 
         $tag->delete();
-
-        Link::flushCache();
-        Tag::flushCache();
 
         return redirect()->route('tags.index');
     }
