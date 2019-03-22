@@ -34,8 +34,10 @@ class Kernel extends ConsoleKernel
     {
         $schedule->command('links:check')->hourly();
 
-        $schedule->command('backup:clean')->daily()->at('01:00');
-        $schedule->command('backup:run')->daily()->at('02:00');
+        if (env('BACKUP_ENABLED', false)) {
+            $schedule->command('backup:clean')->daily()->at('01:00');
+            $schedule->command('backup:run')->daily()->at('02:00');
+        }
     }
 
     /**
