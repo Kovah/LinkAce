@@ -10,7 +10,7 @@ return [
          * The name of this application. You can use this name to monitor
          * the backups.
          */
-        'name' => config('app.name'),
+        'name' => 'backups',
 
         'source' => [
 
@@ -148,7 +148,7 @@ return [
      */
     'monitorBackups' => [
         [
-            'name' => config('app.name'),
+            'name' => 'backups',
             'disks' => [env('BACKUP_DISK', 'local_backups')],
             'newestBackupsShouldNotBeOlderThanDays' => 1,
             'storageUsedMayNotBeHigherThanMegabytes' => env('BACKUP_MAX_SIZE', 512),
