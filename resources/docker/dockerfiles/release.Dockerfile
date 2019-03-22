@@ -33,7 +33,9 @@ RUN npm run build
 # Prepare the final image
 FROM bitnami/php-fpm:7.2-prod
 
+WORKDIR /app
 COPY ./ /app
+COPY ./.env.example /app/.env
 
 # Copy the PHP config files
 COPY ./resources/docker/php/php.ini /opt/bitnami/php/etc/conf.d/php.ini
