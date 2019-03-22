@@ -23,7 +23,7 @@
     "babel-preset-env": "^1.7.0",
     "babelify": "^8.0.0",
     "browserify": "^16.2.3",
-    "grunt": "^1.0.3",
+    "grunt": "^1.0.4",
     "grunt-browser-sync": "^2.2.0",
     "grunt-browserify": "^5.3.0",
     "grunt-contrib-concat": "^1.0.1",
@@ -40,8 +40,8 @@
     "uglifyify": "^5.0.1"
   },
   "dependencies": {
-    "@fortawesome/fontawesome-free": "^5.7.1",
-    "bootstrap": "^4.2.1",
+    "@fortawesome/fontawesome-free": "^5.8.1",
+    "bootstrap": "^4.3.1",
     "font-awesome": "^4.7.0",
     "jquery": "^3.3.1",
     "popper.js": "^1.14.7",
