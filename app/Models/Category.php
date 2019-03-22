@@ -6,6 +6,7 @@ use App\Scopes\OrderNameScope;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Database\Eloquent\SoftDeletes;
+use Illuminate\Support\Facades\Cache;
 
 /**
  * Class Category
@@ -40,7 +41,19 @@ class Category extends RememberedModel
         'is_private',
     ];
 
-    public $rememberCacheTag = 'category_queries';
+    /**
+     * Category constructor.
+     *
+     * @param array $attributes
+     */
+    public function __construct(array $attributes = [])
+    {
+        if (useCacheTags()) {
+            $this->rememberCacheTag = 'category_queries';
+        }
+
+        parent::__construct($attributes);
+    }
 
     /**
      * Add the OrderNameScope to the Tag model
@@ -113,5 +126,24 @@ class Category extends RememberedModel
     public function parentCategory()
     {
         return $this->belongsTo(Category::class, 'parent_category');
+    }
+
+    /*
+     | ========================================================================
+     | METHODS
+     */
+
+    /**
+     * Conditionally flush cache based on cache driver
+     *
+     * @return void
+     */
+    public static function flushCache()
+    {
+        if (useCacheTags()) {
+            parent::flushCache();
+        } else {
+            Cache::flush();
+        }
     }
 }

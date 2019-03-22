@@ -6,6 +6,7 @@ use App\Scopes\OrderNameScope;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Database\Eloquent\SoftDeletes;
+use Illuminate\Support\Facades\Cache;
 
 /**
  * Class Tag
@@ -34,7 +35,19 @@ class Tag extends RememberedModel
         'is_private',
     ];
 
-    public $rememberCacheTag = 'tag_queries';
+    /**
+     * Tag constructor.
+     *
+     * @param array $attributes
+     */
+    public function __construct(array $attributes = [])
+    {
+        if (useCacheTags()) {
+            $this->rememberCacheTag = 'tag_queries';
+        }
+
+        parent::__construct($attributes);
+    }
 
     /**
      * Add the OrderNameScope to the Tag model
@@ -82,5 +95,24 @@ class Tag extends RememberedModel
     public function links()
     {
         return $this->belongsToMany('App\Models\Link', 'link_tags', 'tag_id', 'link_id');
+    }
+
+    /*
+     | ========================================================================
+     | METHODS
+     */
+
+    /**
+     * Conditionally flush cache based on cache driver
+     *
+     * @return void
+     */
+    public static function flushCache()
+    {
+        if (useCacheTags()) {
+            parent::flushCache();
+        } else {
+            Cache::flush();
+        }
     }
 }

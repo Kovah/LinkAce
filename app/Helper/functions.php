@@ -22,6 +22,16 @@ function usersettings(string $key = '')
 }
 
 /**
+ * Checks if cache tags can be used
+ *
+ * @return bool
+ */
+function useCacheTags(): bool
+{
+    return !in_array(strtolower(env('CACHE_DRIVER')), ['file', 'database']);
+}
+
+/**
  * Retrieve system settings
  *
  * @param string $key
