@@ -3,9 +3,12 @@
 namespace App\Console\Commands;
 
 use App\Models\Link;
+use App\Models\User;
+use App\Notifications\LinkCheckErrors;
 use GuzzleHttp\Client;
 use Illuminate\Console\Command;
 use Illuminate\Support\Facades\Cache;
+use Illuminate\Support\Facades\Notification;
 
 /**
  * Class CheckLinksCommand
@@ -56,6 +59,12 @@ class CheckLinksCommand extends Command
     /** @var string */
     protected $cache_key_checked_count = 'command_links:check_checked_count';
 
+    /** @var array */
+    protected $moved_links = [];
+
+    /** @var array */
+    protected $broken_links = [];
+
     /**
      * RegisterUser constructor.
      */
@@ -102,6 +111,9 @@ class CheckLinksCommand extends Command
             // Prevent spam-ish behaviour by limiting outgoing HTTP requests
             sleep(1);
         });
+
+        // Send notification about moved/broken links
+        $this->sendNotification();
 
         // Check if there are more links to check
         $checked_count = $this->checked_link_count + $links->count();
@@ -152,7 +164,7 @@ class CheckLinksCommand extends Command
      */
     protected function checkLink(Link $link): void
     {
-        $this->comment('Checking link ' . $link->url);
+        $this->output->write('Checking link ' . $link->url . ' ');
 
         $options = [
             'http_errors' => false, // Do not throw exceptions for 4xx and 5xx errors
@@ -175,9 +187,13 @@ class CheckLinksCommand extends Command
             if ($status_code === 301 || $status_code === 302) {
                 $link->status = 2;
                 $this->warn('› Link moved to another URL!');
+
+                $this->moved_links[] = $link;
             } else {
                 $link->status = 3;
                 $this->error('› Link seems to be broken!');
+
+                $this->broken_links[] = $link;
             }
 
             $link->save();
@@ -185,5 +201,23 @@ class CheckLinksCommand extends Command
         } else {
             $this->info('› Link looks okay.');
         }
+    }
+
+    /**
+     * Send notification to the main user if not running from the console
+     *
+     * @return void
+     */
+    protected function sendNotification()
+    {
+        if (empty($this->moved_links) && empty($this->broken_links)) {
+            // Do not send a notification if there are no errors
+            return;
+        }
+
+        Notification::send(
+            User::find(1),
+            new LinkCheckErrors($this->moved_links, $this->broken_links)
+        );
     }
 }

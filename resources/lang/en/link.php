@@ -32,4 +32,8 @@ return [
     'added_successfully' => 'Link added successfully.',
     'updated_successfully' => 'Link updated successfully.',
     'deleted_successfully' => 'Link deleted successfully.',
+
+    'notifications.linkcheck.errors' => 'LinkAce found errors while checking your Links',
+    'notifications.linkcheck.errors.moved' => '⚠ ️The following Links were moved:',
+    'notifications.linkcheck.errors.broken' => '🚫 The following Links are not reachable anymore or return an error:',
 ];
