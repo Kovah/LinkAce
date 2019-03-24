@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Models;
 
 use App\Helper\LinkAce;
 use App\Helper\LinkIconMapper;
+use App\Helper\WaybackMachine;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\LinkDeleteRequest;
 use App\Http\Requests\LinkStoreRequest;
@@ -100,6 +101,10 @@ class LinkController extends Controller
 
         alert(trans('link.added_successfully'), 'success');
 
+        // Notify the Wayback Machine about the link
+        WaybackMachine::saveToArchive($link->url);
+
+        // Redirect to the corresponding page based on bookmarklet usage
         $is_bookmarklet = session('bookmarklet.create');
 
         if ($request->get('reload_view')) {

@@ -67,6 +67,14 @@
                 <input type="hidden" name="link_id" value="{{ $link->id }}">
             </form>
 
+            @if($link->status !== 1)
+                <div class="mb-3">
+                    <a href="{{ waybackLink($link) }}" class="btn btn-sm btn-block btn-outline-warning" target="_blank">
+                        @lang('link.wayback')
+                    </a>
+                </div>
+            @endif
+
             <div class="card mb-3">
                 <div class="card-header">
                     @lang('category.category')
