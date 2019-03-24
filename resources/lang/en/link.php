@@ -28,6 +28,7 @@ return [
     'author' => 'by :user',
 
     'external_link' => 'External Link',
+    'wayback' => 'Link archive @ Wayback Machine',
 
     'added_successfully' => 'Link added successfully.',
     'updated_successfully' => 'Link updated successfully.',
