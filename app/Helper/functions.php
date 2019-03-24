@@ -1,6 +1,9 @@
 <?php
 
+use App\Helper\WaybackMachine;
+use App\Models\Link;
 use App\Models\Setting;
+use Illuminate\Support\Facades\Cache;
 
 /**
  * Shorthand for the current user settings
@@ -176,4 +179,17 @@ function tableSorter($label, $route, $type, $order_by, $order_dir)
     $out .= '</div>';
 
     return $out;
+}
+
+/**
+ * Get the Wayback Machine link for an URL
+ *
+ * @param string|Link $link
+ * @return null|string
+ */
+function waybackLink($link): ?string
+{
+    $link = $link->url ?? $link;
+
+    return WaybackMachine::getArchiveLink($link);
 }
