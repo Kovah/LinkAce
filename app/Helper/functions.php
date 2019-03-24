@@ -56,7 +56,7 @@ function systemsettings(string $key = '')
  * @param bool           $use_relational
  * @return string
  */
-function formatDateTime(\Carbon\Carbon $date, bool $use_relational = false)
+function formatDateTime(\Carbon\Carbon $date, bool $use_relational = false): string
 {
     $timezone = config('app.timezone');
 
@@ -80,7 +80,7 @@ function formatDateTime(\Carbon\Carbon $date, bool $use_relational = false)
 /**
  * Get the correct pagination limit
  *
- * @return \Illuminate\Config\Repository|mixed
+ * @return mixed
  */
 function getPaginationLimit()
 {
@@ -99,7 +99,7 @@ function getPaginationLimit()
  * @param \App\Models\Link $link
  * @return string
  */
-function getShareLinks(\App\Models\Link $link)
+function getShareLinks(\App\Models\Link $link): string
 {
     $cache_key = 'sharelinks_link_' . $link->id . (auth()->guest() ? '_guest' : '');
     $cache_duration = config('linkace.default.cache_duration');
@@ -151,7 +151,7 @@ function displaySVG($path, $width = null, $height = null)
  * @param string $order_dir
  * @return string
  */
-function tableSorter($label, $route, $type, $order_by, $order_dir)
+function tableSorter($label, $route, $type, $order_by, $order_dir): string
 {
     $out = '<div class="d-flex">';
     $out .= '<span class="mr-1">' . e($label) . '</span>';
