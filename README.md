@@ -10,6 +10,7 @@
 <p align="center">
   <a href="https://hub.docker.com/r/linkace/linkace"><img src="https://img.shields.io/badge/Docker-linkace%2Flinkace-2596EC.svg" alt="Docker Repository"></a>
   <a href="https://github.com/Kovah/LinkAce/releases"><img src="https://img.shields.io/github/release/kovah/linkace.svg" alt="Latest Release"></a>
+  <a href="https://travis-ci.org/Kovah/LinkAce"><img src="https://img.shields.io/travis/kovah/linkace.svg" alt="Build Status"></a>
   <a href="https://opensource.org/licenses/MIT"><img src="https://img.shields.io/github/license/kovah/linkace.svg" alt="License"></a>
 </p>
 
