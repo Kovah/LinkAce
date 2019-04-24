@@ -9,6 +9,8 @@
 @if(usersettings('darkmode_setting') === '1')
     <link href="{{ asset('assets/dist/css/app-dark.css') }}" rel="stylesheet">
 @elseif(usersettings('darkmode_setting') === '2')
+    <style><?php include public_path('assets/dist/css/loader.css') ?></style>
+    <meta name="darkmode" content="1">
     <link rel="stylesheet"
         data-light-href="{{ asset('assets/dist/css/app.css') }}"
         data-dark-href="{{ asset('assets/dist/css/app-dark.css') }}">

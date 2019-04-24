@@ -22,7 +22,7 @@ return [
     'sharing_toggle' => 'Toggle all on/off',
 
     'darkmode' => 'Darkmode',
-    'darkmode_help' => 'You can either choose to turn on permanently or automatically based on your device settings.',
+    'darkmode_help' => 'You can either choose to turn on permanently or automatically based on your device settings. (<small>Check <a href="https://caniuse.com/#search=prefers-color-scheme">here</a> if your browser supports automatic detection</small>)',
     'darkmode_disabled' => 'Disabled',
     'darkmode_auto' => 'Automatically',
     'darkmode_permanent' => 'Permanent',

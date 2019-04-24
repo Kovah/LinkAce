@@ -16,8 +16,10 @@
     @include('partials.footer')
 
     <script src="{{ asset('assets/dist/js/dependencies.js') }}"></script>
+    <script src="{{ asset('assets/dist/js/app.js') }}"></script>
     @stack('scripts')
 
 </div>
+<div id="loader"><div></div></div>
 </body>
 </html>
