@@ -13,6 +13,8 @@
         @yield('content')
     </main>
 
+    @include('partials.footer')
+
     <script src="{{ asset('assets/dist/js/dependencies.js') }}"></script>
     @stack('scripts')
 

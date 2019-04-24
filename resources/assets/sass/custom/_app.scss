@@ -8,6 +8,11 @@ body:not(.bookmarklet) {
   padding-bottom: ($spacer * 2);
 }
 
+.footer {
+  padding-top: ($spacer * 2);
+  opacity: .5;
+}
+
 @media (max-width: 991px) {
   .container {
     width: 100%;
