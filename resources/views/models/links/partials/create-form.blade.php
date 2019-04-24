@@ -57,15 +57,22 @@
                             class="{{ $errors->has('category_id') ? ' is-invalid' : '' }}">
                             <option value="0">@lang('category.select_category')</option>
                             @foreach($categories as $category)
-                                <option value="{{ $category->id }}">
-                                    {{ $category->name }}
-                                </option>
                                 @if($category->childCategories)
-                                    @foreach($category->childCategories as $child_category)
-                                        <option value="{{ $child_category->id }}">
-                                            &rightarrow; {{ $child_category->name }}
+                                    <optgroup label="{{ $category->name }}">
+                                        <option value="{{ $category->id }}">
+                                            {{ $category->name }}
                                         </option>
-                                    @endforeach
+
+                                        @foreach($category->childCategories as $child_category)
+                                            <option value="{{ $child_category->id }}">
+                                                &rightarrow; {{ $child_category->name }}
+                                            </option>
+                                        @endforeach
+                                    </optgroup>
+                                @else
+                                    <option value="{{ $category->id }}">
+                                        {{ $category->name }}
+                                    </option>
                                 @endif
                             @endforeach
                         </select>
