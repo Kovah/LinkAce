@@ -12,20 +12,17 @@
         <div class="collapse navbar-collapse" id="navbar-content">
             @auth
                 <ul class="navbar-nav mr-auto">
-                    <li class="nav-item dropdown">
-                        <a class="nav-link dropdown-toggle" href="#" id="navbar-links-dd" role="button"
-                            data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                            @lang('link.links')
+                    <li class="nav-item">
+                        <a href="{{ route('links.create') }}" class="nav-link">
+                            @lang('link.add')
                         </a>
-                        <div class="dropdown-menu" aria-labelledby="navbar-links-dd">
-                            <a href="{{ route('links.index') }}" class="dropdown-item">
-                                @lang('link.all_links')
-                            </a>
-                            <a href="{{ route('links.create') }}" class="dropdown-item">
-                                @lang('link.add')
-                            </a>
-                        </div>
                     </li>
+                    <li class="nav-item">
+                        <a href="{{ route('links.index') }}" class="nav-link">
+                            @lang('link.all_links')
+                        </a>
+                    </li>
+                    <li class="nav-divider"></li>
                     <li class="nav-item dropdown">
                         <a class="nav-link dropdown-toggle" href="#" id="navbar-categories-dd" role="button"
                             data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">

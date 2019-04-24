@@ -8,6 +8,10 @@ body:not(.bookmarklet) {
   padding-bottom: ($spacer * 2);
 }
 
+.footer {
+  opacity: .5;
+}
+
 @media (max-width: 991px) {
   .container {
     width: 100%;
@@ -62,4 +66,8 @@ body:not(.bookmarklet) {
 
 .btn-xs {
   @include button-size($btn-padding-y-xs, $btn-padding-x-xs, $btn-font-size-xs, $btn-line-height-xs, $btn-border-radius-xs);
+}
+
+#loader {
+  display: none;
 }

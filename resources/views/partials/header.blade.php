@@ -6,7 +6,18 @@
 
 <title>{{ systemsettings('system_page_title') ?: config('app.name', 'LinkAce') }}</title>
 
-<link href="{{ asset('assets/dist/css/app.css') }}" rel="stylesheet">
+@if(usersettings('darkmode_setting') === '1')
+    <link href="{{ asset('assets/dist/css/app-dark.css') }}" rel="stylesheet">
+@elseif(usersettings('darkmode_setting') === '2')
+    <style><?php include public_path('assets/dist/css/loader.css') ?></style>
+    <meta name="darkmode" content="1">
+    <link rel="stylesheet"
+        data-light-href="{{ asset('assets/dist/css/app.css') }}"
+        data-dark-href="{{ asset('assets/dist/css/app-dark.css') }}">
+@else
+    <link href="{{ asset('assets/dist/css/app.css') }}" rel="stylesheet">
+@endif
+
 <link href="{{ asset('assets/dist/css/fa.min.css') }}" rel="stylesheet">
 
 <link rel="apple-touch-icon" sizes="57x57" href="{{ asset('assets/img/apple-icon-57x57.png') }}">
@@ -18,7 +29,7 @@
 <link rel="apple-touch-icon" sizes="144x144" href="{{ asset('assets/img/apple-icon-144x144.png') }}">
 <link rel="apple-touch-icon" sizes="152x152" href="{{ asset('assets/img/apple-icon-152x152.png') }}">
 <link rel="apple-touch-icon" sizes="180x180" href="{{ asset('assets/img/apple-icon-180x180.png') }}">
-<link rel="icon" type="image/png" sizes="192x192"  href="{{ asset('assets/img/android-icon-192x192.png') }}">
+<link rel="icon" type="image/png" sizes="192x192" href="{{ asset('assets/img/android-icon-192x192.png') }}">
 <link rel="icon" type="image/png" sizes="32x32" href="{{ asset('assets/img/favicon-32x32.png') }}">
 <link rel="icon" type="image/png" sizes="96x96" href="{{ asset('assets/img/favicon-96x96.png') }}">
 <link rel="icon" type="image/png" sizes="16x16" href="{{ asset('assets/img/favicon-16x16.png') }}">

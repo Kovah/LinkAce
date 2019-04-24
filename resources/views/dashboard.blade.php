@@ -40,23 +40,59 @@
         </div>
     </div>
 
-    <div class="card mt-4">
-        <div class="card-header">
-            @lang('link.recent_links')
-        </div>
+    <div class="row">
+        <div class="col-12 col-md-7">
 
-        <ul class="list-group list-group-flush">
-            @forelse($recent_links as $link)
-                <a href="{{ route('links.show', [$link->id]) }}" class="list-group-item list-group-item-action">
-                    {!! $link->getIcon('mr-1') !!}
-                    {{ $link->title }}
-                </a>
-            @empty
-                <li class="list-group-item text-danger">
-                    @lang('linkace.no_results_found', ['model' => trans('link.links')])
-                </li>
-            @endforelse
-        </ul>
+            <div class="card mt-4">
+                <div class="card-header">
+                    @lang('link.recent_links')
+                </div>
+
+                <ul class="list-group list-group-flush">
+                    @forelse($recent_links as $link)
+                        <a href="{{ route('links.show', [$link->id]) }}" class="list-group-item list-group-item-action">
+                            {!! $link->getIcon('mr-1') !!}
+                            {{ $link->title }}
+                        </a>
+                    @empty
+                        <li class="list-group-item text-danger">
+                            @lang('linkace.no_results_found', ['model' => trans('link.links')])
+                        </li>
+                    @endforelse
+                </ul>
+            </div>
+
+        </div>
+        <div class="col-12 col-md-5">
+
+            <div class="card mt-4">
+                <div class="card-header">
+                    @lang('stats.stats')
+                </div>
+
+                <ul class="list-group list-group-flush">
+                    <li class="list-group-item">
+                        <div class="d-flex align-items-center">
+                            <span class="mr-1">@lang('stats.total_links')</span>
+                            <span class="badge badge-secondary ml-auto">{{ $stats['total_links'] }}</span>
+                        </div>
+                    </li>
+                    <li class="list-group-item">
+                        <div class="d-flex align-items-center">
+                            <span class="mr-1">@lang('stats.total_categories')</span>
+                            <span class="badge badge-secondary ml-auto">{{ $stats['total_categories'] }}</span>
+                        </div>
+                    </li>
+                    <li class="list-group-item">
+                        <div class="d-flex align-items-center">
+                            <span class="mr-1">@lang('stats.total_tags')</span>
+                            <span class="badge badge-secondary ml-auto">{{ $stats['total_tags'] }}</span>
+                        </div>
+                    </li>
+                </ul>
+            </div>
+
+        </div>
     </div>
 
 @endsection

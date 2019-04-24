@@ -78,7 +78,9 @@ module.exports = grunt => {
         sourceMap: false
       },
       files: {
-        '<%= paths.dist.css %>/app.css': '<%= paths.assets %>/sass/app.scss'
+        '<%= paths.dist.css %>/loader.css': '<%= paths.assets %>/sass/loader.scss',
+        '<%= paths.dist.css %>/app.css': '<%= paths.assets %>/sass/app.scss',
+        '<%= paths.dist.css %>/app-dark.css': '<%= paths.assets %>/sass/app-dark.scss'
       }
     }
   });
@@ -111,7 +113,7 @@ module.exports = grunt => {
 
   // Tasks
   grunt.registerTask('build', [
-    //'browserify',
+    'browserify',
     'concat',
     'sass',
     'postcss',

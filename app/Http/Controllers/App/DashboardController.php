@@ -3,7 +3,9 @@
 namespace App\Http\Controllers\App;
 
 use App\Http\Controllers\Controller;
+use App\Models\Category;
 use App\Models\Link;
+use App\Models\Tag;
 
 class DashboardController extends Controller
 {
@@ -16,10 +18,17 @@ class DashboardController extends Controller
     {
         $recent_links = Link::byUser(auth()->user()->id)
             ->orderBy('created_at', 'DESC')
-            ->limit(10)
+            ->limit(5)
             ->get();
 
+        $stats = [
+            'total_links' => Link::count(),
+            'total_categories' => Category::count(),
+            'total_tags' => Tag::count(),
+        ];
+
         return view('dashboard')
-            ->with('recent_links', $recent_links);
+            ->with('recent_links', $recent_links)
+            ->with('stats', $stats);
     }
 }
