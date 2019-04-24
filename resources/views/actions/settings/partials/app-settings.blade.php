@@ -164,6 +164,46 @@
                 </div>
             </div>
 
+            <div class="form-group mt-5 mb-5">
+
+                <h5>
+                    @lang('settings.darkmode')
+                </h5>
+
+                <label for="darkmode_setting">
+                    @lang('settings.darkmode_help')
+                </label>
+
+                <div class="row">
+                    <div class="col">
+
+                        <select id="darkmode_setting" name="darkmode_setting"
+                            class="custom-select{{ $errors->has('darkmode_setting') ? ' is-invalid' : '' }}">
+                            <option value="0"
+                                @if($user->settings()->get('darkmode_setting') === '0') selected @endif>
+                                @lang('settings.darkmode_disabled')
+                            </option>
+                            <option value="1"
+                                @if($user->settings()->get('darkmode_setting') === '1') selected @endif>
+                                @lang('settings.darkmode_permanent')
+                            </option>
+                            <option value="2"
+                                @if($user->settings()->get('darkmode_setting') === '2') selected @endif>
+                                @lang('settings.darkmode_auto')
+                            </option>
+                        </select>
+                        @if ($errors->has('darkmode_setting'))
+                            <p class="invalid-feedback" role="alert">
+                                {{ $errors->first('darkmode_setting') }}
+                            </p>
+                        @endif
+
+                    </div>
+                    <div class="col"></div>
+                </div>
+
+            </div>
+
             @include('actions.settings.partials.sharing')
 
             <button type="submit" class="btn btn-primary">
@@ -178,7 +218,7 @@
 @push('scripts')
     <script>
         $('#timezone').selectize({
-            create: false,
+            create: false
         });
     </script>
 @endpush

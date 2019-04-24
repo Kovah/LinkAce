@@ -78,7 +78,8 @@ module.exports = grunt => {
         sourceMap: false
       },
       files: {
-        '<%= paths.dist.css %>/app.css': '<%= paths.assets %>/sass/app.scss'
+        '<%= paths.dist.css %>/app.css': '<%= paths.assets %>/sass/app.scss',
+        '<%= paths.dist.css %>/app-dark.css': '<%= paths.assets %>/sass/app-dark.scss'
       }
     }
   });
