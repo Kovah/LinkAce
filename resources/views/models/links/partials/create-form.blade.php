@@ -57,7 +57,7 @@
                             class="{{ $errors->has('category_id') ? ' is-invalid' : '' }}">
                             <option value="0">@lang('category.select_category')</option>
                             @foreach($categories as $category)
-                                @if($category->childCategories)
+                                @if($category->childCategories->count() > 0)
                                     <optgroup label="{{ $category->name }}">
                                         <option value="{{ $category->id }}">
                                             {{ $category->name }}
