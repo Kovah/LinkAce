@@ -20,6 +20,17 @@
 
 <link href="{{ asset('assets/dist/css/fa.min.css') }}" rel="stylesheet">
 
+<meta property="la-app-data" content="{{ json_encode([
+    'user' => [
+        'token' => csrf_token()
+    ],
+    'routes' => [
+        'ajax' => [
+            'existingLinks' => route('ajax-existing-links')
+        ]
+    ]
+]) }}">
+
 <link rel="apple-touch-icon" sizes="57x57" href="{{ asset('assets/img/apple-icon-57x57.png') }}">
 <link rel="apple-touch-icon" sizes="60x60" href="{{ asset('assets/img/apple-icon-60x60.png') }}">
 <link rel="apple-touch-icon" sizes="72x72" href="{{ asset('assets/img/apple-icon-72x72.png') }}">

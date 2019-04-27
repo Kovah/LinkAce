@@ -231,6 +231,15 @@ Currently you can do this by using the command line:
 docker exec -it linkace-php bash -c "php artisan registeruser [user name] [user email]"
 ```
 
+
+### Tests
+
+You may run some existing tests with the following command:
+
+```bash
+docker exec -it linkace-php bash -c "./vendor/bin/phpunit"
+```
+
 ---
 
 LinkAce is a project by [Kovah](https://kovah.de) | [Contributors](https://github.com/Kovah/LinkAce/graphs/contributors)

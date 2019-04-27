@@ -17,10 +17,8 @@ class LinkAce
      */
     public static function getMetaFromURL(string $url)
     {
-        $title_fallback = parse_url($url, PHP_URL_HOST);
-
         $fallback = [
-            'title' => $title_fallback,
+            'title' => parse_url($url, PHP_URL_HOST),
             'description' => null,
         ];
 
@@ -31,7 +29,14 @@ class LinkAce
             return $fallback;
         }
 
-        if (!$html) {
+        // Try to get the meta tags of that URL
+        try {
+            $tags = get_meta_tags($url);
+        } catch (\Exception $e) {
+            return $fallback;
+        }
+
+        if (empty($html)) {
             return $fallback;
         }
 
@@ -44,22 +49,15 @@ class LinkAce
             $title = trim($title);
         }
 
-        // Parse the HTML for the meta description, or alternatively for the og:description property
-        $res = preg_match(
-            '/<meta (?:property="og:description"|name="description") content="(.*?)"(?:\s\/)?>/i',
-            $html,
-            $description_matches
-        );
-
-        if ($res) {
-            // Clean up description: remove EOL's and excessive whitespace.
-            $description = preg_replace('/\s+/', ' ', $description_matches[1]);
-            $description = trim($description);
-        }
+        // Get the title or the og:description tag or the twitter:description tag
+        $description = $tags['description']
+            ?? $tags['og:description']
+            ?? $tags['twitter:description']
+            ?? $fallback['description'];
 
         return [
-            'title' => $title ?? $title_fallback,
-            'description' => $description ?? null,
+            'title' => $title,
+            'description' => $description,
         ];
     }
 

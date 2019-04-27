@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\API;
 
 use App\Http\Controllers\Controller;
+use App\Models\Link;
 use App\Models\Tag;
 use Illuminate\Http\Request;
 
@@ -42,5 +43,31 @@ class AjaxController extends Controller
         }
 
         return response()->json($tags);
+    }
+
+    /**
+     * @param Request $request
+     * @return \Illuminate\Http\JsonResponse
+     */
+    public function searchExistingUrls(Request $request)
+    {
+        $query = $request->get('query', false);
+
+        if (!$query) {
+            return response()->json([]);
+        }
+
+        // Search for tags
+        $links = Link::byUser(auth()->user()->id)
+            ->where('url', trim($query))
+            ->first();
+
+        if (empty($links)) {
+            // No links found
+            return response()->json(['linkFound' => false]);
+        }
+
+        // Link found
+        return response()->json(['linkFound' => true]);
     }
 }

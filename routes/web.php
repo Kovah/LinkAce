@@ -73,6 +73,7 @@ Route::group(['middleware' => ['auth']], function () {
         'App\SystemSettingsController@generateCronToken')->name('generate-cron-token');
 
     Route::post('ajax/tags', 'API\AjaxController@getTags')->name('ajax-tags');
+    Route::post('ajax/existing-links', 'API\AjaxController@searchExistingUrls')->name('ajax-existing-links');
 });
 
 // Guest access routes
