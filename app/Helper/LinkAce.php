@@ -17,49 +17,30 @@ class LinkAce
      */
     public static function getMetaFromURL(string $url)
     {
-        $title_fallback = parse_url($url, PHP_URL_HOST);
-
         $fallback = [
-            'title' => $title_fallback,
+            'title' => parse_url($url, PHP_URL_HOST),
             'description' => null,
         ];
 
-        // Try to get the HTML content of that URL
-        try {
-            $html = file_get_contents($url);
-        } catch (\Exception $e) {
+        // Try to get the meta tags of that URL
+        $tags = get_meta_tags($url);
+
+        if (empty($tags)) {
             return $fallback;
         }
 
-        if (!$html) {
-            return $fallback;
-        }
+        // Get the title
+        $title = $tags['title'] ?? $fallback['title'];
 
-        // Parse the HTML for the title
-        $res = preg_match("/<title>(.*)<\/title>/siU", $html, $title_matches);
-
-        if ($res) {
-            // Clean up title: remove EOL's and excessive whitespace.
-            $title = preg_replace('/\s+/', ' ', $title_matches[1]);
-            $title = trim($title);
-        }
-
-        // Parse the HTML for the meta description, or alternatively for the og:description property
-        $res = preg_match(
-            '/<meta (?:property="og:description"|name="description") content="(.*?)"(?:\s\/)?>/i',
-            $html,
-            $description_matches
-        );
-
-        if ($res) {
-            // Clean up description: remove EOL's and excessive whitespace.
-            $description = preg_replace('/\s+/', ' ', $description_matches[1]);
-            $description = trim($description);
-        }
+        // Get the title or the og:description tag or the twitter:description tag
+        $description = $tags['description']
+            ?? $tags['og:description']
+            ?? $tags['twitter:description']
+            ?? $fallback['description'];
 
         return [
-            'title' => $title ?? $title_fallback,
-            'description' => $description ?? null,
+            'title' => $title,
+            'description' => $description,
         ];
     }
 
