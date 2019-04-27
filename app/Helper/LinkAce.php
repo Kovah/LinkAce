@@ -22,15 +22,32 @@ class LinkAce
             'description' => null,
         ];
 
-        // Try to get the meta tags of that URL
-        $tags = get_meta_tags($url);
-
-        if (empty($tags)) {
+        // Try to get the HTML content of that URL
+        try {
+            $html = file_get_contents($url);
+        } catch (\Exception $e) {
             return $fallback;
         }
 
-        // Get the title
-        $title = $tags['title'] ?? $fallback['title'];
+        // Try to get the meta tags of that URL
+        try {
+            $tags = get_meta_tags($url);
+        } catch (\Exception $e) {
+            return $fallback;
+        }
+
+        if (empty($html)) {
+            return $fallback;
+        }
+
+        // Parse the HTML for the title
+        $res = preg_match("/<title>(.*)<\/title>/siU", $html, $title_matches);
+
+        if ($res) {
+            // Clean up title: remove EOL's and excessive whitespace.
+            $title = preg_replace('/\s+/', ' ', $title_matches[1]);
+            $title = trim($title);
+        }
 
         // Get the title or the og:description tag or the twitter:description tag
         $description = $tags['description']
