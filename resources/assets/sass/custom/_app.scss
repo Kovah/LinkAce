@@ -10,6 +10,7 @@ body:not(.bookmarklet) {
 
 .footer {
   opacity: .5;
+  padding-bottom: ($spacer * 2);
 }
 
 @media (max-width: 991px) {
