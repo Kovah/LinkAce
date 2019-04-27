@@ -13,6 +13,11 @@
                     class="form-control form-control-lg{{ $errors->has('url') ? ' is-invalid' : '' }}"
                     placeholder="@lang('link.url')" value="{{ old('url') ?: $bookmark_url ?? '' }}"
                     required autofocus>
+
+                <p class="invalid-feedback {{ $errors->has('url') ? 'd-none' : '' }}">
+                    @lang('validation.unique', ['attribute' => trans('link.url')])
+                </p>
+
                 @if ($errors->has('url'))
                     <p class="invalid-feedback" role="alert">
                         {{ $errors->first('url') }}
@@ -76,7 +81,6 @@
                                 @endif
                             @endforeach
                         </select>
-
 
                         @if ($errors->has('category_id'))
                             <p class="invalid-feedback" role="alert">
