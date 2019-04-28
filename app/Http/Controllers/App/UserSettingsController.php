@@ -97,7 +97,7 @@ class UserSettingsController extends Controller
         $data = $request->all();
 
         // Validate the request by checking if the old password is currect
-        $data['old_password'] = Auth::attempt([$current_user->email, $data['old_password']]);
+        $data['old_password'] = Auth::attempt(['email' => $current_user->email, 'password' => $data['old_password']]);
 
         $validator = Validator::make($data, [
             'old_password' => 'accepted',
