@@ -39,4 +39,6 @@ return [
 
     'bookmarklet_close' => 'This bookmarklet window automatically closes in <span class="bm-timer">5</span> seconds.',
     'open_linkace' => 'Open LinkAce',
+
+    'demo_login_hint' => 'You can login right away. Please notice that this demo will be reset every 2 hours.',
 ];

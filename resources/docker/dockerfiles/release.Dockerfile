@@ -56,4 +56,7 @@ COPY --from=npm_builder /srv/public /app/public
 # Cleanup dev stuff from final image
 RUN rm -rf /app/node_modules
 
+# Set correct permissions for the storage directory
+RUN chmod 0777 -R /app/storage
+
 WORKDIR /app

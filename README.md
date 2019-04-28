@@ -70,7 +70,8 @@ want to use for the application.
 
 #### 2. Modify the .env.docker file
 
-Now open the `.env.docker` file and follow the instructions inside the file. All needed variables you have to configure
+Rename the `.env.docker` file to `.env`.  
+Now open the `.env` file and follow the instructions inside the file. All needed variables you have to configure
 are marked accordingly.
 
 #### 3. Modify the nginx.conf file (optional)

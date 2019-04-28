@@ -8,7 +8,7 @@
                 @endif
                 {!! $link->getIcon('mr-1') !!}
                 <a href="{{ $link->url }}">{{ $link->title }}</a>
-                <small>({{ $link->url }})</small>
+                <small>({{ $link->shortUrl() }})</small>
             </div>
             <div class="ml-auto text-right">
                 <button type="button" class="btn btn-xs btn-outline-primary" title="@lang('sharing.share_link')"

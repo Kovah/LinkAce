@@ -118,6 +118,20 @@ class Link extends Model
      */
 
     /**
+     * Display the short URL if it's longer than 60 characters
+     *
+     * @return string
+     */
+    public function shortUrl()
+    {
+        if (mb_strlen($this->url) > 60) {
+            return substr($this->url, 0, 60) . '...';
+        }
+
+        return $this->url;
+    }
+
+    /**
      * @return null|string
      */
     public function tagsForInput()

@@ -9,7 +9,7 @@
     </td>
     <td>
         <a href="{{ $link->url }}" target="_blank">
-            {{ $link->url }}
+            {{ $link->shortUrl() }}
         </a>
     </td>
     <td class="text-muted">
