@@ -27,6 +27,7 @@ RUN npm install
 # Copy the app and build the assets
 COPY ./resources/assets /srv/resources/assets
 COPY ./public /srv/public
+COPY ./.babelrc /srv
 RUN npm run build
 
 # ================================
