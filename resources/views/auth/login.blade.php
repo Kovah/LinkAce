@@ -21,7 +21,7 @@
                                     </div>
                                 </div>
                                 <input type="email" name="email" id="email" class="form-control"
-                                    value="{{ old('email') }}"
+                                    value="{{ env('APP_DEMO', false) ? 'linkace@example.com' : old('email') }}"
                                     placeholder="@lang('linkace.email')" aria-label="@lang('linkace.email')" required
                                     autofocus>
                             </div>
@@ -41,6 +41,7 @@
                                     </div>
                                 </div>
                                 <input type="password" name="password" id="password" class="form-control"
+                                    @if(env('APP_DEMO', false)) value="demopassword" @endif
                                     placeholder="@lang('linkace.password')" aria-label="@lang('linkace.password')">
                             </div>
                             @if ($errors->has('password'))

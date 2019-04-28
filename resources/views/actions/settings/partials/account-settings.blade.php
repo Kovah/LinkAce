@@ -11,12 +11,12 @@
                 <label for="username">
                     @lang('user.username')
                 </label>
-                <input type="text" name="username" id="username" required
-                    class="form-control{{ $errors->has('username') ? ' is-invalid' : '' }}"
-                    placeholder="@lang('user.username')" value="{{ old('username') ?: $user->name }}">
-                @if ($errors->has('username'))
+                <input type="text" name="name" id="name" required
+                    class="form-control{{ $errors->has('name') ? ' is-invalid' : '' }}"
+                    placeholder="@lang('user.username')" value="{{ old('name') ?: $user->name }}">
+                @if ($errors->has('name'))
                     <p class="invalid-feedback" role="alert">
-                        {{ $errors->first('username') }}
+                        {{ $errors->first('name') }}
                     </p>
                 @endif
             </div>
@@ -26,6 +26,7 @@
                     @lang('user.email')
                 </label>
                 <input type="text" name="email" id="email" required
+                    @if(env('APP_DEMO')) disabled @endif
                     class="form-control{{ $errors->has('email') ? ' is-invalid' : '' }}"
                     placeholder="@lang('user.email')" value="{{ old('email') ?: $user->email }}">
                 @if ($errors->has('email'))

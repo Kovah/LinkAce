@@ -4,6 +4,7 @@ namespace App\Http\Controllers\App;
 
 use App\Helper\LinkAce;
 use App\Http\Controllers\Controller;
+use App\Http\Requests\UserAccountUpdateRequest;
 use App\Http\Requests\UserSettingsUpdateRequest;
 use App\Models\Setting;
 use Illuminate\Http\Request;
@@ -33,15 +34,15 @@ class UserSettingsController extends Controller
     }
 
     /**
-     * @param UserSettingsUpdateRequest $request
+     * @param UserAccountUpdateRequest $request
      * @return \Illuminate\Http\RedirectResponse
      */
-    public function saveAccountSettings(UserSettingsUpdateRequest $request)
+    public function saveAccountSettings(UserAccountUpdateRequest $request)
     {
         $user = auth()->user();
 
         $user->update($request->only([
-            'username',
+            'name',
             'email',
         ]));
 
