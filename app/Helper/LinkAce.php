@@ -56,7 +56,7 @@ class LinkAce
             ?? $fallback['description'];
 
         return [
-            'title' => $title,
+            'title' => $title ?? $fallback['title'],
             'description' => $description,
         ];
     }
