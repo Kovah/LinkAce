@@ -13,7 +13,7 @@
 
                 <div class="form-group">
                     <div class="input-group">
-                        <input type="text" name="query" id="query"
+                        <input type="text" name="query" id="query" autofocus
                             class="form-control form-control-lg{{ $errors->has('query') ? ' is-invalid' : '' }}"
                             placeholder="@lang('search.query')"
                             value="{{ old('query') ?: $query_settings['old_query'] }}">
