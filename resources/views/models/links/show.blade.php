@@ -116,7 +116,7 @@
 
     </div>
 
-    <div class="link-notes mt-3">
+    <div class="link-notes mt-4">
 
         <h3 class="h4 mb-2">@lang('note.notes')</h3>
 

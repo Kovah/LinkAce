@@ -13,8 +13,7 @@
                         @lang('settings.old_password')
                     </label>
                     <input type="password" name="old_password" id="old_password" required
-                        class="form-control{{ $errors->has('old_password') ? ' is-invalid' : '' }}"
-                        placeholder="@lang('settings.old_password')">
+                        class="form-control{{ $errors->has('old_password') ? ' is-invalid' : '' }}">
                 </div>
 
                 <div class="form-group">
@@ -23,7 +22,6 @@
                     </label>
                     <input type="password" name="new_password" id="new_password" required
                         class="form-control{{ $errors->has('new_password') ? ' is-invalid' : '' }}"
-                        placeholder="@lang('settings.new_password')">
                 </div>
 
                 <div class="form-group">
@@ -31,8 +29,7 @@
                         @lang('settings.new_password2')
                     </label>
                     <input type="password" name="new_password_confirmation" id="new_password_confirmation" required
-                        class="form-control{{ $errors->has('new_password_confirmation') ? ' is-invalid' : '' }}"
-                        placeholder="@lang('settings.new_password2')">
+                        class="form-control{{ $errors->has('new_password_confirmation') ? ' is-invalid' : '' }}">
                 </div>
 
                 <button type="submit" class="btn btn-primary">
