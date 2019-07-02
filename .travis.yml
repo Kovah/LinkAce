@@ -19,6 +19,6 @@ jobs:
         - composer install
 
     - stage: test-frontend
-      language: nodejs
+      language: node_js
       node_js:
         - 'lts/*'
