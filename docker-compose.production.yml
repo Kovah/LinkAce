@@ -1,11 +1,9 @@
----
 version: "2"
 
 services:
 
   # --- MariaDB
   db:
-    container_name: "linkace-db"
     image: bitnami/mariadb:10.1
     restart: always
     environment:
@@ -20,7 +18,6 @@ services:
 
   # --- LinkAce Image with PHP 7.2
   php:
-    container_name: "linkace-php"
     image: linkace/linkace:latest
     restart: always
     volumes:
@@ -29,7 +26,6 @@ services:
 
   # --- nginx
   nginx:
-    container_name: "linkace-nginx"
     image: bitnami/nginx:latest
     restart: always
     ports:
@@ -46,7 +42,6 @@ services:
 
   # --- Redis
   redis:
-    container_name: "linkace-redis"
     image: bitnami/redis:latest
     restart: always
     env_file:
