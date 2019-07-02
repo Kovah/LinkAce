@@ -2,12 +2,23 @@ branches:
   only:
     - master
 
-language: php
-php:
-  - '7.1.3'
-  - '7.2'
-  - '7.3'
+stages:
+  - test-backend
+  - test-frontend
 
-install:
-  - cp .env.example .env
-  - composer install
+jobs:
+  include:
+    - stage: test-backend
+      language: php
+      php:
+        - '7.1.3'
+        - '7.2'
+        - '7.3'
+      install:
+        - cp .env.example .env
+        - composer install
+
+    - stage: test-frontend
+      language: node_js
+      node_js:
+        - 'lts/*'
