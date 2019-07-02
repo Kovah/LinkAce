@@ -14,7 +14,8 @@
   },
   "scripts": {
     "dev": "grunt dev",
-    "build": "grunt build"
+    "build": "grunt build",
+    "test": "grunt build"
   },
   "devDependencies": {
     "autoprefixer": "^8.6.5",
