@@ -63,11 +63,13 @@
                 @else
                     <li class="nav-item">
                         <a href="{{ route('get-search') }}" class="nav-link" title="@lang('search.search')">
+                            <span class="d-md-none">@lang('search.search')</span>
                             <i class="fa fa-search fa-fw mx-1"></i>
                         </a>
                     </li>
                     <li class="nav-item">
                         <a href="{{ route('get-trash') }}" class="nav-link" title="@lang('trash.trash')">
+                            <span class="d-md-none">@lang('trash.trash')</span>
                             <i class="fa fa-trash-alt fa-fw mx-1"></i>
                         </a>
                     </li>
