@@ -21,8 +21,4 @@ jobs:
     - stage: test-frontend
       language: nodejs
       node_js:
-        - "10.15"
-      before_install:
-        - npm i
-      install:
-        - npm run build
+        - 'lts/*'
