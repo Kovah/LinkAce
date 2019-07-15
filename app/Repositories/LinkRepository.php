@@ -40,7 +40,7 @@ class LinkRepository
      */
     public static function update(Link $link, array $data): Link
     {
-        $data['icon'] = LinkIconMapper::mapLink($data['url']);
+        $data['icon'] = LinkIconMapper::mapLink($data['url'] ?? $link->url);
 
         $link->update($data);
 
