@@ -89,6 +89,12 @@
                             <span class="badge badge-secondary ml-auto">{{ $stats['total_tags'] }}</span>
                         </div>
                     </li>
+                    <li class="list-group-item">
+                        <div class="d-flex align-items-center">
+                            <span class="mr-1">@lang('stats.total_notes')</span>
+                            <span class="badge badge-secondary ml-auto">{{ $stats['total_notes'] }}</span>
+                        </div>
+                    </li>
                 </ul>
             </div>
 
