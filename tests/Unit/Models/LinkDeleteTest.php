@@ -9,7 +9,7 @@ use Illuminate\Foundation\Testing\DatabaseMigrations;
 use Illuminate\Foundation\Testing\DatabaseTransactions;
 use Tests\TestCase;
 
-class LinkUpdateTest extends TestCase
+class LinkDeleteTest extends TestCase
 {
     use DatabaseMigrations;
     use DatabaseTransactions;
@@ -29,20 +29,14 @@ class LinkUpdateTest extends TestCase
      *
      * @return void
      */
-    public function testValidLinkUpdate(): void
+    public function testValidCategoryCreation(): void
     {
         $this->be($this->user);
 
         $link = factory(Link::class)->create();
 
-        $changed_data = [
-            'title' => 'This is a new title!',
-        ];
+        $deletion_result = LinkRepository::delete($link);
 
-        $updated_link = LinkRepository::update($link, $changed_data);
-
-        $asserted_data = array_merge($link->toArray(), $changed_data);
-
-        $this->assertDatabaseHas('links', $asserted_data);
+        $this->assertTrue($deletion_result);
     }
 }

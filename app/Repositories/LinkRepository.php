@@ -6,6 +6,7 @@ use App\Helper\LinkAce;
 use App\Helper\LinkIconMapper;
 use App\Models\Link;
 use App\Models\Tag;
+use Tests\Unit\Models\LinkDeleteTest;
 
 class LinkRepository
 {
@@ -49,6 +50,21 @@ class LinkRepository
         }
 
         return $link;
+    }
+
+    /**
+     * @param Link $link
+     * @return bool
+     */
+    public static function delete(Link $link): bool
+    {
+        try {
+            $link->delete();
+        } catch (\Exception $e) {
+            return false;
+        }
+
+        return true;
     }
 
     /**

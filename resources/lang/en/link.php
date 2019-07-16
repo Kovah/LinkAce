@@ -33,6 +33,7 @@ return [
     'added_successfully' => 'Link added successfully.',
     'updated_successfully' => 'Link updated successfully.',
     'deleted_successfully' => 'Link deleted successfully.',
+    'deletion_error' => 'Link could not be deleted.',
 
     'notifications.linkcheck.errors' => 'LinkAce found errors while checking your Links',
     'notifications.linkcheck.errors.moved' => '⚠ ️The following Links were moved:',

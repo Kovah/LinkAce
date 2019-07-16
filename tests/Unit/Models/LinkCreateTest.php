@@ -18,7 +18,7 @@ class LinkCreateTest extends TestCase
     /** @var User */
     private $user;
 
-    public function setUp()
+    public function setUp(): void
     {
         parent::setUp();
 
@@ -30,7 +30,7 @@ class LinkCreateTest extends TestCase
      *
      * @return void
      */
-    public function testValidLinkCreation()
+    public function testValidLinkCreation(): void
     {
         $this->be($this->user);
 
