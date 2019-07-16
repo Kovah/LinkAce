@@ -17,7 +17,7 @@ class CategoryUpdateTest extends TestCase
     /** @var User */
     private $user;
 
-    public function setUp()
+    public function setUp(): void
     {
         parent::setUp();
 
@@ -29,7 +29,7 @@ class CategoryUpdateTest extends TestCase
      *
      * @return void
      */
-    public function testValidCategoryUpdate()
+    public function testValidCategoryUpdate(): void
     {
         $this->be($this->user);
 
