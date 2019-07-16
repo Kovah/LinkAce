@@ -3,6 +3,7 @@
 namespace App\Repositories;
 
 use App\Models\Category;
+use Illuminate\Support\Facades\Log;
 
 class CategoryRepository
 {
@@ -53,6 +54,7 @@ class CategoryRepository
         try {
             $category->delete();
         } catch (\Exception $e) {
+            Log::error($e);
             return false;
         }
 

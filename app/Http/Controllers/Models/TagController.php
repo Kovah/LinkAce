@@ -178,11 +178,12 @@ class TagController extends Controller
 
         $deletion_successfull = TagRepository::delete($tag);
 
-        if ($deletion_successfull) {
+        if (!$deletion_successfull) {
             alert(trans('tag.deletion_error'), 'error');
             return redirect()->back();
         }
 
+        alert(trans('tag.deleted_successfully'), 'warning');
         return redirect()->route('tags.index');
     }
 }

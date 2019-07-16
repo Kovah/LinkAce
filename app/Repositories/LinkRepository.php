@@ -7,6 +7,7 @@ use App\Helper\LinkIconMapper;
 use App\Jobs\SaveLinkToWaybackmachine;
 use App\Models\Link;
 use App\Models\Tag;
+use Illuminate\Support\Facades\Log;
 use Tests\Unit\Models\LinkDeleteTest;
 
 class LinkRepository
@@ -64,6 +65,7 @@ class LinkRepository
         try {
             $link->delete();
         } catch (\Exception $e) {
+            Log::error($e);
             return false;
         }
 

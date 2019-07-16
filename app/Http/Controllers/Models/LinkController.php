@@ -189,13 +189,12 @@ class LinkController extends Controller
 
         $deletion_successfull = LinkRepository::delete($link);
 
-        if ($deletion_successfull) {
+        if (!$deletion_successfull) {
             alert(trans('link.deletion_error'), 'error');
             return redirect()->back();
         }
 
         alert(trans('link.deleted_successfully'), 'warning');
-
         return redirect()->route('links.index');
     }
 }

@@ -181,7 +181,7 @@ class CategoryController extends Controller
 
         $deletion_successfull = CategoryRepository::delete($category);
 
-        if ($deletion_successfull) {
+        if (!$deletion_successfull) {
             alert(trans('category.deletion_error'), 'error');
             return redirect()->back();
         }
