@@ -6,8 +6,8 @@ use App\Http\Controllers\Controller;
 use App\Http\Requests\TagDeleteRequest;
 use App\Http\Requests\TagStoreRequest;
 use App\Http\Requests\TagUpdateRequest;
-use App\Models\Link;
 use App\Models\Tag;
+use App\Repositories\TagRepository;
 use Illuminate\Http\Request;
 
 class TagController extends Controller
@@ -56,12 +56,9 @@ class TagController extends Controller
      */
     public function store(TagStoreRequest $request)
     {
-        $data = $request->except(['tags', 'reload_view']);
+        $data = $request->except(['reload_view']);
 
-        // Set the user ID
-        $data['user_id'] = auth()->user()->id;
-
-        $tag = Tag::create($data);
+        $tag = TagRepository::create($data);
 
         alert(trans('tag.added_successfully'), 'success');
 
@@ -77,7 +74,7 @@ class TagController extends Controller
      * Display the specified resource.
      *
      * @param Request $request
-     * @param  int    $id
+     * @param int     $id
      * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
      */
     public function show(Request $request, $id)
@@ -92,7 +89,6 @@ class TagController extends Controller
             abort(403);
         }
 
-        // Get links of the category
         $links = $tag->links()->byUser(auth()->id());
 
         if ($request->has('orderBy') && $request->has('orderDir')) {
@@ -115,7 +111,7 @@ class TagController extends Controller
     /**
      * Show the form for editing the specified resource.
      *
-     * @param  int $id
+     * @param int $id
      * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
      */
     public function edit($id)
@@ -137,7 +133,7 @@ class TagController extends Controller
      * Update the specified resource in storage.
      *
      * @param TagUpdateRequest $request
-     * @param  int             $id
+     * @param int              $id
      * @return \Illuminate\Http\RedirectResponse
      */
     public function update(TagUpdateRequest $request, $id)
@@ -153,8 +149,7 @@ class TagController extends Controller
         }
 
         $data = $request->all();
-
-        $tag->update($data);
+        $tag = TagRepository::update($tag, $data);
 
         alert(trans('tag.updated_successfully'), 'success');
 
@@ -165,7 +160,7 @@ class TagController extends Controller
      * Remove the specified resource from storage.
      *
      * @param TagDeleteRequest $request
-     * @param  int             $id
+     * @param int              $id
      * @return \Illuminate\Http\RedirectResponse
      * @throws \Exception
      */
@@ -181,10 +176,12 @@ class TagController extends Controller
             abort(403);
         }
 
-        // Delete all attached links
-        $tag->links()->detach();
+        $deletion_successfull = TagRepository::delete($tag);
 
-        $tag->delete();
+        if ($deletion_successfull) {
+            alert(trans('tag.deletion_error'), 'error');
+            return redirect()->back();
+        }
 
         return redirect()->route('tags.index');
     }

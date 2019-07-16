@@ -21,4 +21,5 @@ return [
     'added_successfully' => 'Tag added successfully.',
     'updated_successfully' => 'Tag updated successfully.',
     'deleted_successfully' => 'Tag deleted successfully.',
+    'deletion_error' => 'Tag could not be deleted.',
 ];
