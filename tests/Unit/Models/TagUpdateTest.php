@@ -10,7 +10,7 @@ use Illuminate\Foundation\Testing\DatabaseMigrations;
 use Illuminate\Foundation\Testing\DatabaseTransactions;
 use Tests\TestCase;
 
-class CategoryUpdateTest extends TestCase
+class TagUpdateTest extends TestCase
 {
     use DatabaseMigrations;
     use DatabaseTransactions;
