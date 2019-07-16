@@ -2,9 +2,8 @@
 
 namespace Tests\Unit\Models;
 
-use App\Models\Category;
+use App\Models\Tag;
 use App\Models\User;
-use App\Repositories\CategoryRepository;
 use App\Repositories\TagRepository;
 use Illuminate\Foundation\Testing\DatabaseMigrations;
 use Illuminate\Foundation\Testing\DatabaseTransactions;
@@ -34,7 +33,7 @@ class TagUpdateTest extends TestCase
     {
         $this->be($this->user);
 
-        $tag = factory(Category::class)->create();
+        $tag = factory(Tag::class)->create();
 
         $changed_data = [
             'name' => 'Changed Tag Title',
