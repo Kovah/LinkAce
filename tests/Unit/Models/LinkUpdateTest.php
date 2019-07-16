@@ -2,8 +2,6 @@
 
 namespace Tests\Unit\Models;
 
-use App\Helper\LinkAce;
-use App\Helper\LinkIconMapper;
 use App\Models\Link;
 use App\Models\User;
 use App\Repositories\LinkRepository;
@@ -31,7 +29,7 @@ class LinkUpdateTest extends TestCase
      *
      * @return void
      */
-    public function testValidLinkCreation()
+    public function testValidLinkUpdate()
     {
         $this->be($this->user);
 
