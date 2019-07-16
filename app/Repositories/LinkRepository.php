@@ -4,6 +4,7 @@ namespace App\Repositories;
 
 use App\Helper\LinkAce;
 use App\Helper\LinkIconMapper;
+use App\Jobs\SaveLinkToWaybackmachine;
 use App\Models\Link;
 use App\Models\Tag;
 use Tests\Unit\Models\LinkDeleteTest;
@@ -30,6 +31,8 @@ class LinkRepository
         if (isset($data['tags'])) {
             self::updateTagsForLink($link, $data['tags']);
         }
+
+        SaveLinkToWaybackmachine::dispatch($link);
 
         return $link;
     }

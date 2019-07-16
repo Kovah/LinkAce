@@ -73,9 +73,6 @@ class LinkController extends Controller
 
         alert(trans('link.added_successfully'), 'success');
 
-        // Notify the Wayback Machine about the link
-        WaybackMachine::saveToArchive($link->url);
-
         // Redirect to the corresponding page based on bookmarklet usage
         $is_bookmarklet = session('bookmarklet.create');
 
