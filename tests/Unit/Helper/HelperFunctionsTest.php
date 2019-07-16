@@ -24,7 +24,7 @@ class HelperFunctionsTest extends TestCase
     /** @var Link */
     private $link;
 
-    public function setUp()
+    public function setUp(): void
     {
         parent::setUp();
 
