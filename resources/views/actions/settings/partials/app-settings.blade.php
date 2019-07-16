@@ -207,7 +207,7 @@
             @include('actions.settings.partials.sharing')
 
             <button type="submit" class="btn btn-primary">
-                <i class="fa fa-save fa-mr"></i> @lang('settings.save_settings')
+                <i class="fas fa-save mr-2"></i> @lang('settings.save_settings')
             </button>
 
         </form>

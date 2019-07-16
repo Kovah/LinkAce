@@ -31,7 +31,7 @@
                         </div>
 
                         <button type="submit" class="btn btn-primary">
-                            <i class="fa fa-envelope-open fa-mr"></i> @lang('linkace.send_reset_email')
+                            <i class="fas fa-envelope-open mr-2"></i> @lang('linkace.send_reset_email')
                         </button>
 
                     </form>

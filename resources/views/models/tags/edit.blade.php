@@ -57,7 +57,7 @@
                 <div class="mt-3 text-right">
 
                     <button type="submit" class="btn btn-primary">
-                        <i class="fa fa-save fa-mr"></i> @lang('tag.edit')
+                        <i class="fas fa-save mr-2"></i> @lang('tag.edit')
                     </button>
 
                 </div>

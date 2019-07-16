@@ -58,7 +58,7 @@
                     </div>
 
                     <button type="submit" class="btn btn-primary">
-                        <i class="fa fa-save fa-mr"></i> @lang('tag.add')
+                        <i class="fas fa-save mr-2"></i> @lang('tag.add')
                     </button>
 
                 </div>

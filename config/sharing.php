@@ -83,7 +83,7 @@ return [
         ],
         'evernote' => [
             'action' => 'https://www.evernote.com/clip.action?url=#E-URL#&title=#SUBJECT#',
-            'icon' => 'fa fa-sticky-note',
+            'icon' => 'fab fa-evernote',
         ],
         'trello' => [
             'action' => 'https://trello.com/add-card?mode=popup&url=#E-URL#&name=#E-SUBJECT#&desc=',
@@ -91,7 +91,7 @@ return [
         ],
         'buffer' => [
             'action' => 'https://buffer.com/add?url=#E-URL#&text=#E-SUBJECT#',
-            'icon' => 'fa fa-layer-group',
+            'icon' => 'fab fa-buffer',
         ],
         'tumblr' => [
             'action' => 'http://tumblr.com/share/link?url=#URL#&name=#SUBJECT#',

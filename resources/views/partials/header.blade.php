@@ -7,18 +7,16 @@
 <title>{{ systemsettings('system_page_title') ?: config('app.name', 'LinkAce') }}</title>
 
 @if(usersettings('darkmode_setting') === '1')
-    <link href="{{ asset('assets/dist/css/app-dark.css') }}" rel="stylesheet">
+    <link href="{{ mix('assets/dist/css/app-dark.css') }}" rel="stylesheet">
 @elseif(usersettings('darkmode_setting') === '2')
     <style><?php include public_path('assets/dist/css/loader.css') ?></style>
     <meta name="darkmode" content="1">
     <link rel="stylesheet"
-        data-light-href="{{ asset('assets/dist/css/app.css') }}"
-        data-dark-href="{{ asset('assets/dist/css/app-dark.css') }}">
+        data-light-href="{{ mix('assets/dist/css/app.css') }}"
+        data-dark-href="{{ mix('assets/dist/css/app-dark.css') }}">
 @else
-    <link href="{{ asset('assets/dist/css/app.css') }}" rel="stylesheet">
+    <link href="{{ mix('assets/dist/css/app.css') }}" rel="stylesheet">
 @endif
-
-<link href="{{ asset('assets/dist/css/fa.min.css') }}" rel="stylesheet">
 
 <meta property="la-app-data" content="{{ json_encode([
     'user' => [

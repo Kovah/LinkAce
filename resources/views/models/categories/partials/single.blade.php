@@ -16,11 +16,11 @@
     <td>
         <div class="btn-group btn-group-sm">
             <a href="{{ route('categories.edit', [$category->id]) }}" class="btn  btn-outline-primary">
-                <i class="fa fa-edit"></i>
+                <i class="fas fa-edit"></i>
             </a>
             <a onclick="event.preventDefault();document.getElementById('category-delete-{{ $category->id }}').submit();"
                 title=" @lang('category.delete')" class="btn btn-outline-danger">
-                <i class="fa fa-trash"></i>
+                <i class="fas fa-trash"></i>
             </a>
         </div>
         <form id="category-delete-{{ $category->id }}" method="POST" style="display: none;"

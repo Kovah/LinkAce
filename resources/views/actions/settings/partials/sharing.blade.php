@@ -21,7 +21,7 @@
     </div>
 
     <button type="button" class="share-toggle btn btn-sm btn-outline-secondary">
-        <i class="fa fa-toggle-on"></i> @lang('settings.sharing_toggle')
+        <i class="fas fa-toggle-on"></i> @lang('settings.sharing_toggle')
     </button>
 
     @if ($errors->has('timezone'))

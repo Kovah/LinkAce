@@ -4,7 +4,7 @@
         <div class="d-flex align-items-top">
             <div class="mr-2">
                 @if($link->is_private)
-                    <i class="fa fa-lock text-muted mr-1" title="@lang('link.private')"></i>
+                    <i class="fas fa-lock text-muted mr-1" title="@lang('link.private')"></i>
                 @endif
                 {!! $link->getIcon('mr-1') !!}
                 <a href="{{ $link->url }}">{{ $link->title }}</a>
@@ -15,7 +15,7 @@
                 <button type="button" class="btn btn-xs btn-outline-primary" title="@lang('sharing.share_link')"
                     data-toggle="collapse" data-target="#sharing-{{ $link->id }}"
                     aria-expanded="false" aria-controls="sharing-{{ $link->id }}">
-                    <i class="fa fa-share-alt fa-fw"></i>
+                    <i class="fas fa-share-alt fa-fw"></i>
                 </button>
             </div>
         </div>
@@ -62,17 +62,17 @@
                 <div class="btn-group mt-1">
                     <a href="{{ route('links.show', [$link->id]) }}" class="btn btn-xs btn-outline-secondary"
                         title="@lang('link.show')">
-                        <i class="fa fa-info fa-fw"></i> @lang('link.show')
+                        <i class="fas fa-info fa-fw"></i> @lang('link.show')
                     </a>
 
                     <a href="{{ route('links.edit', [$link->id]) }}" class="btn btn-xs btn-outline-secondary"
                         title="@lang('link.edit')">
-                        <i class="fa fa-edit fa-fw"></i> @lang('link.edit')
+                        <i class="fas fa-edit fa-fw"></i> @lang('link.edit')
                     </a>
 
                     <a href="#" title="@lang('link.delete')" class="btn btn-xs btn-outline-secondary"
                         onclick="event.preventDefault();document.getElementById('link-delete-{{ $link->id }}').submit();">
-                        <i class="fa fa-trash-alt fa-fw"></i> @lang('link.delete')
+                        <i class="fas fa-trash-alt fa-fw"></i> @lang('link.delete')
                     </a>
                 </div>
 

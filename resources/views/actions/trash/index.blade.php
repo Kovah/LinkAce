@@ -16,7 +16,7 @@
             <div class="ml-auto">
                 <a href="{{ route('clear-trash', ['links']) }}"
                     class="btn btn-sm btn-danger" title="@lang('trash.clear_trash')">
-                    <i class="fa fa-recycle"></i> @lang('trash.clear_trash')
+                    <i class="fas fa-recycle"></i> @lang('trash.clear_trash')
                 </a>
             </div>
         </div>
@@ -35,7 +35,7 @@
             <div class="ml-auto">
                 <a href="{{ route('clear-trash', ['categories']) }}"
                     class="btn btn-sm btn-danger" title="@lang('trash.clear_trash')">
-                    <i class="fa fa-recycle"></i> @lang('trash.clear_trash')
+                    <i class="fas fa-recycle"></i> @lang('trash.clear_trash')
                 </a>
             </div>
         </div>
@@ -54,7 +54,7 @@
             <div class="ml-auto">
                 <a href="{{ route('clear-trash', ['tags']) }}"
                     class="btn btn-sm btn-danger" title="@lang('trash.clear_trash')">
-                    <i class="fa fa-recycle"></i> @lang('trash.clear_trash')
+                    <i class="fas fa-recycle"></i> @lang('trash.clear_trash')
                 </a>
             </div>
         </div>
@@ -73,7 +73,7 @@
             <div class="ml-auto">
                 <a href="{{ route('clear-trash', ['notes']) }}"
                     class="btn btn-sm btn-danger" title="@lang('trash.clear_trash')">
-                    <i class="fa fa-recycle"></i> @lang('trash.clear_trash')
+                    <i class="fas fa-recycle"></i> @lang('trash.clear_trash')
                 </a>
             </div>
         </div>

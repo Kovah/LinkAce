@@ -73,7 +73,6 @@ class LinkIconMapper
         'meetup\.com' => 'fab fa-meetup',
         'microsoft\.com' => 'fab fa-microsoft',
         'mixcloud\.com' => 'fab fa-mixcloud',
-        'store\.nintendo\.com' => 'fab fa-nintendo-switch',
         'npmjs\.com' => 'fab fa-npm',
         'openid\.net' => 'fab fa-openid',
         'opensource\.org' => 'fab fa-osi',

@@ -14,7 +14,7 @@
                 <p>@lang('export.export_help')</p>
 
                 <button type="submit" class="btn btn-primary export-submit">
-                    <i class="fa"></i>
+                    <i class="fas fa-upload mr-2"></i>
                     @lang('export.start_export')
                 </button>
 

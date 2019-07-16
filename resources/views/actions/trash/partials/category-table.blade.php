@@ -20,7 +20,7 @@
                 <td class="text-right">
                     <a href="{{ route('trash-restore', ['category', $category->id]) }}"
                         class="btn btn-sm btn-outline-primary" title="@lang('trash.restore')">
-                        <i class="fa fa-reply"></i>
+                        <i class="fas fa-reply"></i>
                     </a>
                 </td>
             </tr>

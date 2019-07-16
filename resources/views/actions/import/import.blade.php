@@ -27,7 +27,7 @@
                 </div>
 
                 <button type="submit" class="btn btn-primary import-submit">
-                    <i class="fa"></i>
+                    <i class="fas fa-file-import mr-2"></i>
                     @lang('import.start_import')
                 </button>
 
