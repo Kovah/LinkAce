@@ -15,6 +15,7 @@ $gray-600: #6686B9 !default;
 $gray-700: #44679F !default;
 $gray-800: #2C528F !default;
 $gray-900: #193C74 !default;
+$gray: #6F747F !default;
 $black: #17181A !default;
 
 $grays: () !default;
@@ -163,6 +164,7 @@ $sizes: map-merge(
 
 $body-bg: $white !default;
 $body-color: $black !default;
+$body-color-muted: $gray !default;
 
 
 // Links
@@ -319,7 +321,7 @@ $lead-font-weight:            300 !default;
 
 $small-font-size:             80% !default;
 
-$text-muted:                  $gray-600 !default;
+$text-muted:                  $body-color-muted !default;
 
 $blockquote-small-color:      $gray-600 !default;
 $blockquote-small-font-size:  $small-font-size !default;

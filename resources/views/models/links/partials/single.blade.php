@@ -1,14 +1,15 @@
 <div class="card mb-4">
 
     <div class="card-header">
-        <div class="d-flex align-items-center">
+        <div class="d-flex align-items-top">
             <div class="mr-2">
                 @if($link->is_private)
                     <i class="fa fa-lock text-muted mr-1" title="@lang('link.private')"></i>
                 @endif
                 {!! $link->getIcon('mr-1') !!}
                 <a href="{{ $link->url }}">{{ $link->title }}</a>
-                <small>({{ $link->shortUrl() }})</small>
+                <br>
+                <small class="text-muted">({{ $link->shortUrl() }})</small>
             </div>
             <div class="ml-auto text-right">
                 <button type="button" class="btn btn-xs btn-outline-primary" title="@lang('sharing.share_link')"
@@ -23,42 +24,42 @@
     <div class="card-body py-2 px-3">
 
         <div class="row">
-            <div class="col-xs-12 col-sm-6 small">
+            <div class="col-xs-12 col-sm-6">
 
                 <div>
                     @if($link->category)
-                        <label>@lang('category.category'):</label>
-                        <a href="{{ route('categories.show', [$link->category->id]) }}">
+                        <label class="small">@lang('category.category'):</label>
+                        <a href="{{ route('categories.show', [$link->category->id]) }}" class="small">
                             {{ $link->category->name }}
                         </a>
                     @else
-                        @lang('category.no_category')
+                        <label class="small">@lang('category.no_category')</label>
                     @endif
                 </div>
 
-                <div class="mt-2">
+                <div>
                     @if($link->tags->count() > 0)
-                        <label>@lang('tag.tags'):</label>
+                        <label class="small">@lang('tag.tags'):</label>
                         @foreach($link->tags as $tag)
                             <a href="{{ route('tags.show', [$tag->id]) }}" class="badge badge-light">
                                 {{ $tag->name }}
                             </a>
                         @endforeach
                     @else
-                        @lang('tag.no_tags')
+                        <span class="small">@lang('tag.no_tags')</span>
                     @endif
                 </div>
 
             </div>
-            <div class="col-xs-12 col-sm-6 text-md-right">
+            <div class="col-xs-12 col-sm-6 mt-2 mt-sm-0 text-sm-right">
 
                 <div>
                     <small class="text-muted">
-                        @lang('linkace.added_at') {!! $link->addedAt() !!}
+                        @lang('linkace.added') {!! $link->addedAt() !!}
                     </small>
                 </div>
 
-                <div class="btn-group">
+                <div class="btn-group mt-1">
                     <a href="{{ route('links.show', [$link->id]) }}" class="btn btn-xs btn-outline-secondary"
                         title="@lang('link.show')">
                         <i class="fa fa-info fa-fw"></i> @lang('link.show')

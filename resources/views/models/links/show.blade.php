@@ -55,7 +55,7 @@
                     <span class="d-none d-sm-inline">@lang('linkace.edit')</span>
                 </a>
                 <a onclick="event.preventDefault();document.getElementById('link-delete-{{ $link->id }}').submit();"
-                    class="btn btn-sm btn-outline-danger" aria-label="@lang('link.delete')">
+                    class="btn btn-sm btn-outline-danger cursor-pointer" aria-label="@lang('link.delete')">
                     <i class="fa fa-trash fa-mr" aria-hidden="true"></i>
                     <span class="d-none d-sm-inline">@lang('linkace.delete')</span>
                 </a>

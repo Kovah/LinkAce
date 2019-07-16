@@ -19,7 +19,7 @@
                     @lang('linkace.edit')
                 </a>
                 <a onclick="event.preventDefault();document.getElementById('note-delete-{{ $note->id }}').submit();"
-                    class="btn btn-xs btn-outline-danger" aria-label="@lang('note.delete')">
+                    class="btn btn-xs btn-outline-danger cursor-pointer" aria-label="@lang('note.delete')">
                     <i class="fa fa-trash fa-mr" aria-hidden="true"></i>
                     @lang('linkace.delete')
                 </a>
