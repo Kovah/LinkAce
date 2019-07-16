@@ -7,6 +7,7 @@ use App\Http\Requests\CategoryDeleteRequest;
 use App\Http\Requests\CategoryStoreRequest;
 use App\Http\Requests\CategoryUpdateRequest;
 use App\Models\Category;
+use App\Repositories\CategoryRepository;
 use Illuminate\Http\Request;
 
 class CategoryController extends Controller
@@ -58,13 +59,7 @@ class CategoryController extends Controller
     {
         $data = $request->except(['tags', 'reload_view']);
 
-        // Set the user ID
-        $data['user_id'] = auth()->user()->id;
-
-        $data['parent_category'] = isset($data['parent_category']) && $data['parent_category'] > 0 ? $data['parent_category'] : null;
-
-        // Create the new link
-        $link = Category::create($data);
+        $category = CategoryRepository::create($data);
 
         alert(trans('category.added_successfully'), 'success');
 
@@ -73,7 +68,7 @@ class CategoryController extends Controller
             return redirect()->route('categories.create');
         }
 
-        return redirect()->route('categories.show', [$link->id]);
+        return redirect()->route('categories.show', [$category->id]);
     }
 
     /**
@@ -95,7 +90,6 @@ class CategoryController extends Controller
             abort(403);
         }
 
-        // Get links of the category
         $links = $category->links()->byUser(auth()->id());
 
         if ($request->has('orderBy') && $request->has('orderDir')) {
@@ -158,12 +152,7 @@ class CategoryController extends Controller
         }
 
         $data = $request->all();
-
-        // Set the correct parent category
-        $data['parent_category'] = isset($data['parent_category']) && $data['parent_category'] > 0 ? $data['parent_category'] : null;
-
-        // Update the existing category with new data
-        $category->update($data);
+        $category = CategoryRepository::update($category, $data);
 
         alert(trans('category.updated_successfully'), 'success');
 
@@ -190,18 +179,14 @@ class CategoryController extends Controller
             abort(403);
         }
 
-        // Remove the category as a parent from all child categories
-        if ($category->childCategories->count()) {
-            foreach ($category->childCategories as $child) {
-                $child->parent_category = null;
-                $child->save();
-            }
+        $deletion_successfull = CategoryRepository::delete($category);
+
+        if (!$deletion_successfull) {
+            alert(trans('category.deletion_error'), 'error');
+            return redirect()->back();
         }
 
-        $category->delete();
-
         alert(trans('category.deleted_successfully'), 'warning');
-
         return redirect()->route('categories.index');
     }
 }

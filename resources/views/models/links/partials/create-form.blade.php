@@ -136,7 +136,7 @@
                 @endif
 
                 <button type="submit" class="btn btn-primary">
-                    <i class="fa fa-save fa-mr"></i> @lang('link.add')
+                    <i class="fas fa-save mr-2"></i> @lang('link.add')
                 </button>
 
             </div>

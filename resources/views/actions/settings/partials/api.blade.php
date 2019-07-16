@@ -12,7 +12,7 @@
                 aria-describedby="api-token-generate">
             <div class="input-group-append">
                 <button class="btn btn-outline-danger" type="button" id="api-token-generate">
-                    <i class="fa fa-recycle mr-1"></i> @lang('settings.api_token_generate')
+                    <i class="fas fa-recycle mr-1"></i> @lang('settings.api_token_generate')
                 </button>
             </div>
         </div>

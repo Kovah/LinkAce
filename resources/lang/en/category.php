@@ -26,4 +26,5 @@ return [
     'added_successfully' => 'Category added successfully.',
     'updated_successfully' => 'Category updated successfully.',
     'deleted_successfully' => 'Category deleted successfully.',
+    'deletion_error' => 'Category could not be deleted.',
 ];

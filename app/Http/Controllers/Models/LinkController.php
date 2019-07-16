@@ -12,6 +12,7 @@ use App\Http\Requests\LinkUpdateRequest;
 use App\Models\Category;
 use App\Models\Link;
 use App\Models\Tag;
+use App\Repositories\LinkRepository;
 use Illuminate\Http\Request;
 
 class LinkController extends Controller
@@ -68,41 +69,9 @@ class LinkController extends Controller
     public function store(LinkStoreRequest $request)
     {
         // Save the new link
-        $data = $request->except(['tags', 'reload_view']);
-
-        // Try to get the meta information of the URL if no title / description was provided
-        $link_meta = LinkAce::getMetaFromURL($data['url']);
-
-        $data['title'] = $data['title'] ?: $link_meta['title'];
-        $data['description'] = $data['description'] ?: $link_meta['description'];
-
-        // Set the user ID
-        $data['user_id'] = auth()->user()->id;
-        $data['icon'] = LinkIconMapper::mapLink($data['url']);
-
-        $data['category_id'] = isset($data['category_id']) && $data['category_id'] > 0 ? $data['category_id'] : null;
-
-        // Create the new link
-        $link = Link::create($data);
-
-        // Get all tags
-        if ($tags = $request->get('tags')) {
-            $tags = explode(',', $tags);
-
-            foreach ($tags as $tag) {
-                $new_tag = Tag::firstOrCreate([
-                    'user_id' => auth()->user()->id,
-                    'name' => $tag,
-                ]);
-
-                $link->tags()->attach($new_tag->id);
-            }
-        }
+        $link = LinkRepository::create($request->all());
 
         alert(trans('link.added_successfully'), 'success');
-
-        // Notify the Wayback Machine about the link
-        WaybackMachine::saveToArchive($link->url);
 
         // Redirect to the corresponding page based on bookmarklet usage
         $is_bookmarklet = session('bookmarklet.create');
@@ -191,28 +160,7 @@ class LinkController extends Controller
             abort(403);
         }
 
-        // Update the existing link with new data
-        $data = $request->except('tags');
-        $data['icon'] = LinkIconMapper::mapLink($data['url']);
-
-        $link->update($data);
-
-        // Update all tags
-        if ($tags = $request->get('tags')) {
-            $tags = collect(explode(',', $tags));
-            $new_tags = [];
-
-            foreach ($tags as $tag) {
-                $new_tag = Tag::firstOrCreate([
-                    'user_id' => auth()->user()->id,
-                    'name' => $tag,
-                ]);
-
-                $new_tags[] = $new_tag->id;
-            }
-
-            $link->tags()->sync($new_tags);
-        }
+        $link = LinkRepository::update($link, $request->all());
 
         alert(trans('link.updated_successfully'), 'success');
 
@@ -239,10 +187,14 @@ class LinkController extends Controller
             abort(403);
         }
 
-        $link->delete();
+        $deletion_successfull = LinkRepository::delete($link);
+
+        if (!$deletion_successfull) {
+            alert(trans('link.deletion_error'), 'error');
+            return redirect()->back();
+        }
 
         alert(trans('link.deleted_successfully'), 'warning');
-
         return redirect()->route('links.index');
     }
 }

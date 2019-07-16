@@ -14,6 +14,7 @@ return [
     'send_reset_email' => 'Send Password Reset Link',
     'forgot_password_link' => 'Forgot your password? <a href=":reset_url">Reset it here</a>',
 
+    'added' => 'Added',
     'added_at' => 'Added at',
     'updated_at' => 'Updated at',
     'last_update' => 'Last Update',

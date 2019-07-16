@@ -24,7 +24,7 @@
                         aria-label="@lang('link.url')">
                     <div class="input-group-append">
                         <button class="btn btn-primary" type="submit">
-                            <i class="fa fa-plus fa-mr"></i> @lang('linkace.add')
+                            <i class="fas fa-plus mr-2"></i> @lang('linkace.add')
                         </button>
                     </div>
                 </div>
@@ -87,6 +87,12 @@
                         <div class="d-flex align-items-center">
                             <span class="mr-1">@lang('stats.total_tags')</span>
                             <span class="badge badge-secondary ml-auto">{{ $stats['total_tags'] }}</span>
+                        </div>
+                    </li>
+                    <li class="list-group-item">
+                        <div class="d-flex align-items-center">
+                            <span class="mr-1">@lang('stats.total_notes')</span>
+                            <span class="badge badge-secondary ml-auto">{{ $stats['total_notes'] }}</span>
                         </div>
                     </li>
                 </ul>

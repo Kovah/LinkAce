@@ -4,8 +4,8 @@ namespace Tests\Unit\Models;
 
 use App\Helper\LinkAce;
 use App\Helper\LinkIconMapper;
-use App\Models\Link;
 use App\Models\User;
+use App\Repositories\LinkRepository;
 use Illuminate\Foundation\Testing\DatabaseMigrations;
 use Illuminate\Foundation\Testing\DatabaseTransactions;
 use Tests\TestCase;
@@ -18,7 +18,7 @@ class LinkCreateTest extends TestCase
     /** @var User */
     private $user;
 
-    public function setUp()
+    public function setUp(): void
     {
         parent::setUp();
 
@@ -30,27 +30,29 @@ class LinkCreateTest extends TestCase
      *
      * @return void
      */
-    public function testValidLinkCreation()
+    public function testValidLinkCreation(): void
     {
+        $this->be($this->user);
+
         $url = 'https://google.com/';
 
         $meta = LinkAce::getMetaFromURL($url);
 
         $original_data = [
-            'user_id' => $this->user->id,
             'category_id' => null,
             'url' => $url,
             'title' => $meta['title'],
             'description' => $meta['description'],
-            'icon' => LinkIconMapper::mapLink($url),
             'is_private' => false,
-            'status' => 1,
         ];
 
-        $link = Link::create($original_data);
+        $link = LinkRepository::create($original_data);
 
         $automated_data = [
             'id' => $link->id,
+            'icon' => LinkIconMapper::mapLink($url),
+            'user_id' => auth()->user()->id,
+            'status' => 1,
             'created_at' => $link->created_at,
             'updated_at' => $link->updated_at,
             'deleted_at' => null,
@@ -58,7 +60,6 @@ class LinkCreateTest extends TestCase
 
         $asserted_data = array_merge($automated_data, $original_data);
 
-        // Assert that the database now has a category called 'Test Category Number 1'
         $this->assertDatabaseHas('links', $asserted_data);
     }
 }

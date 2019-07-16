@@ -104,7 +104,7 @@
                     </div>
 
                     <button type="submit" class="btn btn-primary">
-                        <i class="fa fa-save fa-mr"></i> @lang('category.add')
+                        <i class="fas fa-save mr-2"></i> @lang('category.add')
                     </button>
 
                 </div>

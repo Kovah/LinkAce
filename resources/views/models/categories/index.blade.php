@@ -8,7 +8,7 @@
         </h3>
         <a href="{{ route('categories.create') }}" class="btn btn-sm btn-primary ml-auto"
             aria-label="@lang('category.add')">
-            <i class="fa fa-plus fa-mr"></i>
+            <i class="fas fa-plus mr-2"></i>
             @lang('linkace.add')
         </a>
     </header>

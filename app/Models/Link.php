@@ -124,8 +124,8 @@ class Link extends Model
      */
     public function shortUrl()
     {
-        if (mb_strlen($this->url) > 60) {
-            return substr($this->url, 0, 60) . '...';
+        if (mb_strlen($this->url) > 50) {
+            return substr($this->url, 0, 50) . '...';
         }
 
         return $this->url;

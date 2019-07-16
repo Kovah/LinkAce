@@ -32,7 +32,7 @@
                 </div>
 
                 <button type="submit" class="btn btn-sm btn-primary">
-                    <i class="fa fa-save fa-mr"></i> @lang('note.add')
+                    <i class="fas fa-save mr-2"></i> @lang('note.add')
                 </button>
 
             </div>

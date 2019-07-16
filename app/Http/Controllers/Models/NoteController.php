@@ -8,6 +8,7 @@ use App\Http\Requests\NoteStoreRequest;
 use App\Http\Requests\NoteUpdateRequest;
 use App\Models\Link;
 use App\Models\Note;
+use App\Repositories\NoteRepository;
 
 class NoteController extends Controller
 {
@@ -26,9 +27,7 @@ class NoteController extends Controller
         }
 
         $data = $request->except(['_token']);
-        $data['user_id'] = auth()->id();
-
-        $note = Note::create($data);
+        $note = NoteRepository::create($data);
 
         alert(trans('note.added_successfully'), 'success');
 
@@ -38,7 +37,7 @@ class NoteController extends Controller
     /**
      * Show the form for editing the specified resource.
      *
-     * @param  int $id
+     * @param int $id
      * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
      */
     public function edit($id)
@@ -60,7 +59,7 @@ class NoteController extends Controller
      * Update the specified resource in storage.
      *
      * @param NoteUpdateRequest $request
-     * @param  int              $id
+     * @param int               $id
      * @return \Illuminate\Http\RedirectResponse
      */
     public function update(NoteUpdateRequest $request, $id)
@@ -72,9 +71,7 @@ class NoteController extends Controller
         }
 
         $data = $request->except(['_token', 'note_id']);
-        $data['is_private'] = $data['is_private'] ?? false;
-
-        $note->update($data);
+        $note = NoteRepository::update($note, $data);
 
         alert(trans('note.updated_successfully'), 'success');
 
@@ -85,7 +82,7 @@ class NoteController extends Controller
      * Remove the specified resource from storage.
      *
      * @param NoteDeleteRequest $request
-     * @param  int              $id
+     * @param int               $id
      * @return \Illuminate\Http\RedirectResponse
      * @throws \Exception
      */
@@ -102,9 +99,15 @@ class NoteController extends Controller
         }
 
         $link = $note->link->id;
-        $note->delete();
 
-        alert(trans('note.deleted_successfully'), 'success');
+        $deletion_successfull = NoteRepository::delete($note);
+
+        if (!$deletion_successfull) {
+            alert(trans('note.deletion_error'), 'error');
+            return redirect()->back();
+        }
+
+        alert(trans('note.deleted_successfully'), 'warning');
 
         return redirect()->route('links.show', [$link]);
     }

@@ -30,7 +30,10 @@ class LoginController extends Controller
         // Redirect to the bookmarklet form after login from the bookmarklet
         if (session('bookmarklet.login_redirect')) {
             session()->remove('bookmarklet.login_redirect');
-            return route('bookmarklet-add');
+            return route('bookmarklet-add', [
+                'u' => session('bookmarklet.new_url'),
+                't' => session('bookmarklet.new_title'),
+            ]);
         }
 
         return '/dashboard';

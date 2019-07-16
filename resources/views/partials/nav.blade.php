@@ -64,13 +64,13 @@
                     <li class="nav-item">
                         <a href="{{ route('get-search') }}" class="nav-link" title="@lang('search.search')">
                             <span class="d-md-none">@lang('search.search')</span>
-                            <i class="fa fa-search fa-fw mx-1"></i>
+                            <i class="fas fa-search fa-fw mx-1"></i>
                         </a>
                     </li>
                     <li class="nav-item">
                         <a href="{{ route('get-trash') }}" class="nav-link" title="@lang('trash.trash')">
                             <span class="d-md-none">@lang('trash.trash')</span>
-                            <i class="fa fa-trash-alt fa-fw mx-1"></i>
+                            <i class="fas fa-trash-alt fa-fw mx-1"></i>
                         </a>
                     </li>
                     <li class="nav-item dropdown">
@@ -82,7 +82,7 @@
                             <a href="{{ route('get-usersettings') }}" class="dropdown-item">
                                 @lang('settings.settings')
                             </a>
-                            <a class="dropdown-item"
+                            <a class="dropdown-item cursor-pointer text-danger"
                                 onclick="event.preventDefault();document.getElementById('logout-form').submit();">
                                 @lang('linkace.logout')
                             </a>
