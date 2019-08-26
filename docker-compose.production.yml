@@ -11,8 +11,6 @@ services:
       - MARIADB_USER=${DB_USERNAME}
       - MARIADB_PASSWORD=${DB_PASSWORD}
       - MARIADB_DATABASE=${DB_DATABASE}
-    env_file:
-      - ./.env
     volumes:
       - db:/bitnami
 
@@ -44,8 +42,6 @@ services:
   redis:
     image: bitnami/redis:latest
     restart: always
-    env_file:
-      - ./.env
     environment:
       - REDIS_PASSWORD=${REDIS_PASSWORD}
 
