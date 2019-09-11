@@ -38,4 +38,6 @@ return [
     'notifications.linkcheck.errors' => 'LinkAce found errors while checking your Links',
     'notifications.linkcheck.errors.moved' => '⚠ ️The following Links were moved:',
     'notifications.linkcheck.errors.broken' => '🚫 The following Links are not reachable anymore or return an error:',
+
+    'happy_bookmarking' => 'Happy Bookmarking',
 ];
