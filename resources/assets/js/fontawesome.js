@@ -14,7 +14,11 @@ import { faTrashAlt } from '@fortawesome/free-solid-svg-icons/faTrashAlt';
 import { faBookmark } from '@fortawesome/free-solid-svg-icons/faBookmark';
 import { faReply } from '@fortawesome/free-solid-svg-icons/faReply';
 import { faLink } from '@fortawesome/free-solid-svg-icons/faLink';
+import { faUnlink } from '@fortawesome/free-solid-svg-icons/faUnlink';
 import { faRecycle } from '@fortawesome/free-solid-svg-icons/faRecycle';
+import { faSort } from '@fortawesome/free-solid-svg-icons/faSort';
+import { faToggleOn } from '@fortawesome/free-solid-svg-icons/faToggleOn';
+
 import { faFacebookSquare } from '@fortawesome/free-brands-svg-icons/faFacebookSquare';
 import { faTwitterSquare } from '@fortawesome/free-brands-svg-icons/faTwitterSquare';
 import { faRedditSquare } from '@fortawesome/free-brands-svg-icons/faRedditSquare';
@@ -148,9 +152,12 @@ export function initFontAwesome () {
   library.add(faBookmark);
   library.add(faReply);
   library.add(faLink);
+  library.add(faUnlink);
   library.add(faRecycle);
   library.add(faFileImport);
   library.add(faUpload);
+  library.add(faSort);
+  library.add(faToggleOn);
 
   library.add(faFacebookSquare);
   library.add(faTwitterSquare);

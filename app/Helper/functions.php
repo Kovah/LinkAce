@@ -1,5 +1,6 @@
 <?php
 
+use App\Helper\Alert;
 use App\Helper\WaybackMachine;
 use App\Models\Link;
 use App\Models\Setting;
@@ -192,4 +193,23 @@ function waybackLink($link): ?string
     $link = $link->url ?? $link;
 
     return WaybackMachine::getArchiveLink($link);
+}
+
+/**
+ * Flash an alert.
+ *
+ * @param string|null $message
+ * @param string|null $style
+ *
+ * @return Alert
+ */
+function alert(string $message = null, string $style = 'info'): Alert
+{
+    $alert = app('alert');
+
+    if ($message === null) {
+        return $alert;
+    }
+
+    return $alert->flash($message, $style);
 }

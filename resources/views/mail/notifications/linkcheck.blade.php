@@ -22,6 +22,6 @@
 @lang('linkace.open_linkace')
 @endcomponent
 
-Thanks,<br>
+@lang('link.happy_bookmarking'),<br>
 {{ config('app.name') }}
 @endcomponent

@@ -14,12 +14,10 @@ services:
       - MARIADB_DATABASE=${DB_DATABASE}
     ports:
       - "127.0.0.1:3306:3306"
-    env_file:
-      - ./.env
     volumes:
-      - ./.tmp/db:/bitnami:delegated
+      - linkace-db:/bitnami
 
-  # --- PHP 7.2
+  # --- PHP 7.3
   php:
     container_name: "linkace-php"
     build:
@@ -51,3 +49,7 @@ services:
       - REDIS_PASSWORD=${REDIS_PASSWORD}
     ports:
       - "127.0.0.1:6379:6379"
+
+volumes:
+  linkace-db:
+    driver: local

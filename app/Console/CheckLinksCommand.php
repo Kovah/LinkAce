@@ -175,9 +175,8 @@ class CheckLinksCommand extends Command
             $res = $this->client->request('GET', $link->url, $options);
             $status_code = $res->getStatusCode();
         } catch (\Exception $e) {
-            // Just abort now, may be a temporary issue
-            $this->warn('› Unknown error while trying to check the URL, trying again later.');
-            return;
+            // Set status code to null so the link will be marked as broken
+            $status_code = null;
         }
 
         // Check if the status code is not 200
@@ -214,6 +213,8 @@ class CheckLinksCommand extends Command
             // Do not send a notification if there are no errors
             return;
         }
+
+        $this->info('› Notification sent to the user.');
 
         Notification::send(
             User::find(1),

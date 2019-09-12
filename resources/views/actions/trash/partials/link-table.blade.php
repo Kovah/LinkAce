@@ -14,8 +14,8 @@
                 <td>
                     {{ $link->url }}
                 </td>
-                <td>
-                    {{ formatDateTime($link->created_at) }}
+                <td class="text-muted">
+                    <small>{{ formatDateTime($link->created_at) }}</small>
                 </td>
                 <td class="text-right">
                     <a href="{{ route('trash-restore', ['link', $link->id]) }}"

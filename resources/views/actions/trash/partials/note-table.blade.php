@@ -20,8 +20,8 @@
                 <td>
                     {{ $note->note }}
                 </td>
-                <td>
-                    {{ formatDateTime($note->created_at) }}
+                <td class="text-muted">
+                    <small>{{ formatDateTime($note->created_at) }}</small>
                 </td>
                 <td class="text-right">
                     <a href="{{ route('trash-restore', ['note', $note->id]) }}"

@@ -2,7 +2,7 @@
 
 # ================================
 # PHP Dependency Setup
-FROM bitnami/php-fpm:7.2 AS builder
+FROM bitnami/php-fpm:7.3-prod AS builder
 
 # Make composer files available in the container
 COPY ./ /app
@@ -16,23 +16,22 @@ RUN composer install -n --prefer-dist --no-dev
 # ================================
 # Compile all assets
 FROM node:10.15.0 AS npm_builder
-
-# Copy package.json and Gruntfile
-COPY ./package.json /srv
-COPY ./Gruntfile.js /srv
 WORKDIR /srv
 
-RUN npm install
+# Copy package.json and Gruntfile
+COPY ./package.json ./
+COPY ./package-lock.json ./
+COPY ./webpack.mix.js ./
+COPY ./resources/assets ./resources/assets
 
-# Copy the app and build the assets
-COPY ./resources/assets /srv/resources/assets
-COPY ./public /srv/public
-COPY ./.babelrc /srv
-RUN npm run build
+RUN npm install
+RUN npm run production
+
+RUN ls /srv/public/assets/dist/
 
 # ================================
 # Prepare the final image
-FROM bitnami/php-fpm:7.2-prod
+FROM bitnami/php-fpm:7.3-prod
 
 WORKDIR /app
 COPY ./ /app
@@ -52,7 +51,9 @@ COPY --from=builder /app/bootstrap/cache /app/bootstrap/cache
 RUN php artisan vendor:publish --provider="Spatie\Backup\BackupServiceProvider"
 
 # Copy files from the theme build
-COPY --from=npm_builder /srv/public /app/public
+COPY --from=npm_builder /srv/public/assets/dist/js /app/public/assets/dist/js
+COPY --from=npm_builder /srv/public/assets/dist/css /app/public/assets/dist/css
+COPY --from=npm_builder /srv/public/mix-manifest.json /app/public/mix-manifest.json
 
 # Cleanup dev stuff from final image
 RUN rm -rf /app/node_modules
