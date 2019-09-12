@@ -13,17 +13,17 @@
     "url": "https://github.com/Kovah/LinkAce/issues"
   },
   "devDependencies": {
-    "cross-env": "^5.2.0",
-    "laravel-mix": "^4.1.2",
+    "cross-env": "^5.2.1",
+    "laravel-mix": "^4.1.4",
     "resolve-url-loader": "^2.3.2",
-    "sass": "^1.22.5",
-    "sass-loader": "^7.1.0",
+    "sass": "^1.22.12",
+    "sass-loader": "^7.3.1",
     "vue-template-compiler": "^2.6.10"
   },
   "dependencies": {
-    "@fortawesome/fontawesome-svg-core": "^1.2.19",
-    "@fortawesome/free-brands-svg-icons": "^5.9.0",
-    "@fortawesome/free-solid-svg-icons": "^5.9.0",
+    "@fortawesome/fontawesome-svg-core": "^1.2.22",
+    "@fortawesome/free-brands-svg-icons": "^5.10.2",
+    "@fortawesome/free-solid-svg-icons": "^5.10.2",
     "bootstrap": "^4.3.1",
     "jquery": "^3.4.1",
     "popper.js": "^1.15.0",
