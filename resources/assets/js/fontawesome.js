@@ -16,6 +16,7 @@ import { faReply } from '@fortawesome/free-solid-svg-icons/faReply';
 import { faLink } from '@fortawesome/free-solid-svg-icons/faLink';
 import { faUnlink } from '@fortawesome/free-solid-svg-icons/faUnlink';
 import { faRecycle } from '@fortawesome/free-solid-svg-icons/faRecycle';
+import { faSort } from '@fortawesome/free-solid-svg-icons/faSort';
 
 import { faFacebookSquare } from '@fortawesome/free-brands-svg-icons/faFacebookSquare';
 import { faTwitterSquare } from '@fortawesome/free-brands-svg-icons/faTwitterSquare';
@@ -154,6 +155,7 @@ export function initFontAwesome () {
   library.add(faRecycle);
   library.add(faFileImport);
   library.add(faUpload);
+  library.add(faSort);
 
   library.add(faFacebookSquare);
   library.add(faTwitterSquare);
