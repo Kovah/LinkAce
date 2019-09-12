@@ -14,8 +14,8 @@
                 <td>
                     {{ $tag->name }}
                 </td>
-                <td>
-                    {{ formatDateTime($tag->created_at) }}
+                <td class="text-muted">
+                    <small>{{ formatDateTime($tag->created_at) }}</small>
                 </td>
                 <td class="text-right">
                     <a href="{{ route('trash-restore', ['tag', $tag->id]) }}"

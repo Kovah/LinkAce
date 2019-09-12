@@ -14,8 +14,8 @@
                 <td>
                     {{ $category->name }}
                 </td>
-                <td>
-                    {{ formatDateTime($category->created_at) }}
+                <td class="text-muted">
+                    <small>{{ formatDateTime($category->created_at) }}</small>
                 </td>
                 <td class="text-right">
                     <a href="{{ route('trash-restore', ['category', $category->id]) }}"
