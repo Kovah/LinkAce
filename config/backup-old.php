@@ -37,7 +37,7 @@ return [
                 /*
                  * Determines if symlinks should be followed.
                  */
-                'follow_links' => false,
+                'followLinks' => false,
             ],
 
             /*
@@ -54,18 +54,7 @@ return [
              *                'table_to_exclude_from_backup',
              *                'another_table_to_exclude'
              *            ]
-             *       ],
-             * ],
-             *
-             * If you are using only InnoDB tables on a MySQL server, you can
-             * also supply the useSingleTransaction option to avoid table locking.
-             *
-             * E.g.
-             * 'mysql' => [
-             *       ...
-             *      'dump' => [
-             *           'useSingleTransaction' => true,
-             *       ],
+             *       ]
              * ],
              *
              * For a complete list of available customization options, see https://github.com/spatie/db-dumper
@@ -157,24 +146,20 @@ return [
      * If a backup does not meet the specified requirements the
      * UnHealthyBackupWasFound event will be fired.
      */
-    'monitor_backups' => [
+    'monitorBackups' => [
         [
             'name' => 'backups',
             'disks' => [env('BACKUP_DISK', 'local_backups')],
-            'health_checks' => [
-                \Spatie\Backup\Tasks\Monitor\HealthChecks\MaximumAgeInDays::class => 1,
-                \Spatie\Backup\Tasks\Monitor\HealthChecks\MaximumStorageInMegabytes::class => env('BACKUP_MAX_SIZE', 512),
-            ],
+            'newestBackupsShouldNotBeOlderThanDays' => 1,
+            'storageUsedMayNotBeHigherThanMegabytes' => env('BACKUP_MAX_SIZE', 512),
         ],
 
         /*
         [
             'name' => 'name of the second app',
             'disks' => ['local', 's3'],
-            'health_checks' => [
-                \Spatie\Backup\Tasks\Monitor\HealthChecks\MaximumAgeInDays::class => 1,
-                \Spatie\Backup\Tasks\Monitor\HealthChecks\MaximumStorageInMegabytes::class => 5000,
-            ],
+            'newestBackupsShouldNotBeOlderThanDays' => 1,
+            'storageUsedMayNotBeHigherThanMegabytes' => 5000,
         ],
         */
     ],
@@ -191,38 +176,38 @@ return [
          */
         'strategy' => \Spatie\Backup\Tasks\Cleanup\Strategies\DefaultStrategy::class,
 
-        'default_strategy' => [
+        'defaultStrategy' => [
 
             /*
              * The number of days for which backups must be kept.
              */
-            'keep_all_backups_for_days' => 7,
+            'keepAllBackupsForDays' => 7,
 
             /*
              * The number of days for which daily backups must be kept.
              */
-            'keep_daily_backups_for_days' => 16,
+            'keepDailyBackupsForDays' => 16,
 
             /*
              * The number of weeks for which one weekly backup must be kept.
              */
-            'keep_weekly_backups_for_weeks' => 8,
+            'keepWeeklyBackupsForWeeks' => 8,
 
             /*
              * The number of months for which one monthly backup must be kept.
              */
-            'keep_monthly_backups_for_months' => 4,
+            'keepMonthlyBackupsForMonths' => 4,
 
             /*
              * The number of years for which one yearly backup must be kept.
              */
-            'keep_yearly_backups_for_years' => 2,
+            'keepYearlyBackupsForYears' => 2,
 
             /*
              * After cleaning up the backups remove the oldest backup until
              * this amount of megabytes has been reached.
              */
-            'delete_oldest_backups_when_using_more_megabytes_than' => env('BACKUP_MAX_SIZE', 512),
+            'deleteOldestBackupsWhenUsingMoreMegabytesThan' => env('BACKUP_MAX_SIZE', 512),
         ],
     ],
 ];

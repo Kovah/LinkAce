@@ -2,7 +2,7 @@
 
 # ================================
 # PHP Dependency Setup
-FROM bitnami/php-fpm:7.2 AS builder
+FROM bitnami/php-fpm:7.3-prod AS builder
 
 # Make composer files available in the container
 COPY ./ /app
@@ -31,7 +31,7 @@ RUN ls /srv/public/assets/dist/
 
 # ================================
 # Prepare the final image
-FROM bitnami/php-fpm:7.2-prod
+FROM bitnami/php-fpm:7.3-prod
 
 WORKDIR /app
 COPY ./ /app

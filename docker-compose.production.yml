@@ -14,7 +14,7 @@ services:
     volumes:
       - db:/bitnami
 
-  # --- LinkAce Image with PHP 7.2
+  # --- LinkAce Image with PHP 7.3
   php:
     image: linkace/linkace:latest
     restart: always

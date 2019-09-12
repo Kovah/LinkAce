@@ -2,6 +2,7 @@
 
 namespace Tests\Unit\Helper;
 
+use App\Helper\Alert;
 use App\Models\Link;
 use App\Models\User;
 use Illuminate\Foundation\Testing\DatabaseMigrations;
@@ -60,5 +61,25 @@ class HelperFunctionsTest extends TestCase
         $link = waybackLink($url);
 
         $this->assertNull($link);
+    }
+
+    /**
+     * Test if the alert helper function is working correctly
+     *
+     * @return void
+     */
+    public function testAlert()
+    {
+        alert('flanders');
+        $this->assertFlash('flanders', 'info');
+
+        alert()->warning('burns');
+        $this->assertFlash('burns', 'warning');
+    }
+
+    protected function assertFlash($message, $style)
+    {
+        $this->assertSame($message, $this->app->session->get('alert.message'));
+        $this->assertSame($style, $this->app->session->get('alert.style'));
     }
 }

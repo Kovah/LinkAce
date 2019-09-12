@@ -17,7 +17,7 @@ services:
     volumes:
       - linkace-db:/bitnami
 
-  # --- PHP 7.2
+  # --- PHP 7.3
   php:
     container_name: "linkace-php"
     build:
