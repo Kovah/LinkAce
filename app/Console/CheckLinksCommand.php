@@ -4,7 +4,7 @@ namespace App\Console\Commands;
 
 use App\Models\Link;
 use App\Models\User;
-use App\Notifications\LinkCheckErrors;
+use App\Notifications\LinkCheckNotification;
 use GuzzleHttp\Client;
 use Illuminate\Console\Command;
 use Illuminate\Support\Facades\Cache;
@@ -218,7 +218,7 @@ class CheckLinksCommand extends Command
 
         Notification::send(
             User::find(1),
-            new LinkCheckErrors($this->moved_links, $this->broken_links)
+            new LinkCheckNotification($this->moved_links, $this->broken_links)
         );
     }
 }
