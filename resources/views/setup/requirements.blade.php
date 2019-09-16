@@ -11,7 +11,22 @@
                 </div>
                 <div class="card-body">
 
+                    <ul>
+                        @foreach($results as $key => $successful)
+                            <li>
+                                @lang('setup.requirements.' . $key)
+                                @if($successful)
+                                    <i class="fa fa-fw fa-check text-success"></i>
+                                @else
+                                    <i class="fa fa-fw fa-ban text-danger"></i>
+                                @endif
+                            </li>
+                        @endforeach
+                    </ul>
 
+                    <a href="{{ route('setup.requirements') }}" class="btn {{ $success ? 'btn-primary' : ' btn-danger disabled' }}">
+                        @lang('setup.check_requirements')
+                    </a>
 
                 </div>
             </div>

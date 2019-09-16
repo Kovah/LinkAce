@@ -7,7 +7,8 @@ Route::get('/', 'FrontController@index')->name('front');
 // Setup routes
 Route::get('setup/start', 'Setup\WelcomeController@index')->name('setup.start');
 Route::get('setup/requirements', 'Setup\RequirementsController@index')->name('setup.requirements');
-Route::post('setup/requirements', 'Setup\RequirementsController@check');
+Route::get('setup/database', 'Setup\DatabaseController@index')->name('setup.database');
+Route::post('setup/database', 'Setup\DatabaseController@configure')->name('setup.database');
 
 // Authentication Routes
 Route::get('login', 'Auth\LoginController@showLoginForm')->name('login');
