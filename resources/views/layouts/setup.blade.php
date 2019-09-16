@@ -22,7 +22,6 @@
                 width="150" height="55">
         </div>
 
-        @include('partials.alerts')
         @yield('content')
     </main>
 

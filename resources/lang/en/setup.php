@@ -2,6 +2,8 @@
 
 return [
     'setup' => 'Setup',
+    'continue' => 'Continue',
+    'try_again' => 'Try again',
 
     'welcome' => 'Welcome to the LinkAce setup',
     'intro' => 'In the following steps you will set up LinkAce to be ready to use.',
@@ -20,4 +22,17 @@ return [
     'requirements.extension_tokenizer' => 'PHP Extension: Tokenizer',
     'requirements.extension_xml' => 'PHP Extension: XML',
     'requirements.env_writable' => '.env file is present and writable',
+
+    'database_configuration' => 'Database Configuration',
+    'database_configure' => 'Configure Database',
+    'database.intro' => 'If you already filled the database details in your .env file the input fields should be pre-filled. Otherwise, fill the fields with the corresponding information for your database.',
+    'database.config_error' => 'Database could not be configured. Please check your connection details. Details:',
+    'database.db_host' => 'Database Host',
+    'database.db_port' => 'Database Port',
+    'database.db_name' => 'Database Name',
+    'database.db_user' => 'Database User',
+    'database.db_password' => 'Database Password',
+    'database.complete_hint' => 'Saving the database configuration and preparing it for using the app may take a few seconds, please be patient.',
+
+    'account_setup' => 'Account Setup',
 ];

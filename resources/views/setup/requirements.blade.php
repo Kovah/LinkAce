@@ -24,8 +24,8 @@
                         @endforeach
                     </ul>
 
-                    <a href="{{ route('setup.requirements') }}" class="btn {{ $success ? 'btn-primary' : ' btn-danger disabled' }}">
-                        @lang('setup.check_requirements')
+                    <a href="{{ route('setup.database') }}" class="btn {{ $success ? 'btn-primary' : ' btn-danger disabled' }}">
+                        @lang('setup.continue')
                     </a>
 
                 </div>
