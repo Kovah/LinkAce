@@ -5,8 +5,9 @@ use Illuminate\Support\Facades\Route;
 Route::get('/', 'FrontController@index')->name('front');
 
 // Setup routes
-Route::get('setup/start', 'Setup\RequirementsController@index')->name('setup.requirements');
-Route::post('setup/start', 'Setup\RequirementsController@check');
+Route::get('setup/start', 'Setup\WelcomeController@index')->name('setup.start');
+Route::get('setup/requirements', 'Setup\RequirementsController@index')->name('setup.requirements');
+Route::post('setup/requirements', 'Setup\RequirementsController@check');
 
 // Authentication Routes
 Route::get('login', 'Auth\LoginController@showLoginForm')->name('login');

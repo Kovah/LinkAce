@@ -7,17 +7,12 @@
 
             <div class="card">
                 <div class="card-header">
-                    @lang('setup.setup')
+                    @lang('setup.check_requirements')
                 </div>
                 <div class="card-body">
-                    <form method="POST" action="{{ route('setup.requirements') }}">
-                        @csrf
 
-                        <button type="submit" class="btn btn-primary btn-block">
-                            @lang('setup.setup')
-                        </button>
 
-                    </form>
+
                 </div>
             </div>
 
