@@ -48,7 +48,7 @@ COPY ./bootstrap /app/bootstrap
 COPY ./config /app/config
 COPY ./database /app/database
 COPY ./public /app/public
-COPY ./resources /app
+COPY ./resources /app/resources
 COPY ./routes /app/routes
 COPY ./storage /app/storage
 COPY ./tests /app/tests
