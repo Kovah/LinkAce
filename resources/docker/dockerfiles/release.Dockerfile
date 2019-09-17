@@ -3,12 +3,22 @@
 # ================================
 # PHP Dependency Setup
 FROM bitnami/php-fpm:7.3-prod AS builder
-
-# Make composer files available in the container
-COPY ./ /app
-COPY ./.env.example /app/.env
-
 WORKDIR /app
+
+# Make needed parts of the app available in the container
+COPY ./app /app/app
+COPY ./bootstrap /app/bootstrap
+COPY ./config /app/config
+COPY ./database /app/database
+COPY ./resources /app
+COPY ./routes /app/routes
+COPY ./tests /app/tests
+
+COPY ./artisan /app
+COPY ./composer.json /app
+COPY ./composer.lock /app
+COPY ./README.md /app
+COPY ./.env.example /app/.env
 
 # Install dependencies using Composer
 RUN composer install -n --prefer-dist --no-dev
@@ -27,14 +37,27 @@ COPY ./resources/assets ./resources/assets
 RUN npm install
 RUN npm run production
 
-RUN ls /srv/public/assets/dist/
-
 # ================================
 # Prepare the final image
 FROM bitnami/php-fpm:7.3-prod
-
 WORKDIR /app
-COPY ./ /app
+
+# Copy the app into the container
+COPY ./app /app/app
+COPY ./bootstrap /app/bootstrap
+COPY ./config /app/config
+COPY ./database /app/database
+COPY ./public /app/public
+COPY ./resources /app
+COPY ./routes /app/routes
+COPY ./storage /app/storage
+COPY ./tests /app/tests
+
+COPY ./artisan /app
+COPY ./composer.json /app
+COPY ./composer.lock /app
+COPY ./README.md /app
+COPY ./server.php /app
 COPY ./.env.example /app/.env
 
 # Copy the PHP config files
@@ -55,10 +78,5 @@ COPY --from=npm_builder /srv/public/assets/dist/js /app/public/assets/dist/js
 COPY --from=npm_builder /srv/public/assets/dist/css /app/public/assets/dist/css
 COPY --from=npm_builder /srv/public/mix-manifest.json /app/public/mix-manifest.json
 
-# Cleanup dev stuff from final image
-RUN rm -rf /app/node_modules
-
 # Set correct permissions for the storage directory
-RUN chmod 0777 -R /app/storage
-
-WORKDIR /app
+RUN chmod -R 0777 /app/storage
