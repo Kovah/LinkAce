@@ -1,11 +1,14 @@
 <?php
 return [
+    'version' => 'v0.0.21',
+
     'default' => [
         'pagination' => 25,
         'date_format' => 'Y-m-d',
         'time_format' => 'H:i',
         'cache_duration' => 60, // minutes
     ],
+
     'listitem_count_values' => [
         10,
         25,
@@ -13,6 +16,7 @@ return [
         75,
         100,
     ],
+
     'formats' => [
         'date' => [
             'Y-m-d',

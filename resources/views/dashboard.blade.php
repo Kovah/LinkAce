@@ -95,6 +95,14 @@
                             <span class="badge badge-secondary ml-auto">{{ $stats['total_notes'] }}</span>
                         </div>
                     </li>
+                    <li class="list-group-item">
+                        <div class="d-flex align-items-center">
+                            <span class="mr-1">@lang('stats.total_broken_links')</span>
+                            <span class="badge {{ $stats['total_broken_links'] > 0 ? 'badge-danger' : 'badge-secondary' }} ml-auto">
+                                {{ $stats['total_broken_links'] }}
+                            </span>
+                        </div>
+                    </li>
                 </ul>
             </div>
 

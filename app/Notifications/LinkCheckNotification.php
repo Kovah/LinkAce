@@ -6,7 +6,7 @@ use Illuminate\Bus\Queueable;
 use Illuminate\Notifications\Messages\MailMessage;
 use Illuminate\Notifications\Notification;
 
-class LinkCheckErrors extends Notification
+class LinkCheckNotification extends Notification
 {
     use Queueable;
 

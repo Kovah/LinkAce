@@ -10,7 +10,7 @@ use Illuminate\Support\Facades\Hash;
  * Class RegisterUser
  *
  * Provides a php artisan command to register a new user
- * php artisan registeruser UserName mail@user.com mysecretpassword []
+ * php artisan registeruser UserName mail@user.com
  *
  * @package App\Console\Commands
  */
