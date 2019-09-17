@@ -22,11 +22,16 @@ class DashboardController extends Controller
             ->limit(5)
             ->get();
 
+        $broken_links = Link::byUser(auth()->user()->id)
+            ->where('status', '>', 1)
+            ->count();
+
         $stats = [
             'total_links' => Link::count(),
             'total_categories' => Category::count(),
             'total_tags' => Tag::count(),
             'total_notes' => Note::count(),
+            'total_broken_links' => $broken_links,
         ];
 
         return view('dashboard')
