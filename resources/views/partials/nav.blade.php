@@ -82,7 +82,7 @@
                             <a href="{{ route('get-usersettings') }}" class="dropdown-item">
                                 @lang('settings.settings')
                             </a>
-                            <a class="dropdown-item cursor-pointer text-danger"
+                            <a href="#" class="dropdown-item cursor-pointer text-danger"
                                 onclick="event.preventDefault();document.getElementById('logout-form').submit();">
                                 @lang('linkace.logout')
                             </a>

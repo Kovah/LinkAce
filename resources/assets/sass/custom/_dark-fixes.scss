@@ -1,0 +1,7 @@
+.form-control {
+
+  &:disabled,
+  &[readonly] {
+    opacity: .5;
+  }
+}
