@@ -31,23 +31,33 @@
 
 ## About LinkAce
 
-> @TODO Screenshot(s)
+![Preview Screenshot](https://www.linkace.org/images/preview/linkace_dashboard.png)
 
 LinkAce is a bookmark manager similar to Shaarli and other tools. I built this tool to have something that fits my
 actual needs that other bookmark managers couldn't solve, even if most features are almost the same.
 
 ### Features
 
-* Bookmark links with automatic title generation
+* Bookmark links with automatic title and description generation
 * Organize bookmarks in categories and tags
 * A bookmarklet to quickly save links from any browser
-* Private or public links so friends or internet stranges can see your collection
+* Private or public links, so friends or internet strangers can see your collection
 * Add notes to links to add thoughts
 * Advanced search for your bookmarks
+* A built-in light and dark color theme
 * Import existing bookmarks from HTML exports (other methods planned)
+* Automated link checks to make sure your bookmarks stay available
+* Automated “backups” of your bookmarks via the Waybackmachine
+* Implemented support for complete database and app backups to Amazon AWS S3
 
 More features are already planned. Take a look at our [project board](https://github.com/Kovah/LinkAce/projects/1)
-for more information. 
+for more information.
+
+### Documentation and Community
+
+For any further information about all the available features and how to install the app can be found on the 
+[LinkAce Website](https://www.linkace.org/). Additionally, you may visit the [community forums](https://community.linkace.org/)
+to share your ideas, talk with other users or find help for specific problems.
 
 
 ---
