@@ -4,12 +4,12 @@ $selectize-font-size: inherit !default;
 $selectize-line-height: $input-btn-line-height !default; //formerly line-height-computed
 
 $selectize-color-text: $input-color !default; //$gray-800
-$selectize-color-highlight: $gray-400 !default;
+$selectize-color-highlight: lighten($primary, 10%) !default;
 $selectize-color-input: $input-bg !default;
 $selectize-color-input-full: $input-bg !default;
 $selectize-color-input-error: theme-color("danger") !default;
 $selectize-color-input-error-focus: darken($selectize-color-input-error, 10%) !default;
-$selectize-color-disabled: $input-bg !default;
+$selectize-color-disabled: $gray-800 !default;
 $selectize-color-item: $gray-800 !default;
 $selectize-color-item-border: $gray-900 !default;
 $selectize-color-item-active: $component-active-bg !default;
