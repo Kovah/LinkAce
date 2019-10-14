@@ -10,6 +10,7 @@ export default class LoadingButton {
   onClick () {
     if (this.formIsValid()) {
       this.$el.disabled = true;
+      this.$form.submit();
     }
   }
 
