@@ -173,8 +173,8 @@ $body-color-muted: $gray !default;
 
 $link-color:                              theme-color("primary") !default;
 $link-decoration:                         none !default;
-$link-hover-color:                        darken($link-color, 15%) !default;
-$link-hover-decoration:                   underline !default;
+$link-hover-color:                        darken($link-color, 20%) !default;
+$link-hover-decoration:                   none !default;
 // Darken percentage for links with `.text-*` class (e.g. `.text-success`)
 $emphasized-link-hover-darken-percentage: 15% !default;
 
