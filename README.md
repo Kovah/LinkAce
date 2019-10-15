@@ -55,7 +55,7 @@ for more information.
 
 ### Documentation and Community
 
-For any further information about all the available features and how to install the app can be found on the 
+Any further information about all the available features and how to install the app, can be found on the 
 [LinkAce Website](https://www.linkace.org/). Additionally, you may visit the [community forums](https://community.linkace.org/)
 to share your ideas, talk with other users or find help for specific problems.
 
@@ -160,7 +160,7 @@ error_page 404 /index.php;
 #### 4. Import a database dump to your Database
 
 To be able to run the app you need to import a database dump into your database.
-> @TODO
+The latest database dump can be found [in the wiki](https://www.linkace.org/docs/v1/setup/setup-without-docker#4-import-a-database-dump-to-your-database).
 
 
 ---
@@ -171,11 +171,11 @@ If you need help or want to report a bug within the application, please open a n
 and describe:
 
 * which version you are using,
-* what your problem is,
-* and what you already done to solve the problem.
+* what your exact problem is,
+* and what you already did to solve the problem.
 
 **Please notice**: This is a private side-project mainly developed for *myself*. Therefore I cannot guarantee that the
-app will work without any problems and I also won't answer support requests within a short period of time.
+app will work without any problems for you, and I may won't answer support requests within a short period of time.
 
 
 ---
@@ -190,6 +190,7 @@ Maybe there already is an existing ticket for your or a very similar topic.
 
 * Always use the `dev` branch to work on the application. The dev branch will contain the latest version of the app
 while the `master` branch may contains the stable version (which may be outdated in terms of development).
+* Consider using a separate branch if you are working on a larger feature.
 * When opening a pull request, link to your ticket and describe what you did to solve the problem.
 
 
@@ -222,12 +223,12 @@ npm install
 OR
 yarn install
 
-./node_modules/.bin/grunt build
+npm run dev
 ```
 
 ### 2. Working with the Artisan command line
 
-I recommend using the Artisan command line tool in the PHP container only to make sure that the same environment is 
+I recommend using the Artisan command line tool in the PHP container only, to make sure that the same environment is 
 used. To do so, use the following example command:
 
 ```bash
@@ -245,7 +246,7 @@ docker exec -it linkace-php bash -c "php artisan registeruser [user name] [user 
 
 ### Tests
 
-You may run some existing tests with the following command:
+You can run existing tests with the following command:
 
 ```bash
 docker exec -it linkace-php bash -c "./vendor/bin/phpunit"
