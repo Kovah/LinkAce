@@ -55,7 +55,7 @@
                             </label>
 
                             <select id="parent_category" name="parent_category"
-                                class="{{ $errors->has('parent_category') ? ' is-invalid' : '' }}">
+                                class="simple-select {{ $errors->has('parent_category') ? ' is-invalid' : '' }}">
                                 <option value="0">@lang('category.select_parent_category')</option>
                                 @foreach($categories as $category)
                                     <option value="{{ $category->id }}">
@@ -115,11 +115,3 @@
     </div>
 
 @endsection
-
-@push('scripts')
-    <script>
-        $('#parent_category').selectize({
-            create: false
-        });
-    </script>
-@endpush

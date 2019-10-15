@@ -15,7 +15,7 @@
                             @lang('settings.timezone')
                         </label>
                         <select id="timezone" name="timezone"
-                            class="{{ $errors->has('timezone') ? ' is-invalid' : '' }}">
+                            class="simple-select {{ $errors->has('timezone') ? ' is-invalid' : '' }}">
                             @foreach(timezone_identifiers_list() as $key => $zone)
                                 <option value="{{ $zone }}"
                                     @if($user->settings()->get('timezone') === $zone) selected @endif>
@@ -214,11 +214,3 @@
 
     </div>
 </div>
-
-@push('scripts')
-    <script>
-        $('#timezone').selectize({
-            create: false
-        });
-    </script>
-@endpush

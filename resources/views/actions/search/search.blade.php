@@ -80,8 +80,8 @@
                         <label for="only_tags" class="d-none" aria-hidden="true">
                             @lang('search.filter_by_tag')
                         </label>
-                        <input name="only_tags" id="only_tags" type="text" placeholder="@lang('search.filter_by_tag')"
-                            value="{{ $query_settings['only_tags'] }}">
+                        <input name="only_tags" id="only_tags" type="text" class="tags-select"
+                            placeholder="@lang('search.filter_by_tag')" value="{{ $query_settings['only_tags'] }}">
                     </div>
 
                     <div class="col-md">
@@ -126,7 +126,3 @@
     </div>
 
 @endsection
-
-@push('scripts')
-    @include('actions.search.partials.tags-js')
-@endpush

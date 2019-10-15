@@ -12,6 +12,10 @@ html, body {
   z-index: 9999;
   background-color: #fff;
 
+  @media (prefers-color-scheme: dark) {
+    background-color: #272B30;
+  }
+
   div {
     justify-self: center;
     align-self: center;
