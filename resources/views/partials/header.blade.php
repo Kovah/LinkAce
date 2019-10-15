@@ -9,7 +9,7 @@
 @if(usersettings('darkmode_setting') === '1')
     <link href="{{ mix('assets/dist/css/app-dark.css') }}" rel="stylesheet">
 @elseif(usersettings('darkmode_setting') === '2')
-    <style><?php include public_path('assets/dist/css/loader.css') ?></style>
+    <style type="text/css"><?php include public_path('assets/dist/css/loader.css') ?></style>
     <meta name="darkmode" content="1">
     <link rel="stylesheet"
         data-light-href="{{ mix('assets/dist/css/app.css') }}"
@@ -18,13 +18,20 @@
     <link href="{{ mix('assets/dist/css/app.css') }}" rel="stylesheet">
 @endif
 
+<script defer src="{{ mix('assets/dist/js/dependencies.js') }}"></script>
+<script defer src="{{ mix('assets/dist/js/app.js') }}"></script>
+<script defer src="{{ mix('assets/dist/js/fontawesome.js') }}"></script>
+
 <meta property="la-app-data" content="{{ json_encode([
     'user' => [
-        'token' => csrf_token()
+        'token' => csrf_token(),
     ],
     'routes' => [
         'ajax' => [
-            'existingLinks' => route('ajax-existing-links')
+            'searchTags' => route('ajax-tags'),
+            'existingLinks' => route('ajax-existing-links'),
+            'generateApiToken' => route('generate-api-token'),
+            'generateCronToken' => route('generate-cron-token'),
         ]
     ]
 ]) }}">

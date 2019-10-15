@@ -62,7 +62,7 @@
                         <div class="form-group">
                             <label for="category_id">@lang('category.category')</label>
                             <select id="category_id" name="category_id"
-                                class="{{ $errors->has('category_id') ? ' is-invalid' : '' }}">
+                                class="simple-select {{ $errors->has('category_id') ? ' is-invalid' : '' }}">
                                 <option value="0">@lang('category.select_category')</option>
                                 @foreach($categories as $category)
                                     @if($category->childCategories->count() > 0)
@@ -96,7 +96,7 @@
                         <div class="form-group">
                             <label for="tags">@lang('tag.tags')</label>
                             <input name="tags" id="tags" type="text" placeholder="@lang('tag.tags')"
-                                value="{{ old('tags') ?: $link->tagsForInput() }}">
+                                value="tags-select {{ old('tags', $link->tagsForInput()) }}" data-allow-creation="true">
 
                             @if ($errors->has('url'))
                                 <p class="invalid-feedback" role="alert">
@@ -141,12 +141,3 @@
     </div>
 
 @endsection
-
-@push('scripts')
-    <script>
-        $('#category_id').selectize({
-            create: false
-        });
-    </script>
-    @include('models.links.partials.tags-js')
-@endpush

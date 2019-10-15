@@ -1,20 +1,20 @@
 export default class LoadingButton {
 
   constructor ($el) {
-    this.$el = $el;
-    this.$form = this.$el.form;
+    this.$btn = $el;
+    this.$form = this.$btn.form;
 
-    this.$el.addEventListener('click', this.onClick.bind(this))
+    this.$btn.addEventListener('click', this.onClick.bind(this));
   }
 
   onClick () {
     if (this.formIsValid()) {
-      this.$el.disabled = true;
+      this.$btn.disabled = true;
       this.$form.submit();
     }
   }
 
-  formIsValid() {
+  formIsValid () {
     return this.$form.checkValidity();
   }
 }
