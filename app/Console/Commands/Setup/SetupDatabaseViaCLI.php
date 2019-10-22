@@ -106,7 +106,7 @@ trait SetupDatabaseViaCLI
     protected function testDatabaseConnection()
     {
         try {
-            Artisan::call('config:clear');
+            // @TODO For some unknown reason I cannot setup the database anymore after entering the wrong credentials once, even if the credentials are correct on the second try [KW 2019-10-22]
 
             Artisan::call('migrate:fresh', [
                 '--database' => 'setup', // Specify the correct connection
