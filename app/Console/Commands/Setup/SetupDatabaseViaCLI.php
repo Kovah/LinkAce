@@ -3,7 +3,6 @@
 namespace App\Console\Commands\Setup;
 
 use Illuminate\Support\Facades\Artisan;
-use Illuminate\Support\Facades\Cache;
 use Illuminate\Support\Facades\Config;
 use Illuminate\Support\Facades\File;
 
@@ -53,12 +52,12 @@ trait SetupDatabaseViaCLI
         $this->success('Your database was configured correctly.');
     }
 
-    protected function databaseIsConfigured()
+    protected function databaseIsConfigured(): bool
     {
         return env('DB_HOST') && env('DB_DATABASE');
     }
 
-    protected function askForValidCredentials()
+    protected function askForValidCredentials(): void
     {
         do {
             $this->line('Provide the correct credentials for your database now.');
@@ -85,9 +84,6 @@ trait SetupDatabaseViaCLI
         return $this->testDatabaseConnection();
     }
 
-    /**
-     * @param array $credentials
-     */
     protected function createTempDatabaseConnection(): void
     {
         $this->dbConfig = Config::get('database.connections.mysql');
@@ -101,7 +97,7 @@ trait SetupDatabaseViaCLI
     }
 
     /**
-     * @return bool|\Exception
+     * @return bool|string
      */
     protected function testDatabaseConnection()
     {
