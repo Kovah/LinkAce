@@ -138,8 +138,11 @@ trait SetupDatabaseViaCLI
             'DB_PASSWORD=' . $this->dbConfig['password'],
         ], $envContent);
 
-        if ($envContent !== null) {
-            File::put(base_path('.env'), $envContent);
+        if ($envContent === null) {
+            $this->warn('Error while saving your .env file. Please add your credentials manually before your proceed');
+            return;
         }
+
+        File::put(base_path('.env'), $envContent);
     }
 }
