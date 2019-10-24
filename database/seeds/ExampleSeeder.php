@@ -21,7 +21,7 @@ class ExampleSeeder extends Seeder
         factory(\App\Models\Link::class, 50)->create()->each(function (\App\Models\Link $link) use ($tags) {
             if (random_int(0, 1)) {
                 // Attach a random number of tags to the link
-                $link->tags()->sync($tags->random(random_int(1, 30))->pluck('id'));
+                $link->tags()->sync($tags->random(random_int(1, 8))->pluck('id'));
             }
         });
     }
