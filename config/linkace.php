@@ -1,6 +1,6 @@
 <?php
 return [
-    'version' => 'v0.0.23',
+    'version' => 'v0.0.24',
 
     'default' => [
         'pagination' => 25,

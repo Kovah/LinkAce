@@ -10,6 +10,11 @@
     @include('partials.nav')
 
     <main class="main container">
+        <a class="d-block d-md-none mb-4"
+            href="{{ auth()->guest() ? route('front') : route('dashboard') }}">
+            {!! displaySVG(public_path('assets/img/logo_linkace.svg'), 100, 30) !!}
+        </a>
+
         @include('partials.alerts')
         @yield('content')
     </main>

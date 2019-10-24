@@ -132,11 +132,11 @@ function displaySVG($path, $width = null, $height = null)
     $svg = file_get_contents($path);
 
     if ($width) {
-        $svg = preg_replace('/width="([\d]+)"/i', "width='$width'", $svg);
+        $svg = preg_replace('/\swidth="([\d]+)"/i', "width='$width'", $svg);
     }
 
     if ($height) {
-        $svg = preg_replace('/height="([\d]+)"/i', "height='$height'", $svg);
+        $svg = preg_replace('/\sheight="([\d]+)"/i', "height='$height'", $svg);
     }
 
     return $svg;
