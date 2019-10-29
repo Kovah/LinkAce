@@ -14,6 +14,7 @@ class ListRepository
     public static function create(array $data): LinkList
     {
         $data['user_id'] = auth()->user()->id;
+        $data['name'] = str_replace(',', '', $data['name']);
 
         return LinkList::create($data);
     }
@@ -25,6 +26,8 @@ class ListRepository
      */
     public static function update(LinkList $list, array $data): LinkList
     {
+        $data['name'] = str_replace(',', '', $data['name']);
+
         $list->update($data);
 
         return $list;
