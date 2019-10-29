@@ -2,14 +2,14 @@
 
 namespace Tests\Unit\Models;
 
-use App\Models\Category;
+use App\Models\LinkList;
 use App\Models\User;
-use App\Repositories\CategoryRepository;
+use App\Repositories\ListRepository;
 use Illuminate\Foundation\Testing\DatabaseMigrations;
 use Illuminate\Foundation\Testing\DatabaseTransactions;
 use Tests\TestCase;
 
-class CategoryDeleteTest extends TestCase
+class ListUpdateTest extends TestCase
 {
     use DatabaseMigrations;
     use DatabaseTransactions;
@@ -29,14 +29,20 @@ class CategoryDeleteTest extends TestCase
      *
      * @return void
      */
-    public function testValidCategoryCreation(): void
+    public function testValidListUpdate(): void
     {
         $this->be($this->user);
 
-        $category = factory(Category::class)->create();
+        $list = factory(LinkList::class)->create();
 
-        $deletion_result = CategoryRepository::delete($category);
+        $changed_data = [
+            'name' => 'Changed List Title',
+        ];
 
-        $this->assertTrue($deletion_result);
+        $updated_list = ListRepository::update($list, $changed_data);
+
+        $asserted_data = array_merge($list->toArray(), $changed_data);
+
+        $this->assertDatabaseHas('lists', $asserted_data);
     }
 }

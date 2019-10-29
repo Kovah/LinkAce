@@ -3,10 +3,10 @@
 namespace App\Http\Controllers\Guest;
 
 use App\Http\Controllers\Controller;
-use App\Models\Category;
+use App\Models\LinkList;
 use Illuminate\Http\Request;
 
-class CategoryController extends Controller
+class ListController extends Controller
 {
     /**
      * Display the specified resource.
@@ -17,14 +17,14 @@ class CategoryController extends Controller
      */
     public function show(Request $request, $id)
     {
-        $category = Category::find($id);
+        $list = LinkList::find($id);
 
-        if (empty($category)) {
+        if (empty($list)) {
             abort(404);
         }
 
         // Get links of the category
-        $links = $category->links()->privateOnly(false);
+        $links = $list->links()->privateOnly(false);
 
         if ($request->has('orderBy') && $request->has('orderDir')) {
             $links->orderBy($request->get('orderBy'), $request->get('orderDir'));
@@ -34,9 +34,9 @@ class CategoryController extends Controller
 
         $links = $links->paginate(getPaginationLimit());
 
-        return view('guest.categories.show', [
-            'category' => $category,
-            'category_links' => $links,
+        return view('guest.lists.show', [
+            'list' => $list,
+            'list_links' => $links,
             'route' => $request->getBaseUrl(),
             'order_by' => $request->get('orderBy'),
             'order_dir' => $request->get('orderDir'),

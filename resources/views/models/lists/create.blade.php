@@ -4,19 +4,19 @@
 
     <div class="card">
         <header class="card-header">
-            @lang('category.add')
+            @lang('list.add')
         </header>
         <div class="card-body">
 
-            <form action="{{ route('categories.store') }}" method="POST">
+            <form action="{{ route('lists.store') }}" method="POST">
                 @csrf
 
                 <div class="form-group">
-                    <label for="name">@lang('category.name')</label>
+                    <label for="name">@lang('list.name')</label>
 
                     <input name="name" id="name"
-                        class="form-control form-control-lg{{ $errors->has('name') ? ' is-invalid' : '' }}"
-                        type="text" placeholder="@lang('category.name')" value="{{ old('name') }}"
+                        class="form-control{{ $errors->has('name') ? ' is-invalid' : '' }}"
+                        type="text" placeholder="@lang('list.name')" value="{{ old('name') }}"
                         required autofocus>
 
                     @if ($errors->has('name'))
@@ -26,18 +26,14 @@
                     @endif
                 </div>
 
-                <br>
-
                 <div class="row">
                     <div class="col">
-
                         <div class="form-group">
-                            <label for="description">
-                                @lang('category.description')
-                            </label>
+                            <label for="description">@lang('list.description')</label>
 
-                            <textarea name="description" id="description" rows="4" class="form-control"
-                                placeholder="@lang('category.description')">{{ old('description') }}</textarea>
+                            <textarea name="description" id="description" rows="4"
+                                class="form-control{{ $errors->has('description') ? ' is-invalid' : '' }}"
+                                placeholder="@lang('list.description')">{{ old('description') }}</textarea>
 
                             @if ($errors->has('description'))
                                 <p class="invalid-feedback" role="alert">
@@ -45,40 +41,13 @@
                                 </p>
                             @endif
                         </div>
-
                     </div>
                     <div class="col">
-
                         <div class="form-group">
-                            <label for="parent_category">
-                                @lang('category.parent_category')
-                            </label>
-
-                            <select id="parent_category" name="parent_category"
-                                class="simple-select {{ $errors->has('parent_category') ? ' is-invalid' : '' }}">
-                                <option value="0">@lang('category.select_parent_category')</option>
-                                @foreach($categories as $category)
-                                    <option value="{{ $category->id }}">
-                                        {{ $category->name }}
-                                    </option>
-                                @endforeach
-                            </select>
-
-
-                            @if ($errors->has('parent_category'))
-                                <p class="invalid-feedback" role="alert">
-                                    {{ $errors->first('parent_category') }}
-                                </p>
-                            @endif
-                        </div>
-
-                        <div class="form-group">
-                            <label for="is_private">
-                                @lang('linkace.is_private')
-                            </label>
+                            <label for="is_private">@lang('linkace.is_private')</label>
 
                             <select id="is_private" name="is_private"
-                                class="custom-select{{ $errors->has('parent_category') ? ' is-invalid' : '' }}">
+                                class="custom-select{{ $errors->has('is_private') ? ' is-invalid' : '' }}">
                                 <option value="0">@lang('linkace.no')</option>
                                 <option value="1">@lang('linkace.yes')</option>
                             </select>
@@ -89,7 +58,6 @@
                                 </p>
                             @endif
                         </div>
-
                     </div>
                 </div>
 
@@ -104,7 +72,7 @@
                     </div>
 
                     <button type="submit" class="btn btn-primary">
-                        <i class="fas fa-save mr-2"></i> @lang('category.add')
+                        <i class="fas fa-save mr-2"></i> @lang('list.add')
                     </button>
 
                 </div>

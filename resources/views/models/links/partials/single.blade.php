@@ -23,68 +23,49 @@
 
     <div class="card-body py-2 px-3">
 
-        <div class="row">
-            <div class="col-xs-12 col-sm-6">
-
-                <div>
-                    @if($link->category)
-                        <label class="small">@lang('category.category'):</label>
-                        <a href="{{ route('categories.show', [$link->category->id]) }}" class="small">
-                            {{ $link->category->name }}
+        <div class="d-flex flex-wrap align-items-center justify-content-end">
+            <div class="mr-auto">
+                @if($link->tags->count() > 0)
+                    <label class="small">@lang('tag.tags'):</label>
+                    @foreach($link->tags as $tag)
+                        <a href="{{ route('tags.show', [$tag->id]) }}" class="badge badge-light">
+                            {{ $tag->name }}
                         </a>
-                    @else
-                        <label class="small">@lang('category.no_category')</label>
-                    @endif
-                </div>
-
-                <div>
-                    @if($link->tags->count() > 0)
-                        <label class="small">@lang('tag.tags'):</label>
-                        @foreach($link->tags as $tag)
-                            <a href="{{ route('tags.show', [$tag->id]) }}" class="badge badge-light">
-                                {{ $tag->name }}
-                            </a>
-                        @endforeach
-                    @else
-                        <span class="small">@lang('tag.no_tags')</span>
-                    @endif
-                </div>
-
+                    @endforeach
+                @else
+                    <span class="small">@lang('tag.no_tags')</span>
+                @endif
             </div>
-            <div class="col-xs-12 col-sm-6 mt-2 mt-sm-0 text-sm-right">
 
-                <div>
-                    <small class="text-muted">
-                        @lang('linkace.added') {!! $link->addedAt() !!}
-                    </small>
-                </div>
 
-                <div class="btn-group mt-1">
-                    <a href="{{ route('links.show', [$link->id]) }}" class="btn btn-xs btn-outline-secondary"
-                        title="@lang('link.show')">
-                        <i class="fas fa-info fa-fw"></i> @lang('link.show')
-                    </a>
+            <div class="small text-muted mx-2">
+                @lang('linkace.added') {!! $link->addedAt() !!}
+            </div>
 
-                    <a href="{{ route('links.edit', [$link->id]) }}" class="btn btn-xs btn-outline-secondary"
-                        title="@lang('link.edit')">
-                        <i class="fas fa-edit fa-fw"></i> @lang('link.edit')
-                    </a>
+            <div class="btn-group mt-1">
+                <a href="{{ route('links.show', [$link->id]) }}" class="btn btn-xs btn-outline-secondary"
+                    title="@lang('link.show')">
+                    <i class="fas fa-info fa-fw"></i> @lang('link.show')
+                </a>
 
-                    <a href="#" title="@lang('link.delete')" class="btn btn-xs btn-outline-secondary"
-                        onclick="event.preventDefault();document.getElementById('link-delete-{{ $link->id }}').submit();">
-                        <i class="fas fa-trash-alt fa-fw"></i> @lang('link.delete')
-                    </a>
-                </div>
+                <a href="{{ route('links.edit', [$link->id]) }}" class="btn btn-xs btn-outline-secondary"
+                    title="@lang('link.edit')">
+                    <i class="fas fa-edit fa-fw"></i> @lang('link.edit')
+                </a>
 
-                <form id="link-delete-{{ $link->id }}" method="POST" style="display: none;"
-                    action="{{ route('links.destroy', [$link->id]) }}">
-                    @method('DELETE')
-                    @csrf
-                    <input type="hidden" name="link_id" value="{{ $link->id }}">
-                </form>
-
+                <a href="#" title="@lang('link.delete')" class="btn btn-xs btn-outline-secondary"
+                    onclick="event.preventDefault();document.getElementById('link-delete-{{ $link->id }}').submit();">
+                    <i class="fas fa-trash-alt fa-fw"></i> @lang('link.delete')
+                </a>
             </div>
         </div>
+
+        <form id="link-delete-{{ $link->id }}" method="POST" style="display: none;"
+            action="{{ route('links.destroy', [$link->id]) }}">
+            @method('DELETE')
+            @csrf
+            <input type="hidden" name="link_id" value="{{ $link->id }}">
+        </form>
 
     </div>
 

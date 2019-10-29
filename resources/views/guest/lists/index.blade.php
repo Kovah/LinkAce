@@ -4,21 +4,21 @@
 
     <header class="d-flex align-items-center">
         <h3 class="mb-0">
-            @lang('category.categories')
+            @lang('list.lists')
         </h3>
     </header>
 
     <div class="card my-3">
         <div class="card-table">
 
-            @if(!$categories->isEmpty())
+            @if(!$lists->isEmpty())
 
-                @include('guest.categories.partials.table')
+                @include('guest.lists.partials.table')
 
             @else
 
                 <div class="alert alert-info m-3">
-                    @lang('linkace.no_results_found', ['model' => trans('category.categories')])
+                    @lang('linkace.no_results_found', ['model' => trans('list.lists')])
                 </div>
 
             @endif
@@ -26,8 +26,8 @@
         </div>
     </div>
 
-    @if(!$categories->isEmpty())
-        {!! $categories->links() !!}
+    @if(!$lists->isEmpty())
+        {!! $lists->links() !!}
     @endif
 
 @endsection

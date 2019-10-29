@@ -4,36 +4,36 @@
 
     <div class="card">
         <header class="card-header">
-            @lang('category.category')
+            @lang('list.list')
         </header>
         <div class="card-body">
 
             <div class="d-flex align-items-center">
-                @if($category->parentCategory)
+                @if($list->parentList)
                     <p class="mr-2 mb-0">
-                        <a href="{{ route('guest.categories.show', [$category->parentCategory->id]) }}"
+                        <a href="{{ route('guest.lists.show', [$list->parentList->id]) }}"
                             class="badge badge-primary">
-                            {{ $category->parentCategory->name }} &leftarrow;
+                            {{ $list->parentList->name }} &leftarrow;
                         </a>
                     </p>
                 @endif
-                <h2 class="mb-0">{{ $category->name }}</h2>
+                <h2 class="mb-0">{{ $list->name }}</h2>
             </div>
 
             <div class="row">
-                @if($category->description)
+                @if($list->description)
                     <div class="col mt-3">
-                        {{ $category->description }}
+                        {{ $list->description }}
                     </div>
                 @endif
 
-                @if(!$category->childCategories->isEmpty())
+                @if(!$list->childlists->isEmpty())
                     <div class="col mt-3">
-                        <label>@lang('category.categories')</label>
+                        <label>@lang('list.lists')</label>
                         <br>
-                        @foreach($category->childCategories as $category)
-                            <a href="{{ route('guest.categories.show', [$category->id]) }}" class="badge badge-light">
-                                {{ $category->name }}
+                        @foreach($list->childlists as $list)
+                            <a href="{{ route('guest.lists.show', [$list->id]) }}" class="badge badge-light">
+                                {{ $list->name }}
                             </a>
                         @endforeach
                     </div>
@@ -50,11 +50,11 @@
         </div>
         <div class="card-table">
 
-            @include('guest.links.partials.table', ['links' => $category_links])
+            @include('guest.links.partials.table', ['links' => $list_links])
 
         </div>
     </div>
 
-    {!! $category_links->links() !!}
+    {!! $list_links->links() !!}
 
 @endsection

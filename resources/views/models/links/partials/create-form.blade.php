@@ -57,34 +57,13 @@
                 <div class="col">
 
                     <div class="form-group">
-                        <label for="category_id">@lang('category.category')</label>
-                        <select id="category_id" name="category_id"
-                            class="simple-select {{ $errors->has('category_id') ? ' is-invalid' : '' }}">
-                            <option value="0">@lang('category.select_category')</option>
-                            @foreach($categories as $category)
-                                @if($category->childCategories->count() > 0)
-                                    <optgroup label="{{ $category->name }}">
-                                        <option value="{{ $category->id }}">
-                                            {{ $category->name }}
-                                        </option>
+                        <label for="lists">@lang('list.lists')</label>
+                        <input name="lists" id="lists" type="text" placeholder="@lang('list.lists')"
+                            class="tags-select" value="{{ old('lists') }}" data-tag-search="lists">
 
-                                        @foreach($category->childCategories as $child_category)
-                                            <option value="{{ $child_category->id }}">
-                                                &rightarrow; {{ $child_category->name }}
-                                            </option>
-                                        @endforeach
-                                    </optgroup>
-                                @else
-                                    <option value="{{ $category->id }}">
-                                        {{ $category->name }}
-                                    </option>
-                                @endif
-                            @endforeach
-                        </select>
-
-                        @if ($errors->has('category_id'))
+                        @if ($errors->has('lists'))
                             <p class="invalid-feedback" role="alert">
-                                {{ $errors->first('category_id') }}
+                                {{ $errors->first('lists') }}
                             </p>
                         @endif
                     </div>
@@ -92,9 +71,9 @@
                     <div class="form-group">
                         <label for="tags">@lang('tag.tags')</label>
                         <input name="tags" id="tags" type="text" placeholder="@lang('tag.tags')"
-                            value="{{ old('tags') }}">
+                            class="tags-select" value="{{ old('tags') }}" data-tag-search="tags">
 
-                        @if ($errors->has('url'))
+                        @if ($errors->has('tags'))
                             <p class="invalid-feedback" role="alert">
                                 {{ $errors->first('tags') }}
                             </p>

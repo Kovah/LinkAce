@@ -79,8 +79,8 @@
                     </li>
                     <li class="list-group-item">
                         <div class="d-flex align-items-center">
-                            <span class="mr-1">@lang('stats.total_categories')</span>
-                            <span class="badge badge-secondary ml-auto">{{ $stats['total_categories'] }}</span>
+                            <span class="mr-1">@lang('stats.total_lists')</span>
+                            <span class="badge badge-secondary ml-auto">{{ $stats['total_lists'] }}</span>
                         </div>
                     </li>
                     <li class="list-group-item">

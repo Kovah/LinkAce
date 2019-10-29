@@ -53,11 +53,7 @@ class LinkController extends Controller
         // Reset the bookmarklet session identifier to prevent issues on regular pages
         session()->forget('bookmarklet.create');
 
-        return view('models.links.create')
-            ->with('categories', Category::parentOnly()
-                ->byUser(auth()->user()->id)
-                ->orderBy('name')
-                ->get());
+        return view('models.links.create');
     }
 
     /**
@@ -134,10 +130,6 @@ class LinkController extends Controller
         }
 
         return view('models.links.edit')
-            ->with('categories', Category::parentOnly()
-                ->byUser(auth()->user()->id)
-                ->orderBy('name', 'asc')
-                ->get())
             ->with('link', $link);
     }
 

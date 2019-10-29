@@ -3,10 +3,11 @@
 namespace App\Http\Requests;
 
 use App\Models\Category;
+use App\Models\LinkList;
 use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Http\Request;
 
-class CategoryDeleteRequest extends FormRequest
+class ListUpdateRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -17,14 +18,14 @@ class CategoryDeleteRequest extends FormRequest
     public function authorize(Request $request)
     {
         // Check if the category ID was provided
-        if (!$request->get('category_id')) {
+        if (!$request->get('list_id')) {
             return false;
         }
 
-        $category = Category::find($request->get('category_id'));
+        $list = LinkList::find($request->get('list_id'));
 
         // Check if the category belongs to the user
-        if ($category->user_id !== auth()->user()->id) {
+        if ($list->user_id !== auth()->user()->id) {
             return false;
         }
 
@@ -39,7 +40,9 @@ class CategoryDeleteRequest extends FormRequest
     public function rules()
     {
         return [
-            'category_id' => 'required',
+            'list_id' => 'required',
+            'name' => 'required',
+            'is_private' => 'required|integer',
         ];
     }
 }
