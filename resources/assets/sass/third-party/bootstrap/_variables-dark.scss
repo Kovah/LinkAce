@@ -66,6 +66,10 @@ $spacer: 1rem !default;
 $body-bg:                   $gray-900 !default;
 $body-color:                $gray-400 !default;
 
+// Components
+
+$border-color:              $gray-900 !default;
+
 // Links
 
 $link-color:                $white !default;
@@ -78,7 +82,7 @@ $font-size-base:              1rem !default;
 
 $table-color:                 $white !default;
 $table-accent-bg:             rgba($white,.05) !default;
-$table-hover-bg:              rgba($white,.075) !default;
+$table-hover-bg:              $gray-900 !default;
 
 $table-border-color:          $gray-900 !default;
 
@@ -92,9 +96,9 @@ $input-btn-padding-x:         .75rem !default;
 
 // Forms
 
-$input-bg:                 $gray-700 !default;
-$input-disabled-bg:        $gray-700 !default;
-$input-border-color:       $gray-900 !default;
+$input-bg:                 $gray-800 !default;
+$input-disabled-bg:        $gray-800 !default;
+$input-border-color:       darken($gray-800, 4%) !default;
 $input-color:              $body-color !default;
 
 // Dropdowns
@@ -148,9 +152,10 @@ $jumbotron-bg:                      darken($gray-900, 5%) !default;
 
 // Cards
 
-$card-border-color:                 $gray-900 !default;
-$card-cap-bg:                       lighten($gray-800, 10%) !default;
-$card-bg:                           lighten($body-bg, 5%) !default;
+//$card-border-width:                 0 !default;
+$card-border-color:                 darken($body-bg, 4%) !default;
+$card-cap-bg:                       darken($body-bg, 2%) !default;
+$card-bg:                           darken($body-bg, 2%) !default;
 
 // Popovers
 
@@ -169,10 +174,11 @@ $progress-bar-color:                $gray-600 !default;
 
 // List group
 
-$list-group-bg:                     lighten($body-bg, 5%) !default;
-$list-group-border-color:           $gray-900 !default;
 
-$list-group-hover-bg:               lighten($body-bg, 10%) !default;
+$list-group-bg:                     darken($body-bg, 2%) !default;
+$list-group-border-color:           darken($body-bg, 4%) !default;
+
+$list-group-hover-bg:               darken($body-bg, 4%) !default;
 $list-group-active-color:           $white !default;
 $list-group-active-bg:              $list-group-hover-bg !default;
 $list-group-active-border-color:    $list-group-border-color !default;
