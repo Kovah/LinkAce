@@ -5,6 +5,7 @@ namespace App\Http\Controllers\App;
 use App\Http\Controllers\Controller;
 use App\Models\Category;
 use App\Models\Link;
+use App\Models\LinkList;
 use App\Models\Note;
 use App\Models\Tag;
 
@@ -28,7 +29,7 @@ class DashboardController extends Controller
 
         $stats = [
             'total_links' => Link::count(),
-            'total_categories' => Category::count(),
+            'total_lists' => LinkList::count(),
             'total_tags' => Tag::count(),
             'total_notes' => Note::count(),
             'total_broken_links' => $broken_links,
