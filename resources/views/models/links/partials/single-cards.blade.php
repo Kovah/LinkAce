@@ -15,16 +15,6 @@
         </div>
 
         <ul class="list-group list-group-flush h-100">
-            <li class="list-group-item">
-                @if($link->category)
-                    <label class="small m-0">@lang('category.category'):</label>
-                    <a href="{{ route('categories.show', [$link->category->id]) }}" class="small">
-                        {{ $link->category->name }}
-                    </a>
-                @else
-                    <label class="small">@lang('category.no_category')</label>
-                @endif
-            </li>
             <li class="list-group-item h-100">
                 @if($link->tags->count() > 0)
                     <label class="small m-0">@lang('tag.tags'):</label>

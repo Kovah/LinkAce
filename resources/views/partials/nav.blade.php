@@ -30,17 +30,17 @@
 
                     <li class="nav-divider"></li>
                     <li class="nav-item dropdown">
-                        <a class="nav-link dropdown-toggle" href="#" id="navbar-categories-dd" role="button"
+                        <a class="nav-link dropdown-toggle" href="#" id="navbar-lists-dd" role="button"
                             data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                            @lang('category.categories')
+                            @lang('list.lists')
                             <i class="fas fa-caret-down fa-fw"></i>
                         </a>
-                        <div class="dropdown-menu" aria-labelledby="navbar-categories-dd">
-                            <a href="{{ route('categories.index') }}" class="dropdown-item">
-                                @lang('category.all_categories')
+                        <div class="dropdown-menu" aria-labelledby="navbar-lists-dd">
+                            <a href="{{ route('lists.index') }}" class="dropdown-item">
+                                @lang('list.all_lists')
                             </a>
-                            <a href="{{ route('categories.create') }}" class="dropdown-item">
-                                @lang('category.add')
+                            <a href="{{ route('lists.create') }}" class="dropdown-item">
+                                @lang('list.add')
                             </a>
                         </div>
                     </li>

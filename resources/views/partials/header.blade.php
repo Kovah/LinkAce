@@ -28,6 +28,7 @@
     ],
     'routes' => [
         'ajax' => [
+            'searchLists' => route('ajax-lists'),
             'searchTags' => route('ajax-tags'),
             'existingLinks' => route('ajax-existing-links'),
             'generateApiToken' => route('generate-api-token'),

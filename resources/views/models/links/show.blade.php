@@ -77,20 +77,17 @@
 
             <div class="card mb-3">
                 <div class="card-header">
-                    @lang('category.category')
+                    @lang('list.lists')
                 </div>
                 <div class="card-body py-2">
-                    @if($link->category)
-                        @if($link->category->parentCategory)
-                            <a href="{{ route('categories.show', [$link->category->parentCategory->id]) }}">
-                                {{ $link->category->parentCategory->name }}
-                            </a>&nbsp;&leftarrow;&nbsp;
-                        @endif
-                        <a href="{{ route('categories.show', [$link->category->id]) }}">
-                            {{ $link->category->name }}
-                        </a>
+                    @if(!$link->lists->isEmpty())
+                        @foreach($link->lists as $list)
+                            <a href="{{ route('lists.show', [$list->id]) }}" class="badge badge-primary badge-pill">
+                                {{ $list->name }}
+                            </a>
+                        @endforeach
                     @else
-                        <div class="text-muted small">@lang('category.no_category')</div>
+                        <div class="text-muted small">@lang('list.no_lists')</div>
                     @endif
                 </div>
             </div>
