@@ -4,6 +4,7 @@ namespace Tests\Feature;
 
 use App\Models\Category;
 use App\Models\Link;
+use App\Models\LinkList;
 use App\Models\Tag;
 use App\Models\User;
 use Illuminate\Foundation\Testing\DatabaseMigrations;
@@ -35,7 +36,7 @@ class ExampleSeedingTest extends TestCase
     public function testSeedingResults(): void
     {
         $this->assertEquals(1, User::count());
-        $this->assertEquals(20, Category::count());
+        $this->assertEquals(10, LinkList::count());
         $this->assertEquals(30, Tag::count());
         $this->assertEquals(50, Link::count());
     }

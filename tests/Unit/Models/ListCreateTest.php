@@ -2,15 +2,13 @@
 
 namespace Tests\Unit\Models;
 
-use App\Helper\LinkAce;
-use App\Helper\LinkIconMapper;
 use App\Models\User;
-use App\Repositories\LinkRepository;
+use App\Repositories\ListRepository;
 use Illuminate\Foundation\Testing\DatabaseMigrations;
 use Illuminate\Foundation\Testing\DatabaseTransactions;
 use Tests\TestCase;
 
-class LinkCreateTest extends TestCase
+class ListCreateTest extends TestCase
 {
     use DatabaseMigrations;
     use DatabaseTransactions;
@@ -30,35 +28,27 @@ class LinkCreateTest extends TestCase
      *
      * @return void
      */
-    public function testValidLinkCreation(): void
+    public function testValidListCreation(): void
     {
         $this->be($this->user);
 
-        $url = 'https://google.com/';
-
-        $meta = LinkAce::getMetaFromURL($url);
-
         $original_data = [
-            'url' => $url,
-            'title' => $meta['title'],
-            'description' => $meta['description'],
-            'is_private' => false,
+            'name' => 'Test List',
+            'description' => 'Test description',
         ];
 
-        $link = LinkRepository::create($original_data);
+        $list = ListRepository::create($original_data);
 
         $automated_data = [
-            'id' => $link->id,
-            'icon' => LinkIconMapper::mapLink($url),
+            'id' => $list->id,
             'user_id' => auth()->user()->id,
-            'status' => 1,
-            'created_at' => $link->created_at,
-            'updated_at' => $link->updated_at,
+            'created_at' => $list->created_at,
+            'updated_at' => $list->updated_at,
             'deleted_at' => null,
         ];
 
         $asserted_data = array_merge($automated_data, $original_data);
 
-        $this->assertDatabaseHas('links', $asserted_data);
+        $this->assertDatabaseHas('lists', $asserted_data);
     }
 }
