@@ -19,7 +19,7 @@ class MoveCategoryToListTable extends Migration
         DB::table('categories')->whereNotNull('parent_category')->get()->each(function ($item) {
             $parent = DB::table('categories')->where('id', $item->parent_category)->first();
             DB::table('categories')->where('id', $item->id)->update([
-                'name' => $parent->name . ' -> ' . $item->name,
+                'name' => $parent->name . ' > ' . $item->name,
             ]);
         });
 
