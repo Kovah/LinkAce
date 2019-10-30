@@ -64,7 +64,12 @@ $spacer: 1rem !default;
 // Body
 
 $body-bg:                   $gray-900 !default;
-$body-color:                $gray-400 !default;
+$body-color:                $gray-300 !default;
+$body-color-muted:          $gray-600 !default;
+
+// Dark Theme
+$darkmode-bg: darken($body-bg, 3%);
+$darkmode-bg-darker: darken($body-bg, 6%);
 
 // Components
 
@@ -133,29 +138,30 @@ $navbar-light-active-color:         $gray-800 !default;
 
 $pagination-color:                  $white !default;
 $pagination-bg:                     transparent !default;
-$pagination-border-color:           $gray-900 !default;
+$pagination-border-color:           $darkmode-bg !default;
 
 $pagination-hover-color:            $white !default;
-$pagination-hover-bg:               transparent !default;
-$pagination-hover-border-color:     $gray-900 !default;
+$pagination-hover-bg:               $darkmode-bg !default;
+$pagination-hover-border-color:     darken($body-bg, 6%) !default;
 
-$pagination-active-bg:              transparent !default;
-$pagination-active-border-color:    $gray-900 !default;
+$pagination-active-bg:              $darkmode-bg !default;
+$pagination-active-border-color:    darken($body-bg, 6%) !default;
 
+$pagination-disabled-color:         $body-color-muted !default;
 $pagination-disabled-bg:            transparent !default;
-$pagination-disabled-border-color:  $gray-900 !default;
+$pagination-disabled-border-color:  $pagination-border-color !default;
 
 
 // Jumbotron
 
-$jumbotron-bg:                      darken($gray-900, 5%) !default;
+$jumbotron-bg:                      $darkmode-bg-darker !default;
 
 // Cards
 
 //$card-border-width:                 0 !default;
-$card-border-color:                 darken($body-bg, 4%) !default;
-$card-cap-bg:                       darken($body-bg, 2%) !default;
-$card-bg:                           darken($body-bg, 2%) !default;
+$card-border-color:                 $darkmode-bg-darker !default;
+$card-cap-bg:                       $darkmode-bg !default;
+$card-bg:                           $darkmode-bg !default;
 
 // Popovers
 
@@ -169,16 +175,16 @@ $modal-header-border-color:         rgba(0,0,0,.2) !default;
 
 // Progress bars
 
-$progress-bg:                       darken($gray-900, 5%) !default;
+$progress-bg:                       $darkmode-bg-darker !default;
 $progress-bar-color:                $gray-600 !default;
 
 // List group
 
 
-$list-group-bg:                     darken($body-bg, 2%) !default;
-$list-group-border-color:           darken($body-bg, 4%) !default;
+$list-group-bg:                     $darkmode-bg !default;
+$list-group-border-color:           $darkmode-bg-darker !default;
 
-$list-group-hover-bg:               darken($body-bg, 4%) !default;
+$list-group-hover-bg:               $darkmode-bg-darker !default;
 $list-group-active-color:           $white !default;
 $list-group-active-bg:              $list-group-hover-bg !default;
 $list-group-active-border-color:    $list-group-border-color !default;
