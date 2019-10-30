@@ -172,10 +172,6 @@ class ListController extends Controller
             abort(404);
         }
 
-        if ($list->user_id !== auth()->id()) {
-            abort(403);
-        }
-
         $deletion_successfull = ListRepository::delete($list);
 
         if (!$deletion_successfull) {

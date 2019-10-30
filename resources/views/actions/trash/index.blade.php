@@ -30,10 +30,10 @@
     <div class="card mt-4">
         <div class="card-header d-flex align-items-center">
             <div>
-                @lang('trash.deleted_categories')
+                @lang('trash.deleted_lists')
             </div>
             <div class="ml-auto">
-                <a href="{{ route('clear-trash', ['categories']) }}"
+                <a href="{{ route('clear-trash', ['lists']) }}"
                     class="btn btn-sm btn-danger" title="@lang('trash.clear_trash')">
                     <i class="fas fa-recycle"></i> @lang('trash.clear_trash')
                 </a>
@@ -41,7 +41,7 @@
         </div>
         <div class="card-body">
 
-            @include('actions.trash.partials.category-table', ['categories' => $categories])
+            @include('actions.trash.partials.list-table', ['lists' => $lists])
 
         </div>
     </div>
