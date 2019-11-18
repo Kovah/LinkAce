@@ -21,7 +21,7 @@
                         @lang('settings.new_password')
                     </label>
                     <input type="password" name="new_password" id="new_password" required
-                        class="form-control{{ $errors->has('new_password') ? ' is-invalid' : '' }}"
+                        class="form-control{{ $errors->has('new_password') ? ' is-invalid' : '' }}">
                 </div>
 
                 <div class="form-group">
