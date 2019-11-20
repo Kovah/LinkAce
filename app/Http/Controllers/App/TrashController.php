@@ -3,8 +3,8 @@
 namespace App\Http\Controllers\App;
 
 use App\Http\Controllers\Controller;
-use App\Models\Category;
 use App\Models\Link;
+use App\Models\LinkList;
 use App\Models\Note;
 use App\Models\Tag;
 use Illuminate\Http\Request;
@@ -22,7 +22,7 @@ class TrashController extends Controller
             ->byUser(auth()->id())
             ->get();
 
-        $categories = Category::onlyTrashed()
+        $lists = LinkList::onlyTrashed()
             ->byUser(auth()->id())
             ->get();
 
@@ -36,7 +36,7 @@ class TrashController extends Controller
 
         return view('actions.trash.index', [
             'links' => $links,
-            'categories' => $categories,
+            'lists' => $lists,
             'tags' => $tags,
             'notes' => $notes,
         ]);
@@ -59,8 +59,8 @@ class TrashController extends Controller
                     ->byUser(auth()->id())
                     ->get();
                 break;
-            case 'categories':
-                $entries = Category::onlyTrashed()
+            case 'lists':
+                $entries = LinkList::onlyTrashed()
                     ->byUser(auth()->id())
                     ->get();
                 break;
@@ -106,8 +106,8 @@ class TrashController extends Controller
             case 'link':
                 $entry = Link::withTrashed()->find($id);
                 break;
-            case 'category':
-                $entry = Category::withTrashed()->find($id);
+            case 'list':
+                $entry = LinkList::withTrashed()->find($id);
                 break;
             case 'tag':
                 $entry = Tag::withTrashed()->find($id);

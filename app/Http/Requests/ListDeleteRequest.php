@@ -18,11 +18,11 @@ class ListDeleteRequest extends FormRequest
     public function authorize(Request $request)
     {
         // Check if the category ID was provided
-        if (!$request->get('category_id')) {
+        if (!$request->get('list_id')) {
             return false;
         }
 
-        $list = LinkList::find($request->get('category_id'));
+        $list = LinkList::find($request->get('list_id'));
 
         // Check if the category belongs to the user
         if ($list->user_id !== auth()->user()->id) {

@@ -27,7 +27,7 @@ services:
       - db
     volumes:
       - .:/app:delegated
-      - ./resources/docker/php/php.ini:/opt/bitnami/php/etc/conf.d/php.ini:ro
+      - ./resources/docker/php/php-dev.ini:/opt/bitnami/php/etc/conf.d/php.ini:ro
 
   # --- nginx 1.14
   nginx:
