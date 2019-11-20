@@ -35,8 +35,8 @@ return [
     'deleted_successfully' => 'Link deleted successfully.',
     'deletion_error' => 'Link could not be deleted.',
 
-    'notifications.linkcheck.errors' => 'LinkAce found errors while checking your Links',
-    'notifications.linkcheck.errors.moved' => '⚠ ️The following Links were moved:',
+    'notifications.linkcheck.errors' => 'LinkAce found errors while checking your Links.',
+    'notifications.linkcheck.errors.moved' => '⚠ ️The following Links moved to a new location:',
     'notifications.linkcheck.errors.broken' => '🚫 The following Links are not reachable anymore or return an error:',
 
     'happy_bookmarking' => 'Happy Bookmarking',
