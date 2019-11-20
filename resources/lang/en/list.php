@@ -18,6 +18,8 @@ return [
 
     'no_lists' => 'No Lists',
 
+    'number_links' => ':number Link in this List|:number Links in this List',
+
     'added_successfully' => 'List added successfully.',
     'updated_successfully' => 'List updated successfully.',
     'deleted_successfully' => 'List deleted successfully.',

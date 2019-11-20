@@ -20,15 +20,8 @@ class ListController extends Controller
      */
     public function index(Request $request)
     {
-        $lists = LinkList::byUser(auth()->id());
-
-        if ($request->has('orderBy') && $request->has('orderDir')) {
-            $lists->orderBy($request->get('orderBy'), $request->get('orderDir'));
-        } else {
-            $lists->orderBy('name', 'ASC');
-        }
-
-        $lists = $lists->paginate(getPaginationLimit());
+        $lists = LinkList::byUser(auth()->id())
+            ->paginate(getPaginationLimit());
 
         return view('models.lists.index', [
             'lists' => $lists,
@@ -133,7 +126,7 @@ class ListController extends Controller
      * Update the specified resource in storage.
      *
      * @param ListUpdateRequest $request
-     * @param int              $id
+     * @param int               $id
      * @return \Illuminate\Http\RedirectResponse
      */
     public function update(ListUpdateRequest $request, $id)
@@ -160,7 +153,7 @@ class ListController extends Controller
      * Remove the specified resource from storage.
      *
      * @param ListDeleteRequest $request
-     * @param int              $id
+     * @param int               $id
      * @return \Illuminate\Http\RedirectResponse
      * @throws \Exception
      */
