@@ -5,13 +5,14 @@ namespace App\Http\Controllers\App;
 use App\Http\Controllers\Controller;
 use App\Models\Link;
 use Illuminate\Http\Request;
+use Illuminate\Http\Response;
 
 class ExportController extends Controller
 {
     /**
      * Show the application dashboard.
      *
-     * @return \Illuminate\Http\Response
+     * @return Response
      */
     public function getExport()
     {
@@ -22,7 +23,7 @@ class ExportController extends Controller
      * Permanently delete entries for a model from the trash
      *
      * @param Request $request
-     * @return \Illuminate\Http\Response
+     * @return Response
      */
     public function doExport(Request $request)
     {

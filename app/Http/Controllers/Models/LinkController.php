@@ -2,18 +2,17 @@
 
 namespace App\Http\Controllers\Models;
 
-use App\Helper\LinkAce;
-use App\Helper\LinkIconMapper;
-use App\Helper\WaybackMachine;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\LinkDeleteRequest;
 use App\Http\Requests\LinkStoreRequest;
 use App\Http\Requests\LinkUpdateRequest;
-use App\Models\Category;
 use App\Models\Link;
-use App\Models\Tag;
 use App\Repositories\LinkRepository;
+use Exception;
+use Illuminate\Contracts\View\Factory;
+use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
+use Illuminate\View\View;
 
 class LinkController extends Controller
 {
@@ -21,7 +20,7 @@ class LinkController extends Controller
      * Display a listing of the resource.
      *
      * @param Request $request
-     * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
+     * @return Factory|View
      */
     public function index(Request $request)
     {
@@ -46,7 +45,7 @@ class LinkController extends Controller
     /**
      * Show the form for creating a new resource.
      *
-     * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
+     * @return Factory|View
      */
     public function create()
     {
@@ -60,7 +59,7 @@ class LinkController extends Controller
      * Store a newly created resource in storage.
      *
      * @param LinkStoreRequest $request
-     * @return \Illuminate\Http\RedirectResponse
+     * @return RedirectResponse
      */
     public function store(LinkStoreRequest $request)
     {
@@ -92,8 +91,8 @@ class LinkController extends Controller
     /**
      * Display the specified resource.
      *
-     * @param  int $id
-     * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
+     * @param int $id
+     * @return Factory|View
      */
     public function show($id)
     {
@@ -114,8 +113,8 @@ class LinkController extends Controller
     /**
      * Show the form for editing the specified resource.
      *
-     * @param  int $id
-     * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
+     * @param int $id
+     * @return Factory|View
      */
     public function edit($id)
     {
@@ -137,8 +136,8 @@ class LinkController extends Controller
      * Update the specified resource in storage.
      *
      * @param LinkUpdateRequest $request
-     * @param  int              $id
-     * @return \Illuminate\Http\RedirectResponse
+     * @param int               $id
+     * @return RedirectResponse
      */
     public function update(LinkUpdateRequest $request, $id)
     {
@@ -163,9 +162,9 @@ class LinkController extends Controller
      * Remove the specified resource from storage.
      *
      * @param LinkDeleteRequest $request
-     * @param  int              $id
-     * @return \Illuminate\Http\RedirectResponse
-     * @throws \Exception
+     * @param int               $id
+     * @return RedirectResponse
+     * @throws Exception
      */
     public function destroy(LinkDeleteRequest $request, $id)
     {

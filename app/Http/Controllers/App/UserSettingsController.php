@@ -7,11 +7,15 @@ use App\Http\Controllers\Controller;
 use App\Http\Requests\UserAccountUpdateRequest;
 use App\Http\Requests\UserSettingsUpdateRequest;
 use App\Models\Setting;
+use Illuminate\Contracts\View\Factory;
+use Illuminate\Http\JsonResponse;
+use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Support\Str;
+use Illuminate\View\View;
 
 /**
  * Class UserSettingsController
@@ -21,7 +25,7 @@ use Illuminate\Support\Str;
 class UserSettingsController extends Controller
 {
     /**
-     * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
+     * @return Factory|View
      */
     public function getUserSettings()
     {
@@ -35,7 +39,7 @@ class UserSettingsController extends Controller
 
     /**
      * @param UserAccountUpdateRequest $request
-     * @return \Illuminate\Http\RedirectResponse
+     * @return RedirectResponse
      */
     public function saveAccountSettings(UserAccountUpdateRequest $request)
     {
@@ -52,7 +56,7 @@ class UserSettingsController extends Controller
 
     /**
      * @param UserSettingsUpdateRequest $request
-     * @return \Illuminate\Http\RedirectResponse
+     * @return RedirectResponse
      */
     public function saveAppSettings(UserSettingsUpdateRequest $request)
     {
@@ -90,7 +94,7 @@ class UserSettingsController extends Controller
 
     /**
      * @param Request $request
-     * @return \Illuminate\Http\RedirectResponse
+     * @return RedirectResponse
      */
     public function changeUserPassword(Request $request)
     {
@@ -125,7 +129,7 @@ class UserSettingsController extends Controller
      * Generate a new API token for the current user
      *
      * @param Request $request
-     * @return \Illuminate\Http\JsonResponse
+     * @return JsonResponse
      */
     public function generateApiToken(Request $request)
     {

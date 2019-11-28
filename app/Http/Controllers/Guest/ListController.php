@@ -23,7 +23,6 @@ class ListController extends Controller
             abort(404);
         }
 
-        // Get links of the category
         $links = $list->links()->privateOnly(false);
 
         if ($request->has('orderBy') && $request->has('orderDir')) {
