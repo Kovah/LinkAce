@@ -6,13 +6,16 @@
                     @if($list->is_private)
                         <i class="fas fa-lock text-muted mr-1" title="@lang('list.private')"></i>
                     @endif
-                        <a href="{{ route('lists.show', [$list->id]) }}">{{ $list->name }}</a>
+                    <a href="{{ route('lists.show', [$list->id]) }}">{{ $list->name }}</a>
                 </div>
             </div>
         </div>
 
         <ul class="list-group list-group-flush h-100">
             <li class="list-group-item h-100 small">
+                @if($list->description)
+                    <p>{{ $list->description }}</p>
+                @endif
                 @if($list->links->count() > 0)
                     {{ trans_choice('list.number_links', $list->links->count(), ['number' => $list->links->count()]) }}
                 @else
@@ -26,7 +29,8 @@
                 <a href="{{ route('lists.edit', [$list->id]) }}" class="card-link">
                     <i class="fas fa-edit"></i>
                 </a>
-                <a href="#" onclick="event.preventDefault();document.getElementById('list-delete-{{ $list->id }}').submit();"
+                <a href="#"
+                    onclick="event.preventDefault();document.getElementById('list-delete-{{ $list->id }}').submit();"
                     title=" @lang('list.delete')" class="card-link cursor-pointer">
                     <i class="fas fa-trash"></i>
                 </a>
