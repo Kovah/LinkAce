@@ -13,6 +13,7 @@ return [
     'private' => 'Private List',
 
     'name' => 'List Name',
+    'description' => 'List Description',
 
     'author' => 'by :user',
 

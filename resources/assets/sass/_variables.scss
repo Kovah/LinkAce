@@ -1,0 +1,178 @@
+// Colors
+$white: #fff;
+$gray-100: #F6F9FE;
+$gray-200: #E5EDFB;
+$gray-300: #CFDDF5;
+$gray-400: #C6D5EE;
+$gray-500: #98B1D8;
+$gray-600: #6686B9;
+$gray-700: #44679F;
+$gray-800: #2C528F;
+$gray-900: #193C74;
+$gray: #6F747F;
+$black: #17181A;
+
+$grays: ();
+$grays: map-merge(
+    (
+      "100": $gray-100,
+      "200": $gray-200,
+      "300": $gray-300,
+      "400": $gray-400,
+      "500": $gray-500,
+      "600": $gray-600,
+      "700": $gray-700,
+      "800": $gray-800,
+      "900": $gray-900
+    ),
+    $grays
+);
+
+$blue: #44679F;
+$indigo: #6610f2;
+$purple: #6f42c1;
+$pink: #e83e8c;
+$red: #DB3523;
+$orange: #FFA602;
+$yellow: #F39C12;
+$green: #0C9E5A;
+$teal: #00A7BA;
+$cyan: #3498DB;
+
+$primary: $blue;
+$secondary: $gray-600;
+$success: $green;
+$info: $cyan;
+$warning: $yellow;
+$danger: $red;
+$light: $gray-100;
+$dark: $gray-800;
+
+$colors: ();
+$colors: map-merge(
+    (
+      "blue": $blue,
+      "indigo": $indigo,
+      "purple": $purple,
+      "pink": $pink,
+      "red": $red,
+      "orange": $orange,
+      "yellow": $yellow,
+      "green": $green,
+      "teal": $teal,
+      "cyan": $cyan,
+      "white": $white,
+      "gray": $gray-600,
+      "gray-dark": $gray-800
+    ),
+    $colors
+);
+
+$theme-colors: ();
+$theme-colors: map-merge(
+    (
+      "primary": $primary,
+      "secondary": $secondary,
+      "success": $success,
+      "info": $info,
+      "warning": $warning,
+      "danger": $danger,
+      "light": $light,
+      "dark": $dark
+    ),
+    $theme-colors
+);
+
+$yiq-text-dark: $black;
+$yiq-text-light: $white;
+
+
+// Options
+$enable-caret: false;
+
+
+// Spacing
+$spacer: 1rem;
+$spacers: ();
+$spacers: map-merge(
+    (
+      0: 0,
+      1: ($spacer * .25),
+      2: ($spacer * .5),
+      3: $spacer,
+      4: ($spacer * 1.5),
+      5: ($spacer * 3)
+    ),
+    $spacers
+);
+
+$sizes: ();
+$sizes: map-merge(
+    (
+      25: 25%,
+      50: 50%,
+      75: 75%,
+      100: 100%,
+      auto: auto
+    ),
+    $sizes
+);
+
+
+// Body
+$body-bg: $white;
+$body-color: $black;
+$body-color-muted: $gray;
+
+
+// Links
+$link-color: theme-color("primary");
+$link-hover-color: darken($link-color, 20%);
+$link-hover-decoration: none;
+
+
+// Components
+$border-radius-xs: .2rem;
+
+$line-height-sm: 1.5;
+
+
+// Typography
+$font-size-base: 1rem;
+$font-size-xs: $font-size-base * .75;
+
+$font-weight-normal: 400;
+
+$text-muted: $body-color-muted;
+
+
+// Tables
+$table-dark-bg: $gray-900;
+$table-dark-color: $white;
+
+
+// Buttons + Forms
+$input-btn-focus-width: .15rem;
+$input-btn-padding-y-xs: .15rem;
+$input-btn-padding-x-xs: .3rem;
+$input-btn-font-size-xs: $font-size-xs;
+$input-btn-line-height-xs: $line-height-sm;
+
+
+// Buttons
+$btn-padding-y-xs: $input-btn-padding-y-xs;
+$btn-padding-x-xs: $input-btn-padding-x-xs;
+$btn-font-size-xs: $input-btn-font-size-xs;
+$btn-line-height-xs: $input-btn-line-height-xs;
+
+$btn-border-radius-xs: $border-radius-xs;
+
+
+// Navbar
+$navbar-dark-color: rgba($white, .75);
+$navbar-dark-hover-color: rgba($white, 1);
+$navbar-dark-disabled-color: rgba($white, .4);
+
+
+// Badges
+$badge-font-weight: $font-weight-normal;

@@ -4,8 +4,12 @@ namespace App\Http\Controllers\App;
 
 use App\Http\Controllers\Controller;
 use App\Models\Setting;
+use Illuminate\Contracts\View\Factory;
+use Illuminate\Http\JsonResponse;
+use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Str;
+use Illuminate\View\View;
 
 /**
  * Class SystemSettingsController
@@ -15,7 +19,7 @@ use Illuminate\Support\Str;
 class SystemSettingsController extends Controller
 {
     /**
-     * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
+     * @return Factory|View
      */
     public function getSystemSettings()
     {
@@ -26,7 +30,7 @@ class SystemSettingsController extends Controller
      * Syve the new system settings to the database
      *
      * @param Request $request
-     * @return \Illuminate\Http\RedirectResponse
+     * @return RedirectResponse
      */
     public function saveSystemSettings(Request $request)
     {
@@ -56,7 +60,7 @@ class SystemSettingsController extends Controller
      * Generate a new API token for the current user
      *
      * @param Request $request
-     * @return \Illuminate\Http\JsonResponse
+     * @return JsonResponse
      */
     public function generateCronToken(Request $request)
     {

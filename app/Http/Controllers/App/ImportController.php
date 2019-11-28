@@ -9,6 +9,8 @@ use App\Http\Requests\DoImportRequest;
 use App\Models\Link;
 use App\Models\Tag;
 use Carbon\Carbon;
+use Illuminate\Contracts\Filesystem\FileNotFoundException;
+use Illuminate\Http\Response;
 use Shaarli\NetscapeBookmarkParser\NetscapeBookmarkParser;
 
 class ImportController extends Controller
@@ -16,7 +18,7 @@ class ImportController extends Controller
     /**
      * Show the application dashboard.
      *
-     * @return \Illuminate\Http\Response
+     * @return Response
      */
     public function getImport()
     {
@@ -27,8 +29,8 @@ class ImportController extends Controller
      * Permanently delete entries for a model from the trash
      *
      * @param DoImportRequest $request
-     * @return \Illuminate\Http\Response
-     * @throws \Illuminate\Contracts\Filesystem\FileNotFoundException
+     * @return Response
+     * @throws FileNotFoundException
      */
     public function doImport(DoImportRequest $request)
     {
@@ -58,7 +60,6 @@ class ImportController extends Controller
 
                 $new_link = Link::create([
                     'user_id' => $user_id,
-                    'category_id' => null,
                     'url' => $link['uri'],
                     'title' => $title,
                     'description' => $link['note'] ?: $link_meta['description'],

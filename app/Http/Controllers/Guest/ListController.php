@@ -8,11 +8,21 @@ use Illuminate\Http\Request;
 
 class ListController extends Controller
 {
+    public function index()
+    {
+        $lists = LinkList::isPrivate(false)
+            ->paginate(getPaginationLimit());
+
+        return view('guest.lists.index', [
+            'lists' => $lists,
+        ]);
+    }
+
     /**
      * Display the specified resource.
      *
      * @param Request $request
-     * @param  int    $id
+     * @param int     $id
      * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
      */
     public function show(Request $request, $id)
@@ -23,7 +33,6 @@ class ListController extends Controller
             abort(404);
         }
 
-        // Get links of the category
         $links = $list->links()->privateOnly(false);
 
         if ($request->has('orderBy') && $request->has('orderDir')) {

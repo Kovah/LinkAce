@@ -18,8 +18,8 @@
 
                             <input name="name" id="name"
                                 class="form-control{{ $errors->has('name') ? ' is-invalid' : '' }}"
-                                type="text" placeholder="@lang('tag.name')" value="{{ old('name') }}"
-                                required autofocus>
+                                type="text" placeholder="@lang('placeholder.tag_name')"
+                                value="{{ old('name') }}" required autofocus>
 
                             @if ($errors->has('name'))
                                 <p class="invalid-feedback" role="alert">

@@ -4,7 +4,7 @@
 
     <header class="d-flex align-items-center">
         <h3 class="mb-0">
-            @lang('link.links')
+            @lang('list.lists')
         </h3>
         <a href="{{ route('lists.create') }}" class="btn btn-sm btn-primary ml-auto" aria-label="@lang('link.add')">
             <i class="fas fa-plus mr-2"></i>

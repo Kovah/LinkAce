@@ -4,9 +4,10 @@ namespace App\Http\Controllers\App;
 
 use App\Http\Controllers\Controller;
 use App\Http\Requests\SearchRequest;
-use App\Models\Category;
 use App\Models\Link;
-use App\Models\Tag;
+use App\Models\LinkList;
+use Illuminate\Contracts\View\Factory;
+use Illuminate\View\View;
 
 /**
  * Class SearchController
@@ -26,7 +27,7 @@ class SearchController extends Controller
     ];
 
     /**
-     * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
+     * @return Factory|View
      */
     public function getSearch()
     {
@@ -38,17 +39,15 @@ class SearchController extends Controller
                 'search_title' => false,
                 'search_description' => false,
                 'private_only' => false,
-                'only_category' => 0,
+                'only_lists' => '',
                 'only_tags' => '',
                 'order_by' => $this->order_by_options[0],
-            ])
-            ->with('categories', Category::byUser(auth()->user()->id)
-                ->orderBy('name', 'asc')->get());
+            ]);
     }
 
     /**
      * @param SearchRequest $request
-     * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
+     * @return Factory|View
      */
     public function doSearch(SearchRequest $request)
     {
@@ -79,10 +78,10 @@ class SearchController extends Controller
             $search->where('is_private', true);
         }
 
-        // Show by specific category only if applicable
-        if ($category_id = $request->get('only_category', false)) {
-            $search->whereHas('category', function ($query) use ($category_id) {
-                $query->where('id', $category_id);
+        // Show by specific list only if applicable
+        if ($list_names = $request->get('only_lists', false)) {
+            $search->whereHas('lists', function ($query) use ($list_names) {
+                $query->whereIn('name', explode(',', $list_names));
             });
         }
 
@@ -110,11 +109,9 @@ class SearchController extends Controller
                 'search_title' => $search_title,
                 'search_description' => $search_description,
                 'private_only' => $private_only,
-                'only_category' => $category_id,
+                'only_lists' => $list_names,
                 'only_tags' => $tag_names,
                 'order_by' => $orderby,
-            ])
-            ->with('categories', Category::byUser(auth()->user()->id)
-                ->orderBy('name', 'asc')->get());
+            ]);
     }
 }

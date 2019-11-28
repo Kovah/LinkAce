@@ -7,14 +7,17 @@ use App\Models\Link;
 use App\Models\LinkList;
 use App\Models\Note;
 use App\Models\Tag;
+use Illuminate\Contracts\View\Factory;
 use Illuminate\Http\Request;
+use Illuminate\Http\Response;
+use Illuminate\View\View;
 
 class TrashController extends Controller
 {
     /**
      * Show the application dashboard.
      *
-     * @return \Illuminate\Http\Response
+     * @return Response
      */
     public function index()
     {
@@ -46,8 +49,8 @@ class TrashController extends Controller
      * Permanently delete entries for a model from the trash
      *
      * @param Request $reques
-     * @param         $model
-     * @return \Illuminate\Http\Response
+     * @param string  $model
+     * @return Response
      */
     public function clearTrash(Request $reques, $model)
     {
@@ -94,9 +97,9 @@ class TrashController extends Controller
      * Restore an entry from the trash
      *
      * @param Request $request
-     * @param         $model
-     * @param         $id
-     * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
+     * @param string  $model
+     * @param string  $id
+     * @return Factory|View
      */
     public function restoreEntry(Request $request, $model, $id)
     {

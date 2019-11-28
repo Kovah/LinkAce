@@ -1,22 +1,28 @@
+<div class="navbar navbar-dark brand-only bg-primary shadow-sm d-block d-md-none text-center">
+    <a class="navbar-brand d-inline-block" href="{{ route('dashboard') }}">
+        {!! displaySVG(public_path('assets/img/logo_linkace.svg')) !!}
+    </a>
+</div>
 <nav class="navbar navbar-expand-md navbar-dark bg-primary shadow-sm">
-    <div class="container">
-        <a class="navbar-brand d-none d-md-inline-block"
-            href="{{ auth()->guest() ? route('front') : route('dashboard') }}">
+    <div class="container px-0">
+        <a class="navbar-brand d-none d-md-inline-block" href="{{ route('dashboard') }}">
             {!! displaySVG(public_path('assets/img/logo_linkace.svg')) !!}
         </a>
 
-        <ul class="navbar-nav flex-row">
-            <li class="nav-item">
-                <a href="{{ route('links.create') }}" class="nav-link">
-                    @lang('link.add')
-                </a>
-            </li>
-            <li class="nav-item">
-                <a href="{{ route('links.index') }}" class="nav-link pl-3 pl-md-2">
-                    @lang('link.all_links')
-                </a>
-            </li>
-        </ul>
+        @auth
+            <ul class="navbar-nav flex-row">
+                <li class="nav-item">
+                    <a href="{{ route('links.create') }}" class="nav-link">
+                        @lang('link.add')
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a href="{{ route('links.index') }}" class="nav-link pl-3 pl-md-2">
+                        @lang('link.all_links')
+                    </a>
+                </li>
+            </ul>
+        @endauth
 
         <button class="navbar-toggler ml-auto d-flex align-items-center d-md-none" type="button"
             data-toggle="collapse" data-target="#navbar-content"
@@ -61,14 +67,9 @@
                     </li>
                 </ul>
             @endauth
+
             <ul class="navbar-nav ml-auto">
-                @guest
-                    <li class="nav-item">
-                        <a class="nav-link" href="{{ route('login') }}">
-                            @lang('linkace.login')
-                        </a>
-                    </li>
-                @else
+                @auth
                     <li class="nav-item">
                         <a href="{{ route('get-search') }}" class="nav-link" title="@lang('search.search')">
                             <span class="d-md-none">@lang('search.search')</span>
@@ -108,7 +109,13 @@
                             </a>
                         </div>
                     </li>
-                @endguest
+                @else
+                    <li class="nav-item">
+                        <a class="nav-link" href="{{ route('login') }}">
+                            @lang('linkace.login')
+                        </a>
+                    </li>
+                @endauth
             </ul>
         </div>
     </div>

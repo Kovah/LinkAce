@@ -3,9 +3,12 @@
 namespace App\Models;
 
 use App\Scopes\OrderNameScope;
+use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 use Illuminate\Database\Eloquent\SoftDeletes;
 
 /**
@@ -17,8 +20,8 @@ use Illuminate\Database\Eloquent\SoftDeletes;
  * @property string                 $name
  * @property ?string                $description
  * @property int                    $is_private
- * @property \Carbon\Carbon|null    $created_at
- * @property \Carbon\Carbon|null    $updated_at
+ * @property Carbon|null            $created_at
+ * @property Carbon|null            $updated_at
  * @property string|null            $deleted_at
  * @property-read Collection|Link[] $links
  * @property-read User              $user
@@ -64,13 +67,25 @@ class LinkList extends Model
         return $query->where('user_id', $user_id);
     }
 
+    /**
+     * Scope for selecting private or non-private lists
+     *
+     * @param Builder $query
+     * @param bool    $is_private
+     * @return mixed
+     */
+    public function scopeIsPrivate($query, bool $is_private)
+    {
+        return $query->where('is_private', $is_private);
+    }
+
     /*
      | ========================================================================
      | RELATIONSHIPS
      */
 
     /**
-     * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
+     * @return BelongsTo
      */
     public function user()
     {
@@ -78,10 +93,27 @@ class LinkList extends Model
     }
 
     /**
-     * @return \Illuminate\Database\Eloquent\Relations\BelongsToMany
+     * @return BelongsToMany
      */
     public function links()
     {
         return $this->belongsToMany('App\Models\Link', 'link_lists', 'list_id', 'link_id');
+    }
+
+    /*
+     | ========================================================================
+     | METHODS
+     */
+
+    /**
+     * Get a collection of all lists for the current user, ordered by name
+     *
+     * @return Builder[]|Collection
+     */
+    public static function getAllForCurrentUser()
+    {
+        return self::byUser(auth()->id())
+            ->orderBy('name')
+            ->get();
     }
 }

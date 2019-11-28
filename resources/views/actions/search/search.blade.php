@@ -62,31 +62,24 @@
                 <div class="row mt-3">
 
                     <div class="col-md mb-2 mb-md-0">
-                        <label for="only_category" class="d-none" aria-hidden="true">
-                            @lang('search.filter_by_category')
+                        <label for="only_lists" class="d-none" aria-hidden="true">
+                            @lang('search.filter_by_list')
                         </label>
-                        <select id="only_category" name="only_category" class="custom-select">
-                            <option value="0">@lang('search.filter_by_category')</option>
-                            @foreach($categories as $category)
-                                <option value="{{ $category->id }}"
-                                    @if($query_settings['only_category'] == $category->id) selected="selected" @endif>
-                                    {{ $category->name }}
-                                </option>
-                            @endforeach
-                        </select>
+                        <input name="only_lists" id="only_lists" type="text" class="tags-select" data-tag-search="lists"
+                            placeholder="@lang('search.filter_by_list')" value="{{ $query_settings['only_lists'] }}">
                     </div>
 
                     <div class="col-md mb-2 mb-md-0">
                         <label for="only_tags" class="d-none" aria-hidden="true">
                             @lang('search.filter_by_tag')
                         </label>
-                        <input name="only_tags" id="only_tags" type="text" class="tags-select"
+                        <input name="only_tags" id="only_tags" type="text" class="tags-select" data-tag-search="tags"
                             placeholder="@lang('search.filter_by_tag')" value="{{ $query_settings['only_tags'] }}">
                     </div>
 
                     <div class="col-md">
                         <label for="order_by" class="d-none" aria-hidden="true">
-                            @lang('search.filter_by_tag')
+                            @lang('search.order_by')
                         </label>
                         <select id="order_by" name="order_by" class="custom-select">
                             <option value="0">@lang('search.order_by')</option>

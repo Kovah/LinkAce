@@ -19,8 +19,8 @@
 
                     <input name="name" id="name"
                         class="form-control{{ $errors->has('name') ? ' is-invalid' : '' }}"
-                        type="text" placeholder="@lang('list.name')" value="{{ old('name') ?: $list->name }}"
-                        required autofocus>
+                        type="text" placeholder="@lang('placeholder.list_name')"
+                        value="{{ old('name') ?: $list->name }}" required autofocus>
 
                     @if ($errors->has('name'))
                         <p class="invalid-feedback" role="alert">
@@ -36,7 +36,7 @@
 
                             <textarea name="description" id="description" rows="4"
                                 class="form-control{{ $errors->has('description') ? ' is-invalid' : '' }}"
-                                placeholder="@lang('list.description')">{{ old('description') ?: $list->description }}</textarea>
+                                >{{ old('description') ?: $list->description }}</textarea>
 
                             @if ($errors->has('description'))
                                 <p class="invalid-feedback" role="alert">
