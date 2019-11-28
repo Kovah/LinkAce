@@ -8,23 +8,21 @@
         </h3>
     </header>
 
-    <div class="card my-3">
-        <div class="card-table">
+    @if(!$lists->isEmpty())
 
-            @if(!$lists->isEmpty())
-
-                @include('guest.lists.partials.table')
-
-            @else
-
-                <div class="alert alert-info m-3">
-                    @lang('linkace.no_results_found', ['model' => trans('list.lists')])
-                </div>
-
-            @endif
-
+        <div class="row my-3">
+            @foreach($lists as $list)
+                @include('guest.lists.partials.single')
+            @endforeach
         </div>
-    </div>
+
+    @else
+
+        <div class="alert alert-info m-3">
+            @lang('linkace.no_results_found', ['model' => trans('list.lists')])
+        </div>
+
+    @endif
 
     @if(!$lists->isEmpty())
         {!! $lists->links() !!}

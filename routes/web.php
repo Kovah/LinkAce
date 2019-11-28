@@ -80,10 +80,11 @@ Route::group(['middleware' => ['auth']], function () {
 // Guest access routes
 Route::prefix('guest')->middleware(['guestaccess'])->group(function () {
 
-    Route::resource('categories', 'Guest\CategoryController')
-        ->only(['show'])
+    Route::resource('lists', 'Guest\ListController')
+        ->only(['index', 'show'])
         ->names([
-            'show' => 'guest.categories.show',
+            'index' => 'guest.lists.index',
+            'show' => 'guest.lists.show',
         ]);
 
     Route::resource('links', 'Guest\LinkController')

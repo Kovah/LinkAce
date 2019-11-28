@@ -67,6 +67,18 @@ class LinkList extends Model
         return $query->where('user_id', $user_id);
     }
 
+    /**
+     * Scope for selecting private or non-private lists
+     *
+     * @param Builder $query
+     * @param bool    $is_private
+     * @return mixed
+     */
+    public function scopeIsPrivate($query, bool $is_private)
+    {
+        return $query->where('is_private', $is_private);
+    }
+
     /*
      | ========================================================================
      | RELATIONSHIPS
