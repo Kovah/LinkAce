@@ -1,7 +1,11 @@
+<div class="navbar navbar-dark brand-only bg-primary shadow-sm d-block d-md-none text-center">
+    <a class="navbar-brand d-inline-block" href="{{ route('front') }}">
+        {!! displaySVG(public_path('assets/img/logo_linkace.svg')) !!}
+    </a>
+</div>
 <nav class="navbar navbar-expand-md navbar-dark bg-primary shadow-sm">
-    <div class="container">
-        <a class="navbar-brand d-none d-md-inline-block"
-            href="{{ auth()->guest() ? route('front') : route('dashboard') }}">
+    <div class="container px-0">
+        <a class="navbar-brand d-none d-md-inline-block" href="{{ route('front') }}">
             {!! displaySVG(public_path('assets/img/logo_linkace.svg')) !!}
         </a>
 

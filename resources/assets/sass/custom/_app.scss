@@ -25,7 +25,7 @@ body:not(.bookmarklet) {
   }
 }
 
-.navbar {
+.navbar:not(.brand-only) {
   position: fixed;
   right: 0;
   bottom: 0;
