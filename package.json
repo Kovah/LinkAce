@@ -16,7 +16,7 @@
     "cross-env": "^5.2.1",
     "laravel-mix": "^4.1.4",
     "resolve-url-loader": "^2.3.2",
-    "sass": "^1.23.1",
+    "sass": "^1.23.7",
     "sass-loader": "^7.3.1",
     "vue-template-compiler": "^2.6.10"
   },
@@ -24,7 +24,7 @@
     "@fortawesome/fontawesome-svg-core": "^1.2.25",
     "@fortawesome/free-brands-svg-icons": "^5.11.2",
     "@fortawesome/free-solid-svg-icons": "^5.11.2",
-    "bootstrap": "^4.3.1",
+    "bootstrap": "4.3.1",
     "jquery": "^3.4.1",
     "popper.js": "^1.16.0",
     "selectize": "^0.12.6"
