@@ -20,7 +20,7 @@
                             <div class="control">
                                 <input name="email" id="email"
                                     class="form-control{{ $errors->has('email') ? ' is-invalid' : '' }}"
-                                    type="email" placeholder="@lang('linkace.email')"
+                                    type="email" placeholder="@lang('placeholder.email')"
                                     value="{{ $email ?? old('email') }}"
                                     required autofocus>
                             </div>
@@ -36,7 +36,7 @@
                             <div class="control">
                                 <input name="password" id="password"
                                     class="form-control{{ $errors->has('password') ? ' is-invalid' : '' }}"
-                                    type="password" placeholder="@lang('linkace.password')"
+                                    type="password" placeholder="@lang('placeholder.password')"
                                     required>
                             </div>
                             @if ($errors->has('password'))
@@ -51,7 +51,7 @@
                             <div class="control">
                                 <input name="password_confirmation" id="password-confirm"
                                     class="form-control{{ $errors->has('password_confirmation') ? ' is-invalid' : '' }}"
-                                    type="email" placeholder="@lang('linkace.password_confirm')"
+                                    type="email" placeholder="@lang('placeholder.password_confirmed')"
                                     required>
                             </div>
                             @if ($errors->has('password_confirmation'))

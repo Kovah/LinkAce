@@ -11,7 +11,7 @@
                 <label class="label" for="url">@lang('link.url')</label>
                 <input name="url" id="url" type="url"
                     class="form-control form-control-lg{{ $errors->has('url') ? ' is-invalid' : '' }}"
-                    placeholder="@lang('link.url')" value="{{ old('url') ?: $bookmark_url ?? '' }}"
+                    placeholder="@lang('placeholder.link_url')" value="{{ old('url') ?: $bookmark_url ?? '' }}"
                     required autofocus>
 
                 <p class="invalid-feedback {{ $errors->has('url') ? 'd-none' : '' }}">
@@ -32,7 +32,7 @@
                         <label class="label" for="title">@lang('link.title')</label>
                         <input name="title" id="title"
                             class="form-control{{ $errors->has('title') ? ' is-invalid' : '' }}"
-                            type="text" placeholder="@lang('link.title')"
+                            type="text" placeholder="@lang('placeholder.link_title')"
                             value="{{ old('title') ?: $bookmark_title ?? '' }}">
                         @if ($errors->has('title'))
                             <p class="invalid-feedback" role="alert">
@@ -44,7 +44,7 @@
                     <div class="form-group">
                         <label for="description">@lang('link.description')</label>
                         <textarea name="description" id="description" rows="4" class="form-control"
-                            placeholder="@lang('link.description')">{{ old('description') }}</textarea>
+                            >{{ old('description') }}</textarea>
 
                         @if ($errors->has('description'))
                             <p class="invalid-feedback" role="alert">
@@ -58,7 +58,7 @@
 
                     <div class="form-group">
                         <label for="lists">@lang('list.lists')</label>
-                        <input name="lists" id="lists" type="text" placeholder="@lang('list.lists')"
+                        <input name="lists" id="lists" type="text" placeholder="@lang('placeholder.list_select')"
                             class="tags-select" value="{{ old('lists') }}" data-tag-search="lists">
 
                         @if ($errors->has('lists'))
@@ -70,7 +70,7 @@
 
                     <div class="form-group">
                         <label for="tags">@lang('tag.tags')</label>
-                        <input name="tags" id="tags" type="text" placeholder="@lang('tag.tags')"
+                        <input name="tags" id="tags" type="text" placeholder="@lang('placeholder.tags_select')"
                             class="tags-select" value="{{ old('tags') }}" data-tag-search="tags">
 
                         @if ($errors->has('tags'))
