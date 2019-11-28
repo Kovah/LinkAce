@@ -1,0 +1,128 @@
+// Colors
+$white: #fff;
+$gray-100: #f8f9fa;
+$gray-200: #e9ecef;
+$gray-300: #dee2e6;
+$gray-400: #ced4da;
+$gray-500: #9A9FA2;
+$gray-600: #7A8288;
+$gray-700: #52575C;
+$gray-800: #3A3F44;
+$gray-900: #272B30;
+$black: #000;
+
+$blue: #2F405A;
+$red: #ee5f5b;
+$orange: #fd7e14;
+$yellow: #f89406;
+$green: #62c462;
+$teal: #20c997;
+$cyan: #5bc0de;
+
+$primary: $blue;
+$secondary: $gray-600;
+$success: $green;
+$info: $cyan;
+$warning: $yellow;
+$danger: $red;
+$light: $gray-200;
+$dark: $gray-900;
+
+$yiq-contrasted-threshold: 170;
+
+
+// Body
+$body-bg: $gray-900;
+$body-color: $gray-400;
+$body-color-muted: $gray-600;
+
+
+// Dark Theme
+$darkmode-bg: darken($body-bg, 3%);
+$darkmode-bg-darker: darken($body-bg, 6%);
+
+
+// Components
+$border-color: $gray-900;
+
+
+// Links
+$link-color: $gray-200;
+$link-hover-color: $white;
+
+
+// Tables
+$table-color: $white;
+$table-accent-bg: rgba($white, .05);
+$table-hover-bg: $gray-900;
+
+$table-border-color: $gray-900;
+
+$table-dark-border-color: $table-border-color;
+$table-dark-color: $white;
+
+
+// Forms
+$input-bg: $gray-800;
+$input-disabled-bg: $gray-800;
+$input-border-color: darken($gray-800, 4%);
+$input-color: $body-color;
+
+
+// Dropdowns
+$dropdown-bg: $primary;
+$dropdown-border-color: darken($primary, 5%);
+$dropdown-divider-bg: darken($primary, 5%);
+
+$dropdown-link-color: $body-color;
+$dropdown-link-hover-color: $white;
+$dropdown-link-hover-bg: darken($primary, 5%);
+
+
+// Navs
+$nav-tabs-border-color: $gray-900;
+$nav-tabs-link-hover-border-color: $nav-tabs-border-color;
+$nav-tabs-link-active-color: $white;
+$nav-tabs-link-active-border-color: $nav-tabs-border-color;
+
+$navbar-dark-hover-color: $white;
+
+$navbar-light-hover-color: $gray-800;
+$navbar-light-active-color: $gray-800;
+
+
+// Pagination
+$pagination-color: $white;
+$pagination-bg: transparent;
+$pagination-border-color: $darkmode-bg;
+
+$pagination-hover-color: $white;
+$pagination-hover-bg: $darkmode-bg;
+$pagination-hover-border-color: darken($body-bg, 6%);
+
+$pagination-active-bg: $darkmode-bg;
+$pagination-active-border-color: darken($body-bg, 6%);
+
+$pagination-disabled-color: $body-color-muted;
+$pagination-disabled-bg: transparent;
+$pagination-disabled-border-color: $pagination-border-color;
+
+
+// Cards
+$card-border-color: $darkmode-bg-darker;
+$card-cap-bg: $darkmode-bg;
+$card-bg: $darkmode-bg;
+
+
+// List group
+$list-group-bg: $darkmode-bg;
+$list-group-border-color: $darkmode-bg-darker;
+
+$list-group-hover-bg: $darkmode-bg-darker;
+$list-group-active-color: $white;
+$list-group-active-bg: $list-group-hover-bg;
+$list-group-active-border-color: $list-group-border-color;
+
+$list-group-disabled-color: $gray-700;
+
+$list-group-action-color: $white;
