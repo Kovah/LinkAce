@@ -73,18 +73,17 @@ and any database system you want.
 To make things easier, we provide a Docker Compose file (docker-compose.production.yml) in the repository which
 contains all needed services, perfectly configured to just run the application right away.
 
-#### 1. Copy all needed files
+### 1. Copy all needed files
 
 All files you need are `docker-compose.production.yml`, `.env.docker` and `nginx.conf`. Copy both to the directory you
 want to use for the application.
 
-#### 2. Modify the .env.docker file
+### 2. Modify the .env.docker file
 
-Rename the `.env.docker` file to `.env`.  
-Now open the `.env` file and follow the instructions inside the file. All needed variables you have to configure
+Now open the `.env.docker` file and follow the instructions inside the file. All needed variables you have to configure
 are marked accordingly.
 
-#### 3. Modify the nginx.conf file (optional)
+### 3. Modify the nginx.conf file (optional)
 
 This step is optional but may depend on your setup. You probably want to run the app standalon on a server. For this I
 highly recommend providing SSL certificates ([Let's Encrypt](https://letsencrypt.org/)) and change the `nginx.conf` as 
@@ -96,71 +95,45 @@ well as the `docker-compose.production.yml` file:
 * In `docker-compose.production.yml`: uncommend the `/path/to/ssl/certificates:/bitnami/nginx/conf/bitnami/certs` line 
   and set the correct path to your certificates before the colon.
 
-#### 4. Run the application
+### 4. Run the application
 
 After you completed the above steps, run the following command to start up the container setup:
 
 ```bash
 docker-compose up -d --build
 ```
+### 5. Prepare the database
+
+As of now, Linkace does not support a standalone installer like Wordpress. To be able to use the app you have to
+prepare the database and register an admin account for yourself. First, initialize the database.  
+Please note that `linkace_php_1` is the name of your PHP container here. It may differ from your name. You will find
+the name of your container in the output of the previous command, but will most likely and with `_php_1`.
+
+```bash
+docker exec -it linkace_php_1 bash -c "php artisan migrate --seed"
+```
+
+Now register a new user for yourself. Replace `yourname` with a username consisting of letters and numbers, and 
+`your@email.com` with your actual email. You then have to set a password.
+
+```bash
+docker exec -it linkace_php_1 bash -c "php artisan registeruser yourname your@email.com"
+```
+
+You can now use LinkAce. Please make sure to follow the post-installation tasks to fully enable all features. A guide
+can be found in the [wiki](https://www.linkace.org/docs/v1/setup/post-setup).
 
 
 ### Setup without Docker
 
-The application was developed with being used with Docker in mind. All following steps will try to work around this but
-cannot be guaranteed to work in every environment.
+The application was developed with being used with Docker in mind. If you don't want to or if you can't use Docker,
+you can also run LinkAce as a regular PHP application. Please notice that there won't be any support for custom 
+environments, unsupported PHP versions or help with setting up Apache or your nginx proxy.
 
-#### Requirements
+Please note that you **must have shell access to your server**. A shared hosting may not be suitable for this.
 
-* PHP > 7.2
-* MySQL compatible database server
-* nginx / Apache web server
-
-#### 1. Get the .zip file
-
-To make things easier I provide a .zip file that contains all precompiled assets and stuff like that so you can use
-LinkAce right away. Download the package from the [latest release](https://github.com/Kovah/LinkAce/releases).
-
-Extract all files and place them wherever you need them. This obviously depends on how and where you want to run the
-app.
-
-#### 2. Edit the .env file
-
-Make a copy of the `.env.example` file and name it `.env`. Open the file and follow all instructions inside the file. 
-All needed variables you have to configure are marked accordingly.
-
-#### 3. Point your web server to /public
-
-For security reasons the application won't run from the base filder where you extracted the files to. Instead, point
-your web server to the `/public` directory in your linkace folder.
-
-If you are using Apache, LinkAce already ships with a proper .htaccess file.
-
-If you are using nginx, please add the following lines to your nginx configuration file:
-
-```
-add_header X-Frame-Options "SAMEORIGIN";
-add_header X-XSS-Protection "1; mode=block";
-add_header X-Content-Type-Options "nosniff";
-
-location / {
-  try_files $uri $uri/ /index.php?$query_string;
-}
-
-location ~* \.(?:css|js|map|scss)$ {
-  expires 7d;
-  access_log off;
-  add_header Cache-Control "public";
-  try_files $uri @fallback;
-}
-
-error_page 404 /index.php;
-```
-
-#### 4. Import a database dump to your Database
-
-To be able to run the app you need to import a database dump into your database.
-The latest database dump can be found [in the wiki](https://www.linkace.org/docs/v1/setup/setup-without-docker#4-import-a-database-dump-to-your-database).
+Follow the instructions in the [wiki](https://www.linkace.org/docs/v1/setup/setup-without-docker) to install 
+LinkAce without Docker.
 
 
 ---
