@@ -34,7 +34,7 @@
 ![Preview Screenshot](https://www.linkace.org/images/preview/linkace_dashboard.png)
 
 LinkAce is a bookmark manager similar to Shaarli and other tools. I built this tool to have something that fits my
-actual needs that other bookmark managers couldn't solve, even if most features are almost the same.
+actual needs which other bookmark managers couldn't solve, even if most features are almost the same.
 
 ### Features
 
@@ -43,14 +43,14 @@ actual needs that other bookmark managers couldn't solve, even if most features 
 * A bookmarklet to quickly save links from any browser
 * Private or public links, so friends or internet strangers can see your collection
 * Add notes to links to add thoughts
-* Advanced search for your bookmarks
-* A built-in light and dark color theme
+* Advanced search including different filters and ordering
 * Import existing bookmarks from HTML exports (other methods planned)
 * Automated link checks to make sure your bookmarks stay available
 * Automated “backups” of your bookmarks via the Waybackmachine
 * Implemented support for complete database and app backups to Amazon AWS S3
+* A built-in light and dark color scheme
 
-More features are already planned. Take a look at our [project board](https://github.com/Kovah/LinkAce/projects/1)
+More features are already planned. Take a look at the [project board](https://github.com/Kovah/LinkAce/projects/1)
 for more information.
 
 ### Documentation and Community
@@ -62,7 +62,7 @@ to share your ideas, talk with other users or find help for specific problems.
 
 ---
 
-## Setup
+## :gear: Setup
 
 ### Setup with Docker
 
@@ -71,7 +71,7 @@ precompiled assets as well as PHP installed. This means you can use any web serv
 and any database system you want.
 
 To make things easier, we provide a Docker Compose file (docker-compose.production.yml) in the repository which
-contains all needed services, perfectly configured to just run the application right away.
+contains all needed services, perfectly configured to run the application right away.
 
 ### 1. Copy all needed files
 
@@ -107,7 +107,7 @@ docker-compose up -d --build
 As of now, Linkace does not support a standalone installer like Wordpress. To be able to use the app you have to
 prepare the database and register an admin account for yourself. First, initialize the database.  
 Please note that `linkace_php_1` is the name of your PHP container here. It may differ from your name. You will find
-the name of your container in the output of the previous command, but will most likely and with `_php_1`.
+the name of your container in the output of the previous command, but will most likely end with `_php_1`.
 
 ```bash
 docker exec -it linkace_php_1 bash -c "php artisan migrate --seed"
@@ -138,7 +138,7 @@ LinkAce without Docker.
 
 ---
 
-## Support and Bugreports
+## :warning: Support and Bugreports
 
 If you need help or want to report a bug within the application, please open a new [issue](https://github.com/Kovah/LinkAce/issues)
 and describe:
@@ -147,13 +147,16 @@ and describe:
 * what your exact problem is,
 * and what you already did to solve the problem.
 
-**Please notice**: This is a private side-project mainly developed for *myself*. Therefore I cannot guarantee that the
-app will work without any problems for you, and I may won't answer support requests within a short period of time.
+**Please notice**: This is **a private side-project* mainly developed for *myself*. Therefore I cannot guarantee that 
+the app will work without any problems, and I may not answer support requests within a short period of time. I also
+do not offer any customization or installation help.
+
+If you need an app with extensive support please consider using another solution.
 
 
 ---
 
-## Contributions
+## :construction: Contributions
 
 I will gladly welcome any help with the development of the application. If you want to contribute to the project please
 open a [ticket](https://github.com/Kovah/LinkAce/issues) first and describe what you want to do or what your idea is.
