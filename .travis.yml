@@ -17,7 +17,6 @@ jobs:
       install:
         - cp .env.example .env
         - composer install
-        - ./vendor/bin/phpunit
 
     - stage: test-frontend
       language: node_js
