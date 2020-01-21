@@ -4,7 +4,7 @@ services:
 
   # --- MariaDB
   db:
-    image: bitnami/mariadb:10.1
+    image: bitnami/mariadb:10.4
     restart: always
     environment:
       - MARIADB_ROOT_PASSWORD=${DB_PASSWORD}
@@ -40,7 +40,7 @@ services:
 
   # --- Redis
   redis:
-    image: bitnami/redis:latest
+    image: bitnami/redis:5.0
     restart: always
     environment:
       - REDIS_PASSWORD=${REDIS_PASSWORD}
