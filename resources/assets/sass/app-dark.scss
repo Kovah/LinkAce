@@ -1,5 +1,7 @@
 // Bulma import
-@import "third-party/bootstrap/variables-dark";
+@import "~bootstrap/scss/functions";
+@import "variables";
+@import "variables-dark";
 @import "third-party/bootstrap/bootstrap";
 // Selectize
 @import "third-party/selectize/variables-dark";

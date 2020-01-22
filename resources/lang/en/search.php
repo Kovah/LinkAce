@@ -3,7 +3,7 @@ return [
     'search' => 'Search',
     'results' => 'results',
 
-    'filter_by_category' => 'Filter by Category',
+    'filter_by_list' => 'Filter by List(s)',
     'filter_by_tag' => 'Filter by Tag(s)',
     'query' => 'Search for...',
     'search_title' => 'Search Title',

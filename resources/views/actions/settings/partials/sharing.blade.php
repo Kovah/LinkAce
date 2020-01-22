@@ -11,6 +11,7 @@
         @foreach(config('sharing.services') as $key => $details)
             <div class="sharing-checkbox">
                 <input type="checkbox" id="share-{{ $key }}" name="share[{{ $key }}]" value="1"
+                    class="sharing-checkbox-input"
                     @if(old('share.' . $key) ?: usersettings('share_' . $key)) checked @endif>
                 <label for="share-{{ $key }}" title="@lang('sharing.service.' . $key)">
                     <i class="fa-fw {{ $details['icon'] }}"></i>
@@ -30,13 +31,3 @@
         </p>
     @endif
 </div>
-
-@push('scripts')
-    <script>
-        $('.share-toggle').click(function () {
-            $('.sharing-checkbox :checkbox').each(function () {
-                this.checked = !this.checked;
-            });
-        });
-    </script>
-@endpush

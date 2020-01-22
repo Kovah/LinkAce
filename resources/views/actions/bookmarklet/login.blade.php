@@ -19,7 +19,7 @@
                         </div>
                         <input type="email" name="email" id="email" class="form-control"
                             value="{{ old('email') }}"
-                            placeholder="@lang('linkace.email')" aria-label="@lang('linkace.email')" required
+                            placeholder="@lang('placeholder.email')" aria-label="@lang('linkace.email')" required
                             autofocus>
                     </div>
 
@@ -38,7 +38,7 @@
                             </div>
                         </div>
                         <input type="password" name="password" id="password" class="form-control"
-                            placeholder="@lang('linkace.password')" aria-label="@lang('linkace.password')">
+                            placeholder="@lang('placeholder.password')" aria-label="@lang('linkace.password')">
                     </div>
                     @if ($errors->has('password'))
                         <p class="invalid-feedback" role="alert">

@@ -39,7 +39,6 @@ class LinkCreateTest extends TestCase
         $meta = LinkAce::getMetaFromURL($url);
 
         $original_data = [
-            'category_id' => null,
             'url' => $url,
             'title' => $meta['title'],
             'description' => $meta['description'],

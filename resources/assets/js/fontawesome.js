@@ -20,6 +20,7 @@ import { faSort } from '@fortawesome/free-solid-svg-icons/faSort';
 import { faToggleOn } from '@fortawesome/free-solid-svg-icons/faToggleOn';
 import { faBan } from '@fortawesome/free-solid-svg-icons/faBan';
 import { faCheck } from '@fortawesome/free-solid-svg-icons/faCheck';
+import { faCaretDown } from '@fortawesome/free-solid-svg-icons/faCaretDown';
 
 import { faFacebookSquare } from '@fortawesome/free-brands-svg-icons/faFacebookSquare';
 import { faTwitterSquare } from '@fortawesome/free-brands-svg-icons/faTwitterSquare';
@@ -41,6 +42,7 @@ import { faTumblrSquare } from '@fortawesome/free-brands-svg-icons/faTumblrSquar
 import { faXingSquare } from '@fortawesome/free-brands-svg-icons/faXingSquare';
 import { faLinkedin } from '@fortawesome/free-brands-svg-icons/faLinkedin';
 import { fa500px } from '@fortawesome/free-brands-svg-icons/fa500px';
+
 import { faAdobe } from '@fortawesome/free-brands-svg-icons/faAdobe';
 import { faAws } from '@fortawesome/free-brands-svg-icons/faAws';
 import { faAmazon } from '@fortawesome/free-brands-svg-icons/faAmazon';
@@ -162,6 +164,7 @@ export function initFontAwesome () {
   library.add(faToggleOn);
   library.add(faBan);
   library.add(faCheck);
+  library.add(faCaretDown);
 
   library.add(faFacebookSquare);
   library.add(faTwitterSquare);

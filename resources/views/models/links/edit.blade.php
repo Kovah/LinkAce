@@ -18,7 +18,7 @@
                     <label class="label" for="url">@lang('link.url')</label>
                     <input name="url" id="url" type="url"
                         class="form-control form-control-lg{{ $errors->has('url') ? ' is-invalid' : '' }}"
-                        placeholder="@lang('link.url')" value="{{ old('url') ?: $link->url }}"
+                        placeholder="@lang('placeholder.link_url')" value="{{ old('url') ?: $link->url }}"
                         required autofocus>
                     @if ($errors->has('url'))
                         <p class="invalid-feedback" role="alert">
@@ -34,7 +34,7 @@
                             <label class="label" for="title">@lang('link.title')</label>
                             <input name="title" id="title"
                                 class="form-control{{ $errors->has('title') ? ' is-invalid' : '' }}"
-                                type="text" placeholder="@lang('link.title')"
+                                type="text" placeholder="@lang('placeholder.link_url')"
                                 value="{{ old('title') ?: $link->title }}">
                             @if ($errors->has('title'))
                                 <p class="invalid-feedback" role="alert">
@@ -46,7 +46,6 @@
                         <div class="form-group">
                             <label for="description">@lang('link.description')</label>
                             <textarea name="description" id="description" rows="4" class="form-control"
-                                placeholder="@lang('link.description')"
                             >{{ old('description') ?: $link->description }}</textarea>
 
                             @if ($errors->has('description'))
@@ -60,43 +59,23 @@
                     <div class="col">
 
                         <div class="form-group">
-                            <label for="category_id">@lang('category.category')</label>
-                            <select id="category_id" name="category_id"
-                                class="{{ $errors->has('category_id') ? ' is-invalid' : '' }}">
-                                <option value="0">@lang('category.select_category')</option>
-                                @foreach($categories as $category)
-                                    @if($category->childCategories->count() > 0)
-                                        <optgroup label="{{ $category->name }}">
-                                            <option value="{{ $category->id }}">
-                                                {{ $category->name }}
-                                            </option>
+                            <label for="lists">@lang('list.lists')</label>
+                            <input name="lists" id="lists" type="text" placeholder="@lang('placeholder.list_select')"
+                                class="tags-select" value="{{ old('lists', $link->listsForInput()) }}"
+                                data-allow-creation="true" data-tag-search="lists">
 
-                                            @foreach($category->childCategories as $child_category)
-                                                <option value="{{ $child_category->id }}">
-                                                    &rightarrow; {{ $child_category->name }}
-                                                </option>
-                                            @endforeach
-                                        </optgroup>
-                                    @else
-                                        <option value="{{ $category->id }}">
-                                            {{ $category->name }}
-                                        </option>
-                                    @endif
-                                @endforeach
-                            </select>
-
-
-                            @if ($errors->has('category_id'))
+                            @if ($errors->has('url'))
                                 <p class="invalid-feedback" role="alert">
-                                    {{ $errors->first('category_id') }}
+                                    {{ $errors->first('lists') }}
                                 </p>
                             @endif
                         </div>
 
                         <div class="form-group">
                             <label for="tags">@lang('tag.tags')</label>
-                            <input name="tags" id="tags" type="text" placeholder="@lang('tag.tags')"
-                                value="{{ old('tags') ?: $link->tagsForInput() }}">
+                            <input name="tags" id="tags" type="text" placeholder="@lang('placeholder.tags_select')"
+                                class="tags-select" value="{{ old('tags', $link->tagsForInput()) }}"
+                                data-allow-creation="true" data-tag-search="tags">
 
                             @if ($errors->has('url'))
                                 <p class="invalid-feedback" role="alert">
@@ -141,12 +120,3 @@
     </div>
 
 @endsection
-
-@push('scripts')
-    <script>
-        $('#category_id').selectize({
-            create: false
-        });
-    </script>
-    @include('models.links.partials.tags-js')
-@endpush

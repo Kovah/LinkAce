@@ -12,12 +12,18 @@
         </a>
     </header>
 
-    <section class="link-wrapper my-3">
+    <section class="my-3">
         @if(!$links->isEmpty())
 
-            @foreach($links as $link)
-                @include('models.links.partials.single')
-            @endforeach
+            <div class="link-wrapper {{ usersettings('link_display_mode') === '1' ? 'row' : '' }}">
+                @foreach($links as $link)
+                    @if(usersettings('link_display_mode') === '1')
+                        @include('models.links.partials.single-cards')
+                    @else
+                        @include('models.links.partials.single')
+                    @endif
+                @endforeach
+            </div>
 
         @else
 

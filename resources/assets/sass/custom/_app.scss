@@ -1,22 +1,52 @@
 // Layout styles
 body:not(.bookmarklet) {
-  padding-top: $nav-link-height + ($navbar-padding-y * 2);
+  padding-bottom: $nav-link-height + ($navbar-padding-y * 2);
+
+  @include media-breakpoint-up('md') {
+    padding-bottom: 0;
+    padding-top: $nav-link-height + ($navbar-padding-y * 2);
+  }
 }
 
 .main {
-  padding-top: ($spacer * 2);
-  padding-bottom: ($spacer * 2);
+  padding-top: map_get($spacers, 4);
+  padding-bottom: map_get($spacers, 4);
 }
 
 .footer {
   opacity: .5;
-  padding-bottom: ($spacer * 2);
+  padding-bottom: map_get($spacers, 4);
 }
 
 @media (max-width: 991px) {
   .container {
     width: 100%;
     max-width: none;
+  }
+}
+
+.navbar:not(.brand-only) {
+  position: fixed;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  z-index: $zindex-fixed;
+
+  @include media-breakpoint-up('md') {
+    top: 0;
+    bottom: auto;
+  }
+
+  @include media-breakpoint-down('sm') {
+
+    .nav-link {
+      display: flex;
+      align-items: center;
+
+      .fa-fw {
+        margin-left: auto;
+      }
+    }
   }
 }
 
@@ -37,7 +67,7 @@ body:not(.bookmarklet) {
 
   .sharing-checkbox {
     flex: 0 0 auto;
-    padding: $spacer / 2;
+    padding: map_get($spacers, 2);
     font-size: $h4-font-size;
 
     input {
@@ -61,7 +91,7 @@ body:not(.bookmarklet) {
 
   .share-link {
     flex: 0 0 auto;
-    margin: $spacer / 4;
+    margin: map_get($spacers, 1);
   }
 }
 
@@ -70,5 +100,5 @@ body:not(.bookmarklet) {
 }
 
 #loader {
-  display: none;
+  display: none !important;
 }

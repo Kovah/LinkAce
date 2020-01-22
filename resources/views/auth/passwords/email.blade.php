@@ -20,7 +20,7 @@
                             <div class="control">
                                 <input name="email" id="email"
                                     class="form-control{{ $errors->has('email') ? ' is-invalid' : '' }}"
-                                    type="email" placeholder="@lang('linkace.email')" value="{{ old('email') }}"
+                                    type="email" placeholder="@lang('placeholder.email')" value="{{ old('email') }}"
                                     required autofocus>
                             </div>
                             @if ($errors->has('email'))

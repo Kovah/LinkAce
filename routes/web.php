@@ -39,8 +39,8 @@ Route::get('cron/{token}', 'API\CronController@run')->name('cron');
 Route::group(['middleware' => ['auth']], function () {
     Route::get('dashboard', 'App\DashboardController@index')->name('dashboard');
 
-    Route::resource('categories', 'Models\CategoryController');
     Route::resource('links', 'Models\LinkController');
+    Route::resource('lists', 'Models\ListController');
     Route::resource('tags', 'Models\TagController');
     Route::resource('notes', 'Models\NoteController')->except(['index', 'show']);
 
@@ -71,16 +71,18 @@ Route::group(['middleware' => ['auth']], function () {
         'App\SystemSettingsController@generateCronToken')->name('generate-cron-token');
 
     Route::post('ajax/tags', 'API\AjaxController@getTags')->name('ajax-tags');
+    Route::post('ajax/lists', 'API\AjaxController@getLists')->name('ajax-lists');
     Route::post('ajax/existing-links', 'API\AjaxController@searchExistingUrls')->name('ajax-existing-links');
 });
 
 // Guest access routes
 Route::prefix('guest')->middleware(['guestaccess'])->group(function () {
 
-    Route::resource('categories', 'Guest\CategoryController')
-        ->only(['show'])
+    Route::resource('lists', 'Guest\ListController')
+        ->only(['index', 'show'])
         ->names([
-            'show' => 'guest.categories.show',
+            'index' => 'guest.lists.index',
+            'show' => 'guest.lists.show',
         ]);
 
     Route::resource('links', 'Guest\LinkController')

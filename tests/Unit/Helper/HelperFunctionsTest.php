@@ -2,7 +2,6 @@
 
 namespace Tests\Unit\Helper;
 
-use App\Helper\Alert;
 use App\Models\Link;
 use App\Models\User;
 use Illuminate\Foundation\Testing\DatabaseMigrations;

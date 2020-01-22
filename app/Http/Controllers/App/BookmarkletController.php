@@ -3,8 +3,9 @@
 namespace App\Http\Controllers\App;
 
 use App\Http\Controllers\Controller;
-use App\Models\Category;
+use App\Models\LinkList;
 use Illuminate\Http\Request;
+use Illuminate\Http\Response;
 
 class BookmarkletController extends Controller
 {
@@ -12,7 +13,7 @@ class BookmarkletController extends Controller
      * Show the application dashboard.
      *
      * @param Request $request
-     * @return \Illuminate\Http\Response
+     * @return Response
      */
     public function getLinkAddForm(Request $request)
     {
@@ -42,18 +43,13 @@ class BookmarkletController extends Controller
 
         return view('actions.bookmarklet.create')
             ->with('bookmark_url', $new_url)
-            ->with('bookmark_title', $new_title)
-            ->with('categories', Category::parentOnly()
-                ->byUser(auth()->user()->id)
-                ->orderBy('name', 'asc')
-                ->get()
-            );
+            ->with('bookmark_title', $new_title);
     }
 
     /**
      * Show the application dashboard.
      *
-     * @return \Illuminate\Http\Response
+     * @return Response
      */
     public function getCompleteView()
     {
@@ -63,7 +59,7 @@ class BookmarkletController extends Controller
     /**
      * Show the application dashboard.
      *
-     * @return \Illuminate\Http\Response
+     * @return Response
      */
     public function getLoginForm()
     {

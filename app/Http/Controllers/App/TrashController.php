@@ -3,18 +3,21 @@
 namespace App\Http\Controllers\App;
 
 use App\Http\Controllers\Controller;
-use App\Models\Category;
 use App\Models\Link;
+use App\Models\LinkList;
 use App\Models\Note;
 use App\Models\Tag;
+use Illuminate\Contracts\View\Factory;
 use Illuminate\Http\Request;
+use Illuminate\Http\Response;
+use Illuminate\View\View;
 
 class TrashController extends Controller
 {
     /**
      * Show the application dashboard.
      *
-     * @return \Illuminate\Http\Response
+     * @return Response
      */
     public function index()
     {
@@ -22,7 +25,7 @@ class TrashController extends Controller
             ->byUser(auth()->id())
             ->get();
 
-        $categories = Category::onlyTrashed()
+        $lists = LinkList::onlyTrashed()
             ->byUser(auth()->id())
             ->get();
 
@@ -36,7 +39,7 @@ class TrashController extends Controller
 
         return view('actions.trash.index', [
             'links' => $links,
-            'categories' => $categories,
+            'lists' => $lists,
             'tags' => $tags,
             'notes' => $notes,
         ]);
@@ -46,8 +49,8 @@ class TrashController extends Controller
      * Permanently delete entries for a model from the trash
      *
      * @param Request $reques
-     * @param         $model
-     * @return \Illuminate\Http\Response
+     * @param string  $model
+     * @return Response
      */
     public function clearTrash(Request $reques, $model)
     {
@@ -59,8 +62,8 @@ class TrashController extends Controller
                     ->byUser(auth()->id())
                     ->get();
                 break;
-            case 'categories':
-                $entries = Category::onlyTrashed()
+            case 'lists':
+                $entries = LinkList::onlyTrashed()
                     ->byUser(auth()->id())
                     ->get();
                 break;
@@ -94,9 +97,9 @@ class TrashController extends Controller
      * Restore an entry from the trash
      *
      * @param Request $request
-     * @param         $model
-     * @param         $id
-     * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
+     * @param string  $model
+     * @param string  $id
+     * @return Factory|View
      */
     public function restoreEntry(Request $request, $model, $id)
     {
@@ -106,8 +109,8 @@ class TrashController extends Controller
             case 'link':
                 $entry = Link::withTrashed()->find($id);
                 break;
-            case 'category':
-                $entry = Category::withTrashed()->find($id);
+            case 'list':
+                $entry = LinkList::withTrashed()->find($id);
                 break;
             case 'tag':
                 $entry = Tag::withTrashed()->find($id);

@@ -13,7 +13,6 @@ use Illuminate\Database\Eloquent\SoftDeletes;
  * @package App\Models
  * @property int                    $id
  * @property int                    $user_id
- * @property int|null               $category_id
  * @property string                 $url
  * @property string                 $title
  * @property string|null            $description
@@ -23,7 +22,7 @@ use Illuminate\Database\Eloquent\SoftDeletes;
  * @property \Carbon\Carbon|null    $created_at
  * @property \Carbon\Carbon|null    $updated_at
  * @property string|null            $deleted_at
- * @property-read Category|null     $category
+ * @property-read Collection|Tag[]  $lists
  * @property-read Collection|Note[] $notes
  * @property-read Collection|Tag[]  $tags
  * @property-read User              $user
@@ -37,7 +36,6 @@ class Link extends Model
 
     public $fillable = [
         'user_id',
-        'category_id',
         'url',
         'title',
         'description',
@@ -89,11 +87,11 @@ class Link extends Model
     }
 
     /**
-     * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
+     * @return \Illuminate\Database\Eloquent\Relations\BelongsToMany
      */
-    public function category()
+    public function lists()
     {
-        return $this->belongsTo(Category::class, 'category_id');
+        return $this->belongsToMany(LinkList::class, 'link_lists', 'link_id', 'list_id');
     }
 
     /**
@@ -143,6 +141,20 @@ class Link extends Model
         }
 
         return $tags->implode('name', ',');
+    }
+
+    /**
+     * @return null|string
+     */
+    public function listsForInput()
+    {
+        $lists = $this->lists;
+
+        if ($lists->isEmpty()) {
+            return null;
+        }
+
+        return $lists->implode('name', ',');
     }
 
     /**

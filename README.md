@@ -31,28 +31,38 @@
 
 ## About LinkAce
 
-> @TODO Screenshot(s)
+![Preview Screenshot](https://www.linkace.org/images/preview/linkace_dashboard.png)
 
 LinkAce is a bookmark manager similar to Shaarli and other tools. I built this tool to have something that fits my
-actual needs that other bookmark managers couldn't solve, even if most features are almost the same.
+actual needs which other bookmark managers couldn't solve, even if most features are almost the same.
 
 ### Features
 
-* Bookmark links with automatic title generation
+* Bookmark links with automatic title and description generation
 * Organize bookmarks in categories and tags
 * A bookmarklet to quickly save links from any browser
-* Private or public links so friends or internet stranges can see your collection
+* Private or public links, so friends or internet strangers can see your collection
 * Add notes to links to add thoughts
-* Advanced search for your bookmarks
+* Advanced search including different filters and ordering
 * Import existing bookmarks from HTML exports (other methods planned)
+* Automated link checks to make sure your bookmarks stay available
+* Automated “backups” of your bookmarks via the Waybackmachine
+* Implemented support for complete database and app backups to Amazon AWS S3
+* A built-in light and dark color scheme
 
-More features are already planned. Take a look at our [project board](https://github.com/Kovah/LinkAce/projects/1)
-for more information. 
+More features are already planned. Take a look at the [project board](https://github.com/Kovah/LinkAce/projects/1)
+for more information.
+
+### Documentation and Community
+
+Any further information about all the available features and how to install the app, can be found on the 
+[LinkAce Website](https://www.linkace.org/). Additionally, you may visit the [community forums](https://community.linkace.org/)
+to share your ideas, talk with other users or find help for specific problems.
 
 
 ---
 
-## Setup
+## :gear: Setup
 
 ### Setup with Docker
 
@@ -61,20 +71,19 @@ precompiled assets as well as PHP installed. This means you can use any web serv
 and any database system you want.
 
 To make things easier, we provide a Docker Compose file (docker-compose.production.yml) in the repository which
-contains all needed services, perfectly configured to just run the application right away.
+contains all needed services, perfectly configured to run the application right away.
 
-#### 1. Copy all needed files
+### 1. Copy all needed files
 
 All files you need are `docker-compose.production.yml`, `.env.docker` and `nginx.conf`. Copy both to the directory you
 want to use for the application.
 
-#### 2. Modify the .env.docker file
+### 2. Modify the .env.docker file
 
-Rename the `.env.docker` file to `.env`.  
-Now open the `.env` file and follow the instructions inside the file. All needed variables you have to configure
+Now open the `.env.docker` file and follow the instructions inside the file. All needed variables you have to configure
 are marked accordingly.
 
-#### 3. Modify the nginx.conf file (optional)
+### 3. Modify the nginx.conf file (optional)
 
 This step is optional but may depend on your setup. You probably want to run the app standalon on a server. For this I
 highly recommend providing SSL certificates ([Let's Encrypt](https://letsencrypt.org/)) and change the `nginx.conf` as 
@@ -86,91 +95,68 @@ well as the `docker-compose.production.yml` file:
 * In `docker-compose.production.yml`: uncommend the `/path/to/ssl/certificates:/bitnami/nginx/conf/bitnami/certs` line 
   and set the correct path to your certificates before the colon.
 
-#### 4. Run the application
+### 4. Run the application
 
 After you completed the above steps, run the following command to start up the container setup:
 
 ```bash
 docker-compose up -d --build
 ```
+### 5. Prepare the database
+
+As of now, Linkace does not support a standalone installer like Wordpress. To be able to use the app you have to
+prepare the database and register an admin account for yourself. First, initialize the database.  
+Please note that `linkace_php_1` is the name of your PHP container here. It may differ from your name. You will find
+the name of your container in the output of the previous command, but will most likely end with `_php_1`.
+
+```bash
+docker exec -it linkace_php_1 bash -c "php artisan migrate --seed"
+```
+
+Now register a new user for yourself. Replace `yourname` with a username consisting of letters and numbers, and 
+`your@email.com` with your actual email. You then have to set a password.
+
+```bash
+docker exec -it linkace_php_1 bash -c "php artisan registeruser yourname your@email.com"
+```
+
+You can now use LinkAce. Please make sure to follow the post-installation tasks to fully enable all features. A guide
+can be found in the [wiki](https://www.linkace.org/docs/v1/setup/post-setup).
 
 
 ### Setup without Docker
 
-The application was developed with being used with Docker in mind. All following steps will try to work around this but
-cannot be guaranteed to work in every environment.
+The application was developed with being used with Docker in mind. If you don't want to or if you can't use Docker,
+you can also run LinkAce as a regular PHP application. Please notice that there won't be any support for custom 
+environments, unsupported PHP versions or help with setting up Apache or your nginx proxy.
 
-#### Requirements
+Please note that you **must have shell access to your server**. A shared hosting may not be suitable for this.
 
-* PHP > 7.2
-* MySQL compatible database server
-* nginx / Apache web server
-
-#### 1. Get the .zip file
-
-To make things easier I provide a .zip file that contains all precompiled assets and stuff like that so you can use
-LinkAce right away. Download the package from the [latest release](https://github.com/Kovah/LinkAce/releases).
-
-Extract all files and place them wherever you need them. This obviously depends on how and where you want to run the
-app.
-
-#### 2. Edit the .env file
-
-Make a copy of the `.env.example` file and name it `.env`. Open the file and follow all instructions inside the file. 
-All needed variables you have to configure are marked accordingly.
-
-#### 3. Point your web server to /public
-
-For security reasons the application won't run from the base filder where you extracted the files to. Instead, point
-your web server to the `/public` directory in your linkace folder.
-
-If you are using Apache, LinkAce already ships with a proper .htaccess file.
-
-If you are using nginx, please add the following lines to your nginx configuration file:
-
-```
-add_header X-Frame-Options "SAMEORIGIN";
-add_header X-XSS-Protection "1; mode=block";
-add_header X-Content-Type-Options "nosniff";
-
-location / {
-  try_files $uri $uri/ /index.php?$query_string;
-}
-
-location ~* \.(?:css|js|map|scss)$ {
-  expires 7d;
-  access_log off;
-  add_header Cache-Control "public";
-  try_files $uri @fallback;
-}
-
-error_page 404 /index.php;
-```
-
-#### 4. Import a database dump to your Database
-
-To be able to run the app you need to import a database dump into your database.
-> @TODO
+Follow the instructions in the [wiki](https://www.linkace.org/docs/v1/setup/setup-without-docker) to install 
+LinkAce without Docker.
 
 
 ---
 
-## Support and Bugreports
+## :warning: Support and Bugreports
 
 If you need help or want to report a bug within the application, please open a new [issue](https://github.com/Kovah/LinkAce/issues)
 and describe:
 
 * which version you are using,
-* what your problem is,
-* and what you already done to solve the problem.
+* what your exact problem is,
+* and what you already did to solve the problem.
 
-**Please notice**: This is a private side-project mainly developed for *myself*. Therefore I cannot guarantee that the
-app will work without any problems and I also won't answer support requests within a short period of time.
+**Please notice**: This is **a private side-project* mainly developed for *myself*. Therefore I cannot guarantee that 
+the app will work without any problems, and I may not answer support requests within a short period of time. I also
+do not offer any customization or installation help.
+
+If you need an app with extensive support please consider using another solution.
 
 
 ---
 
-## Contributions
+## :construction: Contributions
 
 I will gladly welcome any help with the development of the application. If you want to contribute to the project please
 open a [ticket](https://github.com/Kovah/LinkAce/issues) first and describe what you want to do or what your idea is.
@@ -180,6 +166,7 @@ Maybe there already is an existing ticket for your or a very similar topic.
 
 * Always use the `dev` branch to work on the application. The dev branch will contain the latest version of the app
 while the `master` branch may contains the stable version (which may be outdated in terms of development).
+* Consider using a separate branch if you are working on a larger feature.
 * When opening a pull request, link to your ticket and describe what you did to solve the problem.
 
 
@@ -212,12 +199,12 @@ npm install
 OR
 yarn install
 
-./node_modules/.bin/grunt build
+npm run dev
 ```
 
 ### 2. Working with the Artisan command line
 
-I recommend using the Artisan command line tool in the PHP container only to make sure that the same environment is 
+I recommend using the Artisan command line tool in the PHP container only, to make sure that the same environment is 
 used. To do so, use the following example command:
 
 ```bash
@@ -235,7 +222,7 @@ docker exec -it linkace-php bash -c "php artisan registeruser [user name] [user 
 
 ### Tests
 
-You may run some existing tests with the following command:
+You can run existing tests with the following command:
 
 ```bash
 docker exec -it linkace-php bash -c "./vendor/bin/phpunit"

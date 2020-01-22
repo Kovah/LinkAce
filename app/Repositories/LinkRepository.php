@@ -6,6 +6,7 @@ use App\Helper\LinkAce;
 use App\Helper\LinkIconMapper;
 use App\Jobs\SaveLinkToWaybackmachine;
 use App\Models\Link;
+use App\Models\LinkList;
 use App\Models\Tag;
 use Illuminate\Support\Facades\Log;
 use Tests\Unit\Models\LinkDeleteTest;
@@ -25,12 +26,15 @@ class LinkRepository
         $data['description'] = $data['description'] ?: $link_meta['description'];
         $data['user_id'] = auth()->user()->id;
         $data['icon'] = LinkIconMapper::mapLink($data['url']);
-        $data['category_id'] = isset($data['category_id']) && $data['category_id'] > 0 ? $data['category_id'] : null;
 
         $link = Link::create($data);
 
         if (isset($data['tags'])) {
             self::updateTagsForLink($link, $data['tags']);
+        }
+
+        if (isset($data['lists'])) {
+            self::updateListsForLink($link, $data['lists']);
         }
 
         SaveLinkToWaybackmachine::dispatch($link);
@@ -51,6 +55,10 @@ class LinkRepository
 
         if (isset($data['tags'])) {
             self::updateTagsForLink($link, $data['tags']);
+        }
+
+        if (isset($data['lists'])) {
+            self::updateListsForLink($link, $data['lists']);
         }
 
         return $link;
@@ -95,5 +103,30 @@ class LinkRepository
         }
 
         $link->tags()->sync($new_tags);
+    }
+
+    /**
+     * @param Link   $link
+     * @param string $lists
+     */
+    protected static function updateListsForLink(Link $link, string $lists): void
+    {
+        if (empty($lists)) {
+            return;
+        }
+
+        $parsed_lists = explode(',', $lists);
+        $new_lists = [];
+
+        foreach ($parsed_lists as $list) {
+            $new_list = LinkList::firstOrCreate([
+                'user_id' => auth()->user()->id,
+                'name' => $list,
+            ]);
+
+            $new_lists[] = $new_list->id;
+        }
+
+        $link->lists()->sync($new_lists);
     }
 }

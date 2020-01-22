@@ -12,15 +12,3 @@
     </div>
 
 @endsection
-
-@push('scripts')
-    <script>
-        var timer = $('.bm-timer');
-        window.setInterval(function () {
-            timer.text(parseInt(timer.text()) - 1);
-        }, 1000);
-        window.setTimeout(function () {
-            window.close();
-        }, 5000);
-    </script>
-@endpush

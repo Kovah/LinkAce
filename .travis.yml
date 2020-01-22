@@ -13,6 +13,7 @@ jobs:
       php:
         - '7.2'
         - '7.3'
+        - '7.4'
       install:
         - cp .env.example .env
         - composer install

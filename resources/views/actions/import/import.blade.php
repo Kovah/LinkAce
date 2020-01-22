@@ -37,15 +37,3 @@
     </div>
 
 @endsection
-
-@push('scripts')
-    <script>
-        $('.import-submit').click(function (e) {
-            if ($('#import-form')[0].checkValidity()) {
-                var $btn = $(e.currentTarget);
-                $btn.prop('disabled', true);
-                $btn.find('.fa').addClass('fa-fw fa-circle-notch fa-spin');
-            }
-        })
-    </script>
-@endpush

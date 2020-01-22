@@ -31,7 +31,7 @@
                             @lang('settings.sys_guest_access')
                         </label>
                         <select id="system_guest_access" name="system_guest_access"
-                            class="{{ $errors->has('system_guest_access') ? ' is-invalid' : '' }}">
+                            class="simple-select {{ $errors->has('system_guest_access') ? ' is-invalid' : '' }}">
                             <option value="0"
                                 @if(systemsettings('system_guest_access') == 0) selected="selected" @endif>
                                 @lang('linkace.no')
@@ -60,11 +60,3 @@
 
     </div>
 </div>
-
-@push('scripts')
-    <script>
-        $('#system_guest_access').selectize({
-            create: false,
-        });
-    </script>
-@endpush

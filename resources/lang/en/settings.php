@@ -17,6 +17,10 @@ return [
     'notes_private_default' => 'Private Notes by default',
     'notes_private_default_help' => 'Enabling this will make all new notes private by default',
 
+    'display_mode' => 'Display links as',
+    'display_mode_standard' => 'rows with much details',
+    'display_mode_cards' => 'cards with less details',
+
     'sharing' => 'Link Sharing',
     'sharing_help' => 'Enable all services you want to display for links, to be able to share them easily with one click.',
     'sharing_toggle' => 'Toggle all on/off',
@@ -56,7 +60,7 @@ return [
     'cron_token_generate' => 'Generate Token',
     'cron_token_generate_confirm' => 'Do you really want to generate a new token?',
     'cron_token_help' => 'The cron token is needed to run the cron service which checks for dead links or running backups.',
-    'cron_token_url' => 'Point your cron to the following URL: <span id="cron-url">:route</span>',
+    'cron_token_url' => 'Point your cron to the following URL: <span class="cron-token-url">:route</span>',
     'cron_token_generate_info' => 'Caution: If you already have an cron token, generating a new one will break the existing cron job!',
     'cron_token_generate_failure' => 'A new cron token could not be generated. Please check your browser console and application logs for more information.',
 ];

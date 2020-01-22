@@ -15,7 +15,7 @@
                             @lang('settings.timezone')
                         </label>
                         <select id="timezone" name="timezone"
-                            class="{{ $errors->has('timezone') ? ' is-invalid' : '' }}">
+                            class="simple-select {{ $errors->has('timezone') ? ' is-invalid' : '' }}">
                             @foreach(timezone_identifiers_list() as $key => $zone)
                                 <option value="{{ $zone }}"
                                     @if($user->settings()->get('timezone') === $zone) selected @endif>
@@ -162,6 +162,31 @@
                     </div>
 
                 </div>
+                <div class="col">
+
+                    <div class="form-group">
+                        <label for="link_display_mode">
+                            @lang('settings.display_mode')
+                        </label>
+                        <select id="link_display_mode" name="link_display_mode"
+                            class="custom-select{{ $errors->has('link_display_mode') ? ' is-invalid' : '' }}">
+                            <option value="0"
+                                @if($user->settings()->get('link_display_mode') === '0') selected @endif>
+                                @lang('settings.display_mode_standard')
+                            </option>
+                            <option value="1"
+                                @if($user->settings()->get('link_display_mode') === '1') selected @endif>
+                                @lang('settings.display_mode_cards')
+                            </option>
+                        </select>
+                        @if ($errors->has('link_display_mode'))
+                            <p class="invalid-feedback" role="alert">
+                                {{ $errors->first('link_display_mode') }}
+                            </p>
+                        @endif
+                    </div>
+
+                </div>
             </div>
 
             <div class="form-group mt-5 mb-5">
@@ -214,11 +239,3 @@
 
     </div>
 </div>
-
-@push('scripts')
-    <script>
-        $('#timezone').selectize({
-            create: false
-        });
-    </script>
-@endpush

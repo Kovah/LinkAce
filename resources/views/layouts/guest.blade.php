@@ -4,6 +4,7 @@
     @include('partials.header')
 </head>
 <body>
+<div id="loader"><div></div></div>
 <div id="app">
 
     @include('guest.partials.nav')
@@ -15,12 +16,6 @@
 
     @include('partials.footer')
 
-    <script src="{{ mix('assets/dist/js/dependencies.js') }}"></script>
-    <script src="{{ mix('assets/dist/js/app.js') }}"></script>
-    <script src="{{ mix('assets/dist/js/fontawesome.js') }}"></script>
-    @stack('scripts')
-
 </div>
-<div id="loader"><div></div></div>
 </body>
 </html>

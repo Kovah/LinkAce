@@ -22,17 +22,6 @@
         <div class="row">
             <div class="col-xs-12 col-sm-6 small">
 
-                <div>
-                    @if($link->category)
-                        <label>@lang('category.category'):</label>
-                        <a href="{{ route('guest.categories.show', [$link->category->id]) }}">
-                            {{ $link->category->name }}
-                        </a>
-                    @else
-                        @lang('category.no_category')
-                    @endif
-                </div>
-
                 <div class="mt-2">
                     @if($link->tags->count() > 0)
                         <label>@lang('tag.tags'):</label>

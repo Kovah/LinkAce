@@ -13,7 +13,7 @@
                 </label>
                 <input type="text" name="name" id="name" required
                     class="form-control{{ $errors->has('name') ? ' is-invalid' : '' }}"
-                    placeholder="@lang('user.username')" value="{{ old('name') ?: $user->name }}">
+                    placeholder="@lang('placeholder.username')" value="{{ old('name') ?: $user->name }}">
                 @if ($errors->has('name'))
                     <p class="invalid-feedback" role="alert">
                         {{ $errors->first('name') }}
@@ -28,7 +28,7 @@
                 <input type="text" name="email" id="email" required
                     @if(env('APP_DEMO')) disabled @endif
                     class="form-control{{ $errors->has('email') ? ' is-invalid' : '' }}"
-                    placeholder="@lang('user.email')" value="{{ old('email') ?: $user->email }}">
+                    placeholder="@lang('placeholder.email')" value="{{ old('email') ?: $user->email }}">
                 @if ($errors->has('email'))
                     <p class="invalid-feedback" role="alert">
                         {{ $errors->first('email') }}

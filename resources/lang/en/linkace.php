@@ -26,6 +26,7 @@ return [
     'update' => 'Update',
     'delete' => 'Delete',
 
+    'menu' => 'Menu',
     'entries' => 'Entries',
 
     'continue_adding' => 'Continue Adding',
