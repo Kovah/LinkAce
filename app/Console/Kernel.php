@@ -4,7 +4,6 @@ namespace App\Console;
 
 use App\Console\Commands\CheckLinksCommand;
 use App\Console\Commands\RegisterUserCommand;
-use App\Console\Commands\Setup\SetupCommand;
 use Illuminate\Console\Scheduling\Schedule;
 use Illuminate\Foundation\Console\Kernel as ConsoleKernel;
 
@@ -23,7 +22,6 @@ class Kernel extends ConsoleKernel
     protected $commands = [
         RegisterUserCommand::class,
         CheckLinksCommand::class,
-        SetupCommand::class,
     ];
 
     /**
