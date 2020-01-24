@@ -40,7 +40,7 @@ class MoveCategoryToListTable extends Migration
         DB::table('links')->whereNotNull('category_id')->get()->each(function ($link) {
             $list = DB::table('lists')->where('id', $link->category_id)->first();
             if (!empty($list)) {
-                Link::find($link->id)->lists()->attach($list->id);
+                Link::withTrashed()->find($link->id)->lists()->attach($list->id);
             }
         });
 
