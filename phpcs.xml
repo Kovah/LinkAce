@@ -1,0 +1,19 @@
+<?xml version="1.0"?>
+<ruleset name="KVH PHPCS Rules" namespace="Kovah\CS\Standard">
+  <description>KVH Code Standard ruleset</description>
+
+  <!-- Check the theme folder -->
+  <file>./app</file>
+  <file>./tests</file>
+
+  <!-- Enable the PSR-2 Code Standard rules -->
+  <rule ref="PSR2"/>
+
+  <!-- Prevent warnings for lines that contain more than 80 characters, only enforce the hard cap -->
+  <rule ref="Generic.Files.LineLength">
+    <properties>
+      <property name="lineLimit" value="120"/>
+      <property name="absoluteLineLimit" value="120"/>
+    </properties>
+  </rule>
+</ruleset>
