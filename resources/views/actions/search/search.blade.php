@@ -58,6 +58,16 @@
                         </div>
                     </div>
 
+                    <div class="col-md d-flex align-items-center">
+                        <div class="custom-control custom-checkbox">
+                            <input type="checkbox" id="broken_only" name="broken_only" class="custom-control-input"
+                                @if($query_settings['broken_only']) checked @endif>
+                            <label class="custom-control-label" for="broken_only">
+                                @lang('search.broken_links')
+                            </label>
+                        </div>
+                    </div>
+
                 </div>
                 <div class="row mt-3">
 
