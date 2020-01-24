@@ -50,5 +50,5 @@ jobs:
       - name: Run PHP CS
         run: composer run lint
 
-      - name: Run Larastan and PHPunit
+      - name: Run PHPunit
         run: composer run test

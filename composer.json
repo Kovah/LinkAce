@@ -21,7 +21,6 @@
     "laravel/tinker": "^1.0",
     "mockery/mockery": "^1.0",
     "nunomaduro/collision": "^3.0",
-    "nunomaduro/larastan": "^0.5.0",
     "phpunit/phpunit": "^8.0",
     "roave/security-advisories": "dev-master",
     "squizlabs/php_codesniffer": "^3.5"
@@ -64,7 +63,6 @@
       "./vendor/bin/phpcs"
     ],
     "test": [
-      "./vendor/bin/phpstan analyse app tests --level 5 --memory-limit=512M",
       "./vendor/bin/phpunit"
     ]
   },
