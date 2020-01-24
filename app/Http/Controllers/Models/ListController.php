@@ -8,15 +8,24 @@ use App\Http\Requests\ListStoreRequest;
 use App\Http\Requests\ListUpdateRequest;
 use App\Models\LinkList;
 use App\Repositories\ListRepository;
+use Exception;
+use Illuminate\Contracts\View\Factory;
+use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
+use Illuminate\View\View;
 
+/**
+ * Class ListController
+ *
+ * @package App\Http\Controllers\Models
+ */
 class ListController extends Controller
 {
     /**
      * Display a listing of the resource.
      *
      * @param Request $request
-     * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
+     * @return Factory|View
      */
     public function index(Request $request)
     {
@@ -34,7 +43,7 @@ class ListController extends Controller
     /**
      * Show the form for creating a new resource.
      *
-     * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
+     * @return Factory|View
      */
     public function create()
     {
@@ -45,7 +54,7 @@ class ListController extends Controller
      * Store a newly created resource in storage.
      *
      * @param ListStoreRequest $request
-     * @return \Illuminate\Http\RedirectResponse
+     * @return RedirectResponse
      */
     public function store(ListStoreRequest $request)
     {
@@ -68,7 +77,7 @@ class ListController extends Controller
      *
      * @param Request $request
      * @param int     $id
-     * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
+     * @return Factory|View
      */
     public function show(Request $request, $id)
     {
@@ -105,7 +114,7 @@ class ListController extends Controller
      * Show the form for editing the specified resource.
      *
      * @param int $id
-     * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
+     * @return Factory|View
      */
     public function edit($id)
     {
@@ -127,7 +136,7 @@ class ListController extends Controller
      *
      * @param ListUpdateRequest $request
      * @param int               $id
-     * @return \Illuminate\Http\RedirectResponse
+     * @return RedirectResponse
      */
     public function update(ListUpdateRequest $request, $id)
     {
@@ -154,8 +163,8 @@ class ListController extends Controller
      *
      * @param ListDeleteRequest $request
      * @param int               $id
-     * @return \Illuminate\Http\RedirectResponse
-     * @throws \Exception
+     * @return RedirectResponse
+     * @throws Exception
      */
     public function destroy(ListDeleteRequest $request, $id)
     {

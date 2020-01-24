@@ -2,9 +2,13 @@
 
 namespace App\Models;
 
+use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Illuminate\Database\Eloquent\Relations\BelongsToMany;
+use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\SoftDeletes;
 
 /**
@@ -19,8 +23,8 @@ use Illuminate\Database\Eloquent\SoftDeletes;
  * @property string|null            $icon
  * @property int                    $is_private
  * @property int                    $status
- * @property \Carbon\Carbon|null    $created_at
- * @property \Carbon\Carbon|null    $updated_at
+ * @property Carbon|null    $created_at
+ * @property Carbon|null    $updated_at
  * @property string|null            $deleted_at
  * @property-read Collection|Tag[]  $lists
  * @property-read Collection|Note[] $notes
@@ -79,7 +83,7 @@ class Link extends Model
      */
 
     /**
-     * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
+     * @return BelongsTo
      */
     public function user()
     {
@@ -87,7 +91,7 @@ class Link extends Model
     }
 
     /**
-     * @return \Illuminate\Database\Eloquent\Relations\BelongsToMany
+     * @return BelongsToMany
      */
     public function lists()
     {
@@ -95,7 +99,7 @@ class Link extends Model
     }
 
     /**
-     * @return \Illuminate\Database\Eloquent\Relations\BelongsToMany
+     * @return BelongsToMany
      */
     public function tags()
     {
@@ -103,7 +107,7 @@ class Link extends Model
     }
 
     /**
-     * @return \Illuminate\Database\Eloquent\Relations\HasMany
+     * @return HasMany
      */
     public function notes()
     {

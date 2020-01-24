@@ -3,19 +3,25 @@
 namespace App\Http\Controllers\App;
 
 use App\Http\Controllers\Controller;
-use App\Models\LinkList;
+use Illuminate\Contracts\View\Factory;
+use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
-use Illuminate\Http\Response;
+use Illuminate\View\View;
 
+/**
+ * Class BookmarkletController
+ *
+ * @package App\Http\Controllers\App
+ */
 class BookmarkletController extends Controller
 {
     /**
      * Show the application dashboard.
      *
      * @param Request $request
-     * @return Response
+     * @return RedirectResponse
      */
-    public function getLinkAddForm(Request $request)
+    public function getLinkAddForm(Request $request): RedirectResponse
     {
         $new_url = $request->get('u');
         $new_title = $request->get('t');
@@ -47,9 +53,7 @@ class BookmarkletController extends Controller
     }
 
     /**
-     * Show the application dashboard.
-     *
-     * @return Response
+     * @return Factory|View
      */
     public function getCompleteView()
     {
@@ -57,9 +61,7 @@ class BookmarkletController extends Controller
     }
 
     /**
-     * Show the application dashboard.
-     *
-     * @return Response
+     * @return Factory|View
      */
     public function getLoginForm()
     {

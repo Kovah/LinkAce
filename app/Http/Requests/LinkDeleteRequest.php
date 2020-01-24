@@ -6,6 +6,11 @@ use App\Models\Link;
 use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Http\Request;
 
+/**
+ * Class LinkDeleteRequest
+ *
+ * @package App\Http\Requests
+ */
 class LinkDeleteRequest extends FormRequest
 {
     /**

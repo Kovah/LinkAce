@@ -64,7 +64,7 @@
       "./vendor/bin/phpcs"
     ],
     "test": [
-      "./vendor/bin/phpstan analyse app tests --level 5",
+      "./vendor/bin/phpstan analyse app tests --level 5 --memory-limit=512M",
       "./vendor/bin/phpunit"
     ]
   },

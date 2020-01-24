@@ -4,6 +4,11 @@ namespace App\Http\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
 
+/**
+ * Class DoImportRequest
+ *
+ * @package App\Http\Requests
+ */
 class DoImportRequest extends FormRequest
 {
     /**

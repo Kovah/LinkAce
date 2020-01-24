@@ -7,6 +7,11 @@ use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Http\Request;
 use Illuminate\Validation\Rule;
 
+/**
+ * Class TagUpdateRequest
+ *
+ * @package App\Http\Requests
+ */
 class TagUpdateRequest extends FormRequest
 {
     /** @var Tag */

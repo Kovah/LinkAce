@@ -13,9 +13,9 @@ class LinkAce
      * Get the title and description of a website form it's URL
      *
      * @param string $url
-     * @return string|string[]
+     * @return array
      */
-    public static function getMetaFromURL(string $url)
+    public static function getMetaFromURL(string $url): array
     {
         $fallback = [
             'title' => parse_url($url, PHP_URL_HOST),
@@ -63,12 +63,13 @@ class LinkAce
 
     /**
      * Generate the code for the bookmarklet
-     *
-     * @return mixed|string
      */
-    public static function generateBookmarkletCode()
+    public static function generateBookmarkletCode(): string
     {
-        $bm_code = "javascript:javascript:(function(){var%20url%20=%20location.href;var%20title%20=%20document.title%20||%20url;window.open('##URL##?u='%20+%20encodeURIComponent(url)+'&t='%20+%20encodeURIComponent(title),'_blank','menubar=no,height=720,width=600,toolbar=no,scrollbars=yes,status=no,dialog=1');})();";
+        $bm_code = 'javascript:javascript:(function(){var%20url%20=%20location.href;' .
+            "var%20title%20=%20document.title%20||%20url;window.open('##URL##?u='%20+%20encodeURIComponent(url)" .
+            "+'&t='%20+%20encodeURIComponent(title),'_blank','menubar=no,height=720,width=600,toolbar=no," .
+            "scrollbars=yes,status=no,dialog=1');})();";
 
         $bm_code = str_replace('##URL##', route('bookmarklet-add'), $bm_code);
 

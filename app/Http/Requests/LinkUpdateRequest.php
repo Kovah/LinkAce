@@ -5,9 +5,13 @@ namespace App\Http\Requests;
 use App\Models\Link;
 use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Log;
 use Illuminate\Validation\Rule;
 
+/**
+ * Class LinkUpdateRequest
+ *
+ * @package App\Http\Requests
+ */
 class LinkUpdateRequest extends FormRequest
 {
     /** @var Link */

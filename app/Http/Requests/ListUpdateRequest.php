@@ -6,6 +6,11 @@ use App\Models\LinkList;
 use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Http\Request;
 
+/**
+ * Class ListUpdateRequest
+ *
+ * @package App\Http\Requests
+ */
 class ListUpdateRequest extends FormRequest
 {
     /**

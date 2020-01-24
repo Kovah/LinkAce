@@ -41,7 +41,7 @@ class UserSettingsController extends Controller
      * @param UserAccountUpdateRequest $request
      * @return RedirectResponse
      */
-    public function saveAccountSettings(UserAccountUpdateRequest $request)
+    public function saveAccountSettings(UserAccountUpdateRequest $request): RedirectResponse
     {
         $user = auth()->user();
 
@@ -58,7 +58,7 @@ class UserSettingsController extends Controller
      * @param UserSettingsUpdateRequest $request
      * @return RedirectResponse
      */
-    public function saveAppSettings(UserSettingsUpdateRequest $request)
+    public function saveAppSettings(UserSettingsUpdateRequest $request): RedirectResponse
     {
         $user_id = auth()->id();
 
@@ -96,13 +96,16 @@ class UserSettingsController extends Controller
      * @param Request $request
      * @return RedirectResponse
      */
-    public function changeUserPassword(Request $request)
+    public function changeUserPassword(Request $request): RedirectResponse
     {
         $current_user = auth()->user();
         $data = $request->all();
 
         // Validate the request by checking if the old password is currect
-        $data['old_password'] = Auth::attempt(['email' => $current_user->email, 'password' => $data['old_password']]);
+        $data['old_password'] = Auth::attempt([
+            'email' => $current_user->email,
+            'password' => $data['old_password'],
+        ]);
 
         $validator = Validator::make($data, [
             'old_password' => 'accepted',
@@ -131,7 +134,7 @@ class UserSettingsController extends Controller
      * @param Request $request
      * @return JsonResponse
      */
-    public function generateApiToken(Request $request)
+    public function generateApiToken(Request $request): JsonResponse
     {
         $new_token = Str::random(32);
 

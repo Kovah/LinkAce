@@ -9,7 +9,7 @@ use Illuminate\Support\Facades\Artisan;
 /**
  * Class CronController
  *
- * @package App\Http\Controllers
+ * @package App\Http\Controllers\API
  */
 class CronController extends Controller
 {

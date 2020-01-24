@@ -122,10 +122,10 @@ class LinkIconMapper
     /**
      * Check if the given url matches an icon
      *
-     * @param $url
+     * @param string $url
      * @return string
      */
-    public static function mapLink($url): string
+    public static function mapLink(string $url): string
     {
         foreach (self::$icon_map as $pattern => $icon) {
             if (preg_match('/' . $pattern . '/i', $url)) {

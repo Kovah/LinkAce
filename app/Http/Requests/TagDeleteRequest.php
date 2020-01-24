@@ -6,6 +6,11 @@ use App\Models\Tag;
 use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Http\Request;
 
+/**
+ * Class TagDeleteRequest
+ *
+ * @package App\Http\Requests
+ */
 class TagDeleteRequest extends FormRequest
 {
     /**

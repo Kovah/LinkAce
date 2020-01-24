@@ -5,6 +5,11 @@ namespace App\Http\Requests;
 use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Validation\Rule;
 
+/**
+ * Class LinkStoreRequest
+ *
+ * @package App\Http\Requests
+ */
 class LinkStoreRequest extends FormRequest
 {
     /**

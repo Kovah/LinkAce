@@ -3,8 +3,14 @@
 namespace App\Repositories;
 
 use App\Models\Tag;
+use Exception;
 use Illuminate\Support\Facades\Log;
 
+/**
+ * Class TagRepository
+ *
+ * @package App\Repositories
+ */
 class TagRepository
 {
     /**
@@ -42,7 +48,7 @@ class TagRepository
         try {
             $tag->links()->detach();
             $tag->delete();
-        } catch (\Exception $e) {
+        } catch (Exception $e) {
             Log::error($e);
             return false;
         }

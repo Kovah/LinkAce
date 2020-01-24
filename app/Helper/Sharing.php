@@ -72,10 +72,10 @@ class Sharing
      * Encode a string with the basic rawurlencode function
      * "Hello this is text!" becomes Hello%20this%20is%20text%21%
      *
-     * @param $string
+     * @param string $string
      * @return string
      */
-    protected static function encode($string)
+    protected static function encode(string $string): string
     {
         return rawurlencode($string);
     }

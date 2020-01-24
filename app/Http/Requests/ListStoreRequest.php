@@ -4,6 +4,11 @@ namespace App\Http\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
 
+/**
+ * Class ListStoreRequest
+ *
+ * @package App\Http\Requests
+ */
 class ListStoreRequest extends FormRequest
 {
     /**

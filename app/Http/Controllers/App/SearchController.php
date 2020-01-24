@@ -12,7 +12,7 @@ use Illuminate\View\View;
 /**
  * Class SearchController
  *
- * @package App\Http\Controllers
+ * @package App\Http\Controllers\App
  */
 class SearchController extends Controller
 {

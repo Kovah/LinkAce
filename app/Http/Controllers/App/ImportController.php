@@ -13,6 +13,11 @@ use Illuminate\Contracts\Filesystem\FileNotFoundException;
 use Illuminate\Http\Response;
 use Shaarli\NetscapeBookmarkParser\NetscapeBookmarkParser;
 
+/**
+ * Class ImportController
+ *
+ * @package App\Http\Controllers\App
+ */
 class ImportController extends Controller
 {
     /**
@@ -53,7 +58,6 @@ class ImportController extends Controller
             if (Link::whereUrl($link['uri'])->first()) {
                 $skipped++;
             } else {
-
                 $link_meta = LinkAce::getMetaFromURL($link['uri']);
 
                 $title = $link['title'] ?: $link_meta['title'];

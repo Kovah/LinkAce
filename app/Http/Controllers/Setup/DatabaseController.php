@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Setup;
 
 use App\Http\Controllers\Controller;
 use App\Http\Requests\SetupDatabaseRequest;
+use Exception;
 use Illuminate\Contracts\View\Factory;
 use Illuminate\Support\Facades\Artisan;
 use Illuminate\Support\Facades\Config;
@@ -73,7 +74,7 @@ class DatabaseController extends Controller
                 '--force' => true, // Needed for production
                 '--no-interaction' => true,
             ]);
-        } catch (\Exception $e) {
+        } catch (Exception $e) {
             $alert = trans('setup.database.config_error') . ' ' . $e->getMessage();
             alert($alert, 'danger');
             return false;

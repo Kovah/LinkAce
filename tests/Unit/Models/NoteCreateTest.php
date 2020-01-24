@@ -36,7 +36,7 @@ class NoteCreateTest extends TestCase
         $link = factory(Link::class)->create();
 
         $original_data = [
-            'note' => 'Lorem ipsum dolor sit amet, consectetur adipisici elit, sed eiusmod tempor incidunt ut labore et dolore magna aliqua.',
+            'note' => 'Lorem ipsum dolor sit amet, consectetur adipisici elit, sed eiusmod tempor incidunt.',
             'link_id' => $link->id,
         ];
 

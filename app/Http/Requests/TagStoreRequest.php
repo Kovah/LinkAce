@@ -5,6 +5,11 @@ namespace App\Http\Requests;
 use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Validation\Rule;
 
+/**
+ * Class TagStoreRequest
+ *
+ * @package App\Http\Requests
+ */
 class TagStoreRequest extends FormRequest
 {
     /**

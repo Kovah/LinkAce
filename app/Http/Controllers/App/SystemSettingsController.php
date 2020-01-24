@@ -27,12 +27,12 @@ class SystemSettingsController extends Controller
     }
 
     /**
-     * Syve the new system settings to the database
+     * Save the new system settings to the database
      *
      * @param Request $request
      * @return RedirectResponse
      */
-    public function saveSystemSettings(Request $request)
+    public function saveSystemSettings(Request $request): RedirectResponse
     {
         $request->validate([
             'system_guest_access' => 'numeric',
@@ -62,7 +62,7 @@ class SystemSettingsController extends Controller
      * @param Request $request
      * @return JsonResponse
      */
-    public function generateCronToken(Request $request)
+    public function generateCronToken(Request $request): JsonResponse
     {
         $new_token = Str::random(32);
 

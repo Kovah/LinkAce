@@ -3,8 +3,14 @@
 namespace App\Repositories;
 
 use App\Models\Note;
+use Exception;
 use Illuminate\Support\Facades\Log;
 
+/**
+ * Class NoteRepository
+ *
+ * @package App\Repositories
+ */
 class NoteRepository
 {
     /**
@@ -40,7 +46,7 @@ class NoteRepository
     {
         try {
             $note->delete();
-        } catch (\Exception $e) {
+        } catch (Exception $e) {
             Log::error($e);
             return false;
         }

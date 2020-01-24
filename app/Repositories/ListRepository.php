@@ -3,8 +3,14 @@
 namespace App\Repositories;
 
 use App\Models\LinkList;
+use Exception;
 use Illuminate\Support\Facades\Log;
 
+/**
+ * Class ListRepository
+ *
+ * @package App\Repositories
+ */
 class ListRepository
 {
     /**
@@ -42,7 +48,7 @@ class ListRepository
         try {
             $list->links()->detach();
             $list->delete();
-        } catch (\Exception $e) {
+        } catch (Exception $e) {
             Log::error($e);
             return false;
         }
