@@ -8,6 +8,12 @@ export default class TagsSelect {
       persist: false,
       load: (query, callback) => {
         this.handleTagLoading(query, callback);
+      },
+      create: function (input) {
+        return {
+          value: input.replace(',', ''),
+          text: input.replace(',', '')
+        };
       }
     };
 

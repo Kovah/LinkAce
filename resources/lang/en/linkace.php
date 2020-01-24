@@ -3,12 +3,14 @@ return [
     'linkace' => 'LinkAce',
 
     'user' => 'User',
+    'username' => 'Username',
     'email' => 'Email',
     'password' => 'Password',
     'password_confirm' => 'Confirm the Password',
     'login' => 'Login',
     'logout' => 'Logout',
     'remember_me' => 'Remember me',
+    'go_to_dashboard' => 'Go to the Dashboard',
 
     'reset_password' => 'Reset Password',
     'send_reset_email' => 'Send Password Reset Link',

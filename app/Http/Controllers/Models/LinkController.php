@@ -14,6 +14,11 @@ use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\View\View;
 
+/**
+ * Class LinkController
+ *
+ * @package App\Http\Controllers\Models
+ */
 class LinkController extends Controller
 {
     /**

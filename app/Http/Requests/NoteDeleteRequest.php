@@ -6,6 +6,11 @@ use App\Models\Note;
 use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Http\Request;
 
+/**
+ * Class NoteDeleteRequest
+ *
+ * @package App\Http\Requests
+ */
 class NoteDeleteRequest extends FormRequest
 {
     /**

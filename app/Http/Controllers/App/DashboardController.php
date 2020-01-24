@@ -7,14 +7,18 @@ use App\Models\Link;
 use App\Models\LinkList;
 use App\Models\Note;
 use App\Models\Tag;
-use Illuminate\Http\Response;
+use Illuminate\Contracts\View\Factory;
+use Illuminate\View\View;
 
+/**
+ * Class DashboardController
+ *
+ * @package App\Http\Controllers\App
+ */
 class DashboardController extends Controller
 {
     /**
-     * Show the application dashboard.
-     *
-     * @return Response
+     * @return Factory|View
      */
     public function index()
     {

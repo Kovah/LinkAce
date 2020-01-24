@@ -11,7 +11,7 @@
 
 declare(strict_types=1);
 
-namespace Vinkla\Tests\Alert;
+namespace Tests\Unit\Helper;
 
 use App\Helper\Alert;
 use Tests\TestCase;

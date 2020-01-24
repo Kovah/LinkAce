@@ -4,10 +4,20 @@ namespace App\Http\Controllers\Guest;
 
 use App\Http\Controllers\Controller;
 use App\Models\LinkList;
+use Illuminate\Contracts\View\Factory;
 use Illuminate\Http\Request;
+use Illuminate\View\View;
 
+/**
+ * Class ListController
+ *
+ * @package App\Http\Controllers\Guest
+ */
 class ListController extends Controller
 {
+    /**
+     * @return Factory|View
+     */
     public function index()
     {
         $lists = LinkList::isPrivate(false)
@@ -23,7 +33,7 @@ class ListController extends Controller
      *
      * @param Request $request
      * @param int     $id
-     * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
+     * @return Factory|View
      */
     public function show(Request $request, $id)
     {

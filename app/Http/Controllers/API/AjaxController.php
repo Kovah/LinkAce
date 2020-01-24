@@ -11,7 +11,7 @@ use Illuminate\Http\Request;
 /**
  * Class AjaxController
  *
- * @package App\Http\Controllers
+ * @package App\Http\Controllers\API
  */
 class AjaxController extends Controller
 {

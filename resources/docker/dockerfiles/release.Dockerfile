@@ -2,7 +2,7 @@
 
 # ================================
 # PHP Dependency Setup
-FROM bitnami/php-fpm:7.3-prod AS builder
+FROM bitnami/php-fpm:7.4-prod AS builder
 WORKDIR /app
 
 # Make needed parts of the app available in the container
@@ -39,7 +39,7 @@ RUN npm run production
 
 # ================================
 # Prepare the final image
-FROM bitnami/php-fpm:7.3-prod
+FROM bitnami/php-fpm:7.4-prod
 WORKDIR /app
 
 # Copy the app into the container
@@ -64,7 +64,7 @@ COPY ./.env.example /app/.env
 COPY ./resources/docker/php/php.ini /opt/bitnami/php/etc/conf.d/php.ini
 
 # Install MySQL Dump for automated backups
-RUN install_packages mysql-client
+RUN install_packages mariadb-client
 
 # Copy files from the composer build
 COPY --from=builder /app/vendor /app/vendor

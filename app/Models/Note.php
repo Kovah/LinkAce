@@ -2,24 +2,26 @@
 
 namespace App\Models;
 
+use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\SoftDeletes;
 
 /**
  * Class Note
  *
  * @package App\Models
- * @property int                 $id
- * @property int                 $user_id
- * @property int                 $link_id
- * @property string              $note
- * @property int                 $is_private
- * @property \Carbon\Carbon|null $created_at
- * @property \Carbon\Carbon|null $updated_at
- * @property string|null         $deleted_at
- * @property-read Link           $link
- * @property-read User           $user
+ * @property int         $id
+ * @property int         $user_id
+ * @property int         $link_id
+ * @property string      $note
+ * @property int         $is_private
+ * @property Carbon|null $created_at
+ * @property Carbon|null $updated_at
+ * @property string|null $deleted_at
+ * @property-read Link   $link
+ * @property-read User   $user
  * @method static Builder|Link byUser($user_id)
  */
 class Note extends Model
@@ -43,8 +45,8 @@ class Note extends Model
     /**
      * Scope for the user relation
      *
-     * @param  \Illuminate\Database\Eloquent\Builder $query
-     * @param int                                    $user_id
+     * @param Builder $query
+     * @param int     $user_id
      * @return mixed
      */
     public function scopeByUser($query, $user_id)
@@ -58,7 +60,7 @@ class Note extends Model
      */
 
     /**
-     * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
+     * @return BelongsTo
      */
     public function user()
     {
@@ -66,7 +68,7 @@ class Note extends Model
     }
 
     /**
-     * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
+     * @return BelongsTo
      */
     public function link()
     {

@@ -4,6 +4,11 @@ namespace App\Http\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
 
+/**
+ * Class SearchRequest
+ *
+ * @package App\Http\Requests
+ */
 class SearchRequest extends FormRequest
 {
     /**

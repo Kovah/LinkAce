@@ -9,14 +9,23 @@ use App\Http\Requests\NoteUpdateRequest;
 use App\Models\Link;
 use App\Models\Note;
 use App\Repositories\NoteRepository;
+use Exception;
+use Illuminate\Contracts\View\Factory;
+use Illuminate\Http\RedirectResponse;
+use Illuminate\View\View;
 
+/**
+ * Class NoteController
+ *
+ * @package App\Http\Controllers\Models
+ */
 class NoteController extends Controller
 {
     /**
      * Store a newly created resource in storage.
      *
      * @param NoteStoreRequest $request
-     * @return \Illuminate\Http\RedirectResponse
+     * @return RedirectResponse
      */
     public function store(NoteStoreRequest $request)
     {
@@ -27,7 +36,7 @@ class NoteController extends Controller
         }
 
         $data = $request->except(['_token']);
-        $note = NoteRepository::create($data);
+        NoteRepository::create($data);
 
         alert(trans('note.added_successfully'), 'success');
 
@@ -38,7 +47,7 @@ class NoteController extends Controller
      * Show the form for editing the specified resource.
      *
      * @param int $id
-     * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
+     * @return Factory|View
      */
     public function edit($id)
     {
@@ -60,7 +69,7 @@ class NoteController extends Controller
      *
      * @param NoteUpdateRequest $request
      * @param int               $id
-     * @return \Illuminate\Http\RedirectResponse
+     * @return RedirectResponse
      */
     public function update(NoteUpdateRequest $request, $id)
     {
@@ -83,8 +92,8 @@ class NoteController extends Controller
      *
      * @param NoteDeleteRequest $request
      * @param int               $id
-     * @return \Illuminate\Http\RedirectResponse
-     * @throws \Exception
+     * @return RedirectResponse
+     * @throws Exception
      */
     public function destroy(NoteDeleteRequest $request, $id)
     {

@@ -2,17 +2,14 @@
 
 namespace App\Http\Controllers;
 
-/**
- * Class FrontController
- *
- * @package App\Http\Controllers
- */
+use Illuminate\Contracts\View\Factory;
+use Illuminate\Http\RedirectResponse;
+use Illuminate\View\View;
+
 class FrontController extends Controller
 {
     /**
-     * Display a listing of the resource.
-     *
-     * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
+     * @return Factory|RedirectResponse|View
      */
     public function index()
     {

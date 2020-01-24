@@ -120,23 +120,21 @@ class CheckLinksCommand extends Command
         Cache::forever($this->cache_key_checked_count, $checked_count);
 
         if ($this->total > $checked_count) {
-
             // If yes, simply save the offset to the cache.
             // The next link check will pick it up and continue the check
             $next_offset = $this->offset + $this->limit;
             Cache::forever($this->cache_key_offset, $next_offset);
 
             $this->comment('Saving offset for next link check.');
-
         } else {
-
             // If not, all links have been successfully checked.
             // Save a cache flag that prevents link checks for the next days.
             $next_check = now()->addDays(5)->timestamp;
             Cache::forever($this->cache_key_skip_timestamp, $next_check);
 
-            $this->comment('All existing links checked, next link check scheduled for ' . now()->addDays(5)->toDateTimeString());
-
+            $this->comment(
+                'All existing links checked, next link check scheduled for ' . now()->addDays(5)->toDateTimeString()
+            );
         }
     }
 
@@ -196,7 +194,6 @@ class CheckLinksCommand extends Command
             }
 
             $link->save();
-
         } else {
             $this->info('› Link looks okay.');
         }

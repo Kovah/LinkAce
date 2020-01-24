@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Model;
 
 /**
@@ -12,8 +13,8 @@ use Illuminate\Database\Eloquent\Model;
  * @property int    $user_id
  * @property string $key
  * @property mixed  $value
- * @method static \Illuminate\Database\Eloquent\Builder|Setting byUser($user_id)
- * @method static \Illuminate\Database\Eloquent\Builder|Setting systemOnly()
+ * @method static Builder|Setting byUser($user_id)
+ * @method static Builder|Setting systemOnly()
  */
 class Setting extends Model
 {
@@ -35,8 +36,8 @@ class Setting extends Model
     /**
      * Scope for the user relation
      *
-     * @param  \Illuminate\Database\Eloquent\Builder $query
-     * @param int                                    $user_id
+     * @param Builder $query
+     * @param int     $user_id
      * @return mixed
      */
     public function scopeByUser($query, $user_id)
@@ -47,7 +48,7 @@ class Setting extends Model
     /**
      * Scope to get system settings only
      *
-     * @param  \Illuminate\Database\Eloquent\Builder $query
+     * @param Builder $query
      * @return mixed
      */
     public function scopeSystemOnly($query)

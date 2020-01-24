@@ -8,15 +8,24 @@ use App\Http\Requests\TagStoreRequest;
 use App\Http\Requests\TagUpdateRequest;
 use App\Models\Tag;
 use App\Repositories\TagRepository;
+use Exception;
+use Illuminate\Contracts\View\Factory;
+use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
+use Illuminate\View\View;
 
+/**
+ * Class TagController
+ *
+ * @package App\Http\Controllers\Models
+ */
 class TagController extends Controller
 {
     /**
      * Display a listing of the resource.
      *
      * @param Request $request
-     * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
+     * @return Factory|View
      */
     public function index(Request $request)
     {
@@ -41,7 +50,7 @@ class TagController extends Controller
     /**
      * Show the form for creating a new resource.
      *
-     * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
+     * @return Factory|View
      */
     public function create()
     {
@@ -52,7 +61,7 @@ class TagController extends Controller
      * Store a newly created resource in storage.
      *
      * @param TagStoreRequest $request
-     * @return \Illuminate\Http\RedirectResponse
+     * @return RedirectResponse
      */
     public function store(TagStoreRequest $request)
     {
@@ -75,7 +84,7 @@ class TagController extends Controller
      *
      * @param Request $request
      * @param int     $id
-     * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
+     * @return Factory|View
      */
     public function show(Request $request, $id)
     {
@@ -112,7 +121,7 @@ class TagController extends Controller
      * Show the form for editing the specified resource.
      *
      * @param int $id
-     * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
+     * @return Factory|View
      */
     public function edit($id)
     {
@@ -134,7 +143,7 @@ class TagController extends Controller
      *
      * @param TagUpdateRequest $request
      * @param int              $id
-     * @return \Illuminate\Http\RedirectResponse
+     * @return RedirectResponse
      */
     public function update(TagUpdateRequest $request, $id)
     {
@@ -161,8 +170,8 @@ class TagController extends Controller
      *
      * @param TagDeleteRequest $request
      * @param int              $id
-     * @return \Illuminate\Http\RedirectResponse
-     * @throws \Exception
+     * @return RedirectResponse
+     * @throws Exception
      */
     public function destroy(TagDeleteRequest $request, $id)
     {

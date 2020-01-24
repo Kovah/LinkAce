@@ -8,9 +8,14 @@ use App\Jobs\SaveLinkToWaybackmachine;
 use App\Models\Link;
 use App\Models\LinkList;
 use App\Models\Tag;
+use Exception;
 use Illuminate\Support\Facades\Log;
-use Tests\Unit\Models\LinkDeleteTest;
 
+/**
+ * Class LinkRepository
+ *
+ * @package App\Repositories
+ */
 class LinkRepository
 {
     /**
@@ -72,7 +77,7 @@ class LinkRepository
     {
         try {
             $link->delete();
-        } catch (\Exception $e) {
+        } catch (Exception $e) {
             Log::error($e);
             return false;
         }

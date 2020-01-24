@@ -1,9 +1,11 @@
 <?php
 
 use App\Helper\Alert;
+use App\Helper\Sharing;
 use App\Helper\WaybackMachine;
 use App\Models\Link;
 use App\Models\Setting;
+use Carbon\Carbon;
 use Illuminate\Support\Facades\Cache;
 
 /**
@@ -53,11 +55,11 @@ function systemsettings(string $key = '')
 /**
  * Output a correctly formatted date with the correct timezone
  *
- * @param \Carbon\Carbon $date
- * @param bool           $use_relational
+ * @param Carbon $date
+ * @param bool   $use_relational
  * @return string
  */
-function formatDateTime(\Carbon\Carbon $date, bool $use_relational = false): string
+function formatDateTime(Carbon $date, bool $use_relational = false): string
 {
     $timezone = config('app.timezone');
 
@@ -97,10 +99,10 @@ function getPaginationLimit()
 /**
  * Generate all share links for a link, but for enabled services only
  *
- * @param \App\Models\Link $link
+ * @param Link $link
  * @return string
  */
-function getShareLinks(\App\Models\Link $link): string
+function getShareLinks(Link $link): string
 {
     $cache_key = 'sharelinks_link_' . $link->id . (auth()->guest() ? '_guest' : '');
     $cache_duration = config('linkace.default.cache_duration');
@@ -111,7 +113,7 @@ function getShareLinks(\App\Models\Link $link): string
 
         foreach ($services as $service => $details) {
             if (usersettings('share_' . $service) || auth()->guest()) {
-                $links .= \App\Helper\Sharing::getShareLink($service, $link);
+                $links .= Sharing::getShareLink($service, $link);
             }
         }
 
@@ -122,10 +124,10 @@ function getShareLinks(\App\Models\Link $link): string
 /**
  * Get an SVG from a path and return it as a string
  *
- * @param      $path
- * @param null $width
- * @param null $height
- * @return mixed|string|string[]|null
+ * @param string   $path
+ * @param int|null $width
+ * @param int|null $height
+ * @return string
  */
 function displaySVG($path, $width = null, $height = null)
 {
@@ -162,7 +164,6 @@ function tableSorter($label, $route, $type, $order_by, $order_dir): string
     $order_icon = 'fa-sort';
 
     if ($type === $order_by) {
-
         if ($order_dir === 'asc') {
             $order_url .= 'desc';
             $order_icon = 'fa-sort-desc';
@@ -170,7 +171,6 @@ function tableSorter($label, $route, $type, $order_by, $order_dir): string
             $order_url .= 'asc';
             $order_icon = 'fa-sort-asc';
         }
-
     } else {
         $order_url .= 'asc';
     }
@@ -203,7 +203,7 @@ function waybackLink($link): ?string
  *
  * @return Alert
  */
-function alert(string $message = null, string $style = 'info'): Alert
+function alert(?string $message = null, ?string $style = 'info'): Alert
 {
     $alert = app('alert');
 

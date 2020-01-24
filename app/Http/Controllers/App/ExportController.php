@@ -4,15 +4,20 @@ namespace App\Http\Controllers\App;
 
 use App\Http\Controllers\Controller;
 use App\Models\Link;
+use Illuminate\Contracts\View\Factory;
 use Illuminate\Http\Request;
-use Illuminate\Http\Response;
+use Illuminate\View\View;
+use Symfony\Component\HttpFoundation\StreamedResponse;
 
+/**
+ * Class ExportController
+ *
+ * @package App\Http\Controllers\App
+ */
 class ExportController extends Controller
 {
     /**
-     * Show the application dashboard.
-     *
-     * @return Response
+     * @return Factory|View
      */
     public function getExport()
     {
@@ -20,12 +25,10 @@ class ExportController extends Controller
     }
 
     /**
-     * Permanently delete entries for a model from the trash
-     *
      * @param Request $request
-     * @return Response
+     * @return StreamedResponse
      */
-    public function doExport(Request $request)
+    public function doExport(Request $request): StreamedResponse
     {
         $links = Link::orderBy('title', 'asc')->get();
 

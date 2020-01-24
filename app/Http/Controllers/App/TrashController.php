@@ -8,16 +8,19 @@ use App\Models\LinkList;
 use App\Models\Note;
 use App\Models\Tag;
 use Illuminate\Contracts\View\Factory;
+use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
-use Illuminate\Http\Response;
 use Illuminate\View\View;
 
+/**
+ * Class TrashController
+ *
+ * @package App\Http\Controllers\App
+ */
 class TrashController extends Controller
 {
     /**
-     * Show the application dashboard.
-     *
-     * @return Response
+     * @return Factory|View
      */
     public function index()
     {
@@ -50,7 +53,7 @@ class TrashController extends Controller
      *
      * @param Request $reques
      * @param string  $model
-     * @return Response
+     * @return RedirectResponse
      */
     public function clearTrash(Request $reques, $model)
     {

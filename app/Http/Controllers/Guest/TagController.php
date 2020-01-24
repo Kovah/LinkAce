@@ -4,16 +4,23 @@ namespace App\Http\Controllers\Guest;
 
 use App\Http\Controllers\Controller;
 use App\Models\Tag;
+use Illuminate\Contracts\View\Factory;
 use Illuminate\Http\Request;
+use Illuminate\View\View;
 
+/**
+ * Class TagController
+ *
+ * @package App\Http\Controllers\Guest
+ */
 class TagController extends Controller
 {
     /**
      * Display the specified resource.
      *
      * @param Request $request
-     * @param  int    $id
-     * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
+     * @param int     $id
+     * @return Factory|View
      */
     public function show(Request $request, $id)
     {
