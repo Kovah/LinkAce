@@ -11,6 +11,8 @@
 
 declare(strict_types=1);
 
+namespace Tests\Unit\Helper;
+
 use App\Helper\Alert;
 use Tests\TestCase;
 
