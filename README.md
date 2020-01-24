@@ -172,7 +172,7 @@ while the `master` branch may contains the stable version (which may be outdated
 ### Requirements
 
 * [Docker](https://www.docker.com/products/docker-desktop)
-* [Node](https://nodejs.org/en/) (10 LTS)
+* [Node](https://nodejs.org/en/) (12 LTS)
 
 ### 1. Basic Setup
 
