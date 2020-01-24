@@ -64,7 +64,7 @@ COPY ./.env.example /app/.env
 COPY ./resources/docker/php/php.ini /opt/bitnami/php/etc/conf.d/php.ini
 
 # Install MySQL Dump for automated backups
-RUN install_packages mysql-client
+RUN install_packages mariadb-client
 
 # Copy files from the composer build
 COPY --from=builder /app/vendor /app/vendor
