@@ -35,4 +35,14 @@ return [
     'database.complete_hint' => 'Saving the database configuration and preparing it for using the app may take a few seconds, please be patient.',
 
     'account_setup' => 'Account Setup',
+    'account_setup.intro' => 'Before you can start you have to create your user account.',
+    'account_setup.name' => 'Enter your name',
+    'account_setup.email' => 'Enter your email address',
+    'account_setup.password' => 'Enter a strong password',
+    'account_setup.password_requirements' => 'Minimum length: 10 characters',
+    'account_setup.password_confirmed' => 'Confirm your password',
+    'account_setup.create' => 'Create account',
+
+    'complete' => 'Setup completed!',
+    'outro' => 'You completed the setup and can now use LinkAce! You are logged in and can start bookmarking right away.',
 ];

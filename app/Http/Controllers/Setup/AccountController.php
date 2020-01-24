@@ -3,8 +3,9 @@
 namespace App\Http\Controllers\Setup;
 
 use App\Http\Controllers\Controller;
-use Illuminate\Contracts\View\Factory;
-use Illuminate\View\View;
+use App\Models\User;
+use Illuminate\Contracts\Validation\Validator;
+use Illuminate\Foundation\Auth\RegistersUsers;
 
 /**
  * Class AccountController
@@ -13,11 +14,25 @@ use Illuminate\View\View;
  */
 class AccountController extends Controller
 {
-    /**
-     * @return Factory|View
-     */
+    use RegistersUsers;
+
+    protected function redirectTo()
+    {
+        return route('setup.complete');
+    }
+
     public function index()
     {
         return view('setup.account');
+    }
+
+    protected function validator(array $data): Validator
+    {
+        return User::validateRegistration($data);
+    }
+
+    protected function create(array $data): User
+    {
+        return User::createUser($data);
     }
 }
