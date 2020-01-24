@@ -80,8 +80,11 @@ want to use for the application.
 
 ### 2. Modify the .env.docker file
 
-Now open the `.env.docker` file and follow the instructions inside the file. All needed variables you have to configure
-are marked accordingly.
+Make a copy of the `.env.docker` file and name it `.env`. By default, you only must change two variables set in this 
+file before starting the setup:
+
+* DB_PASSWORD - Please set a secure password here
+* REDIS_PASSWORD - Please set a secure password here
 
 ### 3. Modify the nginx.conf file (optional)
 
