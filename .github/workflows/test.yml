@@ -1,9 +1,6 @@
 name: PHP Lint & Test
 
 on:
-  push:
-    branches:
-      - dev
   pull_request:
 
 jobs:
