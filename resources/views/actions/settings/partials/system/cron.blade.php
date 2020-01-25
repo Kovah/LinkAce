@@ -4,7 +4,7 @@
     </div>
     <div class="cron-token card-body"
         data-confirm-message="@lang('settings.cron_token_generate_confirm')"
-        data-cron-url-base="{{ route('cron', ['token' => '']) }}/">
+        data-cron-url-base="{{ url('cron/') }}/">
 
         <p>@lang('settings.cron_token_help')</p>
 
@@ -28,7 +28,7 @@
         @if(systemsettings('cron_token'))
             <p>
                 @lang('settings.cron_token_url', [
-                    'route' => route('cron', ['token' => systemsettings('cron_token')])
+                    'route' => route('cron', ['token' => systemsettings('cron_token')?: ''])
                 ])
             </p>
         @endif
