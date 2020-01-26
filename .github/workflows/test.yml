@@ -4,7 +4,7 @@ on:
   pull_request:
 
 jobs:
-  lint-test:
+  test-php:
     runs-on: ${{ matrix.operating-system }}
     strategy:
       matrix:
@@ -47,3 +47,22 @@ jobs:
 
       - name: Run PHPunit
         run: composer run test
+
+  test-js:
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        node-version: [12.x]
+
+    name: Test asset generation process on Node ${{ matrix.node-version }}
+
+    steps:
+      - uses: actions/checkout@v1
+      - name: Use Node.js ${{ matrix.node-version }}
+        uses: actions/setup-node@v1
+        with:
+          node-version: ${{ matrix.node-version }}
+      - name: Try to build the assets
+        run: |
+          npm ci
+          npm run production

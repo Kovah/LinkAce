@@ -4,7 +4,7 @@
     </a>
 </div>
 <nav class="navbar navbar-expand-md navbar-dark bg-primary shadow-sm">
-    <div class="container px-0">
+    <div class="container px-0 px-lg-3">
         <a class="navbar-brand d-none d-md-inline-block" href="{{ route('dashboard') }}">
             {!! displaySVG(public_path('assets/img/logo_linkace.svg')) !!}
         </a>

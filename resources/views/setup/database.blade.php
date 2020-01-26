@@ -88,6 +88,20 @@
                             @endif
                         </div>
 
+                        @if(session('data_present', false))
+                            <div class="form-group">
+                                <div class="custom-control custom-checkbox">
+                                    <input type="hidden" name="overwrite_data" value="0">
+                                    <input type="checkbox" class="custom-control-input" id="overwrite_data"
+                                        @if(old('overwrite_data')) checked @endif>
+
+                                    <label class="custom-control-label text-danger" for="overwrite_data">
+                                        @lang('setup.database.overwrite_data')
+                                    </label>
+                                </div>
+                            </div>
+                        @endif
+
                         <button type="submit" class="btn btn-primary">
                             @if($errors->any())
                                 @lang('setup.try_again')

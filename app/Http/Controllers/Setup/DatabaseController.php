@@ -8,6 +8,7 @@ use Exception;
 use Illuminate\Contracts\View\Factory;
 use Illuminate\Support\Facades\Artisan;
 use Illuminate\Support\Facades\Config;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\File;
 use Illuminate\View\View;
 
@@ -35,6 +36,11 @@ class DatabaseController extends Controller
     public function configure(SetupDatabaseRequest $request)
     {
         $this->createTempDatabaseConnection($request->all());
+
+        if ($this->databaseHasData() && !$request->has('overwrite_data')) {
+            alert(trans('setup.database.data_present'), 'danger');
+            return redirect()->back()->with('data_present', true)->withInput();
+        }
 
         $migrationResult = $this->migrateDatabase();
 
@@ -104,5 +110,14 @@ class DatabaseController extends Controller
         if ($envContent !== null) {
             File::put(base_path('.env'), $envContent);
         }
+    }
+
+    protected function databaseHasData(): bool
+    {
+        $present_tables = DB::connection('setup')
+            ->getDoctrineSchemaManager()
+            ->listTableNames();
+
+        return count($present_tables) > 0;
     }
 }

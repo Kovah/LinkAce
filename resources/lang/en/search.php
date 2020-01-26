@@ -9,6 +9,7 @@ return [
     'search_title' => 'Search Title',
     'search_description' => 'Search Description',
     'private_only' => 'Private Links only',
+    'broken_links' => 'Broken Links only',
 
     'order_by' => 'Order by',
     'order_by.title:asc' => 'Title ascending',

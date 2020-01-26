@@ -39,6 +39,7 @@ class SearchController extends Controller
                 'search_title' => false,
                 'search_description' => false,
                 'private_only' => false,
+                'broken_only' => false,
                 'only_lists' => '',
                 'only_tags' => '',
                 'order_by' => $this->order_by_options[0],
@@ -78,6 +79,11 @@ class SearchController extends Controller
             $search->where('is_private', true);
         }
 
+        // Show broken only if applicable
+        if ($broken_only = $request->get('broken_only', false)) {
+            $search->where('status', '>', 1);
+        }
+
         // Show by specific list only if applicable
         if ($list_names = $request->get('only_lists', false)) {
             $search->whereHas('lists', function ($query) use ($list_names) {
@@ -109,6 +115,7 @@ class SearchController extends Controller
                 'search_title' => $search_title,
                 'search_description' => $search_description,
                 'private_only' => $private_only,
+                'broken_only' => $broken_only,
                 'only_lists' => $list_names,
                 'only_tags' => $tag_names,
                 'order_by' => $orderby,

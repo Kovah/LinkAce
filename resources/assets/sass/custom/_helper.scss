@@ -6,3 +6,9 @@
 .cursor-pointer {
   cursor: pointer;
 }
+
+.one-line {
+  overflow-x: hidden;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+}
