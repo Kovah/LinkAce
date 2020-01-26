@@ -34,6 +34,9 @@ return [
     'database.db_password' => 'Database Password',
     'database.complete_hint' => 'Saving the database configuration and preparing it for using the app may take a few seconds, please be patient.',
 
+    'database.data_present' => 'Caution! We found data in the database you specified! Please make sure that you have a backup of that database and confirm the deletion of all data.',
+    'database.overwrite_data' => 'I confirm that all data should be deleted and overwritten with a new LinkAce database',
+
     'account_setup' => 'Account Setup',
     'account_setup.intro' => 'Before you can start you have to create your user account.',
     'account_setup.name' => 'Enter your name',
