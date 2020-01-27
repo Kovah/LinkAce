@@ -16,6 +16,12 @@ jobs:
     steps:
       - uses: actions/checkout@v1
 
+      - uses: actions/upload-artifact@v1
+        if: failure()
+        with:
+          name: application-logs
+          path: storage/logs
+
       - name: Setup PHP
         uses: shivammathur/setup-php@v1
         with:
