@@ -1,4 +1,4 @@
-name: PHP Lint & Test
+name: Testing
 
 on:
   pull_request:
