@@ -9,8 +9,7 @@
 
 <p align="center">
   <a href="https://hub.docker.com/r/linkace/linkace"><img src="https://img.shields.io/badge/Docker-linkace%2Flinkace-2596EC.svg" alt="Docker Repository"></a>
-  <a href="https://github.com/Kovah/LinkAce/releases"><img src="https://img.shields.io/github/release/kovah/linkace.svg" alt="Latest Release"></a>
-  <a href="https://travis-ci.org/Kovah/LinkAce"><img src="https://img.shields.io/travis/kovah/linkace.svg" alt="Build Status"></a>
+  <a href="https://github.com/Kovah/LinkAce/releases"><img src="https://img.shields.io/github/v/release/kovah/linkace?include_prereleases&label=Latest%20Release" alt="Latest Release"></a>
   <a href="https://opensource.org/licenses/MIT"><img src="https://img.shields.io/github/license/kovah/linkace.svg" alt="License"></a>
 </p>
 
@@ -172,7 +171,24 @@ while the `master` branch may contains the stable version (which may be outdated
 
 ## Development
 
-### Requirements
+#### Stack
+
+![Docker](https://img.shields.io/badge/Containers-Docker-0087C9.svg)
+![PHP 7.4](https://img.shields.io/badge/PHP-7.4-8892BF.svg)
+![MariaDB 10.4](https://img.shields.io/badge/MariaDB-10.4-009ca5.svg)
+![Redis 5](https://img.shields.io/badge/Redis-5.0-f01e1a.svg)
+![Laravel 6](https://img.shields.io/badge/Laravel-6-FF0000.svg)
+![Node 12 LTS](https://img.shields.io/badge/Node-12_LTS-55a15c.svg)
+![Bootstrap 4](https://img.shields.io/badge/Bootstrap-4-5b3c80.svg)
+
+#### Current Status
+
+[![Github Build Status](https://img.shields.io/github/workflow/status/kovah/linkace/PHP%20Lint%20&%20Test)](https://github.com/Kovah/LinkAce/actions)
+[![Docker Build Status](https://img.shields.io/docker/cloud/build/linkace/linkace)](https://hub.docker.com/r/linkace/linkace)
+[![Open Pull Requests](https://img.shields.io/github/issues-pr/kovah/linkace)](https://github.com/Kovah/LinkAce/pulls)
+
+
+### Minimum Requirements
 
 * [Docker](https://www.docker.com/products/docker-desktop)
 * [Node](https://nodejs.org/en/) (12 LTS)
