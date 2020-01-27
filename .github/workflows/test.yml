@@ -50,9 +50,12 @@ jobs:
       - uses: actions/download-artifact@v1
         with:
           name: assets
+          path: public/assets/dist
+
       - uses: actions/download-artifact@v1
         with:
           name: mix-manifest
+          path: public/mix-manifest.json
 
       - name: Setup PHP
         uses: shivammathur/setup-php@v1
