@@ -3,6 +3,9 @@
 namespace Tests\Unit\Helper;
 
 use App\Helper\WaybackMachine;
+use GuzzleHttp\Handler\MockHandler;
+use GuzzleHttp\HandlerStack;
+use GuzzleHttp\Psr7\Response;
 use Tests\TestCase;
 
 /**
@@ -12,6 +15,26 @@ use Tests\TestCase;
  */
 class WaybackMachineTest extends TestCase
 {
+    /** @var WaybackMachine */
+    private $waybackHelper;
+
+    /**
+     * During setup we create a Mock Handler to prevent tests from running real
+     * queries to archive.org, instead the Mock Handler answers the corresponding
+     * request.
+     */
+    protected function setUp(): void
+    {
+        $mock = new MockHandler([new Response(200)]);
+
+        $handlerStack = HandlerStack::create($mock);
+        $clientConfig = ['handler' => $handlerStack];
+
+        $this->waybackHelper = new WaybackMachine($clientConfig);
+
+        parent::setUp();
+    }
+
     /**
      * Test the saveToArchive() helper funtion with a valid URL.
      * Should return true.
@@ -22,7 +45,7 @@ class WaybackMachineTest extends TestCase
     {
         $url = 'https://google.com';
 
-        $result = WaybackMachine::saveToArchive($url);
+        $result = $this->waybackHelper::saveToArchive($url);
 
         $this->assertTrue($result);
     }
@@ -37,7 +60,7 @@ class WaybackMachineTest extends TestCase
     {
         $url = 'not an URL';
 
-        $result = WaybackMachine::saveToArchive($url);
+        $result = $this->waybackHelper::saveToArchive($url);
 
         $this->assertFalse($result);
     }
@@ -52,7 +75,7 @@ class WaybackMachineTest extends TestCase
     {
         $url = 'https://google.com';
 
-        $link = WaybackMachine::getArchiveLink($url);
+        $link = $this->waybackHelper::getArchiveLink($url);
 
         $this->assertEquals('https://web.archive.org/web/*/https://google.com', $link);
     }
@@ -67,7 +90,7 @@ class WaybackMachineTest extends TestCase
     {
         $url = 'not an URL';
 
-        $link = WaybackMachine::getArchiveLink($url);
+        $link = $this->waybackHelper::getArchiveLink($url);
 
         $this->assertNull($link);
     }

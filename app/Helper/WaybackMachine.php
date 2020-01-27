@@ -15,6 +15,16 @@ class WaybackMachine
     /** @var string */
     public static $base_url = 'https://web.archive.org';
 
+    /** @var array|null */
+    protected static $clientConfig;
+
+    public function __construct(?array $client = null)
+    {
+        if ($client !== null) {
+            self::$clientConfig = $client;
+        }
+    }
+
     /**
      * Save an URL to the Wayback Machine
      *
@@ -31,7 +41,7 @@ class WaybackMachine
         $archive_url = self::$base_url . '/save/' . $url;
 
         try {
-            $client = new Client();
+            $client = new Client(self::$clientConfig);
             $client->request('GET', $archive_url, [
                 'http_errors' => false,
             ]);
