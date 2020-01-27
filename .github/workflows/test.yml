@@ -55,7 +55,7 @@ jobs:
       - uses: actions/download-artifact@v1
         with:
           name: mix-manifest
-          path: public/mix-manifest.json
+          path: public
 
       - name: Setup PHP
         uses: shivammathur/setup-php@v1
