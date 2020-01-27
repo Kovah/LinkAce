@@ -19,9 +19,9 @@ class BookmarkletController extends Controller
      * Show the application dashboard.
      *
      * @param Request $request
-     * @return RedirectResponse
+     * @return Factory|RedirectResponse|View
      */
-    public function getLinkAddForm(Request $request): RedirectResponse
+    public function getLinkAddForm(Request $request)
     {
         $new_url = $request->get('u');
         $new_title = $request->get('t');
