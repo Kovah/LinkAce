@@ -12,17 +12,16 @@ class CronController extends Controller
 {
     /**
      * @param Request     $request
-     * @param null|string $cron_token
+     * @param string|null $cron_token
      * @return ResponseFactory|Response
      */
-    public function run(Request $request, $cron_token)
+    public function __invoke(Request $request, $cron_token)
     {
         // Verify the cron token
         if (!$cron_token || $cron_token !== systemsettings('cron_token')) {
-            abort(403);
+            return response(trans('settings.cron_token_auth_failure'), 403);
         }
 
-        // Run all cron tasks
         Artisan::call('schedule:run');
 
         return response('Cron successfully executed');

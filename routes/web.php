@@ -74,7 +74,7 @@ Route::prefix('bookmarklet')->group(function () {
         ->name('bookmarklet-login');
 });
 
-Route::get('cron/{token}', [CronController::class, 'run'])->name('cron');
+Route::get('cron/{token}', CronController::class)->name('cron');
 
 // Model routes
 Route::group(['middleware' => ['auth']], function () {

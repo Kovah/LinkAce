@@ -63,4 +63,5 @@ return [
     'cron_token_url' => 'Point your cron to the following URL: <span class="cron-token-url">:route</span>',
     'cron_token_generate_info' => 'Caution: If you already have an cron token, generating a new one will break the existing cron job!',
     'cron_token_generate_failure' => 'A new cron token could not be generated. Please check your browser console and application logs for more information.',
+    'cron_token_auth_failure' => 'The provided cron token is invalid',
 ];
