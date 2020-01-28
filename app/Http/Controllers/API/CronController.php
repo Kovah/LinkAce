@@ -3,20 +3,17 @@
 namespace App\Http\Controllers\API;
 
 use App\Http\Controllers\Controller;
+use Illuminate\Contracts\Routing\ResponseFactory;
 use Illuminate\Http\Request;
+use Illuminate\Http\Response;
 use Illuminate\Support\Facades\Artisan;
 
-/**
- * Class CronController
- *
- * @package App\Http\Controllers\API
- */
 class CronController extends Controller
 {
     /**
      * @param Request     $request
      * @param null|string $cron_token
-     * @return \Illuminate\Contracts\Routing\ResponseFactory|\Illuminate\Http\Response
+     * @return ResponseFactory|Response
      */
     public function run(Request $request, $cron_token)
     {

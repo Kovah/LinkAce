@@ -44,7 +44,7 @@ export default class TagsSelect {
   handleTagLoading (query, callback) {
     if (!query.length) return callback();
 
-    fetch(this.getAjaxUrl(), {
+    fetch(this.getFetchUrl(), {
       method: 'POST',
       credentials: 'same-origin',
       headers: {'Content-Type': 'application/json'},
@@ -61,9 +61,9 @@ export default class TagsSelect {
     });
   }
 
-  getAjaxUrl () {
+  getFetchUrl () {
     return this.$el.dataset.tagSearch === 'tags'
-      ? window.appData.routes.ajax.searchTags
-      : window.appData.routes.ajax.searchLists;
+      ? window.appData.routes.fetch.searchTags
+      : window.appData.routes.fetch.searchLists;
   }
 }

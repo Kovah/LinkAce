@@ -1,6 +1,6 @@
 <?php
 
-use App\Http\Controllers\API\AjaxController;
+use App\Http\Controllers\FetchController;
 use App\Http\Controllers\API\CronController;
 use App\Http\Controllers\App\BookmarkletController;
 use App\Http\Controllers\App\DashboardController;
@@ -127,12 +127,12 @@ Route::group(['middleware' => ['auth']], function () {
     Route::post('settings/generate-cron-token', [SystemSettingsController::class, 'generateCronToken'])
         ->name('generate-cron-token');
 
-    Route::post('ajax/tags', [AjaxController::class, 'getTags'])
-        ->name('ajax-tags');
-    Route::post('ajax/lists', [AjaxController::class, 'getLists'])
-        ->name('ajax-lists');
-    Route::post('ajax/existing-links', [AjaxController::class, 'searchExistingUrls'])
-        ->name('ajax-existing-links');
+    Route::post('fetch/tags', [FetchController::class, 'getTags'])
+        ->name('fetch-tags');
+    Route::post('fetch/lists', [FetchController::class, 'getLists'])
+        ->name('fetch-lists');
+    Route::post('fetch/existing-links', [FetchController::class, 'searchExistingUrls'])
+        ->name('fetch-existing-links');
 });
 
 // Guest access routes

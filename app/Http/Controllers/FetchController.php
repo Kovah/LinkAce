@@ -1,25 +1,16 @@
 <?php
 
-namespace App\Http\Controllers\API;
+namespace App\Http\Controllers;
 
-use App\Http\Controllers\Controller;
 use App\Models\Link;
 use App\Models\LinkList;
 use App\Models\Tag;
+use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 
-/**
- * Class AjaxController
- *
- * @package App\Http\Controllers\API
- */
-class AjaxController extends Controller
+class FetchController extends Controller
 {
-    /**
-     * @param Request $request
-     * @return \Illuminate\Http\JsonResponse
-     */
-    public function getTags(Request $request)
+    public function getTags(Request $request): JsonResponse
     {
         $query = $request->get('query', false);
 
@@ -27,14 +18,13 @@ class AjaxController extends Controller
             return response()->json([]);
         }
 
-        // Search for tags
         $tags = Tag::byUser(auth()->user()->id)
             ->where('name', 'like', '%' . $query . '%')
             ->orderBy('name', 'asc')
             ->get();
 
         if (!$tags->isEmpty()) {
-            // Properly format the results
+            // Properly format the results to be used by Selectize
             $tags = $tags->map(function ($item) {
                 return [
                     'value' => $item->name,
@@ -46,11 +36,7 @@ class AjaxController extends Controller
         return response()->json($tags);
     }
 
-    /**
-     * @param Request $request
-     * @return \Illuminate\Http\JsonResponse
-     */
-    public function getLists(Request $request)
+    public function getLists(Request $request): JsonResponse
     {
         $query = $request->get('query', false);
 
@@ -58,14 +44,13 @@ class AjaxController extends Controller
             return response()->json([]);
         }
 
-        // Search for tags
         $tags = LinkList::byUser(auth()->user()->id)
             ->where('name', 'like', '%' . $query . '%')
             ->orderBy('name', 'asc')
             ->get();
 
         if (!$tags->isEmpty()) {
-            // Properly format the results
+            // Properly format the results to be used by Selectize
             $tags = $tags->map(function ($item) {
                 return [
                     'value' => $item->name,
@@ -77,11 +62,7 @@ class AjaxController extends Controller
         return response()->json($tags);
     }
 
-    /**
-     * @param Request $request
-     * @return \Illuminate\Http\JsonResponse
-     */
-    public function searchExistingUrls(Request $request)
+    public function searchExistingUrls(Request $request): JsonResponse
     {
         $query = $request->get('query', false);
 
@@ -89,17 +70,10 @@ class AjaxController extends Controller
             return response()->json([]);
         }
 
-        // Search for tags
-        $links = Link::byUser(auth()->user()->id)
+        $linkCount = Link::byUser(auth()->user()->id)
             ->where('url', trim($query))
-            ->first();
+            ->count();
 
-        if (empty($links)) {
-            // No links found
-            return response()->json(['linkFound' => false]);
-        }
-
-        // Link found
-        return response()->json(['linkFound' => true]);
+        return response()->json(['linkFound' => $linkCount > 0]);
     }
 }

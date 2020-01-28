@@ -27,10 +27,10 @@
         'token' => csrf_token(),
     ],
     'routes' => [
-        'ajax' => [
-            'searchLists' => route('ajax-lists'),
-            'searchTags' => route('ajax-tags'),
-            'existingLinks' => route('ajax-existing-links'),
+        'fetch' => [
+            'searchLists' => route('fetch-lists'),
+            'searchTags' => route('fetch-tags'),
+            'existingLinks' => route('fetch-existing-links'),
             'generateApiToken' => route('generate-api-token'),
             'generateCronToken' => route('generate-cron-token'),
         ]

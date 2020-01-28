@@ -20,7 +20,7 @@ export default class GenerateApiToken {
 
   fetchNewToken () {
 
-    const fetchURL = window.appData.routes.ajax.generateApiToken;
+    const fetchURL = window.appData.routes.fetch.generateApiToken;
 
     fetch(fetchURL, {
       method: 'POST',
