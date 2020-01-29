@@ -1,17 +1,12 @@
 <?php
 
-namespace Tests\Feature\Bookmarklet;
+namespace Tests\Feature\Controller\Bookmarklet;
 
 use App\Models\User;
 use Illuminate\Foundation\Testing\DatabaseMigrations;
 use Illuminate\Foundation\Testing\DatabaseTransactions;
 use Tests\TestCase;
 
-/**
- * Class BookmarkletControllerTest
- *
- * @package Tests\Feature\Bookmarklet
- */
 class BookmarkletControllerTest extends TestCase
 {
     use DatabaseTransactions;
