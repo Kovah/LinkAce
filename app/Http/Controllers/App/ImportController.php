@@ -50,45 +50,46 @@ class ImportController extends Controller
             return redirect()->back();
         }
 
-        $user_id = auth()->id();
+        $userId = auth()->id();
         $imported = 0;
         $skipped = 0;
 
         foreach ($links as $link) {
             if (Link::whereUrl($link['uri'])->first()) {
                 $skipped++;
-            } else {
-                $link_meta = LinkAce::getMetaFromURL($link['uri']);
-
-                $title = $link['title'] ?: $link_meta['title'];
-
-                $new_link = Link::create([
-                    'user_id' => $user_id,
-                    'url' => $link['uri'],
-                    'title' => $title,
-                    'description' => $link['note'] ?: $link_meta['description'],
-                    'icon' => LinkIconMapper::mapLink($link['uri']),
-                    'is_private' => $link['pub'],
-                    'created_at' => Carbon::createFromTimestamp($link['time']),
-                    'updated_at' => Carbon::now(),
-                ]);
-
-                // Get all tags
-                if (!empty($link['tags'])) {
-                    $tags = explode(' ', $link['tags']);
-
-                    foreach ($tags as $tag) {
-                        $new_tag = Tag::firstOrCreate([
-                            'user_id' => $user_id,
-                            'name' => $tag,
-                        ]);
-
-                        $new_link->tags()->attach($new_tag->id);
-                    }
-                }
-
-                $imported++;
+                continue;
             }
+
+            $linkMeta = LinkAce::getMetaFromURL($link['uri']);
+
+            $title = $link['title'] ?: $linkMeta['title'];
+
+            $newLink = Link::create([
+                'user_id' => $userId,
+                'url' => $link['uri'],
+                'title' => $title,
+                'description' => $link['note'] ?: $linkMeta['description'],
+                'icon' => LinkIconMapper::mapLink($link['uri']),
+                'is_private' => $link['pub'],
+                'created_at' => Carbon::createFromTimestamp($link['time']),
+                'updated_at' => Carbon::now(),
+            ]);
+
+            // Get all tags
+            if (!empty($link['tags'])) {
+                $tags = explode(' ', $link['tags']);
+
+                foreach ($tags as $tag) {
+                    $newTag = Tag::firstOrCreate([
+                        'user_id' => $userId,
+                        'name' => $tag,
+                    ]);
+
+                    $newLink->tags()->attach($newTag->id);
+                }
+            }
+
+            $imported++;
         }
 
         alert(trans('import.import_successfully', [
