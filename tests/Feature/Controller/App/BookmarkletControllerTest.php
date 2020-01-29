@@ -1,6 +1,6 @@
 <?php
 
-namespace Tests\Feature\Controller\Bookmarklet;
+namespace Tests\Feature\Controller\App;
 
 use App\Models\User;
 use Illuminate\Foundation\Testing\DatabaseMigrations;

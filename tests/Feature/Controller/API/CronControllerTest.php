@@ -1,6 +1,6 @@
 <?php
 
-namespace Tests\Feature\Controller\Cron;
+namespace Tests\Feature\Controller\API;
 
 use App\Models\Setting;
 use Illuminate\Foundation\Testing\DatabaseMigrations;
