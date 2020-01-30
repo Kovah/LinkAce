@@ -14,11 +14,18 @@ class ImportControllerTest extends TestCase
     use DatabaseTransactions;
     use DatabaseMigrations;
 
+    private $user;
+
+    protected function setUp(): void
+    {
+        parent::setUp();
+
+        $this->user = factory(User::class)->create();
+        $this->actingAs($this->user);
+    }
+
     public function testValidImportResponse(): void
     {
-        $user = factory(User::class)->create();
-        $this->actingAs($user);
-
         $response = $this->get('import');
 
         $response->assertStatus(200)
@@ -27,9 +34,6 @@ class ImportControllerTest extends TestCase
 
     public function testValidImportActionResponse(): void
     {
-        $user = factory(User::class)->create();
-        $this->actingAs($user);
-
         $exampleData = file_get_contents(__DIR__ . '/data/import_example.html');
         $file = UploadedFile::fake()->createWithContent('import_example.html', $exampleData);
 
@@ -41,13 +45,5 @@ class ImportControllerTest extends TestCase
 
         $linkCount = Link::count();
         $this->assertEquals(5, $linkCount);
-    }
-
-    public function testLoginRedirectForImport(): void
-    {
-        $response = $this->get('import');
-
-        $response->assertStatus(302)
-            ->assertRedirect('login');
     }
 }

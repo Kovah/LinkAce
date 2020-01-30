@@ -12,18 +12,20 @@ class ExportControllerTest extends TestCase
     use DatabaseTransactions;
     use DatabaseMigrations;
 
+    private $user;
+
     public function setUp(): void
     {
         parent::setUp();
 
         $this->seed('ExampleSeeder');
+
+        $this->user = User::first();
+        $this->actingAs($this->user);
     }
 
     public function testValidExportResponse(): void
     {
-        $user = factory(User::class)->create();
-        $this->actingAs($user);
-
         $response = $this->get('export');
 
         $response->assertStatus(200)
@@ -44,13 +46,5 @@ class ExportControllerTest extends TestCase
             '<META HTTP-EQUIV="Content-Type" CONTENT="text/html; charset=UTF-8">',
             $content
         );
-    }
-
-    public function testLoginRedirectForExport(): void
-    {
-        $response = $this->get('export');
-
-        $response->assertStatus(302)
-            ->assertRedirect('login');
     }
 }

@@ -22,12 +22,4 @@ class DashboardControllerTest extends TestCase
         $response->assertStatus(200)
             ->assertSee('Hello ' . $user->name . '!');
     }
-
-    public function testLoginRedirectForDashboard(): void
-    {
-        $response = $this->get('dashboard');
-
-        $response->assertStatus(302)
-            ->assertRedirect('login');
-    }
 }
