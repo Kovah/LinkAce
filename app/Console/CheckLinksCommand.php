@@ -121,7 +121,7 @@ class CheckLinksCommand extends Command
 
         if ($this->total > $checked_count) {
             // If yes, simply save the offset to the cache.
-            // The next link check will pick it up and continue the check
+            // The next link check will pick it up and continue the check.
             $next_offset = $this->offset + $this->limit;
             Cache::forever($this->cache_key_offset, $next_offset);
 
@@ -139,8 +139,8 @@ class CheckLinksCommand extends Command
     }
 
     /**
-     * Get links but limit the results to a fixed number of links
-     * If there is an offset saved, use this instead of beginning from the first entry
+     * Get links but limit the results to a fixed number of links.
+     * If there is an offset saved, use this instead of beginning from the first entry.
      *
      * @return mixed
      */
@@ -154,11 +154,10 @@ class CheckLinksCommand extends Command
     }
 
     /**
-     * Check the URL of an link and set the status accordingly
+     * Check the URL of an link and set the status accordingly.
      *
      * @param Link $link
      * @return void
-     * @throws \GuzzleHttp\Exception\GuzzleException
      */
     protected function checkLink(Link $link): void
     {
@@ -174,33 +173,57 @@ class CheckLinksCommand extends Command
             $status_code = $res->getStatusCode();
         } catch (\Exception $e) {
             // Set status code to null so the link will be marked as broken
-            $status_code = null;
+            $status_code = 0;
         }
 
-        // Check if the status code is not 200
         if ($status_code !== 200) {
-            // If the link target is a redirect, set the status 2 (moved)
-            // else set the status to 3 (broken)
-            if ($status_code === 301 || $status_code === 302) {
-                $link->status = 2;
-                $this->warn('› Link moved to another URL!');
-
-                $this->moved_links[] = $link;
-            } else {
-                $link->status = 3;
-                $this->error('› Link seems to be broken!');
-
-                $this->broken_links[] = $link;
-            }
-
-            $link->save();
+            $this->processBrokenLink($status_code, $link);
         } else {
-            $this->info('› Link looks okay.');
+            $this->processWorkingLink($link);
         }
     }
 
     /**
-     * Send notification to the main user if not running from the console
+     * Set the Link status to either moved or broken depending on the given
+     * status code.
+     *
+     * @param int  $status_code
+     * @param Link $link
+     */
+    protected function processBrokenLink(int $status_code, Link $link): void
+    {
+        if ($status_code === 301 || $status_code === 302) {
+            $link->status = Link::STATUS_MOVED;
+            $this->warn('› Link moved to another URL!');
+
+            $this->moved_links[] = $link;
+        } else {
+            $link->status = Link::STATUS_BROKEN;
+            $this->error('› Link seems to be broken!');
+
+            $this->broken_links[] = $link;
+        }
+
+        $link->save();
+    }
+
+    /**
+     * If the Link has not the "ok" status, set it to ok.
+     *
+     * @param Link $link
+     */
+    protected function processWorkingLink(Link $link): void
+    {
+        if ($link->status !== Link::STATUS_OK) {
+            $link->status = Link::STATUS_OK;
+            $link->save();
+        }
+
+        $this->info('› Link looks okay.');
+    }
+
+    /**
+     * Send notification to the main user if not running from the console.
      *
      * @return void
      */

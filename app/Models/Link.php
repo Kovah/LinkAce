@@ -48,6 +48,10 @@ class Link extends Model
         'status',
     ];
 
+    public const STATUS_OK = 1;
+    public const STATUS_MOVED = 2;
+    public const STATUS_BROKEN = 3;
+
     /*
      | ========================================================================
      | SCOPES
