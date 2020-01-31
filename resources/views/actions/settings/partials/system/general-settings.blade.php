@@ -1,6 +1,6 @@
 <div class="card mt-4">
     <div class="card-header">
-        @lang('settings.user_settings')
+        @lang('settings.system_settings')
     </div>
     <div class="card-body">
 
