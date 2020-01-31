@@ -20,9 +20,12 @@ return [
     'delete_success.tags' => 'Permanently deleted all tags.',
     'delete_success.notes' => 'Permanently deleted all notes.',
 
-    'delete_restore.link' => 'Restored the link from trash.',
-    'delete_restore.list' => 'Restored the list from trash.',
-    'delete_restore.tag' => 'Restored the tag from trash.',
-    'delete_restore.note' => 'Restored the note from trash.',
+    'restore.link' => 'Restored the link from trash.',
+    'restore.list' => 'Restored the list from trash.',
+    'restore.tag' => 'Restored the tag from trash.',
+    'restore.note' => 'Restored the note from trash.',
+
+    'restore.not_found' => 'The item to be restored could not be found.',
+    'restore.not_allowed' => 'You are not allowed to restore this item.',
 
 ];
