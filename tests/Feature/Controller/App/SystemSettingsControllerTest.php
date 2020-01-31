@@ -22,7 +22,7 @@ class SystemSettingsControllerTest extends TestCase
         $this->actingAs($this->user);
     }
 
-    public function testValidExportResponse(): void
+    public function testValidSettingsResponse(): void
     {
         $response = $this->get('settings/system');
 

@@ -27,12 +27,12 @@ class SearchControllerTest extends TestCase
         $this->setupTestData();
     }
 
-    public function testValidExportResponse(): void
+    public function testValidSearchResponse(): void
     {
-        $response = $this->get('export');
+        $response = $this->get('search');
 
         $response->assertStatus(200)
-            ->assertSee('Export');
+            ->assertSee('Search');
     }
 
     public function testValidSearchResult(): void
@@ -150,7 +150,7 @@ class SearchControllerTest extends TestCase
 
         $linkExample->tags()->attach($tagExample->id);
 
-        $linkEmoji = Link::create([
+        $linkTest = Link::create([
             'user_id' => $this->user->id,
             'url' => 'https://test.com',
             'title' => 'Test Site',
@@ -158,7 +158,7 @@ class SearchControllerTest extends TestCase
             'is_private' => false,
         ]);
 
-        $linkEmoji->lists()->attach($listTest->id);
+        $linkTest->lists()->attach($listTest->id);
 
         $linkBroken = Link::create([
             'user_id' => $this->user->id,
