@@ -37,6 +37,12 @@ class Note extends Model
         'is_private',
     ];
 
+    protected $casts = [
+        'user_id' => 'integer',
+        'link_id' => 'integer',
+        'is_private' => 'boolean',
+    ];
+
     /*
      | ========================================================================
      | SCOPES

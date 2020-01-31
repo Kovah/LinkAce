@@ -48,6 +48,12 @@ class Link extends Model
         'status',
     ];
 
+    protected $casts = [
+        'user_id' => 'integer',
+        'is_private' => 'boolean',
+        'status' => 'integer',
+    ];
+
     public const STATUS_OK = 1;
     public const STATUS_MOVED = 2;
     public const STATUS_BROKEN = 3;

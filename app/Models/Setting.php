@@ -28,6 +28,10 @@ class Setting extends Model
         'value',
     ];
 
+    protected $casts = [
+        'user_id' => 'integer',
+    ];
+
     /*
      | ========================================================================
      | SCOPES

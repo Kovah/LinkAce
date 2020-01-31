@@ -38,6 +38,11 @@ class Tag extends Model
         'is_private',
     ];
 
+    protected $casts = [
+        'user_id' => 'integer',
+        'is_private' => 'boolean',
+    ];
+
     /**
      * Add the OrderNameScope to the Tag model
      */
