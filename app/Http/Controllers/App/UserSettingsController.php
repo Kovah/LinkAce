@@ -5,6 +5,7 @@ namespace App\Http\Controllers\App;
 use App\Helper\LinkAce;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\UserAccountUpdateRequest;
+use App\Http\Requests\UserPasswordUpdateRequest;
 use App\Http\Requests\UserSettingsUpdateRequest;
 use App\Models\Setting;
 use Illuminate\Contracts\View\Factory;
@@ -29,11 +30,11 @@ class UserSettingsController extends Controller
      */
     public function getUserSettings()
     {
-        $bookmarklet_code = LinkAce::generateBookmarkletCode();
+        $bookmarkletCode = LinkAce::generateBookmarkletCode();
 
         return view('actions.settings.user', [
             'user' => auth()->user(),
-            'bookmarklet_code' => $bookmarklet_code,
+            'bookmarklet_code' => $bookmarkletCode,
         ]);
     }
 
@@ -60,13 +61,13 @@ class UserSettingsController extends Controller
      */
     public function saveAppSettings(UserSettingsUpdateRequest $request): RedirectResponse
     {
-        $user_id = auth()->id();
+        $userId = auth()->id();
 
         // Save all user settings or update them
         $settings = $request->except(['_token', 'share']);
         foreach ($settings as $key => $value) {
             Setting::updateOrCreate([
-                'user_id' => $user_id,
+                'user_id' => $userId,
                 'key' => $key,
             ], [
                 'value' => $value,
@@ -74,14 +75,14 @@ class UserSettingsController extends Controller
         }
 
         // Enable / disable sharing services
-        $user_services = $request->only(['share']);
-        $user_services = $user_services['share'] ?? [];
+        $userServices = $request->only(['share']);
+        $userServices = $userServices['share'] ?? [];
 
         foreach (config('sharing.services') as $service => $details) {
-            $toggle = array_key_exists($service, $user_services);
+            $toggle = array_key_exists($service, $userServices);
 
             Setting::updateOrCreate([
-                'user_id' => $user_id,
+                'user_id' => $userId,
                 'key' => 'share_' . $service,
             ], [
                 'value' => $toggle,
@@ -93,36 +94,25 @@ class UserSettingsController extends Controller
     }
 
     /**
-     * @param Request $request
+     * @param UserPasswordUpdateRequest $request
      * @return RedirectResponse
      */
-    public function changeUserPassword(Request $request): RedirectResponse
+    public function changeUserPassword(UserPasswordUpdateRequest $request): RedirectResponse
     {
-        $current_user = auth()->user();
-        $data = $request->all();
+        $currentUser = auth()->user();
 
-        // Validate the request by checking if the old password is currect
-        $data['old_password'] = Auth::attempt([
-            'email' => $current_user->email,
-            'password' => $data['old_password'],
+        $authorizationSuccessful = Auth::attempt([
+            'email' => $currentUser->email,
+            'password' => $request->input('old_password'),
         ]);
 
-        $validator = Validator::make($data, [
-            'old_password' => 'accepted',
-            'new_password' => 'required|confirmed',
-        ], [
-            'accepted' => trans('settings.old_password_invalid'),
-        ]);
-
-        if ($validator->failed()) {
-            return redirect()->back()
-                ->withErrors($validator)
-                ->withInput();
+        if (!$authorizationSuccessful) {
+            alert(trans('settings.old_password_invalid'));
+            return redirect()->back()->withInput();
         }
 
-        // Save the new password
-        $current_user->password = Hash::make($data['new_password']);
-        $current_user->save();
+        $currentUser->password = Hash::make($request->input('new_password'));
+        $currentUser->save();
 
         alert(trans('settings.password_updated'), 'success');
         return redirect()->back();
