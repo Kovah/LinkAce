@@ -68,6 +68,10 @@ class User extends Authenticatable
 
     public function settings()
     {
+        if ($this->rawSettings->isEmpty()) {
+            $this->load('rawSettings');
+        }
+
         return $this->rawSettings->mapWithKeys(function ($item) {
             return [$item['key'] => $item['value']];
         });
