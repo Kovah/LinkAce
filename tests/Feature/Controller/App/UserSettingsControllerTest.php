@@ -65,22 +65,6 @@ class UserSettingsControllerTest extends TestCase
 
         $response->assertStatus(302);
 
-        /*
-         * @TODO The following checks are not working due to an eager-loaded relation of the user being empty
-         * A user exists, auth()->user() correctly returns it. The issue is that the user has a relation
-         * to the Setting model which is eager-loaded as $user->rawSettings->... and then made available
-         * via the settings() method. Eager loading should prevent multiple database calls for each single
-         * setting being checked. This works correctly in the app.
-         * However, for whatever reason, this eager loaded model is simply empty when run via the PPHunit
-         * tests. Despite the fact, that there are settings connected to the user in the database.
-         * Maybe some kind of database caching is happening here? I don't know...
-         *
-         * auth()->user() returns the current user with the ID 1
-         * Setting::first() returns a valid setting entry connected to the user via user_id = 1
-         * auth()->user()->rawSettings is empty
-         * usersettings('...') therefore returns null for everything
-         */
-
         $this->assertEquals('Europe/Berlin', usersettings('timezone'));
         $this->assertEquals('1', usersettings('private_default'));
         $this->assertEquals('1', usersettings('notes_private_default'));
