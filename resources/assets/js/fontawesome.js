@@ -17,10 +17,14 @@ import { faLink } from '@fortawesome/free-solid-svg-icons/faLink';
 import { faUnlink } from '@fortawesome/free-solid-svg-icons/faUnlink';
 import { faRecycle } from '@fortawesome/free-solid-svg-icons/faRecycle';
 import { faSort } from '@fortawesome/free-solid-svg-icons/faSort';
+import { faSortDown } from '@fortawesome/free-solid-svg-icons/faSortDown';
+import { faSortUp } from '@fortawesome/free-solid-svg-icons/faSortUp';
 import { faToggleOn } from '@fortawesome/free-solid-svg-icons/faToggleOn';
 import { faBan } from '@fortawesome/free-solid-svg-icons/faBan';
 import { faCheck } from '@fortawesome/free-solid-svg-icons/faCheck';
 import { faCaretDown } from '@fortawesome/free-solid-svg-icons/faCaretDown';
+import { faFileImport } from '@fortawesome/free-solid-svg-icons/faFileImport';
+import { faUpload } from '@fortawesome/free-solid-svg-icons/faUpload';
 
 import { faFacebookSquare } from '@fortawesome/free-brands-svg-icons/faFacebookSquare';
 import { faTwitterSquare } from '@fortawesome/free-brands-svg-icons/faTwitterSquare';
@@ -137,8 +141,6 @@ import { faXing } from '@fortawesome/free-brands-svg-icons/faXing';
 import { faYahoo } from '@fortawesome/free-brands-svg-icons/faYahoo';
 import { faYelp } from '@fortawesome/free-brands-svg-icons/faYelp';
 import { faYoutube } from '@fortawesome/free-brands-svg-icons/faYoutube';
-import { faFileImport } from '@fortawesome/free-solid-svg-icons/faFileImport';
-import { faUpload } from '@fortawesome/free-solid-svg-icons/faUpload';
 
 export function initFontAwesome () {
   library.add(faPlus);
@@ -161,6 +163,8 @@ export function initFontAwesome () {
   library.add(faFileImport);
   library.add(faUpload);
   library.add(faSort);
+  library.add(faSortDown);
+  library.add(faSortUp);
   library.add(faToggleOn);
   library.add(faBan);
   library.add(faCheck);

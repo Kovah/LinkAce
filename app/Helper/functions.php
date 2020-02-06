@@ -166,10 +166,10 @@ function tableSorter($label, $route, $type, $order_by, $order_dir): string
     if ($type === $order_by) {
         if ($order_dir === 'asc') {
             $order_url .= 'desc';
-            $order_icon = 'fa-sort-desc';
+            $order_icon = 'fa-sort-up';
         } else {
             $order_url .= 'asc';
-            $order_icon = 'fa-sort-asc';
+            $order_icon = 'fa-sort-down';
         }
     } else {
         $order_url .= 'asc';
