@@ -24,7 +24,8 @@ use Illuminate\Database\Eloquent\SoftDeletes;
  * @property string|null            $deleted_at
  * @property-read Collection|Link[] $links
  * @property-read User              $user
- * @method static Builder|Tag byUser($user_id)
+ * @method static Builder|Tag byUser(int $user_id)
+ * @method static Builder|Tag isPrivate(bool $private)
  */
 class Tag extends Model
 {
@@ -68,6 +69,18 @@ class Tag extends Model
     public function scopeByUser($query, $user_id)
     {
         return $query->where('user_id', $user_id);
+    }
+
+    /**
+     * Scope for selecting private or non-private tags
+     *
+     * @param Builder $query
+     * @param bool    $is_private
+     * @return mixed
+     */
+    public function scopeIsPrivate($query, bool $is_private)
+    {
+        return $query->where('is_private', $is_private);
     }
 
     /*
