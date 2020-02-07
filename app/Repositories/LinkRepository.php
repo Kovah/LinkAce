@@ -19,16 +19,20 @@ use Illuminate\Support\Facades\Log;
 class LinkRepository
 {
     /**
+     * Create a new link from the given data. If there is no title and description
+     * given, fill the data with meta pulled from the website itself. Also
+     * fill other needed information like the user id and the link icon.
+     * After that, dispatch the backup job for the Wayback Machine.
+     *
      * @param array $data
      * @return Link
      */
     public static function create(array $data): Link
     {
-        // Try to get the meta information of the URL if no title / description was provided
-        $link_meta = LinkAce::getMetaFromURL($data['url']);
+        $linkMeta = LinkAce::getMetaFromURL($data['url']);
 
-        $data['title'] = $data['title'] ?: $link_meta['title'];
-        $data['description'] = $data['description'] ?: $link_meta['description'];
+        $data['title'] = $data['title'] ?: $linkMeta['title'];
+        $data['description'] = $data['description'] ?: $linkMeta['description'];
         $data['user_id'] = auth()->user()->id;
         $data['icon'] = LinkIconMapper::mapLink($data['url']);
 
@@ -48,6 +52,8 @@ class LinkRepository
     }
 
     /**
+     * Update a link with the given data and sync both the tags and lists.
+     *
      * @param Link  $link
      * @param array $data
      * @return Link
@@ -70,6 +76,8 @@ class LinkRepository
     }
 
     /**
+     * Try to delete a given link. If it fails, log the error.
+     *
      * @param Link $link
      * @return bool
      */
@@ -86,6 +94,8 @@ class LinkRepository
     }
 
     /**
+     * Create or get the tags from the input and attach them to the link.
+     *
      * @param Link   $link
      * @param string $tags
      */
@@ -95,22 +105,24 @@ class LinkRepository
             return;
         }
 
-        $parsed_tags = explode(',', $tags);
-        $new_tags = [];
+        $parsedTags = explode(',', $tags);
+        $newTags = [];
 
-        foreach ($parsed_tags as $tag) {
+        foreach ($parsedTags as $tag) {
             $new_tag = Tag::firstOrCreate([
                 'user_id' => auth()->user()->id,
                 'name' => $tag,
             ]);
 
-            $new_tags[] = $new_tag->id;
+            $newTags[] = $new_tag->id;
         }
 
-        $link->tags()->sync($new_tags);
+        $link->tags()->sync($newTags);
     }
 
     /**
+     * Create or get the lists from the input and attach them to the link.
+     *
      * @param Link   $link
      * @param string $lists
      */
@@ -120,18 +132,18 @@ class LinkRepository
             return;
         }
 
-        $parsed_lists = explode(',', $lists);
-        $new_lists = [];
+        $parsedLists = explode(',', $lists);
+        $newLists = [];
 
-        foreach ($parsed_lists as $list) {
+        foreach ($parsedLists as $list) {
             $new_list = LinkList::firstOrCreate([
                 'user_id' => auth()->user()->id,
                 'name' => $list,
             ]);
 
-            $new_lists[] = $new_list->id;
+            $newLists[] = $new_list->id;
         }
 
-        $link->lists()->sync($new_lists);
+        $link->lists()->sync($newLists);
     }
 }

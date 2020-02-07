@@ -63,12 +63,17 @@ class LinkUpdateRequest extends FormRequest
         }
 
         return [
+            'link_id' => 'required',
             'url' => [
                 'required',
                 Rule::unique('links')->where(function ($query) {
                     return $query->where('user_id', auth()->user()->id);
                 }),
             ],
+            'title' => 'present',
+            'description' => 'present',
+            'lists' => 'present',
+            'tags' => 'present',
             'is_private' => 'required|boolean',
         ];
     }

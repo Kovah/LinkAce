@@ -45,7 +45,7 @@ class WaybackMachineTest extends TestCase
     {
         $url = 'https://google.com';
 
-        $result = $this->waybackHelper::saveToArchive($url);
+        $result = $this->waybackHelper->saveToArchive($url);
 
         $this->assertTrue($result);
     }
@@ -60,7 +60,7 @@ class WaybackMachineTest extends TestCase
     {
         $url = 'not an URL';
 
-        $result = $this->waybackHelper::saveToArchive($url);
+        $result = $this->waybackHelper->saveToArchive($url);
 
         $this->assertFalse($result);
     }

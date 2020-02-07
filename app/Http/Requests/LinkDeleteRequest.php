@@ -16,23 +16,10 @@ class LinkDeleteRequest extends FormRequest
     /**
      * Determine if the user is authorized to make this request.
      *
-     * @param Request $request
      * @return bool
      */
-    public function authorize(Request $request)
+    public function authorize(): bool
     {
-        // Check if the link ID was provided
-        if (!$request->get('link_id')) {
-            return false;
-        }
-
-        $link = Link::find($request->get('link_id'));
-
-        // Check if the link belongs to the user
-        if ($link->user_id !== auth()->user()->id) {
-            return false;
-        }
-
         return true;
     }
 
@@ -41,10 +28,8 @@ class LinkDeleteRequest extends FormRequest
      *
      * @return array
      */
-    public function rules()
+    public function rules(): array
     {
-        return [
-            'link_id' => 'required',
-        ];
+        return [];
     }
 }

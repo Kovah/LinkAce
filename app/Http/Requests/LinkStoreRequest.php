@@ -17,7 +17,7 @@ class LinkStoreRequest extends FormRequest
      *
      * @return bool
      */
-    public function authorize()
+    public function authorize(): bool
     {
         return true;
     }
@@ -27,7 +27,7 @@ class LinkStoreRequest extends FormRequest
      *
      * @return array
      */
-    public function rules()
+    public function rules(): array
     {
         return [
             'url' => [
@@ -36,6 +36,10 @@ class LinkStoreRequest extends FormRequest
                     return $query->where('user_id', auth()->user()->id);
                 }),
             ],
+            'title' => 'present',
+            'description' => 'present',
+            'lists' => 'present',
+            'tags' => 'present',
             'is_private' => 'required|boolean',
         ];
     }

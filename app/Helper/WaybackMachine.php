@@ -13,16 +13,14 @@ use Illuminate\Support\Facades\Log;
 class WaybackMachine
 {
     /** @var string */
-    public static $base_url = 'https://web.archive.org';
+    public static $baseUrl = 'https://web.archive.org';
 
-    /** @var array|null */
-    protected static $clientConfig;
+    /** @var array */
+    protected $clientConfig;
 
-    public function __construct(?array $client = null)
+    public function __construct(array $clientConfig = [])
     {
-        if ($client !== null) {
-            self::$clientConfig = $client;
-        }
+        $this->clientConfig = $clientConfig;
     }
 
     /**
@@ -31,18 +29,18 @@ class WaybackMachine
      * @param string $url
      * @return bool
      */
-    public static function saveToArchive(string $url): bool
+    public function saveToArchive(string $url): bool
     {
         if (!filter_var($url, FILTER_VALIDATE_URL)) {
             // Abort if provided string is not an URL
             return false;
         }
 
-        $archive_url = self::$base_url . '/save/' . $url;
+        $archiveUrl = self::$baseUrl . '/save/' . $url;
 
         try {
-            $client = new Client(self::$clientConfig);
-            $client->request('GET', $archive_url, [
+            $client = new Client($this->clientConfig);
+            $client->request('GET', $archiveUrl, [
                 'http_errors' => false,
             ]);
         } catch (\GuzzleHttp\Exception\GuzzleException $e) {
@@ -66,6 +64,6 @@ class WaybackMachine
             return null;
         }
 
-        return self::$base_url . '/web/*/' . $url;
+        return self::$baseUrl . '/web/*/' . $url;
     }
 }
