@@ -23,8 +23,8 @@ use Illuminate\Database\Eloquent\SoftDeletes;
  * @property string|null            $icon
  * @property int                    $is_private
  * @property int                    $status
- * @property Carbon|null    $created_at
- * @property Carbon|null    $updated_at
+ * @property Carbon|null            $created_at
+ * @property Carbon|null            $updated_at
  * @property string|null            $deleted_at
  * @property-read Collection|Tag[]  $lists
  * @property-read Collection|Note[] $notes
@@ -216,5 +216,16 @@ class Link extends Model
         $output .= '</time-ago>';
 
         return $output;
+    }
+
+    /**
+     * @param string|int $linkId
+     * @param string     $newUrl
+     * @return bool
+     */
+    public static function hasUrlChanged($linkId, string $newUrl): bool
+    {
+        $oldUrl = self::find($linkId)->url ?? null;
+        return $oldUrl !== $newUrl;
     }
 }

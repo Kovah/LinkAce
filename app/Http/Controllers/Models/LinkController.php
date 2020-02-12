@@ -29,15 +29,11 @@ class LinkController extends Controller
      */
     public function index(Request $request)
     {
-        $links = Link::byUser(auth()->id());
-
-        if ($request->has('orderBy') && $request->has('orderDir')) {
-            $links->orderBy($request->get('orderBy'), $request->get('orderDir'));
-        } else {
-            $links->orderBy('created_at', 'DESC');
-        }
-
-        $links = $links->paginate(getPaginationLimit());
+        $links = Link::byUser(auth()->id())
+            ->orderBy(
+                $request->get('orderBy', 'created_at'),
+                $request->get('orderDir', 'DESC'))
+            ->paginate(getPaginationLimit());
 
         return view('models.links.index', [
             'links' => $links,

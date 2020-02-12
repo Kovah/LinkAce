@@ -26,7 +26,7 @@ class LinkControllerTest extends TestCase
         $this->actingAs($this->user);
     }
 
-    public function testValidLinkOverviewResponse(): void
+    public function testIndexView(): void
     {
         $link = factory(Link::class)->create();
 
@@ -36,7 +36,7 @@ class LinkControllerTest extends TestCase
             ->assertSee($link->url);
     }
 
-    public function testValidLinkCreateResponse(): void
+    public function testLinkCreateView(): void
     {
         $response = $this->get('links/create');
 
@@ -44,7 +44,7 @@ class LinkControllerTest extends TestCase
             ->assertSee('Add Link');
     }
 
-    public function testValidLinkMinimalStoreResponse(): void
+    public function testMinimalStoreRequest(): void
     {
         $response = $this->post('links', [
             'url' => 'https://example.com',
@@ -63,7 +63,7 @@ class LinkControllerTest extends TestCase
         $this->assertEquals('https://example.com', $databaseLink->url);
     }
 
-    public function testValidLinkFullStoreResponse(): void
+    public function testFullStoreRequest(): void
     {
         $tag = factory(Tag::class)->create();
         $list = factory(LinkList::class)->create();
@@ -89,7 +89,7 @@ class LinkControllerTest extends TestCase
         $this->assertEquals($tag->name, $databaseLink->tags->first()->name);
     }
 
-    public function testValidLinkStoreResponseWithContinue(): void
+    public function testMinimalStoreRequestWithContinue(): void
     {
         $response = $this->post('links', [
             'url' => 'https://example.com',
@@ -109,7 +109,7 @@ class LinkControllerTest extends TestCase
         $this->assertEquals('https://example.com', $databaseLink->url);
     }
 
-    public function testInvalidLinkStoreResponse(): void
+    public function testInvalidStoreRequest(): void
     {
         $response = $this->post('links', [
             'url' => null,
@@ -125,7 +125,7 @@ class LinkControllerTest extends TestCase
         ]);
     }
 
-    public function testValidLinkDetailResponse(): void
+    public function testDetailView(): void
     {
         $link = factory(Link::class)->create();
 
@@ -135,7 +135,7 @@ class LinkControllerTest extends TestCase
             ->assertSee($link->url);
     }
 
-    public function testValidLinkEditResponse(): void
+    public function testLinkEditView(): void
     {
         factory(Link::class)->create();
 
@@ -145,7 +145,7 @@ class LinkControllerTest extends TestCase
             ->assertSee('Edit Link');
     }
 
-    public function testValidLinkUpdateResponse(): void
+    public function testUpdateResponse(): void
     {
         $baseLink = factory(Link::class)->create();
 
@@ -170,7 +170,23 @@ class LinkControllerTest extends TestCase
         $this->assertEquals('New Description', $updatedLink->description);
     }
 
-    public function testInvalidLinkUpdateResponse(): void
+    public function testMissingLinkErrorForUpdate(): void
+    {
+        $response = $this->post('links/1', [
+            '_method' => 'patch',
+            'link_id' => '1',
+            'url' => 'https://new-example.com',
+            'title' => 'New Title',
+            'description' => 'New Description',
+            'lists' => null,
+            'tags' => null,
+            'is_private' => '0',
+        ]);
+
+        $response->assertStatus(404);
+    }
+
+    public function testValidationErrorForUpdate(): void
     {
         $baseLink = factory(Link::class)->create();
 
@@ -190,7 +206,7 @@ class LinkControllerTest extends TestCase
         ]);
     }
 
-    public function testValidLinkDeleteResponse(): void
+    public function testDeleteResponse(): void
     {
         factory(Link::class)->create();
 
@@ -206,7 +222,7 @@ class LinkControllerTest extends TestCase
         $this->assertNotNull($databaseLink->deleted_at);
     }
 
-    public function testInvalidLinkDeleteResponse(): void
+    public function testLinkMissingErrorForDelete(): void
     {
         $response = $this->post('links/1', [
             '_method' => 'delete',
