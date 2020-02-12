@@ -32,7 +32,8 @@ class LinkController extends Controller
         $links = Link::byUser(auth()->id())
             ->orderBy(
                 $request->get('orderBy', 'created_at'),
-                $request->get('orderDir', 'DESC'))
+                $request->get('orderDir', 'DESC')
+            )
             ->paginate(getPaginationLimit());
 
         return view('models.links.index', [
