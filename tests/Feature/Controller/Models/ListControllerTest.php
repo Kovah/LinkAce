@@ -2,7 +2,6 @@
 
 namespace Tests\Feature\Controller\Models;
 
-use App\Models\Link;
 use App\Models\LinkList;
 use App\Models\User;
 use Illuminate\Foundation\Testing\DatabaseMigrations;
@@ -25,7 +24,7 @@ class ListControllerTest extends TestCase
         $this->actingAs($this->user);
     }
 
-    public function testValidListOverviewResponse(): void
+    public function testIndexView(): void
     {
         $list = factory(LinkList::class)->create([
             'user_id' => $this->user->id,
@@ -37,7 +36,7 @@ class ListControllerTest extends TestCase
             ->assertSee($list->name);
     }
 
-    public function testValidListCreateResponse(): void
+    public function testCreateView(): void
     {
         $response = $this->get('lists/create');
 
@@ -45,7 +44,7 @@ class ListControllerTest extends TestCase
             ->assertSee('Add List');
     }
 
-    public function testValidListMinimalStoreResponse(): void
+    public function testMinimalStoreRequest(): void
     {
         $response = $this->post('lists', [
             'name' => 'Test List',
@@ -60,7 +59,7 @@ class ListControllerTest extends TestCase
         $this->assertEquals('Test List', $databaseList->name);
     }
 
-    public function testValidListFullStoreResponse(): void
+    public function testFullStoreRequest(): void
     {
         $response = $this->post('lists', [
             'name' => 'Test List',
@@ -77,7 +76,7 @@ class ListControllerTest extends TestCase
         $this->assertEquals('My custom description', $databaseList->description);
     }
 
-    public function testValidListStoreResponseWithContinue(): void
+    public function testStoreRequestWithContinue(): void
     {
         $response = $this->post('lists', [
             'name' => 'Test List',
@@ -93,7 +92,7 @@ class ListControllerTest extends TestCase
         $this->assertEquals('Test List', $databaseList->name);
     }
 
-    public function testInvalidListStoreResponse(): void
+    public function testInvalidStoreRequest(): void
     {
         $response = $this->post('lists', [
             'name' => null,
@@ -105,7 +104,7 @@ class ListControllerTest extends TestCase
         ]);
     }
 
-    public function testValidListDetailResponse(): void
+    public function testDetailView(): void
     {
         $list = factory(LinkList::class)->create([
             'user_id' => $this->user->id,
@@ -117,7 +116,7 @@ class ListControllerTest extends TestCase
             ->assertSee($list->name);
     }
 
-    public function testValidListEditResponse(): void
+    public function testEditView(): void
     {
         factory(LinkList::class)->create([
             'user_id' => $this->user->id,
@@ -136,7 +135,7 @@ class ListControllerTest extends TestCase
         $response->assertStatus(404);
     }
 
-    public function testValidListUpdateResponse(): void
+    public function testUpdateResponse(): void
     {
         $baseList = factory(LinkList::class)->create([
             'user_id' => $this->user->id,
@@ -157,7 +156,19 @@ class ListControllerTest extends TestCase
         $this->assertEquals('New Test List', $updatedLink->name);
     }
 
-    public function testInvalidLinkUpdateResponse(): void
+    public function testMissingModelErrorForUpdate(): void
+    {
+        $response = $this->post('lists/1', [
+            '_method' => 'patch',
+            'list_id' => '1',
+            'name' => 'New Test List',
+            'is_private' => '0',
+        ]);
+
+        $response->assertStatus(404);
+    }
+
+    public function testValidationErrorForUpdate(): void
     {
         $baseList = factory(LinkList::class)->create([
             'user_id' => $this->user->id,
@@ -175,7 +186,7 @@ class ListControllerTest extends TestCase
         ]);
     }
 
-    public function testValidListDeleteResponse(): void
+    public function testDeleteResponse(): void
     {
         factory(LinkList::class)->create([
             'user_id' => $this->user->id,
@@ -194,7 +205,7 @@ class ListControllerTest extends TestCase
         $this->assertNotNull($databaseList->deleted_at);
     }
 
-    public function testInvalidListDeleteResponse(): void
+    public function testMissingModelErrorForDelete(): void
     {
         $response = $this->post('lists/1', [
             '_method' => 'delete',

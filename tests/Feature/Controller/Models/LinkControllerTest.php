@@ -36,7 +36,7 @@ class LinkControllerTest extends TestCase
             ->assertSee($link->url);
     }
 
-    public function testLinkCreateView(): void
+    public function testCreateView(): void
     {
         $response = $this->get('links/create');
 
@@ -89,7 +89,7 @@ class LinkControllerTest extends TestCase
         $this->assertEquals($tag->name, $databaseLink->tags->first()->name);
     }
 
-    public function testMinimalStoreRequestWithContinue(): void
+    public function testStoreRequestWithContinue(): void
     {
         $response = $this->post('links', [
             'url' => 'https://example.com',
@@ -135,7 +135,7 @@ class LinkControllerTest extends TestCase
             ->assertSee($link->url);
     }
 
-    public function testLinkEditView(): void
+    public function testEditView(): void
     {
         factory(Link::class)->create();
 
@@ -170,7 +170,7 @@ class LinkControllerTest extends TestCase
         $this->assertEquals('New Description', $updatedLink->description);
     }
 
-    public function testMissingLinkErrorForUpdate(): void
+    public function testMissingMissingErrorForUpdate(): void
     {
         $response = $this->post('links/1', [
             '_method' => 'patch',
@@ -222,7 +222,7 @@ class LinkControllerTest extends TestCase
         $this->assertNotNull($databaseLink->deleted_at);
     }
 
-    public function testLinkMissingErrorForDelete(): void
+    public function testMissingModelErrorForDelete(): void
     {
         $response = $this->post('links/1', [
             '_method' => 'delete',
