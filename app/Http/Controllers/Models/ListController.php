@@ -81,15 +81,7 @@ class ListController extends Controller
      */
     public function show(Request $request, $id)
     {
-        $list = LinkList::find($id);
-
-        if (empty($list)) {
-            abort(404);
-        }
-
-        if ($list->user_id !== auth()->id()) {
-            abort(403);
-        }
+        $list = LinkList::findOrFail($id);
 
         $links = $list->links()->byUser(auth()->id());
 
@@ -118,15 +110,7 @@ class ListController extends Controller
      */
     public function edit($id)
     {
-        $list = LinkList::find($id);
-
-        if (empty($list)) {
-            abort(404);
-        }
-
-        if ($list->user_id !== auth()->id()) {
-            abort(403);
-        }
+        $list = LinkList::findOrFail($id);
 
         return view('models.lists.edit')->with('list', $list);
     }
@@ -140,18 +124,9 @@ class ListController extends Controller
      */
     public function update(ListUpdateRequest $request, $id)
     {
-        $list = LinkList::find($id);
+        $list = LinkList::findOrFail($id);
 
-        if (empty($list)) {
-            abort(404);
-        }
-
-        if ($list->user_id !== auth()->id()) {
-            abort(403);
-        }
-
-        $data = $request->all();
-        $list = ListRepository::update($list, $data);
+        $list = ListRepository::update($list, $request->all());
 
         alert(trans('list.updated_successfully'), 'success');
 
@@ -168,15 +143,11 @@ class ListController extends Controller
      */
     public function destroy(ListDeleteRequest $request, $id)
     {
-        $list = LinkList::find($id);
+        $list = LinkList::findOrFail($id);
 
-        if (empty($list)) {
-            abort(404);
-        }
+        $deletionSuccessfull = ListRepository::delete($list);
 
-        $deletion_successfull = ListRepository::delete($list);
-
-        if (!$deletion_successfull) {
+        if (!$deletionSuccessfull) {
             alert(trans('list.deletion_error'), 'error');
             return redirect()->back();
         }
