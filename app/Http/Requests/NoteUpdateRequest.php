@@ -21,18 +21,6 @@ class NoteUpdateRequest extends FormRequest
      */
     public function authorize(Request $request)
     {
-        // Check if the note ID was provided
-        if (!$request->get('note_id')) {
-            return false;
-        }
-
-        $note = Note::find($request->get('note_id'));
-
-        // Check if the note belongs to the user
-        if ($note->user_id !== auth()->user()->id) {
-            return false;
-        }
-
         return true;
     }
 

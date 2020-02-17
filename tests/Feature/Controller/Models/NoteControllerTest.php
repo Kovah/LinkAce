@@ -3,7 +3,6 @@
 namespace Tests\Feature\Controller\Models;
 
 use App\Models\Link;
-use App\Models\LinkNote;
 use App\Models\Note;
 use App\Models\User;
 use Illuminate\Foundation\Testing\DatabaseMigrations;
@@ -26,7 +25,7 @@ class NoteControllerTest extends TestCase
         $this->actingAs($this->user);
     }
 
-    public function testValidNoteMinimalStoreResponse(): void
+    public function testMinimalStoreRequest(): void
     {
         $link = factory(Link::class)->create();
 
@@ -42,7 +41,7 @@ class NoteControllerTest extends TestCase
         $this->assertEquals('Lorem ipsum dolor', $link->notes()->first()->note);
     }
 
-    public function testInvalidNoteStoreResponse(): void
+    public function testValidationErrorForCreate(): void
     {
         $link = factory(Link::class)->create();
 
@@ -57,7 +56,7 @@ class NoteControllerTest extends TestCase
         ]);
     }
 
-    public function testInvalidNoteStoreResponseWithMissingLink(): void
+    public function testStoreRequestForMissingLink(): void
     {
         $response = $this->post('notes', [
             'link_id' => '1',
@@ -68,7 +67,7 @@ class NoteControllerTest extends TestCase
         $response->assertStatus(404);
     }
 
-    public function testValidNoteEditResponse(): void
+    public function testEditView(): void
     {
         factory(Note::class)->create();
 
@@ -78,14 +77,14 @@ class NoteControllerTest extends TestCase
             ->assertSee('Edit Note');
     }
 
-    public function testInvalidNoteEditResponse(): void
+    public function testInvalidEditRequest(): void
     {
         $response = $this->get('notes/1/edit');
 
         $response->assertStatus(404);
     }
 
-    public function testValidNoteUpdateResponse(): void
+    public function testUpdateResponse(): void
     {
         $baseNote = factory(Note::class)->create();
 
@@ -104,7 +103,19 @@ class NoteControllerTest extends TestCase
         $this->assertEquals('Lorem ipsum dolor est updated', $updatedLink->note);
     }
 
-    public function testInvalidLinkUpdateResponse(): void
+    public function testMissingModelErrorForUpdate(): void
+    {
+        $response = $this->post('notes/1', [
+            '_method' => 'patch',
+            'note_id' => '1',
+            'note' => 'Lorem ipsum dolor est updated',
+            'is_private' => '0',
+        ]);
+
+        $response->assertStatus(404);
+    }
+
+    public function testValidationErrorForUpdate(): void
     {
         $baseNote = factory(Note::class)->create();
 
@@ -120,7 +131,7 @@ class NoteControllerTest extends TestCase
         ]);
     }
 
-    public function testValidNoteDeleteResponse(): void
+    public function testDeleteResponse(): void
     {
         $link = factory(Note::class)->create([
             'user_id' => $this->user->id,
@@ -142,7 +153,7 @@ class NoteControllerTest extends TestCase
         $this->assertNotNull($databaseNote->deleted_at);
     }
 
-    public function testInvalidNoteDeleteResponse(): void
+    public function testMissingModelErrorForDelete(): void
     {
         $response = $this->post('notes/1', [
             '_method' => 'delete',

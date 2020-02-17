@@ -109,7 +109,7 @@ class LinkControllerTest extends TestCase
         $this->assertEquals('https://example.com', $databaseLink->url);
     }
 
-    public function testInvalidStoreRequest(): void
+    public function testValidationErrorForCreate(): void
     {
         $response = $this->post('links', [
             'url' => null,

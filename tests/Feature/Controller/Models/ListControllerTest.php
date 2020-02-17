@@ -92,7 +92,7 @@ class ListControllerTest extends TestCase
         $this->assertEquals('Test List', $databaseList->name);
     }
 
-    public function testInvalidStoreRequest(): void
+    public function testValidationErrorForCreate(): void
     {
         $response = $this->post('lists', [
             'name' => null,
@@ -128,7 +128,7 @@ class ListControllerTest extends TestCase
             ->assertSee('Edit List');
     }
 
-    public function testInvalidListEditResponse(): void
+    public function testInvalidEditRequest(): void
     {
         $response = $this->get('lists/1/edit');
 
