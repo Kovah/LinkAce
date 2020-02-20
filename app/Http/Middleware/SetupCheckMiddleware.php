@@ -22,6 +22,11 @@ class SetupCheckMiddleware
     public function handle($request, Closure $next)
     {
         if ($request->is('setup/*')) {
+            if (config('app.setup_completed') === true) {
+                // Do not allow access to setup after it was completed
+                return redirect()->route('front');
+            }
+
             // Skip check if current route targets the setup
             return $next($request);
         }
