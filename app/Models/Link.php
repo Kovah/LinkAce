@@ -223,7 +223,7 @@ class Link extends Model
      * @param string     $newUrl
      * @return bool
      */
-    public static function hasUrlChanged($linkId, string $newUrl): bool
+    public static function urlHasChanged($linkId, string $newUrl): bool
     {
         $oldUrl = self::find($linkId)->url ?? null;
         return $oldUrl !== $newUrl;

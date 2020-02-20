@@ -103,4 +103,20 @@ class Tag extends Model
     {
         return $this->belongsToMany('App\Models\Link', 'link_tags', 'tag_id', 'link_id');
     }
+
+    /*
+     | ========================================================================
+     | METHODS
+     */
+
+    /**
+     * @param string|int $tagId
+     * @param string     $newName
+     * @return bool
+     */
+    public static function nameHasChanged($tagId, string $newName): bool
+    {
+        $oldName = self::find($tagId)->name ?? null;
+        return $oldName !== $newName;
+    }
 }

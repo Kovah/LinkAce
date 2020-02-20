@@ -25,7 +25,7 @@ class LinkUpdateRequest extends FormRequest
      */
     public function authorize(Request $request)
     {
-        $this->requireUniqueUrl = Link::hasUrlChanged($request->route('link'), $request->input('url', ''));
+        $this->requireUniqueUrl = Link::urlHasChanged($request->route('link'), $request->input('url', ''));
 
         return true;
     }

@@ -88,15 +88,7 @@ class TagController extends Controller
      */
     public function show(Request $request, $id)
     {
-        $tag = Tag::find($id);
-
-        if (empty($tag)) {
-            abort(404);
-        }
-
-        if ($tag->user_id !== auth()->id()) {
-            abort(403);
-        }
+        $tag = Tag::findOrFail($id);
 
         $links = $tag->links()->byUser(auth()->id());
 
@@ -125,15 +117,7 @@ class TagController extends Controller
      */
     public function edit($id)
     {
-        $tag = Tag::find($id);
-
-        if (empty($tag)) {
-            abort(404);
-        }
-
-        if ($tag->user_id !== auth()->id()) {
-            abort(403);
-        }
+        $tag = Tag::findOrFail($id);
 
         return view('models.tags.edit')->with('tag', $tag);
     }
@@ -147,15 +131,7 @@ class TagController extends Controller
      */
     public function update(TagUpdateRequest $request, $id)
     {
-        $tag = Tag::find($id);
-
-        if (empty($tag)) {
-            abort(404);
-        }
-
-        if ($tag->user_id !== auth()->id()) {
-            abort(403);
-        }
+        $tag = Tag::findOrFail($id);
 
         $data = $request->all();
         $tag = TagRepository::update($tag, $data);
@@ -175,19 +151,11 @@ class TagController extends Controller
      */
     public function destroy(TagDeleteRequest $request, $id)
     {
-        $tag = Tag::find($id);
+        $tag = Tag::findOrFail($id);
 
-        if (empty($tag)) {
-            abort(404);
-        }
+        $deletionSuccessfull = TagRepository::delete($tag);
 
-        if ($tag->user_id !== auth()->id()) {
-            abort(403);
-        }
-
-        $deletion_successfull = TagRepository::delete($tag);
-
-        if (!$deletion_successfull) {
+        if (!$deletionSuccessfull) {
             alert(trans('tag.deletion_error'), 'error');
             return redirect()->back();
         }
