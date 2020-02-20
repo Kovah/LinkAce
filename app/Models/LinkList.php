@@ -121,4 +121,15 @@ class LinkList extends Model
             ->orderBy('name')
             ->get();
     }
+
+    /**
+     * @param string|int $listId
+     * @param string     $newName
+     * @return bool
+     */
+    public static function nameHasChanged($listId, string $newName): bool
+    {
+        $oldName = self::find($listId)->name ?? null;
+        return $oldName !== $newName;
+    }
 }
