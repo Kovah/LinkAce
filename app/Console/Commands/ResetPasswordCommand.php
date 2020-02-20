@@ -31,7 +31,6 @@ class ResetPasswordCommand extends Command
             if (empty($this->user)) {
                 $this->warn('A user with this email address could not be found!');
             }
-
         } while (empty($this->user));
     }
 
@@ -49,7 +48,6 @@ class ResetPasswordCommand extends Command
                     $this->warn($error);
                 }
             }
-
         } while ($validator->invalid());
 
         $this->user->password = bcrypt($newPassword);
