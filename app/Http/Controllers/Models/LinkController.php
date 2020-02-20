@@ -29,15 +29,12 @@ class LinkController extends Controller
      */
     public function index(Request $request)
     {
-        $links = Link::byUser(auth()->id());
-
-        if ($request->has('orderBy') && $request->has('orderDir')) {
-            $links->orderBy($request->get('orderBy'), $request->get('orderDir'));
-        } else {
-            $links->orderBy('created_at', 'DESC');
-        }
-
-        $links = $links->paginate(getPaginationLimit());
+        $links = Link::byUser(auth()->id())
+            ->orderBy(
+                $request->get('orderBy', 'created_at'),
+                $request->get('orderDir', 'DESC')
+            )
+            ->paginate(getPaginationLimit());
 
         return view('models.links.index', [
             'links' => $links,
@@ -68,25 +65,23 @@ class LinkController extends Controller
      */
     public function store(LinkStoreRequest $request)
     {
-        // Save the new link
         $link = LinkRepository::create($request->all());
 
         alert(trans('link.added_successfully'), 'success');
 
-        // Redirect to the corresponding page based on bookmarklet usage
-        $is_bookmarklet = session('bookmarklet.create');
+        $isBookmarklet = session('bookmarklet.create');
 
         if ($request->get('reload_view')) {
             session()->flash('reload_view', true);
 
-            if ($is_bookmarklet) {
+            if ($isBookmarklet) {
                 return redirect()->route('bookmarklet-add');
             }
 
             return redirect()->route('links.create');
         }
 
-        if ($is_bookmarklet) {
+        if ($isBookmarklet) {
             return redirect()->route('bookmarklet-complete');
         }
 
@@ -101,15 +96,7 @@ class LinkController extends Controller
      */
     public function show($id)
     {
-        $link = Link::find($id);
-
-        if (empty($link)) {
-            abort(404);
-        }
-
-        if ($link->user_id !== auth()->id()) {
-            abort(403);
-        }
+        $link = Link::findOrFail($id);
 
         return view('models.links.show')
             ->with('link', $link);
@@ -123,15 +110,7 @@ class LinkController extends Controller
      */
     public function edit($id)
     {
-        $link = Link::find($id);
-
-        if (empty($link)) {
-            abort(404);
-        }
-
-        if ($link->user_id !== auth()->id()) {
-            abort(403);
-        }
+        $link = Link::findOrFail($id);
 
         return view('models.links.edit')
             ->with('link', $link);
@@ -146,15 +125,7 @@ class LinkController extends Controller
      */
     public function update(LinkUpdateRequest $request, $id)
     {
-        $link = Link::find($id);
-
-        if (empty($link)) {
-            abort(404);
-        }
-
-        if ($link->user_id !== auth()->id()) {
-            abort(403);
-        }
+        $link = Link::findOrFail($id);
 
         $link = LinkRepository::update($link, $request->all());
 
@@ -173,19 +144,11 @@ class LinkController extends Controller
      */
     public function destroy(LinkDeleteRequest $request, $id)
     {
-        $link = Link::find($id);
+        $link = Link::findOrFail($id);
 
-        if (empty($link)) {
-            abort(404);
-        }
+        $deletionSuccessfull = LinkRepository::delete($link);
 
-        if ($link->user_id !== auth()->id()) {
-            abort(403);
-        }
-
-        $deletion_successfull = LinkRepository::delete($link);
-
-        if (!$deletion_successfull) {
+        if (!$deletionSuccessfull) {
             alert(trans('link.deletion_error'), 'error');
             return redirect()->back();
         }

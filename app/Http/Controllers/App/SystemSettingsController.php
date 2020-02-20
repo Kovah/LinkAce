@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\App;
 
 use App\Http\Controllers\Controller;
+use App\Http\Requests\SystemSettingsUpdateRequest;
 use App\Models\Setting;
 use Illuminate\Contracts\View\Factory;
 use Illuminate\Http\JsonResponse;
@@ -29,15 +30,11 @@ class SystemSettingsController extends Controller
     /**
      * Save the new system settings to the database
      *
-     * @param Request $request
+     * @param SystemSettingsUpdateRequest $request
      * @return RedirectResponse
      */
-    public function saveSystemSettings(Request $request): RedirectResponse
+    public function saveSystemSettings(SystemSettingsUpdateRequest $request): RedirectResponse
     {
-        $request->validate([
-            'system_guest_access' => 'numeric',
-        ]);
-
         $settings = $request->except(['_token']);
 
         foreach ($settings as $key => $value) {
@@ -53,7 +50,7 @@ class SystemSettingsController extends Controller
 
         alert(trans('settings.settings_saved'));
 
-        return redirect()->back();
+        return redirect()->route('get-sysstemsettings');
     }
 
     /**
@@ -64,18 +61,18 @@ class SystemSettingsController extends Controller
      */
     public function generateCronToken(Request $request): JsonResponse
     {
-        $new_token = Str::random(32);
+        $newToken = Str::random(32);
 
         Setting::updateOrCreate(
             [
                 'key' => 'cron_token',
                 'user_id' => null,
             ],
-            ['value' => $new_token]
+            ['value' => $newToken]
         );
 
         return response()->json([
-            'new_token' => $new_token,
+            'new_token' => $newToken,
         ]);
     }
 }

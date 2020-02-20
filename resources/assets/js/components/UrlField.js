@@ -23,7 +23,7 @@ export default class UrlField {
   }
 
   checkforExistingUrl (url) {
-    const checkUrl = window.appData.routes.ajax.existingLinks;
+    const checkUrl = window.appData.routes.fetch.existingLinks;
 
     fetch(checkUrl, {
       method: 'POST',

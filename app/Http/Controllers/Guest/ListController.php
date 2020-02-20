@@ -37,7 +37,7 @@ class ListController extends Controller
      */
     public function show(Request $request, $id)
     {
-        $list = LinkList::find($id);
+        $list = LinkList::isPrivate(false)->find($id);
 
         if (empty($list)) {
             abort(404);
@@ -48,7 +48,7 @@ class ListController extends Controller
         if ($request->has('orderBy') && $request->has('orderDir')) {
             $links->orderBy($request->get('orderBy'), $request->get('orderDir'));
         } else {
-            $links->orderBy('created_at', 'DESC');
+            $links->latest();
         }
 
         $links = $links->paginate(getPaginationLimit());

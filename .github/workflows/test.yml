@@ -1,11 +1,42 @@
-name: PHP Lint & Test
+name: Testing
 
 on:
   pull_request:
 
 jobs:
+
+  test-js:
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        node-version: [12.x]
+
+    name: Test asset generation process on Node ${{ matrix.node-version }}
+
+    steps:
+      - uses: actions/checkout@v1
+      - name: Use Node.js ${{ matrix.node-version }}
+        uses: actions/setup-node@v1
+        with:
+          node-version: ${{ matrix.node-version }}
+      - name: Try to build the assets
+        run: |
+          npm ci
+          npm run production
+      - name: Upload built assets
+        uses: actions/upload-artifact@v1
+        with:
+          name: assets
+          path: public/assets/dist
+      - name: Upload mix manifest
+        uses: actions/upload-artifact@v1
+        with:
+          name: mix-manifest
+          path: public/mix-manifest.json
+
   test-php:
     runs-on: ${{ matrix.operating-system }}
+    needs: test-js
     strategy:
       matrix:
         operating-system: [ubuntu-latest]
@@ -15,6 +46,16 @@ jobs:
 
     steps:
       - uses: actions/checkout@v1
+
+      - uses: actions/download-artifact@v1
+        with:
+          name: assets
+          path: public/assets/dist
+
+      - uses: actions/download-artifact@v1
+        with:
+          name: mix-manifest
+          path: public
 
       - name: Setup PHP
         uses: shivammathur/setup-php@v1
@@ -48,21 +89,14 @@ jobs:
       - name: Run PHPunit
         run: composer run test
 
-  test-js:
-    runs-on: ubuntu-latest
-    strategy:
-      matrix:
-        node-version: [12.x]
-
-    name: Test asset generation process on Node ${{ matrix.node-version }}
-
-    steps:
-      - uses: actions/checkout@v1
-      - name: Use Node.js ${{ matrix.node-version }}
-        uses: actions/setup-node@v1
+      - uses: actions/upload-artifact@v1
+        if: failure()
         with:
-          node-version: ${{ matrix.node-version }}
-      - name: Try to build the assets
-        run: |
-          npm ci
-          npm run production
+          name: application-logs
+          path: storage/logs
+
+      - uses: actions/upload-artifact@v1
+        if: failure()
+        with:
+          name: application-public
+          path: public

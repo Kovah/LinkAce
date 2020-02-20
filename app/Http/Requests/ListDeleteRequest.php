@@ -21,18 +21,6 @@ class ListDeleteRequest extends FormRequest
      */
     public function authorize(Request $request)
     {
-        // Check if the list ID was provided
-        if (!$request->get('list_id')) {
-            return false;
-        }
-
-        $list = LinkList::find($request->get('list_id'));
-
-        // Check if the list belongs to the user
-        if ($list->user_id !== auth()->user()->id) {
-            return false;
-        }
-
         return true;
     }
 
@@ -43,8 +31,6 @@ class ListDeleteRequest extends FormRequest
      */
     public function rules()
     {
-        return [
-            'list_id' => 'required',
-        ];
+        return [];
     }
 }

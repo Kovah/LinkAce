@@ -40,6 +40,11 @@ class LinkList extends Model
         'is_private',
     ];
 
+    protected $casts = [
+        'user_id' => 'integer',
+        'is_private' => 'boolean',
+    ];
+
     /**
      * Add the OrderNameScope to the Tag model
      */
@@ -115,5 +120,16 @@ class LinkList extends Model
         return self::byUser(auth()->id())
             ->orderBy('name')
             ->get();
+    }
+
+    /**
+     * @param string|int $listId
+     * @param string     $newName
+     * @return bool
+     */
+    public static function nameHasChanged($listId, string $newName): bool
+    {
+        $oldName = self::find($listId)->name ?? null;
+        return $oldName !== $newName;
     }
 }

@@ -28,12 +28,14 @@
   <php>
     <server name="APP_ENV" value="testing"/>
     <server name="APP_KEY" value="base64:cQiwS51aa/3oti4KXHtj8mZLNyiDTA7BCAB5GIMvg5w="/>
+    <server name="APP_DEMO" value="false"/>
     <server name="DB_CONNECTION" value="testing"/>
     <server name="BCRYPT_ROUNDS" value="4"/>
     <server name="CACHE_DRIVER" value="array"/>
     <server name="MAIL_DRIVER" value="array"/>
     <server name="QUEUE_CONNECTION" value="sync"/>
     <server name="SESSION_DRIVER" value="array"/>
+    <server name="SETUP_COMPLETED" value="true"/>
     <server name="APP_CONFIG_CACHE" value="bootstrap/cache/config.phpunit.php"/>
     <server name="APP_SERVICES_CACHE" value="bootstrap/cache/services.phpunit.php"/>
     <server name="APP_PACKAGES_CACHE" value="bootstrap/cache/packages.phpunit.php"/>

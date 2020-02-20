@@ -16,34 +16,9 @@ use Illuminate\Support\Facades\Hash;
  */
 class RegisterUserCommand extends Command
 {
-    /**
-     * The name and signature of the console command.
-     *
-     * @var string
-     */
     protected $signature = 'registeruser {name? : Username} {email? : User email address}';
 
-    /**
-     * The console command description.
-     *
-     * @var string
-     */
-    protected $description = 'Register a new user';
-
-    /**
-     * RegisterUser constructor.
-     */
-    public function __construct()
-    {
-        parent::__construct();
-    }
-
-    /**
-     * Execute the console command.
-     *
-     * @return mixed
-     */
-    public function handle()
+    public function handle(): void
     {
         $name = $this->argument('name');
         $email = $this->argument('email');

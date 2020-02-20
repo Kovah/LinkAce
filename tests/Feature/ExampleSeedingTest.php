@@ -2,7 +2,6 @@
 
 namespace Tests\Feature;
 
-use App\Models\Category;
 use App\Models\Link;
 use App\Models\LinkList;
 use App\Models\Tag;

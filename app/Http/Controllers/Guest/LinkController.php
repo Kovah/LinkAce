@@ -16,28 +16,15 @@ use Illuminate\View\View;
 class LinkController extends Controller
 {
     /**
-     * Display a listing of the resource.
-     *
-     * @param Request $request
      * @return Factory|View
      */
-    public function index(Request $request)
+    public function index()
     {
-        $links = Link::privateOnly(false);
-
-        if ($request->has('orderBy') && $request->has('orderDir')) {
-            $links->orderBy($request->get('orderBy'), $request->get('orderDir'));
-        } else {
-            $links->orderBy('created_at', 'DESC');
-        }
-
-        $links = $links->paginate(getPaginationLimit());
+        $links = Link::privateOnly(false)
+            ->paginate(getPaginationLimit());
 
         return view('guest.links.index', [
             'links' => $links,
-            'route' => $request->getBaseUrl(),
-            'order_by' => $request->get('orderBy'),
-            'order_dir' => $request->get('orderDir'),
         ]);
     }
 }

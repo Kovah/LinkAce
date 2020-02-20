@@ -11,7 +11,7 @@ class FrontController extends Controller
     /**
      * @return Factory|RedirectResponse|View
      */
-    public function index()
+    public function __invoke()
     {
         if (!auth()->check()) {
             if (systemsettings('system_guest_access')) {

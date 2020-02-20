@@ -123,6 +123,19 @@ return [
 
     /*
     |--------------------------------------------------------------------------
+    | setup Completed
+    |--------------------------------------------------------------------------
+    |
+    | After the user completed the app setup, the env file will change the
+    | SETUP_COMPLETED value in the .env file. This setting makes the
+    | environment variable available in the application.
+    |
+    */
+
+    'setup_completed' => env('SETUP_COMPLETED', false),
+
+    /*
+    |--------------------------------------------------------------------------
     | Encryption Key
     |--------------------------------------------------------------------------
     |

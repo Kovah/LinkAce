@@ -24,7 +24,7 @@ class TagController extends Controller
      */
     public function show(Request $request, $id)
     {
-        $tag = Tag::find($id);
+        $tag = Tag::isPrivate(false)->find($id);
 
         if (empty($tag)) {
             abort(404);

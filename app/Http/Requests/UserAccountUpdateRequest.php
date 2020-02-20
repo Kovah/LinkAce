@@ -26,7 +26,7 @@ class UserAccountUpdateRequest extends FormRequest
     public function authorize(Request $request)
     {
         // Validate the username if it was changed
-        if ($request->get('username') !== auth()->user()->name) {
+        if ($request->get('name') !== auth()->user()->name) {
             $this->validate_username = true;
         }
 
@@ -46,13 +46,13 @@ class UserAccountUpdateRequest extends FormRequest
     public function rules()
     {
         if ($this->validate_username) {
-            $rules['username'] = 'unique:users,name';
+            $rules['name'] = 'unique:users,name';
         }
 
         if ($this->validate_email) {
             $rules['email'] = 'unique:users,email';
         }
 
-        return $rules;
+        return $rules ?? [];
     }
 }

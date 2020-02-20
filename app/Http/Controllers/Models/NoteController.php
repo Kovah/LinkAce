@@ -29,7 +29,7 @@ class NoteController extends Controller
      */
     public function store(NoteStoreRequest $request)
     {
-        $link = Link::find($request->get('link_id'));
+        $link = Link::findOrFail($request->get('link_id'));
 
         if ($link->user_id !== auth()->id()) {
             abort(403);
@@ -51,14 +51,10 @@ class NoteController extends Controller
      */
     public function edit($id)
     {
-        $note = Note::find($id);
-
-        if (empty($note)) {
-            abort(404);
-        }
+        $note = Note::findOrFail($id);
 
         if ($note->user_id !== auth()->id()) {
-            abort(404);
+            abort(403);
         }
 
         return view('models.notes.edit')->with('note', $note);
@@ -73,11 +69,7 @@ class NoteController extends Controller
      */
     public function update(NoteUpdateRequest $request, $id)
     {
-        $note = Note::find($request->get('note_id'));
-
-        if (empty($note)) {
-            abort(404);
-        }
+        $note = Note::findOrFail($request->get('note_id'));
 
         $data = $request->except(['_token', 'note_id']);
         $note = NoteRepository::update($note, $data);
@@ -97,27 +89,19 @@ class NoteController extends Controller
      */
     public function destroy(NoteDeleteRequest $request, $id)
     {
-        $note = Note::find($id);
+        $note = Note::findOrFail($id);
 
-        if (empty($note)) {
-            abort(404);
-        }
+        $linkId = $note->link->id;
 
-        if ($note->link->user_id !== auth()->id()) {
-            abort(404);
-        }
+        $deletionSuccessfull = NoteRepository::delete($note);
 
-        $link = $note->link->id;
-
-        $deletion_successfull = NoteRepository::delete($note);
-
-        if (!$deletion_successfull) {
+        if (!$deletionSuccessfull) {
             alert(trans('note.deletion_error'), 'error');
             return redirect()->back();
         }
 
         alert(trans('note.deleted_successfully'), 'warning');
 
-        return redirect()->route('links.show', [$link]);
+        return redirect()->route('links.show', [$linkId]);
     }
 }

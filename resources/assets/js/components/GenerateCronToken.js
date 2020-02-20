@@ -26,7 +26,7 @@ export default class GenerateCronToken {
       return;
     }
 
-    const fetchURL = window.appData.routes.ajax.generateCronToken;
+    const fetchURL = window.appData.routes.fetch.generateCronToken;
 
     fetch(fetchURL, {
       method: 'POST',

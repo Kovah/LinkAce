@@ -24,7 +24,8 @@ use Illuminate\Database\Eloquent\SoftDeletes;
  * @property string|null            $deleted_at
  * @property-read Collection|Link[] $links
  * @property-read User              $user
- * @method static Builder|Tag byUser($user_id)
+ * @method static Builder|Tag byUser(int $user_id)
+ * @method static Builder|Tag isPrivate(bool $private)
  */
 class Tag extends Model
 {
@@ -36,6 +37,11 @@ class Tag extends Model
         'user_id',
         'name',
         'is_private',
+    ];
+
+    protected $casts = [
+        'user_id' => 'integer',
+        'is_private' => 'boolean',
     ];
 
     /**
@@ -65,6 +71,18 @@ class Tag extends Model
         return $query->where('user_id', $user_id);
     }
 
+    /**
+     * Scope for selecting private or non-private tags
+     *
+     * @param Builder $query
+     * @param bool    $is_private
+     * @return mixed
+     */
+    public function scopeIsPrivate($query, bool $is_private)
+    {
+        return $query->where('is_private', $is_private);
+    }
+
     /*
      | ========================================================================
      | RELATIONSHIPS
@@ -84,5 +102,21 @@ class Tag extends Model
     public function links()
     {
         return $this->belongsToMany('App\Models\Link', 'link_tags', 'tag_id', 'link_id');
+    }
+
+    /*
+     | ========================================================================
+     | METHODS
+     */
+
+    /**
+     * @param string|int $tagId
+     * @param string     $newName
+     * @return bool
+     */
+    public static function nameHasChanged($tagId, string $newName): bool
+    {
+        $oldName = self::find($tagId)->name ?? null;
+        return $oldName !== $newName;
     }
 }
