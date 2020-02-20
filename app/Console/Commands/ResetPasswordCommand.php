@@ -13,12 +13,7 @@ class ResetPasswordCommand extends Command
     /** @var User */
     protected $user;
 
-    /**
-     * Execute the console command.
-     *
-     * @return mixed
-     */
-    public function handle()
+    public function handle(): void
     {
         $this->line('This tool allows you to reset the password for any user.');
 

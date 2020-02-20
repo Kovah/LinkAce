@@ -17,25 +17,9 @@ use Illuminate\Support\Facades\Notification;
  */
 class CheckLinksCommand extends Command
 {
-    /**
-     * The name and signature of the console command.
-     *
-     * @var string
-     */
     protected $signature = 'links:check';
 
-    /**
-     * The console command description.
-     *
-     * @var string
-     */
-    protected $description = 'Checks links for availablility';
-
-    /**
-     * Check a maximum of 100 links at once
-     *
-     * @var int
-     */
+    /** @var int $limit Check a maximum of 100 links at once */
     protected $limit = 100;
 
     /** @var int */
@@ -75,11 +59,6 @@ class CheckLinksCommand extends Command
         parent::__construct();
     }
 
-    /**
-     * Execute the console command.
-     *
-     * @return void
-     */
     public function handle(): void
     {
         // Check if the command should skip the execution
