@@ -168,6 +168,29 @@ class ListControllerTest extends TestCase
         $response->assertStatus(404);
     }
 
+    public function testUniquePropertyValidation(): void
+    {
+        factory(LinkList::class)->create([
+            'name' => 'Taken List Name',
+            'user_id' => $this->user->id,
+        ]);
+
+        $baseList = factory(LinkList::class)->create([
+            'user_id' => $this->user->id,
+        ]);
+
+        $response = $this->post('lists/2', [
+            '_method' => 'patch',
+            'list_id' => $baseList->id,
+            'name' => 'Taken List Name',
+            'is_private' => '0',
+        ]);
+
+        $response->assertSessionHasErrors([
+            'name',
+        ]);
+    }
+
     public function testValidationErrorForUpdate(): void
     {
         $baseList = factory(LinkList::class)->create([

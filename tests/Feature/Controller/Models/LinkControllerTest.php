@@ -186,6 +186,27 @@ class LinkControllerTest extends TestCase
         $response->assertStatus(404);
     }
 
+    public function testUniquePropertyValidation(): void
+    {
+        factory(Link::class)->create(['url' => 'https://old-example.com']);
+        $baseLink = factory(Link::class)->create();
+
+        $response = $this->post('links/2', [
+            '_method' => 'patch',
+            'link_id' => $baseLink->id,
+            'url' => 'https://old-example.com',
+            'title' => 'New Title',
+            'description' => 'New Description',
+            'lists' => null,
+            'tags' => null,
+            'is_private' => '0',
+        ]);
+
+        $response->assertSessionHasErrors([
+            'url',
+        ]);
+    }
+
     public function testValidationErrorForUpdate(): void
     {
         $baseLink = factory(Link::class)->create();

@@ -151,6 +151,29 @@ class TagControllerTest extends TestCase
         $response->assertStatus(404);
     }
 
+    public function testUniquePropertyValidation(): void
+    {
+        factory(Tag::class)->create([
+            'name' => 'taken-tag-name',
+            'user_id' => $this->user->id,
+        ]);
+
+        $baseTag = factory(Tag::class)->create([
+            'user_id' => $this->user->id,
+        ]);
+
+        $response = $this->post('tags/2', [
+            '_method' => 'patch',
+            'tag_id' => $baseTag->id,
+            'name' => 'taken-tag-name',
+            'is_private' => '0',
+        ]);
+
+        $response->assertSessionHasErrors([
+            'name',
+        ]);
+    }
+
     public function testValidationErrorForUpdate(): void
     {
         $baseTag = factory(Tag::class)->create([
