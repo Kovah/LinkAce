@@ -26,7 +26,7 @@ class SetupCheckMiddleware
             return $next($request);
         }
 
-        if (env('SETUP_COMPLETED', false) !== true) {
+        if (config('app.setup_completed') !== true) {
             // Start the setup if it was not completed yet
             return redirect()->route('setup.welcome');
         }
