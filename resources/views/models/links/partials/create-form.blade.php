@@ -102,10 +102,10 @@
                 </div>
             </div>
 
-            <div class="mt-3 d-flex align-items-center">
+            <div class="mt-3 d-flex align-items-center justify-content-end">
 
                 @if(!isset($bookmark_url))
-                    <div class="custom-control custom-checkbox ml-auto mr-4">
+                    <div class="custom-control custom-checkbox mr-4">
                         <input class="custom-control-input" type="checkbox" id="reload_view" name="reload_view"
                             @if(session('reload_view')) checked @endif>
                         <label class="custom-control-label" for="reload_view">
