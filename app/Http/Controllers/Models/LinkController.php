@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Models;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\LinkDeleteRequest;
 use App\Http\Requests\LinkStoreRequest;
+use App\Http\Requests\LinkToggleCheckRequest;
 use App\Http\Requests\LinkUpdateRequest;
 use App\Models\Link;
 use App\Repositories\LinkRepository;
@@ -155,5 +156,15 @@ class LinkController extends Controller
 
         alert(trans('link.deleted_successfully'), 'warning');
         return redirect()->route('links.index');
+    }
+
+    public function updateCheckToggle(LinkToggleCheckRequest $request, $id)
+    {
+        $link = Link::findOrFail($id);
+
+        $link->check_disabled = $request->input('toggle');
+        $link->save();
+
+        return redirect()->route('links.show', [$link->id]);
     }
 }
