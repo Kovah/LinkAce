@@ -128,8 +128,12 @@ class CheckLinksCommand extends Command
         // Get the total amount of remaining links
         $this->total = Link::count();
 
-        // Get a porton of the remaining links based on the limit
-        return Link::orderBy('id', 'ASC')->offset($this->offset)->limit($this->limit)->get();
+        // Get a portion of the remaining links based on the limit
+        return Link::where('check_disabled', false)
+            ->orderBy('id', 'ASC')
+            ->offset($this->offset)
+            ->limit($this->limit)
+            ->get();
     }
 
     /**

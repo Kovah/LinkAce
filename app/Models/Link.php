@@ -21,8 +21,9 @@ use Illuminate\Database\Eloquent\SoftDeletes;
  * @property string                 $title
  * @property string|null            $description
  * @property string|null            $icon
- * @property int                    $is_private
+ * @property boolean                $is_private
  * @property int                    $status
+ * @property boolean                $check_disabled
  * @property Carbon|null            $created_at
  * @property Carbon|null            $updated_at
  * @property string|null            $deleted_at
@@ -46,12 +47,14 @@ class Link extends Model
         'icon',
         'is_private',
         'status',
+        'check_disabled',
     ];
 
     protected $casts = [
         'user_id' => 'integer',
         'is_private' => 'boolean',
         'status' => 'integer',
+        'check_disabled' => 'boolean',
     ];
 
     public const STATUS_OK = 1;
