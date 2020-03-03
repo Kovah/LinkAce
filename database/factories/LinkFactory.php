@@ -16,5 +16,6 @@ $factory->define(\App\Models\Link::class, function (Faker $faker) {
         'title' => $faker->boolean(70) ? $faker->words(random_int(1, 5), true) : $faker->domainName,
         'description' => $faker->boolean(70) ? $faker->sentences(random_int(1, 3), true) : null,
         'is_private' => $faker->boolean(10),
+        'check_disabled' => false,
     ];
 });

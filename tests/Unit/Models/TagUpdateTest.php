@@ -35,14 +35,12 @@ class TagUpdateTest extends TestCase
 
         $tag = factory(Tag::class)->create();
 
-        $changed_data = [
+        $changedData = [
             'name' => 'Changed Tag Title',
         ];
 
-        $updated_tag = TagRepository::update($tag, $changed_data);
+        $updatedTag = TagRepository::update($tag, $changedData);
 
-        $asserted_data = array_merge($tag->toArray(), $changed_data);
-
-        $this->assertDatabaseHas('tags', $asserted_data);
+        $this->assertEquals('Changed Tag Title', $updatedTag->name);
     }
 }

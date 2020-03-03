@@ -35,14 +35,12 @@ class LinkUpdateTest extends TestCase
 
         $link = factory(Link::class)->create();
 
-        $changed_data = [
+        $changedData = [
             'title' => 'This is a new title!',
         ];
 
-        $updated_link = LinkRepository::update($link, $changed_data);
+        $updatedLink = LinkRepository::update($link, $changedData);
 
-        $asserted_data = array_merge($link->toArray(), $changed_data);
-
-        $this->assertDatabaseHas('links', $asserted_data);
+        $this->assertEquals('This is a new title!', $updatedLink->title);
     }
 }
