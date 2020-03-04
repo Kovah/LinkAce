@@ -6,6 +6,7 @@ use App\Helper\WaybackMachine;
 use GuzzleHttp\Handler\MockHandler;
 use GuzzleHttp\HandlerStack;
 use GuzzleHttp\Psr7\Response;
+use Illuminate\Support\Facades\Http;
 use Tests\TestCase;
 
 /**
@@ -15,44 +16,47 @@ use Tests\TestCase;
  */
 class WaybackMachineTest extends TestCase
 {
-    /** @var WaybackMachine */
-    private $waybackHelper;
-
-    /**
-     * During setup we create a Mock Handler to prevent tests from running real
-     * queries to archive.org, instead the Mock Handler answers the corresponding
-     * request.
-     */
-    protected function setUp(): void
-    {
-        $mock = new MockHandler([new Response(200)]);
-
-        $handlerStack = HandlerStack::create($mock);
-        $clientConfig = ['handler' => $handlerStack];
-
-        $this->waybackHelper = new WaybackMachine($clientConfig);
-
-        parent::setUp();
-    }
-
     /**
      * Test the saveToArchive() helper funtion with a valid URL.
-     * Should return true.
+     * Must return true.
      *
      * @return void
      */
     public function testValidWaybackAdding(): void
     {
+        Http::fake([
+            'web.archive.org/*' => Http::response([], 200),
+        ]);
+
         $url = 'https://google.com';
 
-        $result = $this->waybackHelper->saveToArchive($url);
+        $result = WaybackMachine::saveToArchive($url);
 
         $this->assertTrue($result);
     }
 
     /**
+     * Test the saveToArchive() helper funtion with a valid URL, but a network error.
+     * Must return false.
+     *
+     * @return void
+     */
+    public function testValidWaybackAddingWithNetworkError(): void
+    {
+        Http::fake([
+            'web.archive.org/*' => Http::response([], 404),
+        ]);
+
+        $url = 'https://google.com';
+
+        $result = WaybackMachine::saveToArchive($url);
+
+        $this->assertFalse($result);
+    }
+
+    /**
      * Test the saveToArchive() helper funtion with an invalid URL.
-     * Will return false.
+     * Must return false.
      *
      * @return void
      */
@@ -60,7 +64,7 @@ class WaybackMachineTest extends TestCase
     {
         $url = 'not an URL';
 
-        $result = $this->waybackHelper->saveToArchive($url);
+        $result = WaybackMachine::saveToArchive($url);
 
         $this->assertFalse($result);
     }
@@ -75,7 +79,7 @@ class WaybackMachineTest extends TestCase
     {
         $url = 'https://google.com';
 
-        $link = $this->waybackHelper::getArchiveLink($url);
+        $link = WaybackMachine::getArchiveLink($url);
 
         $this->assertEquals('https://web.archive.org/web/*/https://google.com', $link);
     }
@@ -90,7 +94,7 @@ class WaybackMachineTest extends TestCase
     {
         $url = 'not an URL';
 
-        $link = $this->waybackHelper::getArchiveLink($url);
+        $link = WaybackMachine::getArchiveLink($url);
 
         $this->assertNull($link);
     }
