@@ -136,6 +136,8 @@ Route::group(['middleware' => ['auth']], function () {
         ->name('fetch-lists');
     Route::post('fetch/existing-links', [FetchController::class, 'searchExistingUrls'])
         ->name('fetch-existing-links');
+    Route::get('fetch/update-check', [FetchController::class, 'checkForUpdates'])
+        ->name('fetch-update-check');
 });
 
 // Guest access routes

@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Helper\UpdateHelper;
 use App\Models\Link;
 use App\Models\LinkList;
 use App\Models\Tag;
@@ -75,5 +76,12 @@ class FetchController extends Controller
             ->count();
 
         return response()->json(['linkFound' => $linkCount > 0]);
+    }
+
+    public static function checkForUpdates(): JsonResponse
+    {
+        $updateCheck = UpdateHelper::checkForUpdates();
+
+        return response()->json(['checkResult' => $updateCheck]);
     }
 }

@@ -9,6 +9,7 @@ import SimpleSelect from './components/SimpleSelect';
 import ShareToggleAll from './components/ShareToggleAll';
 import GenerateApiToken from './components/GenerateApiToken';
 import GenerateCronToken from './components/GenerateCronToken';
+import UpdateCheck from './components/UpdateCheck';
 
 // Register view components
 function registerViews () {
@@ -21,6 +22,7 @@ function registerViews () {
   register('.share-toggle', ShareToggleAll);
   register('.api-token', GenerateApiToken);
   register('.cron-token', GenerateCronToken);
+  register('.update-check', UpdateCheck);
 }
 
 if (document.readyState !== 'loading') {
