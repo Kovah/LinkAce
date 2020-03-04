@@ -2,6 +2,8 @@
 
 namespace App\Helper;
 
+use Illuminate\Support\Facades\Http;
+
 /**
  * Class LinkAce
  *
@@ -23,9 +25,15 @@ class LinkAce
         ];
 
         // Try to get the HTML content of that URL
-        try {
-            $html = file_get_contents($url);
-        } catch (\Exception $e) {
+        $response = Http::get($url);
+
+        if (!$response->successful()) {
+            return $fallback;
+        }
+
+        $html = $response->body();
+
+        if (empty($html)) {
             return $fallback;
         }
 
@@ -33,10 +41,6 @@ class LinkAce
         try {
             $tags = get_meta_tags($url);
         } catch (\Exception $e) {
-            return $fallback;
-        }
-
-        if (empty($html)) {
             return $fallback;
         }
 
