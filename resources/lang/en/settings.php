@@ -11,6 +11,8 @@ return [
     'time_format' => 'Time Format',
     'listitem_count' => 'Number of Items in Lists',
 
+    'links_new_tab' => 'Open external links in new tabs',
+
     'private_default' => 'Private Links by default',
     'private_default_help' => 'Enabling this will make all new links private by default',
 
