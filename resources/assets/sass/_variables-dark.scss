@@ -31,19 +31,20 @@ $dark: $gray-900;
 $yiq-contrasted-threshold: 170;
 
 
+// Dark Theme
+$darkmode-bg: $gray-900;
+$darkmode-bg-dark: darken($gray-900, 3%);
+$darkmode-bg-darker: darken($gray-900, 6%);
+
+
 // Body
-$body-bg: $gray-900;
+$body-bg: $darkmode-bg-darker;
 $body-color: $gray-400;
 $body-color-muted: $gray-600;
 
 
-// Dark Theme
-$darkmode-bg: darken($body-bg, 3%);
-$darkmode-bg-darker: darken($body-bg, 6%);
-
-
 // Components
-$border-color: $gray-900;
+$border-color: $darkmode-bg;
 
 
 // Links
@@ -56,7 +57,7 @@ $table-color: $white;
 $table-accent-bg: rgba($white, .05);
 $table-hover-bg: $gray-900;
 
-$table-border-color: $gray-900;
+$table-border-color: $darkmode-bg-dark;
 
 $table-dark-border-color: $table-border-color;
 $table-dark-color: $white;
@@ -64,8 +65,8 @@ $table-dark-color: $white;
 
 // Forms
 $input-bg: $gray-800;
-$input-disabled-bg: $gray-800;
-$input-border-color: darken($gray-800, 4%);
+$input-disabled-bg: $darkmode-bg;
+$input-border-color: $darkmode-bg-dark;
 $input-color: $body-color;
 
 
@@ -93,15 +94,15 @@ $navbar-light-active-color: $gray-800;
 
 // Pagination
 $pagination-color: $white;
-$pagination-bg: transparent;
-$pagination-border-color: $darkmode-bg;
+$pagination-bg: $darkmode-bg-dark;
+$pagination-border-color: $darkmode-bg-dark;
 
 $pagination-hover-color: $white;
 $pagination-hover-bg: $darkmode-bg;
-$pagination-hover-border-color: darken($body-bg, 6%);
+$pagination-hover-border-color: $darkmode-bg;
 
 $pagination-active-bg: $darkmode-bg;
-$pagination-active-border-color: darken($body-bg, 6%);
+$pagination-active-border-color: $darkmode-bg;
 
 $pagination-disabled-color: $body-color-muted;
 $pagination-disabled-bg: transparent;
@@ -109,7 +110,7 @@ $pagination-disabled-border-color: $pagination-border-color;
 
 
 // Cards
-$card-border-color: $darkmode-bg-darker;
+$card-border-color: $darkmode-bg-dark;
 $card-cap-bg: $darkmode-bg;
 $card-bg: $darkmode-bg;
 

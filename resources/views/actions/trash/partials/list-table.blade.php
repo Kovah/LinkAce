@@ -1,5 +1,5 @@
 <div class="table-responsive">
-    <table class="table table-sm table-bordered table-hover mb-0">
+    <table class="table table-sm mb-0">
         <thead>
         <tr>
             <th>@lang('list.name')</th>

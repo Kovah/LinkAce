@@ -17,7 +17,16 @@
   }
 }
 
-.card-footer {
+.card {
+  box-shadow: $box-shadow-sm;
+  border: 0;
+}
+
+.card-table {
+  padding: 0 1px;
+}
+
+.table thead th {
   border-top: 0;
 }
 
