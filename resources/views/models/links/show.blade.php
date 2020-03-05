@@ -16,10 +16,10 @@
                 <div class="card-body">
 
                     <h2>
-                        <a href="{{ $link->url }}">{{ $link->title }}</a>
+                        <a href="{{ $link->url }}" {!! linkTarget() !!}>{{ $link->title }}</a>
                     </h2>
                     <div class="text-muted small mt-1 mb-3">
-                        <a href="{{ $link->url }}">{{ $link->url }}</a>
+                        <a href="{{ $link->url }}" {!! linkTarget() !!}>{{ $link->url }}</a>
                     </div>
 
                     <div class="row">

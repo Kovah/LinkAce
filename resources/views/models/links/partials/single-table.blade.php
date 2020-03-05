@@ -8,7 +8,7 @@
         @endif
     </td>
     <td>
-        <a href="{{ $link->url }}" target="_blank">
+        <a href="{{ $link->url }}" {!! linkTarget() !!}>
             {{ $link->shortUrl() }}
         </a>
     </td>

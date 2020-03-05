@@ -213,3 +213,13 @@ function alert(?string $message = null, ?string $style = 'info'): Alert
 
     return $alert->flash($message, $style);
 }
+
+/**
+ * Return proper link attributes based on the links_new_tab user setting
+ *
+ * @return string
+ */
+function linkTarget(): string
+{
+    return usersettings('links_new_tab') ? 'target="_blank" rel="noopener noreferrer"' : '';
+}

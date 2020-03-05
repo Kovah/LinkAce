@@ -7,7 +7,7 @@
                     <i class="fas fa-lock text-muted mr-1" title="@lang('link.private')"></i>
                 @endif
                 {!! $link->getIcon('mr-1') !!}
-                <a href="{{ $link->url }}">{{ $link->title }}</a>
+                <a href="{{ $link->url }}" {!! linkTarget() !!}>{{ $link->title }}</a>
                 <br>
                 <small class="text-muted">({{ $link->shortUrl() }})</small>
             </div>
