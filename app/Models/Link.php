@@ -149,7 +149,7 @@ class Link extends Model
      * @param int $maxLength
      * @return string
      */
-    function shortTitle(int $maxLength = 50): string
+    public function shortTitle(int $maxLength = 50): string
     {
         return Str::limit($this->title, $maxLength);
     }
