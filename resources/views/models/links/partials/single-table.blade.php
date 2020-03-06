@@ -16,14 +16,14 @@
         <small>{!! $link->addedAt() !!}</small>
     </td>
     @if(!isset($hide_edit))
-        <td>
-            <div class="btn-group btn-group-sm">
-                <a href="{{ route('links.edit', [$link->id]) }}" class="btn btn-outline-primary">
+        <td class="text-right">
+            <div class="btn-group btn-group-xs">
+                <a href="{{ route('links.edit', [$link->id]) }}" class="btn btn-outline-secondary">
                     <i class="fas fa-edit"></i>
                 </a>
-                <a onclick="event.preventDefault();document.getElementById('link-delete-{{ $link->id }}').submit();"
-                    title=" @lang('link.delete')" class="btn btn-outline-danger">
-                    <i class="fas fa-trash"></i>
+                <a href="#" title=" @lang('link.delete')" class="btn btn-outline-secondary"
+                    onclick="event.preventDefault();document.getElementById('link-delete-{{ $link->id }}').submit();">
+                    <i class="fas fa-trash-alt"></i>
                 </a>
             </div>
             <form id="link-delete-{{ $link->id }}" method="POST" style="display: none;"

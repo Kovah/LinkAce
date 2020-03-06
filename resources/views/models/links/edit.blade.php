@@ -110,7 +110,7 @@
 
                     <button type="button" class="btn btn-sm btn-outline-danger mr-auto"
                         onclick="window.deleteLink.submit()">
-                        <i class="fas fa-trash mr-2"></i> @lang('link.delete')
+                        <i class="fas fa-trash-alt mr-2"></i> @lang('link.delete')
                     </button>
 
                     <button type="submit" class="btn btn-primary">

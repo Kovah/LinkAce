@@ -10,6 +10,7 @@ use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\SoftDeletes;
+use Illuminate\Support\Str;
 
 /**
  * Class Link
@@ -133,17 +134,24 @@ class Link extends Model
      */
 
     /**
-     * Display the short URL if it's longer than 60 characters
+     * Get the URL shortened to max 50 characters
      *
      * @return string
      */
     public function shortUrl()
     {
-        if (mb_strlen($this->url) > 50) {
-            return substr($this->url, 0, 50) . '...';
-        }
+        return Str::limit(trim($this->url, '/'), 50);
+    }
 
-        return $this->url;
+    /**
+     * Get the title shortened to max 50 characters
+     *
+     * @param int $maxLength
+     * @return string
+     */
+    function shortTitle(int $maxLength = 50): string
+    {
+        return Str::limit($this->title, $maxLength);
     }
 
     /**

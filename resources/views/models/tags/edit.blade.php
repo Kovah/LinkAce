@@ -58,7 +58,7 @@
 
                     <button type="button" class="btn btn-sm btn-outline-danger mr-auto"
                         onclick="window.deleteTag.submit()">
-                        <i class="fas fa-trash mr-2"></i> @lang('tag.delete')
+                        <i class="fas fa-trash-alt mr-2"></i> @lang('tag.delete')
                     </button>
 
                     <button type="submit" class="btn btn-primary">

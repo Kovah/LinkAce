@@ -51,12 +51,12 @@
             <div class="btn-group btn-block mb-3 mt-3 mt-md-0">
                 <a href="{{ route('links.edit', [$link->id]) }}" class="btn btn-sm btn-primary"
                     aria-label="@lang('link.edit')">
-                    <i class="fas fa-edit mr-2" aria-hidden="true"></i>
+                    <i class="fas fa-edit mr-2"></i>
                     <span class="d-none d-sm-inline">@lang('linkace.edit')</span>
                 </a>
                 <a onclick="event.preventDefault();document.getElementById('link-delete-{{ $link->id }}').submit();"
                     class="btn btn-sm btn-outline-danger cursor-pointer" aria-label="@lang('link.delete')">
-                    <i class="fas fa-trash mr-2" aria-hidden="true"></i>
+                    <i class="fas fa-trash-alt mr-2"></i>
                     <span class="d-none d-sm-inline">@lang('linkace.delete')</span>
                 </a>
             </div>
