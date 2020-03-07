@@ -8,6 +8,7 @@ use App\Models\User;
 use App\Repositories\LinkRepository;
 use Illuminate\Foundation\Testing\DatabaseMigrations;
 use Illuminate\Foundation\Testing\DatabaseTransactions;
+use Illuminate\Support\Facades\Http;
 use Tests\TestCase;
 
 class LinkCreateTest extends TestCase
@@ -21,6 +22,12 @@ class LinkCreateTest extends TestCase
     public function setUp(): void
     {
         parent::setUp();
+
+        $testHtml = '<!DOCTYPE html><head><title>Google</title></head></html>';
+
+        Http::fake([
+            '*' => Http::response($testHtml, 200),
+        ]);
 
         $this->user = factory(User::class)->create();
     }

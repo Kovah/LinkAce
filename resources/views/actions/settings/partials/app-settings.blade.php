@@ -33,6 +33,26 @@
                 </div>
                 <div class="col">
 
+                    <div class="form-group">
+                        <label for="links_new_tab">
+                            @lang('settings.links_new_tab')
+                        </label>
+                        <select id="links_new_tab" name="links_new_tab"
+                            class="simple-select {{ $errors->has('links_new_tab') ? ' is-invalid' : '' }}">
+                            <option value="0" @if($user->settings()->get('links_new_tab') === '0') selected @endif>
+                                @lang('linkace.no')
+                            </option>
+                            <option value="1" @if($user->settings()->get('links_new_tab') === '1') selected @endif>
+                                @lang('linkace.yes')
+                            </option>
+                        </select>
+                        @if ($errors->has('links_new_tab'))
+                            <p class="invalid-feedback" role="alert">
+                                {{ $errors->first('links_new_tab') }}
+                            </p>
+                        @endif
+                    </div>
+
                 </div>
             </div>
 

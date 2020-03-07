@@ -87,6 +87,9 @@ Route::group(['middleware' => ['auth']], function () {
     Route::resource('notes', NoteController::class)
         ->except(['index', 'show']);
 
+    Route::post('links/toggle-check/{id}', [LinkController::class, 'updateCheckToggle'])
+        ->name('links.toggle-check');
+
     Route::get('search', [SearchController::class, 'getSearch'])
         ->name('get-search');
     Route::post('search', [SearchController::class, 'doSearch'])
@@ -133,6 +136,8 @@ Route::group(['middleware' => ['auth']], function () {
         ->name('fetch-lists');
     Route::post('fetch/existing-links', [FetchController::class, 'searchExistingUrls'])
         ->name('fetch-existing-links');
+    Route::get('fetch/update-check', [FetchController::class, 'checkForUpdates'])
+        ->name('fetch-update-check');
 });
 
 // Guest access routes

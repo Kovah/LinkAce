@@ -32,7 +32,7 @@
                 <a href="#"
                     onclick="event.preventDefault();document.getElementById('list-delete-{{ $list->id }}').submit();"
                     title=" @lang('list.delete')" class="card-link cursor-pointer">
-                    <i class="fas fa-trash"></i>
+                    <i class="fas fa-trash-alt"></i>
                 </a>
             </div>
 

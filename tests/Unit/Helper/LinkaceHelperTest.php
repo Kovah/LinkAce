@@ -3,6 +3,7 @@
 namespace Tests\Unit;
 
 use App\Helper\LinkAce;
+use Illuminate\Support\Facades\Http;
 use Tests\TestCase;
 
 /**
@@ -20,6 +21,12 @@ class LinkaceHelperTest extends TestCase
      */
     public function testTitleFromValidURL(): void
     {
+        $testHtml = '<!DOCTYPE html><head><title>Google</title></head></html>';
+
+        Http::fake([
+            '*' => Http::response($testHtml, 200),
+        ]);
+
         $url = 'https://google.com/';
 
         $result = LinkAce::getMetaFromURL($url);
@@ -36,11 +43,15 @@ class LinkaceHelperTest extends TestCase
      */
     public function testTitleFromInvalidURL(): void
     {
-        $url = 'https://a-google-url-that-does-not-exist.comcom/';
+        $url = 'https://googlegoogle.comcom/';
+
+        Http::fake([
+            '*' => Http::response(null, 404),
+        ]);
 
         $result = LinkAce::getMetaFromURL($url);
 
         $this->assertArrayHasKey('title', $result);
-        $this->assertEquals('a-google-url-that-does-not-exist.comcom', $result['title']);
+        $this->assertEquals('googlegoogle.comcom', $result['title']);
     }
 }

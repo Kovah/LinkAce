@@ -35,14 +35,12 @@ class ListUpdateTest extends TestCase
 
         $list = factory(LinkList::class)->create();
 
-        $changed_data = [
+        $changedData = [
             'name' => 'Changed List Title',
         ];
 
-        $updated_list = ListRepository::update($list, $changed_data);
+        $updatedList = ListRepository::update($list, $changedData);
 
-        $asserted_data = array_merge($list->toArray(), $changed_data);
-
-        $this->assertDatabaseHas('lists', $asserted_data);
+        $this->assertEquals('Changed List Title', $updatedList->name);
     }
 }

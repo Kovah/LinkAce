@@ -31,6 +31,11 @@ return [
     'external_link' => 'External Link',
     'wayback' => 'Link archive @ Wayback Machine',
 
+    'check_disable' => 'Disable Check',
+    'check_disabled' => 'Check is disabled',
+    'check_enable' => 'Enable Check',
+    'check_enabled' => 'Check is enabled',
+
     'added_successfully' => 'Link added successfully.',
     'updated_successfully' => 'Link updated successfully.',
     'deleted_successfully' => 'Link deleted successfully.',

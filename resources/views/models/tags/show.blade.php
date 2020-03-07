@@ -15,7 +15,7 @@
                 </a>
                 <a onclick="event.preventDefault();document.getElementById('tag-delete-{{ $tag->id }}').submit();"
                     class="btn btn-sm btn-outline-danger" aria-label="@lang('tag.delete')">
-                    <i class="fas fa-trash mr-2"></i>
+                    <i class="fas fa-trash-alt mr-2"></i>
                     @lang('linkace.delete')
                 </a>
             </div>

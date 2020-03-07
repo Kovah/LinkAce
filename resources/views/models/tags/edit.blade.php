@@ -54,7 +54,12 @@
                     </div>
                 </div>
 
-                <div class="mt-3 text-right">
+                <div class="mt-3 d-flex align-items-center">
+
+                    <button type="button" class="btn btn-sm btn-outline-danger mr-auto"
+                        onclick="window.deleteTag.submit()">
+                        <i class="fas fa-trash-alt mr-2"></i> @lang('tag.delete')
+                    </button>
 
                     <button type="submit" class="btn btn-primary">
                         <i class="fas fa-save mr-2"></i> @lang('tag.edit')
@@ -66,5 +71,10 @@
 
         </div>
     </div>
+
+    <form action="{{ route('tags.destroy', [$tag->id]) }}" method="post" id="deleteTag">
+        @csrf
+        @method('DELETE')
+    </form>
 
 @endsection

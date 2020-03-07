@@ -37,14 +37,12 @@ class NoteUpdateTest extends TestCase
 
         $note = factory(Note::class)->create();
 
-        $changed_data = [
+        $changedData = [
             'note' => 'Cras mattis iudicium purus sit amet fermentum.',
         ];
 
-        $updated_note = NoteRepository::update($note, $changed_data);
+        $updatedNote = NoteRepository::update($note, $changedData);
 
-        $asserted_data = array_merge($note->toArray(), $changed_data);
-
-        $this->assertDatabaseHas('notes', $asserted_data);
+        $this->assertEquals('Cras mattis iudicium purus sit amet fermentum.', $updatedNote->note);
     }
 }

@@ -1,33 +1,20 @@
 <div class="col-12 col-sm-6 col-md-4 mb-4">
     <div class="h-100 card">
-        <div class="card-header">
+        <div class="card-header h-100 border-bottom-0">
             <div class="d-flex align-items-top">
                 <div class="mr-2">
                     @if($link->is_private)
                         <i class="fas fa-lock text-muted mr-1" title="@lang('link.private')"></i>
                     @endif
                     {!! $link->getIcon('mr-1') !!}
-                    <a href="{{ $link->url }}">{{ $link->title }}</a>
-                    <br>
-                    <small class="text-muted">({{ $link->shortUrl() }})</small>
+                    <a href="{{ $link->url }}" {!! linkTarget() !!}>
+                        {{ $link->shortTitle() }}
+                    </a>
+                    <div class="mt-2 small text-muted">{{ $link->shortUrl() }}</div>
                 </div>
             </div>
         </div>
 
-        <ul class="list-group list-group-flush h-100">
-            <li class="list-group-item h-100">
-                @if($link->tags->count() > 0)
-                    <label class="small m-0">@lang('tag.tags'):</label>
-                    @foreach($link->tags as $tag)
-                        <a href="{{ route('tags.show', [$tag->id]) }}" class="badge badge-light">
-                            {{ $tag->name }}
-                        </a>
-                    @endforeach
-                @else
-                    <span class="small">@lang('tag.no_tags')</span>
-                @endif
-            </li>
-        </ul>
         <div class="card-footer">
             <div>
                 <small class="text-muted">
@@ -35,7 +22,7 @@
                 </small>
             </div>
 
-            <div class="btn-group w-100 mt-2">
+            <div class="btn-group w-100 mt-2 small">
                 <a href="{{ route('links.show', [$link->id]) }}" class="card-link" title="@lang('link.show')">
                     <i class="fas fa-info fa-fw"></i>
                 </a>

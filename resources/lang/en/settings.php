@@ -11,6 +11,8 @@ return [
     'time_format' => 'Time Format',
     'listitem_count' => 'Number of Items in Lists',
 
+    'links_new_tab' => 'Open external links in new tabs',
+
     'private_default' => 'Private Links by default',
     'private_default_help' => 'Enabling this will make all new links private by default',
 
@@ -65,4 +67,10 @@ return [
     'cron_token_generate_failure' => 'A new cron token could not be generated. Please check your browser console and application logs for more information.',
     'cron_token_auth_failure' => 'The provided cron token is invalid',
     'cron_execute_successful' => 'Cron successfully executed',
+
+    'update_check' => 'Update Check',
+    'update_check_running' => 'Checking for updates...',
+    'update_check_version_found' => 'Update found. Version #VERSION# is available.',
+    'update_check_success' => 'No update found.',
+    'update_check_failed' => 'Could not check for updates.',
 ];

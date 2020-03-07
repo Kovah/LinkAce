@@ -3,6 +3,11 @@
   cursor: pointer;
 }
 
+// Remove buplicate border from list groups inside cards
+.card .list-group-item:last-of-type {
+  border: 0;
+}
+
 // Style fix for the navbar logo
 .navbar-dark {
 
@@ -19,4 +24,8 @@
   .svg-stroke {
     stroke: $white;
   }
+}
+
+[disabled] {
+  cursor: not-allowed;
 }

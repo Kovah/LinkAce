@@ -15,12 +15,12 @@
             <div class="btn-group">
                 <a href="{{ route('notes.edit', [$note->id]) }}" class="btn btn-xs btn-outline-secondary"
                     aria-label="@lang('note.edit')">
-                    <i class="fas fa-edit mr-2" aria-hidden="true"></i>
+                    <i class="fas fa-edit mr-2"></i>
                     @lang('linkace.edit')
                 </a>
                 <a onclick="event.preventDefault();document.getElementById('note-delete-{{ $note->id }}').submit();"
                     class="btn btn-xs btn-outline-danger cursor-pointer" aria-label="@lang('note.delete')">
-                    <i class="fas fa-trash mr-2" aria-hidden="true"></i>
+                    <i class="fas fa-trash-alt mr-2"></i>
                     @lang('linkace.delete')
                 </a>
             </div>

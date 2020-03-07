@@ -16,10 +16,10 @@
                 <div class="card-body">
 
                     <h2>
-                        <a href="{{ $link->url }}">{{ $link->title }}</a>
+                        <a href="{{ $link->url }}" {!! linkTarget() !!}>{{ $link->title }}</a>
                     </h2>
                     <div class="text-muted small mt-1 mb-3">
-                        <a href="{{ $link->url }}">{{ $link->url }}</a>
+                        <a href="{{ $link->url }}" {!! linkTarget() !!}>{{ $link->url }}</a>
                     </div>
 
                     <div class="row">
@@ -51,12 +51,12 @@
             <div class="btn-group btn-block mb-3 mt-3 mt-md-0">
                 <a href="{{ route('links.edit', [$link->id]) }}" class="btn btn-sm btn-primary"
                     aria-label="@lang('link.edit')">
-                    <i class="fas fa-edit mr-2" aria-hidden="true"></i>
+                    <i class="fas fa-edit mr-2"></i>
                     <span class="d-none d-sm-inline">@lang('linkace.edit')</span>
                 </a>
                 <a onclick="event.preventDefault();document.getElementById('link-delete-{{ $link->id }}').submit();"
                     class="btn btn-sm btn-outline-danger cursor-pointer" aria-label="@lang('link.delete')">
-                    <i class="fas fa-trash mr-2" aria-hidden="true"></i>
+                    <i class="fas fa-trash-alt mr-2"></i>
                     <span class="d-none d-sm-inline">@lang('linkace.delete')</span>
                 </a>
             </div>
@@ -68,11 +68,29 @@
             </form>
 
             @if($link->status !== 1)
-                <div class="mb-3">
+                <div class="mb-2">
                     <a href="{{ waybackLink($link) }}" class="btn btn-sm btn-block btn-outline-warning" target="_blank">
                         @lang('link.wayback')
                     </a>
                 </div>
+
+                <form action="{{ route('links.toggle-check', [$link->id]) }}" method="POST"
+                    class="mb-3 d-flex align-items-center">
+                    @csrf
+                    @if($link->check_disabled)
+                        <small class="mr-3">@lang('link.check_disabled')</small>
+                        <input type="hidden" name="toggle" value="0">
+                        <button type="submit" class="btn btn-xs btn-outline-secondary ml-auto">
+                            @lang('link.check_enable')
+                        </button>
+                    @else
+                        <small class="mr-3">@lang('link.check_enabled')</small>
+                        <input type="hidden" name="toggle" value="1">
+                        <button type="submit" class="btn btn-xs btn-outline-secondary ml-auto">
+                            @lang('link.check_disable')
+                        </button>
+                    @endif
+                </form>
             @endif
 
             <div class="card mb-3">

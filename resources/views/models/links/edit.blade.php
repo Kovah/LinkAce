@@ -8,7 +8,7 @@
         </header>
         <div class="card-body">
 
-            <form action="{{ route('links.update', [$link->id]) }}" method="POST">
+            <form action="{{ route('links.update', [$link->id]) }}" method="POST" id="link-edit">
                 @method('PATCH')
                 @csrf
 
@@ -106,7 +106,12 @@
                     </div>
                 </div>
 
-                <div class="mt-3 text-right">
+                <div class="mt-3 d-flex align-items-center justify-content-end">
+
+                    <button type="button" class="btn btn-sm btn-outline-danger mr-auto"
+                        onclick="window.deleteLink.submit()">
+                        <i class="fas fa-trash-alt mr-2"></i> @lang('link.delete')
+                    </button>
 
                     <button type="submit" class="btn btn-primary">
                         <i class="fas fa-save mr-2"></i> @lang('link.update')
@@ -118,5 +123,10 @@
 
         </div>
     </div>
+
+    <form action="{{ route('links.destroy', [$link->id]) }}" method="post" id="deleteLink">
+        @csrf
+        @method('DELETE')
+    </form>
 
 @endsection

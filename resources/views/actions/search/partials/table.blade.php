@@ -1,10 +1,10 @@
 <div class="table-responsive">
-    <table class="table table-bordered table-hover mb-0">
+    <table class="table mb-0">
         <thead>
         <tr>
             <th>@lang('link.title')</th>
             <th>@lang('link.url')</th>
-            <th>@lang('linkace.added_at')</th>
+            <th style="min-width:90px;">@lang('linkace.added_at')</th>
         </tr>
         </thead>
         <tbody>
@@ -16,7 +16,7 @@
                     </a>
                 </td>
                 <td>
-                    <a href="{{ $link->url }}" target="_blank">
+                    <a href="{{ $link->url }}" {!! linkTarget() !!}>
                         {{ $link->url }}
                     </a>
                 </td>

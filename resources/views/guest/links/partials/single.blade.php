@@ -4,7 +4,7 @@
         <div class="d-flex align-items-center">
             <div class="mr-2">
                 {!! $link->getIcon('mr-1') !!}
-                <a href="{{ $link->url }}" target="_blank">{{ $link->title }}</a>
+                <a href="{{ $link->url }}" {!! linkTarget() !!}>{{ $link->title }}</a>
                 <small>({{ $link->url }})</small>
             </div>
             <div class="ml-auto text-right">

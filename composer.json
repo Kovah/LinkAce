@@ -4,11 +4,11 @@
   "license": "MIT",
   "type": "project",
   "require": {
-    "php": "^7.2",
+    "php": "^7.2.5",
     "doctrine/dbal": "^2.8",
     "fideloper/proxy": "^4.0",
     "guzzlehttp/guzzle": "^6.3",
-    "laravel/framework": "^6.0",
+    "laravel/framework": "^7.0",
     "predis/predis": "^1.1",
     "shaarli/netscape-bookmark-parser": "^2.1",
     "spatie/laravel-backup": "^6.4.0"
@@ -16,11 +16,11 @@
   "require-dev": {
     "barryvdh/laravel-debugbar": "^3.2",
     "barryvdh/laravel-ide-helper": "^2.6",
-    "facade/ignition": "^1.4",
+    "facade/ignition": "^2.0.0",
     "fzaninotto/faker": "^1.4",
-    "laravel/tinker": "^1.0",
+    "laravel/tinker": "^2.2.0",
     "mockery/mockery": "^1.0",
-    "nunomaduro/collision": "^3.0",
+    "nunomaduro/collision": "^4.1",
     "phpunit/phpunit": "^8.0",
     "roave/security-advisories": "dev-master",
     "squizlabs/php_codesniffer": "^3.5"

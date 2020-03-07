@@ -34,6 +34,6 @@ class SaveLinkToWaybackmachine implements ShouldQueue
      */
     public function handle(): void
     {
-        (new WaybackMachine)->saveToArchive($this->link->url);
+        WaybackMachine::saveToArchive($this->link->url);
     }
 }
