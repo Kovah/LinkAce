@@ -81,7 +81,7 @@ jobs:
         run: composer validate
 
       - name: Install dependencies
-        run: composer install -n --prefer-dist --no-dev
+        run: composer install --prefer-dist --no-progress --no-suggest
 
       - name: Run PHP CS
         run: composer run lint
