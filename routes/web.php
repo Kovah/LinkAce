@@ -1,7 +1,5 @@
 <?php
 
-use App\Http\Controllers\FetchController;
-use App\Http\Controllers\API\CronController;
 use App\Http\Controllers\App\BookmarkletController;
 use App\Http\Controllers\App\DashboardController;
 use App\Http\Controllers\App\ExportController;
@@ -13,6 +11,8 @@ use App\Http\Controllers\App\UserSettingsController;
 use App\Http\Controllers\Auth\ForgotPasswordController;
 use App\Http\Controllers\Auth\LoginController;
 use App\Http\Controllers\Auth\ResetPasswordController;
+use App\Http\Controllers\CronController;
+use App\Http\Controllers\FetchController;
 use App\Http\Controllers\FrontController;
 use App\Http\Controllers\Guest\LinkController as GuestLinkController;
 use App\Http\Controllers\Guest\ListController as GuestListController;
