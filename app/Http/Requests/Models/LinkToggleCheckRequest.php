@@ -2,10 +2,8 @@
 
 namespace App\Http\Requests\Models;
 
-use App\Models\LinkList;
 use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Http\Request;
-use Illuminate\Validation\Rule;
 
 /**
  * Class LinkToggleCheckRequest

@@ -2,7 +2,6 @@
 
 namespace App\Http\Requests\Models;
 
-use App\Models\Tag;
 use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Http\Request;
 

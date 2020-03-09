@@ -2,9 +2,7 @@
 
 namespace App\Http\Requests\Models;
 
-use App\Models\Link;
 use Illuminate\Foundation\Http\FormRequest;
-use Illuminate\Http\Request;
 
 /**
  * Class LinkDeleteRequest
