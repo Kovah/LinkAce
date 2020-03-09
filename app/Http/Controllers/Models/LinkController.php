@@ -3,10 +3,10 @@
 namespace App\Http\Controllers\Models;
 
 use App\Http\Controllers\Controller;
-use App\Http\Requests\LinkDeleteRequest;
-use App\Http\Requests\LinkStoreRequest;
-use App\Http\Requests\LinkToggleCheckRequest;
-use App\Http\Requests\LinkUpdateRequest;
+use App\Http\Requests\Models\LinkDeleteRequest;
+use App\Http\Requests\Models\LinkStoreRequest;
+use App\Http\Requests\Models\LinkToggleCheckRequest;
+use App\Http\Requests\Models\LinkUpdateRequest;
 use App\Models\Link;
 use App\Repositories\LinkRepository;
 use Exception;
