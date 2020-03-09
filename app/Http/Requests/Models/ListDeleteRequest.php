@@ -1,24 +1,25 @@
 <?php
 
-namespace App\Http\Requests;
+namespace App\Http\Requests\Models;
 
-use App\Models\Link;
+use App\Models\LinkList;
 use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Http\Request;
 
 /**
- * Class LinkDeleteRequest
+ * Class ListDeleteRequest
  *
- * @package App\Http\Requests
+ * @package App\Http\Requests\Models
  */
-class LinkDeleteRequest extends FormRequest
+class ListDeleteRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
      *
+     * @param Request $request
      * @return bool
      */
-    public function authorize(): bool
+    public function authorize(Request $request)
     {
         return true;
     }
@@ -28,7 +29,7 @@ class LinkDeleteRequest extends FormRequest
      *
      * @return array
      */
-    public function rules(): array
+    public function rules()
     {
         return [];
     }

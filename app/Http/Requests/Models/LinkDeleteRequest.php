@@ -1,22 +1,24 @@
 <?php
 
-namespace App\Http\Requests;
+namespace App\Http\Requests\Models;
 
+use App\Models\Link;
 use Illuminate\Foundation\Http\FormRequest;
+use Illuminate\Http\Request;
 
 /**
- * Class ListStoreRequest
+ * Class LinkDeleteRequest
  *
- * @package App\Http\Requests
+ * @package App\Http\Requests\Models
  */
-class ListStoreRequest extends FormRequest
+class LinkDeleteRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
      *
      * @return bool
      */
-    public function authorize()
+    public function authorize(): bool
     {
         return true;
     }
@@ -26,11 +28,8 @@ class ListStoreRequest extends FormRequest
      *
      * @return array
      */
-    public function rules()
+    public function rules(): array
     {
-        return [
-            'name' => 'required',
-            'is_private' => 'required|integer',
-        ];
+        return [];
     }
 }

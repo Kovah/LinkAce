@@ -1,17 +1,17 @@
 <?php
 
-namespace App\Http\Requests;
+namespace App\Http\Requests\Models;
 
-use App\Models\LinkList;
+use App\Models\Tag;
 use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Http\Request;
 
 /**
- * Class ListDeleteRequest
+ * Class TagDeleteRequest
  *
- * @package App\Http\Requests
+ * @package App\Http\Requests\Models
  */
-class ListDeleteRequest extends FormRequest
+class TagDeleteRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.

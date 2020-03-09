@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Http\Requests;
+namespace App\Http\Requests\Models;
 
 use App\Models\Note;
 use Illuminate\Foundation\Http\FormRequest;
@@ -9,7 +9,7 @@ use Illuminate\Http\Request;
 /**
  * Class NoteDeleteRequest
  *
- * @package App\Http\Requests
+ * @package App\Http\Requests\Models
  */
 class NoteDeleteRequest extends FormRequest
 {
