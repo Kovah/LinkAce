@@ -8,6 +8,6 @@ $factory->define(App\Models\User::class, function (Faker $faker) {
         'name' => $faker->userName,
         'email' => $faker->unique()->safeEmail,
         'password' => '$2y$10$9.preebMjZ.8obdvk5ZVdOCw7Cq1EJm6i1B1RJevxCXYW0lUiwDJG', // secretpassword
-        'remember_token' => Str::random(10),
+        'api_token' => Str::random(32),
     ];
 });
