@@ -52,7 +52,7 @@ class LinkController extends Controller
      */
     public function show($id)
     {
-        $link = Link::findOrFail($id);
+        $link = Link::with(['lists', 'tags'])->findOrFail($id);
 
         return response()->json($link);
     }

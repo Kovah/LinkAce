@@ -118,6 +118,29 @@ class LinkApiTest extends TestCase
             ]);
     }
 
+    public function testShowRequestWithRelations(): void
+    {
+        $link = factory(Link::class)->create();
+        $list = factory(LinkList::class)->create();
+        $tag = factory(Tag::class)->create();
+
+        $link->lists()->sync([$list->id]);
+        $link->tags()->sync([$tag->id]);
+
+        $response = $this->getJson('api/v1/links/1', $this->generateHeaders());
+
+        $response->assertStatus(200)
+            ->assertJson([
+                'url' => $link->url,
+                'lists' => [
+                    ['name' => $list->name],
+                ],
+                'tags' => [
+                    ['name' => $tag->name],
+                ],
+            ]);
+    }
+
     public function testShowRequestNotFound(): void
     {
         $response = $this->getJson('api/v1/links/1', $this->generateHeaders());
