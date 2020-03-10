@@ -38,7 +38,6 @@ class LinkUpdateRequest extends FormRequest
     public function rules()
     {
         $rules = [
-            'link_id' => 'required',
             'url' => 'required',
             'title' => 'present',
             'description' => 'present',
