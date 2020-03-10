@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\API\LinkController;
+use App\Http\Controllers\API\ListController;
 
 /*
 |--------------------------------------------------------------------------
@@ -16,5 +17,6 @@ use App\Http\Controllers\API\LinkController;
 Route::prefix('v1')->group(function () {
     Route::middleware('auth:api')->group(function () {
         Route::apiResource('links', LinkController::class);
+        Route::apiResource('lists', ListController::class);
     });
 });
