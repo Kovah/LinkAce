@@ -1,6 +1,6 @@
 <?php
 
-use Illuminate\Http\Request;
+use App\Http\Controllers\API\LinkController;
 
 /*
 |--------------------------------------------------------------------------
@@ -12,3 +12,9 @@ use Illuminate\Http\Request;
 | is assigned the "api" middleware group. Enjoy building your API!
 |
 */
+
+Route::prefix('v1')->group(function () {
+    Route::middleware('auth:api')->group(function () {
+        Route::apiResource('links', LinkController::class);
+    });
+});
