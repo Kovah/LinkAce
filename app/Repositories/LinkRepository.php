@@ -31,8 +31,8 @@ class LinkRepository
     {
         $linkMeta = LinkAce::getMetaFromURL($data['url']);
 
-        $data['title'] = $data['title'] ?: $linkMeta['title'];
-        $data['description'] = $data['description'] ?: $linkMeta['description'];
+        $data['title'] = $data['title'] ?? $linkMeta['title'];
+        $data['description'] = $data['description'] ?? $linkMeta['description'];
         $data['user_id'] = auth()->user()->id;
         $data['icon'] = LinkIconMapper::mapLink($data['url']);
 
@@ -96,25 +96,15 @@ class LinkRepository
     /**
      * Create or get the tags from the input and attach them to the link.
      *
-     * @param Link   $link
-     * @param string $tags
+     * @param Link         $link
+     * @param array|string $tags
      */
-    protected static function updateTagsForLink(Link $link, string $tags): void
+    protected static function updateTagsForLink(Link $link, $tags): void
     {
-        if (empty($tags)) {
-            return;
-        }
-
-        $parsedTags = explode(',', $tags);
-        $newTags = [];
-
-        foreach ($parsedTags as $tag) {
-            $new_tag = Tag::firstOrCreate([
-                'user_id' => auth()->user()->id,
-                'name' => $tag,
-            ]);
-
-            $newTags[] = $new_tag->id;
+        if (is_array($tags)) {
+            $newTags = self::processTaxonomyAsArray(Tag::class, $tags);
+        } else {
+            $newTags = self::processTaxonomyAsString(Tag::class, $tags);
         }
 
         $link->tags()->sync($newTags);
@@ -123,27 +113,65 @@ class LinkRepository
     /**
      * Create or get the lists from the input and attach them to the link.
      *
-     * @param Link   $link
-     * @param string $lists
+     * @param Link         $link
+     * @param array|string $lists
      */
-    protected static function updateListsForLink(Link $link, string $lists): void
+    protected static function updateListsForLink(Link $link, $lists): void
     {
-        if (empty($lists)) {
-            return;
-        }
-
-        $parsedLists = explode(',', $lists);
-        $newLists = [];
-
-        foreach ($parsedLists as $list) {
-            $new_list = LinkList::firstOrCreate([
-                'user_id' => auth()->user()->id,
-                'name' => $list,
-            ]);
-
-            $newLists[] = $new_list->id;
+        if (is_array($lists)) {
+            $newLists = self::processTaxonomyAsArray(LinkList::class, $lists);
+        } else {
+            $newLists = self::processTaxonomyAsString(LinkList::class, $lists);
         }
 
         $link->lists()->sync($newLists);
+    }
+
+    /**
+     * Tags or lists are passed as comma-delimited string in the LinkAce
+     * frontend. Parsing the string also creates the corresponding tag or list
+     * if it does not exist already.
+     *
+     * @param string $model
+     * @param string $tags
+     * @return array
+     */
+    protected static function processTaxonomyAsString(string $model, string $tags): array
+    {
+        $parsedTags = explode(',', $tags);
+        $newTags = [];
+
+        foreach ($parsedTags as $tag) {
+            $newTag = $model::firstOrCreate([
+                'user_id' => auth()->user()->id,
+                'name' => $tag,
+            ]);
+
+            $newTags[] = $newTag->id;
+        }
+
+        return $newTags;
+    }
+
+    /**
+     * Tags or lists are passed as arrays containing the model IDs in API
+     * calls. The passed IDs are first checked for existence before allowing
+     * them to be synced with the link.
+     *
+     * @param string $model
+     * @param array  $data
+     * @return array
+     */
+    protected static function processTaxonomyAsArray(string $model, array $data): array
+    {
+        $entries = [];
+
+        foreach ($data as $entry) {
+            if ($model::first($entry)) {
+                $entries[] = $entry;
+            }
+        }
+
+        return $entries;
     }
 }

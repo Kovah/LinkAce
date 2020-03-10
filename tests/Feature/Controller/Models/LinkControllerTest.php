@@ -48,11 +48,6 @@ class LinkControllerTest extends TestCase
     {
         $response = $this->post('links', [
             'url' => 'https://example.com',
-            'title' => null,
-            'description' => null,
-            'lists' => null,
-            'tags' => null,
-            'is_private' => '0',
         ]);
 
         $response->assertStatus(302)
@@ -93,11 +88,6 @@ class LinkControllerTest extends TestCase
     {
         $response = $this->post('links', [
             'url' => 'https://example.com',
-            'title' => null,
-            'description' => null,
-            'lists' => null,
-            'tags' => null,
-            'is_private' => '0',
             'reload_view' => '1',
         ]);
 
@@ -113,15 +103,10 @@ class LinkControllerTest extends TestCase
     {
         $response = $this->post('links', [
             'url' => null,
-            'is_private' => '0',
         ]);
 
         $response->assertSessionHasErrors([
             'url',
-            'title',
-            'description',
-            'lists',
-            'tags',
         ]);
     }
 
@@ -151,13 +136,13 @@ class LinkControllerTest extends TestCase
 
         $response = $this->post('links/1', [
             '_method' => 'patch',
-            'link_id' => $baseLink->id,
             'url' => 'https://new-example.com',
             'title' => 'New Title',
             'description' => 'New Description',
             'lists' => null,
             'tags' => null,
             'is_private' => '0',
+            'check_disabled' => '0',
         ]);
 
         $response->assertStatus(302)
@@ -170,7 +155,7 @@ class LinkControllerTest extends TestCase
         $this->assertEquals('New Description', $updatedLink->description);
     }
 
-    public function testMissingMissingErrorForUpdate(): void
+    public function testMissingModelErrorForUpdate(): void
     {
         $response = $this->post('links/1', [
             '_method' => 'patch',

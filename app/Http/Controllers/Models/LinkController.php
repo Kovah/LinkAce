@@ -158,6 +158,11 @@ class LinkController extends Controller
         return redirect()->route('links.index');
     }
 
+    /**
+     * @param LinkToggleCheckRequest $request
+     * @param int                    $id
+     * @return RedirectResponse
+     */
     public function updateCheckToggle(LinkToggleCheckRequest $request, $id)
     {
         $link = Link::findOrFail($id);
