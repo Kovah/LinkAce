@@ -1,22 +1,24 @@
 <?php
 
-namespace App\Http\Requests;
+namespace App\Http\Requests\Models;
 
 use Illuminate\Foundation\Http\FormRequest;
+use Illuminate\Http\Request;
 
 /**
- * Class NoteStoreRequest
+ * Class NoteDeleteRequest
  *
- * @package App\Http\Requests
+ * @package App\Http\Requests\Models
  */
-class NoteStoreRequest extends FormRequest
+class NoteDeleteRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
      *
+     * @param Request $request
      * @return bool
      */
-    public function authorize()
+    public function authorize(Request $request)
     {
         return true;
     }
@@ -28,10 +30,6 @@ class NoteStoreRequest extends FormRequest
      */
     public function rules()
     {
-        return [
-            'link_id' => 'required',
-            'note' => 'required',
-            'is_private' => 'boolean',
-        ];
+        return [];
     }
 }

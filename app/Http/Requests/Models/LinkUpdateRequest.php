@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Http\Requests;
+namespace App\Http\Requests\Models;
 
 use App\Models\Link;
 use Illuminate\Foundation\Http\FormRequest;
@@ -10,7 +10,7 @@ use Illuminate\Validation\Rule;
 /**
  * Class LinkUpdateRequest
  *
- * @package App\Http\Requests
+ * @package App\Http\Requests\Models
  */
 class LinkUpdateRequest extends FormRequest
 {
@@ -38,7 +38,6 @@ class LinkUpdateRequest extends FormRequest
     public function rules()
     {
         $rules = [
-            'link_id' => 'required',
             'url' => 'required',
             'title' => 'present',
             'description' => 'present',

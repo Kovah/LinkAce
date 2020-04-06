@@ -3,9 +3,9 @@
 namespace App\Http\Controllers\Models;
 
 use App\Http\Controllers\Controller;
-use App\Http\Requests\ListDeleteRequest;
-use App\Http\Requests\ListStoreRequest;
-use App\Http\Requests\ListUpdateRequest;
+use App\Http\Requests\Models\ListDeleteRequest;
+use App\Http\Requests\Models\ListStoreRequest;
+use App\Http\Requests\Models\ListUpdateRequest;
 use App\Models\LinkList;
 use App\Repositories\ListRepository;
 use Exception;

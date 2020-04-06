@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Http\Requests;
+namespace App\Http\Requests\Models;
 
 use App\Models\Tag;
 use Illuminate\Foundation\Http\FormRequest;
@@ -10,7 +10,7 @@ use Illuminate\Validation\Rule;
 /**
  * Class TagUpdateRequest
  *
- * @package App\Http\Requests
+ * @package App\Http\Requests\Models
  */
 class TagUpdateRequest extends FormRequest
 {

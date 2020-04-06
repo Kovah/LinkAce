@@ -1,15 +1,13 @@
 <?php
 
-namespace App\Http\Requests;
+namespace App\Http\Requests\Models;
 
-use App\Models\Link;
 use Illuminate\Foundation\Http\FormRequest;
-use Illuminate\Http\Request;
 
 /**
  * Class LinkDeleteRequest
  *
- * @package App\Http\Requests
+ * @package App\Http\Requests\Models
  */
 class LinkDeleteRequest extends FormRequest
 {
