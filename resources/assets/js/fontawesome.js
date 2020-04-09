@@ -86,6 +86,7 @@ import { faGooglePlay } from '@fortawesome/free-brands-svg-icons/faGooglePlay';
 import { faGoogle } from '@fortawesome/free-brands-svg-icons/faGoogle';
 import { faGoogleDrive } from '@fortawesome/free-brands-svg-icons/faGoogleDrive';
 import { faHackerrank } from '@fortawesome/free-brands-svg-icons/faHackerrank';
+import { faHackerNews } from '@fortawesome/free-brands-svg-icons/faHackerNews';
 import { faHouzz } from '@fortawesome/free-brands-svg-icons/faHouzz';
 import { faImdb } from '@fortawesome/free-brands-svg-icons/faImdb';
 import { faInstagram } from '@fortawesome/free-brands-svg-icons/faInstagram';
@@ -230,6 +231,7 @@ export function initFontAwesome () {
   library.add(faGooglePlay);
   library.add(faGoogleDrive);
   library.add(faHackerrank);
+  library.add(faHackerNews);
   library.add(faHouzz);
   library.add(faImdb);
   library.add(faInstagram);
