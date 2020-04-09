@@ -12,3 +12,11 @@
   white-space: nowrap;
   text-overflow: ellipsis;
 }
+
+.one-line-sm {
+  @include media-breakpoint-up(sm) {
+    overflow-x: hidden;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+  }
+}

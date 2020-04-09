@@ -15,14 +15,14 @@
     <section class="my-3">
         @if(!$links->isEmpty())
 
-            <div class="link-wrapper {{ usersettings('link_display_mode') === '1' ? 'row' : '' }}">
-                @foreach($links as $link)
-                    @if(usersettings('link_display_mode') === '1')
-                        @include('models.links.partials.single-cards')
-                    @else
-                        @include('models.links.partials.single')
-                    @endif
-                @endforeach
+            <div class="link-wrapper">
+                @if((int)usersettings('link_display_mode') === Link::DISPLAY_CARDS)
+                    @include('models.links.partials.list-cards')
+                @elseif((int)usersettings('link_display_mode') === Link::DISPLAY_LIST_SIMPLE)
+                    @include('models.links.partials.list-simple')
+                @else
+                    @include('models.links.partials.list-detailed')
+                @endif
             </div>
 
         @else
