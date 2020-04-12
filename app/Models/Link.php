@@ -160,6 +160,17 @@ class Link extends Model
     }
 
     /**
+     * Get the domain of the URL
+     *
+     * @return string
+     */
+    public function domainOfURL()
+    {
+        $urlDetails = parse_url($this->url);
+        return $urlDetails['host'] ?? $this->shortUrl(20);
+    }
+
+    /**
      * @return null|string
      */
     public function tagsForInput()
