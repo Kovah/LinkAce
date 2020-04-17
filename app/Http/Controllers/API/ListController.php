@@ -54,7 +54,7 @@ class ListController extends Controller
     {
         $list = LinkList::findOrFail($id);
 
-        $list->links = $list->links()->paginate(5);
+        $list->links = route('api.lists.links', [$id], true);
 
         return response()->json($list);
     }

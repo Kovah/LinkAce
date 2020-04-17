@@ -99,29 +99,12 @@ class ListApiTest extends TestCase
 
         $response = $this->getJson('api/v1/lists/1', $this->generateHeaders());
 
-        $response->assertStatus(200)
-            ->assertJson([
-                'name' => $list->name,
-            ]);
-    }
-
-    public function testShowRequestWithRelations(): void
-    {
-        $link = factory(Link::class)->create();
-        $list = factory(LinkList::class)->create();
-
-        $link->lists()->sync([$list->id]);
-
-        $response = $this->getJson('api/v1/lists/1', $this->generateHeaders());
+        $expectedLinkApiUrl = 'http://localhost/api/v1/lists/1/links';
 
         $response->assertStatus(200)
             ->assertJson([
                 'name' => $list->name,
-                'links' => [
-                    'data' => [
-                        ['url' => $link->url]
-                    ]
-                ],
+                'links' => $expectedLinkApiUrl,
             ]);
     }
 
