@@ -27,10 +27,7 @@ class RequirementsController extends Controller
         ]);
     }
 
-    /**
-     * @return array
-     */
-    protected function checkRequirements()
+    protected function checkRequirements(): array
     {
         $results = [
             'php_version' => PHP_VERSION_ID >= 70200,

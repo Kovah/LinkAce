@@ -20,7 +20,8 @@ return [
     'notes_private_default_help' => 'Enabling this will make all new notes private by default',
 
     'display_mode' => 'Display links as',
-    'display_mode_standard' => 'rows with much details',
+    'display_mode_list_detailed' => 'list with many details',
+    'display_mode_list_simple' => 'list with few details',
     'display_mode_cards' => 'cards with less details',
 
     'sharing' => 'Link Sharing',
