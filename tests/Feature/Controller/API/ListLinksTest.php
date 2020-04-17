@@ -9,7 +9,7 @@ use Illuminate\Foundation\Testing\DatabaseMigrations;
 use Illuminate\Foundation\Testing\DatabaseTransactions;
 use Tests\TestCase;
 
-class ListApiTest extends TestCase
+class ListLinksTest extends TestCase
 {
     use DatabaseTransactions;
     use DatabaseMigrations;
