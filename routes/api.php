@@ -3,6 +3,7 @@
 use App\Http\Controllers\API\LinkController;
 use App\Http\Controllers\API\ListController;
 use App\Http\Controllers\API\ListLinksController;
+use App\Http\Controllers\API\TagController;
 
 /*
 |--------------------------------------------------------------------------
@@ -37,5 +38,14 @@ Route::prefix('v1')->group(function () {
 
         Route::get('lists/{list}/links', ListLinksController::class)
             ->name('api.lists.links');
+
+        Route::apiResource('tags', TagController::class)
+            ->names([
+                'index' => 'api.tags.index',
+                'show' => 'api.tags.show',
+                'store' => 'api.tags.store',
+                'update' => 'api.tags.update',
+                'destroy' => 'api.tags.destroy',
+            ]);
     });
 });

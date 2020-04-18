@@ -38,7 +38,6 @@ class TagUpdateRequest extends FormRequest
     public function rules()
     {
         $rules = [
-            'tag_id' => 'required',
             'name' => 'required',
             'is_private' => 'required|boolean',
         ];
