@@ -31,7 +31,7 @@ class NoteStoreRequest extends FormRequest
         return [
             'link_id' => 'required',
             'note' => 'required',
-            'is_private' => 'boolean',
+            'is_private' => 'sometimes|boolean',
         ];
     }
 }

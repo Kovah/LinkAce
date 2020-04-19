@@ -4,6 +4,7 @@ use App\Http\Controllers\API\LinkController;
 use App\Http\Controllers\API\LinkNotesController;
 use App\Http\Controllers\API\ListController;
 use App\Http\Controllers\API\ListLinksController;
+use App\Http\Controllers\API\NoteController;
 use App\Http\Controllers\API\TagController;
 use App\Http\Controllers\API\TagLinksController;
 
@@ -55,5 +56,13 @@ Route::prefix('v1')->group(function () {
 
         Route::get('tags/{tag}/links', TagLinksController::class)
             ->name('api.tags.links');
+
+        Route::apiResource('notes', NoteController::class)
+            ->names([
+                'store' => 'api.notes.store',
+                'update' => 'api.notes.update',
+                'destroy' => 'api.notes.destroy',
+            ])
+            ->except(['index', 'show']);
     });
 });

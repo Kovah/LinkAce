@@ -69,10 +69,9 @@ class NoteController extends Controller
      */
     public function update(NoteUpdateRequest $request, $id)
     {
-        $note = Note::findOrFail($request->get('note_id'));
+        $note = Note::findOrFail($id);
 
-        $data = $request->except(['_token', 'note_id']);
-        $note = NoteRepository::update($note, $data);
+        $note = NoteRepository::update($note, $request->except(['_token']));
 
         alert(trans('note.updated_successfully'), 'success');
 

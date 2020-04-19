@@ -90,7 +90,7 @@ class NoteControllerTest extends TestCase
 
         $response = $this->post('notes/1', [
             '_method' => 'patch',
-            'note_id' => $baseNote->id,
+            'link_id' => $baseNote->link_id,
             'note' => 'Lorem ipsum dolor est updated',
             'is_private' => '0',
         ]);
@@ -107,7 +107,7 @@ class NoteControllerTest extends TestCase
     {
         $response = $this->post('notes/1', [
             '_method' => 'patch',
-            'note_id' => '1',
+            'link_id' => '1',
             'note' => 'Lorem ipsum dolor est updated',
             'is_private' => '0',
         ]);
