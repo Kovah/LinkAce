@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\API\LinkController;
+use App\Http\Controllers\API\LinkNotesController;
 use App\Http\Controllers\API\ListController;
 use App\Http\Controllers\API\ListLinksController;
 use App\Http\Controllers\API\TagController;
@@ -27,6 +28,9 @@ Route::prefix('v1')->group(function () {
                 'update' => 'api.links.update',
                 'destroy' => 'api.links.destroy',
             ]);
+
+        Route::get('links/{link}/notes', LinkNotesController::class)
+            ->name('api.links.notes');
 
         Route::apiResource('lists', ListController::class)
             ->names([
