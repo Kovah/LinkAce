@@ -4,6 +4,7 @@ use App\Http\Controllers\API\LinkController;
 use App\Http\Controllers\API\ListController;
 use App\Http\Controllers\API\ListLinksController;
 use App\Http\Controllers\API\TagController;
+use App\Http\Controllers\API\TagLinksController;
 
 /*
 |--------------------------------------------------------------------------
@@ -47,5 +48,8 @@ Route::prefix('v1')->group(function () {
                 'update' => 'api.tags.update',
                 'destroy' => 'api.tags.destroy',
             ]);
+
+        Route::get('tags/{tag}/links', TagLinksController::class)
+            ->name('api.tags.links');
     });
 });
