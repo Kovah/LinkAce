@@ -19,7 +19,9 @@
 
 .card {
   box-shadow: $box-shadow-sm;
-  border: 0;
+  border-left: 0;
+  border-right: 0;
+  border-color: transparent;
 }
 
 .card-table {
