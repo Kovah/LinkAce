@@ -18,7 +18,7 @@
 
     <main class="main container">
         <div class="mb-5 text-center">
-            <img src="{{ asset('assets/img/logo_linkace.svg') }}" alt="@lang('linkace.linkace')"
+            <img src="{{ asset('assets/img/linkace_logo.svg') }}" alt="@lang('linkace.linkace')"
                 width="150" height="55">
         </div>
 
