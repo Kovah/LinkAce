@@ -1,12 +1,12 @@
 <div class="navbar navbar-dark brand-only bg-primary shadow-sm d-block d-md-none text-center">
     <a class="navbar-brand d-inline-block" href="{{ route('front') }}">
-        {!! displaySVG(public_path('assets/img/logo_linkace.svg')) !!}
+        {!! displaySVG(public_path('assets/img/linkace_logo.svg')) !!}
     </a>
 </div>
 <nav class="navbar navbar-expand-md navbar-dark bg-primary shadow-sm">
     <div class="container px-0 px-lg-3">
         <a class="navbar-brand d-none d-md-inline-block" href="{{ route('front') }}">
-            {!! displaySVG(public_path('assets/img/logo_linkace.svg')) !!}
+            {!! displaySVG(public_path('assets/img/linkace_logo.svg')) !!}
         </a>
 
         <ul class="navbar-nav flex-row">
