@@ -2,7 +2,6 @@
 
 namespace App\Helper;
 
-use GuzzleHttp\Client;
 use Illuminate\Support\Facades\Http;
 use Illuminate\Support\Facades\Log;
 
@@ -36,7 +35,7 @@ class WaybackMachine
         try {
             $response->throw();
         } catch (\Exception $e) {
-            Log::warning($e);
+            Log::warning($archiveUrl . ': ' . $e->getMessage());
             return false;
         }
 
