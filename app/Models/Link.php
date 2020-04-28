@@ -62,6 +62,11 @@ class Link extends Model
     public const STATUS_MOVED = 2;
     public const STATUS_BROKEN = 3;
 
+    public const DISPLAY_CARDS = 1;
+    public const DISPLAY_LIST_SIMPLE = 2;
+    public const DISPLAY_LIST_DETAILED = 0;
+
+
     /*
      | ========================================================================
      | SCOPES
@@ -152,6 +157,17 @@ class Link extends Model
     public function shortTitle(int $maxLength = 50): string
     {
         return Str::limit($this->title, $maxLength);
+    }
+
+    /**
+     * Get the domain of the URL
+     *
+     * @return string
+     */
+    public function domainOfURL()
+    {
+        $urlDetails = parse_url($this->url);
+        return $urlDetails['host'] ?? $this->shortUrl(20);
     }
 
     /**

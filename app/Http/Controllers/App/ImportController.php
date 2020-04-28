@@ -46,7 +46,7 @@ class ImportController extends Controller
         $links = $parser->parseString($data);
 
         if (empty($links)) {
-            alert(trans('import.import_empty'), 'warning');
+            flash(trans('import.import_empty'), 'warning');
             return redirect()->back();
         }
 
@@ -92,7 +92,7 @@ class ImportController extends Controller
             $imported++;
         }
 
-        alert(trans('import.import_successfully', [
+        flash(trans('import.import_successfully', [
             'imported' => $imported,
             'skipped' => $skipped,
         ]), 'success');

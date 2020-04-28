@@ -1,6 +1,6 @@
 <?php
 
-namespace Tests\Feature;
+namespace Tests\Feature\App;
 
 use App\Models\User;
 use Illuminate\Foundation\Testing\DatabaseMigrations;
@@ -85,7 +85,8 @@ class UserSettingsControllerTest extends TestCase
 
         $response->assertStatus(302);
 
-        $this->assertEquals('Password changed successfully!', session()->get('alert.message'));
+        $flashMessage = session('flash_notification', collect())->first();
+        $this->assertEquals('Password changed successfully!', $flashMessage['message']);
 
         $this->assertEquals(true, Auth::attempt([
             'email' => $this->user->email,

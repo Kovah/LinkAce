@@ -2,7 +2,10 @@
 
 namespace App\Helper;
 
+use GuzzleHttp\Exception\RequestException;
+use Illuminate\Http\Client\ConnectionException;
 use Illuminate\Support\Facades\Http;
+use Illuminate\Support\Facades\Log;
 
 /**
  * Class LinkAce
@@ -25,7 +28,19 @@ class LinkAce
         ];
 
         // Try to get the HTML content of that URL
-        $response = Http::get($url);
+        try {
+            $response = Http::get($url);
+        } catch (ConnectionException $e) {
+            flash(trans('link.added_connection_error'), 'warning');
+            Log::warning($url . ': ' . $e->getMessage());
+
+            return $fallback;
+        } catch (RequestException $e) {
+            flash(trans('link.added_request_error'), 'warning');
+            Log::warning($url . ': ' . $e->getMessage());
+
+            return $fallback;
+        }
 
         if (!$response->successful()) {
             return $fallback;

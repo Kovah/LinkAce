@@ -6,6 +6,8 @@
 
 <title>{{ systemsettings('system_page_title') ?: config('app.name', 'LinkAce') }}</title>
 
+@include('partials.favicon')
+
 @if(usersettings('darkmode_setting') === '1')
     <link href="{{ mix('assets/dist/css/app-dark.css') }}" rel="stylesheet">
 @elseif(usersettings('darkmode_setting') === '2')
@@ -37,5 +39,3 @@
         ]
     ]
 ]) }}">
-
-@include('partials.favicon')

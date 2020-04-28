@@ -66,10 +66,14 @@ class LinkRepository
 
         if (isset($data['tags'])) {
             self::updateTagsForLink($link, $data['tags']);
+        } else {
+            $link->tags()->detach();
         }
 
         if (isset($data['lists'])) {
             self::updateListsForLink($link, $data['lists']);
+        } else {
+            $link->lists()->detach();
         }
 
         return $link;
@@ -101,10 +105,6 @@ class LinkRepository
      */
     protected static function updateTagsForLink(Link $link, string $tags): void
     {
-        if (empty($tags)) {
-            return;
-        }
-
         $parsedTags = explode(',', $tags);
         $newTags = [];
 
@@ -128,10 +128,6 @@ class LinkRepository
      */
     protected static function updateListsForLink(Link $link, string $lists): void
     {
-        if (empty($lists)) {
-            return;
-        }
-
         $parsedLists = explode(',', $lists);
         $newLists = [];
 

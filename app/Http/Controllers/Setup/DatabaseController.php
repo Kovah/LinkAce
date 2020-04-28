@@ -5,12 +5,15 @@ namespace App\Http\Controllers\Setup;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\SetupDatabaseRequest;
 use Exception;
+use Illuminate\Contracts\Filesystem\FileNotFoundException;
 use Illuminate\Contracts\View\Factory;
 use Illuminate\Support\Facades\Artisan;
 use Illuminate\Support\Facades\Config;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\File;
+use Illuminate\Support\Facades\Log;
 use Illuminate\View\View;
+use PDOException;
 
 /**
  * Class DatabaseController
@@ -32,13 +35,14 @@ class DatabaseController extends Controller
     /**
      * @param SetupDatabaseRequest $request
      * @return Factory|View
+     * @throws FileNotFoundException
      */
     public function configure(SetupDatabaseRequest $request)
     {
         $this->createTempDatabaseConnection($request->all());
 
         if ($this->databaseHasData() && !$request->has('overwrite_data')) {
-            alert(trans('setup.database.data_present'), 'danger');
+            flash(trans('setup.database.data_present'), 'danger');
             return redirect()->back()->with('data_present', true)->withInput();
         }
 
@@ -70,6 +74,11 @@ class DatabaseController extends Controller
     }
 
     /**
+     * Instead of trying to manually detect if the database connection is
+     * working we try to run the migration of the database scheme. If it fails
+     * we get the exact error we can display to the user, e.g. SQLSTATE[HY000]
+     * [2002] Connection refused which implies wrong credentials.
+     *
      * @return bool
      */
     protected function migrateDatabase(): bool
@@ -82,23 +91,30 @@ class DatabaseController extends Controller
             ]);
         } catch (Exception $e) {
             $alert = trans('setup.database.config_error') . ' ' . $e->getMessage();
-            alert($alert, 'danger');
+            flash($alert, 'danger');
             return false;
         }
 
         return true;
     }
 
+    /**
+     * At this point we write the database credentials to the .env file.
+     * We can ignore the FileNotFoundException exception as we already checked
+     * the presence and writability of the file in the previous setup step.
+     *
+     * @throws FileNotFoundException
+     */
     protected function storeConfigurationInEnv(): void
     {
         $envContent = File::get(base_path('.env'));
 
-        $envContent = str_replace([
-            'DB_HOST=127.0.0.1',
-            'DB_PORT=3306',
-            'DB_DATABASE=linkace',
-            'DB_USERNAME=linkace',
-            'DB_PASSWORD=changeThisPassword',
+        $envContent = preg_replace([
+            '/DB_HOST=(.*)\S/',
+            '/DB_PORT=(.*)\S/',
+            '/DB_DATABASE=(.*)\S/',
+            '/DB_USERNAME=(.*)\S/',
+            '/DB_PASSWORD=(.*)\S/',
         ], [
             'DB_HOST=' . $this->dbConfig['host'],
             'DB_PORT=' . $this->dbConfig['port'],
@@ -112,11 +128,23 @@ class DatabaseController extends Controller
         }
     }
 
+    /**
+     * To prevent unwanted data loss we check for data in the database. It does
+     * not matter which data, because users may accidentially enter the
+     * credentials for a wrong database.
+     *
+     * @return bool
+     */
     protected function databaseHasData(): bool
     {
-        $present_tables = DB::connection('setup')
-            ->getDoctrineSchemaManager()
-            ->listTableNames();
+        try {
+            $present_tables = DB::connection('setup')
+                ->getDoctrineSchemaManager()
+                ->listTableNames();
+        } catch (PDOException $e) {
+            Log::error($e->getMessage());
+            return false;
+        }
 
         return count($present_tables) > 0;
     }

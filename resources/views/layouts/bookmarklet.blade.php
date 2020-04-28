@@ -11,7 +11,7 @@
         <div class="mb-4 text-center">
             <a class="bookmarklet-logo d-inline-block"
                 href="{{ auth()->guest() ? route('front') : route('dashboard') }}">
-                {!! displaySVG(public_path('assets/img/logo_linkace.svg'), 90, 33) !!}
+                {!! displaySVG(public_path('assets/img/linkace_logo.svg'), 103, 30) !!}
             </a>
         </div>
 

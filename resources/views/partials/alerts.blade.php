@@ -1,8 +1,4 @@
-@if (session()->has('alert.message'))
-    <div class="alert alert-{{ session()->get('alert.style') }}" role="alert">
-        {!! session()->get('alert.message') !!}
-    </div><!-- /alert -->
-@endif
+@include('flash::message')
 
 @if ($errors->any())
     <div class="alert alert-danger">

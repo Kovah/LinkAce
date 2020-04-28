@@ -190,12 +190,22 @@
                         </label>
                         <select id="link_display_mode" name="link_display_mode"
                             class="custom-select{{ $errors->has('link_display_mode') ? ' is-invalid' : '' }}">
-                            <option value="0"
-                                @if($user->settings()->get('link_display_mode') === '0') selected @endif>
-                                @lang('settings.display_mode_standard')
+                            <option value="{{ Link::DISPLAY_LIST_DETAILED }}"
+                                @if((int)$user->settings()->get('link_display_mode') === Link::DISPLAY_LIST_DETAILED)
+                                selected
+                                @endif>
+                                @lang('settings.display_mode_list_detailed')
                             </option>
-                            <option value="1"
-                                @if($user->settings()->get('link_display_mode') === '1') selected @endif>
+                            <option value="{{ Link::DISPLAY_LIST_SIMPLE }}"
+                                @if((int)$user->settings()->get('link_display_mode') === Link::DISPLAY_LIST_SIMPLE)
+                                selected
+                                @endif>
+                                @lang('settings.display_mode_list_simple')
+                            </option>
+                            <option value="{{ Link::DISPLAY_CARDS }}"
+                                @if((int)$user->settings()->get('link_display_mode') === Link::DISPLAY_CARDS)
+                                selected
+                                @endif>
                                 @lang('settings.display_mode_cards')
                             </option>
                         </select>

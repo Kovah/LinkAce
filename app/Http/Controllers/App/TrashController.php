@@ -83,7 +83,7 @@ class TrashController extends Controller
         }
 
         if ($entries->isEmpty()) {
-            alert(trans('trash.delete_no_entries'), 'warning');
+            flash(trans('trash.delete_no_entries'), 'warning');
             return redirect()->back();
         }
 
@@ -91,7 +91,7 @@ class TrashController extends Controller
             $entry->forceDelete();
         }
 
-        alert(trans('trash.delete_success.' . $model), 'success');
+        flash(trans('trash.delete_success.' . $model), 'success');
 
         return redirect()->route('get-trash');
     }
@@ -133,7 +133,7 @@ class TrashController extends Controller
 
         $entry->restore();
 
-        alert(trans('trash.restore.' . $model), 'success');
+        flash(trans('trash.restore.' . $model), 'success');
 
         return redirect()->route('get-trash');
     }
