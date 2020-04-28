@@ -16,6 +16,8 @@
                 <input type="hidden" name="is_private" value="{{ usersettings('private_default') ?: 0 }}">
                 <input type="hidden" name="title" value="">
                 <input type="hidden" name="description" value="">
+                <input type="hidden" name="lists" value="">
+                <input type="hidden" name="tags" value="">
 
                 <div class="input-group">
                     <input type="text" id="url" name="url" required
