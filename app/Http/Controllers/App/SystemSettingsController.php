@@ -48,7 +48,7 @@ class SystemSettingsController extends Controller
             ]);
         }
 
-        alert(trans('settings.settings_saved'));
+        flash(trans('settings.settings_saved'));
 
         return redirect()->route('get-sysstemsettings');
     }

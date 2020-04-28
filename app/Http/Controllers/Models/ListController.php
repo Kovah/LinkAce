@@ -62,7 +62,7 @@ class ListController extends Controller
 
         $list = ListRepository::create($data);
 
-        alert(trans('list.added_successfully'), 'success');
+        flash(trans('list.added_successfully'), 'success');
 
         if ($request->get('reload_view')) {
             session()->flash('reload_view', true);
@@ -128,7 +128,7 @@ class ListController extends Controller
 
         $list = ListRepository::update($list, $request->all());
 
-        alert(trans('list.updated_successfully'), 'success');
+        flash(trans('list.updated_successfully'), 'success');
 
         return redirect()->route('lists.show', [$list->id]);
     }
@@ -148,11 +148,11 @@ class ListController extends Controller
         $deletionSuccessfull = ListRepository::delete($list);
 
         if (!$deletionSuccessfull) {
-            alert(trans('list.deletion_error'), 'error');
+            flash(trans('list.deletion_error'), 'error');
             return redirect()->back();
         }
 
-        alert(trans('list.deleted_successfully'), 'warning');
+        flash(trans('list.deleted_successfully'), 'warning');
         return redirect()->route('lists.index');
     }
 }

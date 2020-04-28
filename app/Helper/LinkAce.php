@@ -31,12 +31,12 @@ class LinkAce
         try {
             $response = Http::get($url);
         } catch (ConnectionException $e) {
-            alert(trans('link.added_connection_error'), 'warning');
+            flash(trans('link.added_connection_error'), 'warning');
             Log::warning($url . ': ' . $e->getMessage());
 
             return $fallback;
         } catch (RequestException $e) {
-            alert(trans('link.added_request_error'), 'warning');
+            flash(trans('link.added_request_error'), 'warning');
             Log::warning($url . ': ' . $e->getMessage());
 
             return $fallback;

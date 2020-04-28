@@ -88,7 +88,9 @@ class TrashControllerTest extends TestCase
         $response = $this->get('trash/clear/links');
 
         $response->assertStatus(302);
-        $this->assertEquals('No entries to be deleted.', session()->get('alert.message'));
+
+        $flashMessage = session('flash_notification', collect())->first();
+        $this->assertEquals('No entries to be deleted.', $flashMessage['message']);
     }
 
     /*
