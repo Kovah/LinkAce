@@ -1,6 +1,6 @@
 <?php
 
-namespace Tests\Unit;
+namespace Tests\Unit\Helper;
 
 use App\Helper\LinkAce;
 use GuzzleHttp\Exception\RequestException;
@@ -24,18 +24,18 @@ class LinkaceHelperTest extends TestCase
      */
     public function testTitleFromValidURL(): void
     {
-        $testHtml = '<!DOCTYPE html><head><title>Google</title></head></html>';
+        $testHtml = '<!DOCTYPE html><head><title>DuckDuckGo</title></head></html>';
 
         Http::fake([
             '*' => Http::response($testHtml, 200),
         ]);
 
-        $url = 'https://google.com/';
+        $url = 'https://duckduckgo.com/';
 
         $result = LinkAce::getMetaFromURL($url);
 
         $this->assertArrayHasKey('title', $result);
-        $this->assertEquals('Google', $result['title']);
+        $this->assertEquals('DuckDuckGo', $result['title']);
     }
 
     /**
@@ -46,7 +46,7 @@ class LinkaceHelperTest extends TestCase
      */
     public function testTitleFromInvalidURL(): void
     {
-        $url = 'https://googlegoogle.comcom/';
+        $url = 'https://duckduckgogo.comcom/';
 
         Http::fake([
             '*' => Http::response(null, 404),
@@ -55,7 +55,27 @@ class LinkaceHelperTest extends TestCase
         $result = LinkAce::getMetaFromURL($url);
 
         $this->assertArrayHasKey('title', $result);
-        $this->assertEquals('googlegoogle.comcom', $result['title']);
+        $this->assertEquals('duckduckgogo.comcom', $result['title']);
+    }
+
+    /**
+     * Test the titleFromURL() helper funtion with an invalid URL
+     * Will geturn just the host of the given URL
+     *
+     * @return void
+     */
+    public function testTitleFromURLwithoutProtocol(): void
+    {
+        $url = 'duckduckgo.com/about-us';
+
+        Http::fake([
+            '*' => Http::response(null, 404),
+        ]);
+
+        $result = LinkAce::getMetaFromURL($url);
+
+        $this->assertArrayHasKey('title', $result);
+        $this->assertEquals('duckduckgo.com/about-us', $result['title']);
     }
 
     /**

@@ -22,6 +22,13 @@ class LinkAce
      */
     public static function getMetaFromURL(string $url): array
     {
+        if (!filter_var($url, FILTER_VALIDATE_URL)) {
+            return [
+                'title' => $url,
+                'description' => null,
+            ];
+        }
+
         $fallback = [
             'title' => parse_url($url, PHP_URL_HOST),
             'description' => null,
