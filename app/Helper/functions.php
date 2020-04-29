@@ -196,25 +196,6 @@ function waybackLink($link): ?string
 }
 
 /**
- * Flash an alert.
- *
- * @param string|null $message
- * @param string|null $style
- *
- * @return Alert
- */
-function alert(?string $message = null, ?string $style = 'info'): Alert
-{
-    $alert = app('alert');
-
-    if ($message === null) {
-        return $alert;
-    }
-
-    return $alert->flash($message, $style);
-}
-
-/**
  * Return proper link attributes based on the links_new_tab user setting
  *
  * @return string

@@ -2,6 +2,7 @@
 
 namespace App\Repositories;
 
+use App\Helper\HtmlMeta;
 use App\Helper\LinkAce;
 use App\Helper\LinkIconMapper;
 use App\Jobs\SaveLinkToWaybackmachine;
@@ -29,12 +30,18 @@ class LinkRepository
      */
     public static function create(array $data): Link
     {
-        $linkMeta = LinkAce::getMetaFromURL($data['url']);
+        $linkMeta = HtmlMeta::getFromUrl($data['url']);
 
         $data['title'] = $data['title'] ?? $linkMeta['title'];
         $data['description'] = $data['description'] ?? $linkMeta['description'];
         $data['user_id'] = auth()->user()->id;
         $data['icon'] = LinkIconMapper::mapLink($data['url']);
+
+        // If the meta helper was not successfull, disable future checks and set the status to broken
+        if ($linkMeta['success'] === false) {
+            $data['check_disabled'] = true;
+            $data['status'] = Link::STATUS_BROKEN;
+        }
 
         $link = Link::create($data);
 

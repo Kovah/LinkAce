@@ -68,7 +68,7 @@ class LinkController extends Controller
     {
         $link = LinkRepository::create($request->all());
 
-        alert(trans('link.added_successfully'), 'success');
+        flash(trans('link.added_successfully'), 'success');
 
         $isBookmarklet = session('bookmarklet.create');
 
@@ -130,7 +130,7 @@ class LinkController extends Controller
 
         $link = LinkRepository::update($link, $request->all());
 
-        alert(trans('link.updated_successfully'), 'success');
+        flash(trans('link.updated_successfully'), 'success');
 
         return redirect()->route('links.show', [$link->id]);
     }
@@ -150,11 +150,11 @@ class LinkController extends Controller
         $deletionSuccessfull = LinkRepository::delete($link);
 
         if (!$deletionSuccessfull) {
-            alert(trans('link.deletion_error'), 'error');
+            flash(trans('link.deletion_error'), 'error');
             return redirect()->back();
         }
 
-        alert(trans('link.deleted_successfully'), 'warning');
+        flash(trans('link.deleted_successfully'), 'warning');
         return redirect()->route('links.index');
     }
 

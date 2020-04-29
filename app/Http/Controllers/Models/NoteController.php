@@ -38,7 +38,7 @@ class NoteController extends Controller
         $data = $request->except(['_token']);
         NoteRepository::create($data);
 
-        alert(trans('note.added_successfully'), 'success');
+        flash(trans('note.added_successfully'), 'success');
 
         return redirect()->route('links.show', [$link->id]);
     }
@@ -73,7 +73,7 @@ class NoteController extends Controller
 
         $note = NoteRepository::update($note, $request->except(['_token']));
 
-        alert(trans('note.updated_successfully'), 'success');
+        flash(trans('note.updated_successfully'), 'success');
 
         return redirect()->route('links.show', [$note->link->id]);
     }
@@ -95,11 +95,11 @@ class NoteController extends Controller
         $deletionSuccessfull = NoteRepository::delete($note);
 
         if (!$deletionSuccessfull) {
-            alert(trans('note.deletion_error'), 'error');
+            flash(trans('note.deletion_error'), 'error');
             return redirect()->back();
         }
 
-        alert(trans('note.deleted_successfully'), 'warning');
+        flash(trans('note.deleted_successfully'), 'warning');
 
         return redirect()->route('links.show', [$linkId]);
     }

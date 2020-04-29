@@ -84,6 +84,27 @@ class LinkControllerTest extends TestCase
         $this->assertEquals($tag->name, $databaseLink->tags->first()->name);
     }
 
+    public function testStoreRequestWithInvalidUrl(): void
+    {
+        $response = $this->post('links', [
+            'url' => 'example.com',
+            'title' => null,
+            'description' => null,
+            'lists' => null,
+            'tags' => null,
+            'is_private' => '0',
+        ]);
+
+        $response->assertStatus(302)
+            ->assertRedirect('links/1');
+
+        $databaseLink = Link::first();
+
+        $this->assertTrue($databaseLink->check_disabled);
+        $this->assertEquals(Link::STATUS_BROKEN, $databaseLink->status);
+        $this->assertEquals('example.com', $databaseLink->title);
+    }
+
     public function testStoreRequestWithContinue(): void
     {
         $response = $this->post('links', [

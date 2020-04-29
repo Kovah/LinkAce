@@ -51,7 +51,7 @@ class UserSettingsController extends Controller
             'email',
         ]));
 
-        alert(trans('settings.settings_saved'), 'success');
+        flash(trans('settings.settings_saved'), 'success');
         return redirect()->back();
     }
 
@@ -89,7 +89,7 @@ class UserSettingsController extends Controller
             ]);
         }
 
-        alert(trans('settings.settings_saved'), 'success');
+        flash(trans('settings.settings_saved'), 'success');
         return redirect()->back();
     }
 
@@ -107,14 +107,14 @@ class UserSettingsController extends Controller
         ]);
 
         if (!$authorizationSuccessful) {
-            alert(trans('settings.old_password_invalid'));
+            flash(trans('settings.old_password_invalid'));
             return redirect()->back()->withInput();
         }
 
         $currentUser->password = Hash::make($request->input('new_password'));
         $currentUser->save();
 
-        alert(trans('settings.password_updated'), 'success');
+        flash(trans('settings.password_updated'), 'success');
         return redirect()->back();
     }
 

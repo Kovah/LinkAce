@@ -69,7 +69,7 @@ class TagController extends Controller
 
         $tag = TagRepository::create($data);
 
-        alert(trans('tag.added_successfully'), 'success');
+        flash(trans('tag.added_successfully'), 'success');
 
         if ($request->get('reload_view')) {
             session()->flash('reload_view', true);
@@ -136,7 +136,7 @@ class TagController extends Controller
         $data = $request->all();
         $tag = TagRepository::update($tag, $data);
 
-        alert(trans('tag.updated_successfully'), 'success');
+        flash(trans('tag.updated_successfully'), 'success');
 
         return redirect()->route('tags.show', [$tag->id]);
     }
@@ -156,11 +156,11 @@ class TagController extends Controller
         $deletionSuccessfull = TagRepository::delete($tag);
 
         if (!$deletionSuccessfull) {
-            alert(trans('tag.deletion_error'), 'error');
+            flash(trans('tag.deletion_error'), 'error');
             return redirect()->back();
         }
 
-        alert(trans('tag.deleted_successfully'), 'warning');
+        flash(trans('tag.deleted_successfully'), 'warning');
         return redirect()->route('tags.index');
     }
 }

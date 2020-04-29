@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\App;
 
+use App\Helper\HtmlMeta;
 use App\Helper\LinkAce;
 use App\Helper\LinkIconMapper;
 use App\Http\Controllers\Controller;
@@ -46,7 +47,7 @@ class ImportController extends Controller
         $links = $parser->parseString($data);
 
         if (empty($links)) {
-            alert(trans('import.import_empty'), 'warning');
+            flash(trans('import.import_empty'), 'warning');
             return redirect()->back();
         }
 
@@ -60,7 +61,7 @@ class ImportController extends Controller
                 continue;
             }
 
-            $linkMeta = LinkAce::getMetaFromURL($link['uri']);
+            $linkMeta = HtmlMeta::getFromUrl($link['uri']);
 
             $title = $link['title'] ?: $linkMeta['title'];
 
@@ -92,7 +93,7 @@ class ImportController extends Controller
             $imported++;
         }
 
-        alert(trans('import.import_successfully', [
+        flash(trans('import.import_successfully', [
             'imported' => $imported,
             'skipped' => $skipped,
         ]), 'success');

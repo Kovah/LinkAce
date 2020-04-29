@@ -42,7 +42,7 @@ class DatabaseController extends Controller
         $this->createTempDatabaseConnection($request->all());
 
         if ($this->databaseHasData() && !$request->has('overwrite_data')) {
-            alert(trans('setup.database.data_present'), 'danger');
+            flash(trans('setup.database.data_present'), 'danger');
             return redirect()->back()->with('data_present', true)->withInput();
         }
 
@@ -91,7 +91,7 @@ class DatabaseController extends Controller
             ]);
         } catch (Exception $e) {
             $alert = trans('setup.database.config_error') . ' ' . $e->getMessage();
-            alert($alert, 'danger');
+            flash($alert, 'danger');
             return false;
         }
 
