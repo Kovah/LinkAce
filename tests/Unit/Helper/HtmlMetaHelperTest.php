@@ -2,7 +2,7 @@
 
 namespace Tests\Unit\Helper;
 
-use App\Helper\LinkAce;
+use App\Helper\HtmlMeta;
 use GuzzleHttp\Exception\RequestException;
 use Illuminate\Http\Client\ConnectionException;
 use Illuminate\Http\Client\Request;
@@ -10,11 +10,11 @@ use Illuminate\Support\Facades\Http;
 use Tests\TestCase;
 
 /**
- * Class LinkaceHelperTest
+ * Class HtmlMetaHelperTest
  *
  * @package Tests\Unit
  */
-class LinkaceHelperTest extends TestCase
+class HtmlMetaHelperTest extends TestCase
 {
     /**
      * Test the titleFromURL() helper funtion with a valid URL
@@ -24,7 +24,11 @@ class LinkaceHelperTest extends TestCase
      */
     public function testTitleFromValidURL(): void
     {
-        $testHtml = '<!DOCTYPE html><head><title>DuckDuckGo</title></head></html>';
+        $testHtml = '<!DOCTYPE html><head>' .
+            '<title>DuckDuckGo</title>' .
+            '<meta name="test" content="Bla">' .
+            '<meta name="description" content="This an example description">' .
+            '</head></html>';
 
         Http::fake([
             '*' => Http::response($testHtml, 200),
@@ -32,10 +36,39 @@ class LinkaceHelperTest extends TestCase
 
         $url = 'https://duckduckgo.com/';
 
-        $result = LinkAce::getMetaFromURL($url);
+        $result = HtmlMeta::getFromUrl($url);
 
         $this->assertArrayHasKey('title', $result);
         $this->assertEquals('DuckDuckGo', $result['title']);
+        $this->assertEquals('This an example description', $result['description']);
+        $this->assertTrue($result['success']);
+    }
+
+    /**
+     * Test the titleFromURL() helper funtion with a valid URL
+     * Will return the title of the Google frontpage: "Google"
+     *
+     * @return void
+     */
+    public function testAlternativeDescriptionFromValidURL(): void
+    {
+        $testHtml = '<!DOCTYPE html><head>' .
+            '<title>DuckDuckGo</title>' .
+            '<meta property="og:description" content="This an example description">' .
+            '</head></html>';
+
+        Http::fake([
+            '*' => Http::response($testHtml, 200),
+        ]);
+
+        $url = 'https://duckduckgo.com/';
+
+        $result = HtmlMeta::getFromUrl($url);
+
+        $this->assertArrayHasKey('title', $result);
+        $this->assertEquals('DuckDuckGo', $result['title']);
+        $this->assertEquals('This an example description', $result['description']);
+        $this->assertTrue($result['success']);
     }
 
     /**
@@ -52,10 +85,11 @@ class LinkaceHelperTest extends TestCase
             '*' => Http::response(null, 404),
         ]);
 
-        $result = LinkAce::getMetaFromURL($url);
+        $result = HtmlMeta::getFromUrl($url);
 
         $this->assertArrayHasKey('title', $result);
         $this->assertEquals('duckduckgogo.comcom', $result['title']);
+        $this->assertFalse($result['success']);
     }
 
     /**
@@ -72,10 +106,11 @@ class LinkaceHelperTest extends TestCase
             '*' => Http::response(null, 404),
         ]);
 
-        $result = LinkAce::getMetaFromURL($url);
+        $result = HtmlMeta::getFromUrl($url);
 
         $this->assertArrayHasKey('title', $result);
         $this->assertEquals('duckduckgo.com/about-us', $result['title']);
+        $this->assertFalse($result['success']);
     }
 
     /**
@@ -96,10 +131,11 @@ class LinkaceHelperTest extends TestCase
             );
         });
 
-        $result = LinkAce::getMetaFromURL($url);
+        $result = HtmlMeta::getFromUrl($url);
 
         $this->assertArrayHasKey('title', $result);
         $this->assertEquals('self-signed.badssl.com', $result['title']);
+        $this->assertFalse($result['success']);
 
         $flashMessage = session('flash_notification', collect())->first();
         $this->assertEquals(
@@ -127,10 +163,11 @@ class LinkaceHelperTest extends TestCase
             );
         });
 
-        $result = LinkAce::getMetaFromURL($url);
+        $result = HtmlMeta::getFromUrl($url);
 
         $this->assertArrayHasKey('title', $result);
         $this->assertEquals('192.168.0.123', $result['title']);
+        $this->assertFalse($result['success']);
 
         $flashMessage = session('flash_notification', collect())->first();
         $this->assertEquals(

@@ -2,6 +2,7 @@
 
 namespace Tests\Unit\Models;
 
+use App\Helper\HtmlMeta;
 use App\Helper\LinkAce;
 use App\Helper\LinkIconMapper;
 use App\Models\User;
@@ -32,18 +33,13 @@ class LinkCreateTest extends TestCase
         $this->user = factory(User::class)->create();
     }
 
-    /**
-     * A basic test example.
-     *
-     * @return void
-     */
     public function testValidLinkCreation(): void
     {
         $this->be($this->user);
 
         $url = 'https://google.com/';
 
-        $meta = LinkAce::getMetaFromURL($url);
+        $meta = HtmlMeta::getFromUrl($url);
 
         $original_data = [
             'url' => $url,
