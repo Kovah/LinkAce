@@ -29,7 +29,7 @@ class LinkAce
 
         // Try to get the HTML content of that URL
         try {
-            $response = Http::get($url);
+            $response = Http::timeout(5)->get($url);
         } catch (ConnectionException $e) {
             flash(trans('link.added_connection_error'), 'warning');
             Log::warning($url . ': ' . $e->getMessage());
