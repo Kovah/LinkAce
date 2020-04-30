@@ -117,8 +117,6 @@ class HtmlMetaHelperTest extends TestCase
      * Test the titleFromURL() helper funtion with an valid URL that returns
      * a certificate error.
      * Will return just the host of the given URL and issue a new flash message.
-     *
-     * @return void
      */
     public function testRequestError(): void
     {
@@ -150,8 +148,6 @@ class HtmlMetaHelperTest extends TestCase
      * accessible due to connection errors, such as a refused connection for
      * a specific port.
      * Will return just the host of the given URL and issue a new flash message.
-     *
-     * @return void
      */
     public function testConnectionError(): void
     {
@@ -175,5 +171,55 @@ class HtmlMetaHelperTest extends TestCase
             ' Details can be found in the logs.',
             $flashMessage['message']
         );
+    }
+
+    /**
+     * Test if the helper is able to convert a non-UTF-8 title into UTF-8.
+     * hex2bin('3c7469746c653ecfe8eae0e1f33c2f7469746c653e') translates to
+     * '<title>Пикабу</title>' in this case. 'Пикабу' must be correctly parsed
+     * and converted into UTF-8 as the title.
+     */
+    public function testMetaEncodingWithCharsetAvailable(): void
+    {
+        $testHtml = '<!DOCTYPE html><head>' .
+            '<meta charset="windows-1251">' .
+            hex2bin('3c7469746c653ecfe8eae0e1f33c2f7469746c653e') .
+            '</head></html>';
+
+        Http::fake([
+            '*' => Http::response($testHtml, 200),
+        ]);
+
+        $url = 'https://duckduckgo.com/';
+
+        $result = HtmlMeta::getFromUrl($url);
+
+        $this->assertArrayHasKey('title', $result);
+        $this->assertEquals('Пикабу', $result['title']);
+    }
+
+    /**
+     * Test if the helper correctly discards the title if
+     * a) no charset meta tag is present and
+     * b) the title is detected as a non-UTF-8 string.
+     *
+     * The returned title must the the domain of the original URL.
+     */
+    public function testMetaEncodingWithCharsetMissing(): void
+    {
+        $testHtml = '<!DOCTYPE html><head>' .
+            hex2bin('3c7469746c653ecfe8eae0e1f33c2f7469746c653e') .
+            '</head></html>';
+
+        Http::fake([
+            '*' => Http::response($testHtml, 200),
+        ]);
+
+        $url = 'https://duckduckgo.com/';
+
+        $result = HtmlMeta::getFromUrl($url);
+
+        $this->assertArrayHasKey('title', $result);
+        $this->assertEquals('duckduckgo.com', $result['title']);
     }
 }
