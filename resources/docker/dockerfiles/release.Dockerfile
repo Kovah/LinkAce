@@ -25,7 +25,7 @@ RUN composer install -n --prefer-dist --no-dev
 
 # ================================
 # Compile all assets
-FROM node:12.13.1 AS npm_builder
+FROM node:12.16.1 AS npm_builder
 WORKDIR /srv
 
 # Copy package.json and Gruntfile
