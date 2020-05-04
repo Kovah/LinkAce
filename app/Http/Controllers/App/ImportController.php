@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\App;
 
+use App\Helper\HtmlMeta;
 use App\Helper\LinkAce;
 use App\Helper\LinkIconMapper;
 use App\Http\Controllers\Controller;
@@ -60,7 +61,7 @@ class ImportController extends Controller
                 continue;
             }
 
-            $linkMeta = LinkAce::getMetaFromURL($link['uri']);
+            $linkMeta = HtmlMeta::getFromUrl($link['uri']);
 
             $title = $link['title'] ?: $linkMeta['title'];
 
