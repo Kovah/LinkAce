@@ -129,7 +129,7 @@ class HtmlMetaHelperTest extends TestCase
             );
         });
 
-        $result = HtmlMeta::getFromUrl($url);
+        $result = HtmlMeta::getFromUrl($url, true);
 
         $this->assertArrayHasKey('title', $result);
         $this->assertEquals('self-signed.badssl.com', $result['title']);
@@ -159,7 +159,7 @@ class HtmlMetaHelperTest extends TestCase
             );
         });
 
-        $result = HtmlMeta::getFromUrl($url);
+        $result = HtmlMeta::getFromUrl($url, true);
 
         $this->assertArrayHasKey('title', $result);
         $this->assertEquals('192.168.0.123', $result['title']);
