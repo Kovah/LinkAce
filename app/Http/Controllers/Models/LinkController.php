@@ -66,7 +66,7 @@ class LinkController extends Controller
      */
     public function store(LinkStoreRequest $request)
     {
-        $link = LinkRepository::create($request->all());
+        $link = LinkRepository::create($request->all(), true);
 
         flash(trans('link.added_successfully'), 'success');
 

@@ -17,6 +17,9 @@ class HtmlMeta
     /** @var array */
     protected static $fallback;
 
+    /** @var bool */
+    protected static $flashAlerts;
+
     /**
      * Get the title and description of an URL.
      *
@@ -27,11 +30,14 @@ class HtmlMeta
      *   'description' => string|null,
      * ]
      *
-     * @param $url
+     * @param string $url
+     * @param bool   $flashAlerts
      * @return array
      */
-    public static function getFromUrl($url): array
+    public static function getFromUrl(string $url, bool $flashAlerts = false): array
     {
+        self::$flashAlerts = $flashAlerts;
+
         if (!filter_var($url, FILTER_VALIDATE_URL)) {
             return [
                 'success' => false,
@@ -68,12 +74,18 @@ class HtmlMeta
         try {
             $response = Http::timeout(5)->get($url);
         } catch (ConnectionException $e) {
-            flash(trans('link.added_connection_error'), 'warning');
+            if (self::$flashAlerts) {
+                flash(trans('link.added_connection_error'), 'warning');
+            }
+
             Log::warning($url . ': ' . $e->getMessage());
 
             return null;
         } catch (RequestException $e) {
-            flash(trans('link.added_request_error'), 'warning');
+            if (self::$flashAlerts) {
+                flash(trans('link.added_request_error'), 'warning');
+            }
+
             Log::warning($url . ': ' . $e->getMessage());
 
             return null;
