@@ -8,8 +8,7 @@
         </div>
         <div class="card-body">
 
-            <form id="import-form" action="{{ route('do-import') }}" method="post" enctype="multipart/form-data">
-                @csrf
+            <form class="import-form" data-action="{{ route('do-import') }}" data-csrf="{{ csrf_token() }}">
 
                 <p>@lang('import.import_help')</p>
 
@@ -26,9 +25,21 @@
                     @endif
                 </div>
 
-                <button type="submit" class="btn btn-primary import-submit">
-                    <i class="fas fa-file-import mr-2"></i>
-                    @lang('import.start_import')
+                <div class="import-alerts">
+                    <div class="import-alert-networkerror alert alert-danger d-none">@lang('import.import_error')</div>
+                    <div class="import-alert-warning alert alert-warning d-none"></div>
+                    <div class="import-alert-success alert alert-success d-none"></div>
+                </div>
+
+                <button type="button" class="btn btn-primary import-submit">
+                    <span class="import-submit-processing d-none">
+                        <i class="fas fa-cog fa-spin mr-2"></i>
+                        @lang('import.import_running')
+                    </span>
+                    <span class="import-submit-default">
+                        <i class="fas fa-file-import mr-2"></i>
+                        @lang('import.start_import')
+                    </span>
                 </button>
 
             </form>

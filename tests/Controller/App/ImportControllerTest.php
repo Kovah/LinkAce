@@ -1,6 +1,6 @@
 <?php
 
-namespace Tests\Database;
+namespace Tests\Controller\App;
 
 use App\Models\Link;
 use App\Models\User;
@@ -39,9 +39,14 @@ class ImportControllerTest extends TestCase
 
         $response = $this->post('import', [
             'import-file' => $file,
+        ], [
+            'Accept' => 'application/json',
         ]);
 
-        $response->assertStatus(302);
+        $response->assertStatus(200)
+            ->assertJson([
+                'success' => true,
+            ]);
 
         $linkCount = Link::count();
         $this->assertEquals(5, $linkCount);
