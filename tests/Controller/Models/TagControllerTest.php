@@ -1,15 +1,15 @@
 <?php
 
-namespace Tests\Feature\Controller\Models;
+namespace Tests\Database\Controller\Models;
 
-use App\Models\LinkList;
 use App\Models\Setting;
+use App\Models\Tag;
 use App\Models\User;
 use Illuminate\Foundation\Testing\DatabaseMigrations;
 use Illuminate\Foundation\Testing\DatabaseTransactions;
 use Tests\TestCase;
 
-class ListControllerTest extends TestCase
+class TagControllerTest extends TestCase
 {
     use DatabaseTransactions;
     use DatabaseMigrations;
@@ -27,96 +27,79 @@ class ListControllerTest extends TestCase
 
     public function testIndexView(): void
     {
-        $list = factory(LinkList::class)->create([
+        $tag = factory(Tag::class)->create([
             'user_id' => $this->user->id,
         ]);
 
-        $response = $this->get('lists');
+        $response = $this->get('tags');
 
         $response->assertStatus(200)
-            ->assertSee($list->name);
+            ->assertSee($tag->name);
     }
 
     public function testCreateView(): void
     {
-        $response = $this->get('lists/create');
+        $response = $this->get('tags/create');
 
         $response->assertStatus(200)
-            ->assertSee('Add List');
+            ->assertSee('Add Tag');
     }
 
     public function testMinimalStoreRequest(): void
     {
-        $response = $this->post('lists', [
-            'name' => 'Test List',
+        $response = $this->post('tags', [
+            'name' => 'Test Tag',
             'is_private' => '0',
         ]);
 
         $response->assertStatus(302)
-            ->assertRedirect('lists/1');
+            ->assertRedirect('tags/1');
 
-        $databaseList = LinkList::first();
+        $databaseList = Tag::first();
 
-        $this->assertEquals('Test List', $databaseList->name);
-    }
-
-    public function testFullStoreRequest(): void
-    {
-        $response = $this->post('lists', [
-            'name' => 'Test List',
-            'description' => 'My custom description',
-            'is_private' => '1',
-        ]);
-
-        $response->assertStatus(302)
-            ->assertRedirect('lists/1');
-
-        $databaseList = LinkList::first();
-
-        $this->assertEquals('Test List', $databaseList->name);
-        $this->assertEquals('My custom description', $databaseList->description);
+        $this->assertEquals('Test Tag', $databaseList->name);
     }
 
     public function testStoreRequestWithPrivateDefault(): void
     {
         Setting::create([
             'user_id' => 1,
-            'key' => 'lists_private_default',
+            'key' => 'tags_private_default',
             'value' => '1',
         ]);
 
-        $response = $this->post('lists', [
-            'name' => 'Test List',
-            'is_private' => usersettings('lists_private_default'),
+        $response = $this->post('tags', [
+            'name' => 'Test Tag',
+            'is_private' => usersettings('tags_private_default'),
         ]);
 
         $response->assertStatus(302)
-            ->assertRedirect('lists/1');
+            ->assertRedirect('tags/1');
 
-        $databaseList = LinkList::first();
+        $databaseList = Tag::first();
 
         $this->assertTrue($databaseList->is_private);
     }
 
     public function testStoreRequestWithContinue(): void
     {
-        $response = $this->post('lists', [
-            'name' => 'Test List',
+        $response = $this->post('tags', [
+            'name' => 'Test Tag',
             'is_private' => '1',
             'reload_view' => '1',
         ]);
 
         $response->assertStatus(302)
-            ->assertRedirect('lists/create');
+            ->assertRedirect('tags/create');
 
-        $databaseList = LinkList::first();
+        $databaseList = Tag::first();
 
-        $this->assertEquals('Test List', $databaseList->name);
+        $this->assertEquals('Test Tag', $databaseList->name);
     }
 
     public function testValidationErrorForCreate(): void
     {
-        $response = $this->post('lists', [
+        $response = $this->post('tags', [
             'name' => null,
             'is_private' => '0',
         ]);
@@ -128,62 +111,62 @@ class ListControllerTest extends TestCase
 
     public function testDetailView(): void
     {
-        $list = factory(LinkList::class)->create([
+        $tag = factory(Tag::class)->create([
             'user_id' => $this->user->id,
         ]);
 
-        $response = $this->get('lists/1');
+        $response = $this->get('tags/1');
 
         $response->assertStatus(200)
-            ->assertSee($list->name);
+            ->assertSee($tag->name);
     }
 
     public function testEditView(): void
     {
-        factory(LinkList::class)->create([
+        factory(Tag::class)->create([
             'user_id' => $this->user->id,
         ]);
 
-        $response = $this->get('lists/1/edit');
+        $response = $this->get('tags/1/edit');
 
         $response->assertStatus(200)
-            ->assertSee('Edit List');
+            ->assertSee('Edit Tag');
     }
 
     public function testInvalidEditRequest(): void
     {
-        $response = $this->get('lists/1/edit');
+        $response = $this->get('tags/1/edit');
 
         $response->assertStatus(404);
     }
 
     public function testUpdateResponse(): void
     {
-        $baseList = factory(LinkList::class)->create([
+        $baseTag = factory(Tag::class)->create([
             'user_id' => $this->user->id,
         ]);
 
-        $response = $this->post('lists/1', [
+        $response = $this->post('tags/1', [
             '_method' => 'patch',
-            'list_id' => $baseList->id,
-            'name' => 'New Test List',
+            'tag_id' => $baseTag->id,
+            'name' => 'New Test Tag',
             'is_private' => '0',
         ]);
 
         $response->assertStatus(302)
-            ->assertRedirect('lists/1');
+            ->assertRedirect('tags/1');
 
-        $updatedLink = $baseList->fresh();
+        $updatedLink = $baseTag->fresh();
 
-        $this->assertEquals('New Test List', $updatedLink->name);
+        $this->assertEquals('New Test Tag', $updatedLink->name);
     }
 
     public function testMissingModelErrorForUpdate(): void
     {
-        $response = $this->post('lists/1', [
+        $response = $this->post('tags/1', [
             '_method' => 'patch',
-            'list_id' => '1',
-            'name' => 'New Test List',
+            'tag_id' => '1',
+            'name' => 'New Test Tag',
             'is_private' => '0',
         ]);
 
@@ -192,19 +175,19 @@ class ListControllerTest extends TestCase
 
     public function testUniquePropertyValidation(): void
     {
-        factory(LinkList::class)->create([
-            'name' => 'Taken List Name',
+        factory(Tag::class)->create([
+            'name' => 'taken-tag-name',
             'user_id' => $this->user->id,
         ]);
 
-        $baseList = factory(LinkList::class)->create([
+        $baseTag = factory(Tag::class)->create([
             'user_id' => $this->user->id,
         ]);
 
-        $response = $this->post('lists/2', [
+        $response = $this->post('tags/2', [
             '_method' => 'patch',
-            'list_id' => $baseList->id,
-            'name' => 'Taken List Name',
+            'tag_id' => $baseTag->id,
+            'name' => 'taken-tag-name',
             'is_private' => '0',
         ]);
 
@@ -215,14 +198,14 @@ class ListControllerTest extends TestCase
 
     public function testValidationErrorForUpdate(): void
     {
-        $baseList = factory(LinkList::class)->create([
+        $baseTag = factory(Tag::class)->create([
             'user_id' => $this->user->id,
         ]);
 
-        $response = $this->post('lists/1', [
+        $response = $this->post('tags/1', [
             '_method' => 'patch',
-            'list_id' => $baseList->id,
-            //'name' => 'New Test List',
+            'tag_id' => $baseTag->id,
+            //'name' => 'New Test Tag',
             'is_private' => '0',
         ]);
 
@@ -233,26 +216,26 @@ class ListControllerTest extends TestCase
 
     public function testDeleteResponse(): void
     {
-        factory(LinkList::class)->create([
+        factory(Tag::class)->create([
             'user_id' => $this->user->id,
         ]);
 
-        $response = $this->post('lists/1', [
+        $response = $this->post('tags/1', [
             '_method' => 'delete',
         ]);
 
         $response->assertStatus(302)
-            ->assertRedirect('lists');
+            ->assertRedirect('tags');
 
-        $databaseList = LinkList::withTrashed()->first();
+        $databaseTag = Tag::withTrashed()->first();
 
-        $this->assertNotNull($databaseList->deleted_at);
-        $this->assertNotNull($databaseList->deleted_at);
+        $this->assertNotNull($databaseTag->deleted_at);
+        $this->assertNotNull($databaseTag->deleted_at);
     }
 
     public function testMissingModelErrorForDelete(): void
     {
-        $response = $this->post('lists/1', [
+        $response = $this->post('tags/1', [
             '_method' => 'delete',
         ]);
 

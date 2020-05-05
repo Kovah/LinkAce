@@ -1,6 +1,6 @@
 <?php
 
-namespace Tests\Feature\Controller\App;
+namespace Tests\Database\Controller\App;
 
 use App\Models\User;
 use Illuminate\Foundation\Testing\DatabaseMigrations;

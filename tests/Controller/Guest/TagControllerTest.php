@@ -1,6 +1,6 @@
 <?php
 
-namespace Tests\Feature\Controller\Guest;
+namespace Tests\Database\Controller\Guest;
 
 use App\Models\LinkList;
 use App\Models\Setting;
