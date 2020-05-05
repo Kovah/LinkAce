@@ -8,6 +8,7 @@ use App\Models\Setting;
 use App\Models\Tag;
 use App\Models\User;
 use Illuminate\Foundation\Testing\RefreshDatabase;
+use Illuminate\Support\Facades\Http;
 use Tests\TestCase;
 
 class LinkControllerTest extends TestCase
@@ -22,8 +23,16 @@ class LinkControllerTest extends TestCase
         parent::setUp();
 
         $this->user = factory(User::class)->create();
-
         $this->actingAs($this->user);
+
+        $testHtml = '<!DOCTYPE html><head>' .
+            '<title>Example Title</title>' .
+            '<meta name="description" content="This an example description">' .
+            '</head></html>';
+
+        Http::fake([
+            'example.com' => Http::response($testHtml, 200),
+        ]);
     }
 
     public function testIndexView(): void
@@ -61,6 +70,7 @@ class LinkControllerTest extends TestCase
         $databaseLink = Link::first();
 
         $this->assertEquals('https://example.com', $databaseLink->url);
+        $this->assertEquals('Example Title', $databaseLink->title);
     }
 
     public function testFullStoreRequest(): void
@@ -112,7 +122,6 @@ class LinkControllerTest extends TestCase
         $databaseLink = Link::first();
 
         $this->assertTrue($databaseLink->is_private);
-        $this->user->load('rawSettings'); // Reload cached settings from other tests
     }
 
     public function testStoreRequestWithInvalidUrl(): void
