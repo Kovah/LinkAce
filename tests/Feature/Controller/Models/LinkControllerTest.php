@@ -4,17 +4,17 @@ namespace Tests\Feature\Controller\Models;
 
 use App\Models\Link;
 use App\Models\LinkList;
+use App\Models\Setting;
 use App\Models\Tag;
 use App\Models\User;
-use Illuminate\Foundation\Testing\DatabaseMigrations;
-use Illuminate\Foundation\Testing\DatabaseTransactions;
+use Illuminate\Foundation\Testing\RefreshDatabase;
 use Tests\TestCase;
 
 class LinkControllerTest extends TestCase
 {
-    use DatabaseTransactions;
-    use DatabaseMigrations;
+    use RefreshDatabase;
 
+    /** @var User */
     private $user;
 
     protected function setUp(): void
@@ -87,6 +87,32 @@ class LinkControllerTest extends TestCase
         $this->assertEquals('My custom description', $databaseLink->description);
         $this->assertEquals($list->name, $databaseLink->lists->first()->name);
         $this->assertEquals($tag->name, $databaseLink->tags->first()->name);
+    }
+
+    public function testStoreRequestWithPrivateDefault(): void
+    {
+        Setting::create([
+            'user_id' => 1,
+            'key' => 'links_private_default',
+            'value' => '1',
+        ]);
+
+        $response = $this->post('links', [
+            'url' => 'https://example.com',
+            'title' => null,
+            'description' => null,
+            'lists' => null,
+            'tags' => null,
+            'is_private' => usersettings('links_private_default'),
+        ]);
+
+        $response->assertStatus(302)
+            ->assertRedirect('links/1');
+
+        $databaseLink = Link::first();
+
+        $this->assertTrue($databaseLink->is_private);
+        $this->user->load('rawSettings'); // Reload cached settings from other tests
     }
 
     public function testStoreRequestWithInvalidUrl(): void

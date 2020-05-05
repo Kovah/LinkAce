@@ -3,14 +3,12 @@
 namespace Tests\Feature;
 
 use App\Models\User;
-use Illuminate\Foundation\Testing\DatabaseMigrations;
-use Illuminate\Foundation\Testing\DatabaseTransactions;
+use Illuminate\Foundation\Testing\RefreshDatabase;
 use Tests\TestCase;
 
 class SystemSettingsControllerTest extends TestCase
 {
-    use DatabaseTransactions;
-    use DatabaseMigrations;
+    use RefreshDatabase;
 
     private $user;
 
@@ -41,14 +39,12 @@ class SystemSettingsControllerTest extends TestCase
         $response->assertStatus(302);
 
         $this->assertDatabaseHas('settings', [
-            'id' => 1,
             'user_id' => null,
             'key' => 'system_page_title',
             'value' => 'New Title',
         ]);
 
         $this->assertDatabaseHas('settings', [
-            'id' => 2,
             'user_id' => null,
             'key' => 'system_guest_access',
             'value' => '1',

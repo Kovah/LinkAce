@@ -2,6 +2,7 @@
 
 namespace Tests\Feature\Controller\Models;
 
+use App\Models\Setting;
 use App\Models\Tag;
 use App\Models\User;
 use Illuminate\Foundation\Testing\DatabaseMigrations;
@@ -57,6 +58,27 @@ class TagControllerTest extends TestCase
         $databaseList = Tag::first();
 
         $this->assertEquals('Test Tag', $databaseList->name);
+    }
+
+    public function testStoreRequestWithPrivateDefault(): void
+    {
+        Setting::create([
+            'user_id' => 1,
+            'key' => 'tags_private_default',
+            'value' => '1',
+        ]);
+
+        $response = $this->post('tags', [
+            'name' => 'Test Tag',
+            'is_private' => usersettings('tags_private_default'),
+        ]);
+
+        $response->assertStatus(302)
+            ->assertRedirect('tags/1');
+
+        $databaseList = Tag::first();
+
+        $this->assertTrue($databaseList->is_private);
     }
 
     public function testStoreRequestWithContinue(): void

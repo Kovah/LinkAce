@@ -4,6 +4,7 @@ namespace Tests\Feature\Controller\Models;
 
 use App\Models\Link;
 use App\Models\Note;
+use App\Models\Setting;
 use App\Models\User;
 use Illuminate\Foundation\Testing\DatabaseMigrations;
 use Illuminate\Foundation\Testing\DatabaseTransactions;
@@ -39,6 +40,28 @@ class NoteControllerTest extends TestCase
             ->assertRedirect('links/1');
 
         $this->assertEquals('Lorem ipsum dolor', $link->notes()->first()->note);
+    }
+
+    public function testStoreRequestWithPrivateDefault(): void
+    {
+        Setting::create([
+            'user_id' => 1,
+            'key' => 'notes_private_default',
+            'value' => '1',
+        ]);
+
+        $link = factory(Link::class)->create();
+
+        $response = $this->post('notes', [
+            'link_id' => $link->id,
+            'note' => 'Lorem ipsum dolor',
+            'is_private' => usersettings('notes_private_default'),
+        ]);
+
+        $response->assertStatus(302)
+            ->assertRedirect('links/1');
+
+        $this->assertTrue($link->notes()->first()->is_private);
     }
 
     public function testValidationErrorForCreate(): void

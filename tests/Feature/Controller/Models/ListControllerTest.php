@@ -3,6 +3,7 @@
 namespace Tests\Feature\Controller\Models;
 
 use App\Models\LinkList;
+use App\Models\Setting;
 use App\Models\User;
 use Illuminate\Foundation\Testing\DatabaseMigrations;
 use Illuminate\Foundation\Testing\DatabaseTransactions;
@@ -74,6 +75,27 @@ class ListControllerTest extends TestCase
 
         $this->assertEquals('Test List', $databaseList->name);
         $this->assertEquals('My custom description', $databaseList->description);
+    }
+
+    public function testStoreRequestWithPrivateDefault(): void
+    {
+        Setting::create([
+            'user_id' => 1,
+            'key' => 'lists_private_default',
+            'value' => '1',
+        ]);
+
+        $response = $this->post('lists', [
+            'name' => 'Test List',
+            'is_private' => usersettings('lists_private_default'),
+        ]);
+
+        $response->assertStatus(302)
+            ->assertRedirect('lists/1');
+
+        $databaseList = LinkList::first();
+
+        $this->assertTrue($databaseList->is_private);
     }
 
     public function testStoreRequestWithContinue(): void

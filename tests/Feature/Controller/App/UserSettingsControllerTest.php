@@ -3,15 +3,13 @@
 namespace Tests\Feature\App;
 
 use App\Models\User;
-use Illuminate\Foundation\Testing\DatabaseMigrations;
-use Illuminate\Foundation\Testing\DatabaseTransactions;
+use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Support\Facades\Auth;
 use Tests\TestCase;
 
 class UserSettingsControllerTest extends TestCase
 {
-    use DatabaseTransactions;
-    use DatabaseMigrations;
+    use RefreshDatabase;
 
     private $user;
 
@@ -54,8 +52,10 @@ class UserSettingsControllerTest extends TestCase
     {
         $response = $this->post('settings/app', [
             'timezone' => 'Europe/Berlin',
-            'private_default' => '1',
+            'links_private_default' => '1',
             'notes_private_default' => '1',
+            'lists_private_default' => '1',
+            'tags_private_default' => '1',
             'date_format' => 'Y-m-d',
             'time_format' => 'H:i',
             'listitem_count' => '25',
@@ -65,9 +65,13 @@ class UserSettingsControllerTest extends TestCase
 
         $response->assertStatus(302);
 
+        $this->user->load('rawSettings'); // Reload cached settings from other tests
+
         $this->assertEquals('Europe/Berlin', usersettings('timezone'));
-        $this->assertEquals('1', usersettings('private_default'));
+        $this->assertEquals('1', usersettings('links_private_default'));
         $this->assertEquals('1', usersettings('notes_private_default'));
+        $this->assertEquals('1', usersettings('lists_private_default'));
+        $this->assertEquals('1', usersettings('tags_private_default'));
         $this->assertEquals('Y-m-d', usersettings('date_format'));
         $this->assertEquals('H:i', usersettings('time_format'));
         $this->assertEquals('25', usersettings('listitem_count'));
