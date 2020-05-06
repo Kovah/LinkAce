@@ -13,6 +13,14 @@ jobs:
     steps:
       - uses: actions/checkout@v1
 
+      - name: Use Node.js 12.x
+        uses: actions/setup-node@v1
+        with:
+          node-version: 12.x
+
+      - name: Build all assets
+        run: npm run production
+
       - name: Setup PHP
         uses: shivammathur/setup-php@v1
         with:
