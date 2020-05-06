@@ -1,0 +1,57 @@
+name: Analyze
+
+on:
+  pull_request:
+
+jobs:
+
+  analyze-php:
+    name: PHP Code Coverage Generation
+    runs-on: ubuntu-latest
+    continue-on-error: true
+
+    steps:
+      - uses: actions/checkout@v1
+
+      - uses: actions/download-artifact@v1
+        with:
+          name: assets
+          path: public/assets/dist
+
+      - uses: actions/download-artifact@v1
+        with:
+          name: mix-manifest
+          path: public
+
+      - name: Setup PHP
+        uses: shivammathur/setup-php@v1
+        with:
+          php-version: 7.4
+          coverage: xdebug
+          extensions: mbstring
+
+      - name: Get composer cache directory
+        id: composer-cache
+        run: echo "::set-output name=dir::$(composer config cache-files-dir)"
+
+      - name: Cache dependencies
+        uses: actions/cache@v1
+        with:
+          path: ${{ steps.composer-cache.outputs.dir }}
+          key: ${{ runner.os }}-composer-${{ hashFiles('**/composer.lock') }}
+          restore-keys: ${{ runner.os }}-composer-
+
+      - name: Prepare the environment
+        run: cp .env.example .env
+
+      - name: Install dependencies
+        run: composer install --prefer-dist --no-progress --no-suggest
+
+      - name: Test & publish code coverage
+        uses: paambaati/codeclimate-action@v2.6.0
+        env:
+          CC_TEST_REPORTER_ID: ${{secrets.CC_TEST_REPORTER_ID}}
+        with:
+          coverageCommand: composer run code-coverage
+          coverageLocations: ${{github.workspace}}/test-coverage.xml:clover
+          debug: true

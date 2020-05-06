@@ -62,12 +62,9 @@
       "Illuminate\\Foundation\\ComposerScripts::postAutoloadDump",
       "@php artisan package:discover --ansi"
     ],
-    "lint": [
-      "./vendor/bin/phpcs"
-    ],
-    "test": [
-      "./vendor/bin/phpunit"
-    ]
+    "lint": "./vendor/bin/phpcs",
+    "test": "./vendor/bin/phpunit",
+    "code-coverage": "./vendor/bin/phpunit --coverage-clover test-coverage.xml"
   },
   "config": {
     "optimize-autoloader": true,
