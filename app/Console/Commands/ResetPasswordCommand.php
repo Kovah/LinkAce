@@ -6,6 +6,11 @@ use App\Models\User;
 use Illuminate\Console\Command;
 use Illuminate\Support\Facades\Validator;
 
+/**
+ * Class ResetPasswordCommand
+ *
+ * @package App\Console\Commands
+ */
 class ResetPasswordCommand extends Command
 {
     protected $signature = 'reset-password';
