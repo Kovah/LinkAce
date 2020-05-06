@@ -1,5 +1,5 @@
 <p align="center">
-  <img src="./public/assets/img/logo_linkace.svg" title="Linkace">
+  <img src="./public/assets/img/linkace_logo.svg" title="Linkace">
 </p>
 
 <p>&nbsp;</p>

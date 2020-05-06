@@ -4,6 +4,7 @@ import { faBan } from '@fortawesome/free-solid-svg-icons/faBan';
 import { faBookmark } from '@fortawesome/free-solid-svg-icons/faBookmark';
 import { faCaretDown } from '@fortawesome/free-solid-svg-icons/faCaretDown';
 import { faCheck } from '@fortawesome/free-solid-svg-icons/faCheck';
+import { faCog } from '@fortawesome/free-solid-svg-icons/faCog';
 import { faEdit } from '@fortawesome/free-solid-svg-icons/faEdit';
 import { faEnvelope } from '@fortawesome/free-solid-svg-icons/faEnvelope';
 import { faExternalLinkAlt } from '@fortawesome/free-solid-svg-icons/faExternalLinkAlt';
@@ -150,6 +151,7 @@ export function initFontAwesome () {
   library.add(faBookmark);
   library.add(faCaretDown);
   library.add(faCheck);
+  library.add(faCog);
   library.add(faEdit);
   library.add(faEnvelope);
   library.add(faExternalLinkAlt);

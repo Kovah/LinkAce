@@ -26,11 +26,12 @@ class LinkRepository
      * After that, dispatch the backup job for the Wayback Machine.
      *
      * @param array $data
+     * @param bool  $flashAlerts
      * @return Link
      */
-    public static function create(array $data): Link
+    public static function create(array $data, bool $flashAlerts = false): Link
     {
-        $linkMeta = HtmlMeta::getFromUrl($data['url']);
+        $linkMeta = HtmlMeta::getFromUrl($data['url'], $flashAlerts);
 
         $data['title'] = $data['title'] ?? $linkMeta['title'];
         $data['description'] = $data['description'] ?? $linkMeta['description'];
@@ -43,6 +44,7 @@ class LinkRepository
             $data['status'] = Link::STATUS_BROKEN;
         }
 
+        /** @var Link $link */
         $link = Link::create($data);
 
         if (isset($data['tags'])) {
@@ -53,7 +55,7 @@ class LinkRepository
             self::updateListsForLink($link, $data['lists']);
         }
 
-        SaveLinkToWaybackmachine::dispatch($link);
+        $link->initiateInternetArchiveBackup();
 
         return $link;
     }

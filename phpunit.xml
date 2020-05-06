@@ -9,12 +9,20 @@
          processIsolation="false"
          stopOnFailure="false">
   <testsuites>
-    <testsuite name="Unit">
-      <directory suffix="Test.php">./tests/Unit</directory>
+    <testsuite name="Commands">
+      <directory suffix="Test.php">./tests/Commands</directory>
     </testsuite>
-
-    <testsuite name="Feature">
-      <directory suffix="Test.php">./tests/Feature</directory>
+    <testsuite name="Controller">
+      <directory suffix="Test.php">./tests/Controller</directory>
+    </testsuite>
+    <testsuite name="Database">
+      <directory suffix="Test.php">./tests/Database</directory>
+    </testsuite>
+    <testsuite name="Helper">
+      <directory suffix="Test.php">./tests/Helper</directory>
+    </testsuite>
+    <testsuite name="Models">
+      <directory suffix="Test.php">./tests/Models</directory>
     </testsuite>
   </testsuites>
   <filter>

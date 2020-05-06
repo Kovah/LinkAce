@@ -49,7 +49,9 @@
                             <select id="is_private" name="is_private"
                                 class="custom-select{{ $errors->has('is_private') ? ' is-invalid' : '' }}">
                                 <option value="0">@lang('linkace.no')</option>
-                                <option value="1">@lang('linkace.yes')</option>
+                                <option value="1" @if(usersettings('lists_private_default') === '1') selected @endif>
+                                    @lang('linkace.yes')
+                                </option>
                             </select>
 
                             @if ($errors->has('is_private'))

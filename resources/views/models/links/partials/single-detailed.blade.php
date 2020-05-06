@@ -1,8 +1,8 @@
 <div class="card mb-4">
 
     <div class="card-header">
-        <div class="d-flex align-items-top">
-            <div class="mr-2">
+        <div class="d-flex align-items-top flex-wrap">
+            <div class="mr-2 mw-100">
                 @if($link->is_private)
                     <i class="fas fa-lock text-muted mr-1" title="@lang('link.private')"></i>
                 @endif

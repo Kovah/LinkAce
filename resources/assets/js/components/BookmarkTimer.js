@@ -6,11 +6,11 @@ export default class BookmarkTimer {
   }
 
   init () {
-    window.setInterval(function () {
-      this.$el.text(parseInt(this.$el.text()) - 1);
+    window.setInterval(() => {
+      this.$el.innerText = parseInt(this.$el.innerText) - 1;
     }, 1000);
 
-    window.setTimeout(function () {
+    window.setTimeout(() => {
       window.close();
     }, 5000);
   }
