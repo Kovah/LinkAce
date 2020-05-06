@@ -44,6 +44,7 @@ class LinkRepository
             $data['status'] = Link::STATUS_BROKEN;
         }
 
+        /** @var Link $link */
         $link = Link::create($data);
 
         if (isset($data['tags'])) {
@@ -54,7 +55,7 @@ class LinkRepository
             self::updateListsForLink($link, $data['lists']);
         }
 
-        SaveLinkToWaybackmachine::dispatch($link);
+        $link->initiateInternetArchiveBackup();
 
         return $link;
     }

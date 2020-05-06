@@ -2,6 +2,7 @@
 
 namespace Tests\Database\Controller\Models;
 
+use App\Jobs\SaveLinkToWaybackmachine;
 use App\Models\Link;
 use App\Models\LinkList;
 use App\Models\Setting;
@@ -9,6 +10,7 @@ use App\Models\Tag;
 use App\Models\User;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Support\Facades\Http;
+use Illuminate\Support\Facades\Queue;
 use Tests\TestCase;
 
 class LinkControllerTest extends TestCase
@@ -55,6 +57,8 @@ class LinkControllerTest extends TestCase
 
     public function testMinimalStoreRequest(): void
     {
+        Queue::fake();
+
         $response = $this->post('links', [
             'url' => 'https://example.com',
             'title' => null,
@@ -71,10 +75,14 @@ class LinkControllerTest extends TestCase
 
         $this->assertEquals('https://example.com', $databaseLink->url);
         $this->assertEquals('Example Title', $databaseLink->title);
+
+        Queue::assertPushed(SaveLinkToWaybackmachine::class);
     }
 
     public function testFullStoreRequest(): void
     {
+        Queue::fake();
+
         $tag = factory(Tag::class)->create();
         $list = factory(LinkList::class)->create();
 
@@ -101,6 +109,8 @@ class LinkControllerTest extends TestCase
 
     public function testStoreRequestWithPrivateDefault(): void
     {
+        Queue::fake();
+
         Setting::create([
             'user_id' => 1,
             'key' => 'links_private_default',
@@ -126,6 +136,8 @@ class LinkControllerTest extends TestCase
 
     public function testStoreRequestWithInvalidUrl(): void
     {
+        Queue::fake();
+
         $response = $this->post('links', [
             'url' => 'example.com',
             'title' => null,
@@ -147,6 +159,8 @@ class LinkControllerTest extends TestCase
 
     public function testStoreRequestWithContinue(): void
     {
+        Queue::fake();
+
         $response = $this->post('links', [
             'url' => 'https://example.com',
             'title' => null,
@@ -163,6 +177,56 @@ class LinkControllerTest extends TestCase
         $databaseLink = Link::first();
 
         $this->assertEquals('https://example.com', $databaseLink->url);
+    }
+
+    public function testStoreRequestWithoutArchiveBackup(): void
+    {
+        Queue::fake();
+
+        Setting::create([
+            'user_id' => 1,
+            'key' => 'archive_backups_enabled',
+            'value' => '0',
+        ]);
+
+        $this->post('links', [
+            'url' => 'https://example.com',
+            'title' => null,
+            'description' => null,
+            'lists' => null,
+            'tags' => null,
+            'is_private' => '0',
+        ]);
+
+        Queue::assertNotPushed(SaveLinkToWaybackmachine::class);
+    }
+
+    public function testStoreRequestWithoutPrivateArchiveBackup(): void
+    {
+        Queue::fake();
+
+        Setting::create([
+            'user_id' => 1,
+            'key' => 'archive_backups_enabled',
+            'value' => '1',
+        ]);
+
+        Setting::create([
+            'user_id' => 1,
+            'key' => 'archive_private_backups_enabled',
+            'value' => '0',
+        ]);
+
+        $this->post('links', [
+            'url' => 'https://example.com',
+            'title' => null,
+            'description' => null,
+            'lists' => null,
+            'tags' => null,
+            'is_private' => '1',
+        ]);
+
+        Queue::assertNotPushed(SaveLinkToWaybackmachine::class);
     }
 
     public function testValidationErrorForCreate(): void

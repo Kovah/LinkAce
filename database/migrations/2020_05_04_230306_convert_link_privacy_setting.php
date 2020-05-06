@@ -15,7 +15,7 @@ class ConvertLinkPrivacySetting extends Migration
         Setting::create([
             'user_id' => 1,
             'key' => 'links_private_default',
-            'value' => usersettings('private_default'),
+            'value' => usersettings('private_default') ?? '0',
         ]);
     }
 
