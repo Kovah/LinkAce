@@ -105,4 +105,12 @@ class CheckLinksCommandTest extends TestCase
 
         $this->assertEquals(10, cache()->get('command_links:check_checked_count'));
     }
+
+    public function testCheckWithoutLinks(): void
+    {
+        $this->artisan('links:check');
+
+        $this->assertEquals(null, cache()->get('command_links:check_offset'));
+        $this->assertEquals(null, cache()->get('command_links:check_skip_timestamp'));
+    }
 }
