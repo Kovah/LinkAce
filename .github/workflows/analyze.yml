@@ -13,16 +13,6 @@ jobs:
     steps:
       - uses: actions/checkout@v1
 
-      - uses: actions/download-artifact@v1
-        with:
-          name: assets
-          path: public/assets/dist
-
-      - uses: actions/download-artifact@v1
-        with:
-          name: mix-manifest
-          path: public
-
       - name: Setup PHP
         uses: shivammathur/setup-php@v1
         with:
