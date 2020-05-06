@@ -1,7 +1,9 @@
 # DOCKERFILE DEVELOPMENT
-FROM bitnami/php-fpm:7.4-prod
+# Installs MySQL Client for database exports, and xDebug
+FROM bitnami/php-fpm:7.4
 
-# Install MySQL Dump for automated backups
-RUN install_packages mariadb-client
+RUN install_packages mariadb-client autoconf build-essential php-pear
 
-WORKDIR /app
+RUN pecl install xdebug
+
+EXPOSE 10000
