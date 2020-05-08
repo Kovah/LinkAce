@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use App\Jobs\SaveLinkToWaybackmachine;
 use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Collection;
@@ -254,5 +255,24 @@ class Link extends Model
     {
         $oldUrl = self::find($linkId)->url ?? null;
         return $oldUrl !== $newUrl;
+    }
+
+    /*
+     * Dispatch the SaveLinkToWaybackmachine job, if Internet Archive backups
+     * are enabled.
+     * If the link is private, private Internet Archive backups must be enabled
+     * too.
+     */
+    public function initiateInternetArchiveBackup(): void
+    {
+        if (usersettings('archive_backups_enabled') === '0') {
+            return;
+        }
+
+        if ($this->is_private && usersettings('archive_private_backups_enabled') === '0') {
+            return;
+        }
+
+        SaveLinkToWaybackmachine::dispatch($this);
     }
 }

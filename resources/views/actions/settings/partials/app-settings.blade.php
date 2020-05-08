@@ -8,7 +8,7 @@
             @csrf
 
             <div class="row">
-                <div class="col">
+                <div class="col-12 col-sm-8 col-md-6">
 
                     <div class="form-group">
                         <label for="timezone">
@@ -31,7 +31,7 @@
                     </div>
 
                 </div>
-                <div class="col">
+                <div class="col-12 col-sm-8 col-md-6">
 
                     <div class="form-group">
                         <label for="links_new_tab">
@@ -57,60 +57,7 @@
             </div>
 
             <div class="row">
-                <div class="col">
-
-                    <div class="form-group">
-                        <label for="private_default">
-                            @lang('settings.private_default')
-                        </label>
-                        <select id="private_default" name="private_default"
-                            class="custom-select{{ $errors->has('private_default') ? ' is-invalid' : '' }}">
-                            <option value="0" @if($user->settings()->get('private_default') === '0') selected @endif>
-                                @lang('linkace.no')
-                            </option>
-                            <option value="1" @if($user->settings()->get('private_default') === '1') selected @endif>
-                                @lang('linkace.yes')
-                            </option>
-                        </select>
-                        <p class="text-muted small">@lang('settings.private_default_help')</p>
-                        @if ($errors->has('private_default'))
-                            <p class="invalid-feedback" role="alert">
-                                {{ $errors->first('private_default') }}
-                            </p>
-                        @endif
-                    </div>
-
-                </div>
-                <div class="col">
-
-                    <div class="form-group">
-                        <label for="notes_private_default">
-                            @lang('settings.notes_private_default')
-                        </label>
-                        <select id="notes_private_default" name="notes_private_default"
-                            class="custom-select{{ $errors->has('notes_private_default') ? ' is-invalid' : '' }}">
-                            <option value="0"
-                                @if($user->settings()->get('notes_private_default') === '0') selected @endif>
-                                @lang('linkace.no')
-                            </option>
-                            <option value="1"
-                                @if($user->settings()->get('notes_private_default') === '1') selected @endif>
-                                @lang('linkace.yes')
-                            </option>
-                        </select>
-                        <p class="text-muted small">@lang('settings.notes_private_default_help')</p>
-                        @if ($errors->has('notes_private_default'))
-                            <p class="invalid-feedback" role="alert">
-                                {{ $errors->first('notes_private_default') }}
-                            </p>
-                        @endif
-                    </div>
-
-                </div>
-            </div>
-
-            <div class="row">
-                <div class="col">
+                <div class="col-12 col-sm-8 col-md-6">
 
                     <div class="form-group">
                         <label for="date_format">
@@ -133,7 +80,7 @@
                     </div>
 
                 </div>
-                <div class="col">
+                <div class="col-12 col-sm-8 col-md-6">
 
                     <div class="form-group">
                         <label for="time_format">
@@ -159,7 +106,7 @@
             </div>
 
             <div class="row">
-                <div class="col">
+                <div class="col-12 col-sm-8 col-md-6">
 
                     <div class="form-group">
                         <label for="listitem_count">
@@ -182,7 +129,7 @@
                     </div>
 
                 </div>
-                <div class="col">
+                <div class="col-12 col-sm-8 col-md-6">
 
                     <div class="form-group">
                         <label for="link_display_mode">
@@ -219,18 +166,198 @@
                 </div>
             </div>
 
-            <div class="form-group mt-5 mb-5">
+            <div class="form-group my-5">
+                <h5>
+                    @lang('settings.archive_backups')
+                </h5>
+
+                <p class="my-3 small">@lang('settings.archive_backups_help')</p>
+
+                <div class="row">
+                    <div class="col-12 col-sm-8 col-md-6">
+
+                        <div class="form-group">
+                            <label for="archive_backups_enabled">
+                                @lang('settings.archive_backups_enabled')
+                            </label>
+                            <select id="archive_backups_enabled" name="archive_backups_enabled"
+                                class="custom-select{{ $errors->has('archive_backups_enabled') ? ' is-invalid' : '' }}">
+                                <option value="1"
+                                    @if($user->settings()->get('archive_backups_enabled') === '1') selected @endif>
+                                    @lang('linkace.yes')
+                                </option>
+                                <option value="0"
+                                    @if($user->settings()->get('archive_backups_enabled') === '0') selected @endif>
+                                    @lang('linkace.no')
+                                </option>
+                            </select>
+                            <p class="text-muted small mt-1">@lang('settings.archive_backups_enabled_help')</p>
+                            @if ($errors->has('archive_backups_enabled'))
+                                <p class="invalid-feedback" role="alert">
+                                    {{ $errors->first('archive_backups_enabled') }}
+                                </p>
+                            @endif
+                        </div>
+
+                    </div>
+                    <div class="col-12 col-sm-8 col-md-6">
+
+                        <div class="form-group">
+                            <label for="archive_private_backups_enabled">
+                                @lang('settings.archive_private_backups_enabled')
+                            </label>
+                            <select id="archive_private_backups_enabled"
+                                name="archive_private_backups_enabled"
+                                class="custom-select{{ $errors->has('archive_private_backups_enabled') ? ' is-invalid' : '' }}">
+                                <option value="1"
+                                    @if($user->settings()->get('archive_private_backups_enabled') === '1') selected @endif>
+                                    @lang('linkace.yes')
+                                </option>
+                                <option value="0"
+                                    @if($user->settings()->get('archive_private_backups_enabled') === '0') selected @endif>
+                                    @lang('linkace.no')
+                                </option>
+                            </select>
+                            <p class="text-muted small mt-1">@lang('settings.archive_private_backups_enabled_help')</p>
+                            @if ($errors->has('archive_private_backups_enabled'))
+                                <p class="invalid-feedback" role="alert">
+                                    {{ $errors->first('archive_private_backups_enabled') }}
+                                </p>
+                            @endif
+                        </div>
+
+                    </div>
+                </div>
+
+            </div>
+
+            <div class="form-group my-5">
+                <h5>
+                    @lang('settings.privacy')
+                </h5>
+
+                <div class="row">
+                    <div class="col-12 col-sm-8 col-md-6">
+
+                        <div class="form-group">
+                            <label for="links_private_default">
+                                @lang('settings.links_private_default')
+                            </label>
+                            <select id="links_private_default" name="links_private_default"
+                                class="custom-select{{ $errors->has('links_private_default') ? ' is-invalid' : '' }}">
+                                <option value="0"
+                                    @if($user->settings()->get('links_private_default') === '0') selected @endif>
+                                    @lang('linkace.no')
+                                </option>
+                                <option value="1"
+                                    @if($user->settings()->get('links_private_default') === '1') selected @endif>
+                                    @lang('linkace.yes')
+                                </option>
+                            </select>
+                            <p class="text-muted small mt-1">@lang('settings.links_private_default_help')</p>
+                            @if ($errors->has('links_private_default'))
+                                <p class="invalid-feedback" role="alert">
+                                    {{ $errors->first('links_private_default') }}
+                                </p>
+                            @endif
+                        </div>
+
+                    </div>
+                    <div class="col-12 col-sm-8 col-md-6">
+
+                        <div class="form-group">
+                            <label for="notes_private_default">
+                                @lang('settings.notes_private_default')
+                            </label>
+                            <select id="notes_private_default" name="notes_private_default"
+                                class="custom-select{{ $errors->has('notes_private_default') ? ' is-invalid' : '' }}">
+                                <option value="0"
+                                    @if($user->settings()->get('notes_private_default') === '0') selected @endif>
+                                    @lang('linkace.no')
+                                </option>
+                                <option value="1"
+                                    @if($user->settings()->get('notes_private_default') === '1') selected @endif>
+                                    @lang('linkace.yes')
+                                </option>
+                            </select>
+                            <p class="text-muted small mt-1">@lang('settings.notes_private_default_help')</p>
+                            @if ($errors->has('notes_private_default'))
+                                <p class="invalid-feedback" role="alert">
+                                    {{ $errors->first('notes_private_default') }}
+                                </p>
+                            @endif
+                        </div>
+
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="col-12 col-sm-8 col-md-6">
+
+                        <div class="form-group">
+                            <label for="lists_private_default">
+                                @lang('settings.lists_private_default')
+                            </label>
+                            <select id="lists_private_default" name="lists_private_default"
+                                class="custom-select{{ $errors->has('lists_private_default') ? ' is-invalid' : '' }}">
+                                <option value="0"
+                                    @if($user->settings()->get('lists_private_default') === '0') selected @endif>
+                                    @lang('linkace.no')
+                                </option>
+                                <option value="1"
+                                    @if($user->settings()->get('lists_private_default') === '1') selected @endif>
+                                    @lang('linkace.yes')
+                                </option>
+                            </select>
+                            <p class="text-muted small mt-1">@lang('settings.lists_private_default_help')</p>
+                            @if ($errors->has('lists_private_default'))
+                                <p class="invalid-feedback" role="alert">
+                                    {{ $errors->first('lists_private_default') }}
+                                </p>
+                            @endif
+                        </div>
+
+                    </div>
+                    <div class="col-12 col-sm-8 col-md-6">
+
+                        <div class="form-group">
+                            <label for="tags_private_default">
+                                @lang('settings.tags_private_default')
+                            </label>
+                            <select id="tags_private_default" name="tags_private_default"
+                                class="custom-select{{ $errors->has('tags_private_default') ? ' is-invalid' : '' }}">
+                                <option value="0"
+                                    @if($user->settings()->get('tags_private_default') === '0') selected @endif>
+                                    @lang('linkace.no')
+                                </option>
+                                <option value="1"
+                                    @if($user->settings()->get('tags_private_default') === '1') selected @endif>
+                                    @lang('linkace.yes')
+                                </option>
+                            </select>
+                            <p class="text-muted small mt-1">@lang('settings.tags_private_default_help')</p>
+                            @if ($errors->has('tags_private_default'))
+                                <p class="invalid-feedback" role="alert">
+                                    {{ $errors->first('tags_private_default') }}
+                                </p>
+                            @endif
+                        </div>
+
+                    </div>
+                </div>
+
+            </div>
+
+            <div class="form-group my-5">
 
                 <h5>
                     @lang('settings.darkmode')
                 </h5>
 
-                <label for="darkmode_setting">
-                    @lang('settings.darkmode_help')
-                </label>
+                <p class="my-3 small">@lang('settings.darkmode_help')</p>
 
                 <div class="row">
-                    <div class="col">
+                    <div class="col-12 col-sm-8 col-md-6">
 
                         <select id="darkmode_setting" name="darkmode_setting"
                             class="custom-select{{ $errors->has('darkmode_setting') ? ' is-invalid' : '' }}">
@@ -254,7 +381,7 @@
                         @endif
 
                     </div>
-                    <div class="col"></div>
+                    <div class="col-12 col-sm-8 col-md-6"></div>
                 </div>
 
             </div>

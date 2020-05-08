@@ -3,15 +3,17 @@
 namespace App\Http\Controllers\App;
 
 use App\Helper\HtmlMeta;
-use App\Helper\LinkAce;
 use App\Helper\LinkIconMapper;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\DoImportRequest;
 use App\Models\Link;
 use App\Models\Tag;
 use Carbon\Carbon;
+use Exception;
 use Illuminate\Contracts\Filesystem\FileNotFoundException;
-use Illuminate\Http\Response;
+use Illuminate\Http\JsonResponse;
+use Illuminate\Support\Facades\Log;
+use Illuminate\View\View;
 use Shaarli\NetscapeBookmarkParser\NetscapeBookmarkParser;
 
 /**
@@ -21,12 +23,7 @@ use Shaarli\NetscapeBookmarkParser\NetscapeBookmarkParser;
  */
 class ImportController extends Controller
 {
-    /**
-     * Show the application dashboard.
-     *
-     * @return Response
-     */
-    public function getImport()
+    public function getImport(): View
     {
         return view('actions.import.import');
     }
@@ -35,7 +32,7 @@ class ImportController extends Controller
      * Permanently delete entries for a model from the trash
      *
      * @param DoImportRequest $request
-     * @return Response
+     * @return JsonResponse
      * @throws FileNotFoundException
      */
     public function doImport(DoImportRequest $request)
@@ -44,11 +41,24 @@ class ImportController extends Controller
 
         $parser = new NetscapeBookmarkParser();
 
-        $links = $parser->parseString($data);
+        try {
+            $links = $parser->parseString($data);
+        } catch (Exception $e) {
+            Log::error($e->getMessage());
+
+            return response()->json([
+                'success' => false,
+                'message' => trans('import.import_error'),
+            ]);
+        }
 
         if (empty($links)) {
-            flash(trans('import.import_empty'), 'warning');
-            return redirect()->back();
+            // This will never be reached at the moment because the bookmark parser is not capable of handling
+            // empty bookmarks exports. See https://github.com/shaarli/netscape-bookmark-parser/issues/50
+            return response()->json([
+                'success' => false,
+                'message' => trans('import.import_empty'),
+            ]);
         }
 
         $userId = auth()->id();
@@ -93,11 +103,12 @@ class ImportController extends Controller
             $imported++;
         }
 
-        flash(trans('import.import_successfully', [
-            'imported' => $imported,
-            'skipped' => $skipped,
-        ]), 'success');
-
-        return redirect()->back();
+        return response()->json([
+            'success' => true,
+            'message' => trans('import.import_successfully', [
+                'imported' => $imported,
+                'skipped' => $skipped,
+            ]),
+        ]);
     }
 }

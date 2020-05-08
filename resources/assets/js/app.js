@@ -10,6 +10,7 @@ import ShareToggleAll from './components/ShareToggleAll';
 import GenerateApiToken from './components/GenerateApiToken';
 import GenerateCronToken from './components/GenerateCronToken';
 import UpdateCheck from './components/UpdateCheck';
+import Import from './components/Import';
 
 // Register view components
 function registerViews () {
@@ -23,6 +24,7 @@ function registerViews () {
   register('.api-token', GenerateApiToken);
   register('.cron-token', GenerateCronToken);
   register('.update-check', UpdateCheck);
+  register('.import-form', Import);
 }
 
 if (document.readyState !== 'loading') {

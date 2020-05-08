@@ -5,9 +5,9 @@ namespace App\Console\Commands;
 use App\Models\Link;
 use App\Models\User;
 use App\Notifications\LinkCheckNotification;
-use GuzzleHttp\Client;
 use Illuminate\Console\Command;
 use Illuminate\Support\Facades\Cache;
+use Illuminate\Support\Facades\Http;
 use Illuminate\Support\Facades\Notification;
 
 /**
@@ -17,10 +17,10 @@ use Illuminate\Support\Facades\Notification;
  */
 class CheckLinksCommand extends Command
 {
-    protected $signature = 'links:check';
+    protected $signature = 'links:check {--limit=} {--noWait}';
 
     /** @var int $limit Check a maximum of 100 links at once */
-    protected $limit = 100;
+    public $limit = 100;
 
     /** @var int */
     protected $offset;
@@ -29,53 +29,44 @@ class CheckLinksCommand extends Command
     protected $total;
 
     /** @var int */
-    protected $checked_link_count;
-
-    /** @var Client */
-    protected $client;
+    protected $checkedLinkCount;
 
     /** @var string */
-    protected $cache_key_offset = 'command_links:check_offset';
+    protected $cacheKeyOffset = 'command_links:check_offset';
 
     /** @var string */
-    protected $cache_key_skip_timestamp = 'command_links:check_skip_timestamp';
+    protected $cacheKeySkipTimestamp = 'command_links:check_skip_timestamp';
 
     /** @var string */
-    protected $cache_key_checked_count = 'command_links:check_checked_count';
+    protected $cacheKeyCheckedCount = 'command_links:check_checked_count';
 
     /** @var array */
-    protected $moved_links = [];
+    protected $movedLinks = [];
 
     /** @var array */
-    protected $broken_links = [];
-
-    /**
-     * RegisterUser constructor.
-     */
-    public function __construct()
-    {
-        $this->client = new Client();
-
-        parent::__construct();
-    }
+    protected $brokenLinks = [];
 
     public function handle(): void
     {
         // Check if the command should skip the execution
-        $skip_timestamp = Cache::get($this->cache_key_skip_timestamp);
-        $this->offset = Cache::get($this->cache_key_offset, 0);
-        $this->checked_link_count = Cache::get($this->cache_key_checked_count, 0);
+        $skipTimestamp = Cache::get($this->cacheKeySkipTimestamp);
+        $this->offset = Cache::get($this->cacheKeyOffset, 0);
+        $this->checkedLinkCount = Cache::get($this->cacheKeyCheckedCount, 0);
 
-        if (now()->timestamp < $skip_timestamp) {
+        if (now()->timestamp < $skipTimestamp) {
             return;
+        }
+
+        if ($this->option('limit')) {
+            $this->limit = $this->option('limit');
         }
 
         $links = $this->getLinks();
 
         // Cancel if there are no links to check
         if ($links->isEmpty()) {
-            Cache::forget($this->cache_key_offset);
-            Cache::forget($this->cache_key_skip_timestamp);
+            Cache::forget($this->cacheKeyOffset);
+            Cache::forget($this->cacheKeySkipTimestamp);
 
             $this->comment('No links found, aborting...');
             return;
@@ -88,28 +79,28 @@ class CheckLinksCommand extends Command
             $this->checkLink($link);
 
             // Prevent spam-ish behaviour by limiting outgoing HTTP requests
-            sleep(1);
+            if ($this->option('noWait') === null) {
+                sleep(1);
+            }
         });
 
-        // Send notification about moved/broken links
         $this->sendNotification();
 
-        // Check if there are more links to check
-        $checked_count = $this->checked_link_count + $links->count();
-        Cache::forever($this->cache_key_checked_count, $checked_count);
+        $checkedCount = $this->checkedLinkCount + $links->count();
+        Cache::forever($this->cacheKeyCheckedCount, $checkedCount);
 
-        if ($this->total > $checked_count) {
+        if ($this->total > $checkedCount) {
             // If yes, simply save the offset to the cache.
             // The next link check will pick it up and continue the check.
-            $next_offset = $this->offset + $this->limit;
-            Cache::forever($this->cache_key_offset, $next_offset);
+            $nextOffset = $this->offset + $this->limit;
+            Cache::forever($this->cacheKeyOffset, $nextOffset);
 
             $this->comment('Saving offset for next link check.');
         } else {
             // If not, all links have been successfully checked.
             // Save a cache flag that prevents link checks for the next days.
-            $next_check = now()->addDays(5)->timestamp;
-            Cache::forever($this->cache_key_skip_timestamp, $next_check);
+            $nextCheck = now()->addDays(20)->timestamp;
+            Cache::forever($this->cacheKeySkipTimestamp, $nextCheck);
 
             $this->comment(
                 'All existing links checked, next link check scheduled for ' . now()->addDays(5)->toDateTimeString()
@@ -146,21 +137,16 @@ class CheckLinksCommand extends Command
     {
         $this->output->write('Checking link ' . $link->url . ' ');
 
-        $options = [
-            'http_errors' => false, // Do not throw exceptions for 4xx and 5xx errors
-            'timeout' => 5, // wait a maximum of 5 seconds for the request to finish
-        ];
-
         try {
-            $res = $this->client->request('GET', $link->url, $options);
-            $status_code = $res->getStatusCode();
+            $response = Http::timeout(5)->get($link->url);
+            $statusCode = $response->status();
         } catch (\Exception $e) {
             // Set status code to null so the link will be marked as broken
-            $status_code = 0;
+            $statusCode = 0;
         }
 
-        if ($status_code !== 200) {
-            $this->processBrokenLink($status_code, $link);
+        if ($statusCode !== 200) {
+            $this->processBrokenLink($statusCode, $link);
         } else {
             $this->processWorkingLink($link);
         }
@@ -179,12 +165,12 @@ class CheckLinksCommand extends Command
             $link->status = Link::STATUS_MOVED;
             $this->warn('› Link moved to another URL!');
 
-            $this->moved_links[] = $link;
+            $this->movedLinks[] = $link;
         } else {
             $link->status = Link::STATUS_BROKEN;
             $this->error('› Link seems to be broken!');
 
-            $this->broken_links[] = $link;
+            $this->brokenLinks[] = $link;
         }
 
         $link->save();
@@ -212,16 +198,16 @@ class CheckLinksCommand extends Command
      */
     protected function sendNotification()
     {
-        if (empty($this->moved_links) && empty($this->broken_links)) {
+        if (empty($this->movedLinks) && empty($this->brokenLinks)) {
             // Do not send a notification if there are no errors
             return;
         }
 
-        $this->info('› Notification sent to the user.');
-
         Notification::send(
             User::find(1),
-            new LinkCheckNotification($this->moved_links, $this->broken_links)
+            new LinkCheckNotification($this->movedLinks, $this->brokenLinks)
         );
+
+        $this->info('› Notification sent to the user.');
     }
 }

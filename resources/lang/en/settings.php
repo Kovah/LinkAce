@@ -13,11 +13,22 @@ return [
 
     'links_new_tab' => 'Open external links in new tabs',
 
-    'private_default' => 'Private Links by default',
-    'private_default_help' => 'Enabling this will make all new links private by default',
-
+    'privacy' => 'Privacy',
+    'links_private_default' => 'Private Links by default',
+    'links_private_default_help' => 'Enabling this will make all new links private by default',
     'notes_private_default' => 'Private Notes by default',
     'notes_private_default_help' => 'Enabling this will make all new notes private by default',
+    'tags_private_default' => 'Private Notes by default',
+    'tags_private_default_help' => 'Enabling this will make all new tags private by default',
+    'lists_private_default' => 'Private Lists by default',
+    'lists_private_default_help' => 'Enabling this will make all new lists private by default',
+
+    'archive_backups' => 'Internet Archive backups',
+    'archive_backups_help' => 'If enabled, LinkAce will tell the <a href="https://archive.org/">Internet Archive</a> to backup the link. By using the Internet Archive, users get a free, off-site backup solution for the content of their bookmarks. Please consider donating to the Internet Archive.',
+    'archive_backups_enabled' => 'Enable backups',
+    'archive_backups_enabled_help' => 'If enabled, non-private links will be saved by the Internet Archive.',
+    'archive_private_backups_enabled' => 'Enable backups for private links',
+    'archive_private_backups_enabled_help' => 'If enabled, private links will also be saved. Backups must be enabled.',
 
     'display_mode' => 'Display links as',
     'display_mode_list_detailed' => 'list with many details',

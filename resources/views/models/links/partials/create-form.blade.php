@@ -87,7 +87,7 @@
                             <option value="0">
                                 @lang('linkace.no')
                             </option>
-                            <option value="1" @if(usersettings('private_default') === '1') selected @endif>
+                            <option value="1" @if(usersettings('links_private_default') === '1') selected @endif>
                                 @lang('linkace.yes')
                             </option>
                         </select>

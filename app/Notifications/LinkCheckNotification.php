@@ -11,10 +11,10 @@ class LinkCheckNotification extends Notification
     use Queueable;
 
     /** @var array */
-    public $moved_links = [];
+    public $movedLinks = [];
 
     /** @var array */
-    public $broken_links = [];
+    public $brokenLinks = [];
 
     /**
      * Create a new notification instance.
@@ -23,8 +23,8 @@ class LinkCheckNotification extends Notification
      */
     public function __construct($moved_links, $broken_links)
     {
-        $this->moved_links = $moved_links;
-        $this->broken_links = $broken_links;
+        $this->movedLinks = $moved_links;
+        $this->brokenLinks = $broken_links;
     }
 
     /**
@@ -49,8 +49,8 @@ class LinkCheckNotification extends Notification
         return (new MailMessage)
             ->subject(trans('link.notifications.linkcheck.errors'))
             ->markdown('mail.notifications.linkcheck', [
-                'moved_links' => $this->moved_links,
-                'broken_links' => $this->broken_links,
+                'moved_links' => $this->movedLinks,
+                'broken_links' => $this->brokenLinks,
                 'linkace_url' => route('dashboard'),
             ]);
     }
@@ -65,8 +65,8 @@ class LinkCheckNotification extends Notification
     {
         return [
             'subject' => trans('link.notifications.linkcheck.errors'),
-            'moved_links' => $this->moved_links,
-            'broken_links' => $this->broken_links,
+            'moved_links' => $this->movedLinks,
+            'broken_links' => $this->brokenLinks,
         ];
     }
 }
