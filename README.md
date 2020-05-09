@@ -19,10 +19,10 @@
 ### Contents
 
 * [About LinkAce](#about-linkace)
+* [Support Disclaimer](#warning-support-for-linkace)
 * [Setup](#gear-setup)
   * [Setup with Docker](#setup-with-docker)
   * [Setup without Docker](#setup-without-docker)
-* [Support Disclaimer](#warning-support-disclaimer)
 * [Contribution](#construction-contribution)
   * [Development](#development)
 
