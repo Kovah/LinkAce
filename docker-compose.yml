@@ -29,10 +29,10 @@ services:
       - .:/app:delegated
       - ./resources/docker/php/php-dev.ini:/opt/bitnami/php/etc/conf.d/php.ini:ro
 
-  # --- nginx 1.14
+  # --- nginx 1.18
   nginx:
     container_name: "linkace-nginx"
-    image: bitnami/nginx:1.14
+    image: bitnami/nginx:1.18
     ports:
       - "80:8085"
     depends_on:
