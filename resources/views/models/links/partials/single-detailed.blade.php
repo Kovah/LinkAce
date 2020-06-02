@@ -9,7 +9,7 @@
                 {!! $link->getIcon('mr-1') !!}
                 <a href="{{ $link->url }}" {!! linkTarget() !!}>{{ $link->title }}</a>
                 <br>
-                <small class="text-muted">({{ $link->shortUrl() }})</small>
+                <small class="text-muted">{{ $link->shortUrl() }}</small>
             </div>
             <div class="ml-auto text-right">
                 <button type="button" class="btn btn-xs btn-outline-secondary" title="@lang('sharing.share_link')"
