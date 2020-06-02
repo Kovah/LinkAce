@@ -70,23 +70,27 @@ class LinkController extends Controller
 
         flash(trans('link.added_successfully'), 'success');
 
+        if ($duplicates = $link->searchDuplicateUrls()) {
+            $msg = trans('link.duplicates_found');
+
+            foreach ($duplicates as $link) {
+                $msg .= sprintf(' <a href="%s">%s</a>,', route('links.show', [$link->id]), $link->shortUrl());
+            }
+
+            flash(trim($msg, ','), 'warning');
+        }
+
         $isBookmarklet = session('bookmarklet.create');
 
         if ($request->get('reload_view')) {
             session()->flash('reload_view', true);
 
-            if ($isBookmarklet) {
-                return redirect()->route('bookmarklet-add');
-            }
-
-            return redirect()->route('links.create');
+            return redirect()->route($isBookmarklet ? 'bookmarklet-add' : 'links.create');
         }
 
-        if ($isBookmarklet) {
-            return redirect()->route('bookmarklet-complete');
-        }
-
-        return redirect()->route('links.show', [$link->id]);
+        return $isBookmarklet
+            ? redirect()->route('bookmarklet-complete')
+            : redirect()->route('links.show', [$link->id]);
     }
 
     /**

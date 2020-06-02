@@ -43,6 +43,8 @@ return [
     'deleted_successfully' => 'Link deleted successfully.',
     'deletion_error' => 'Link could not be deleted.',
 
+    'duplicates_found' => 'LinkAce found possible duplicates of the submitted URL:',
+
     'notifications.linkcheck.errors' => 'LinkAce found errors while checking your Links.',
     'notifications.linkcheck.errors.moved' => '⚠ ️The following Links moved to a new location:',
     'notifications.linkcheck.errors.broken' => '🚫 The following Links are not reachable anymore or return an error:',

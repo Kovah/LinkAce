@@ -275,4 +275,34 @@ class Link extends Model
 
         SaveLinkToWaybackmachine::dispatch($this);
     }
+
+    /**
+     * Create a base uri of the link url, consisting of a possible auth, the
+     * hostname, a port if present, and the path. The scheme, fragments and
+     * query parameters are dumped, as well as trailing slashes.
+     * Then return all links that match this URI.
+     *
+     * If the host is not present, the URL might be broken, so do not search
+     * for any duplicates.
+     *
+     * @return Collection
+     */
+    public function searchDuplicateUrls(): Collection
+    {
+        $parsed = parse_url($this->url);
+
+        if (!isset($parsed['host'])) {
+            return new Collection();
+        }
+
+        $auth = $parsed['user'] ?? '';
+        $auth .= isset($parsed['pass']) ? ':' . $parsed['pass'] : '';
+
+        $uri = $auth ? $auth . '@' : '';
+        $uri .= $parsed['host'] ?? '';
+        $uri .= isset($parsed['port']) ? ':' . $parsed['port'] : '';
+        $uri .= $parsed['path'] ?? '';
+
+        return self::where('url', 'like', '%' . trim($uri, '/') . '%')->get();
+    }
 }
