@@ -17,22 +17,22 @@ use Illuminate\Support\Str;
  * Class Link
  *
  * @package App\Models
- * @property int                    $id
- * @property int                    $user_id
- * @property string                 $url
- * @property string                 $title
- * @property string|null            $description
- * @property string|null            $icon
- * @property boolean                $is_private
- * @property int                    $status
- * @property boolean                $check_disabled
- * @property Carbon|null            $created_at
- * @property Carbon|null            $updated_at
- * @property string|null            $deleted_at
- * @property-read Collection|Tag[]  $lists
- * @property-read Collection|Note[] $notes
- * @property-read Collection|Tag[]  $tags
- * @property-read User              $user
+ * @property int               $id
+ * @property int               $user_id
+ * @property string            $url
+ * @property string            $title
+ * @property string|null       $description
+ * @property string|null       $icon
+ * @property boolean           $is_private
+ * @property int               $status
+ * @property boolean           $check_disabled
+ * @property Carbon|null       $created_at
+ * @property Carbon|null       $updated_at
+ * @property string|null       $deleted_at
+ * @property Collection|Tag[]  $lists
+ * @property Collection|Note[] $notes
+ * @property Collection|Tag[]  $tags
+ * @property User              $user
  * @method static Builder|Link byUser($user_id)
  */
 class Link extends Model

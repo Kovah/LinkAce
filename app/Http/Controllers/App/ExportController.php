@@ -5,8 +5,12 @@ namespace App\Http\Controllers\App;
 use App\Http\Controllers\Controller;
 use App\Models\Link;
 use Illuminate\Contracts\View\Factory;
+use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Log;
 use Illuminate\View\View;
+use League\Csv\CannotInsertRecord;
+use League\Csv\Writer;
 use Symfony\Component\HttpFoundation\StreamedResponse;
 
 /**
@@ -33,15 +37,52 @@ class ExportController extends Controller
      * @param Request $request
      * @return StreamedResponse
      */
-    public function doExport(Request $request): StreamedResponse
+    public function doHtmlExport(Request $request): StreamedResponse
     {
         $links = Link::orderBy('title', 'asc')->with('tags')->get();
 
-        $fileContent = view()->make('actions.export.exportfile', ['links' => $links])->render();
+        $fileContent = view()->make('actions.export.html-export', ['links' => $links])->render();
         $fileName = config('app.name') . '_export.html';
 
         return response()->streamDownload(function () use ($fileContent) {
             echo $fileContent;
+        }, $fileName);
+    }
+
+    /**
+     * Export all links to a CSV file. Tags and lists are inlined with their
+     * names. A CSV file is generated with the League\Csv\Writer and made
+     * available to download.
+     *
+     * @param Request $request
+     * @return RedirectResponse|StreamedResponse
+     */
+    public function doCsvExport(Request $request)
+    {
+        $links = Link::orderBy('title', 'asc')->get();
+
+        $rows = $links->map(function (Link $link) {
+            $link->tags = $link->tags()->get()->pluck('name')->join(',');
+            $link->lists = $link->lists()->get()->pluck('name')->join(',');
+            return $link;
+        })->toArray();
+
+        try {
+
+            $csv = Writer::createFromString('');
+            $csv->insertOne(array_keys($rows[0]));
+            $csv->insertAll($rows);
+
+        } catch (CannotInsertRecord $e) {
+            Log::error($e->getMessage());
+            flash(trans('export.export_csv_error'));
+            return redirect()->back();
+        }
+
+        $fileName = config('app.name') . '_export.csv';
+
+        return response()->streamDownload(function () use ($csv) {
+            echo $csv;
         }, $fileName);
     }
 }

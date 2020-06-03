@@ -12,6 +12,7 @@
     "laracasts/flash": "^3.1",
     "laravel/framework": "^7.0",
     "laravel/ui": "^2.0",
+    "league/csv": "^9.6",
     "predis/predis": "^1.1",
     "shaarli/netscape-bookmark-parser": "^2.1",
     "spatie/laravel-backup": "^6.4.0"
