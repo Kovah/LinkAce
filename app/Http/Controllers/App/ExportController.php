@@ -68,11 +68,9 @@ class ExportController extends Controller
         })->toArray();
 
         try {
-
             $csv = Writer::createFromString('');
             $csv->insertOne(array_keys($rows[0]));
             $csv->insertAll($rows);
-
         } catch (CannotInsertRecord $e) {
             Log::error($e->getMessage());
             flash(trans('export.export_csv_error'));
