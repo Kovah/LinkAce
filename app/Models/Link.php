@@ -17,22 +17,22 @@ use Illuminate\Support\Str;
  * Class Link
  *
  * @package App\Models
- * @property int                    $id
- * @property int                    $user_id
- * @property string                 $url
- * @property string                 $title
- * @property string|null            $description
- * @property string|null            $icon
- * @property boolean                $is_private
- * @property int                    $status
- * @property boolean                $check_disabled
- * @property Carbon|null            $created_at
- * @property Carbon|null            $updated_at
- * @property string|null            $deleted_at
- * @property-read Collection|Tag[]  $lists
- * @property-read Collection|Note[] $notes
- * @property-read Collection|Tag[]  $tags
- * @property-read User              $user
+ * @property int               $id
+ * @property int               $user_id
+ * @property string            $url
+ * @property string            $title
+ * @property string|null       $description
+ * @property string|null       $icon
+ * @property boolean           $is_private
+ * @property int               $status
+ * @property boolean           $check_disabled
+ * @property Carbon|null       $created_at
+ * @property Carbon|null       $updated_at
+ * @property string|null       $deleted_at
+ * @property Collection|Tag[]  $lists
+ * @property Collection|Note[] $notes
+ * @property Collection|Tag[]  $tags
+ * @property User              $user
  * @method static Builder|Link byUser($user_id)
  */
 class Link extends Model
@@ -274,5 +274,35 @@ class Link extends Model
         }
 
         SaveLinkToWaybackmachine::dispatch($this);
+    }
+
+    /**
+     * Create a base uri of the link url, consisting of a possible auth, the
+     * hostname, a port if present, and the path. The scheme, fragments and
+     * query parameters are dumped, as well as trailing slashes.
+     * Then return all links that match this URI.
+     *
+     * If the host is not present, the URL might be broken, so do not search
+     * for any duplicates.
+     *
+     * @return Collection
+     */
+    public function searchDuplicateUrls(): Collection
+    {
+        $parsed = parse_url($this->url);
+
+        if (!isset($parsed['host'])) {
+            return new Collection();
+        }
+
+        $auth = $parsed['user'] ?? '';
+        $auth .= isset($parsed['pass']) ? ':' . $parsed['pass'] : '';
+
+        $uri = $auth ? $auth . '@' : '';
+        $uri .= $parsed['host'] ?? '';
+        $uri .= isset($parsed['port']) ? ':' . $parsed['port'] : '';
+        $uri .= $parsed['path'] ?? '';
+
+        return self::where('url', 'like', '%' . trim($uri, '/') . '%')->get();
     }
 }

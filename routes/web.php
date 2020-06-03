@@ -102,8 +102,10 @@ Route::group(['middleware' => ['auth']], function () {
 
     Route::get('export', [ExportController::class, 'getExport'])
         ->name('get-export');
-    Route::post('export', [ExportController::class, 'doExport'])
-        ->name('do-export');
+    Route::post('export/html', [ExportController::class, 'doHtmlExport'])
+        ->name('do-html-export');
+    Route::post('export/csv', [ExportController::class, 'doCsvExport'])
+        ->name('do-csv-export');
 
     Route::get('trash', [TrashController::class, 'index'])
         ->name('get-trash');

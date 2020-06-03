@@ -8,16 +8,22 @@
         </div>
         <div class="card-body">
 
-            <form id="export-form" action="{{ route('do-export') }}" method="post">
+            <p>@lang('export.export_help')</p>
+
+            <form action="{{ route('do-html-export') }}" method="post" class="mb-3">
                 @csrf
-
-                <p>@lang('export.export_help')</p>
-
-                <button type="submit" class="btn btn-primary export-submit">
+                <button type="submit" name="method" value="html" class="btn btn-primary export-submit">
                     <i class="fas fa-upload mr-2"></i>
-                    @lang('export.start_export')
+                    @lang('export.start_export_html')
                 </button>
+            </form>
 
+            <form action="{{ route('do-csv-export') }}" method="post">
+                @csrf
+                <button type="submit" name="method" value="csv" class="btn btn-primary export-submit">
+                    <i class="fas fa-upload mr-2"></i>
+                    @lang('export.start_export_csv')
+                </button>
             </form>
 
         </div>

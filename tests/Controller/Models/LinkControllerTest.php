@@ -134,9 +134,37 @@ class LinkControllerTest extends TestCase
         $this->assertTrue($databaseLink->is_private);
     }
 
-    public function testStoreRequestWithInvalidUrl(): void
+    public function testStoreRequestWithDuplicate(): void
     {
         Queue::fake();
+
+        factory(Link::class)->create([
+            'url' => 'https://example.com/',
+        ]);
+
+        $response = $this->post('links', [
+            'url' => 'https://example.com',
+            'title' => null,
+            'description' => null,
+            'lists' => null,
+            'tags' => null,
+            'is_private' => '0',
+        ]);
+
+        $response->assertStatus(302)
+            ->assertRedirect('links/2');
+
+        $flashMessages = session('flash_notification', collect());
+        $flashMessages->contains('message', trans('link.duplicates_found'));
+    }
+
+    public function testStoreRequestWithBrokenUrl(): void
+    {
+        Queue::fake();
+
+        Http::fake([
+            'example.com' => Http::response('', 500),
+        ]);
 
         $response = $this->post('links', [
             'url' => 'example.com',
