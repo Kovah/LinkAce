@@ -25,7 +25,7 @@
     @endif
 
     @if(!$lists->isEmpty())
-        {!! $lists->links() !!}
+        {!! $lists->onEachSide(1)->links() !!}
     @endif
 
 @endsection
