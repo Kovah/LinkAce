@@ -4,7 +4,7 @@
 
     <div class="card">
         <header class="card-header">
-            @lang('list.add')
+            @lang('list.edit')
         </header>
         <div class="card-body">
 

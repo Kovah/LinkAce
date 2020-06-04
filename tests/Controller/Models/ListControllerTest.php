@@ -147,7 +147,8 @@ class ListControllerTest extends TestCase
         $response = $this->get('lists/1/edit');
 
         $response->assertStatus(200)
-            ->assertSee('Edit List');
+            ->assertSee('Edit List')
+            ->assertSee('Update List');
     }
 
     public function testInvalidEditRequest(): void

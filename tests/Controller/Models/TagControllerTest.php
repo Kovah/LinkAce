@@ -130,7 +130,8 @@ class TagControllerTest extends TestCase
         $response = $this->get('tags/1/edit');
 
         $response->assertStatus(200)
-            ->assertSee('Edit Tag');
+            ->assertSee('Edit Tag')
+            ->assertSee('Update Tag');
     }
 
     public function testInvalidEditRequest(): void
