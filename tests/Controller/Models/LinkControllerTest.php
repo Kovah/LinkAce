@@ -1,6 +1,6 @@
 <?php
 
-namespace Tests\Database\Controller\Models;
+namespace Tests\Controller\Models;
 
 use App\Jobs\SaveLinkToWaybackmachine;
 use App\Models\Link;

@@ -1,6 +1,6 @@
 <?php
 
-namespace Tests\Unit\Helper;
+namespace Tests\Helper;
 
 use App\Models\Link;
 use App\Models\User;
@@ -8,11 +8,6 @@ use Illuminate\Foundation\Testing\DatabaseMigrations;
 use Illuminate\Foundation\Testing\DatabaseTransactions;
 use Tests\TestCase;
 
-/**
- * Class HelperFunctionsTest
- *
- * @package Tests\Unit\Helper
- */
 class HelperFunctionsTest extends TestCase
 {
     use DatabaseMigrations;

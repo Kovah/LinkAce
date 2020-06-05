@@ -1,6 +1,6 @@
 <?php
 
-namespace Tests\Unit\Models;
+namespace Tests\Models;
 
 use App\Models\User;
 use App\Repositories\ListRepository;
@@ -23,23 +23,18 @@ class ListCreateTest extends TestCase
         $this->user = factory(User::class)->create();
     }
 
-    /**
-     * A basic test example.
-     *
-     * @return void
-     */
     public function testValidListCreation(): void
     {
         $this->be($this->user);
 
-        $original_data = [
+        $originalData = [
             'name' => 'Test List',
             'description' => 'Test description',
         ];
 
-        $list = ListRepository::create($original_data);
+        $list = ListRepository::create($originalData);
 
-        $automated_data = [
+        $automatedData = [
             'id' => $list->id,
             'user_id' => auth()->user()->id,
             'created_at' => $list->created_at,
@@ -47,8 +42,8 @@ class ListCreateTest extends TestCase
             'deleted_at' => null,
         ];
 
-        $asserted_data = array_merge($automated_data, $original_data);
+        $assertedData = array_merge($automatedData, $originalData);
 
-        $this->assertDatabaseHas('lists', $asserted_data);
+        $this->assertDatabaseHas('lists', $assertedData);
     }
 }

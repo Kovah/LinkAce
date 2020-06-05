@@ -1,6 +1,6 @@
 <?php
 
-namespace Tests\Database\Controller\Models;
+namespace Tests\Controller\Models;
 
 use App\Models\Setting;
 use App\Models\Tag;

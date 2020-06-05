@@ -27,12 +27,12 @@ class DuplicateSearchTest extends TestCase
     {
         /** @var Link $link */
         $link = factory(Link::class)->create([
-            'url' => 'https://example.com'
+            'url' => 'https://example.com',
         ]);
 
         /** @var Link $duplicateLink */
         $duplicateLink = factory(Link::class)->create([
-            'url' => 'http://example.com'
+            'url' => 'http://example.com',
         ]);
 
         $check = $link->searchDuplicateUrls();
@@ -45,12 +45,12 @@ class DuplicateSearchTest extends TestCase
     {
         /** @var Link $link */
         $link = factory(Link::class)->create([
-            'url' => 'https://example.com'
+            'url' => 'https://example.com',
         ]);
 
         /** @var Link $duplicateLink */
         $duplicateLink = factory(Link::class)->create([
-            'url' => 'https://example.com/'
+            'url' => 'https://example.com/',
         ]);
 
         $check = $link->searchDuplicateUrls();
@@ -63,12 +63,12 @@ class DuplicateSearchTest extends TestCase
     {
         /** @var Link $link */
         $link = factory(Link::class)->create([
-            'url' => 'https://example.com'
+            'url' => 'https://example.com',
         ]);
 
         /** @var Link $duplicateLink */
         $duplicateLink = factory(Link::class)->create([
-            'url' => 'https://example.com#anchor'
+            'url' => 'https://example.com#anchor',
         ]);
 
         $check = $link->searchDuplicateUrls();
@@ -81,12 +81,12 @@ class DuplicateSearchTest extends TestCase
     {
         /** @var Link $link */
         $link = factory(Link::class)->create([
-            'url' => 'https://example.com'
+            'url' => 'https://example.com',
         ]);
 
         /** @var Link $duplicateLink */
         $duplicateLink = factory(Link::class)->create([
-            'url' => 'https://example.com?s=testing'
+            'url' => 'https://example.com?s=testing',
         ]);
 
         $check = $link->searchDuplicateUrls();
@@ -99,12 +99,12 @@ class DuplicateSearchTest extends TestCase
     {
         /** @var Link $link */
         $link = factory(Link::class)->create([
-            'url' => 'https://localhost:8080'
+            'url' => 'https://localhost:8080',
         ]);
 
         /** @var Link $duplicateLink */
         $duplicateLink = factory(Link::class)->create([
-            'url' => 'https://localhost:8080/'
+            'url' => 'https://localhost:8080/',
         ]);
 
         $check = $link->searchDuplicateUrls();
@@ -117,12 +117,12 @@ class DuplicateSearchTest extends TestCase
     {
         /** @var Link $link */
         $link = factory(Link::class)->create([
-            'url' => 'https://:password@ftp.cia.gov'
+            'url' => 'https://:password@ftp.cia.gov',
         ]);
 
         /** @var Link $duplicateLink */
         $duplicateLink = factory(Link::class)->create([
-            'url' => 'https://:password@ftp.cia.gov/'
+            'url' => 'https://:password@ftp.cia.gov/',
         ]);
 
         $check = $link->searchDuplicateUrls();
@@ -135,12 +135,12 @@ class DuplicateSearchTest extends TestCase
     {
         /** @var Link $link */
         $link = factory(Link::class)->create([
-            'url' => 'https://:snowden@files.nsa.gov'
+            'url' => 'https://:snowden@files.nsa.gov',
         ]);
 
         /** @var Link $duplicateLink */
         $duplicateLink = factory(Link::class)->create([
-            'url' => 'https://admin:snowden@files.nsa.gov/'
+            'url' => 'https://admin:snowden@files.nsa.gov/',
         ]);
 
         $check = $link->searchDuplicateUrls();
@@ -153,7 +153,7 @@ class DuplicateSearchTest extends TestCase
     {
         /** @var Link $link */
         $link = factory(Link::class)->create([
-            'url' => 'example.com'
+            'url' => 'example.com',
         ]);
 
         $check = $link->searchDuplicateUrls();

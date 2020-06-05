@@ -1,6 +1,6 @@
 <?php
 
-namespace Tests\Unit\Models;
+namespace Tests\Models;
 
 use App\Models\Link;
 use App\Models\User;
@@ -24,25 +24,20 @@ class NoteCreateTest extends TestCase
         $this->user = factory(User::class)->create();
     }
 
-    /**
-     * A basic test example.
-     *
-     * @return void
-     */
     public function testValidNoteCreation(): void
     {
         $this->be($this->user);
 
         $link = factory(Link::class)->create();
 
-        $original_data = [
+        $originalData = [
             'note' => 'Lorem ipsum dolor sit amet, consectetur adipisici elit, sed eiusmod tempor incidunt.',
             'link_id' => $link->id,
         ];
 
-        $note = NoteRepository::create($original_data);
+        $note = NoteRepository::create($originalData);
 
-        $automated_data = [
+        $automatedData = [
             'id' => $note->id,
             'user_id' => auth()->user()->id,
             'created_at' => $note->created_at,
@@ -50,8 +45,8 @@ class NoteCreateTest extends TestCase
             'deleted_at' => null,
         ];
 
-        $asserted_data = array_merge($automated_data, $original_data);
+        $assertedData = array_merge($automatedData, $originalData);
 
-        $this->assertDatabaseHas('notes', $asserted_data);
+        $this->assertDatabaseHas('notes', $assertedData);
     }
 }

@@ -1,6 +1,6 @@
 <?php
 
-namespace Tests\Unit\Helper;
+namespace Tests\Helper;
 
 use App\Helper\HtmlMeta;
 use GuzzleHttp\Exception\RequestException;
@@ -9,11 +9,6 @@ use Illuminate\Http\Client\Request;
 use Illuminate\Support\Facades\Http;
 use Tests\TestCase;
 
-/**
- * Class HtmlMetaHelperTest
- *
- * @package Tests\Unit
- */
 class HtmlMetaHelperTest extends TestCase
 {
     /**

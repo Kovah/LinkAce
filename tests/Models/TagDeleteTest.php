@@ -1,6 +1,6 @@
 <?php
 
-namespace Tests\Unit\Models;
+namespace Tests\Models;
 
 use App\Models\Tag;
 use App\Models\User;
@@ -24,19 +24,14 @@ class TagDeleteTest extends TestCase
         $this->user = factory(User::class)->create();
     }
 
-    /**
-     * A basic test example.
-     *
-     * @return void
-     */
     public function testValidCategoryCreation(): void
     {
         $this->be($this->user);
 
         $tag = factory(Tag::class)->create();
 
-        $deletion_result = TagRepository::delete($tag);
+        $deletionResult = TagRepository::delete($tag);
 
-        $this->assertTrue($deletion_result);
+        $this->assertTrue($deletionResult);
     }
 }

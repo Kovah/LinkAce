@@ -1,9 +1,8 @@
 <?php
 
-namespace Tests\Unit\Models;
+namespace Tests\Models;
 
 use App\Helper\HtmlMeta;
-use App\Helper\LinkAce;
 use App\Helper\LinkIconMapper;
 use App\Models\User;
 use App\Repositories\LinkRepository;
@@ -41,16 +40,16 @@ class LinkCreateTest extends TestCase
 
         $meta = HtmlMeta::getFromUrl($url);
 
-        $original_data = [
+        $originalData = [
             'url' => $url,
             'title' => $meta['title'],
             'description' => $meta['description'],
             'is_private' => false,
         ];
 
-        $link = LinkRepository::create($original_data);
+        $link = LinkRepository::create($originalData);
 
-        $automated_data = [
+        $automatedData = [
             'id' => $link->id,
             'icon' => LinkIconMapper::mapLink($url),
             'user_id' => auth()->user()->id,
@@ -60,8 +59,8 @@ class LinkCreateTest extends TestCase
             'deleted_at' => null,
         ];
 
-        $asserted_data = array_merge($automated_data, $original_data);
+        $assertedData = array_merge($automatedData, $originalData);
 
-        $this->assertDatabaseHas('links', $asserted_data);
+        $this->assertDatabaseHas('links', $assertedData);
     }
 }

@@ -1,17 +1,15 @@
 <?php
 
-namespace Tests\Database\Controller\API;
+namespace Tests\Controller\API;
 
 use App\Models\Setting;
-use Illuminate\Foundation\Testing\DatabaseMigrations;
-use Illuminate\Foundation\Testing\DatabaseTransactions;
+use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Support\Str;
 use Tests\TestCase;
 
 class CronControllerTest extends TestCase
 {
-    use DatabaseTransactions;
-    use DatabaseMigrations;
+    use RefreshDatabase;
 
     public function testValidCronTokenResponse(): void
     {
