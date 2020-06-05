@@ -10,31 +10,35 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 use Illuminate\Database\Eloquent\Relations\HasMany;
+use Illuminate\Database\Eloquent\Relations\MorphMany;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Support\Str;
+use Venturecraft\Revisionable\Revision;
 use Venturecraft\Revisionable\RevisionableTrait;
 
 /**
  * Class Link
  *
  * @package App\Models
- * @property int               $id
- * @property int               $user_id
- * @property string            $url
- * @property string            $title
- * @property string|null       $description
- * @property string|null       $icon
- * @property boolean           $is_private
- * @property int               $status
- * @property boolean           $check_disabled
- * @property Carbon|null       $created_at
- * @property Carbon|null       $updated_at
- * @property string|null       $deleted_at
- * @property Collection|Tag[]  $lists
- * @property Collection|Note[] $notes
- * @property Collection|Tag[]  $tags
- * @property User              $user
- * @method static Builder|Link byUser($user_id)
+ * @property int                   $id
+ * @property int                   $user_id
+ * @property string                $url
+ * @property string                $title
+ * @property string|null           $description
+ * @property string|null           $icon
+ * @property boolean               $is_private
+ * @property int                   $status
+ * @property boolean               $check_disabled
+ * @property Carbon|null           $created_at
+ * @property Carbon|null           $updated_at
+ * @property string|null           $deleted_at
+ * @property Collection|Tag[]      $lists
+ * @property Collection|Note[]     $notes
+ * @property Collection|Revision[] $revisionHistory
+ * @property Collection|Tag[]      $tags
+ * @property User                  $user
+ * @method static Builder|Link  byUser($user_id)
+ * @method static MorphMany     revisionHistory()
  */
 class Link extends Model
 {
@@ -72,6 +76,7 @@ class Link extends Model
     // Revisions settings
     protected $revisionCleanup = true;
     protected $historyLimit = 50;
+    protected $dontKeepRevisionOf = ['icon'];
 
     public const REV_TAGS_NAME = 'revtags';
     public const REV_LISTS_NAME = 'revlists';

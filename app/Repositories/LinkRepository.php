@@ -76,12 +76,15 @@ class LinkRepository
         if (isset($data['tags'])) {
             self::updateTagsForLink($link, $data['tags']);
         } else {
-            self::createRelationshipRevision(
-                $link,
-                Link::REV_TAGS_NAME,
-                $link->tags->pluck('id')->join(','),
-                null
-            );
+            // Only save a "removed" revision if there were tags before
+            if ($link->tags()->count() > 0) {
+                self::createRelationshipRevision(
+                    $link,
+                    Link::REV_TAGS_NAME,
+                    $link->tags->pluck('id')->join(','),
+                    null
+                );
+            }
 
             $link->tags()->detach();
         }
@@ -89,12 +92,15 @@ class LinkRepository
         if (isset($data['lists'])) {
             self::updateListsForLink($link, $data['lists']);
         } else {
-            self::createRelationshipRevision(
-                $link,
-                Link::REV_LISTS_NAME,
-                $link->lists->pluck('id')->join(','),
-                null
-            );
+            // Only save a "removed" revision if there were tags before
+            if ($link->lists()->count() > 0) {
+                self::createRelationshipRevision(
+                    $link,
+                    Link::REV_LISTS_NAME,
+                    $link->lists->pluck('id')->join(','),
+                    null
+                );
+            }
 
             $link->lists()->detach();
         }
