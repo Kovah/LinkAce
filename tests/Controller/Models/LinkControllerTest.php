@@ -316,6 +316,12 @@ class LinkControllerTest extends TestCase
         $this->assertEquals('https://new-example.com', $updatedLink->url);
         $this->assertEquals('New Title', $updatedLink->title);
         $this->assertEquals('New Description', $updatedLink->description);
+
+        $historyEntry = $updatedLink->revisionHistory()->first();
+
+        $this->assertEquals('url', $historyEntry->fieldName());
+        $this->assertEquals($baseLink->url, $historyEntry->oldValue());
+        $this->assertEquals($updatedLink->url, $historyEntry->newValue());
     }
 
     public function testMissingMissingErrorForUpdate(): void

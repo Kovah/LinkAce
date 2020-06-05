@@ -131,7 +131,7 @@
 
     </div>
 
-    <div class="link-notes mt-4">
+    <div class="link-notes mt-5">
 
         <h3 class="h4 mb-2">@lang('note.notes')</h3>
 
@@ -143,6 +143,16 @@
 
         @include('models.notes.partials.create', ['link' => $link])
 
+    </div>
+
+    <div class="link-history mt-5">
+        <h3 class="h6 mb-2">@lang('link.history')</h3>
+
+        <div class="small text-muted">
+            @foreach($link->revisionHistory()->latest()->get() as $entry)
+                <x-links.history-entry :entry="$entry"/>
+            @endforeach
+        </div>
     </div>
 
 @endsection

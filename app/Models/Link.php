@@ -12,6 +12,7 @@ use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Support\Str;
+use Venturecraft\Revisionable\RevisionableTrait;
 
 /**
  * Class Link
@@ -38,6 +39,7 @@ use Illuminate\Support\Str;
 class Link extends Model
 {
     use SoftDeletes;
+    use RevisionableTrait;
 
     public $table = 'links';
 
@@ -66,6 +68,13 @@ class Link extends Model
     public const DISPLAY_CARDS = 1;
     public const DISPLAY_LIST_SIMPLE = 2;
     public const DISPLAY_LIST_DETAILED = 0;
+
+    // Revisions settings
+    protected $revisionCleanup = true;
+    protected $historyLimit = 50;
+
+    public const REV_TAGS_NAME = 'revtags';
+    public const REV_LISTS_NAME = 'revlists';
 
 
     /*
