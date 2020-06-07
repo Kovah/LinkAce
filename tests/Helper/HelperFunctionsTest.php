@@ -28,10 +28,88 @@ class HelperFunctionsTest extends TestCase
     }
 
     /**
-     * Test the saveToArchive() helper funtion with a valid URL.
+     * Test the usersettings() helper function and try to get all user settings
+     * at once.
+     */
+    public function testGetAllUserSettings(): void
+    {
+        $this->actingAs($this->user);
+
+        $this->post('settings/app', [
+            'timezone' => 'Europe/Berlin',
+        ]);
+
+        $this->user->load('rawSettings'); // Reload cached settings from other tests
+
+        $settings = usersettings();
+
+        $this->assertArrayHasKey('timezone', $settings);
+        $this->assertEquals('Europe/Berlin', $settings['timezone']);
+    }
+
+    /**
+     * Test the systemsettings() helper function and try to get all system
+     * settings at once.
+     */
+    public function testGetAllSystemSettings(): void
+    {
+        $this->actingAs($this->user);
+
+        $this->post('settings/system', [
+            'system_page_title' => 'New Title',
+            'system_guest_access' => '1',
+        ]);
+
+        $settings = systemsettings();
+
+        $this->assertArrayHasKey('system_page_title', $settings);
+        $this->assertEquals('New Title', $settings['system_page_title']);
+    }
+
+    /**
+     * Test the formatDateTime() helper with a specific user format set first.
+     */
+    public function testDateTimeFormatterWithUserSettings(): void
+    {
+        $this->actingAs($this->user);
+
+        $this->post('settings/app', [
+            'timezone' => 'Europe/Berlin',
+            'date_format' => 'd.m.Y',
+            'time_format' => 'H:i:s',
+        ]);
+
+        $this->user->load('rawSettings'); // Reload cached settings from other tests
+
+        $dateTime = now();
+        $appFormatted = formatDateTime($dateTime);
+        $carbonFormatted = $dateTime->format('d.m.Y H:i:s');
+
+        $this->assertEquals($carbonFormatted, $appFormatted);
+    }
+
+    /**
+     * Test the formatDateTime() helper with a specific user format set first.
+     */
+    public function testPaginationLimitWithUserSettings(): void
+    {
+        $this->actingAs($this->user);
+
+        $this->post('settings/app', [
+            'timezone' => 'Europe/Berlin',
+            'listitem_count' => '100',
+        ]);
+
+        $this->user->load('rawSettings'); // Reload cached settings from other tests
+
+        $limit = getPaginationLimit();
+
+        $this->assertEquals('100', $limit);
+    }
+
+    /**
+     * Test the saveToArchive() helper function with a valid URL.
      * Should return true.
-     *
-     * @return void
      */
     public function testValidWaybackLink(): void
     {
@@ -43,10 +121,8 @@ class HelperFunctionsTest extends TestCase
     }
 
     /**
-     * Test the saveToArchive() helper funtion with an invalid URL.
+     * Test the saveToArchive() helper function with an invalid URL.
      * Will return false.
-     *
-     * @return void
      */
     public function testInvalidWaybackLink(): void
     {
