@@ -162,6 +162,13 @@ class LinkController extends Controller
         return redirect()->route('links.index');
     }
 
+    /**
+     * Toggles the setting of a link to be either checked or not.
+     *
+     * @param LinkToggleCheckRequest $request
+     * @param                        $id
+     * @return RedirectResponse
+     */
     public function updateCheckToggle(LinkToggleCheckRequest $request, $id)
     {
         $link = Link::findOrFail($id);
