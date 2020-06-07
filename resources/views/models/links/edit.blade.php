@@ -88,10 +88,10 @@
                             <label for="is_private">@lang('linkace.is_private')</label>
                             <select id="is_private" name="is_private"
                                 class="custom-select{{ $errors->has('is_private') ? ' is-invalid' : '' }}">
-                                <option value="0" @if($link->is_private === 0) selected @endif>
+                                <option value="0" @if($link->is_private === false) selected @endif>
                                     @lang('linkace.no')
                                 </option>
-                                <option value="1" @if($link->is_private === 1) selected @endif>
+                                <option value="1" @if($link->is_private === true) selected @endif>
                                     @lang('linkace.yes')
                                 </option>
                             </select>
