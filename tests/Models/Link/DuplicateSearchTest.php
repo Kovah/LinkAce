@@ -23,6 +23,18 @@ class DuplicateSearchTest extends TestCase
         $this->user = factory(User::class)->create();
     }
 
+    public function testWithoutDuplicates(): void
+    {
+        /** @var Link $link */
+        $link = factory(Link::class)->create([
+            'url' => 'https://example.com',
+        ]);
+
+        $check = $link->searchDuplicateUrls();
+
+        $this->assertTrue($check->isEmpty());
+    }
+
     public function testScheme(): void
     {
         /** @var Link $link */

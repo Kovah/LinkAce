@@ -316,6 +316,8 @@ class Link extends Model
         $uri .= isset($parsed['port']) ? ':' . $parsed['port'] : '';
         $uri .= $parsed['path'] ?? '';
 
-        return self::where('url', 'like', '%' . trim($uri, '/') . '%')->get();
+        return self::where('id', '<>', $this->id)
+            ->where('url', 'like', '%' . trim($uri, '/') . '%')
+            ->get();
     }
 }
