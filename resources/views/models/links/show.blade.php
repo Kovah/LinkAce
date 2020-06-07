@@ -133,7 +133,7 @@
 
     <div class="link-notes mt-5">
 
-        <h3 class="h4 mb-2">@lang('note.notes')</h3>
+        <h3 class="h6 mb-2">@lang('note.notes')</h3>
 
         @if($link->notes->count())
             @foreach($link->notes as $note)
@@ -145,14 +145,26 @@
 
     </div>
 
-    <div class="link-history mt-5">
-        <h3 class="h6 mb-2">@lang('link.history')</h3>
+    @if(count($history) > 0)
+        <div class="link-history mt-5">
+            <h3 class="h6 mb-2">@lang('link.history')</h3>
 
-        <div class="small text-muted">
-            @foreach($link->revisionHistory()->latest()->get() as $entry)
-                <x-links.history-entry :entry="$entry"/>
-            @endforeach
+            <div class="small text-muted">
+                @foreach($history as $entry)
+                    @if($loop->index === 5 && $loop->count >= 10)
+                        <a data-toggle="collapse" href="#link-history" role="button" class="d-inline-block mb-1"
+                            aria-expanded="false" aria-controls="link-history">
+                            @lang('linkace.more') <i class="fa fa-caret-down fa-fw"></i>
+                        </a>
+                        <div id="link-history" class="collapse">
+                    @endif
+                    <x-links.history-entry :entry="$entry"/>
+                    @if($loop->last && $loop->count >= 10)
+                        </div>
+                    @endif
+                @endforeach
+            </div>
         </div>
-    </div>
+    @endif
 
 @endsection

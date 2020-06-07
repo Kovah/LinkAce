@@ -103,8 +103,10 @@ class LinkController extends Controller
     {
         $link = Link::findOrFail($id);
 
-        return view('models.links.show')
-            ->with('link', $link);
+        return view('models.links.show', [
+            'link' => $link,
+            'history' => $link->revisionHistory()->latest()->get(),
+        ]);
     }
 
     /**
