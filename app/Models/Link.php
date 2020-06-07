@@ -227,21 +227,20 @@ class Link extends Model
         $title = null;
 
         // Override the icon by status if applicable
-        if ($this->status === 2) {
+        if ($this->status === self::STATUS_MOVED) {
             $icon = 'fa fa-external-link-alt text-warning';
             $title = trans('link.status.2');
         }
 
-        if ($this->status === 3) {
+        if ($this->status === self::STATUS_BROKEN) {
             $icon = 'fa fa-unlink text-danger';
             $title = trans('link.status.3');
         }
 
         // Build the correct attributes
         $classes = 'fa-fw ' . $icon . ($additional_classes ? ' ' . $additional_classes : '');
-        $title = $title ? ' title="' . $title . '"' : '';
 
-        return '<i class="' . $classes . '" ' . $title . '></i>';
+        return sprintf('<i class="%s" title="%s"></i>', $classes, $title);
     }
 
     /**
