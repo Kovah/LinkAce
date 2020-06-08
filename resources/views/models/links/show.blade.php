@@ -6,18 +6,19 @@
 
         <div class="col-12 col-md-8">
             <div class="card">
-                <header class="card-header">
-                    {!! $link->getIcon('mr-2') !!}
-                    @lang('link.link')
-                    @if($link->is_private)
-                        <i class="fas fa-lock" title="@lang('link.private')"></i>
-                    @endif
-                </header>
                 <div class="card-body">
+                    <div class="d-sm-flex mb-3">
+                        <div class="d-sm-inline-block mt-1 mb-2 mb-sm-0">
+                            {!! $link->getIcon('mr-1 mr-sm-2') !!}
+                            @if($link->is_private)
+                                <i class="fa fa-fw fa-lock mr-1 mr-sm-2" title="@lang('link.private')"></i>
+                            @endif
+                        </div>
+                        <h3 class="d-inline-block mb-0">
+                            <a href="{{ $link->url }}" {!! linkTarget() !!}>{{ $link->title }}</a>
+                        </h3>
+                    </div>
 
-                    <h2>
-                        <a href="{{ $link->url }}" {!! linkTarget() !!}>{{ $link->title }}</a>
-                    </h2>
                     <div class="text-muted small mt-1 mb-3">
                         <a href="{{ $link->url }}" {!! linkTarget() !!}>{{ $link->url }}</a>
                     </div>
@@ -33,7 +34,7 @@
                 </div>
             </div>
 
-            <div class="card mt-3">
+            <div class="card mt-4">
                 <div class="card-header">
                     @lang('sharing.share_link')
                 </div>
@@ -48,7 +49,7 @@
 
         <div class="col-12 col-md-4">
 
-            <div class="btn-group btn-block mb-3 mt-3 mt-md-0">
+            <div class="btn-group btn-block mb-4 mt-4 mt-md-0">
                 <a href="{{ route('links.edit', [$link->id]) }}" class="btn btn-sm btn-primary"
                     aria-label="@lang('link.edit')">
                     <i class="fas fa-edit mr-2"></i>
@@ -75,7 +76,7 @@
                 </div>
 
                 <form action="{{ route('links.toggle-check', [$link->id]) }}" method="POST"
-                    class="mb-3 d-flex align-items-center">
+                    class="mb-4 d-flex align-items-center">
                     @csrf
                     @if($link->check_disabled)
                         <small class="mr-3">@lang('link.check_disabled')</small>
@@ -93,7 +94,7 @@
                 </form>
             @endif
 
-            <div class="card mb-3">
+            <div class="card mb-4">
                 <div class="card-header">
                     @lang('list.lists')
                 </div>
@@ -131,9 +132,9 @@
 
     </div>
 
-    <div class="link-notes mt-4">
+    <div class="link-notes mt-5">
 
-        <h3 class="h4 mb-2">@lang('note.notes')</h3>
+        <h3 class="h6 mb-2">@lang('note.notes')</h3>
 
         @if($link->notes->count())
             @foreach($link->notes as $note)
@@ -144,5 +145,27 @@
         @include('models.notes.partials.create', ['link' => $link])
 
     </div>
+
+    @if(count($history) > 0)
+        <div class="link-history mt-5">
+            <h3 class="h6 mb-2">@lang('link.history')</h3>
+
+            <div class="small text-muted">
+                @foreach($history as $entry)
+                    @if($loop->index === 5 && $loop->count >= 10)
+                        <a data-toggle="collapse" href="#link-history" role="button" class="d-inline-block mb-1"
+                            aria-expanded="false" aria-controls="link-history">
+                            @lang('linkace.more') <i class="fa fa-caret-down fa-fw"></i>
+                        </a>
+                        <div id="link-history" class="collapse">
+                    @endif
+                    <x-links.history-entry :entry="$entry"/>
+                    @if($loop->last && $loop->count >= 10)
+                        </div>
+                    @endif
+                @endforeach
+            </div>
+        </div>
+    @endif
 
 @endsection

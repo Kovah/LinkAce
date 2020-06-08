@@ -210,9 +210,4 @@ class CheckLinksCommand extends Command
 
         $this->info('› Notification sent to the user.');
     }
-
-    public function setLimit(int $limit)
-    {
-        $this->limit = $limit;
-    }
 }

@@ -29,3 +29,10 @@
 [disabled] {
   cursor: not-allowed;
 }
+
+// Generate a small pagination on mobile devices to prevent overflow
+.pagination {
+  @include media-breakpoint-only(xs) {
+    @include pagination-size($pagination-padding-y-sm, $pagination-padding-x-sm, $font-size-sm, $line-height-sm, $border-radius-sm);
+  }
+}

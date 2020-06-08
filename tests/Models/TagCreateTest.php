@@ -1,6 +1,6 @@
 <?php
 
-namespace Tests\Unit\Models;
+namespace Tests\Models;
 
 use App\Models\User;
 use App\Repositories\TagRepository;
@@ -23,22 +23,17 @@ class TagCreateTest extends TestCase
         $this->user = factory(User::class)->create();
     }
 
-    /**
-     * A basic test example.
-     *
-     * @return void
-     */
     public function testValidTagCreation(): void
     {
         $this->be($this->user);
 
-        $original_data = [
+        $originalData = [
             'name' => 'Test Tag',
         ];
 
-        $tag = TagRepository::create($original_data);
+        $tag = TagRepository::create($originalData);
 
-        $automated_data = [
+        $automatedData = [
             'id' => $tag->id,
             'user_id' => auth()->user()->id,
             'created_at' => $tag->created_at,
@@ -46,8 +41,8 @@ class TagCreateTest extends TestCase
             'deleted_at' => null,
         ];
 
-        $asserted_data = array_merge($automated_data, $original_data);
+        $assertedData = array_merge($automatedData, $originalData);
 
-        $this->assertDatabaseHas('tags', $asserted_data);
+        $this->assertDatabaseHas('tags', $assertedData);
     }
 }

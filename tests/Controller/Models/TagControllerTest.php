@@ -1,6 +1,6 @@
 <?php
 
-namespace Tests\Database\Controller\Models;
+namespace Tests\Controller\Models;
 
 use App\Models\Setting;
 use App\Models\Tag;
@@ -130,7 +130,8 @@ class TagControllerTest extends TestCase
         $response = $this->get('tags/1/edit');
 
         $response->assertStatus(200)
-            ->assertSee('Edit Tag');
+            ->assertSee('Edit Tag')
+            ->assertSee('Update Tag');
     }
 
     public function testInvalidEditRequest(): void

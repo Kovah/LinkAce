@@ -1,28 +1,29 @@
 <p align="center">
-  <img src="./public/assets/img/linkace_logo.svg" title="Linkace">
+  <img src="./public/assets/img/linkace_logo_padded.png" title="Linkace">
 </p>
 
 <p>&nbsp;</p>
 
-<p align="center"><b>A small, selfhosted bookmark manager.</b></p>
+<p align="center"><b>Your selfhosted bookmark archive with a simple interface and advanced features.</b></p>
 <p align="center"><b>:warning: This application is still in development! :warning:</b></p>
 
 <p align="center">
+  <a href="https://twitter.com/LinkAceApp"><img src="https://img.shields.io/badge/Twitter-@LinkAceApp-1da1f2" alt="Follow LinkAce on Twitter"></a>
   <a href="https://hub.docker.com/r/linkace/linkace"><img src="https://img.shields.io/badge/Docker-linkace%2Flinkace-2596EC.svg" alt="Docker Repository"></a>
   <a href="https://github.com/Kovah/LinkAce/releases"><img src="https://img.shields.io/github/v/release/kovah/linkace?include_prereleases&label=Latest%20Release" alt="Latest Release"></a>
   <a href="https://opensource.org/licenses/MIT"><img src="https://img.shields.io/github/license/kovah/linkace.svg" alt="License"></a>
+  <a href="https://crowdin.com/project/linkace"><img src="https://img.shields.io/badge/Translations-Crowdin-2b303d" alt="Translations"></a>
 </p>
-
 <p>&nbsp;</p>
 
 
 ### Contents
 
 * [About LinkAce](#about-linkace)
+* [Support Disclaimer](#warning-support-for-linkace)
 * [Setup](#gear-setup)
   * [Setup with Docker](#setup-with-docker)
   * [Setup without Docker](#setup-without-docker)
-* [Support Disclaimer](#warning-support-disclaimer)
 * [Contribution](#construction-contribution)
   * [Development](#development)
 
@@ -59,6 +60,25 @@ for more information.
 Any further information about all the available features and how to install the app, can be found on the 
 [LinkAce Website](https://www.linkace.org/). Additionally, you may visit the [community forums](https://spectrum.chat/linkace/)
 to share your ideas, talk with other users or find help for specific problems.
+
+
+---
+
+
+### :warning: Support for LinkAce
+
+LinkAce is my personal freetime project. I do not offer any sort of granted support for it. I do not offer any paid 
+support or customization. I do not assist with installing it on your server. If I answer your questions in the
+community forum or on Github, it's my free time I spend on your issue. Be respectful.
+
+If you need an app with extensive support please consider using a commercial solution.
+
+If you need help or want to report a bug within the application, please open a new [issue](https://github.com/Kovah/LinkAce/issues)
+and describe:
+
+* which version you are using,
+* what your exact problem is,
+* and what you already did to solve the problem.
 
 
 ---
@@ -116,10 +136,10 @@ Please note that `linkace_php_1` is the name of your PHP container here. It may 
 the name of your container in the output of the previous command, but will most likely end with `_php_1`.
 
 ```bash
-docker exec -it linkace_php_1 bash -c "php artisan key:generate"
+docker-compose run php php artisan key:generate
 ```
 
-Open the URL which points to your Docker container in your browser now. You have to configure the database and your 
+Open the URL which points to your Docker container in your browser now. You have to configure the database, and your 
 user account in this process.
 
 Please make sure to follow the post-installation tasks to fully enable all features. A guide can be found in the 
@@ -141,30 +161,13 @@ LinkAce without Docker.
 ---
 
 
-### :warning: Support Disclaimer
-
-**Please notice**: This is **a private side-project* mainly developed for *myself*. Therefore I cannot guarantee that 
-the app will work without any problems, and I may not answer support requests within a short period of time. I also
-do not offer any customization or installation help.
-
-If you need an app with extensive support please consider using another solution.
-
-If you need help or want to report a bug within the application, please open a new [issue](https://github.com/Kovah/LinkAce/issues)
-and describe:
-
-* which version you are using,
-* what your exact problem is,
-* and what you already did to solve the problem.
-
-
----
-
-
 ### :construction: Contribution
 
-I will gladly welcome any help with the development of the application. If you want to contribute to the project please
-open a [ticket](https://github.com/Kovah/LinkAce/issues) first and describe what you want to do or what your idea is.
-Maybe there already is an existing ticket for your or a very similar topic.
+If you want to contribute to the project please open a [ticket](https://github.com/Kovah/LinkAce/issues) first and 
+describe what you want to do or what your idea is. Maybe there already is an existing ticket for your or a very similar 
+topic.
+
+I may decline contributions for features that may not fit into the application.
 
 #### Some Contribution Guidelines
 
@@ -217,7 +220,7 @@ docker exec linkace-php bash -c "php artisan migrate"
 
 #### 3. Registering a new user
 
-Currently you can do this by using the command line:
+Currently, you can do this by using the command line:
 
 ```bash
 docker exec -it linkace-php bash -c "php artisan registeruser [user name] [user email]"

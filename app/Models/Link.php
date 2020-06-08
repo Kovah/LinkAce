@@ -10,34 +10,40 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 use Illuminate\Database\Eloquent\Relations\HasMany;
+use Illuminate\Database\Eloquent\Relations\MorphMany;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Support\Str;
+use Venturecraft\Revisionable\Revision;
+use Venturecraft\Revisionable\RevisionableTrait;
 
 /**
  * Class Link
  *
  * @package App\Models
- * @property int                    $id
- * @property int                    $user_id
- * @property string                 $url
- * @property string                 $title
- * @property string|null            $description
- * @property string|null            $icon
- * @property boolean                $is_private
- * @property int                    $status
- * @property boolean                $check_disabled
- * @property Carbon|null            $created_at
- * @property Carbon|null            $updated_at
- * @property string|null            $deleted_at
- * @property-read Collection|Tag[]  $lists
- * @property-read Collection|Note[] $notes
- * @property-read Collection|Tag[]  $tags
- * @property-read User              $user
- * @method static Builder|Link byUser($user_id)
+ * @property int                   $id
+ * @property int                   $user_id
+ * @property string                $url
+ * @property string                $title
+ * @property string|null           $description
+ * @property string|null           $icon
+ * @property boolean               $is_private
+ * @property int                   $status
+ * @property boolean               $check_disabled
+ * @property Carbon|null           $created_at
+ * @property Carbon|null           $updated_at
+ * @property string|null           $deleted_at
+ * @property Collection|Tag[]      $lists
+ * @property Collection|Note[]     $notes
+ * @property Collection|Revision[] $revisionHistory
+ * @property Collection|Tag[]      $tags
+ * @property User                  $user
+ * @method static Builder|Link  byUser($user_id)
+ * @method static MorphMany     revisionHistory()
  */
 class Link extends Model
 {
     use SoftDeletes;
+    use RevisionableTrait;
 
     public $table = 'links';
 
@@ -66,6 +72,14 @@ class Link extends Model
     public const DISPLAY_CARDS = 1;
     public const DISPLAY_LIST_SIMPLE = 2;
     public const DISPLAY_LIST_DETAILED = 0;
+
+    // Revisions settings
+    protected $revisionCleanup = true;
+    protected $historyLimit = 50;
+    protected $dontKeepRevisionOf = ['icon'];
+
+    public const REV_TAGS_NAME = 'revtags';
+    public const REV_LISTS_NAME = 'revlists';
 
 
     /*
@@ -213,21 +227,20 @@ class Link extends Model
         $title = null;
 
         // Override the icon by status if applicable
-        if ($this->status === 2) {
+        if ($this->status === self::STATUS_MOVED) {
             $icon = 'fa fa-external-link-alt text-warning';
             $title = trans('link.status.2');
         }
 
-        if ($this->status === 3) {
+        if ($this->status === self::STATUS_BROKEN) {
             $icon = 'fa fa-unlink text-danger';
             $title = trans('link.status.3');
         }
 
         // Build the correct attributes
         $classes = 'fa-fw ' . $icon . ($additional_classes ? ' ' . $additional_classes : '');
-        $title = $title ? ' title="' . $title . '"' : '';
 
-        return '<i class="' . $classes . '" ' . $title . '></i>';
+        return sprintf('<i class="%s" title="%s"></i>', $classes, $title);
     }
 
     /**
@@ -274,5 +287,37 @@ class Link extends Model
         }
 
         SaveLinkToWaybackmachine::dispatch($this);
+    }
+
+    /**
+     * Create a base uri of the link url, consisting of a possible auth, the
+     * hostname, a port if present, and the path. The scheme, fragments and
+     * query parameters are dumped, as well as trailing slashes.
+     * Then return all links that match this URI.
+     *
+     * If the host is not present, the URL might be broken, so do not search
+     * for any duplicates.
+     *
+     * @return Collection
+     */
+    public function searchDuplicateUrls(): Collection
+    {
+        $parsed = parse_url($this->url);
+
+        if (!isset($parsed['host'])) {
+            return new Collection();
+        }
+
+        $auth = $parsed['user'] ?? '';
+        $auth .= isset($parsed['pass']) ? ':' . $parsed['pass'] : '';
+
+        $uri = $auth ? $auth . '@' : '';
+        $uri .= $parsed['host'] ?? '';
+        $uri .= isset($parsed['port']) ? ':' . $parsed['port'] : '';
+        $uri .= $parsed['path'] ?? '';
+
+        return self::where('id', '<>', $this->id)
+            ->where('url', 'like', '%' . trim($uri, '/') . '%')
+            ->get();
     }
 }

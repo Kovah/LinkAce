@@ -27,7 +27,7 @@
                 </div>
 
                 <div class="row">
-                    <div class="col">
+                    <div class="col-12 col-sm-6 col-md-7">
                         <div class="form-group">
                             <label for="description">@lang('list.description')</label>
 
@@ -42,7 +42,7 @@
                             @endif
                         </div>
                     </div>
-                    <div class="col">
+                    <div class="col-12 col-sm-6 col-md-5">
                         <div class="form-group">
                             <label for="is_private">@lang('linkace.is_private')</label>
 
@@ -63,9 +63,9 @@
                     </div>
                 </div>
 
-                <div class="mt-3 d-flex align-items-center">
+                <div class="mt-3 d-sm-flex align-items-center justify-content-end">
 
-                    <div class="custom-control custom-checkbox ml-auto mr-4">
+                    <div class="custom-control custom-checkbox mb-3 mb-sm-0 mr-sm-4">
                         <input class="custom-control-input" type="checkbox" id="reload_view" name="reload_view"
                             @if(session('reload_view')) checked @endif>
                         <label class="custom-control-label" for="reload_view">

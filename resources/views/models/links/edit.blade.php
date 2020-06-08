@@ -28,7 +28,7 @@
                 </div>
 
                 <div class="row">
-                    <div class="col">
+                    <div class="col-12 col-sm-6 col-md-7">
 
                         <div class="form-group">
                             <label class="label" for="title">@lang('link.title')</label>
@@ -56,7 +56,7 @@
                         </div>
 
                     </div>
-                    <div class="col">
+                    <div class="col-12 col-sm-6 col-md-5">
 
                         <div class="form-group">
                             <label for="lists">@lang('list.lists')</label>
@@ -88,10 +88,10 @@
                             <label for="is_private">@lang('linkace.is_private')</label>
                             <select id="is_private" name="is_private"
                                 class="custom-select{{ $errors->has('is_private') ? ' is-invalid' : '' }}">
-                                <option value="0" @if($link->is_private === 0) selected @endif>
+                                <option value="0" @if($link->is_private === false) selected @endif>
                                     @lang('linkace.no')
                                 </option>
-                                <option value="1" @if($link->is_private === 1) selected @endif>
+                                <option value="1" @if($link->is_private === true) selected @endif>
                                     @lang('linkace.yes')
                                 </option>
                             </select>
@@ -106,12 +106,14 @@
                     </div>
                 </div>
 
-                <div class="mt-3 d-flex align-items-center justify-content-end">
+                <div class="mt-3 d-sm-flex flex-wrap align-items-center">
 
-                    <button type="button" class="btn btn-sm btn-outline-danger mr-auto"
-                        onclick="window.deleteLink.submit()">
-                        <i class="fas fa-trash-alt mr-2"></i> @lang('link.delete')
-                    </button>
+                    <div class="d-sm-inline-block mb-3 mb-sm-0 mr-auto">
+                        <button type="button" class="btn btn-sm btn-outline-danger"
+                            onclick="window.deleteLink.submit()">
+                            <i class="fas fa-trash-alt mr-2"></i> @lang('link.delete')
+                        </button>
+                    </div>
 
                     <button type="submit" class="btn btn-primary">
                         <i class="fas fa-save mr-2"></i> @lang('link.update')

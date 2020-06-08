@@ -9,7 +9,7 @@ use Illuminate\Support\Facades\Hash;
 /**
  * Class RegisterUser
  *
- * Provides a php artisan command to register a new user
+ * Provides a php artisan command to register a new user:
  * php artisan registeruser UserName mail@user.com
  *
  * @package App\Console\Commands
@@ -39,13 +39,12 @@ class RegisterUserCommand extends Command
 
         $password = $this->secret('Please enter a password for ' . $name);
 
-        $new_user = User::create([
+        User::create([
             'name' => $name,
             'email' => $email,
             'password' => Hash::make($password),
         ]);
 
         $this->info('User ' . $name . ' registered.');
-        return;
     }
 }

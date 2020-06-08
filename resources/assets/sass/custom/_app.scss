@@ -95,11 +95,28 @@ body:not(.bookmarklet) {
   }
 }
 
+.alert {
+  font-size: 90%;
+}
+
 .btn-xs {
   @include button-size($btn-padding-y-xs, $btn-padding-x-xs, $btn-font-size-xs, $btn-line-height-xs, $btn-border-radius-xs);
 }
 
 .btn-group-xs > .btn { @extend .btn-xs; }
+
+code {
+  @include font-size($code-font-size);
+  color: $code-color;
+  word-wrap: break-word;
+  background-color: $code-background-color;
+  padding: $code-padding;
+  border-radius: $code-border-radius;
+
+  a > & {
+    color: inherit;
+  }
+}
 
 #loader {
   display: none !important;

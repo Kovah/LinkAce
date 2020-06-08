@@ -10,11 +10,6 @@ use Illuminate\Foundation\Testing\DatabaseMigrations;
 use Illuminate\Foundation\Testing\DatabaseTransactions;
 use Tests\TestCase;
 
-/**
- * Class ExampleSeedingTest
- *
- * @package Tests\Feature
- */
 class ExampleSeedingTest extends TestCase
 {
     use DatabaseTransactions;
@@ -27,11 +22,6 @@ class ExampleSeedingTest extends TestCase
         $this->seed('ExampleSeeder');
     }
 
-    /**
-     * Check if the example seeder has generated the correct amounts of entities
-     *
-     * @return void
-     */
     public function testSeedingResults(): void
     {
         $this->assertEquals(1, User::count());

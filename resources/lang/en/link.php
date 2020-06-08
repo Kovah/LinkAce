@@ -16,9 +16,19 @@ return [
 
     'private' => 'Private Link',
 
+    'history' => 'History',
+    'history_added' => 'Added <code>:newvalue</code> to :fieldname.',
+    'history_changed' => 'Changed :fieldname from <code>:oldvalue</code> to <code>:newvalue</code>',
+    'history_removed' => 'Removed <code>:oldvalue</code> from :fieldname.',
+    'history_deleted' => 'Link was deleted',
+    'history_restored' => 'Link was restored',
+
     'url' => 'URL',
     'title' => 'Title',
     'description' => 'Description',
+    'revtags' => 'Tags',
+    'revlists' => 'Lists',
+    'is_private' => 'Private Status',
 
     'status' => [
         '1' => 'Working',
@@ -42,6 +52,8 @@ return [
     'updated_successfully' => 'Link updated successfully.',
     'deleted_successfully' => 'Link deleted successfully.',
     'deletion_error' => 'Link could not be deleted.',
+
+    'duplicates_found' => 'LinkAce found possible duplicates of the submitted URL:',
 
     'notifications.linkcheck.errors' => 'LinkAce found errors while checking your Links.',
     'notifications.linkcheck.errors.moved' => '⚠ ️The following Links moved to a new location:',

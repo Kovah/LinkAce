@@ -1,6 +1,6 @@
 <?php
 
-namespace Tests\Unit\Models;
+namespace Tests\Models;
 
 use App\Models\LinkList;
 use App\Models\User;
@@ -24,11 +24,6 @@ class ListUpdateTest extends TestCase
         $this->user = factory(User::class)->create();
     }
 
-    /**
-     * A basic test example.
-     *
-     * @return void
-     */
     public function testValidListUpdate(): void
     {
         $this->be($this->user);

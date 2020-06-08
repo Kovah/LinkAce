@@ -1,7 +1,8 @@
 <?php
 
-namespace Tests\Database;
+namespace Tests\Controller\App;
 
+use App\Models\Link;
 use App\Models\User;
 use Illuminate\Foundation\Testing\DatabaseMigrations;
 use Illuminate\Foundation\Testing\DatabaseTransactions;
@@ -32,18 +33,31 @@ class ExportControllerTest extends TestCase
             ->assertSee('Export');
     }
 
-    public function testValidExportGenerationResponse(): void
+    public function testValidHtmlExportGeneration(): void
     {
-        $user = factory(User::class)->create();
-        $this->actingAs($user);
-
-        $response = $this->post('export');
+        $response = $this->post('export/html');
         $response->assertStatus(200);
 
         $content = $response->streamedContent();
 
         $this->assertStringContainsString(
             '<META HTTP-EQUIV="Content-Type" CONTENT="text/html; charset=UTF-8">',
+            $content
+        );
+    }
+
+    public function testValidCsvExportGeneration(): void
+    {
+        /** @var Link $link */
+        $link = Link::inRandomOrder()->first();
+
+        $response = $this->post('export/csv');
+        $response->assertStatus(200);
+
+        $content = $response->streamedContent();
+
+        $this->assertStringContainsString(
+            sprintf('%s,%s,%s', $link->id, $link->user_id, $link->url),
             $content
         );
     }

@@ -27,7 +27,7 @@
     </div>
 
     @if(!$tags->isEmpty())
-        {!! $tags->links() !!}
+        {!! $tags->onEachSide(1)->links() !!}
     @endif
 
 @endsection

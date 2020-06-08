@@ -1,6 +1,6 @@
 {
   "name": "linkace",
-  "version": "0.0.35",
+  "version": "0.0.38",
   "description": "A small, selfhosted bookmark manager with advanced features, built with Laravel and Docker",
   "homepage": "https://github.com/Kovah/LinkAce",
   "repository": {
@@ -8,7 +8,7 @@
     "url": "git+https://github.com/Kovah/LinkAce.git"
   },
   "author": "Kovah.de",
-  "license": "MIT",
+  "license": "GPL-3.0-or-later",
   "bugs": {
     "url": "https://github.com/Kovah/LinkAce/issues"
   },
@@ -16,7 +16,7 @@
     "cross-env": "^6.0.3",
     "laravel-mix": "^5.0.4",
     "resolve-url-loader": "^3.1.1",
-    "sass": "^1.26.5",
+    "sass": "^1.26.7",
     "sass-loader": "^8.0.2",
     "vue-template-compiler": "^2.6.11"
   },
@@ -24,8 +24,8 @@
     "@fortawesome/fontawesome-svg-core": "^1.2.28",
     "@fortawesome/free-brands-svg-icons": "^5.13.0",
     "@fortawesome/free-solid-svg-icons": "^5.13.0",
-    "bootstrap": "^4.4.1",
-    "jquery": "^3.5.0",
+    "bootstrap": "^4.5.0",
+    "jquery": "^3.5.1",
     "popper.js": "^1.16.1",
     "selectize": "^0.12.6"
   },

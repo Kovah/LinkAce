@@ -1,6 +1,6 @@
 <?php
 
-namespace Tests\Database\Controller\Models;
+namespace Tests\Controller\Models;
 
 use App\Jobs\SaveLinkToWaybackmachine;
 use App\Models\Link;
@@ -63,8 +63,7 @@ class LinkControllerTest extends TestCase
             'url' => 'https://example.com',
         ]);
 
-        $response->assertStatus(302)
-            ->assertRedirect('links/1');
+        $response->assertRedirect('links/1');
 
         $databaseLink = Link::first();
 
@@ -90,8 +89,7 @@ class LinkControllerTest extends TestCase
             'is_private' => '1',
         ]);
 
-        $response->assertStatus(302)
-            ->assertRedirect('links/1');
+        $response->assertRedirect('links/1');
 
         $databaseLink = Link::first();
 
@@ -121,17 +119,43 @@ class LinkControllerTest extends TestCase
             'is_private' => usersettings('links_private_default'),
         ]);
 
-        $response->assertStatus(302)
-            ->assertRedirect('links/1');
+        $response->assertRedirect('links/1');
 
         $databaseLink = Link::first();
 
         $this->assertTrue($databaseLink->is_private);
     }
 
-    public function testStoreRequestWithInvalidUrl(): void
+    public function testStoreRequestWithDuplicate(): void
     {
         Queue::fake();
+
+        factory(Link::class)->create([
+            'url' => 'https://example.com/',
+        ]);
+
+        $response = $this->post('links', [
+            'url' => 'https://example.com',
+            'title' => null,
+            'description' => null,
+            'lists' => null,
+            'tags' => null,
+            'is_private' => '0',
+        ]);
+
+        $response->assertRedirect('links/2');
+
+        $flashMessages = session('flash_notification', collect());
+        $flashMessages->contains('message', trans('link.duplicates_found'));
+    }
+
+    public function testStoreRequestWithBrokenUrl(): void
+    {
+        Queue::fake();
+
+        Http::fake([
+            'example.com' => Http::response('', 500),
+        ]);
 
         $response = $this->post('links', [
             'url' => 'example.com',
@@ -142,8 +166,7 @@ class LinkControllerTest extends TestCase
             'is_private' => '0',
         ]);
 
-        $response->assertStatus(302)
-            ->assertRedirect('links/1');
+        $response->assertRedirect('links/1');
 
         $databaseLink = Link::first();
 
@@ -161,8 +184,7 @@ class LinkControllerTest extends TestCase
             'reload_view' => '1',
         ]);
 
-        $response->assertStatus(302)
-            ->assertRedirect('links/create');
+        $response->assertRedirect('links/create');
 
         $databaseLink = Link::first();
 
@@ -265,14 +287,19 @@ class LinkControllerTest extends TestCase
             'check_disabled' => '0',
         ]);
 
-        $response->assertStatus(302)
-            ->assertRedirect('links/1');
+        $response->assertRedirect('links/1');
 
         $updatedLink = $baseLink->fresh();
 
         $this->assertEquals('https://new-example.com', $updatedLink->url);
         $this->assertEquals('New Title', $updatedLink->title);
         $this->assertEquals('New Description', $updatedLink->description);
+
+        $historyEntry = $updatedLink->revisionHistory()->first();
+
+        $this->assertEquals('url', $historyEntry->fieldName());
+        $this->assertEquals($baseLink->url, $historyEntry->oldValue());
+        $this->assertEquals($updatedLink->url, $historyEntry->newValue());
     }
 
     public function testMissingModelErrorForUpdate(): void
@@ -340,8 +367,7 @@ class LinkControllerTest extends TestCase
             '_method' => 'delete',
         ]);
 
-        $response->assertStatus(302)
-            ->assertRedirect('links');
+        $response->assertRedirect('links');
 
         $databaseLink = Link::withTrashed()->first();
 
@@ -355,5 +381,33 @@ class LinkControllerTest extends TestCase
         ]);
 
         $response->assertStatus(404);
+    }
+
+    public function testCheckToggleRequest(): void
+    {
+        $link = factory(Link::class)->create();
+
+        $response = $this->post('links/toggle-check/1', [
+            'toggle' => '1',
+        ]);
+
+        $response->assertRedirect('links/1');
+
+        $updatedLink = $link->fresh();
+
+        $this->assertEquals(true, $updatedLink->check_disabled);
+    }
+
+    public function testInvalidCheckToggleRequest(): void
+    {
+        factory(Link::class)->create();
+
+        $response = $this->post('links/toggle-check/1', [
+            'toggle' => 'blabla',
+        ]);
+
+        $response->assertSessionHasErrors([
+            'toggle',
+        ]);
     }
 }

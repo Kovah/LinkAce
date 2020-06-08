@@ -35,7 +35,7 @@
     </section>
 
     @if(!$links->isEmpty())
-        {!! $links->links() !!}
+        {!! $links->onEachSide(1)->links() !!}
     @endif
 
 @endsection

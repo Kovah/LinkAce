@@ -24,6 +24,6 @@
         </div>
     </div>
 
-    {!! $tag_links->links() !!}
+    {!! $tag_links->onEachSide(1)->links() !!}
 
 @endsection

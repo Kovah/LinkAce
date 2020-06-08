@@ -4,12 +4,12 @@
         <div class="d-flex align-items-top flex-wrap">
             <div class="mr-2 mw-100">
                 @if($link->is_private)
-                    <i class="fas fa-lock text-muted mr-1" title="@lang('link.private')"></i>
+                    <i class="fa fa-lock mr-1" title="@lang('link.private')"></i>
                 @endif
                 {!! $link->getIcon('mr-1') !!}
                 <a href="{{ $link->url }}" {!! linkTarget() !!}>{{ $link->title }}</a>
                 <br>
-                <small class="text-muted">({{ $link->shortUrl() }})</small>
+                <small class="text-muted">{{ $link->shortUrl() }}</small>
             </div>
             <div class="ml-auto text-right">
                 <button type="button" class="btn btn-xs btn-outline-secondary" title="@lang('sharing.share_link')"

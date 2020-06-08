@@ -38,6 +38,7 @@ return [
 
     'yes' => 'Yes',
     'no' => 'No',
+    'more' => 'More',
 
     'no_results_found' => 'No :model found.',
 

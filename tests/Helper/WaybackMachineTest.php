@@ -1,19 +1,11 @@
 <?php
 
-namespace Tests\Unit\Helper;
+namespace Tests\Helper;
 
 use App\Helper\WaybackMachine;
-use GuzzleHttp\Handler\MockHandler;
-use GuzzleHttp\HandlerStack;
-use GuzzleHttp\Psr7\Response;
 use Illuminate\Support\Facades\Http;
 use Tests\TestCase;
 
-/**
- * Class WaybackMachineTest
- *
- * @package Tests\Unit\Helper
- */
 class WaybackMachineTest extends TestCase
 {
     /**

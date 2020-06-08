@@ -1,8 +1,7 @@
 <?php
 
-namespace Tests\Database\Controller\Guest;
+namespace Tests\Controller\Guest;
 
-use App\Models\LinkList;
 use App\Models\Setting;
 use App\Models\Tag;
 use App\Models\User;
