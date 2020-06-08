@@ -48,6 +48,51 @@ class LinkRepository
         /** @var Link $link */
         $link = Link::create($data);
 
+        self::processLinkTaxonmies($link, $data);
+
+        $link->initiateInternetArchiveBackup();
+
+        return $link;
+    }
+
+    /**
+     * Update a link with the given data and sync both the tags and lists.
+     *
+     * @param Link  $link
+     * @param array $data
+     * @return Link
+     */
+    public static function update(Link $link, array $data): Link
+    {
+        $data['icon'] = LinkIconMapper::mapLink($data['url'] ?? $link->url);
+
+        $link->update($data);
+
+        self::processLinkTaxonmies($link, $data);
+
+        return $link;
+    }
+
+    /**
+     * Try to delete a given link. If it fails, log the error.
+     *
+     * @param Link $link
+     * @return bool
+     */
+    public static function delete(Link $link): bool
+    {
+        try {
+            $link->delete();
+        } catch (Exception $e) {
+            Log::error($e);
+            return false;
+        }
+
+        return true;
+    }
+
+    protected static function processLinkTaxonmies(Link $link, array $data)
+    {
         if (isset($data['tags'])) {
             self::updateTagsForLink($link, $data['tags']);
         } else {
@@ -79,52 +124,6 @@ class LinkRepository
 
             $link->lists()->detach();
         }
-
-        $link->initiateInternetArchiveBackup();
-
-        return $link;
-    }
-
-    /**
-     * Update a link with the given data and sync both the tags and lists.
-     *
-     * @param Link  $link
-     * @param array $data
-     * @return Link
-     */
-    public static function update(Link $link, array $data): Link
-    {
-        $data['icon'] = LinkIconMapper::mapLink($data['url'] ?? $link->url);
-
-        $link->update($data);
-
-        if (isset($data['tags'])) {
-            self::updateTagsForLink($link, $data['tags']);
-        }
-
-        if (isset($data['lists'])) {
-            self::updateListsForLink($link, $data['lists']);
-        }
-
-        return $link;
-    }
-
-    /**
-     * Try to delete a given link. If it fails, log the error.
-     *
-     * @param Link $link
-     * @return bool
-     */
-    public static function delete(Link $link): bool
-    {
-        try {
-            $link->delete();
-        } catch (Exception $e) {
-            Log::error($e);
-            return false;
-        }
-
-        return true;
     }
 
     /**
