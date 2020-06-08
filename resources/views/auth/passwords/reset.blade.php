@@ -9,11 +9,13 @@
                 <div class="card-header">
                     @lang('linkace.reset_password')
                 </div>
-                <div class="card-content">
+                <div class="card-body">
 
                     <form method="POST" action="{{ route('password.request') }}"
                         aria-label="@lang('linkace.reset_password')">
                         @csrf
+
+                        <input type="hidden" name="token" value="{{ $token }}">
 
                         <div class="form-group">
                             <label for="email">@lang('linkace.email')</label>
@@ -51,7 +53,7 @@
                             <div class="control">
                                 <input name="password_confirmation" id="password-confirm"
                                     class="form-control{{ $errors->has('password_confirmation') ? ' is-invalid' : '' }}"
-                                    type="email" placeholder="@lang('placeholder.password_confirmed')"
+                                    type="password" placeholder="@lang('placeholder.password_confirmed')"
                                     required>
                             </div>
                             @if ($errors->has('password_confirmation'))
