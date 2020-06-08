@@ -1,6 +1,6 @@
 <?php
 
-namespace Tests\Database;
+namespace Tests\Controller\App;
 
 use App\Models\Link;
 use App\Models\LinkList;

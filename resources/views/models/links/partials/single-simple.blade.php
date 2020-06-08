@@ -2,6 +2,9 @@
     <div class="d-sm-flex align-items-center">
         <div class="mr-3 one-line-sm">
             <a href="{{ $link->url }}" title="{{ $link->url }}">
+                @if($link->is_private)
+                    <i class="fa fa-lock mr-1" title="@lang('link.private')"></i>
+                @endif
                 {!! $link->getIcon('mr-1') !!}
                 {{ $link->shortTitle(100) }}
             </a>

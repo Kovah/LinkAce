@@ -1,6 +1,6 @@
 <?php
 
-namespace Tests\Database\Controller\Setup;
+namespace Tests\Controller\Setup;
 
 use Illuminate\Foundation\Testing\DatabaseMigrations;
 use Illuminate\Foundation\Testing\DatabaseTransactions;

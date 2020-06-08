@@ -1,6 +1,6 @@
 <?php
 
-namespace Tests\Unit\Models;
+namespace Tests\Models;
 
 use App\Models\LinkList;
 use App\Models\User;
@@ -35,8 +35,8 @@ class ListDeleteTest extends TestCase
 
         $list = factory(LinkList::class)->create();
 
-        $deletion_result = ListRepository::delete($list);
+        $deletionResult = ListRepository::delete($list);
 
-        $this->assertTrue($deletion_result);
+        $this->assertTrue($deletionResult);
     }
 }

@@ -1,6 +1,6 @@
 <?php
 
-namespace Tests\Unit\Models;
+namespace Tests\Models;
 
 use App\Models\Note;
 use App\Models\User;
@@ -24,19 +24,14 @@ class NoteDeleteTest extends TestCase
         $this->user = factory(User::class)->create();
     }
 
-    /**
-     * A basic test example.
-     *
-     * @return void
-     */
     public function testValidCategoryCreation(): void
     {
         $this->be($this->user);
 
         $note = factory(Note::class)->create();
 
-        $deletion_result = NoteRepository::delete($note);
+        $deletionResult = NoteRepository::delete($note);
 
-        $this->assertTrue($deletion_result);
+        $this->assertTrue($deletionResult);
     }
 }

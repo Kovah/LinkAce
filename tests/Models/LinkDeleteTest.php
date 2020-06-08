@@ -1,6 +1,6 @@
 <?php
 
-namespace Tests\Unit\Models;
+namespace Tests\Models;
 
 use App\Models\Link;
 use App\Models\User;
@@ -24,19 +24,14 @@ class LinkDeleteTest extends TestCase
         $this->user = factory(User::class)->create();
     }
 
-    /**
-     * A basic test example.
-     *
-     * @return void
-     */
     public function testValidCategoryCreation(): void
     {
         $this->be($this->user);
 
         $link = factory(Link::class)->create();
 
-        $deletion_result = LinkRepository::delete($link);
+        $deletionResult = LinkRepository::delete($link);
 
-        $this->assertTrue($deletion_result);
+        $this->assertTrue($deletionResult);
     }
 }

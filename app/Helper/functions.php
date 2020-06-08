@@ -28,16 +28,6 @@ function usersettings(string $key = '')
 }
 
 /**
- * Checks if cache tags can be used
- *
- * @return bool
- */
-function useCacheTags(): bool
-{
-    return !in_array(strtolower(env('CACHE_DRIVER')), ['file', 'database']);
-}
-
-/**
  * Retrieve system settings
  *
  * @param string $key
@@ -46,7 +36,9 @@ function useCacheTags(): bool
 function systemsettings(string $key = '')
 {
     if ($key === '') {
-        return Setting::systemOnly()->get();
+        return Setting::systemOnly()->get()->mapWithKeys(function ($item) {
+            return [$item['key'] => $item['value']];
+        });
     }
 
     return Setting::systemOnly()->where('key', $key)->pluck('value')->first() ?: null;

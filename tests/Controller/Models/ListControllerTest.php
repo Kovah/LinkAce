@@ -1,6 +1,6 @@
 <?php
 
-namespace Tests\Database\Controller\Models;
+namespace Tests\Controller\Models;
 
 use App\Models\LinkList;
 use App\Models\Setting;
@@ -147,7 +147,8 @@ class ListControllerTest extends TestCase
         $response = $this->get('lists/1/edit');
 
         $response->assertStatus(200)
-            ->assertSee('Edit List');
+            ->assertSee('Edit List')
+            ->assertSee('Update List');
     }
 
     public function testInvalidEditRequest(): void

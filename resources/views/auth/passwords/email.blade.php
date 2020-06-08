@@ -11,6 +11,12 @@
                 </div>
                 <div class="card-body">
 
+                    @if(session('status'))
+                        <div class="alert alert-success" role="alert">
+                            {{ session('status') }}
+                        </div>
+                    @endif
+
                     <form method="POST" action="{{ route('password.email') }}"
                         aria-label="@lang('linkace.reset_password')">
                         @csrf
@@ -31,7 +37,7 @@
                         </div>
 
                         <button type="submit" class="btn btn-primary">
-                            <i class="fas fa-envelope-open mr-2"></i> @lang('linkace.send_reset_email')
+                            @lang('linkace.send_reset_email')
                         </button>
 
                     </form>

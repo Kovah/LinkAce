@@ -70,11 +70,16 @@ class LinkController extends Controller
 
         flash(trans('link.added_successfully'), 'success');
 
-        if ($duplicates = $link->searchDuplicateUrls()) {
+        $duplicates = $link->searchDuplicateUrls();
+        if ($duplicates->isNotEmpty()) {
             $msg = trans('link.duplicates_found');
 
-            foreach ($duplicates as $link) {
-                $msg .= sprintf(' <a href="%s">%s</a>,', route('links.show', [$link->id]), $link->shortUrl());
+            foreach ($duplicates as $duplicateLink) {
+                $msg .= sprintf(
+                    ' <a href="%s">%s</a>,',
+                    route('links.show', [$duplicateLink->id]),
+                    $duplicateLink->shortUrl()
+                );
             }
 
             flash(trim($msg, ','), 'warning');
@@ -103,8 +108,10 @@ class LinkController extends Controller
     {
         $link = Link::findOrFail($id);
 
-        return view('models.links.show')
-            ->with('link', $link);
+        return view('models.links.show', [
+            'link' => $link,
+            'history' => $link->revisionHistory()->latest()->get(),
+        ]);
     }
 
     /**
@@ -162,6 +169,13 @@ class LinkController extends Controller
         return redirect()->route('links.index');
     }
 
+    /**
+     * Toggles the setting of a link to be either checked or not.
+     *
+     * @param LinkToggleCheckRequest $request
+     * @param                        $id
+     * @return RedirectResponse
+     */
     public function updateCheckToggle(LinkToggleCheckRequest $request, $id)
     {
         $link = Link::findOrFail($id);

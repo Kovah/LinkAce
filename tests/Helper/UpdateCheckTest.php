@@ -1,16 +1,11 @@
 <?php
 
-namespace Tests\Unit\Helper;
+namespace Tests\Helper;
 
 use App\Helper\UpdateHelper;
 use Illuminate\Support\Facades\Http;
 use Tests\TestCase;
 
-/**
- * Class UpdateCheckTest
- *
- * @package Tests\Unit\Helper
- */
 class UpdateCheckTest extends TestCase
 {
     /**

@@ -48,6 +48,6 @@
         </div>
     </div>
 
-    {!! $list_links->links() !!}
+    {!! $list_links->onEachSide(1)->links() !!}
 
 @endsection

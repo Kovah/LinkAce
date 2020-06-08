@@ -4,7 +4,7 @@
 
     <div class="card">
         <header class="card-header">
-            @lang('tag.add')
+            @lang('tag.edit')
         </header>
         <div class="card-body">
 
@@ -15,7 +15,7 @@
                 <input type="hidden" name="tag_id" value="{{ $tag->id }}">
 
                 <div class="row">
-                    <div class="col">
+                    <div class="col-12 col-sm-6 col-md-7">
                         <div class="form-group">
                             <label for="name">@lang('tag.name')</label>
 
@@ -31,7 +31,7 @@
                             @endif
                         </div>
                     </div>
-                    <div class="col">
+                    <div class="col-12 col-sm-6 col-md-5">
                         <div class="form-group">
                             <label for="is_private">@lang('linkace.is_private')</label>
 
@@ -54,15 +54,17 @@
                     </div>
                 </div>
 
-                <div class="mt-3 d-flex align-items-center">
+                <div class="mt-3 d-sm-flex flex-wrap align-items-center">
 
-                    <button type="button" class="btn btn-sm btn-outline-danger mr-auto"
-                        onclick="window.deleteTag.submit()">
-                        <i class="fas fa-trash-alt mr-2"></i> @lang('tag.delete')
-                    </button>
+                    <div class="d-sm-inline-block mb-3 mb-sm-0 mr-auto">
+                        <button type="button" class="btn btn-sm btn-outline-danger"
+                            onclick="window.deleteTag.submit()">
+                            <i class="fas fa-trash-alt mr-2"></i> @lang('tag.delete')
+                        </button>
+                    </div>
 
                     <button type="submit" class="btn btn-primary">
-                        <i class="fas fa-save mr-2"></i> @lang('tag.edit')
+                        <i class="fas fa-save mr-2"></i> @lang('tag.update')
                     </button>
 
                 </div>

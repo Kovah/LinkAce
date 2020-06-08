@@ -3,14 +3,14 @@
 namespace App\Repositories;
 
 use App\Helper\HtmlMeta;
-use App\Helper\LinkAce;
 use App\Helper\LinkIconMapper;
-use App\Jobs\SaveLinkToWaybackmachine;
 use App\Models\Link;
 use App\Models\LinkList;
 use App\Models\Tag;
 use Exception;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Log;
+use Venturecraft\Revisionable\Revisionable;
 
 /**
  * Class LinkRepository
@@ -76,12 +76,32 @@ class LinkRepository
         if (isset($data['tags'])) {
             self::updateTagsForLink($link, $data['tags']);
         } else {
+            // Only save a "removed" revision if there were tags before
+            if ($link->tags()->count() > 0) {
+                self::createRelationshipRevision(
+                    $link,
+                    Link::REV_TAGS_NAME,
+                    $link->tags->pluck('id')->join(','),
+                    null
+                );
+            }
+
             $link->tags()->detach();
         }
 
         if (isset($data['lists'])) {
             self::updateListsForLink($link, $data['lists']);
         } else {
+            // Only save a "removed" revision if there were tags before
+            if ($link->lists()->count() > 0) {
+                self::createRelationshipRevision(
+                    $link,
+                    Link::REV_LISTS_NAME,
+                    $link->lists->pluck('id')->join(','),
+                    null
+                );
+            }
+
             $link->lists()->detach();
         }
 
@@ -114,19 +134,29 @@ class LinkRepository
      */
     protected static function updateTagsForLink(Link $link, string $tags): void
     {
+        $oldTags = $link->tags->pluck('id');
         $parsedTags = explode(',', $tags);
-        $newTags = [];
+        $newTags = collect();
 
         foreach ($parsedTags as $tag) {
-            $new_tag = Tag::firstOrCreate([
+            $newTag = Tag::firstOrCreate([
                 'user_id' => auth()->user()->id,
                 'name' => $tag,
             ]);
 
-            $newTags[] = $new_tag->id;
+            $newTags->push($newTag->id);
         }
 
         $link->tags()->sync($newTags);
+
+        if ($oldTags->isEmpty() || $oldTags->diff($newTags)->isNotEmpty()) {
+            self::createRelationshipRevision(
+                $link,
+                Link::REV_TAGS_NAME,
+                $oldTags->join(','),
+                $newTags->join(',')
+            );
+        }
     }
 
     /**
@@ -137,18 +167,56 @@ class LinkRepository
      */
     protected static function updateListsForLink(Link $link, string $lists): void
     {
+        $oldLists = $link->lists->pluck('id');
         $parsedLists = explode(',', $lists);
-        $newLists = [];
+        $newLists = collect();
 
         foreach ($parsedLists as $list) {
-            $new_list = LinkList::firstOrCreate([
+            $newList = LinkList::firstOrCreate([
                 'user_id' => auth()->user()->id,
                 'name' => $list,
             ]);
 
-            $newLists[] = $new_list->id;
+            $newLists->push($newList->id);
         }
 
         $link->lists()->sync($newLists);
+
+        if ($oldLists->isEmpty() || $oldLists->diff($newLists)->isNotEmpty()) {
+            self::createRelationshipRevision(
+                $link,
+                Link::REV_LISTS_NAME,
+                $oldLists->join(','),
+                $newLists->join(',')
+            );
+        }
+    }
+
+    /**
+     * Manually create a new revision for a link if the related tags or lists
+     * have changed. Recorded are the IDs instead of names to make sure changes
+     * of the corresponding models are taken into account.
+     *
+     * @param Link   $link
+     * @param string $key
+     * @param mixed  $oldData
+     * @param mixed  $newData
+     */
+    protected static function createRelationshipRevision(Link $link, string $key, $oldData, $newData)
+    {
+        $revision = [
+            'revisionable_type' => $link->getMorphClass(),
+            'revisionable_id' => $link->getKey(),
+            'key' => $key,
+            'old_value' => $oldData,
+            'new_value' => $newData,
+            'user_id' => $link->getSystemUserId(),
+            'created_at' => new \DateTime(),
+            'updated_at' => new \DateTime(),
+        ];
+
+        $revisionable = Revisionable::newModel();
+
+        DB::table($revisionable->getTable())->insert($revision);
     }
 }

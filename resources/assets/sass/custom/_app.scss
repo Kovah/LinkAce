@@ -105,6 +105,19 @@ body:not(.bookmarklet) {
 
 .btn-group-xs > .btn { @extend .btn-xs; }
 
+code {
+  @include font-size($code-font-size);
+  color: $code-color;
+  word-wrap: break-word;
+  background-color: $code-background-color;
+  padding: $code-padding;
+  border-radius: $code-border-radius;
+
+  a > & {
+    color: inherit;
+  }
+}
+
 #loader {
   display: none !important;
 }
