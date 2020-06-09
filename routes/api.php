@@ -5,6 +5,7 @@ use App\Http\Controllers\API\LinkNotesController;
 use App\Http\Controllers\API\ListController;
 use App\Http\Controllers\API\ListLinksController;
 use App\Http\Controllers\API\NoteController;
+use App\Http\Controllers\API\SearchController;
 use App\Http\Controllers\API\TagController;
 use App\Http\Controllers\API\TagLinksController;
 
@@ -64,5 +65,8 @@ Route::prefix('v1')->group(function () {
                 'destroy' => 'api.notes.destroy',
             ])
             ->except(['index', 'show']);
+
+        Route::get('search/tags', [SearchController::class, 'searchTags'])
+            ->name('api.search.tags');
     });
 });
