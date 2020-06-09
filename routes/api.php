@@ -68,5 +68,7 @@ Route::prefix('v1')->group(function () {
 
         Route::get('search/tags', [SearchController::class, 'searchTags'])
             ->name('api.search.tags');
+        Route::get('search/lists', [SearchController::class, 'searchLists'])
+            ->name('api.search.lists');
     });
 });

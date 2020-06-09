@@ -13,7 +13,7 @@ class SearchTagsTest extends ApiTestCase
 
     public function testUnauthorizedRequest(): void
     {
-        $response = $this->getJson('api/v1/links');
+        $response = $this->getJson('api/v1/search/tags');
 
         $response->assertUnauthorized();
     }
@@ -28,6 +28,7 @@ class SearchTagsTest extends ApiTestCase
 
     public function testWithEmptyQuery(): void
     {
+        // This tag must not be present in the results
         factory(Tag::class)->create([
             'user_id' => $this->user->id,
             'name' => 'artificial-intelligence',
@@ -56,6 +57,7 @@ class SearchTagsTest extends ApiTestCase
             'name' => 'pair-programming',
         ]);
 
+        // This tag must not be present in the results
         factory(Tag::class)->create([
             'user_id' => $this->user->id,
             'name' => 'learning',
@@ -84,6 +86,7 @@ class SearchTagsTest extends ApiTestCase
             'name' => 'programming-books',
         ]);
 
+        // This tag must not be present in the results
         factory(Tag::class)->create([
             'user_id' => $this->user->id,
             'name' => 'learning',
