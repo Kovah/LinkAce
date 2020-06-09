@@ -1,6 +1,6 @@
 <?php
 
-namespace Tests\Feature\Controller\API;
+namespace Tests\Controller\API;
 
 use App\Models\Link;
 use App\Models\LinkList;
