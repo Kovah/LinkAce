@@ -2,26 +2,15 @@
 
 namespace Tests\Controller\API;
 
-use App\Models\Link;
 use App\Models\LinkList;
 use App\Models\User;
 use Illuminate\Foundation\Testing\DatabaseMigrations;
 use Illuminate\Foundation\Testing\DatabaseTransactions;
-use Tests\TestCase;
 
-class ListApiTest extends TestCase
+class ListApiTest extends ApiTestCase
 {
     use DatabaseTransactions;
     use DatabaseMigrations;
-
-    private $user;
-
-    protected function setUp(): void
-    {
-        parent::setUp();
-
-        $this->user = factory(User::class)->create();
-    }
 
     public function testUnauthorizedRequest(): void
     {
@@ -176,12 +165,5 @@ class ListApiTest extends TestCase
         $response = $this->deleteJson('api/v1/lists/1', [], $this->generateHeaders());
 
         $response->assertStatus(404);
-    }
-
-    protected function generateHeaders(): array
-    {
-        return [
-            'Authorization' => 'Bearer ' . $this->user->api_token,
-        ];
     }
 }

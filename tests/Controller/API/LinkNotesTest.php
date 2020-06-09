@@ -9,19 +9,10 @@ use Illuminate\Foundation\Testing\DatabaseMigrations;
 use Illuminate\Foundation\Testing\DatabaseTransactions;
 use Tests\TestCase;
 
-class LinkNotesTest extends TestCase
+class LinkNotesTest extends ApiTestCase
 {
     use DatabaseTransactions;
     use DatabaseMigrations;
-
-    private $user;
-
-    protected function setUp(): void
-    {
-        parent::setUp();
-
-        $this->user = factory(User::class)->create();
-    }
 
     public function testLinksRequest(): void
     {
@@ -61,12 +52,5 @@ class LinkNotesTest extends TestCase
         $response = $this->getJson('api/v1/links/1/notes', $this->generateHeaders());
 
         $response->assertStatus(404);
-    }
-
-    protected function generateHeaders(): array
-    {
-        return [
-            'Authorization' => 'Bearer ' . $this->user->api_token,
-        ];
     }
 }

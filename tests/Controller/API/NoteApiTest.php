@@ -9,19 +9,10 @@ use Illuminate\Foundation\Testing\DatabaseMigrations;
 use Illuminate\Foundation\Testing\DatabaseTransactions;
 use Tests\TestCase;
 
-class NoteApiTest extends TestCase
+class NoteApiTest extends ApiTestCase
 {
     use DatabaseTransactions;
     use DatabaseMigrations;
-
-    private $user;
-
-    protected function setUp(): void
-    {
-        parent::setUp();
-
-        $this->user = factory(User::class)->create();
-    }
 
     public function testMinimalCreateRequest(): void
     {
@@ -142,12 +133,5 @@ class NoteApiTest extends TestCase
         $response = $this->deleteJson('api/v1/notes/1', [], $this->generateHeaders());
 
         $response->assertStatus(404);
-    }
-
-    protected function generateHeaders(): array
-    {
-        return [
-            'Authorization' => 'Bearer ' . $this->user->api_token,
-        ];
     }
 }

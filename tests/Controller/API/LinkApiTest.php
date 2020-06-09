@@ -2,27 +2,18 @@
 
 namespace Tests\Controller\API;
 
+use App\Jobs\SaveLinkToWaybackmachine;
 use App\Models\Link;
 use App\Models\LinkList;
 use App\Models\Tag;
-use App\Models\User;
 use Illuminate\Foundation\Testing\DatabaseMigrations;
 use Illuminate\Foundation\Testing\DatabaseTransactions;
-use Tests\TestCase;
+use Illuminate\Support\Facades\Queue;
 
-class LinkApiTest extends TestCase
+class LinkApiTest extends ApiTestCase
 {
     use DatabaseTransactions;
     use DatabaseMigrations;
-
-    private $user;
-
-    protected function setUp(): void
-    {
-        parent::setUp();
-
-        $this->user = factory(User::class)->create();
-    }
 
     public function testUnauthorizedRequest(): void
     {
@@ -48,17 +39,17 @@ class LinkApiTest extends TestCase
     public function testMinimalCreateRequest(): void
     {
         $response = $this->postJson('api/v1/links', [
-            'url' => 'https://duckduckgo.com',
+            'url' => 'http://example.com',
         ], $this->generateHeaders());
 
         $response->assertStatus(200)
             ->assertJson([
-                'url' => 'https://duckduckgo.com',
+                'url' => 'http://example.com',
             ]);
 
         $databaseLink = Link::first();
 
-        $this->assertEquals('https://duckduckgo.com', $databaseLink->url);
+        $this->assertEquals('http://example.com', $databaseLink->url);
     }
 
     public function testFullCreateRequest(): void
@@ -67,7 +58,7 @@ class LinkApiTest extends TestCase
         $tag = factory(Tag::class)->create();
 
         $response = $this->postJson('api/v1/links', [
-            'url' => 'https://duckduckgo.com',
+            'url' => 'http://example.com',
             'title' => 'Search the Web',
             'description' => 'There could be a description here',
             'lists' => [$list->id],
@@ -78,19 +69,21 @@ class LinkApiTest extends TestCase
 
         $response->assertStatus(200)
             ->assertJson([
-                'url' => 'https://duckduckgo.com',
+                'url' => 'http://example.com',
             ]);
 
         $databaseLink = Link::first();
 
-        $this->assertEquals('https://duckduckgo.com', $databaseLink->url);
+        $this->assertEquals('http://example.com', $databaseLink->url);
+
+        Queue::assertPushed(SaveLinkToWaybackmachine::class);
     }
 
     public function testInvalidCreateRequest(): void
     {
         $response = $this->postJson('api/v1/links', [
             'url' => null,
-            'lists' =>'no array',
+            'lists' => 'no array',
             'tags' => 123,
             'is_private' => 'hello',
             'check_disabled' => 'bla',
@@ -154,7 +147,7 @@ class LinkApiTest extends TestCase
         $list = factory(LinkList::class)->create();
 
         $response = $this->patchJson('api/v1/links/1', [
-            'url' => 'https://duckduckgo.com',
+            'url' => 'http://example.com',
             'title' => 'Custom Title',
             'description' => 'Custom Description',
             'lists' => [$list->id],
@@ -164,12 +157,12 @@ class LinkApiTest extends TestCase
 
         $response->assertStatus(200)
             ->assertJson([
-                'url' => 'https://duckduckgo.com',
+                'url' => 'http://example.com',
             ]);
 
         $databaseLink = Link::first();
 
-        $this->assertEquals('https://duckduckgo.com', $databaseLink->url);
+        $this->assertEquals('http://example.com', $databaseLink->url);
     }
 
     public function testInvalidUpdateRequest(): void
@@ -189,7 +182,7 @@ class LinkApiTest extends TestCase
     public function testUpdateRequestNotFound(): void
     {
         $response = $this->patchJson('api/v1/links/1', [
-            'url' => 'https://duckduckgo.com',
+            'url' => 'http://example.com',
             'title' => 'Custom Title',
             'description' => 'Custom Description',
             'lists' => [],
@@ -217,12 +210,5 @@ class LinkApiTest extends TestCase
         $response = $this->deleteJson('api/v1/links/1', [], $this->generateHeaders());
 
         $response->assertStatus(404);
-    }
-
-    protected function generateHeaders(): array
-    {
-        return [
-            'Authorization' => 'Bearer ' . $this->user->api_token,
-        ];
     }
 }

@@ -8,19 +8,10 @@ use Illuminate\Foundation\Testing\DatabaseMigrations;
 use Illuminate\Foundation\Testing\DatabaseTransactions;
 use Tests\TestCase;
 
-class TagApiTest extends TestCase
+class TagApiTest extends ApiTestCase
 {
     use DatabaseTransactions;
     use DatabaseMigrations;
-
-    private $user;
-
-    protected function setUp(): void
-    {
-        parent::setUp();
-
-        $this->user = factory(User::class)->create();
-    }
 
     public function testUnauthorizedRequest(): void
     {
@@ -168,12 +159,5 @@ class TagApiTest extends TestCase
         $response = $this->deleteJson('api/v1/tags/1', [], $this->generateHeaders());
 
         $response->assertStatus(404);
-    }
-
-    protected function generateHeaders(): array
-    {
-        return [
-            'Authorization' => 'Bearer ' . $this->user->api_token,
-        ];
     }
 }
