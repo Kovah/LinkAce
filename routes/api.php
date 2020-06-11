@@ -66,6 +66,8 @@ Route::prefix('v1')->group(function () {
             ])
             ->except(['index', 'show']);
 
+        Route::get('search/links', [SearchController::class, 'searchLinks'])
+            ->name('api.search.links');
         Route::get('search/tags', [SearchController::class, 'searchTags'])
             ->name('api.search.tags');
         Route::get('search/lists', [SearchController::class, 'searchLists'])
