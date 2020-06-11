@@ -2,8 +2,8 @@
 
 namespace App\Http\Controllers\Traits;
 
+use App\Http\Requests\SearchRequest;
 use App\Models\Link;
-use Illuminate\Http\Request;
 
 trait SearchesLinks
 {
@@ -12,8 +12,8 @@ trait SearchesLinks
     protected $searchDescription;
     protected $searchPrivateOnly;
     protected $searchBrokenOnly;
-    protected $searchListNames;
-    protected $searchTagNames;
+    protected $searchLists;
+    protected $searchTags;
     protected $searchOrderBy;
 
     /** @var array */
@@ -26,7 +26,7 @@ trait SearchesLinks
         'created_at:desc',
     ];
 
-    public function buildDatabaseQuery(Request $request)
+    public function buildDatabaseQuery(SearchRequest $request)
     {
         // Start building the search
         $search = Link::byUser($request->user()->id);
@@ -58,16 +58,18 @@ trait SearchesLinks
         }
 
         // Show by specific list only if applicable
-        if ($this->searchListNames = $request->input('only_lists', false)) {
-            $search->whereHas('lists', function ($query) {
-                $query->whereIn('name', explode(',', $this->searchListNames));
+        if ($this->searchLists = $request->input('only_lists', false)) {
+            $search->whereHas('lists', function ($query) use ($request) {
+                $field = $request->isJson() ? 'id' : 'name';
+                $query->whereIn($field, explode(',', $this->searchLists));
             });
         }
 
         // Show by specific tag only if applicable
-        if ($this->searchTagNames = $request->input('only_tags', false)) {
-            $search->whereHas('tags', function ($query) {
-                $query->whereIn('name', explode(',', $this->searchTagNames));
+        if ($this->searchTags = $request->input('only_tags', false)) {
+            $search->whereHas('tags', function ($query) use ($request) {
+                $field = $request->isJson() ? 'id' : 'name';
+                $query->whereIn($field, explode(',', $this->searchTags));
             });
         }
 

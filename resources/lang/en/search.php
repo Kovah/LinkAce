@@ -20,4 +20,8 @@ return [
     'order_by.created_at:desc' => 'Creation Date descending',
 
     'no_results' => 'No results found.',
+
+    'validation_query_missing' => 'A search query must be present if no lists or tags were provided.',
+    'validation_lists_missing' => 'A list must be present if no query or some tags were provided.',
+    'validation_tags_missing' => 'A tag must be present if no query or some lists were provided.',
 ];

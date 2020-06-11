@@ -109,14 +109,6 @@
         </div>
         <div class="card-table mt-3">
 
-            @if ($errors->any())
-                <div class="alert alert-danger m-3">
-                    @foreach ($errors->all() as $error)
-                        {{ $error }}<br/>
-                    @endforeach
-                </div>
-            @endif
-
             @if($results->isEmpty())
                 <div class="alert alert-info m-3">
                     @lang('search.no_results')

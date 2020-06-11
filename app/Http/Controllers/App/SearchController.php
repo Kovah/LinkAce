@@ -55,8 +55,8 @@ class SearchController extends Controller
                 'search_description' => $this->searchDescription,
                 'private_only' => $this->searchPrivateOnly,
                 'broken_only' => $this->searchBrokenOnly,
-                'only_lists' => $this->searchListNames,
-                'only_tags' => $this->searchTagNames,
+                'only_lists' => $this->searchLists,
+                'only_tags' => $this->searchTags,
                 'order_by' => $this->searchOrderBy,
             ]);
     }
