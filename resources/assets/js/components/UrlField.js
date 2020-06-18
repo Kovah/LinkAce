@@ -65,9 +65,21 @@ export default class UrlField {
       return;
     }
 
-    fetch(url)
+    fetch(window.appData.routes.fetch.htmlForUrl, {
+      method: 'POST',
+      credentials: 'same-origin',
+      headers: {'Content-Type': 'application/json'},
+      body: JSON.stringify({
+        _token: window.appData.user.token,
+        url: url
+      })
+    })
       .then(response => response.text())
-      .then(body => this.parseHtmlForKeywords(body));
+      .then(body => {
+        if (body !== null) {
+          this.parseHtmlForKeywords(body)
+        }
+      });
   }
 
   parseHtmlForKeywords (body) {
@@ -77,7 +89,7 @@ export default class UrlField {
     if (doc.head.children.length > 0) {
       const keywords = doc.head.children.namedItem('keywords');
 
-      if (keywords !== null) {
+      if (keywords !== null && keywords.content.length > 0) {
         this.tagSuggestions.displayNewSuggestions(keywords.content.split(','));
       }
     }

@@ -8,6 +8,8 @@ use App\Models\LinkList;
 use App\Models\Tag;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
+use Illuminate\Http\Response;
+use Illuminate\Support\Facades\Http;
 
 class FetchController extends Controller
 {
@@ -76,6 +78,18 @@ class FetchController extends Controller
             ->count();
 
         return response()->json(['linkFound' => $linkCount > 0]);
+    }
+
+    public function htmlForUrl(Request $request): Response
+    {
+        $url = $request->input('url');
+        $response = Http::timeout(3)->get($url);
+
+        if ($response->successful()) {
+            return response($response->body());
+        }
+
+        return response(null);
     }
 
     public static function checkForUpdates(): JsonResponse
