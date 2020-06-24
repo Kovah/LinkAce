@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\API\LinkCheckController;
 use App\Http\Controllers\API\LinkController;
 use App\Http\Controllers\API\LinkNotesController;
 use App\Http\Controllers\API\ListController;
@@ -22,6 +23,10 @@ use App\Http\Controllers\API\TagLinksController;
 
 Route::prefix('v1')->group(function () {
     Route::middleware('auth:api')->group(function () {
+
+        Route::get('links/check', LinkCheckController::class)
+            ->name('api.links.check');
+
         Route::apiResource('links', LinkController::class)
             ->names([
                 'index' => 'api.links.index',
