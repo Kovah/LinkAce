@@ -7,22 +7,18 @@ use App\Models\Link;
 use App\Models\LinkList;
 use App\Models\Note;
 use App\Models\Tag;
-use Illuminate\Contracts\View\Factory;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\View\View;
 
-/**
- * Class TrashController
- *
- * @package App\Http\Controllers\App
- */
 class TrashController extends Controller
 {
     /**
-     * @return Factory|View
+     * Display the trash overview with all deleted entries for links, tags, etc.
+     *
+     * @return View
      */
-    public function index()
+    public function index(): View
     {
         $links = Link::onlyTrashed()
             ->byUser(auth()->id())
@@ -49,13 +45,13 @@ class TrashController extends Controller
     }
 
     /**
-     * Permanently delete entries for a model from the trash
+     * Permanently delete entries for a model from the trash.
      *
      * @param Request $reques
      * @param string  $model
      * @return RedirectResponse
      */
-    public function clearTrash(Request $reques, $model)
+    public function clearTrash(Request $reques, $model): RedirectResponse
     {
         $entries = [];
 
@@ -97,14 +93,14 @@ class TrashController extends Controller
     }
 
     /**
-     * Restore an entry from the trash
+     * Restore an entry from the trash.
      *
      * @param Request $request
      * @param string  $model
      * @param string  $id
-     * @return Factory|View
+     * @return RedirectResponse
      */
-    public function restoreEntry(Request $request, $model, $id)
+    public function restoreEntry(Request $request, $model, $id): RedirectResponse
     {
         $entry = null;
 

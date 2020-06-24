@@ -8,6 +8,7 @@ use App\Http\Requests\Models\NoteStoreRequest;
 use App\Http\Requests\Models\NoteUpdateRequest;
 use App\Models\Note;
 use App\Repositories\NoteRepository;
+use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Response;
 
 class NoteController extends Controller
@@ -16,9 +17,9 @@ class NoteController extends Controller
      * Store a newly created resource in storage.
      *
      * @param NoteStoreRequest $request
-     * @return Response
+     * @return JsonResponse
      */
-    public function store(NoteStoreRequest $request)
+    public function store(NoteStoreRequest $request): JsonResponse
     {
         $note = NoteRepository::create($request->all());
 
@@ -30,9 +31,9 @@ class NoteController extends Controller
      *
      * @param NoteUpdateRequest $request
      * @param int               $id
-     * @return Response
+     * @return JsonResponse
      */
-    public function update(NoteUpdateRequest $request, $id)
+    public function update(NoteUpdateRequest $request, $id): JsonResponse
     {
         $note = Note::findOrFail($id);
 
@@ -46,18 +47,18 @@ class NoteController extends Controller
      *
      * @param NoteDeleteRequest $request
      * @param int               $id
-     * @return Response
+     * @return JsonResponse
      */
-    public function destroy(NoteDeleteRequest $request, $id)
+    public function destroy(NoteDeleteRequest $request, $id): JsonResponse
     {
         $note = Note::findOrFail($id);
 
         $deletionSuccessfull = NoteRepository::delete($note);
 
         if ($deletionSuccessfull) {
-            return response(null, Response::HTTP_OK);
+            return response()->json(null, Response::HTTP_OK);
         }
 
-        return response(null, Response::HTTP_INTERNAL_SERVER_ERROR);
+        return response()->json(null, Response::HTTP_INTERNAL_SERVER_ERROR);
     }
 }

@@ -8,6 +8,7 @@ use App\Http\Requests\Models\LinkStoreRequest;
 use App\Http\Requests\Models\LinkUpdateRequest;
 use App\Models\Link;
 use App\Repositories\LinkRepository;
+use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
 
@@ -17,14 +18,14 @@ class LinkController extends Controller
      * Display a listing of the resource.
      *
      * @param Request $request
-     * @return Response
+     * @return JsonResponse
      */
-    public function index(Request $request)
+    public function index(Request $request): JsonResponse
     {
         $links = Link::byUser(auth()->id())
             ->orderBy(
-                $request->get('order_by', 'created_at'),
-                $request->get('order_dir', 'DESC')
+                $request->input('order_by', 'created_at'),
+                $request->input('order_dir', 'DESC')
             )
             ->paginate(getPaginationLimit());
 
@@ -35,9 +36,9 @@ class LinkController extends Controller
      * Store a newly created resource in storage.
      *
      * @param LinkStoreRequest $request
-     * @return Response
+     * @return JsonResponse
      */
-    public function store(LinkStoreRequest $request)
+    public function store(LinkStoreRequest $request): JsonResponse
     {
         $link = LinkRepository::create($request->all());
 
@@ -48,9 +49,9 @@ class LinkController extends Controller
      * Display the specified resource.
      *
      * @param int $id
-     * @return Response
+     * @return JsonResponse
      */
-    public function show($id)
+    public function show($id): JsonResponse
     {
         $link = Link::with(['lists', 'tags'])->findOrFail($id);
 
@@ -62,9 +63,9 @@ class LinkController extends Controller
      *
      * @param LinkUpdateRequest $request
      * @param int               $id
-     * @return Response
+     * @return JsonResponse
      */
-    public function update(LinkUpdateRequest $request, $id)
+    public function update(LinkUpdateRequest $request, $id): JsonResponse
     {
         $link = Link::findOrFail($id);
 
@@ -78,18 +79,18 @@ class LinkController extends Controller
      *
      * @param LinkDeleteRequest $request
      * @param int               $id
-     * @return Response
+     * @return JsonResponse
      */
-    public function destroy(LinkDeleteRequest $request, $id)
+    public function destroy(LinkDeleteRequest $request, $id): JsonResponse
     {
         $link = Link::findOrFail($id);
 
         $deletionSuccessfull = LinkRepository::delete($link);
 
         if ($deletionSuccessfull) {
-            return response(null, Response::HTTP_OK);
+            return response()->json(null, Response::HTTP_OK);
         }
 
-        return response(null, Response::HTTP_INTERNAL_SERVER_ERROR);
+        return response()->json(null, Response::HTTP_INTERNAL_SERVER_ERROR);
     }
 }

@@ -2,14 +2,16 @@
 
 namespace App\Http\Controllers;
 
-use Illuminate\Contracts\View\Factory;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\View\View;
 
 class FrontController extends Controller
 {
     /**
-     * @return Factory|RedirectResponse|View
+     * The front controller checks if the user is authenticated and the guest
+     * access is enabled, and redirects the request accordingly.
+     *
+     * @return RedirectResponse|View
      */
     public function __invoke()
     {

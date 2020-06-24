@@ -5,15 +5,9 @@ namespace App\Http\Controllers\Setup;
 use App\Http\Controllers\Controller;
 use App\Models\User;
 use Illuminate\Contracts\Validation\Validator;
-use Illuminate\Contracts\View\Factory;
 use Illuminate\Foundation\Auth\RegistersUsers;
 use Illuminate\View\View;
 
-/**
- * Class AccountController
- *
- * @package App\Http\Controllers\Setup
- */
 class AccountController extends Controller
 {
     use RegistersUsers;
@@ -24,9 +18,11 @@ class AccountController extends Controller
     }
 
     /**
-     * @return Factory|View
+     * Display the registration form for the first user account.
+     *
+     * @return View
      */
-    public function index()
+    public function index(): View
     {
         return view('setup.account');
     }

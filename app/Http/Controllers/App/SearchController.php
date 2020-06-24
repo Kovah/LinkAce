@@ -5,22 +5,18 @@ namespace App\Http\Controllers\App;
 use App\Http\Controllers\Controller;
 use App\Http\Controllers\Traits\SearchesLinks;
 use App\Http\Requests\SearchRequest;
-use Illuminate\Contracts\View\Factory;
 use Illuminate\View\View;
 
-/**
- * Class SearchController
- *
- * @package App\Http\Controllers\App
- */
 class SearchController extends Controller
 {
     use SearchesLinks;
 
     /**
-     * @return Factory|View
+     * Display the initial search form.
+     *
+     * @return View
      */
-    public function getSearch()
+    public function getSearch(): View
     {
         return view('actions.search.search')
             ->with('results', collect([]))
@@ -38,10 +34,12 @@ class SearchController extends Controller
     }
 
     /**
+     * Handle the search query and display the view with all results.
+     *
      * @param SearchRequest $request
-     * @return Factory|View
+     * @return View
      */
-    public function doSearch(SearchRequest $request)
+    public function doSearch(SearchRequest $request): View
     {
         $search = $this->buildDatabaseQuery($request);
         $results = $search->paginate(getPaginationLimit());

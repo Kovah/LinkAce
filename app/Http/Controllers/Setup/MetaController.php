@@ -4,27 +4,37 @@ namespace App\Http\Controllers\Setup;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\File;
+use Illuminate\View\View;
 
-/**
- * Class WelcomeController
- *
- * @package App\Http\Controllers\Setup
- */
 class MetaController extends Controller
 {
-    public function welcome()
+    /**
+     * Display a very simple welcome screen to start the setup process.
+     *
+     * @return View
+     */
+    public function welcome(): View
     {
         return view('setup.welcome');
     }
 
-    public function complete()
+    /**
+     * Display a final screen after the setup was successful.
+     *
+     * @return View
+     */
+    public function complete(): View
     {
         $this->markSetupCompleted();
 
         return view('setup.complete');
     }
 
-    protected function markSetupCompleted()
+    /**
+     * After the setup is finished, we change the SETUP_COMPLETED variable
+     * from false to true to prevent the setup from being run again.
+     */
+    protected function markSetupCompleted(): void
     {
         $envContent = File::get(base_path('.env'));
 

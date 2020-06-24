@@ -9,7 +9,7 @@ use Illuminate\Http\JsonResponse;
 class LinkNotesController extends Controller
 {
     /**
-     * Get the notes for a specific link
+     * Get the notes for a specific link.
      *
      * @param $linkID
      * @return JsonResponse

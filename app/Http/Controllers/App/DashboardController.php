@@ -7,27 +7,23 @@ use App\Models\Link;
 use App\Models\LinkList;
 use App\Models\Note;
 use App\Models\Tag;
-use Illuminate\Contracts\View\Factory;
 use Illuminate\View\View;
 
-/**
- * Class DashboardController
- *
- * @package App\Http\Controllers\App
- */
 class DashboardController extends Controller
 {
     /**
-     * @return Factory|View
+     * Display the dashboard including all widgets.
+     *
+     * @return View
      */
-    public function index()
+    public function index(): View
     {
-        $recent_links = Link::byUser(auth()->user()->id)
+        $recentLinks = Link::byUser(auth()->user()->id)
             ->orderBy('created_at', 'DESC')
             ->limit(5)
             ->get();
 
-        $broken_links = Link::byUser(auth()->user()->id)
+        $brokenLinks = Link::byUser(auth()->user()->id)
             ->where('status', '>', 1)
             ->count();
 
@@ -36,11 +32,12 @@ class DashboardController extends Controller
             'total_lists' => LinkList::count(),
             'total_tags' => Tag::count(),
             'total_notes' => Note::count(),
-            'total_broken_links' => $broken_links,
+            'total_broken_links' => $brokenLinks,
         ];
 
-        return view('dashboard')
-            ->with('recent_links', $recent_links)
-            ->with('stats', $stats);
+        return view('dashboard', [
+            'recent_links' => $recentLinks,
+            'stats' => $stats,
+        ]);
     }
 }

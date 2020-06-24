@@ -10,15 +10,9 @@ use App\Models\Link;
 use App\Models\Note;
 use App\Repositories\NoteRepository;
 use Exception;
-use Illuminate\Contracts\View\Factory;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\View\View;
 
-/**
- * Class NoteController
- *
- * @package App\Http\Controllers\Models
- */
 class NoteController extends Controller
 {
     /**
@@ -27,9 +21,9 @@ class NoteController extends Controller
      * @param NoteStoreRequest $request
      * @return RedirectResponse
      */
-    public function store(NoteStoreRequest $request)
+    public function store(NoteStoreRequest $request): RedirectResponse
     {
-        $link = Link::findOrFail($request->get('link_id'));
+        $link = Link::findOrFail($request->input('link_id'));
 
         if ($link->user_id !== auth()->id()) {
             abort(403);
@@ -47,9 +41,9 @@ class NoteController extends Controller
      * Show the form for editing the specified resource.
      *
      * @param int $id
-     * @return Factory|View
+     * @return View
      */
-    public function edit($id)
+    public function edit($id): View
     {
         $note = Note::findOrFail($id);
 
@@ -67,7 +61,7 @@ class NoteController extends Controller
      * @param int               $id
      * @return RedirectResponse
      */
-    public function update(NoteUpdateRequest $request, $id)
+    public function update(NoteUpdateRequest $request, $id): RedirectResponse
     {
         $note = Note::findOrFail($id);
 
@@ -86,7 +80,7 @@ class NoteController extends Controller
      * @return RedirectResponse
      * @throws Exception
      */
-    public function destroy(NoteDeleteRequest $request, $id)
+    public function destroy(NoteDeleteRequest $request, $id): RedirectResponse
     {
         $note = Note::findOrFail($id);
 

@@ -9,7 +9,7 @@ use Illuminate\Http\JsonResponse;
 class ListLinksController extends Controller
 {
     /**
-     * Get the links for a specific list
+     * Get the links for a specific list.
      *
      * @param $listID
      * @return JsonResponse

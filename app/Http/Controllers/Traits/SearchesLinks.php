@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Traits;
 
 use App\Http\Requests\SearchRequest;
 use App\Models\Link;
+use Illuminate\Database\Eloquent\Builder;
 
 trait SearchesLinks
 {
@@ -26,7 +27,14 @@ trait SearchesLinks
         'created_at:desc',
     ];
 
-    public function buildDatabaseQuery(SearchRequest $request)
+    /**
+     * This method takes a HTTP request containing various search fields and
+     * create a database query builder for the Link model based on that fields.
+     *
+     * @param SearchRequest $request
+     * @return Builder
+     */
+    protected function buildDatabaseQuery(SearchRequest $request)
     {
         // Start building the search
         $search = Link::byUser($request->user()->id);

@@ -5,30 +5,26 @@ namespace App\Http\Controllers\App;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\SystemSettingsUpdateRequest;
 use App\Models\Setting;
-use Illuminate\Contracts\View\Factory;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Str;
 use Illuminate\View\View;
 
-/**
- * Class SystemSettingsController
- *
- * @package App\Http\Controllers\App
- */
 class SystemSettingsController extends Controller
 {
     /**
-     * @return Factory|View
+     * Display the system settings forms.
+     *
+     * @return View
      */
-    public function getSystemSettings()
+    public function getSystemSettings(): View
     {
         return view('actions.settings.system');
     }
 
     /**
-     * Save the new system settings to the database
+     * Save the updated system settings to the database.
      *
      * @param SystemSettingsUpdateRequest $request
      * @return RedirectResponse
@@ -54,7 +50,7 @@ class SystemSettingsController extends Controller
     }
 
     /**
-     * Generate a new API token for the current user
+     * Generate a new API token for the current user.
      *
      * @param Request $request
      * @return JsonResponse

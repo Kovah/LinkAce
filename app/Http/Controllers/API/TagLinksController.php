@@ -9,7 +9,7 @@ use Illuminate\Http\JsonResponse;
 class TagLinksController extends Controller
 {
     /**
-     * Get the links for a specific tag
+     * Get the links for a specific tag.
      *
      * @param $tagID
      * @return JsonResponse

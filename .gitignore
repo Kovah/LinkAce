@@ -1,4 +1,5 @@
 /node_modules
+/logs
 /public/hot
 /public/storage
 /public/mix-manifest.json

@@ -4,21 +4,17 @@ namespace App\Http\Controllers\Guest;
 
 use App\Http\Controllers\Controller;
 use App\Models\LinkList;
-use Illuminate\Contracts\View\Factory;
 use Illuminate\Http\Request;
 use Illuminate\View\View;
 
-/**
- * Class ListController
- *
- * @package App\Http\Controllers\Guest
- */
 class ListController extends Controller
 {
     /**
-     * @return Factory|View
+     * Display an overview of all lists.
+     *
+     * @return View
      */
-    public function index()
+    public function index(): View
     {
         $lists = LinkList::isPrivate(false)
             ->paginate(getPaginationLimit());
@@ -33,32 +29,25 @@ class ListController extends Controller
      *
      * @param Request $request
      * @param int     $id
-     * @return Factory|View
+     * @return View
      */
-    public function show(Request $request, $id)
+    public function show(Request $request, $id): View
     {
-        $list = LinkList::isPrivate(false)->find($id);
+        $list = LinkList::isPrivate(false)->findOrFail($id);
 
-        if (empty($list)) {
-            abort(404);
-        }
-
-        $links = $list->links()->privateOnly(false);
-
-        if ($request->has('orderBy') && $request->has('orderDir')) {
-            $links->orderBy($request->get('orderBy'), $request->get('orderDir'));
-        } else {
-            $links->latest();
-        }
-
-        $links = $links->paginate(getPaginationLimit());
+        $links = $list->links()
+            ->privateOnly(false)
+            ->orderBy(
+                $request->input('orderBy', 'name'),
+                $request->input('orderDir', 'ASC')
+            )->paginate(getPaginationLimit());
 
         return view('guest.lists.show', [
             'list' => $list,
             'list_links' => $links,
             'route' => $request->getBaseUrl(),
-            'order_by' => $request->get('orderBy'),
-            'order_dir' => $request->get('orderDir'),
+            'order_by' => $request->input('orderBy', 'name'),
+            'order_dir' => $request->input('orderDir', 'ASC'),
         ]);
     }
 }
