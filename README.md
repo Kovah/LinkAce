@@ -67,11 +67,13 @@ to share your ideas, talk with other users or find help for specific problems.
 
 ### :bulb: Support for LinkAce
 
-I do not offer any free support for any of my tools, including LinkAce. If you need help please visit the 
-[community forum on Spectrum](https://spectrum.chat/linkace/) and post your issue there. Please notice that LinkAce
-has specific requirements to run correctly.
+Free support is highly limited for all my free tools, including LinkAce. If you need help please visit the 
+[community forum](https://spectrum.chat/linkace/) and post your issue there. I do not offer free personal 
+support via chat or email.
+Please notice that LinkAce has specific requirements to run correctly.
 
-If you need prioritized support you can **become a [Patreon](https://www.patreon.com/Kovah)** or **[Github Sponsor](https://github.com/sponsors/Kovah)**. :star:
+If you need prioritized support you can **become a [Patreon](https://www.patreon.com/Kovah)** 
+or **[Github Sponsor](https://github.com/sponsors/Kovah)**. :star:
 
 
 ---
