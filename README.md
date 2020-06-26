@@ -20,7 +20,7 @@
 ### Contents
 
 * [About LinkAce](#about-linkace)
-* [Support Disclaimer](#warning-support-for-linkace)
+* [Support Disclaimer](#bulb-support-for-linkace)
 * [Setup](#gear-setup)
   * [Setup with Docker](#setup-with-docker)
   * [Setup without Docker](#setup-without-docker)
@@ -40,17 +40,17 @@ actual needs which other bookmark managers couldn't solve, even if most features
 
 #### Features
 
-* Bookmark links with automatic title and description generation
-* Automated link checks to make sure your bookmarks stay available
-* Automated “backups” of your bookmarks via the Waybackmachine
-* Organize bookmarks in lists and tags
-* A bookmarklet to quickly save links from any browser
-* Private or public links, so friends or internet strangers can see your collection
-* Add notes to links to add thoughts
-* Advanced search including different filters and ordering
-* Import existing bookmarks from HTML exports (other methods planned)
-* Support for complete database and app backups to Amazon AWS S3
-* A built-in light and dark color scheme
+* Save links with automatic title and description generation.
+* Automated link checks to make sure your bookmarks stay available.
+* Automated “backups” of your bookmarks via the Waybackmachine.
+* Organize bookmarks in lists and tags.
+* A bookmarklet to quickly save links from any browser.
+* Private or public links, so friends or internet strangers can see your collection.
+* Add notes to links to add thoughts or other information.
+* Advanced search including different filters and ordering.
+* Import existing bookmarks from HTML exports (other methods planned).
+* Support for complete database and app backups to Amazon AWS S3.
+* A built-in light and dark color scheme.
 
 More features are already planned. Take a look at the [project board](https://github.com/Kovah/LinkAce/projects/1)
 for more information.
@@ -65,26 +65,22 @@ to share your ideas, talk with other users or find help for specific problems.
 ---
 
 
-### :warning: Support for LinkAce
+### :bulb: Support for LinkAce
 
-LinkAce is my personal freetime project. I do not offer any sort of granted support for it. I do not offer any paid 
-support or customization. I do not assist with installing it on your server. If I answer your questions in the
-community forum or on Github, it's my free time I spend on your issue. Be respectful.
+I do not offer any free support for any of my tools, including LinkAce. If you need help please visit the 
+[community forum on Spectrum](https://spectrum.chat/linkace/) and post your issue there. Please notice that LinkAce
+has specific requirements to run correctly.
 
-If you need an app with extensive support please consider using a commercial solution.
-
-If you need help or want to report a bug within the application, please open a new [issue](https://github.com/Kovah/LinkAce/issues)
-and describe:
-
-* which version you are using,
-* what your exact problem is,
-* and what you already did to solve the problem.
+If you need prioritized support you can **become a [Patreon](https://www.patreon.com/Kovah)** or **[Github Sponsor](https://github.com/sponsors/Kovah)**. :star:
 
 
 ---
 
 
 ### :gear: Setup
+
+Please check if your server supports the [requirements](https://www.linkace.org/docs/v1/setup/) before starting the
+setup.
 
 #### Setup with Docker
 
