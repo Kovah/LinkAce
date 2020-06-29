@@ -36,11 +36,17 @@ jobs:
 
   test-php:
     runs-on: ${{ matrix.operating-system }}
+    continue-on-error: ${{ matrix.experimental }}
     needs: test-js
     strategy:
       matrix:
         operating-system: [ubuntu-latest]
         php-versions: ['7.2', '7.3', '7.4']
+        experimental: [false]
+        include:
+          - node: '8.0'
+            os: ubuntu-latest
+            experimental: true
 
     name: PHP ${{ matrix.php-versions }} Test on ${{ matrix.operating-system }}
 
