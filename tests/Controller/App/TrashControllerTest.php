@@ -43,9 +43,11 @@ class TrashControllerTest extends TestCase
     {
         $this->setupTestData();
 
-        $response = $this->get('trash/clear/links');
+        $response = $this->post('trash/clear', [
+            'model' => 'links'
+        ]);
 
-        $response->assertStatus(302);
+        $response->assertRedirect('trash');
 
         $this->assertEquals(0, DB::table('links')->count());
     }
@@ -54,9 +56,11 @@ class TrashControllerTest extends TestCase
     {
         $this->setupTestData();
 
-        $response = $this->get('trash/clear/tags');
+        $response = $this->post('trash/clear', [
+            'model' => 'tags'
+        ]);
 
-        $response->assertStatus(302);
+        $response->assertRedirect('trash');
 
         $this->assertEquals(0, DB::table('tags')->count());
     }
@@ -65,9 +69,11 @@ class TrashControllerTest extends TestCase
     {
         $this->setupTestData();
 
-        $response = $this->get('trash/clear/lists');
+        $response = $this->post('trash/clear', [
+            'model' => 'lists'
+        ]);
 
-        $response->assertStatus(302);
+        $response->assertRedirect('trash');
 
         $this->assertEquals(0, DB::table('lists')->count());
     }
@@ -76,9 +82,11 @@ class TrashControllerTest extends TestCase
     {
         $this->setupTestData();
 
-        $response = $this->get('trash/clear/notes');
+        $response = $this->post('trash/clear', [
+            'model' => 'notes'
+        ]);
 
-        $response->assertStatus(302);
+        $response->assertRedirect('trash');
 
         $this->assertEquals(0, DB::table('notes')->count());
     }

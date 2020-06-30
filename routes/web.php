@@ -109,7 +109,7 @@ Route::group(['middleware' => ['auth']], function () {
 
     Route::get('trash', [TrashController::class, 'index'])
         ->name('get-trash');
-    Route::get('trash/clear/{model}', [TrashController::class, 'clearTrash'])
+    Route::post('trash/clear', [TrashController::class, 'clearTrash'])
         ->name('clear-trash');
     Route::post('trash/restore', [TrashController::class, 'restoreEntry'])
         ->name('trash-restore');

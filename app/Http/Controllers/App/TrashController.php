@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\App;
 
 use App\Http\Controllers\Controller;
+use App\Http\Requests\TrashClearRequest;
 use App\Http\Requests\TrashRestoreRequest;
 use App\Models\Link;
 use App\Models\LinkList;
@@ -49,15 +50,14 @@ class TrashController extends Controller
     /**
      * Permanently delete entries for a model from the trash.
      *
-     * @param Request $request
-     * @param string  $model
+     * @param TrashClearRequest $request
      * @return RedirectResponse
      */
-    public function clearTrash(Request $request, $model): RedirectResponse
+    public function clearTrash(TrashClearRequest $request): RedirectResponse
     {
-        TrashRepository::delete($model);
+        TrashRepository::delete($request->input('model'));
 
-        flash(trans('trash.delete_success.' . $model), 'success');
+        flash(trans('trash.delete_success.' . $request->input('model')), 'success');
 
         return redirect()->route('get-trash');
     }

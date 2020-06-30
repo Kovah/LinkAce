@@ -9,6 +9,7 @@ use App\Http\Controllers\API\NoteController;
 use App\Http\Controllers\API\SearchController;
 use App\Http\Controllers\API\TagController;
 use App\Http\Controllers\API\TagLinksController;
+use App\Http\Controllers\API\TrashController;
 
 /*
 |--------------------------------------------------------------------------
@@ -77,5 +78,16 @@ Route::prefix('v1')->group(function () {
             ->name('api.search.tags');
         Route::get('search/lists', [SearchController::class, 'searchLists'])
             ->name('api.search.lists');
+
+        Route::get('trash/links', [TrashController::class, 'getLinks'])
+            ->name('api.trash.links');
+        Route::get('trash/lists', [TrashController::class, 'getLists'])
+            ->name('api.trash.lists');
+        Route::get('trash/tags', [TrashController::class, 'getTags'])
+            ->name('api.trash.tags');
+        Route::get('trash/notes', [TrashController::class, 'getNotes'])
+            ->name('api.trash.notes');
+        Route::post('trash/delete', [TrashController::class, 'getNotes'])
+            ->name('api.trash.notes');
     });
 });
