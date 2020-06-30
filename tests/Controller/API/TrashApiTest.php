@@ -34,7 +34,7 @@ class TrashApiTest extends ApiTestCase
     {
         $response = $this->getJson('api/v1/trash/links', $this->generateHeaders());
 
-        $response->assertStatus(200);
+        $response->assertOk();
 
         $result = json_decode($response->content());
         $this->assertEquals('Very special site title', $result[0]->title);
@@ -44,7 +44,7 @@ class TrashApiTest extends ApiTestCase
     {
         $response = $this->getJson('api/v1/trash/lists', $this->generateHeaders());
 
-        $response->assertStatus(200);
+        $response->assertOk();
 
         $result = json_decode($response->content());
         $this->assertEquals('A Tests List', $result[0]->name);
@@ -54,7 +54,7 @@ class TrashApiTest extends ApiTestCase
     {
         $response = $this->getJson('api/v1/trash/tags', $this->generateHeaders());
 
-        $response->assertStatus(200);
+        $response->assertOk();
 
         $result = json_decode($response->content());
         $this->assertEquals('Examples', $result[0]->name);
@@ -64,7 +64,7 @@ class TrashApiTest extends ApiTestCase
     {
         $response = $this->getJson('api/v1/trash/notes', $this->generateHeaders());
 
-        $response->assertStatus(200);
+        $response->assertOk();
 
         $result = json_decode($response->content());
         $this->assertEquals('Quisque placerat facilisis egestas cillum dolore.', $result[0]->note);
@@ -78,7 +78,7 @@ class TrashApiTest extends ApiTestCase
     {
         $this->setupTrashTestData();
 
-        $response = $this->postJson('api/v1/trash/clear', [
+        $response = $this->deleteJson('api/v1/trash/clear', [
             'model' => 'links',
         ], $this->generateHeaders());
 
@@ -91,7 +91,7 @@ class TrashApiTest extends ApiTestCase
     {
         $this->setupTrashTestData();
 
-        $response = $this->postJson('api/v1/trash/clear', [
+        $response = $this->deleteJson('api/v1/trash/clear', [
             'model' => 'tags',
         ], $this->generateHeaders());
 
@@ -104,7 +104,7 @@ class TrashApiTest extends ApiTestCase
     {
         $this->setupTrashTestData();
 
-        $response = $this->postJson('api/v1/trash/clear', [
+        $response = $this->deleteJson('api/v1/trash/clear', [
             'model' => 'lists',
         ], $this->generateHeaders());
 
@@ -117,7 +117,7 @@ class TrashApiTest extends ApiTestCase
     {
         $this->setupTrashTestData();
 
-        $response = $this->postJson('api/v1/trash/clear', [
+        $response = $this->deleteJson('api/v1/trash/clear', [
             'model' => 'notes',
         ], $this->generateHeaders());
 
@@ -130,7 +130,7 @@ class TrashApiTest extends ApiTestCase
     {
         $this->setupTrashTestData();
 
-        $response = $this->postJson('api/v1/trash/clear', [
+        $response = $this->deleteJson('api/v1/trash/clear', [
             //'model' => 'links',
         ], $this->generateHeaders());
 
@@ -143,7 +143,7 @@ class TrashApiTest extends ApiTestCase
     {
         $this->setupTrashTestData();
 
-        $response = $this->postJson('api/v1/trash/clear', [
+        $response = $this->deleteJson('api/v1/trash/clear', [
             'model' => 'shoes',
         ], $this->generateHeaders());
 
@@ -160,7 +160,7 @@ class TrashApiTest extends ApiTestCase
     {
         $this->setupTrashTestData();
 
-        $response = $this->postJson('api/v1/trash/restore', [
+        $response = $this->patchJson('api/v1/trash/restore', [
             'model' => 'link',
             'id' => '1',
         ], $this->generateHeaders());
@@ -174,7 +174,7 @@ class TrashApiTest extends ApiTestCase
     {
         $this->setupTrashTestData();
 
-        $response = $this->postJson('api/v1/trash/restore', [
+        $response = $this->patchJson('api/v1/trash/restore', [
             'model' => 'tag',
             'id' => '1',
         ], $this->generateHeaders());
@@ -188,7 +188,7 @@ class TrashApiTest extends ApiTestCase
     {
         $this->setupTrashTestData();
 
-        $response = $this->postJson('api/v1/trash/restore', [
+        $response = $this->patchJson('api/v1/trash/restore', [
             'model' => 'list',
             'id' => '1',
         ], $this->generateHeaders());
@@ -202,7 +202,7 @@ class TrashApiTest extends ApiTestCase
     {
         $this->setupTrashTestData();
 
-        $response = $this->postJson('api/v1/trash/restore', [
+        $response = $this->patchJson('api/v1/trash/restore', [
             'model' => 'note',
             'id' => '1',
         ], $this->generateHeaders());
@@ -216,7 +216,7 @@ class TrashApiTest extends ApiTestCase
     {
         $this->setupTrashTestData();
 
-        $response = $this->postJson('api/v1/trash/restore', [
+        $response = $this->patchJson('api/v1/trash/restore', [
             //'model' => 'link',
             //'id' => '1',
         ], $this->generateHeaders());
@@ -231,11 +231,11 @@ class TrashApiTest extends ApiTestCase
     {
         $this->setupTrashTestData();
 
-        $response = $this->postJson('api/v1/trash/restore', [
+        $response = $this->patchJson('api/v1/trash/restore', [
             'model' => 'link',
             'id' => '1345235',
         ], $this->generateHeaders());
 
-        $response->assertStatus(404);
+        $response->assertNotFound();
     }
 }
