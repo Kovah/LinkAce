@@ -19,12 +19,15 @@ class TrashControllerTest extends TestCase
     use DatabaseMigrations;
     use PreparesTrash;
 
+    /** @var User */
+    private $user;
+
     public function setUp(): void
     {
         parent::setUp();
 
-        $user = factory(User::class)->create();
-        $this->actingAs($user);
+        $this->user = factory(User::class)->create();
+        $this->actingAs($this->user);
     }
 
     public function testValidTrashResponse(): void
