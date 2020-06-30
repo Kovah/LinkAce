@@ -11,7 +11,6 @@ use App\Models\Note;
 use App\Models\Tag;
 use App\Repositories\TrashRepository;
 use Illuminate\Http\RedirectResponse;
-use Illuminate\Http\Request;
 use Illuminate\View\View;
 
 class TrashController extends Controller

@@ -87,7 +87,10 @@ Route::prefix('v1')->group(function () {
             ->name('api.trash.tags');
         Route::get('trash/notes', [TrashController::class, 'getNotes'])
             ->name('api.trash.notes');
-        Route::post('trash/delete', [TrashController::class, 'getNotes'])
-            ->name('api.trash.notes');
+
+        Route::post('trash/clear', [TrashController::class, 'clear'])
+            ->name('api.trash.clear');
+        Route::post('trash/restore', [TrashController::class, 'restore'])
+            ->name('api.trash.restore');
     });
 });

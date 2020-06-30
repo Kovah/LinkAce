@@ -10,21 +10,21 @@ use App\Models\User;
 use Illuminate\Foundation\Testing\DatabaseMigrations;
 use Illuminate\Foundation\Testing\DatabaseTransactions;
 use Illuminate\Support\Facades\DB;
+use Tests\Controller\Traits\PreparesTrash;
 use Tests\TestCase;
 
 class TrashControllerTest extends TestCase
 {
     use DatabaseTransactions;
     use DatabaseMigrations;
-
-    private $user;
+    use PreparesTrash;
 
     public function setUp(): void
     {
         parent::setUp();
 
-        $this->user = factory(User::class)->create();
-        $this->actingAs($this->user);
+        $user = factory(User::class)->create();
+        $this->actingAs($user);
     }
 
     public function testValidTrashResponse(): void
@@ -41,7 +41,7 @@ class TrashControllerTest extends TestCase
 
     public function testValidTrashClearLinksResponse(): void
     {
-        $this->setupTestData();
+        $this->setupTrashTestData();
 
         $response = $this->post('trash/clear', [
             'model' => 'links'
@@ -54,7 +54,7 @@ class TrashControllerTest extends TestCase
 
     public function testValidTrashClearTagsResponse(): void
     {
-        $this->setupTestData();
+        $this->setupTrashTestData();
 
         $response = $this->post('trash/clear', [
             'model' => 'tags'
@@ -67,7 +67,7 @@ class TrashControllerTest extends TestCase
 
     public function testValidTrashClearListsResponse(): void
     {
-        $this->setupTestData();
+        $this->setupTrashTestData();
 
         $response = $this->post('trash/clear', [
             'model' => 'lists'
@@ -80,7 +80,7 @@ class TrashControllerTest extends TestCase
 
     public function testValidTrashClearNotesResponse(): void
     {
-        $this->setupTestData();
+        $this->setupTrashTestData();
 
         $response = $this->post('trash/clear', [
             'model' => 'notes'
@@ -97,7 +97,7 @@ class TrashControllerTest extends TestCase
 
     public function testValidRestoreLinkResponse(): void
     {
-        $this->setupTestData();
+        $this->setupTrashTestData();
 
         $response = $this->post('trash/restore', [
             'model' => 'link',
@@ -110,7 +110,7 @@ class TrashControllerTest extends TestCase
 
     public function testValidRestoreTagResponse(): void
     {
-        $this->setupTestData();
+        $this->setupTrashTestData();
 
         $response = $this->post('trash/restore', [
             'model' => 'tag',
@@ -123,7 +123,7 @@ class TrashControllerTest extends TestCase
 
     public function testValidRestoreListResponse(): void
     {
-        $this->setupTestData();
+        $this->setupTrashTestData();
 
         $response = $this->post('trash/restore', [
             'model' => 'list',
@@ -136,7 +136,7 @@ class TrashControllerTest extends TestCase
 
     public function testValidRestoreNoteResponse(): void
     {
-        $this->setupTestData();
+        $this->setupTrashTestData();
 
         $response = $this->post('trash/restore', [
             'model' => 'note',
@@ -149,7 +149,7 @@ class TrashControllerTest extends TestCase
 
     public function testInvalidRestoreResponse(): void
     {
-        $this->setupTestData();
+        $this->setupTrashTestData();
 
         $response = $this->post('trash/restore', [
             //'model' => 'link',
@@ -164,7 +164,7 @@ class TrashControllerTest extends TestCase
 
     public function testRestoreWithMissingModel(): void
     {
-        $this->setupTestData();
+        $this->setupTrashTestData();
 
         $response = $this->post('trash/restore', [
             'model' => 'link',
@@ -172,51 +172,5 @@ class TrashControllerTest extends TestCase
         ]);
 
         $response->assertStatus(404);
-    }
-
-    protected function setupTestData(): void
-    {
-        $tagExample = Tag::create([
-            'name' => 'Examples',
-            'user_id' => $this->user->id,
-        ]);
-
-        $listTest = LinkList::create([
-            'name' => 'A Tests List',
-            'user_id' => $this->user->id,
-        ]);
-
-        $linkExample = Link::create([
-            'user_id' => $this->user->id,
-            'url' => 'https://example.com',
-            'title' => 'Very special site title',
-            'description' => 'Some description for this site',
-            'is_private' => true,
-        ]);
-
-        $linkExample->tags()->attach($tagExample->id);
-
-        $linkExampleNote = Note::create([
-            'user_id' => $this->user->id,
-            'link_id' => $linkExample->id,
-            'note' => 'Quisque placerat facilisis egestas cillum dolore.',
-            'is_private' => false,
-        ]);
-
-        $linkTest = Link::create([
-            'user_id' => $this->user->id,
-            'url' => 'https://test.com',
-            'title' => 'Test Site',
-            'description' => null,
-            'is_private' => false,
-        ]);
-
-        $linkTest->lists()->attach($listTest->id);
-
-        $tagExample->delete();
-        $listTest->delete();
-        $linkExample->delete();
-        $linkExampleNote->delete();
-        $linkTest->delete();
     }
 }
