@@ -83,16 +83,6 @@ class TrashControllerTest extends TestCase
         $this->assertEquals(0, DB::table('notes')->count());
     }
 
-    public function testTrashClearWithoutEntriesResponse(): void
-    {
-        $response = $this->get('trash/clear/links');
-
-        $response->assertStatus(302);
-
-        $flashMessage = session('flash_notification', collect())->first();
-        $this->assertEquals('No entries to be deleted.', $flashMessage['message']);
-    }
-
     /*
      * Tests for restoring items
      */
@@ -101,9 +91,12 @@ class TrashControllerTest extends TestCase
     {
         $this->setupTestData();
 
-        $response = $this->get('trash/restore/link/1');
+        $response = $this->post('trash/restore', [
+            'model' => 'link',
+            'id' => '1',
+        ]);
 
-        $response->assertStatus(302);
+        $response->assertRedirect('trash');
         $this->assertEquals(null, Link::find(1)->deleted_at);
     }
 
@@ -111,9 +104,12 @@ class TrashControllerTest extends TestCase
     {
         $this->setupTestData();
 
-        $response = $this->get('trash/restore/tag/1');
+        $response = $this->post('trash/restore', [
+            'model' => 'tag',
+            'id' => '1',
+        ]);
 
-        $response->assertStatus(302);
+        $response->assertRedirect('trash');
         $this->assertEquals(null, Tag::find(1)->deleted_at);
     }
 
@@ -121,7 +117,10 @@ class TrashControllerTest extends TestCase
     {
         $this->setupTestData();
 
-        $response = $this->get('trash/restore/list/1');
+        $response = $this->post('trash/restore', [
+            'model' => 'list',
+            'id' => '1',
+        ]);
 
         $response->assertStatus(302);
         $this->assertEquals(null, LinkList::find(1)->deleted_at);
@@ -131,7 +130,10 @@ class TrashControllerTest extends TestCase
     {
         $this->setupTestData();
 
-        $response = $this->get('trash/restore/note/1');
+        $response = $this->post('trash/restore', [
+            'model' => 'note',
+            'id' => '1',
+        ]);
 
         $response->assertStatus(302);
         $this->assertEquals(null, Note::find(1)->deleted_at);
@@ -141,23 +143,27 @@ class TrashControllerTest extends TestCase
     {
         $this->setupTestData();
 
-        $response = $this->get('trash/restore/link/1234');
+        $response = $this->post('trash/restore', [
+            //'model' => 'link',
+            //'id' => '1',
+        ]);
 
-        $response->assertStatus(404)
-            ->assertSee('The item to be restored could not be found.');
+        $response->assertSessionHasErrors([
+            'model',
+            'id',
+        ]);
     }
 
-    public function testUnauthorizedRestoreResponse(): void
+    public function testRestoreWithMissingModel(): void
     {
         $this->setupTestData();
 
-        $newUser = factory(User::class)->create();
-        $this->actingAs($newUser);
+        $response = $this->post('trash/restore', [
+            'model' => 'link',
+            'id' => '1345235',
+        ]);
 
-        $response = $this->get('trash/restore/link/1');
-
-        $response->assertStatus(403)
-            ->assertSee('You are not allowed to restore this item.');
+        $response->assertStatus(404);
     }
 
     protected function setupTestData(): void

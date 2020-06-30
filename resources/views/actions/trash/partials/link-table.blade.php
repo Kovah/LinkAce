@@ -18,10 +18,14 @@
                     <small>{{ formatDateTime($link->created_at) }}</small>
                 </td>
                 <td class="text-right">
-                    <a href="{{ route('trash-restore', ['link', $link->id]) }}"
-                        class="btn btn-sm btn-outline-primary" title="@lang('trash.restore')">
-                        <i class="fas fa-reply"></i>
-                    </a>
+                    <form action="{{ route('trash-restore') }}">
+                        @csrf
+                        <input type="hidden" name="model" value="link">
+                        <input type="hidden" name="id" value="{{ $link->id }}">
+                        <button type="submit" class="btn btn-sm btn-outline-primary" title="@lang('trash.restore')">
+                            <i class="fas fa-reply"></i>
+                        </button>
+                    </form>
                 </td>
             </tr>
         @endforeach

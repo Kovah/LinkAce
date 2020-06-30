@@ -111,7 +111,7 @@ Route::group(['middleware' => ['auth']], function () {
         ->name('get-trash');
     Route::get('trash/clear/{model}', [TrashController::class, 'clearTrash'])
         ->name('clear-trash');
-    Route::get('trash/restore/{model}/{id}', [TrashController::class, 'restoreEntry'])
+    Route::post('trash/restore', [TrashController::class, 'restoreEntry'])
         ->name('trash-restore');
 
     Route::get('settings', [UserSettingsController::class, 'getUserSettings'])
