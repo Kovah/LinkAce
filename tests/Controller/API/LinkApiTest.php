@@ -26,9 +26,9 @@ class LinkApiTest extends ApiTestCase
     {
         $link = factory(Link::class)->create();
 
-        $response = $this->getJson('api/v1/links', $this->generateHeaders());
+        $response = $this->getJsonAuthorized('api/v1/links');
 
-        $response->assertStatus(200)
+        $response->assertOk()
             ->assertJson([
                 'data' => [
                     ['url' => $link->url],
@@ -38,11 +38,11 @@ class LinkApiTest extends ApiTestCase
 
     public function testMinimalCreateRequest(): void
     {
-        $response = $this->postJson('api/v1/links', [
+        $response = $this->postJsonAuthorized('api/v1/links', [
             'url' => 'http://example.com',
-        ], $this->generateHeaders());
+        ]);
 
-        $response->assertStatus(200)
+        $response->assertOk()
             ->assertJson([
                 'url' => 'http://example.com',
             ]);
@@ -57,7 +57,7 @@ class LinkApiTest extends ApiTestCase
         $list = factory(LinkList::class)->create();
         $tag = factory(Tag::class)->create();
 
-        $response = $this->postJson('api/v1/links', [
+        $response = $this->postJsonAuthorized('api/v1/links', [
             'url' => 'http://example.com',
             'title' => 'Search the Web',
             'description' => 'There could be a description here',
@@ -65,9 +65,9 @@ class LinkApiTest extends ApiTestCase
             'tags' => [$tag->id],
             'is_private' => false,
             'check_disabled' => false,
-        ], $this->generateHeaders());
+        ]);
 
-        $response->assertStatus(200)
+        $response->assertOk()
             ->assertJson([
                 'url' => 'http://example.com',
             ]);
@@ -81,31 +81,30 @@ class LinkApiTest extends ApiTestCase
 
     public function testInvalidCreateRequest(): void
     {
-        $response = $this->postJson('api/v1/links', [
+        $response = $this->postJsonAuthorized('api/v1/links', [
             'url' => null,
             'lists' => 'no array',
             'tags' => 123,
             'is_private' => 'hello',
             'check_disabled' => 'bla',
-        ], $this->generateHeaders());
+        ]);
 
-        $response->assertStatus(422)
-            ->assertJsonValidationErrors([
-                'url',
-                'lists',
-                'tags',
-                'is_private',
-                'check_disabled',
-            ]);
+        $response->assertJsonValidationErrors([
+            'url' => 'The url field is required.',
+            'lists' => 'The lists must be an array.',
+            'tags' => 'The tags must be an array.',
+            'is_private' => 'The is private field must be true or false.',
+            'check_disabled' => 'The check disabled field must be true or false.',
+        ]);
     }
 
     public function testShowRequest(): void
     {
         $link = factory(Link::class)->create();
 
-        $response = $this->getJson('api/v1/links/1', $this->generateHeaders());
+        $response = $this->getJsonAuthorized('api/v1/links/1');
 
-        $response->assertStatus(200)
+        $response->assertOk()
             ->assertJson([
                 'url' => $link->url,
             ]);
@@ -120,9 +119,9 @@ class LinkApiTest extends ApiTestCase
         $link->lists()->sync([$list->id]);
         $link->tags()->sync([$tag->id]);
 
-        $response = $this->getJson('api/v1/links/1', $this->generateHeaders());
+        $response = $this->getJsonAuthorized('api/v1/links/1');
 
-        $response->assertStatus(200)
+        $response->assertOk()
             ->assertJson([
                 'url' => $link->url,
                 'lists' => [
@@ -136,26 +135,26 @@ class LinkApiTest extends ApiTestCase
 
     public function testShowRequestNotFound(): void
     {
-        $response = $this->getJson('api/v1/links/1', $this->generateHeaders());
+        $response = $this->getJsonAuthorized('api/v1/links/1');
 
-        $response->assertStatus(404);
+        $response->assertNotFound();
     }
 
     public function testUpdateRequest(): void
     {
-        $link = factory(Link::class)->create();
+        factory(Link::class)->create();
         $list = factory(LinkList::class)->create();
 
-        $response = $this->patchJson('api/v1/links/1', [
+        $response = $this->patchJsonAuthorized('api/v1/links/1', [
             'url' => 'http://example.com',
             'title' => 'Custom Title',
             'description' => 'Custom Description',
             'lists' => [$list->id],
             'is_private' => false,
             'check_disabled' => false,
-        ], $this->generateHeaders());
+        ]);
 
-        $response->assertStatus(200)
+        $response->assertOk()
             ->assertJson([
                 'url' => 'http://example.com',
             ]);
@@ -167,21 +166,28 @@ class LinkApiTest extends ApiTestCase
 
     public function testInvalidUpdateRequest(): void
     {
-        $link = factory(Link::class)->create();
+        factory(Link::class)->create();
 
-        $response = $this->patchJson('api/v1/links/1', [
-            //
-        ], $this->generateHeaders());
+        $response = $this->patchJsonAuthorized('api/v1/links/1', [
+            'url' => null,
+            'lists' => 'no array',
+            'tags' => 123,
+            'is_private' => 'hello',
+            'check_disabled' => 'bla',
+        ]);
 
-        $response->assertStatus(422)
-            ->assertJsonValidationErrors([
-                'url',
-            ]);
+        $response->assertJsonValidationErrors([
+            'url' => 'The url field is required.',
+            'lists' => 'The lists must be an array.',
+            'tags' => 'The tags must be an array.',
+            'is_private' => 'The is private field must be true or false.',
+            'check_disabled' => 'The check disabled field must be true or false.',
+        ]);
     }
 
     public function testUpdateRequestNotFound(): void
     {
-        $response = $this->patchJson('api/v1/links/1', [
+        $response = $this->patchJsonAuthorized('api/v1/links/1', [
             'url' => 'http://example.com',
             'title' => 'Custom Title',
             'description' => 'Custom Description',
@@ -189,26 +195,26 @@ class LinkApiTest extends ApiTestCase
             'tags' => [],
             'is_private' => false,
             'check_disabled' => false,
-        ], $this->generateHeaders());
+        ]);
 
-        $response->assertStatus(404);
+        $response->assertNotFound();
     }
 
     public function testDeleteRequest(): void
     {
-        $link = factory(Link::class)->create();
+        factory(Link::class)->create();
 
-        $response = $this->deleteJson('api/v1/links/1', [], $this->generateHeaders());
+        $response = $this->deleteJsonAuthorized('api/v1/links/1');
 
-        $response->assertStatus(200);
+        $response->assertOk();
 
         $this->assertEquals(0, Link::count());
     }
 
     public function testDeleteRequestNotFound(): void
     {
-        $response = $this->deleteJson('api/v1/links/1', [], $this->generateHeaders());
+        $response = $this->deleteJsonAuthorized('api/v1/links/1');
 
-        $response->assertStatus(404);
+        $response->assertNotFound();
     }
 }

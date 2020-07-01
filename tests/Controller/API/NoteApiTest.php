@@ -4,10 +4,8 @@ namespace Tests\Controller\API;
 
 use App\Models\Link;
 use App\Models\Note;
-use App\Models\User;
 use Illuminate\Foundation\Testing\DatabaseMigrations;
 use Illuminate\Foundation\Testing\DatabaseTransactions;
-use Tests\TestCase;
 
 class NoteApiTest extends ApiTestCase
 {
@@ -18,12 +16,12 @@ class NoteApiTest extends ApiTestCase
     {
         $link = factory(Link::class)->create();
 
-        $response = $this->postJson('api/v1/notes', [
+        $response = $this->postJsonAuthorized('api/v1/notes', [
             'link_id' => $link->id,
             'note' => 'Quae vero auctorem tractata ab fiducia dicuntur.',
-        ], $this->generateHeaders());
+        ]);
 
-        $response->assertStatus(200)
+        $response->assertOk()
             ->assertJson([
                 'note' => 'Quae vero auctorem tractata ab fiducia dicuntur.',
             ]);
@@ -37,13 +35,13 @@ class NoteApiTest extends ApiTestCase
     {
         $link = factory(Link::class)->create();
 
-        $response = $this->postJson('api/v1/notes', [
+        $response = $this->postJsonAuthorized('api/v1/notes', [
             'link_id' => $link->id,
             'note' => 'Quae vero auctorem tractata ab fiducia dicuntur.',
             'is_private' => true,
-        ], $this->generateHeaders());
+        ]);
 
-        $response->assertStatus(200)
+        $response->assertOk()
             ->assertJson([
                 'note' => 'Quae vero auctorem tractata ab fiducia dicuntur.',
                 'is_private' => true,
@@ -56,32 +54,31 @@ class NoteApiTest extends ApiTestCase
 
     public function testInvalidCreateRequest(): void
     {
-        $response = $this->postJson('api/v1/notes', [
+        $response = $this->postJsonAuthorized('api/v1/notes', [
             'link_id' => null,
             'note' => null,
-        ], $this->generateHeaders());
+        ]);
 
-        $response->assertStatus(422)
-            ->assertJsonValidationErrors([
-                'link_id',
-                'note',
-            ]);
+        $response->assertJsonValidationErrors([
+            'link_id' => 'The link id field is required.',
+            'note' => 'The note field is required.',
+        ]);
     }
 
     public function testUpdateRequest(): void
     {
         $link = factory(Link::class)->create();
-        $note = factory(Note::class)->create([
+        factory(Note::class)->create([
             'link_id' => $link->id,
         ]);
 
-        $response = $this->patchJson('api/v1/notes/1', [
+        $response = $this->patchJsonAuthorized('api/v1/notes/1', [
             'link_id' => $link->id,
             'note' => 'Gallia est omnis divisa in partes tres, quarum.',
             'is_private' => false,
-        ], $this->generateHeaders());
+        ]);
 
-        $response->assertStatus(200)
+        $response->assertOk()
             ->assertJson([
                 'note' => 'Gallia est omnis divisa in partes tres, quarum.',
             ]);
@@ -93,45 +90,44 @@ class NoteApiTest extends ApiTestCase
 
     public function testInvalidUpdateRequest(): void
     {
-        $note = factory(Note::class)->create();
+        factory(Note::class)->create();
 
-        $response = $this->patchJson('api/v1/notes/1', [
+        $response = $this->patchJsonAuthorized('api/v1/notes/1', [
             //
-        ], $this->generateHeaders());
+        ]);
 
-        $response->assertStatus(422)
-            ->assertJsonValidationErrors([
-                'link_id',
-                'note',
-            ]);
+        $response->assertJsonValidationErrors([
+            'link_id' => 'The link id field is required.',
+            'note' => 'The note field is required.',
+        ]);
     }
 
     public function testUpdateRequestNotFound(): void
     {
-        $response = $this->patchJson('api/v1/notes/1', [
+        $response = $this->patchJsonAuthorized('api/v1/notes/1', [
             'link_id' => 1,
             'note' => 'Sed haec quis possit intrepidus aestimare tellus.',
             'is_private' => false,
-        ], $this->generateHeaders());
+        ]);
 
-        $response->assertStatus(404);
+        $response->assertNotFound();
     }
 
     public function testDeleteRequest(): void
     {
-        $note = factory(Note::class)->create();
+        factory(Note::class)->create();
 
-        $response = $this->deleteJson('api/v1/notes/1', [], $this->generateHeaders());
+        $response = $this->deleteJsonAuthorized('api/v1/notes/1', []);
 
-        $response->assertStatus(200);
+        $response->assertOk();
 
         $this->assertEquals(0, Note::count());
     }
 
     public function testDeleteRequestNotFound(): void
     {
-        $response = $this->deleteJson('api/v1/notes/1', [], $this->generateHeaders());
+        $response = $this->deleteJsonAuthorized('api/v1/notes/1');
 
-        $response->assertStatus(404);
+        $response->assertNotFound();
     }
 }

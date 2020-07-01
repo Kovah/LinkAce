@@ -21,9 +21,9 @@ class LinkNotesTest extends ApiTestCase
             'link_id' => $link->id,
         ]);
 
-        $response = $this->getJson('api/v1/links/1/notes', $this->generateHeaders());
+        $response = $this->getJsonAuthorized('api/v1/links/1/notes');
 
-        $response->assertStatus(200)
+        $response->assertOk()
             ->assertJson([
                 'data' => [
                     ['note' => $note->note],
@@ -33,11 +33,11 @@ class LinkNotesTest extends ApiTestCase
 
     public function testLinksRequestWithoutLinks(): void
     {
-        $link = factory(Link::class)->create();
+        factory(Link::class)->create();
 
-        $response = $this->getJson('api/v1/links/1/notes', $this->generateHeaders());
+        $response = $this->getJsonAuthorized('api/v1/links/1/notes');
 
-        $response->assertStatus(200)
+        $response->assertOk()
             ->assertJson([
                 'data' => [],
             ]);
@@ -49,8 +49,8 @@ class LinkNotesTest extends ApiTestCase
 
     public function testShowRequestNotFound(): void
     {
-        $response = $this->getJson('api/v1/links/1/notes', $this->generateHeaders());
+        $response = $this->getJsonAuthorized('api/v1/links/1/notes');
 
-        $response->assertStatus(404);
+        $response->assertNotFound();
     }
 }

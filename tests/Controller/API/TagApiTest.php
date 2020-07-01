@@ -3,10 +3,8 @@
 namespace Tests\Controller\API;
 
 use App\Models\Tag;
-use App\Models\User;
 use Illuminate\Foundation\Testing\DatabaseMigrations;
 use Illuminate\Foundation\Testing\DatabaseTransactions;
-use Tests\TestCase;
 
 class TagApiTest extends ApiTestCase
 {
@@ -24,9 +22,9 @@ class TagApiTest extends ApiTestCase
     {
         $tag = factory(Tag::class)->create();
 
-        $response = $this->getJson('api/v1/tags', $this->generateHeaders());
+        $response = $this->getJsonAuthorized('api/v1/tags');
 
-        $response->assertStatus(200)
+        $response->assertOk()
             ->assertJson([
                 'data' => [
                     ['name' => $tag->name],
@@ -36,11 +34,11 @@ class TagApiTest extends ApiTestCase
 
     public function testMinimalCreateRequest(): void
     {
-        $response = $this->postJson('api/v1/tags', [
+        $response = $this->postJsonAuthorized('api/v1/tags', [
             'name' => 'Test Tag',
-        ], $this->generateHeaders());
+        ]);
 
-        $response->assertStatus(200)
+        $response->assertOk()
             ->assertJson([
                 'name' => 'Test Tag',
             ]);
@@ -52,12 +50,12 @@ class TagApiTest extends ApiTestCase
 
     public function testFullCreateRequest(): void
     {
-        $response = $this->postJson('api/v1/tags', [
+        $response = $this->postJsonAuthorized('api/v1/tags', [
             'name' => 'Test Tag',
             'is_private' => false,
-        ], $this->generateHeaders());
+        ]);
 
-        $response->assertStatus(200)
+        $response->assertOk()
             ->assertJson([
                 'name' => 'Test Tag',
             ]);
@@ -69,25 +67,24 @@ class TagApiTest extends ApiTestCase
 
     public function testInvalidCreateRequest(): void
     {
-        $response = $this->postJson('api/v1/tags', [
+        $response = $this->postJsonAuthorized('api/v1/tags', [
             'name' => null,
             'is_private' => 'hello',
-        ], $this->generateHeaders());
+        ]);
 
-        $response->assertStatus(422)
-            ->assertJsonValidationErrors([
-                'name',
-                'is_private',
-            ]);
+        $response->assertJsonValidationErrors([
+            'name' => 'The name field is required.',
+            'is_private' => 'The is private field must be true or false.',
+        ]);
     }
 
     public function testShowRequest(): void
     {
         $tag = factory(Tag::class)->create();
 
-        $response = $this->getJson('api/v1/tags/1', $this->generateHeaders());
+        $response = $this->getJsonAuthorized('api/v1/tags/1');
 
-        $response->assertStatus(200)
+        $response->assertOk()
             ->assertJson([
                 'name' => $tag->name,
             ]);
@@ -95,21 +92,21 @@ class TagApiTest extends ApiTestCase
 
     public function testShowRequestNotFound(): void
     {
-        $response = $this->getJson('api/v1/tags/1', $this->generateHeaders());
+        $response = $this->getJsonAuthorized('api/v1/tags/1');
 
-        $response->assertStatus(404);
+        $response->assertNotFound();
     }
 
     public function testUpdateRequest(): void
     {
-        $tag = factory(Tag::class)->create();
+        factory(Tag::class)->create();
 
-        $response = $this->patchJson('api/v1/tags/1', [
+        $response = $this->patchJsonAuthorized('api/v1/tags/1', [
             'name' => 'Updated Tag Title',
             'is_private' => false,
-        ], $this->generateHeaders());
+        ]);
 
-        $response->assertStatus(200)
+        $response->assertOk()
             ->assertJson([
                 'name' => 'Updated Tag Title',
             ]);
@@ -121,43 +118,44 @@ class TagApiTest extends ApiTestCase
 
     public function testInvalidUpdateRequest(): void
     {
-        $tag = factory(Tag::class)->create();
+        factory(Tag::class)->create();
 
-        $response = $this->patchJson('api/v1/tags/1', [
-            //
-        ], $this->generateHeaders());
+        $response = $this->patchJsonAuthorized('api/v1/tags/1', [
+            'name' => null,
+            'is_private' => 'hello',
+        ]);
 
-        $response->assertStatus(422)
-            ->assertJsonValidationErrors([
-                'name',
-            ]);
+        $response->assertJsonValidationErrors([
+            'name' => 'The name field is required.',
+            'is_private' => 'The is private field must be true or false.',
+        ]);
     }
 
     public function testUpdateRequestNotFound(): void
     {
-        $response = $this->patchJson('api/v1/tags/1', [
+        $response = $this->patchJsonAuthorized('api/v1/tags/1', [
             'name' => 'Updated Tag Title',
             'is_private' => false,
-        ], $this->generateHeaders());
+        ]);
 
-        $response->assertStatus(404);
+        $response->assertNotFound();
     }
 
     public function testDeleteRequest(): void
     {
-        $tag = factory(Tag::class)->create();
+        factory(Tag::class)->create();
 
-        $response = $this->deleteJson('api/v1/tags/1', [], $this->generateHeaders());
+        $response = $this->deleteJsonAuthorized('api/v1/tags/1');
 
-        $response->assertStatus(200);
+        $response->assertOk();
 
         $this->assertEquals(0, Tag::count());
     }
 
     public function testDeleteRequestNotFound(): void
     {
-        $response = $this->deleteJson('api/v1/tags/1', [], $this->generateHeaders());
+        $response = $this->deleteJsonAuthorized('api/v1/tags/1');
 
-        $response->assertStatus(404);
+        $response->assertNotFound();
     }
 }

@@ -30,7 +30,12 @@ class LinkUpdateRequest extends FormRequest
     {
         $this->isApiRequest = $request->isJson();
 
-        $this->requireUniqueUrl = Link::urlHasChanged($request->route('link'), $request->input('url', ''));
+        if ($request->input('url') !== null) {
+            $this->requireUniqueUrl = Link::urlHasChanged(
+                $request->route('link'),
+                $request->input('url')
+            );
+        }
 
         return true;
     }

@@ -20,9 +20,9 @@ class SearchTagsTest extends ApiTestCase
 
     public function testWithoutQuery(): void
     {
-        $response = $this->getJson('api/v1/search/tags', $this->generateHeaders());
+        $response = $this->getJsonAuthorized('api/v1/search/tags');
 
-        $response->assertStatus(200)
+        $response->assertOk()
             ->assertExactJson([]);
     }
 
@@ -34,9 +34,9 @@ class SearchTagsTest extends ApiTestCase
             'name' => 'artificial-intelligence',
         ]);
 
-        $response = $this->getJson('api/v1/search/tags?query=', $this->generateHeaders());
+        $response = $this->getJsonAuthorized('api/v1/search/tags?query=');
 
-        $response->assertStatus(200)
+        $response->assertOk()
             ->assertExactJson([]);
     }
 
@@ -64,9 +64,9 @@ class SearchTagsTest extends ApiTestCase
         ]);
 
         $url = sprintf('api/v1/search/tags?query=%s', 'programming');
-        $response = $this->getJson($url, $this->generateHeaders());
+        $response = $this->getJsonAuthorized($url);
 
-        $response->assertStatus(200)
+        $response->assertOk()
             ->assertExactJson([
                 $tag->id => $tag->name,
                 $tag2->id => $tag2->name,
@@ -93,9 +93,9 @@ class SearchTagsTest extends ApiTestCase
         ]);
 
         $url = sprintf('api/v1/search/tags?query=%s', 'p');
-        $response = $this->getJson($url, $this->generateHeaders());
+        $response = $this->getJsonAuthorized($url);
 
-        $response->assertStatus(200)
+        $response->assertOk()
             ->assertExactJson([
                 $tag->id => $tag->name,
                 $tag2->id => $tag2->name,

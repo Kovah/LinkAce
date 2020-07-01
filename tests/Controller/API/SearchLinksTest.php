@@ -20,12 +20,12 @@ class SearchLinksTest extends ApiTestCase
 
     public function testWithoutQuery(): void
     {
-        $response = $this->getJson('api/v1/search/links', $this->generateHeaders());
+        $response = $this->getJsonAuthorized('api/v1/search/links');
 
         $response->assertJsonValidationErrors([
-            'query',
-            'only_lists',
-            'only_tags',
+            'query' => 'A search query must be present if no lists or tags were provided.',
+            'only_lists' => 'A list must be present if no query or some tags were provided.',
+            'only_tags' => 'A tag must be present if no query or some lists were provided.',
         ]);
     }
 
@@ -48,9 +48,9 @@ class SearchLinksTest extends ApiTestCase
         ]);
 
         $url = sprintf('api/v1/search/links?query=%s', 'example');
-        $response = $this->getJson($url, $this->generateHeaders());
+        $response = $this->getJsonAuthorized($url);
 
-        $response->assertStatus(200)
+        $response->assertOk()
             ->assertJsonFragment([
                 'current_page' => 1,
             ])
@@ -79,9 +79,9 @@ class SearchLinksTest extends ApiTestCase
         ]);
 
         $url = sprintf('api/v1/search/links?query=%s&search_title=1', 'Test');
-        $response = $this->getJson($url, $this->generateHeaders());
+        $response = $this->getJsonAuthorized($url);
 
-        $response->assertStatus(200)
+        $response->assertOk()
             ->assertJsonFragment([
                 'url' => $link->url,
             ])
@@ -90,7 +90,7 @@ class SearchLinksTest extends ApiTestCase
             ]);
     }
 
-    public function testSearchByDescription()
+    public function testSearchByDescription(): void
     {
         $link = factory(Link::class)->create([
             'user_id' => $this->user->id,
@@ -106,9 +106,9 @@ class SearchLinksTest extends ApiTestCase
         ]);
 
         $url = sprintf('api/v1/search/links?query=%s&search_description=1', 'Example');
-        $response = $this->getJson($url, $this->generateHeaders());
+        $response = $this->getJsonAuthorized($url);
 
-        $response->assertStatus(200)
+        $response->assertOk()
             ->assertJsonFragment([
                 'url' => $link->url,
             ])
@@ -117,7 +117,7 @@ class SearchLinksTest extends ApiTestCase
             ]);
     }
 
-    public function testSearchPrivateOnly()
+    public function testSearchPrivateOnly(): void
     {
         $link = factory(Link::class)->create([
             'user_id' => $this->user->id,
@@ -133,9 +133,9 @@ class SearchLinksTest extends ApiTestCase
         ]);
 
         $url = sprintf('api/v1/search/links?query=%s&private_only=1', 'test');
-        $response = $this->getJson($url, $this->generateHeaders());
+        $response = $this->getJsonAuthorized($url);
 
-        $response->assertStatus(200)
+        $response->assertOk()
             ->assertJsonFragment([
                 'url' => $link->url,
             ])
@@ -144,7 +144,7 @@ class SearchLinksTest extends ApiTestCase
             ]);
     }
 
-    public function testSearchBrokenOnly()
+    public function testSearchBrokenOnly(): void
     {
         $link = factory(Link::class)->create([
             'user_id' => $this->user->id,
@@ -159,9 +159,9 @@ class SearchLinksTest extends ApiTestCase
         ]);
 
         $url = sprintf('api/v1/search/links?query=%s&broken_only=1', 'test');
-        $response = $this->getJson($url, $this->generateHeaders());
+        $response = $this->getJsonAuthorized($url);
 
-        $response->assertStatus(200)
+        $response->assertOk()
             ->assertJsonFragment([
                 'url' => $link->url,
             ])
@@ -170,7 +170,7 @@ class SearchLinksTest extends ApiTestCase
             ]);
     }
 
-    public function testSearchWithLists()
+    public function testSearchWithLists(): void
     {
         $list = factory(LinkList::class)->create([
             'user_id' => $this->user->id,
@@ -191,9 +191,9 @@ class SearchLinksTest extends ApiTestCase
         ]);
 
         $url = sprintf('api/v1/search/links?only_lists=%s', $list->id);
-        $response = $this->getJson($url, $this->generateHeaders());
+        $response = $this->getJsonAuthorized($url);
 
-        $response->assertStatus(200)
+        $response->assertOk()
             ->assertJsonFragment([
                 'url' => $link->url,
             ])
@@ -202,7 +202,7 @@ class SearchLinksTest extends ApiTestCase
             ]);
     }
 
-    public function testSearchWithTags()
+    public function testSearchWithTags(): void
     {
         $tag = factory(Tag::class)->create([
             'user_id' => $this->user->id,
@@ -223,9 +223,9 @@ class SearchLinksTest extends ApiTestCase
         ]);
 
         $url = sprintf('api/v1/search/links?only_tags=%s', $tag->id);
-        $response = $this->getJson($url, $this->generateHeaders());
+        $response = $this->getJsonAuthorized($url);
 
-        $response->assertStatus(200)
+        $response->assertOk()
             ->assertJsonFragment([
                 'url' => $link->url,
             ])

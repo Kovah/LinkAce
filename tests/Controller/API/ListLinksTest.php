@@ -21,9 +21,9 @@ class ListLinksTest extends ApiTestCase
 
         $link->lists()->sync([$list->id]);
 
-        $response = $this->getJson('api/v1/lists/1/links', $this->generateHeaders());
+        $response = $this->getJsonAuthorized('api/v1/lists/1/links');
 
-        $response->assertStatus(200)
+        $response->assertOk()
             ->assertJson([
                 'data' => [
                     ['url' => $link->url]
@@ -33,11 +33,11 @@ class ListLinksTest extends ApiTestCase
 
     public function testLinksRequestWithoutLinks(): void
     {
-        $list = factory(LinkList::class)->create();
+        factory(LinkList::class)->create();
 
-        $response = $this->getJson('api/v1/lists/1/links', $this->generateHeaders());
+        $response = $this->getJsonAuthorized('api/v1/lists/1/links');
 
-        $response->assertStatus(200)
+        $response->assertOk()
             ->assertJson([
                 'data' => []
             ]);
@@ -49,8 +49,8 @@ class ListLinksTest extends ApiTestCase
 
     public function testShowRequestNotFound(): void
     {
-        $response = $this->getJson('api/v1/lists/1/links', $this->generateHeaders());
+        $response = $this->getJsonAuthorized('api/v1/lists/1/links');
 
-        $response->assertStatus(404);
+        $response->assertNotFound();
     }
 }

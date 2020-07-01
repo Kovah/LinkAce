@@ -20,9 +20,9 @@ class SearchListsTest extends ApiTestCase
 
     public function testWithoutQuery(): void
     {
-        $response = $this->getJson('api/v1/search/lists', $this->generateHeaders());
+        $response = $this->getJsonAuthorized('api/v1/search/lists');
 
-        $response->assertStatus(200)
+        $response->assertOk()
             ->assertExactJson([]);
     }
 
@@ -34,9 +34,9 @@ class SearchListsTest extends ApiTestCase
             'name' => 'Scientific Articles',
         ]);
 
-        $response = $this->getJson('api/v1/search/lists?query=', $this->generateHeaders());
+        $response = $this->getJsonAuthorized('api/v1/search/lists?query=');
 
-        $response->assertStatus(200)
+        $response->assertOk()
             ->assertExactJson([]);
     }
 
@@ -59,9 +59,9 @@ class SearchListsTest extends ApiTestCase
         ]);
 
         $url = sprintf('api/v1/search/lists?query=%s', 'articles');
-        $response = $this->getJson($url, $this->generateHeaders());
+        $response = $this->getJsonAuthorized($url);
 
-        $response->assertStatus(200)
+        $response->assertOk()
             ->assertExactJson([
                 $list->id => $list->name,
                 $list2->id => $list2->name,
@@ -87,9 +87,9 @@ class SearchListsTest extends ApiTestCase
         ]);
 
         $url = sprintf('api/v1/search/lists?query=%s', 'ar');
-        $response = $this->getJson($url, $this->generateHeaders());
+        $response = $this->getJsonAuthorized($url);
 
-        $response->assertStatus(200)
+        $response->assertOk()
             ->assertExactJson([
                 $list->id => $list->name,
                 $list2->id => $list2->name,

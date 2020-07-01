@@ -24,9 +24,9 @@ class LinkCheckApiTest extends ApiTestCase
             'url' => 'https://example.com',
         ]);
 
-        $response = $this->getJson('api/v1/links/check?url=https://example.com', $this->generateHeaders());
+        $response = $this->getJsonAuthorized('api/v1/links/check?url=https://example.com');
 
-        $response->assertStatus(200)
+        $response->assertOk()
             ->assertJson([
                 'linksFound' => true,
             ]);
@@ -38,9 +38,9 @@ class LinkCheckApiTest extends ApiTestCase
             'url' => 'https://test.com',
         ]);
 
-        $response = $this->getJson('api/v1/links/check?url=https://example.com', $this->generateHeaders());
+        $response = $this->getJsonAuthorized('api/v1/links/check?url=https://example.com');
 
-        $response->assertStatus(200)
+        $response->assertOk()
             ->assertJson([
                 'linksFound' => false,
             ]);
@@ -48,9 +48,9 @@ class LinkCheckApiTest extends ApiTestCase
 
     public function testCheckWithoutQuery(): void
     {
-        $response = $this->getJson('api/v1/links/check', $this->generateHeaders());
+        $response = $this->getJsonAuthorized('api/v1/links/check');
 
-        $response->assertStatus(200)
+        $response->assertOk()
             ->assertJson([
                 'linksFound' => false,
             ]);
