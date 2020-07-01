@@ -3,13 +3,11 @@
 namespace Tests\Controller\API;
 
 use App\Models\Link;
-use Illuminate\Foundation\Testing\DatabaseMigrations;
-use Illuminate\Foundation\Testing\DatabaseTransactions;
+use Illuminate\Foundation\Testing\RefreshDatabase;
 
 class LinkCheckApiTest extends ApiTestCase
 {
-    use DatabaseTransactions;
-    use DatabaseMigrations;
+    use RefreshDatabase;
 
     public function testUnauthorizedRequest(): void
     {

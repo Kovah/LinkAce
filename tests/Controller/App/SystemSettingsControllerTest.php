@@ -10,6 +10,7 @@ class SystemSettingsControllerTest extends TestCase
 {
     use RefreshDatabase;
 
+    /** @var User */
     private $user;
 
     public function setUp(): void

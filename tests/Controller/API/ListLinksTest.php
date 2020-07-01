@@ -4,15 +4,11 @@ namespace Tests\Controller\API;
 
 use App\Models\Link;
 use App\Models\LinkList;
-use App\Models\User;
-use Illuminate\Foundation\Testing\DatabaseMigrations;
-use Illuminate\Foundation\Testing\DatabaseTransactions;
-use Tests\TestCase;
+use Illuminate\Foundation\Testing\RefreshDatabase;
 
 class ListLinksTest extends ApiTestCase
 {
-    use DatabaseTransactions;
-    use DatabaseMigrations;
+    use RefreshDatabase;
 
     public function testLinksRequest(): void
     {
@@ -26,8 +22,8 @@ class ListLinksTest extends ApiTestCase
         $response->assertOk()
             ->assertJson([
                 'data' => [
-                    ['url' => $link->url]
-                ]
+                    ['url' => $link->url],
+                ],
             ]);
     }
 
@@ -39,7 +35,7 @@ class ListLinksTest extends ApiTestCase
 
         $response->assertOk()
             ->assertJson([
-                'data' => []
+                'data' => [],
             ]);
 
         $responseBody = json_decode($response->content());

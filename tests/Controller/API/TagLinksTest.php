@@ -4,15 +4,11 @@ namespace Tests\Controller\API;
 
 use App\Models\Link;
 use App\Models\Tag;
-use App\Models\User;
-use Illuminate\Foundation\Testing\DatabaseMigrations;
-use Illuminate\Foundation\Testing\DatabaseTransactions;
-use Tests\TestCase;
+use Illuminate\Foundation\Testing\RefreshDatabase;
 
 class TagLinksTest extends ApiTestCase
 {
-    use DatabaseTransactions;
-    use DatabaseMigrations;
+    use RefreshDatabase;
 
     public function testLinksRequest(): void
     {

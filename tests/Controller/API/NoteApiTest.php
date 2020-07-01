@@ -4,13 +4,11 @@ namespace Tests\Controller\API;
 
 use App\Models\Link;
 use App\Models\Note;
-use Illuminate\Foundation\Testing\DatabaseMigrations;
-use Illuminate\Foundation\Testing\DatabaseTransactions;
+use Illuminate\Foundation\Testing\RefreshDatabase;
 
 class NoteApiTest extends ApiTestCase
 {
-    use DatabaseTransactions;
-    use DatabaseMigrations;
+    use RefreshDatabase;
 
     public function testMinimalCreateRequest(): void
     {

@@ -7,16 +7,14 @@ use App\Models\LinkList;
 use App\Models\Note;
 use App\Models\Tag;
 use App\Models\User;
-use Illuminate\Foundation\Testing\DatabaseMigrations;
-use Illuminate\Foundation\Testing\DatabaseTransactions;
+use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Support\Facades\DB;
 use Tests\Controller\Traits\PreparesTrash;
 use Tests\TestCase;
 
 class TrashControllerTest extends TestCase
 {
-    use DatabaseTransactions;
-    use DatabaseMigrations;
+    use RefreshDatabase;
     use PreparesTrash;
 
     /** @var User */
