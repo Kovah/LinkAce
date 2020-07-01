@@ -5,6 +5,7 @@
 /public/mix-manifest.json
 /resources/lang/vendor
 /storage/*.key
+/tests/Controller/logs
 /vendor
 /.idea
 /.tmp

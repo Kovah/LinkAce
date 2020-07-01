@@ -5,14 +5,12 @@ namespace Tests\Controller\Models;
 use App\Models\LinkList;
 use App\Models\Setting;
 use App\Models\User;
-use Illuminate\Foundation\Testing\DatabaseMigrations;
-use Illuminate\Foundation\Testing\DatabaseTransactions;
+use Illuminate\Foundation\Testing\RefreshDatabase;
 use Tests\TestCase;
 
 class ListControllerTest extends TestCase
 {
-    use DatabaseTransactions;
-    use DatabaseMigrations;
+    use RefreshDatabase;
 
     private $user;
 
@@ -33,7 +31,7 @@ class ListControllerTest extends TestCase
 
         $response = $this->get('lists');
 
-        $response->assertStatus(200)
+        $response->assertOk()
             ->assertSee($list->name);
     }
 
@@ -41,7 +39,7 @@ class ListControllerTest extends TestCase
     {
         $response = $this->get('lists/create');
 
-        $response->assertStatus(200)
+        $response->assertOk()
             ->assertSee('Add List');
     }
 
@@ -52,8 +50,7 @@ class ListControllerTest extends TestCase
             'is_private' => '0',
         ]);
 
-        $response->assertStatus(302)
-            ->assertRedirect('lists/1');
+        $response->assertRedirect('lists/1');
 
         $databaseList = LinkList::first();
 
@@ -68,8 +65,7 @@ class ListControllerTest extends TestCase
             'is_private' => '1',
         ]);
 
-        $response->assertStatus(302)
-            ->assertRedirect('lists/1');
+        $response->assertRedirect('lists/1');
 
         $databaseList = LinkList::first();
 
@@ -90,8 +86,7 @@ class ListControllerTest extends TestCase
             'is_private' => usersettings('lists_private_default'),
         ]);
 
-        $response->assertStatus(302)
-            ->assertRedirect('lists/1');
+        $response->assertRedirect('lists/1');
 
         $databaseList = LinkList::first();
 
@@ -106,8 +101,7 @@ class ListControllerTest extends TestCase
             'reload_view' => '1',
         ]);
 
-        $response->assertStatus(302)
-            ->assertRedirect('lists/create');
+        $response->assertRedirect('lists/create');
 
         $databaseList = LinkList::first();
 
@@ -134,7 +128,7 @@ class ListControllerTest extends TestCase
 
         $response = $this->get('lists/1');
 
-        $response->assertStatus(200)
+        $response->assertOk()
             ->assertSee($list->name);
     }
 
@@ -146,7 +140,7 @@ class ListControllerTest extends TestCase
 
         $response = $this->get('lists/1/edit');
 
-        $response->assertStatus(200)
+        $response->assertOk()
             ->assertSee('Edit List')
             ->assertSee('Update List');
     }
@@ -155,7 +149,7 @@ class ListControllerTest extends TestCase
     {
         $response = $this->get('lists/1/edit');
 
-        $response->assertStatus(404);
+        $response->assertNotFound();
     }
 
     public function testUpdateResponse(): void
@@ -164,15 +158,13 @@ class ListControllerTest extends TestCase
             'user_id' => $this->user->id,
         ]);
 
-        $response = $this->post('lists/1', [
-            '_method' => 'patch',
+        $response = $this->patch('lists/1', [
             'list_id' => $baseList->id,
             'name' => 'New Test List',
             'is_private' => '0',
         ]);
 
-        $response->assertStatus(302)
-            ->assertRedirect('lists/1');
+        $response->assertRedirect('lists/1');
 
         $updatedLink = $baseList->fresh();
 
@@ -181,14 +173,13 @@ class ListControllerTest extends TestCase
 
     public function testMissingModelErrorForUpdate(): void
     {
-        $response = $this->post('lists/1', [
-            '_method' => 'patch',
+        $response = $this->patch('lists/1', [
             'list_id' => '1',
             'name' => 'New Test List',
             'is_private' => '0',
         ]);
 
-        $response->assertStatus(404);
+        $response->assertNotFound();
     }
 
     public function testUniquePropertyValidation(): void
@@ -202,8 +193,7 @@ class ListControllerTest extends TestCase
             'user_id' => $this->user->id,
         ]);
 
-        $response = $this->post('lists/2', [
-            '_method' => 'patch',
+        $response = $this->patch('lists/2', [
             'list_id' => $baseList->id,
             'name' => 'Taken List Name',
             'is_private' => '0',
@@ -220,8 +210,7 @@ class ListControllerTest extends TestCase
             'user_id' => $this->user->id,
         ]);
 
-        $response = $this->post('lists/1', [
-            '_method' => 'patch',
+        $response = $this->patch('lists/1', [
             'list_id' => $baseList->id,
             //'name' => 'New Test List',
             'is_private' => '0',
@@ -238,12 +227,9 @@ class ListControllerTest extends TestCase
             'user_id' => $this->user->id,
         ]);
 
-        $response = $this->post('lists/1', [
-            '_method' => 'delete',
-        ]);
+        $response = $this->deleteJson('lists/1');
 
-        $response->assertStatus(302)
-            ->assertRedirect('lists');
+        $response->assertRedirect('lists');
 
         $databaseList = LinkList::withTrashed()->first();
 
@@ -253,10 +239,8 @@ class ListControllerTest extends TestCase
 
     public function testMissingModelErrorForDelete(): void
     {
-        $response = $this->post('lists/1', [
-            '_method' => 'delete',
-        ]);
+        $response = $this->delete('lists/1');
 
-        $response->assertStatus(404);
+        $response->assertNotFound();
     }
 }

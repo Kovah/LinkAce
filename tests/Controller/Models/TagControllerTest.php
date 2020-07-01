@@ -5,14 +5,12 @@ namespace Tests\Controller\Models;
 use App\Models\Setting;
 use App\Models\Tag;
 use App\Models\User;
-use Illuminate\Foundation\Testing\DatabaseMigrations;
-use Illuminate\Foundation\Testing\DatabaseTransactions;
+use Illuminate\Foundation\Testing\RefreshDatabase;
 use Tests\TestCase;
 
 class TagControllerTest extends TestCase
 {
-    use DatabaseTransactions;
-    use DatabaseMigrations;
+    use RefreshDatabase;
 
     private $user;
 
@@ -33,7 +31,7 @@ class TagControllerTest extends TestCase
 
         $response = $this->get('tags');
 
-        $response->assertStatus(200)
+        $response->assertOk()
             ->assertSee($tag->name);
     }
 
@@ -41,7 +39,7 @@ class TagControllerTest extends TestCase
     {
         $response = $this->get('tags/create');
 
-        $response->assertStatus(200)
+        $response->assertOk()
             ->assertSee('Add Tag');
     }
 
@@ -52,8 +50,7 @@ class TagControllerTest extends TestCase
             'is_private' => '0',
         ]);
 
-        $response->assertStatus(302)
-            ->assertRedirect('tags/1');
+        $response->assertRedirect('tags/1');
 
         $databaseList = Tag::first();
 
@@ -73,8 +70,7 @@ class TagControllerTest extends TestCase
             'is_private' => usersettings('tags_private_default'),
         ]);
 
-        $response->assertStatus(302)
-            ->assertRedirect('tags/1');
+        $response->assertRedirect('tags/1');
 
         $databaseList = Tag::first();
 
@@ -89,8 +85,7 @@ class TagControllerTest extends TestCase
             'reload_view' => '1',
         ]);
 
-        $response->assertStatus(302)
-            ->assertRedirect('tags/create');
+        $response->assertRedirect('tags/create');
 
         $databaseList = Tag::first();
 
@@ -117,7 +112,7 @@ class TagControllerTest extends TestCase
 
         $response = $this->get('tags/1');
 
-        $response->assertStatus(200)
+        $response->assertOk()
             ->assertSee($tag->name);
     }
 
@@ -129,7 +124,7 @@ class TagControllerTest extends TestCase
 
         $response = $this->get('tags/1/edit');
 
-        $response->assertStatus(200)
+        $response->assertOk()
             ->assertSee('Edit Tag')
             ->assertSee('Update Tag');
     }
@@ -138,7 +133,7 @@ class TagControllerTest extends TestCase
     {
         $response = $this->get('tags/1/edit');
 
-        $response->assertStatus(404);
+        $response->assertNotFound();
     }
 
     public function testUpdateResponse(): void
@@ -147,15 +142,13 @@ class TagControllerTest extends TestCase
             'user_id' => $this->user->id,
         ]);
 
-        $response = $this->post('tags/1', [
-            '_method' => 'patch',
+        $response = $this->patch('tags/1', [
             'tag_id' => $baseTag->id,
             'name' => 'New Test Tag',
             'is_private' => '0',
         ]);
 
-        $response->assertStatus(302)
-            ->assertRedirect('tags/1');
+        $response->assertRedirect('tags/1');
 
         $updatedLink = $baseTag->fresh();
 
@@ -164,14 +157,13 @@ class TagControllerTest extends TestCase
 
     public function testMissingModelErrorForUpdate(): void
     {
-        $response = $this->post('tags/1', [
-            '_method' => 'patch',
+        $response = $this->patch('tags/1', [
             'tag_id' => '1',
             'name' => 'New Test Tag',
             'is_private' => '0',
         ]);
 
-        $response->assertStatus(404);
+        $response->assertNotFound();
     }
 
     public function testUniquePropertyValidation(): void
@@ -185,8 +177,7 @@ class TagControllerTest extends TestCase
             'user_id' => $this->user->id,
         ]);
 
-        $response = $this->post('tags/2', [
-            '_method' => 'patch',
+        $response = $this->patch('tags/2', [
             'tag_id' => $baseTag->id,
             'name' => 'taken-tag-name',
             'is_private' => '0',
@@ -203,8 +194,7 @@ class TagControllerTest extends TestCase
             'user_id' => $this->user->id,
         ]);
 
-        $response = $this->post('tags/1', [
-            '_method' => 'patch',
+        $response = $this->patch('tags/1', [
             'tag_id' => $baseTag->id,
             //'name' => 'New Test Tag',
             'is_private' => '0',
@@ -221,12 +211,9 @@ class TagControllerTest extends TestCase
             'user_id' => $this->user->id,
         ]);
 
-        $response = $this->post('tags/1', [
-            '_method' => 'delete',
-        ]);
+        $response = $this->delete('tags/1');
 
-        $response->assertStatus(302)
-            ->assertRedirect('tags');
+        $response->assertRedirect('tags');
 
         $databaseTag = Tag::withTrashed()->first();
 
@@ -236,10 +223,8 @@ class TagControllerTest extends TestCase
 
     public function testMissingModelErrorForDelete(): void
     {
-        $response = $this->post('tags/1', [
-            '_method' => 'delete',
-        ]);
+        $response = $this->delete('tags/1');
 
-        $response->assertStatus(404);
+        $response->assertNotFound();
     }
 }
