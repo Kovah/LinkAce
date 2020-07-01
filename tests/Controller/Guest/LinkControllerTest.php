@@ -28,7 +28,7 @@ class LinkControllerTest extends TestCase
 
         $response = $this->get('guest/links');
 
-        $response->assertStatus(200)
+        $response->assertOk()
             ->assertSee($linkPublic->url)
             ->assertDontSee($linkPrivate->url);
     }

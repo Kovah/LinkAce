@@ -16,7 +16,7 @@ class LoginControllerTest extends TestCase
     {
         $response = $this->get('login');
 
-        $response->assertStatus(200)
+        $response->assertOk()
             ->assertSee('Login');
     }
 
@@ -27,8 +27,7 @@ class LoginControllerTest extends TestCase
 
         $response = $this->get('login');
 
-        $response->assertStatus(302)
-            ->assertRedirect('dashboard');
+        $response->assertRedirect('dashboard');
     }
 
     public function testValidLoginSubmit(): void
@@ -40,8 +39,7 @@ class LoginControllerTest extends TestCase
             'password' => 'secretpassword',
         ]);
 
-        $response->assertStatus(302)
-            ->assertRedirect('dashboard');
+        $response->assertRedirect('dashboard');
     }
 
     public function testInvalidLoginSubmit(): void
@@ -53,7 +51,6 @@ class LoginControllerTest extends TestCase
             'password' => 'wrongpassword',
         ]);
 
-        $response->assertStatus(302)
-            ->assertSessionHasErrors(['email']);
+        $response->assertSessionHasErrors(['email']);
     }
 }

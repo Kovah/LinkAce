@@ -33,7 +33,7 @@ class ListControllerTest extends TestCase
 
         $response = $this->get('guest/lists');
 
-        $response->assertStatus(200)
+        $response->assertOk()
             ->assertSee($listPublic->name)
             ->assertDontSee($listPrivate->name);
     }
@@ -46,7 +46,7 @@ class ListControllerTest extends TestCase
 
         $response = $this->get('guest/lists/1');
 
-        $response->assertStatus(200)
+        $response->assertOk()
             ->assertSee($listPublic->name);
     }
 
@@ -58,6 +58,6 @@ class ListControllerTest extends TestCase
 
         $response = $this->get('guest/lists/1');
 
-        $response->assertStatus(404);
+        $response->assertNotFound();
     }
 }

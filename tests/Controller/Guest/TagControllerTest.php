@@ -32,7 +32,7 @@ class TagControllerTest extends TestCase
 
         $response = $this->get('guest/tags/1');
 
-        $response->assertStatus(200)
+        $response->assertOk()
             ->assertSee($tag->name);
     }
 
@@ -44,6 +44,6 @@ class TagControllerTest extends TestCase
 
         $response = $this->get('guest/tags/1');
 
-        $response->assertStatus(404);
+        $response->assertNotFound();
     }
 }
