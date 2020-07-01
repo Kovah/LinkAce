@@ -25,7 +25,7 @@ class UserSettingsControllerTest extends TestCase
     {
         $response = $this->get('settings');
 
-        $response->assertStatus(200)
+        $response->assertOk()
             ->assertSee('Bookmarklet')
             ->assertSee('API Token')
             ->assertSee('Account Settings')
@@ -40,7 +40,7 @@ class UserSettingsControllerTest extends TestCase
             'email' => 'test@linkace.org',
         ]);
 
-        $response->assertStatus(302);
+        $response->assertRedirect('/');
 
         $updatedUser = User::first();
 
@@ -63,7 +63,7 @@ class UserSettingsControllerTest extends TestCase
             'darkmode_setting' => '0',
         ]);
 
-        $response->assertStatus(302);
+        $response->assertRedirect('/');
 
         $this->user->load('rawSettings'); // Reload cached settings from other tests
 
@@ -87,7 +87,7 @@ class UserSettingsControllerTest extends TestCase
             'new_password_confirmation' => 'newuserpassword',
         ]);
 
-        $response->assertStatus(302);
+        $response->assertRedirect('/');
 
         $flashMessage = session('flash_notification', collect())->first();
         $this->assertEquals('Password changed successfully!', $flashMessage['message']);

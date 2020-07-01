@@ -34,7 +34,7 @@ class TrashControllerTest extends TestCase
     {
         $response = $this->get('trash');
 
-        $response->assertStatus(200)
+        $response->assertOk()
             ->assertSee('Search');
     }
 
@@ -47,7 +47,7 @@ class TrashControllerTest extends TestCase
         $this->setupTrashTestData();
 
         $response = $this->post('trash/clear', [
-            'model' => 'links'
+            'model' => 'links',
         ]);
 
         $response->assertRedirect('trash');
@@ -60,7 +60,7 @@ class TrashControllerTest extends TestCase
         $this->setupTrashTestData();
 
         $response = $this->post('trash/clear', [
-            'model' => 'tags'
+            'model' => 'tags',
         ]);
 
         $response->assertRedirect('trash');
@@ -73,7 +73,7 @@ class TrashControllerTest extends TestCase
         $this->setupTrashTestData();
 
         $response = $this->post('trash/clear', [
-            'model' => 'lists'
+            'model' => 'lists',
         ]);
 
         $response->assertRedirect('trash');
@@ -86,7 +86,7 @@ class TrashControllerTest extends TestCase
         $this->setupTrashTestData();
 
         $response = $this->post('trash/clear', [
-            'model' => 'notes'
+            'model' => 'notes',
         ]);
 
         $response->assertRedirect('trash');
@@ -108,6 +108,7 @@ class TrashControllerTest extends TestCase
         ]);
 
         $response->assertRedirect('trash');
+
         $this->assertEquals(null, Link::find(1)->deleted_at);
     }
 
@@ -121,6 +122,7 @@ class TrashControllerTest extends TestCase
         ]);
 
         $response->assertRedirect('trash');
+
         $this->assertEquals(null, Tag::find(1)->deleted_at);
     }
 
@@ -133,7 +135,8 @@ class TrashControllerTest extends TestCase
             'id' => '1',
         ]);
 
-        $response->assertStatus(302);
+        $response->assertRedirect('trash');
+
         $this->assertEquals(null, LinkList::find(1)->deleted_at);
     }
 
@@ -146,7 +149,8 @@ class TrashControllerTest extends TestCase
             'id' => '1',
         ]);
 
-        $response->assertStatus(302);
+        $response->assertRedirect('trash');
+
         $this->assertEquals(null, Note::find(1)->deleted_at);
     }
 
@@ -174,6 +178,6 @@ class TrashControllerTest extends TestCase
             'id' => '1345235',
         ]);
 
-        $response->assertStatus(404);
+        $response->assertNotFound();
     }
 }

@@ -28,7 +28,7 @@ class ImportControllerTest extends TestCase
     {
         $response = $this->get('import');
 
-        $response->assertStatus(200)
+        $response->assertOk()
             ->assertSee('Import');
     }
 
@@ -43,7 +43,7 @@ class ImportControllerTest extends TestCase
             'Accept' => 'application/json',
         ]);
 
-        $response->assertStatus(200)
+        $response->assertOk()
             ->assertJson([
                 'success' => true,
             ]);

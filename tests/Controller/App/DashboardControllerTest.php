@@ -19,7 +19,7 @@ class DashboardControllerTest extends TestCase
 
         $response = $this->get('dashboard');
 
-        $response->assertStatus(200)
+        $response->assertOk()
             ->assertSee('Hello ' . $user->name . '!');
     }
 }

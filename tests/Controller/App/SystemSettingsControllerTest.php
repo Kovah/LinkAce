@@ -24,7 +24,7 @@ class SystemSettingsControllerTest extends TestCase
     {
         $response = $this->get('settings/system');
 
-        $response->assertStatus(200)
+        $response->assertOk()
             ->assertSee('Cron Token')
             ->assertSee('System Settings');
     }
@@ -36,7 +36,7 @@ class SystemSettingsControllerTest extends TestCase
             'system_guest_access' => '1',
         ]);
 
-        $response->assertStatus(302);
+        $response->assertRedirect('settings/system');
 
         $this->assertDatabaseHas('settings', [
             'user_id' => null,
@@ -55,8 +55,9 @@ class SystemSettingsControllerTest extends TestCase
     {
         $response = $this->post('settings/generate-cron-token');
 
-        $response->assertStatus(200)->assertJsonStructure([
-            'new_token',
-        ]);
+        $response->assertOk()
+            ->assertJsonStructure([
+                'new_token',
+            ]);
     }
 }

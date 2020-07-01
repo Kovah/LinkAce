@@ -29,14 +29,14 @@ class ExportControllerTest extends TestCase
     {
         $response = $this->get('export');
 
-        $response->assertStatus(200)
+        $response->assertOk()
             ->assertSee('Export');
     }
 
     public function testValidHtmlExportGeneration(): void
     {
         $response = $this->post('export/html');
-        $response->assertStatus(200);
+        $response->assertOk();
 
         $content = $response->streamedContent();
 
@@ -52,7 +52,7 @@ class ExportControllerTest extends TestCase
         $link = Link::inRandomOrder()->first();
 
         $response = $this->post('export/csv');
-        $response->assertStatus(200);
+        $response->assertOk();
 
         $content = $response->streamedContent();
 
