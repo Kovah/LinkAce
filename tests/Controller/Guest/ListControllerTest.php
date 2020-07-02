@@ -5,14 +5,12 @@ namespace Tests\Controller\Guest;
 use App\Models\LinkList;
 use App\Models\Setting;
 use App\Models\User;
-use Illuminate\Foundation\Testing\DatabaseMigrations;
-use Illuminate\Foundation\Testing\DatabaseTransactions;
+use Illuminate\Foundation\Testing\RefreshDatabase;
 use Tests\TestCase;
 
 class ListControllerTest extends TestCase
 {
-    use DatabaseTransactions;
-    use DatabaseMigrations;
+    use RefreshDatabase;
 
     protected function setUp(): void
     {
@@ -33,7 +31,7 @@ class ListControllerTest extends TestCase
 
         $response = $this->get('guest/lists');
 
-        $response->assertStatus(200)
+        $response->assertOk()
             ->assertSee($listPublic->name)
             ->assertDontSee($listPrivate->name);
     }
@@ -46,7 +44,7 @@ class ListControllerTest extends TestCase
 
         $response = $this->get('guest/lists/1');
 
-        $response->assertStatus(200)
+        $response->assertOk()
             ->assertSee($listPublic->name);
     }
 
@@ -58,6 +56,6 @@ class ListControllerTest extends TestCase
 
         $response = $this->get('guest/lists/1');
 
-        $response->assertStatus(404);
+        $response->assertNotFound();
     }
 }

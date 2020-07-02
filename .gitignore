@@ -1,9 +1,11 @@
 /node_modules
+/logs
 /public/hot
 /public/storage
 /public/mix-manifest.json
 /resources/lang/vendor
 /storage/*.key
+/tests/Controller/logs
 /vendor
 /.idea
 /.tmp

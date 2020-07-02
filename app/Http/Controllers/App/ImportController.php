@@ -16,20 +16,22 @@ use Illuminate\Support\Facades\Log;
 use Illuminate\View\View;
 use Shaarli\NetscapeBookmarkParser\NetscapeBookmarkParser;
 
-/**
- * Class ImportController
- *
- * @package App\Http\Controllers\App
- */
 class ImportController extends Controller
 {
+    /**
+     * Display the initial screen to start the import.
+     *
+     * @return View
+     */
     public function getImport(): View
     {
         return view('actions.import.import');
     }
 
     /**
-     * Permanently delete entries for a model from the trash
+     * Load the provided HTML bookmarks file and save all parsed results as new
+     * links including tags. This method is called via an Ajax call to prevent
+     * timeouts during the link creation.
      *
      * @param DoImportRequest $request
      * @return JsonResponse

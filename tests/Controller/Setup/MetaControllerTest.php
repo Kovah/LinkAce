@@ -2,14 +2,12 @@
 
 namespace Tests\Controller\Setup;
 
-use Illuminate\Foundation\Testing\DatabaseMigrations;
-use Illuminate\Foundation\Testing\DatabaseTransactions;
+use Illuminate\Foundation\Testing\RefreshDatabase;
 use Tests\TestCase;
 
 class MetaControllerTest extends TestCase
 {
-    use DatabaseTransactions;
-    use DatabaseMigrations;
+    use RefreshDatabase;
 
     protected function setUp(): void
     {
@@ -31,7 +29,7 @@ class MetaControllerTest extends TestCase
 
         $response = $this->get('/');
 
-        $response->assertStatus(200);
+        $response->assertOk();
     }
 
     public function testRedirectIfSetupCompleted(): void
@@ -47,7 +45,7 @@ class MetaControllerTest extends TestCase
     {
         $response = $this->get('setup/start');
 
-        $response->assertStatus(200)
+        $response->assertOk()
             ->assertSee('Welcome to the LinkAce setup');
     }
 }

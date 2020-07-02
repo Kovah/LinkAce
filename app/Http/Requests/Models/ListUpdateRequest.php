@@ -15,7 +15,7 @@ use Illuminate\Validation\Rule;
 class ListUpdateRequest extends FormRequest
 {
     /** @var bool */
-    private $requireUniqueUrl = false;
+    private $requireUniqueName = false;
 
     /**
      * Determine if the user is authorized to make this request.
@@ -25,7 +25,12 @@ class ListUpdateRequest extends FormRequest
      */
     public function authorize(Request $request)
     {
-        $this->requireUniqueUrl = LinkList::nameHasChanged($request->route('list'), $request->input('name', ''));
+        if ($request->input('name') !== null) {
+            $this->requireUniqueName = LinkList::nameHasChanged(
+                $request->route('list'),
+                $request->input('name')
+            );
+        }
 
         return true;
     }
@@ -38,12 +43,12 @@ class ListUpdateRequest extends FormRequest
     public function rules()
     {
         $rules = [
-            'list_id' => 'required',
-            'name' => 'required',
-            'is_private' => 'required|integer',
+            'name' => 'required|string',
+            'description' => 'nullable|string',
+            'is_private' => 'sometimes|boolean',
         ];
 
-        if ($this->requireUniqueUrl) {
+        if ($this->requireUniqueName) {
             $rules['name'] = [
                 'required',
                 Rule::unique('lists')->where(function ($query) {

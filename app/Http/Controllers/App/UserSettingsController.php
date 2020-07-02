@@ -8,27 +8,22 @@ use App\Http\Requests\UserAccountUpdateRequest;
 use App\Http\Requests\UserPasswordUpdateRequest;
 use App\Http\Requests\UserSettingsUpdateRequest;
 use App\Models\Setting;
-use Illuminate\Contracts\View\Factory;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
-use Illuminate\Support\Facades\Validator;
 use Illuminate\Support\Str;
 use Illuminate\View\View;
 
-/**
- * Class UserSettingsController
- *
- * @package App\Http\Controllers\App
- */
 class UserSettingsController extends Controller
 {
     /**
-     * @return Factory|View
+     * Display the user settings forms.
+     *
+     * @return View
      */
-    public function getUserSettings()
+    public function getUserSettings(): View
     {
         $bookmarkletCode = LinkAce::generateBookmarkletCode();
 
@@ -39,29 +34,32 @@ class UserSettingsController extends Controller
     }
 
     /**
+     * Handles changes of the user account itself.
+     *
      * @param UserAccountUpdateRequest $request
      * @return RedirectResponse
      */
     public function saveAccountSettings(UserAccountUpdateRequest $request): RedirectResponse
     {
-        $user = auth()->user();
-
-        $user->update($request->only([
+        $request->user()->update($request->only([
             'name',
             'email',
         ]));
 
         flash(trans('settings.settings_saved'), 'success');
+
         return redirect()->back();
     }
 
     /**
+     * Handle changes of generall application settings like share services.
+     *
      * @param UserSettingsUpdateRequest $request
      * @return RedirectResponse
      */
     public function saveAppSettings(UserSettingsUpdateRequest $request): RedirectResponse
     {
-        $userId = auth()->id();
+        $userId = $request->user()->id;
 
         // Save all user settings or update them
         $settings = $request->except(['_token', 'share']);
@@ -90,16 +88,19 @@ class UserSettingsController extends Controller
         }
 
         flash(trans('settings.settings_saved'), 'success');
+
         return redirect()->back();
     }
 
     /**
+     * Handles the user password change.
+     *
      * @param UserPasswordUpdateRequest $request
      * @return RedirectResponse
      */
     public function changeUserPassword(UserPasswordUpdateRequest $request): RedirectResponse
     {
-        $currentUser = auth()->user();
+        $currentUser = $request->user();
 
         $authorizationSuccessful = Auth::attempt([
             'email' => $currentUser->email,
@@ -108,6 +109,7 @@ class UserSettingsController extends Controller
 
         if (!$authorizationSuccessful) {
             flash(trans('settings.old_password_invalid'));
+
             return redirect()->back()->withInput();
         }
 
@@ -115,11 +117,12 @@ class UserSettingsController extends Controller
         $currentUser->save();
 
         flash(trans('settings.password_updated'), 'success');
+
         return redirect()->back();
     }
 
     /**
-     * Generate a new API token for the current user
+     * Generate a new API token for the current user.
      *
      * @param Request $request
      * @return JsonResponse
@@ -128,9 +131,8 @@ class UserSettingsController extends Controller
     {
         $new_token = Str::random(32);
 
-        $user = auth()->user();
-        $user->api_token = $new_token;
-        $user->save();
+        $request->user()->api_token = $new_token;
+        $request->user()->save();
 
         return response()->json([
             'new_token' => $new_token,

@@ -6,14 +6,12 @@ use App\Models\Link;
 use App\Models\Note;
 use App\Models\Setting;
 use App\Models\User;
-use Illuminate\Foundation\Testing\DatabaseMigrations;
-use Illuminate\Foundation\Testing\DatabaseTransactions;
+use Illuminate\Foundation\Testing\RefreshDatabase;
 use Tests\TestCase;
 
 class NoteControllerTest extends TestCase
 {
-    use DatabaseTransactions;
-    use DatabaseMigrations;
+    use RefreshDatabase;
 
     private $user;
 
@@ -36,8 +34,7 @@ class NoteControllerTest extends TestCase
             'is_private' => '0',
         ]);
 
-        $response->assertStatus(302)
-            ->assertRedirect('links/1');
+        $response->assertRedirect('links/1');
 
         $this->assertEquals('Lorem ipsum dolor', $link->notes()->first()->note);
     }
@@ -58,8 +55,7 @@ class NoteControllerTest extends TestCase
             'is_private' => usersettings('notes_private_default'),
         ]);
 
-        $response->assertStatus(302)
-            ->assertRedirect('links/1');
+        $response->assertRedirect('links/1');
 
         $this->assertTrue($link->notes()->first()->is_private);
     }
@@ -87,7 +83,7 @@ class NoteControllerTest extends TestCase
             'is_private' => '0',
         ]);
 
-        $response->assertStatus(404);
+        $response->assertNotFound();
     }
 
     public function testEditView(): void
@@ -96,7 +92,7 @@ class NoteControllerTest extends TestCase
 
         $response = $this->get('notes/1/edit');
 
-        $response->assertStatus(200)
+        $response->assertOk()
             ->assertSee('Edit Note');
     }
 
@@ -104,22 +100,20 @@ class NoteControllerTest extends TestCase
     {
         $response = $this->get('notes/1/edit');
 
-        $response->assertStatus(404);
+        $response->assertNotFound();
     }
 
     public function testUpdateResponse(): void
     {
         $baseNote = factory(Note::class)->create();
 
-        $response = $this->post('notes/1', [
-            '_method' => 'patch',
-            'note_id' => $baseNote->id,
+        $response = $this->patch('notes/1', [
+            'link_id' => $baseNote->link_id,
             'note' => 'Lorem ipsum dolor est updated',
             'is_private' => '0',
         ]);
 
-        $response->assertStatus(302)
-            ->assertRedirect('links/' . $baseNote->link_id);
+        $response->assertRedirect('links/' . $baseNote->link_id);
 
         $updatedLink = $baseNote->fresh();
 
@@ -128,22 +122,20 @@ class NoteControllerTest extends TestCase
 
     public function testMissingModelErrorForUpdate(): void
     {
-        $response = $this->post('notes/1', [
-            '_method' => 'patch',
-            'note_id' => '1',
+        $response = $this->patch('notes/1', [
+            'link_id' => '1',
             'note' => 'Lorem ipsum dolor est updated',
             'is_private' => '0',
         ]);
 
-        $response->assertStatus(404);
+        $response->assertNotFound();
     }
 
     public function testValidationErrorForUpdate(): void
     {
         $baseNote = factory(Note::class)->create();
 
-        $response = $this->post('notes/1', [
-            '_method' => 'patch',
+        $response = $this->patch('notes/1', [
             'note_id' => $baseNote->id,
             //'note' => 'Lorem ipsum dolor est updated',
             'is_private' => '0',
@@ -164,12 +156,9 @@ class NoteControllerTest extends TestCase
             'link_id' => $link->id,
         ]);
 
-        $response = $this->post('notes/1', [
-            '_method' => 'delete',
-        ]);
+        $response = $this->deleteJson('notes/1');
 
-        $response->assertStatus(302)
-            ->assertRedirect('links/' . $note->link_id);
+        $response->assertRedirect('links/' . $note->link_id);
 
         $databaseNote = Note::withTrashed()->first();
 
@@ -178,10 +167,8 @@ class NoteControllerTest extends TestCase
 
     public function testMissingModelErrorForDelete(): void
     {
-        $response = $this->post('notes/1', [
-            '_method' => 'delete',
-        ]);
+        $response = $this->deleteJson('notes/1');
 
-        $response->assertStatus(404);
+        $response->assertNotFound();
     }
 }

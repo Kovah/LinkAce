@@ -5,14 +5,12 @@ namespace Tests\Controller\Guest;
 use App\Models\Setting;
 use App\Models\Tag;
 use App\Models\User;
-use Illuminate\Foundation\Testing\DatabaseMigrations;
-use Illuminate\Foundation\Testing\DatabaseTransactions;
+use Illuminate\Foundation\Testing\RefreshDatabase;
 use Tests\TestCase;
 
 class TagControllerTest extends TestCase
 {
-    use DatabaseTransactions;
-    use DatabaseMigrations;
+    use RefreshDatabase;
 
     protected function setUp(): void
     {
@@ -32,7 +30,7 @@ class TagControllerTest extends TestCase
 
         $response = $this->get('guest/tags/1');
 
-        $response->assertStatus(200)
+        $response->assertOk()
             ->assertSee($tag->name);
     }
 
@@ -44,6 +42,6 @@ class TagControllerTest extends TestCase
 
         $response = $this->get('guest/tags/1');
 
-        $response->assertStatus(404);
+        $response->assertNotFound();
     }
 }

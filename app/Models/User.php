@@ -19,6 +19,7 @@ use Illuminate\Support\Facades\Validator;
  * @property string      $email
  * @property string      $password
  * @property string|null $remember_token
+ * @property string|null $api_token
  * @property Carbon|null $created_at
  * @property Carbon|null $updated_at
  */

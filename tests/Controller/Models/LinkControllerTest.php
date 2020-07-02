@@ -35,6 +35,8 @@ class LinkControllerTest extends TestCase
         Http::fake([
             'example.com' => Http::response($testHtml, 200),
         ]);
+
+        Queue::fake();
     }
 
     public function testIndexView(): void
@@ -43,7 +45,7 @@ class LinkControllerTest extends TestCase
 
         $response = $this->get('links');
 
-        $response->assertStatus(200)
+        $response->assertOk()
             ->assertSee($link->url);
     }
 
@@ -51,21 +53,14 @@ class LinkControllerTest extends TestCase
     {
         $response = $this->get('links/create');
 
-        $response->assertStatus(200)
+        $response->assertOk()
             ->assertSee('Add Link');
     }
 
     public function testMinimalStoreRequest(): void
     {
-        Queue::fake();
-
         $response = $this->post('links', [
             'url' => 'https://example.com',
-            'title' => null,
-            'description' => null,
-            'lists' => null,
-            'tags' => null,
-            'is_private' => '0',
         ]);
 
         $response->assertRedirect('links/1');
@@ -80,8 +75,6 @@ class LinkControllerTest extends TestCase
 
     public function testFullStoreRequest(): void
     {
-        Queue::fake();
-
         $tag = factory(Tag::class)->create();
         $list = factory(LinkList::class)->create();
 
@@ -107,8 +100,6 @@ class LinkControllerTest extends TestCase
 
     public function testStoreRequestWithPrivateDefault(): void
     {
-        Queue::fake();
-
         Setting::create([
             'user_id' => 1,
             'key' => 'links_private_default',
@@ -133,8 +124,6 @@ class LinkControllerTest extends TestCase
 
     public function testStoreRequestWithDuplicate(): void
     {
-        Queue::fake();
-
         factory(Link::class)->create([
             'url' => 'https://example.com/',
         ]);
@@ -156,8 +145,6 @@ class LinkControllerTest extends TestCase
 
     public function testStoreRequestWithBrokenUrl(): void
     {
-        Queue::fake();
-
         Http::fake([
             'example.com' => Http::response('', 500),
         ]);
@@ -182,15 +169,8 @@ class LinkControllerTest extends TestCase
 
     public function testStoreRequestWithContinue(): void
     {
-        Queue::fake();
-
         $response = $this->post('links', [
             'url' => 'https://example.com',
-            'title' => null,
-            'description' => null,
-            'lists' => null,
-            'tags' => null,
-            'is_private' => '0',
             'reload_view' => '1',
         ]);
 
@@ -203,8 +183,6 @@ class LinkControllerTest extends TestCase
 
     public function testStoreRequestWithoutArchiveBackup(): void
     {
-        Queue::fake();
-
         Setting::create([
             'user_id' => 1,
             'key' => 'archive_backups_enabled',
@@ -225,8 +203,6 @@ class LinkControllerTest extends TestCase
 
     public function testStoreRequestWithoutPrivateArchiveBackup(): void
     {
-        Queue::fake();
-
         Setting::create([
             'user_id' => 1,
             'key' => 'archive_backups_enabled',
@@ -255,15 +231,10 @@ class LinkControllerTest extends TestCase
     {
         $response = $this->post('links', [
             'url' => null,
-            'is_private' => '0',
         ]);
 
         $response->assertSessionHasErrors([
             'url',
-            'title',
-            'description',
-            'lists',
-            'tags',
         ]);
     }
 
@@ -273,7 +244,7 @@ class LinkControllerTest extends TestCase
 
         $response = $this->get('links/1');
 
-        $response->assertStatus(200)
+        $response->assertOk()
             ->assertSee($link->url);
     }
 
@@ -283,7 +254,7 @@ class LinkControllerTest extends TestCase
 
         $response = $this->get('links/1/edit');
 
-        $response->assertStatus(200)
+        $response->assertOk()
             ->assertSee('Edit Link');
     }
 
@@ -291,15 +262,14 @@ class LinkControllerTest extends TestCase
     {
         $baseLink = factory(Link::class)->create();
 
-        $response = $this->post('links/1', [
-            '_method' => 'patch',
-            'link_id' => $baseLink->id,
+        $response = $this->patch('links/1', [
             'url' => 'https://new-example.com',
             'title' => 'New Title',
             'description' => 'New Description',
             'lists' => null,
             'tags' => null,
             'is_private' => '0',
+            'check_disabled' => '0',
         ]);
 
         $response->assertRedirect('links/1');
@@ -317,10 +287,9 @@ class LinkControllerTest extends TestCase
         $this->assertEquals($updatedLink->url, $historyEntry->newValue());
     }
 
-    public function testMissingMissingErrorForUpdate(): void
+    public function testMissingModelErrorForUpdate(): void
     {
-        $response = $this->post('links/1', [
-            '_method' => 'patch',
+        $response = $this->patch('links/1', [
             'link_id' => '1',
             'url' => 'https://new-example.com',
             'title' => 'New Title',
@@ -330,7 +299,7 @@ class LinkControllerTest extends TestCase
             'is_private' => '0',
         ]);
 
-        $response->assertStatus(404);
+        $response->assertNotFound();
     }
 
     public function testUniquePropertyValidation(): void
@@ -338,8 +307,7 @@ class LinkControllerTest extends TestCase
         factory(Link::class)->create(['url' => 'https://old-example.com']);
         $baseLink = factory(Link::class)->create();
 
-        $response = $this->post('links/2', [
-            '_method' => 'patch',
+        $response = $this->patch('links/2', [
             'link_id' => $baseLink->id,
             'url' => 'https://old-example.com',
             'title' => 'New Title',
@@ -358,8 +326,7 @@ class LinkControllerTest extends TestCase
     {
         $baseLink = factory(Link::class)->create();
 
-        $response = $this->post('links/1', [
-            '_method' => 'patch',
+        $response = $this->patch('links/1', [
             'link_id' => $baseLink->id,
             //'url' => 'https://new-example.com',
             'title' => 'New Title',
@@ -378,9 +345,7 @@ class LinkControllerTest extends TestCase
     {
         factory(Link::class)->create();
 
-        $response = $this->post('links/1', [
-            '_method' => 'delete',
-        ]);
+        $response = $this->delete('links/1');
 
         $response->assertRedirect('links');
 
@@ -391,11 +356,9 @@ class LinkControllerTest extends TestCase
 
     public function testMissingModelErrorForDelete(): void
     {
-        $response = $this->post('links/1', [
-            '_method' => 'delete',
-        ]);
+        $response = $this->delete('links/1');
 
-        $response->assertStatus(404);
+        $response->assertNotFound();
     }
 
     public function testCheckToggleRequest(): void

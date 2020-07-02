@@ -10,47 +10,41 @@ use App\Http\Requests\Models\LinkUpdateRequest;
 use App\Models\Link;
 use App\Repositories\LinkRepository;
 use Exception;
-use Illuminate\Contracts\View\Factory;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\View\View;
 
-/**
- * Class LinkController
- *
- * @package App\Http\Controllers\Models
- */
 class LinkController extends Controller
 {
     /**
      * Display a listing of the resource.
      *
      * @param Request $request
-     * @return Factory|View
+     * @return View
      */
-    public function index(Request $request)
+    public function index(Request $request): View
     {
         $links = Link::byUser(auth()->id())
             ->orderBy(
-                $request->get('orderBy', 'created_at'),
-                $request->get('orderDir', 'DESC')
+                $request->input('orderBy', 'created_at'),
+                $request->input('orderDir', 'DESC')
             )
             ->paginate(getPaginationLimit());
 
         return view('models.links.index', [
             'links' => $links,
             'route' => $request->getBaseUrl(),
-            'order_by' => $request->get('orderBy'),
-            'order_dir' => $request->get('orderDir'),
+            'order_by' => $request->input('orderBy', 'created_at'),
+            'order_dir' => $request->input('orderDir', 'DESC'),
         ]);
     }
 
     /**
      * Show the form for creating a new resource.
      *
-     * @return Factory|View
+     * @return View
      */
-    public function create()
+    public function create(): View
     {
         // Reset the bookmarklet session identifier to prevent issues on regular pages
         session()->forget('bookmarklet.create');
@@ -64,7 +58,7 @@ class LinkController extends Controller
      * @param LinkStoreRequest $request
      * @return RedirectResponse
      */
-    public function store(LinkStoreRequest $request)
+    public function store(LinkStoreRequest $request): RedirectResponse
     {
         $link = LinkRepository::create($request->all(), true);
 
@@ -87,7 +81,7 @@ class LinkController extends Controller
 
         $isBookmarklet = session('bookmarklet.create');
 
-        if ($request->get('reload_view')) {
+        if ($request->input('reload_view')) {
             session()->flash('reload_view', true);
 
             return redirect()->route($isBookmarklet ? 'bookmarklet-add' : 'links.create');
@@ -102,9 +96,9 @@ class LinkController extends Controller
      * Display the specified resource.
      *
      * @param int $id
-     * @return Factory|View
+     * @return View
      */
-    public function show($id)
+    public function show($id): View
     {
         $link = Link::findOrFail($id);
 
@@ -118,9 +112,9 @@ class LinkController extends Controller
      * Show the form for editing the specified resource.
      *
      * @param int $id
-     * @return Factory|View
+     * @return View
      */
-    public function edit($id)
+    public function edit($id): View
     {
         $link = Link::findOrFail($id);
 
@@ -135,7 +129,7 @@ class LinkController extends Controller
      * @param int               $id
      * @return RedirectResponse
      */
-    public function update(LinkUpdateRequest $request, $id)
+    public function update(LinkUpdateRequest $request, $id): RedirectResponse
     {
         $link = Link::findOrFail($id);
 
@@ -154,7 +148,7 @@ class LinkController extends Controller
      * @return RedirectResponse
      * @throws Exception
      */
-    public function destroy(LinkDeleteRequest $request, $id)
+    public function destroy(LinkDeleteRequest $request, $id): RedirectResponse
     {
         $link = Link::findOrFail($id);
 
@@ -166,6 +160,7 @@ class LinkController extends Controller
         }
 
         flash(trans('link.deleted_successfully'), 'warning');
+
         return redirect()->route('links.index');
     }
 
@@ -176,7 +171,7 @@ class LinkController extends Controller
      * @param                        $id
      * @return RedirectResponse
      */
-    public function updateCheckToggle(LinkToggleCheckRequest $request, $id)
+    public function updateCheckToggle(LinkToggleCheckRequest $request, $id): RedirectResponse
     {
         $link = Link::findOrFail($id);
 

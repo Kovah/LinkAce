@@ -4,7 +4,7 @@ namespace App\Http\Controllers\App;
 
 use App\Http\Controllers\Controller;
 use App\Models\Link;
-use Illuminate\Contracts\View\Factory;
+use Illuminate\Contracts\Container\BindingResolutionException;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Log;
@@ -13,17 +13,14 @@ use League\Csv\CannotInsertRecord;
 use League\Csv\Writer;
 use Symfony\Component\HttpFoundation\StreamedResponse;
 
-/**
- * Class ExportController
- *
- * @package App\Http\Controllers\App
- */
 class ExportController extends Controller
 {
     /**
-     * @return Factory|View
+     * Get the initial screen to start the export.
+     *
+     * @return View
      */
-    public function getExport()
+    public function getExport(): View
     {
         return view('actions.export.export');
     }
@@ -36,6 +33,7 @@ class ExportController extends Controller
      *
      * @param Request $request
      * @return StreamedResponse
+     * @throws BindingResolutionException
      */
     public function doHtmlExport(Request $request): StreamedResponse
     {
@@ -74,6 +72,7 @@ class ExportController extends Controller
         } catch (CannotInsertRecord $e) {
             Log::error($e->getMessage());
             flash(trans('export.export_csv_error'));
+
             return redirect()->back();
         }
 

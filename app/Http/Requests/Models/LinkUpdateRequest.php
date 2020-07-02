@@ -15,7 +15,10 @@ use Illuminate\Validation\Rule;
 class LinkUpdateRequest extends FormRequest
 {
     /** @var bool */
-    private $requireUniqueUrl = false;
+    private $requireUniqueUrl;
+
+    /** @var bool */
+    private $isApiRequest;
 
     /**
      * Determine if the user is authorized to make this request.
@@ -25,7 +28,14 @@ class LinkUpdateRequest extends FormRequest
      */
     public function authorize(Request $request)
     {
-        $this->requireUniqueUrl = Link::urlHasChanged($request->route('link'), $request->input('url', ''));
+        $this->isApiRequest = $request->isJson();
+
+        if ($request->input('url') !== null) {
+            $this->requireUniqueUrl = Link::urlHasChanged(
+                $request->route('link'),
+                $request->input('url')
+            );
+        }
 
         return true;
     }
@@ -38,12 +48,13 @@ class LinkUpdateRequest extends FormRequest
     public function rules()
     {
         $rules = [
-            'url' => 'required',
-            'title' => 'present',
-            'description' => 'present',
-            'lists' => 'present',
-            'tags' => 'present',
-            'is_private' => 'required|boolean',
+            'url' => 'required|string',
+            'title' => 'nullable|string',
+            'description' => 'nullable|string',
+            'lists' => $this->isApiRequest ? 'array' : 'nullable|string',
+            'tags' => $this->isApiRequest ? 'array' : 'nullable|string',
+            'is_private' => 'sometimes|boolean',
+            'check_disabled' => 'sometimes|boolean',
         ];
 
         if ($this->requireUniqueUrl) {

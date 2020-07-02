@@ -4,15 +4,13 @@ namespace Tests\Controller\App;
 
 use App\Models\Link;
 use App\Models\User;
-use Illuminate\Foundation\Testing\DatabaseMigrations;
-use Illuminate\Foundation\Testing\DatabaseTransactions;
+use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Http\UploadedFile;
 use Tests\TestCase;
 
 class ImportControllerTest extends TestCase
 {
-    use DatabaseTransactions;
-    use DatabaseMigrations;
+    use RefreshDatabase;
 
     private $user;
 
@@ -28,7 +26,7 @@ class ImportControllerTest extends TestCase
     {
         $response = $this->get('import');
 
-        $response->assertStatus(200)
+        $response->assertOk()
             ->assertSee('Import');
     }
 
@@ -43,7 +41,7 @@ class ImportControllerTest extends TestCase
             'Accept' => 'application/json',
         ]);
 
-        $response->assertStatus(200)
+        $response->assertOk()
             ->assertJson([
                 'success' => true,
             ]);

@@ -4,14 +4,12 @@ namespace Tests\Controller\App;
 
 use App\Models\Link;
 use App\Models\User;
-use Illuminate\Foundation\Testing\DatabaseMigrations;
-use Illuminate\Foundation\Testing\DatabaseTransactions;
+use Illuminate\Foundation\Testing\RefreshDatabase;
 use Tests\TestCase;
 
 class ExportControllerTest extends TestCase
 {
-    use DatabaseTransactions;
-    use DatabaseMigrations;
+    use RefreshDatabase;
 
     private $user;
 
@@ -29,14 +27,14 @@ class ExportControllerTest extends TestCase
     {
         $response = $this->get('export');
 
-        $response->assertStatus(200)
+        $response->assertOk()
             ->assertSee('Export');
     }
 
     public function testValidHtmlExportGeneration(): void
     {
         $response = $this->post('export/html');
-        $response->assertStatus(200);
+        $response->assertOk();
 
         $content = $response->streamedContent();
 
@@ -52,7 +50,7 @@ class ExportControllerTest extends TestCase
         $link = Link::inRandomOrder()->first();
 
         $response = $this->post('export/csv');
-        $response->assertStatus(200);
+        $response->assertOk();
 
         $content = $response->streamedContent();
 

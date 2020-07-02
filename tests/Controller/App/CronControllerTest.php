@@ -1,6 +1,6 @@
 <?php
 
-namespace Tests\Controller\API;
+namespace Tests\Controller\App;
 
 use App\Models\Setting;
 use Illuminate\Foundation\Testing\RefreshDatabase;
@@ -22,7 +22,7 @@ class CronControllerTest extends TestCase
 
         $response = $this->get('cron/' . $cronToken);
 
-        $response->assertStatus(200)
+        $response->assertOk()
             ->assertSee('Cron successfully executed');
     }
 
@@ -38,7 +38,7 @@ class CronControllerTest extends TestCase
 
         $response = $this->get('cron/' . $invalidCronToken);
 
-        $response->assertStatus(403)
+        $response->assertForbidden()
             ->assertSee('The provided cron token is invalid');
     }
 
@@ -46,6 +46,6 @@ class CronControllerTest extends TestCase
     {
         $response = $this->get('cron');
 
-        $response->assertStatus(404);
+        $response->assertNotFound();
     }
 }

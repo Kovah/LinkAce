@@ -3,20 +3,18 @@
 namespace Tests\Controller\Auth;
 
 use App\Models\User;
-use Illuminate\Foundation\Testing\DatabaseMigrations;
-use Illuminate\Foundation\Testing\DatabaseTransactions;
+use Illuminate\Foundation\Testing\RefreshDatabase;
 use Tests\TestCase;
 
 class LoginControllerTest extends TestCase
 {
-    use DatabaseTransactions;
-    use DatabaseMigrations;
+    use RefreshDatabase;
 
     public function testValidLoginResponse(): void
     {
         $response = $this->get('login');
 
-        $response->assertStatus(200)
+        $response->assertOk()
             ->assertSee('Login');
     }
 
@@ -27,8 +25,7 @@ class LoginControllerTest extends TestCase
 
         $response = $this->get('login');
 
-        $response->assertStatus(302)
-            ->assertRedirect('dashboard');
+        $response->assertRedirect('dashboard');
     }
 
     public function testValidLoginSubmit(): void
@@ -40,8 +37,7 @@ class LoginControllerTest extends TestCase
             'password' => 'secretpassword',
         ]);
 
-        $response->assertStatus(302)
-            ->assertRedirect('dashboard');
+        $response->assertRedirect('dashboard');
     }
 
     public function testInvalidLoginSubmit(): void
@@ -53,7 +49,6 @@ class LoginControllerTest extends TestCase
             'password' => 'wrongpassword',
         ]);
 
-        $response->assertStatus(302)
-            ->assertSessionHasErrors(['email']);
+        $response->assertSessionHasErrors(['email']);
     }
 }

@@ -10,6 +10,9 @@ use Illuminate\Support\Facades\Artisan;
 class CronController extends Controller
 {
     /**
+     * This endpoint allows the execution of the cron if a system-controlled
+     * cron is not available.
+     *
      * @param Request $request
      * @param string  $cron_token
      * @return ResponseFactory|Response

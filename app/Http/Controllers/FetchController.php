@@ -11,9 +11,15 @@ use Illuminate\Http\Request;
 
 class FetchController extends Controller
 {
+    /**
+     * Returns all tags that match a given query, preformatted for Selectize.
+     *
+     * @param Request $request
+     * @return JsonResponse
+     */
     public function getTags(Request $request): JsonResponse
     {
-        $query = $request->get('query', false);
+        $query = $request->input('query', false);
 
         if (!$query) {
             return response()->json([]);
@@ -37,9 +43,15 @@ class FetchController extends Controller
         return response()->json($tags);
     }
 
+    /**
+     * Returns all lists that match a given query, preformatted for Selectize.
+     *
+     * @param Request $request
+     * @return JsonResponse
+     */
     public function getLists(Request $request): JsonResponse
     {
-        $query = $request->get('query', false);
+        $query = $request->input('query', false);
 
         if (!$query) {
             return response()->json([]);
@@ -63,9 +75,16 @@ class FetchController extends Controller
         return response()->json($tags);
     }
 
+    /**
+     * Returns a boolean flag which indicates that there already is a link
+     * present for the given URL.
+     *
+     * @param Request $request
+     * @return JsonResponse
+     */
     public function searchExistingUrls(Request $request): JsonResponse
     {
-        $query = $request->get('query', false);
+        $query = $request->input('query', false);
 
         if (!$query) {
             return response()->json([]);
@@ -78,6 +97,12 @@ class FetchController extends Controller
         return response()->json(['linkFound' => $linkCount > 0]);
     }
 
+    /**
+     * Simple endpoint for the system settings page which runs an update check
+     * and returns the result to the frontend.
+     *
+     * @return JsonResponse
+     */
     public static function checkForUpdates(): JsonResponse
     {
         $updateCheck = UpdateHelper::checkForUpdates();

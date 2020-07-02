@@ -6,7 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Http\Requests\SetupDatabaseRequest;
 use Exception;
 use Illuminate\Contracts\Filesystem\FileNotFoundException;
-use Illuminate\Contracts\View\Factory;
+use Illuminate\Http\RedirectResponse;
 use Illuminate\Support\Facades\Artisan;
 use Illuminate\Support\Facades\Config;
 use Illuminate\Support\Facades\DB;
@@ -15,34 +15,34 @@ use Illuminate\Support\Facades\Log;
 use Illuminate\View\View;
 use PDOException;
 
-/**
- * Class DatabaseController
- *
- * @package App\Http\Controllers\Setup
- */
 class DatabaseController extends Controller
 {
     protected $dbConfig;
 
     /**
-     * @return Factory|View
+     * Display the form for configuration of the database.
+     *
+     * @return View
      */
-    public function index()
+    public function index(): View
     {
         return view('setup.database');
     }
 
     /**
+     * Handle the test and configuration of a new database connection.
+     *
      * @param SetupDatabaseRequest $request
-     * @return Factory|View
+     * @return RedirectResponse
      * @throws FileNotFoundException
      */
-    public function configure(SetupDatabaseRequest $request)
+    public function configure(SetupDatabaseRequest $request): RedirectResponse
     {
         $this->createTempDatabaseConnection($request->all());
 
         if ($this->databaseHasData() && !$request->has('overwrite_data')) {
             flash(trans('setup.database.data_present'), 'danger');
+
             return redirect()->back()->with('data_present', true)->withInput();
         }
 
@@ -58,6 +58,8 @@ class DatabaseController extends Controller
     }
 
     /**
+     * Accepts new credentials for a database and sets them accordingly.
+     *
      * @param array $credentials
      */
     protected function createTempDatabaseConnection($credentials): void
@@ -102,8 +104,6 @@ class DatabaseController extends Controller
      * At this point we write the database credentials to the .env file.
      * We can ignore the FileNotFoundException exception as we already checked
      * the presence and writability of the file in the previous setup step.
-     *
-     * @throws FileNotFoundException
      */
     protected function storeConfigurationInEnv(): void
     {

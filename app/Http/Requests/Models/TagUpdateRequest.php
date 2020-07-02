@@ -25,7 +25,12 @@ class TagUpdateRequest extends FormRequest
      */
     public function authorize(Request $request)
     {
-        $this->requireUniqueName = Tag::nameHasChanged($request->route('tag'), $request->input('name', ''));
+        if ($request->input('name') !== null) {
+            $this->requireUniqueName = Tag::nameHasChanged(
+                $request->route('tag'),
+                $request->input('name')
+            );
+        }
 
         return true;
     }
@@ -38,7 +43,6 @@ class TagUpdateRequest extends FormRequest
     public function rules()
     {
         $rules = [
-            'tag_id' => 'required',
             'name' => 'required',
             'is_private' => 'required|boolean',
         ];

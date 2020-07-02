@@ -11,7 +11,7 @@ $gray-800: #3A3F44;
 $gray-900: #272B30;
 $black: #000;
 
-$blue: #2F405A;
+$blue: #44679F;
 $red: #ee5f5b;
 $orange: #fd7e14;
 $yellow: #f89406;
@@ -27,6 +27,41 @@ $warning: $yellow;
 $danger: $red;
 $light: $gray-200;
 $dark: $gray-900;
+
+$colors: ();
+$colors: map-merge(
+    (
+      "blue": $blue,
+      "indigo": $indigo,
+      "purple": $purple,
+      "pink": $pink,
+      "red": $red,
+      "orange": $orange,
+      "yellow": $yellow,
+      "green": $green,
+      "teal": $teal,
+      "cyan": $cyan,
+      "white": $white,
+      "gray": $gray-600,
+      "gray-dark": $gray-800
+    ),
+    $colors
+);
+
+$theme-colors: ();
+$theme-colors: map-merge(
+    (
+      "primary": $primary,
+      "secondary": $secondary,
+      "success": $success,
+      "info": $info,
+      "warning": $warning,
+      "danger": $danger,
+      "light": $light,
+      "dark": $dark
+    ),
+    $theme-colors
+);
 
 $yiq-contrasted-threshold: 170;
 

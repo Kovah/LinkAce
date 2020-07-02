@@ -3,21 +3,17 @@
 namespace App\Http\Controllers\Setup;
 
 use App\Http\Controllers\Controller;
-use Illuminate\Contracts\View\Factory;
 use Illuminate\Support\Facades\File;
 use Illuminate\View\View;
 
-/**
- * Class RequirementsController
- *
- * @package App\Http\Controllers\Setup
- */
 class RequirementsController extends Controller
 {
     /**
-     * @return Factory|View
+     * Display all requirements that must be fulfilled to run the setup.
+     *
+     * @return View
      */
-    public function index()
+    public function index(): View
     {
         [$success, $results] = $this->checkRequirements();
 

@@ -5,14 +5,12 @@ namespace Tests\Controller\Guest;
 use App\Models\Link;
 use App\Models\Setting;
 use App\Models\User;
-use Illuminate\Foundation\Testing\DatabaseMigrations;
-use Illuminate\Foundation\Testing\DatabaseTransactions;
+use Illuminate\Foundation\Testing\RefreshDatabase;
 use Tests\TestCase;
 
 class LinkControllerTest extends TestCase
 {
-    use DatabaseTransactions;
-    use DatabaseMigrations;
+    use RefreshDatabase;
 
     public function testValidLinkOverviewResponse(): void
     {
@@ -28,7 +26,7 @@ class LinkControllerTest extends TestCase
 
         $response = $this->get('guest/links');
 
-        $response->assertStatus(200)
+        $response->assertOk()
             ->assertSee($linkPublic->url)
             ->assertDontSee($linkPrivate->url);
     }

@@ -26,12 +26,12 @@ class UserAccountUpdateRequest extends FormRequest
     public function authorize(Request $request)
     {
         // Validate the username if it was changed
-        if ($request->get('name') !== auth()->user()->name) {
+        if ($request->input('name') !== auth()->user()->name) {
             $this->validate_username = true;
         }
 
         // Validate the email address if it was changed
-        if ($request->get('email') !== auth()->user()->email) {
+        if ($request->input('email') !== auth()->user()->email) {
             $this->validate_email = true;
         }
 

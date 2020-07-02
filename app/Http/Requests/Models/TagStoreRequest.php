@@ -36,7 +36,7 @@ class TagStoreRequest extends FormRequest
                     return $query->where('user_id', auth()->user()->id);
                 }),
             ],
-            'is_private' => 'required|boolean',
+            'is_private' => 'sometimes|boolean',
         ];
     }
 }

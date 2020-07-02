@@ -6,14 +6,12 @@ use App\Models\Link;
 use App\Models\LinkList;
 use App\Models\Tag;
 use App\Models\User;
-use Illuminate\Foundation\Testing\DatabaseMigrations;
-use Illuminate\Foundation\Testing\DatabaseTransactions;
+use Illuminate\Foundation\Testing\RefreshDatabase;
 use Tests\TestCase;
 
 class SearchControllerTest extends TestCase
 {
-    use DatabaseTransactions;
-    use DatabaseMigrations;
+    use RefreshDatabase;
 
     private $user;
 
@@ -31,7 +29,7 @@ class SearchControllerTest extends TestCase
     {
         $response = $this->get('search');
 
-        $response->assertStatus(200)
+        $response->assertOk()
             ->assertSee('Search');
     }
 
@@ -41,7 +39,7 @@ class SearchControllerTest extends TestCase
             'query' => 'example',
         ]);
 
-        $response->assertStatus(200)
+        $response->assertOk()
             ->assertSee('https://example.com')
             ->assertDontSee('https://test.com');
     }
@@ -52,7 +50,7 @@ class SearchControllerTest extends TestCase
             'query' => 'https://example.com',
         ]);
 
-        $response->assertStatus(200)
+        $response->assertOk()
             ->assertSee('https://example.com')
             ->assertDontSee('https://test.com');
     }
@@ -64,7 +62,7 @@ class SearchControllerTest extends TestCase
             'search_title' => 'on',
         ]);
 
-        $response->assertStatus(200)
+        $response->assertOk()
             ->assertSee('https://example.com')
             ->assertDontSee('https://test.com');
     }
@@ -76,7 +74,7 @@ class SearchControllerTest extends TestCase
             'search_description' => 'on',
         ]);
 
-        $response->assertStatus(200)
+        $response->assertOk()
             ->assertSee('https://example.com')
             ->assertDontSee('https://test.com');
     }
@@ -88,7 +86,7 @@ class SearchControllerTest extends TestCase
             'private_only' => 'on',
         ]);
 
-        $response->assertStatus(200)
+        $response->assertOk()
             ->assertSee('https://example.com')
             ->assertDontSee('https://test.com');
     }
@@ -100,7 +98,7 @@ class SearchControllerTest extends TestCase
             'broken_only' => 'on',
         ]);
 
-        $response->assertStatus(200)
+        $response->assertOk()
             ->assertSee('https://broken.com')
             ->assertDontSee('https://example.com')
             ->assertDontSee('https://test.com');
@@ -112,7 +110,7 @@ class SearchControllerTest extends TestCase
             'only_tags' => 'Examples',
         ]);
 
-        $response->assertStatus(200)
+        $response->assertOk()
             ->assertSee('https://example.com')
             ->assertDontSee('https://test.com');
     }
@@ -123,7 +121,7 @@ class SearchControllerTest extends TestCase
             'only_lists' => 'A Tests List',
         ]);
 
-        $response->assertStatus(200)
+        $response->assertOk()
             ->assertSee('https://test.com')
             ->assertDontSee('https://example.com');
     }
@@ -160,7 +158,7 @@ class SearchControllerTest extends TestCase
 
         $linkTest->lists()->attach($listTest->id);
 
-        $linkBroken = Link::create([
+        Link::create([
             'user_id' => $this->user->id,
             'url' => 'https://broken.com',
             'title' => 'Broken Site',

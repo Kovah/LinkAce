@@ -9,50 +9,40 @@ use App\Http\Requests\Models\TagUpdateRequest;
 use App\Models\Tag;
 use App\Repositories\TagRepository;
 use Exception;
-use Illuminate\Contracts\View\Factory;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\View\View;
 
-/**
- * Class TagController
- *
- * @package App\Http\Controllers\Models
- */
 class TagController extends Controller
 {
     /**
      * Display a listing of the resource.
      *
      * @param Request $request
-     * @return Factory|View
+     * @return View
      */
-    public function index(Request $request)
+    public function index(Request $request): View
     {
-        $tags = Tag::byUser(auth()->id());
-
-        if ($request->has('orderBy') && $request->has('orderDir')) {
-            $tags->orderBy($request->get('orderBy'), $request->get('orderDir'));
-        } else {
-            $tags->orderBy('name', 'ASC');
-        }
-
-        $tags = $tags->paginate(getPaginationLimit());
+        $tags = Tag::byUser(auth()->id())
+            ->orderBy(
+                $request->input('orderBy', 'name'),
+                $request->input('orderDir', 'ASC')
+            )->paginate(getPaginationLimit());
 
         return view('models.tags.index', [
             'tags' => $tags,
             'route' => $request->getBaseUrl(),
-            'order_by' => $request->get('orderBy'),
-            'order_dir' => $request->get('orderDir'),
+            'order_by' => $request->input('orderBy', 'name'),
+            'order_dir' => $request->input('orderDir', 'ASC'),
         ]);
     }
 
     /**
      * Show the form for creating a new resource.
      *
-     * @return Factory|View
+     * @return View
      */
-    public function create()
+    public function create(): View
     {
         return view('models.tags.create');
     }
@@ -71,7 +61,7 @@ class TagController extends Controller
 
         flash(trans('tag.added_successfully'), 'success');
 
-        if ($request->get('reload_view')) {
+        if ($request->input('reload_view')) {
             session()->flash('reload_view', true);
             return redirect()->route('tags.create');
         }
@@ -84,16 +74,16 @@ class TagController extends Controller
      *
      * @param Request $request
      * @param int     $id
-     * @return Factory|View
+     * @return View
      */
-    public function show(Request $request, $id)
+    public function show(Request $request, $id): View
     {
         $tag = Tag::findOrFail($id);
 
         $links = $tag->links()->byUser(auth()->id());
 
         if ($request->has('orderBy') && $request->has('orderDir')) {
-            $links->orderBy($request->get('orderBy'), $request->get('orderDir'));
+            $links->orderBy($request->input('orderBy'), $request->input('orderDir'));
         } else {
             $links->orderBy('created_at', 'DESC');
         }
@@ -104,8 +94,8 @@ class TagController extends Controller
             'tag' => $tag,
             'tag_links' => $links,
             'route' => $request->getBaseUrl(),
-            'order_by' => $request->get('orderBy'),
-            'order_dir' => $request->get('orderDir'),
+            'order_by' => $request->input('orderBy'),
+            'order_dir' => $request->input('orderDir'),
         ]);
     }
 
@@ -113,9 +103,9 @@ class TagController extends Controller
      * Show the form for editing the specified resource.
      *
      * @param int $id
-     * @return Factory|View
+     * @return View
      */
-    public function edit($id)
+    public function edit($id): View
     {
         $tag = Tag::findOrFail($id);
 
@@ -129,7 +119,7 @@ class TagController extends Controller
      * @param int              $id
      * @return RedirectResponse
      */
-    public function update(TagUpdateRequest $request, $id)
+    public function update(TagUpdateRequest $request, $id): RedirectResponse
     {
         $tag = Tag::findOrFail($id);
 
@@ -149,7 +139,7 @@ class TagController extends Controller
      * @return RedirectResponse
      * @throws Exception
      */
-    public function destroy(TagDeleteRequest $request, $id)
+    public function destroy(TagDeleteRequest $request, $id): RedirectResponse
     {
         $tag = Tag::findOrFail($id);
 
@@ -161,6 +151,7 @@ class TagController extends Controller
         }
 
         flash(trans('tag.deleted_successfully'), 'warning');
+
         return redirect()->route('tags.index');
     }
 }

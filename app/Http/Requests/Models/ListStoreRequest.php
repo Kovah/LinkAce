@@ -29,8 +29,9 @@ class ListStoreRequest extends FormRequest
     public function rules()
     {
         return [
-            'name' => 'required',
-            'is_private' => 'required|integer',
+            'name' => 'required|string',
+            'description' => 'nullable|string',
+            'is_private' => 'sometimes|boolean',
         ];
     }
 }

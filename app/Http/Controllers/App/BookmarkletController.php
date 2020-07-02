@@ -8,62 +8,58 @@ use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\View\View;
 
-/**
- * Class BookmarkletController
- *
- * @package App\Http\Controllers\App
- */
 class BookmarkletController extends Controller
 {
     /**
-     * Show the application dashboard.
+     * Show the link creation form based on the information provided by the Bookmarklet.
      *
      * @param Request $request
      * @return Factory|RedirectResponse|View
      */
     public function getLinkAddForm(Request $request)
     {
-        $new_url = $request->get('u');
-        $new_title = $request->get('t');
+        $newUrl = $request->input('u');
+        $newTitle = $request->input('t');
 
-        // Rredirect to the login if the user is not logged in
+        // Redirect to the login if the user is not logged in
         if (!auth()->check()) {
             // Save details for the link in the session
-            session(['bookmarklet.new_url' => $new_url]);
-            session(['bookmarklet.new_title' => $new_title]);
+            session(['bookmarklet.new_url' => $newUrl]);
+            session(['bookmarklet.new_title' => $newTitle]);
             session(['bookmarklet.login_redirect' => true]);
 
             return redirect()->route('bookmarklet-login');
         }
 
-        if ($new_url === null) {
-            // Receive the link details from the session
-            $new_url = session('bookmarklet.new_url');
-            $new_title = session('bookmarklet.new_title');
-
-            session()->remove('bookmarklet.new_url');
-            session()->remove('bookmarklet.new_title');
+        if ($newUrl === null) {
+            // Receive the link details from the session after the user logged in
+            $newUrl = session()->pull('bookmarklet.new_url');
+            $newTitle = session()->pull('bookmarklet.new_title');
         }
 
         session(['bookmarklet.create' => true]);
 
         return view('actions.bookmarklet.create')
-            ->with('bookmark_url', $new_url)
-            ->with('bookmark_title', $new_title);
+            ->with('bookmark_url', $newUrl)
+            ->with('bookmark_title', $newTitle);
     }
 
     /**
-     * @return Factory|View
+     * Display the confirmation screen after adding a new link.
+     *
+     * @return View
      */
-    public function getCompleteView()
+    public function getCompleteView(): View
     {
         return view('actions.bookmarklet.complete');
     }
 
     /**
-     * @return Factory|View
+     * Return a special version of the login form made for the Bookmarklet.
+     *
+     * @return View
      */
-    public function getLoginForm()
+    public function getLoginForm(): View
     {
         return view('actions.bookmarklet.login');
     }

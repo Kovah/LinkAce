@@ -3,26 +3,24 @@
 namespace App\Http\Controllers\App;
 
 use App\Http\Controllers\Controller;
+use App\Http\Requests\TrashClearRequest;
+use App\Http\Requests\TrashRestoreRequest;
 use App\Models\Link;
 use App\Models\LinkList;
 use App\Models\Note;
 use App\Models\Tag;
-use Illuminate\Contracts\View\Factory;
+use App\Repositories\TrashRepository;
 use Illuminate\Http\RedirectResponse;
-use Illuminate\Http\Request;
 use Illuminate\View\View;
 
-/**
- * Class TrashController
- *
- * @package App\Http\Controllers\App
- */
 class TrashController extends Controller
 {
     /**
-     * @return Factory|View
+     * Display the trash overview with all deleted entries for links, tags, etc.
+     *
+     * @return View
      */
-    public function index()
+    public function index(): View
     {
         $links = Link::onlyTrashed()
             ->byUser(auth()->id())
@@ -49,91 +47,31 @@ class TrashController extends Controller
     }
 
     /**
-     * Permanently delete entries for a model from the trash
+     * Permanently delete entries for a model from the trash.
      *
-     * @param Request $reques
-     * @param string  $model
+     * @param TrashClearRequest $request
      * @return RedirectResponse
      */
-    public function clearTrash(Request $reques, $model)
+    public function clearTrash(TrashClearRequest $request): RedirectResponse
     {
-        $entries = [];
+        TrashRepository::delete($request->input('model'));
 
-        switch ($model) {
-            case 'links':
-                $entries = Link::onlyTrashed()
-                    ->byUser(auth()->id())
-                    ->get();
-                break;
-            case 'lists':
-                $entries = LinkList::onlyTrashed()
-                    ->byUser(auth()->id())
-                    ->get();
-                break;
-            case 'tags':
-                $entries = Tag::onlyTrashed()
-                    ->byUser(auth()->id())
-                    ->get();
-                break;
-            case 'notes':
-                $entries = Note::onlyTrashed()
-                    ->byUser(auth()->id())
-                    ->get();
-                break;
-        }
-
-        if ($entries->isEmpty()) {
-            flash(trans('trash.delete_no_entries'), 'warning');
-            return redirect()->back();
-        }
-
-        foreach ($entries as $entry) {
-            $entry->forceDelete();
-        }
-
-        flash(trans('trash.delete_success.' . $model), 'success');
+        flash(trans('trash.delete_success.' . $request->input('model')), 'success');
 
         return redirect()->route('get-trash');
     }
 
     /**
-     * Restore an entry from the trash
+     * Restore an entry from the trash.
      *
-     * @param Request $request
-     * @param string  $model
-     * @param string  $id
-     * @return Factory|View
+     * @param TrashRestoreRequest $request
+     * @return RedirectResponse
      */
-    public function restoreEntry(Request $request, $model, $id)
+    public function restoreEntry(TrashRestoreRequest $request): RedirectResponse
     {
-        $entry = null;
+        TrashRepository::restore($request->input('model'), $request->input('id'));
 
-        switch ($model) {
-            case 'link':
-                $entry = Link::withTrashed()->find($id);
-                break;
-            case 'list':
-                $entry = LinkList::withTrashed()->find($id);
-                break;
-            case 'tag':
-                $entry = Tag::withTrashed()->find($id);
-                break;
-            case 'note':
-                $entry = Note::withTrashed()->find($id);
-                break;
-        }
-
-        if (empty($entry)) {
-            abort(404, trans('trash.restore.not_found'));
-        }
-
-        if ($entry->user_id !== auth()->id()) {
-            abort(403, trans('trash.restore.not_allowed'));
-        }
-
-        $entry->restore();
-
-        flash(trans('trash.restore.' . $model), 'success');
+        flash(trans('trash.restore.' . $request->input('model')), 'success');
 
         return redirect()->route('get-trash');
     }
