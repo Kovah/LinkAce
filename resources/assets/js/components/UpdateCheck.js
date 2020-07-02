@@ -29,11 +29,6 @@ export default class UpdateCheck {
     this.$running.classList.add('d-none');
 
     if (typeof this.result === 'string') {
-      if (this.currentVersion === this.result) {
-        this.$success.classList.remove('d-none');
-        return;
-      }
-
       this.$versionFound.innerText = this.$versionFound.innerText.replace('#VERSION#', this.result);
       this.$versionFound.classList.remove('d-none');
     } else if (this.result === true) {

@@ -24,7 +24,7 @@ class UpdateHelper
      */
     public static function checkForUpdates()
     {
-        $currentVersion = config('linkace.version');
+        $currentVersion = getVersionFromPackage();
         $latestVersion = self::getCurrentVersionFromAPI();
 
         if ($latestVersion === null) {

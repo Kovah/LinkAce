@@ -113,6 +113,9 @@ class FetchController extends Controller
     }
 
     /**
+     * Returns the HTML for a given URL to prevent CORS issues in the frontend
+     * implementation.
+     *
      * @param Request $request
      * @return Response
      */
