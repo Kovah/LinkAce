@@ -54,13 +54,14 @@ class LinkApiTest extends ApiTestCase
     {
         $list = factory(LinkList::class)->create();
         $tag = factory(Tag::class)->create();
+        $tag2 = factory(Tag::class)->create();
 
         $response = $this->postJsonAuthorized('api/v1/links', [
             'url' => 'http://example.com',
             'title' => 'Search the Web',
             'description' => 'There could be a description here',
             'lists' => [$list->id],
-            'tags' => [$tag->id],
+            'tags' => [$tag->id, $tag2->id],
             'is_private' => false,
             'check_disabled' => false,
         ]);

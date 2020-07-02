@@ -222,7 +222,7 @@ class LinkRepository
         $entries = collect();
 
         foreach ($data as $entry) {
-            if ($model::first($entry)) {
+            if ($model::find($entry)) {
                 $entries->push($entry);
             }
         }
