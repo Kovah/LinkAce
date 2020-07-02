@@ -48,5 +48,5 @@ return [
     'demo_login_hint' => 'You can login right away. Please notice that this demo will be reset every 2 hours.',
 
     'project_of' => 'Linkace is a project by',
-    'version' => 'Version: :version',
+    'version' => 'Current version: :version',
 ];

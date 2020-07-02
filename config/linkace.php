@@ -1,7 +1,5 @@
 <?php
 return [
-    'version' => 'v0.0.38',
-
     'default' => [
         'pagination' => 25,
         'date_format' => 'Y-m-d',
