@@ -22,7 +22,7 @@ class SystemSettingsController extends Controller
     public function getSystemSettings(): View
     {
         $packageInfo = json_decode(File::get(base_path('package.json')));
-        $linkaceVersion = $packageInfo->version;
+        $linkaceVersion = 'v' . $packageInfo->version;
 
         return view('actions.settings.system', [
             'linkaceVersion' => $linkaceVersion,

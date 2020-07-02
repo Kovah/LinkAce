@@ -3,9 +3,11 @@ import { debounce } from '../lib/helper';
 export default class UpdateCheck {
 
   constructor ($el) {
-    this.result = null;
-
     this.$el = $el;
+
+    this.result = null;
+    this.currentVersion = this.$el.dataset.currentVersion;
+
     this.$running = $el.querySelector('.update-check-running');
     this.$versionFound = $el.querySelector('.update-check-version-found');
     this.$success = $el.querySelector('.update-check-success');
@@ -26,7 +28,12 @@ export default class UpdateCheck {
   updateCheckStatus () {
     this.$running.classList.add('d-none');
 
-    if (typeof this.result.length === 'string') {
+    if (typeof this.result === 'string') {
+      if (this.currentVersion === this.result) {
+        this.$success.classList.remove('d-none');
+        return;
+      }
+
       this.$versionFound.innerText = this.$versionFound.innerText.replace('#VERSION#', this.result);
       this.$versionFound.classList.remove('d-none');
     } else if (this.result === true) {

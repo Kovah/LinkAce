@@ -2,7 +2,7 @@
     <div class="card-header">
         @lang('settings.update_check')
     </div>
-    <div class="update-check card-body small">
+    <div class="update-check card-body small" data-current-version="{{ $linkaceVersion }}">
 
         <p>@lang('linkace.version', ['version' => $linkaceVersion])</p>
 
