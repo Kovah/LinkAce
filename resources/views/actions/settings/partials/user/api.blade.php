@@ -1,4 +1,4 @@
-<div class="card mt-4">
+<div class="card mt-5">
     <div class="card-header">
         @lang('settings.api_token')
     </div>

@@ -2,14 +2,14 @@
 
 @section('content')
 
-    @include('actions.settings.partials.bookmarklet')
+    @include('actions.settings.partials.user.bookmarklet')
 
-    @include('actions.settings.partials.api')
+    @include('actions.settings.partials.user.api')
 
-    @include('actions.settings.partials.account-settings')
+    @include('actions.settings.partials.user.account-settings')
 
-    @include('actions.settings.partials.change-pw')
+    @include('actions.settings.partials.user.change-pw')
 
-    @include('actions.settings.partials.app-settings')
+    @include('actions.settings.partials.user.app-settings')
 
 @endsection
