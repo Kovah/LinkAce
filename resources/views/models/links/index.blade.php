@@ -12,7 +12,7 @@
         </a>
     </header>
 
-    <section class="my-3">
+    <section class="my-4">
         @if(!$links->isEmpty())
 
             <div class="link-wrapper">
