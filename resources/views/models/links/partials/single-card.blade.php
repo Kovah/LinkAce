@@ -1,6 +1,6 @@
 <div class="col-12 col-sm-6 col-md-4 mb-4">
     <div class="h-100 card">
-        <div class="card-header h-100 border-bottom-0">
+        <div class="card-body h-100 border-bottom-0">
             <div class="d-flex align-items-top">
                 <div class="mr-2">
                     @if($link->is_private)

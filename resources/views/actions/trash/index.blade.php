@@ -4,7 +4,7 @@
 
     <h2>@lang('trash.trash')</h2>
 
-    <div class="alert alert-danger">
+    <div class="alert alert-danger my-4">
         @lang('trash.delete_warning')
     </div>
 
@@ -22,12 +22,15 @@
         </div>
         <div class="card-body">
 
-            @include('actions.trash.partials.link-table', ['links' => $links])
+            @includeWhen($links->isNotempty(), 'actions.trash.partials.link-table', ['links' => $links])
+            @if($links->isEmpty())
+                <small class="text-muted">@lang('trash.delete_no_entries')</small>
+            @endif
 
         </div>
     </div>
 
-    <div class="card mt-4">
+    <div class="card mt-5">
         <div class="card-header d-flex align-items-center">
             <div>
                 @lang('trash.deleted_lists')
@@ -41,12 +44,15 @@
         </div>
         <div class="card-body">
 
-            @include('actions.trash.partials.list-table', ['lists' => $lists])
+            @includeWhen($lists->isNotEmpty(), 'actions.trash.partials.list-table', ['lists' => $lists])
+            @if($lists->isEmpty())
+                <small class="text-muted">@lang('trash.delete_no_entries')</small>
+            @endif
 
         </div>
     </div>
 
-    <div class="card mt-4">
+    <div class="card mt-5">
         <div class="card-header d-flex align-items-center">
             <div>
                 @lang('trash.deleted_tags')
@@ -60,12 +66,15 @@
         </div>
         <div class="card-body">
 
-            @include('actions.trash.partials.tag-table', ['tags' => $tags])
+            @includeWhen($tags->isNotEmpty(), 'actions.trash.partials.tag-table', ['tags' => $tags])
+            @if($tags->isEmpty())
+                <small class="text-muted">@lang('trash.delete_no_entries')</small>
+            @endif
 
         </div>
     </div>
 
-    <div class="card mt-4">
+    <div class="card mt-5">
         <div class="card-header d-flex align-items-center">
             <div>
                 @lang('trash.deleted_notes')
@@ -79,7 +88,11 @@
         </div>
         <div class="card-body">
 
-            @include('actions.trash.partials.note-table', ['notes' => $notes])
+            @includeWhen($notes->isNotEmpty(), 'actions.trash.partials.note-table', ['notes' => $notes])
+
+            @if($notes->isEmpty())
+                <small class="text-muted">@lang('trash.delete_no_entries')</small>
+            @endif
 
         </div>
     </div>

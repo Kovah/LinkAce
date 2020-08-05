@@ -8,6 +8,7 @@ use App\Models\Setting;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\File;
 use Illuminate\Support\Str;
 use Illuminate\View\View;
 
@@ -20,7 +21,9 @@ class SystemSettingsController extends Controller
      */
     public function getSystemSettings(): View
     {
-        return view('actions.settings.system');
+        return view('actions.settings.system', [
+            'linkaceVersion' => getVersionFromPackage(),
+        ]);
     }
 
     /**

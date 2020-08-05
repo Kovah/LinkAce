@@ -8,6 +8,8 @@ use App\Models\LinkList;
 use App\Models\Tag;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
+use Illuminate\Http\Response;
+use Illuminate\Support\Facades\Http;
 
 class FetchController extends Controller
 {
@@ -108,5 +110,24 @@ class FetchController extends Controller
         $updateCheck = UpdateHelper::checkForUpdates();
 
         return response()->json(['checkResult' => $updateCheck]);
+    }
+
+    /**
+     * Returns the HTML for a given URL to prevent CORS issues in the frontend
+     * implementation.
+     *
+     * @param Request $request
+     * @return Response
+     */
+    public function htmlForUrl(Request $request): Response
+    {
+        $url = $request->input('url');
+        $response = Http::timeout(3)->get($url);
+
+        if ($response->successful()) {
+            return response($response->body());
+        }
+
+        return response(null);
     }
 }

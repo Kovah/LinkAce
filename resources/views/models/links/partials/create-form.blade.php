@@ -59,7 +59,7 @@
                     <div class="form-group">
                         <label for="lists">@lang('list.lists')</label>
                         <input name="lists" id="lists" type="text" placeholder="@lang('placeholder.list_select')"
-                            class="tags-select" value="{{ old('lists') }}" data-tag-search="lists">
+                            class="tags-select" value="{{ old('lists') }}" data-tag-type="lists">
 
                         @if ($errors->has('lists'))
                             <p class="invalid-feedback" role="alert">
@@ -71,13 +71,18 @@
                     <div class="form-group">
                         <label for="tags">@lang('tag.tags')</label>
                         <input name="tags" id="tags" type="text" placeholder="@lang('placeholder.tags_select')"
-                            class="tags-select" value="{{ old('tags') }}" data-tag-search="tags">
+                            class="tags-select" value="{{ old('tags') }}" data-tag-type="tags">
 
                         @if ($errors->has('tags'))
                             <p class="invalid-feedback" role="alert">
                                 {{ $errors->first('tags') }}
                             </p>
                         @endif
+
+                        <div class="tag-suggestions mt-2 d-none">
+                            <small>@lang('We found some tags which might be interesting...')</small>
+                            <div class="tag-suggestions-content mt-1"></div>
+                        </div>
                     </div>
 
                     <div class="form-group">

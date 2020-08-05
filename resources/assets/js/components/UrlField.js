@@ -1,4 +1,6 @@
 import { debounce } from '../lib/helper';
+import { getInstance } from '../lib/views';
+import TagsSelect from './TagsSelect';
 
 export default class UrlField {
 
@@ -6,6 +8,11 @@ export default class UrlField {
     this.$field = $el;
 
     this.$field.addEventListener('keyup', this.onKeyup.bind(this));
+
+    this.tagSuggestions = getInstance(
+      document.querySelector('#tags'),
+      TagsSelect
+    );
   }
 
   onKeyup () {
@@ -42,6 +49,7 @@ export default class UrlField {
         this.$field.classList.add('is-invalid');
       } else {
         this.$field.classList.remove('is-invalid');
+        this.querySiteForMetaTags(url);
       }
 
     });
@@ -49,5 +57,41 @@ export default class UrlField {
 
   resetField () {
     this.$field.classList.remove('is-invalid');
+  }
+
+  querySiteForMetaTags (url) {
+    if (this.tagSuggestions === null) {
+      // Abort if tag suggestions are not available
+      return;
+    }
+
+    fetch(window.appData.routes.fetch.htmlForUrl, {
+      method: 'POST',
+      credentials: 'same-origin',
+      headers: {'Content-Type': 'application/json'},
+      body: JSON.stringify({
+        _token: window.appData.user.token,
+        url: url
+      })
+    })
+      .then(response => response.text())
+      .then(body => {
+        if (body !== null) {
+          this.parseHtmlForKeywords(body)
+        }
+      });
+  }
+
+  parseHtmlForKeywords (body) {
+    const parser = new DOMParser();
+    const doc = parser.parseFromString(body, 'text/html');
+
+    if (doc.head.children.length > 0) {
+      const keywords = doc.head.children.namedItem('keywords');
+
+      if (keywords !== null && keywords.content.length > 0) {
+        this.tagSuggestions.displayNewSuggestions(keywords.content.split(','));
+      }
+    }
   }
 }

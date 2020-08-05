@@ -1,16 +1,11 @@
-<div class="navbar navbar-dark brand-only bg-primary shadow-sm d-block d-md-none text-center">
-    <a class="navbar-brand d-inline-block" href="{{ route('dashboard') }}">
-        {!! displaySVG(public_path('assets/img/linkace_logo.svg')) !!}
-    </a>
-</div>
-<nav class="navbar navbar-expand-md navbar-dark bg-primary shadow-sm">
+<nav class="navbar navbar-dark navbar-expand bg-primary shadow-sm d-none d-md-flex">
     <div class="container px-0 px-lg-3">
         <a class="navbar-brand d-none d-md-inline-block" href="{{ route('dashboard') }}">
             {!! displaySVG(public_path('assets/img/linkace_logo.svg')) !!}
         </a>
 
         @auth
-            <ul class="navbar-nav flex-row">
+            <ul class="navbar-nav">
                 <li class="nav-item">
                     <a href="{{ route('links.create') }}" class="nav-link">
                         @lang('link.add')
@@ -21,105 +16,132 @@
                         @lang('link.all_links')
                     </a>
                 </li>
+                <li class="nav-item dropdown">
+                    <a class="nav-link dropdown-toggle" href="#" id="navbar-lists-dd" role="button"
+                        data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                        @lang('list.lists')
+                        <i class="fas fa-caret-down fa-fw"></i>
+                    </a>
+                    <div class="dropdown-menu" aria-labelledby="navbar-lists-dd">
+                        <a href="{{ route('lists.index') }}" class="dropdown-item">
+                            @lang('list.all_lists')
+                        </a>
+                        <a href="{{ route('lists.create') }}" class="dropdown-item">
+                            @lang('list.add')
+                        </a>
+                    </div>
+                </li>
+                <li class="nav-item dropdown">
+                    <a class="nav-link dropdown-toggle" href="#" id="navbar-tags-dd" role="button"
+                        data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                        @lang('tag.tags')
+                        <i class="fas fa-caret-down fa-fw"></i>
+                    </a>
+                    <div class="dropdown-menu" aria-labelledby="navbar-tags-dd">
+                        <a href="{{ route('tags.index') }}" class="dropdown-item">
+                            @lang('tag.all_tags')
+                        </a>
+                        <a href="{{ route('tags.create') }}" class="dropdown-item">
+                            @lang('tag.add')
+                        </a>
+                    </div>
+                </li>
             </ul>
+
         @endauth
 
-        <button class="navbar-toggler ml-auto d-flex align-items-center d-md-none" type="button"
-            data-toggle="collapse" data-target="#navbar-content"
-            aria-controls="navbar-content" aria-expanded="false" aria-label="Toggle navigation">
-            <small class="mr-3">@lang('linkace.menu')</small> <span class="navbar-toggler-icon"></span>
-        </button>
-
-        <div class="collapse navbar-collapse" id="navbar-content">
+        <ul class="navbar-nav ml-auto">
             @auth
-                <ul class="navbar-nav mr-auto">
-
-                    <li class="nav-divider"></li>
-                    <li class="nav-item dropdown">
-                        <a class="nav-link dropdown-toggle" href="#" id="navbar-lists-dd" role="button"
-                            data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                            @lang('list.lists')
-                            <i class="fas fa-caret-down fa-fw"></i>
-                        </a>
-                        <div class="dropdown-menu" aria-labelledby="navbar-lists-dd">
-                            <a href="{{ route('lists.index') }}" class="dropdown-item">
-                                @lang('list.all_lists')
-                            </a>
-                            <a href="{{ route('lists.create') }}" class="dropdown-item">
-                                @lang('list.add')
-                            </a>
-                        </div>
-                    </li>
-                    <li class="nav-item dropdown">
-                        <a class="nav-link dropdown-toggle" href="#" id="navbar-tags-dd" role="button"
-                            data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                            @lang('tag.tags')
-                            <i class="fas fa-caret-down fa-fw"></i>
-                        </a>
-                        <div class="dropdown-menu" aria-labelledby="navbar-tags-dd">
-                            <a href="{{ route('tags.index') }}" class="dropdown-item">
-                                @lang('tag.all_tags')
-                            </a>
-                            <a href="{{ route('tags.create') }}" class="dropdown-item">
-                                @lang('tag.add')
-                            </a>
-                        </div>
-                    </li>
-                </ul>
+                <li class="nav-item">
+                    <a href="{{ route('get-search') }}" class="nav-link" title="@lang('search.search')">
+                        <i class="fas fa-search fa-fw"></i>
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a href="{{ route('get-trash') }}" class="nav-link" title="@lang('trash.trash')">
+                        <i class="fas fa-trash-alt fa-fw"></i>
+                    </a>
+                </li>
             @endauth
-
-            <ul class="navbar-nav ml-auto">
-                @auth
-                    <li class="nav-item">
-                        <a href="{{ route('get-search') }}" class="nav-link" title="@lang('search.search')">
-                            <span class="d-md-none">@lang('search.search')</span>
-                            <i class="fas fa-search fa-fw"></i>
-                        </a>
-                    </li>
-                    <li class="nav-item">
-                        <a href="{{ route('get-trash') }}" class="nav-link" title="@lang('trash.trash')">
-                            <span class="d-md-none">@lang('trash.trash')</span>
-                            <i class="fas fa-trash-alt fa-fw"></i>
-                        </a>
-                    </li>
-                    <li class="nav-item dropdown">
-                        <a class="nav-link dropdown-toggle" href="#" id="navbar-user-dd" role="button"
-                            data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                            {{ auth()->user()->name }}
-                            <i class="fas fa-caret-down fa-fw"></i>
-                        </a>
-                        <div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbar-user-dd">
-                            <a href="{{ route('get-usersettings') }}" class="dropdown-item">
-                                @lang('settings.settings')
-                            </a>
-                            <a href="#" class="dropdown-item cursor-pointer text-danger"
-                                onclick="event.preventDefault();document.getElementById('logout-form').submit();">
-                                @lang('linkace.logout')
-                            </a>
-                            <div class="dropdown-divider"></div>
-                            <a href="{{ route('get-import') }}" class="dropdown-item">
-                                @lang('import.import')
-                            </a>
-                            <a href="{{ route('get-export') }}" class="dropdown-item">
-                                @lang('export.export')
-                            </a>
-                            <div class="dropdown-divider"></div>
-                            <a href="{{ route('get-sysstemsettings') }}" class="dropdown-item">
-                                @lang('settings.system_settings')
-                            </a>
-                        </div>
-                    </li>
-                @else
-                    <li class="nav-item">
-                        <a class="nav-link" href="{{ route('login') }}">
-                            @lang('linkace.login')
-                        </a>
-                    </li>
-                @endauth
-            </ul>
-        </div>
+            @include('partials.nav-user')
+        </ul>
     </div>
 </nav>
+
+<div class="navbar navbar-dark navbar-expand brand-only bg-primary shadow-sm d-md-none">
+    <a class="navbar-brand" href="{{ route('dashboard') }}">
+        {!! displaySVG(public_path('assets/img/linkace_logo.svg')) !!}
+    </a>
+    <ul class="navbar-nav ml-auto">
+        @include('partials.nav-user')
+    </ul>
+</div>
+
+@auth
+    <div class="navbar navbar-dark navbar-expand fixed-bottom bg-primary shadow-sm d-md-none px-2">
+        <ul class="navbar-nav">
+            <li class="nav-item">
+                <a href="{{ route('links.create') }}" class="nav-link">
+                    <span class="d-none d-sm-inline mr-2">@lang('link.add')</span>
+                    <span class="d-sm-none"><i class="fa fa-plus fa-fw"></i></span>
+                </a>
+            </li>
+            <li class="nav-item">
+                <a href="{{ route('links.index') }}" class="nav-link">
+                    <span class="d-none d-sm-inline mr-2">@lang('link.all_links')</span>
+                    <span class="d-sm-none"><i class="fa fa-link fa-fw"></i></span>
+                </a>
+            </li>
+            <li class="nav-item dropup">
+                <a class="nav-link dropdown-toggle" href="#" id="navbar-lists-dd" role="button"
+                    data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                    <span class="d-none d-sm-inline mr-2">@lang('list.lists')</span>
+                    <span class="d-sm-none"><i class="fa fa-list fa-fw"></i></span>
+                    <i class="fas fa-caret-down fa-fw"></i>
+                </a>
+                <div class="dropdown-menu" aria-labelledby="navbar-lists-dd">
+                    <a href="{{ route('lists.index') }}" class="dropdown-item">
+                        @lang('list.all_lists')
+                    </a>
+                    <a href="{{ route('lists.create') }}" class="dropdown-item">
+                        @lang('list.add')
+                    </a>
+                </div>
+            </li>
+            <li class="nav-item dropup">
+                <a class="nav-link dropdown-toggle" href="#" id="navbar-tags-dd" role="button"
+                    data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                    <span class="d-none d-sm-inline mr-2">@lang('tag.tags')</span>
+                    <span class="d-sm-none"><i class="fa fa-tags fa-fw"></i></span>
+                    <i class="fas fa-caret-down fa-fw"></i>
+                </a>
+                <div class="dropdown-menu" aria-labelledby="navbar-tags-dd">
+                    <a href="{{ route('tags.index') }}" class="dropdown-item">
+                        @lang('tag.all_tags')
+                    </a>
+                    <a href="{{ route('tags.create') }}" class="dropdown-item">
+                        @lang('tag.add')
+                    </a>
+                </div>
+            </li>
+        </ul>
+
+        <ul class="navbar-nav ml-auto">
+            <li class="nav-item">
+                <a href="{{ route('get-search') }}" class="nav-link" title="@lang('search.search')">
+                    <span class="d-none d-sm-inline">@lang('search.search')</span>
+                    <span class="d-sm-none"><i class="fas fa-search fa-fw"></i></span>
+                </a>
+            </li>
+            <li class="nav-item">
+                <a href="{{ route('get-trash') }}" class="nav-link" title="@lang('trash.trash')">
+                    <span class="d-none d-sm-inline">@lang('trash.trash')</span>
+                    <span class="d-sm-none"><i class="fas fa-trash-alt fa-fw"></i></span>
+                </a>
+            </li>
+        </ul>
+    </div>
+@endauth
 
 <form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">
     @csrf

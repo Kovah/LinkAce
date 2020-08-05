@@ -7,6 +7,7 @@ use App\Models\Link;
 use App\Models\Setting;
 use Carbon\Carbon;
 use Illuminate\Support\Facades\Cache;
+use Illuminate\Support\Facades\Storage;
 
 /**
  * Shorthand for the current user settings
@@ -195,4 +196,20 @@ function waybackLink($link): ?string
 function linkTarget(): string
 {
     return usersettings('links_new_tab') ? 'target="_blank" rel="noopener noreferrer"' : '';
+}
+
+/**
+ * Get the current version from the package.json file
+ *
+ * @return string|null
+ */
+function getVersionFromPackage(): ?string
+{
+    try {
+        $package = json_decode(Storage::disk('root')->get('package.json'), false);
+    } catch (\Exception $e) {
+        return null;
+    }
+
+    return isset($package->version) ? 'v' . $package->version : null;
 }
