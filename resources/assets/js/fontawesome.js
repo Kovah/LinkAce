@@ -145,6 +145,8 @@ import { faXing } from '@fortawesome/free-brands-svg-icons/faXing';
 import { faYahoo } from '@fortawesome/free-brands-svg-icons/faYahoo';
 import { faYelp } from '@fortawesome/free-brands-svg-icons/faYelp';
 import { faYoutube } from '@fortawesome/free-brands-svg-icons/faYoutube';
+import { faList } from '@fortawesome/free-solid-svg-icons/faList';
+import { faTags } from '@fortawesome/free-solid-svg-icons/faTags';
 
 export function initFontAwesome () {
   library.add(faBan);
@@ -175,6 +177,8 @@ export function initFontAwesome () {
   library.add(faUnlink);
   library.add(faUnlock);
   library.add(faUpload);
+  library.add(faList);
+  library.add(faTags);
 
   library.add(faFacebookSquare);
   library.add(faTwitterSquare);
