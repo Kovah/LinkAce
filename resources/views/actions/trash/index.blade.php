@@ -14,10 +14,13 @@
                 @lang('trash.deleted_links')
             </div>
             <div class="ml-auto">
-                <a href="{{ route('clear-trash', ['links']) }}"
-                    class="btn btn-sm btn-danger" title="@lang('trash.clear_trash')">
-                    <i class="fas fa-recycle"></i> @lang('trash.clear_trash')
-                </a>
+                <form action="{{ route('clear-trash') }}" method="post">
+                    @csrf
+                    <input type="hidden" name="model" value="links">
+                    <button class="btn btn-sm btn-danger" title="@lang('trash.clear_trash')">
+                        <i class="fas fa-recycle"></i> @lang('trash.clear_trash')
+                    </button>
+                </form>
             </div>
         </div>
         <div class="card-body">
@@ -36,10 +39,13 @@
                 @lang('trash.deleted_lists')
             </div>
             <div class="ml-auto">
-                <a href="{{ route('clear-trash', ['lists']) }}"
-                    class="btn btn-sm btn-danger" title="@lang('trash.clear_trash')">
-                    <i class="fas fa-recycle"></i> @lang('trash.clear_trash')
-                </a>
+                <form action="{{ route('clear-trash') }}" method="post">
+                    @csrf
+                    <input type="hidden" name="model" value="lists">
+                    <button class="btn btn-sm btn-danger" title="@lang('trash.clear_trash')">
+                        <i class="fas fa-recycle"></i> @lang('trash.clear_trash')
+                    </button>
+                </form>
             </div>
         </div>
         <div class="card-body">
@@ -58,10 +64,13 @@
                 @lang('trash.deleted_tags')
             </div>
             <div class="ml-auto">
-                <a href="{{ route('clear-trash', ['tags']) }}"
-                    class="btn btn-sm btn-danger" title="@lang('trash.clear_trash')">
-                    <i class="fas fa-recycle"></i> @lang('trash.clear_trash')
-                </a>
+                <form action="{{ route('clear-trash') }}" method="post">
+                    @csrf
+                    <input type="hidden" name="model" value="tags">
+                    <button class="btn btn-sm btn-danger" title="@lang('trash.clear_trash')">
+                        <i class="fas fa-recycle"></i> @lang('trash.clear_trash')
+                    </button>
+                </form>
             </div>
         </div>
         <div class="card-body">
@@ -80,10 +89,13 @@
                 @lang('trash.deleted_notes')
             </div>
             <div class="ml-auto">
-                <a href="{{ route('clear-trash', ['notes']) }}"
-                    class="btn btn-sm btn-danger" title="@lang('trash.clear_trash')">
-                    <i class="fas fa-recycle"></i> @lang('trash.clear_trash')
-                </a>
+                <form action="{{ route('clear-trash') }}" method="post">
+                    @csrf
+                    <input type="hidden" name="model" value="notes">
+                    <button class="btn btn-sm btn-danger" title="@lang('trash.clear_trash')">
+                        <i class="fas fa-recycle"></i> @lang('trash.clear_trash')
+                    </button>
+                </form>
             </div>
         </div>
         <div class="card-body">
