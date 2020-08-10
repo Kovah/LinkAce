@@ -128,6 +128,8 @@ class LinkRepository
 
     /**
      * Create or get the tags from the input and attach them to the link.
+     * If links or tags are provided as strings, they are converted into
+     * an array of entries, separated by commas.
      *
      * @param Link         $link
      * @param array|string $tags
@@ -136,11 +138,11 @@ class LinkRepository
     {
         $oldTags = $link->tags->pluck('id');
 
-        if (is_array($tags)) {
-            $newTags = self::processTaxonomyAsArray(Tag::class, $tags);
-        } else {
-            $newTags = self::processTaxonomyAsString(Tag::class, $tags);
+        if (!is_array($tags)) {
+            $tags = explode(',', $tags);
         }
+
+        $newTags = self::processTaxonomy(Tag::class, $tags);
 
         $link->tags()->sync($newTags);
 
@@ -164,11 +166,11 @@ class LinkRepository
     {
         $oldLists = $link->lists->pluck('id');
 
-        if (is_array($lists)) {
-            $newLists = self::processTaxonomyAsArray(LinkList::class, $lists);
-        } else {
-            $newLists = self::processTaxonomyAsString(LinkList::class, $lists);
+        if (!is_array($lists)) {
+            $lists = explode(',', $lists);
         }
+
+        $newLists = self::processTaxonomy(LinkList::class, $lists);
 
         $link->lists()->sync($newLists);
 
@@ -183,51 +185,37 @@ class LinkRepository
     }
 
     /**
-     * Tags or lists are passed as comma-delimited string in the LinkAce
-     * frontend. Parsing the string also creates the corresponding tag or list
-     * if it does not exist already.
+     * Tags or lists are passed as comma-delimited strings or integers.
+     * If integers are passed we assume that the tags or lists are referenced
+     * by their ID. n that case we try to reetrieve the tag or list by the
+     * provided ID.
+     * If tags or lists are passed as strings, we create them and pass the new
+     * entity to the taxonomy list.
      *
      * @param string $model
-     * @param string $tags
+     * @param array  $entries
      * @return Collection
      */
-    protected static function processTaxonomyAsString(string $model, string $tags): Collection
+    protected static function processTaxonomy(string $model, array $entries): Collection
     {
-        $parsedTags = explode(',', $tags);
-        $newTags = collect();
+        $newEntries = collect();
 
-        foreach ($parsedTags as $tag) {
-            $newTag = $model::firstOrCreate([
-                'user_id' => auth()->user()->id,
-                'name' => $tag,
-            ]);
+        foreach ($entries as $entry) {
+            if (is_int($entry)) {
+                $newEntry = Tag::find($entry);
+            } else {
+                $newEntry = $model::firstOrCreate([
+                    'user_id' => auth()->id(),
+                    'name' => trim($entry),
+                ]);
+            }
 
-            $newTags->push($newTag->id);
-        }
-
-        return $newTags;
-    }
-
-    /**
-     * Tags or lists are passed as arrays containing the model IDs in API
-     * calls. The passed IDs are first checked for existence before allowing
-     * them to be synced with the link.
-     *
-     * @param string $model
-     * @param array  $data
-     * @return Collection
-     */
-    protected static function processTaxonomyAsArray(string $model, array $data): Collection
-    {
-        $entries = collect();
-
-        foreach ($data as $entry) {
-            if ($model::find($entry)) {
-                $entries->push($entry);
+            if ($newEntry !== null) {
+                $newEntries->push($newEntry->id);
             }
         }
 
-        return $entries;
+        return $newEntries;
     }
 
     /**
@@ -240,7 +228,7 @@ class LinkRepository
      * @param mixed  $oldData
      * @param mixed  $newData
      */
-    protected static function createRelationshipRevision(Link $link, string $key, $oldData, $newData)
+    protected static function createRelationshipRevision(Link $link, string $key, $oldData, $newData): void
     {
         $revision = [
             'revisionable_type' => $link->getMorphClass(),

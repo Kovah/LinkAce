@@ -17,9 +17,6 @@ class LinkUpdateRequest extends FormRequest
     /** @var bool */
     private $requireUniqueUrl;
 
-    /** @var bool */
-    private $isApiRequest;
-
     /**
      * Determine if the user is authorized to make this request.
      *
@@ -28,8 +25,6 @@ class LinkUpdateRequest extends FormRequest
      */
     public function authorize(Request $request)
     {
-        $this->isApiRequest = $request->isJson();
-
         if ($request->input('url') !== null) {
             $this->requireUniqueUrl = Link::urlHasChanged(
                 $request->route('link'),
@@ -51,8 +46,8 @@ class LinkUpdateRequest extends FormRequest
             'url' => 'required|string',
             'title' => 'nullable|string',
             'description' => 'nullable|string',
-            'lists' => $this->isApiRequest ? 'array' : 'nullable|string',
-            'tags' => $this->isApiRequest ? 'array' : 'nullable|string',
+            'lists' => 'nullable',
+            'tags' => 'nullable',
             'is_private' => 'sometimes|boolean',
             'check_disabled' => 'sometimes|boolean',
         ];
