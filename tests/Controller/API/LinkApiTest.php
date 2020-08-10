@@ -116,6 +116,28 @@ class LinkApiTest extends ApiTestCase
         $this->assertEquals('tag 1', $databaseTag->name);
     }
 
+    public function testCreateRequestWithUnicodeTags(): void
+    {
+        $response = $this->postJsonAuthorized('api/v1/links', [
+            'url' => 'http://example.com',
+            'tags' => 'Games 👾, Захватывающе, उत्तेजित करनेवाला',
+        ]);
+
+        $response->assertOk()
+            ->assertJson([
+                'url' => 'http://example.com',
+            ]);
+
+        $databaseTag = Tag::find(1);
+        $this->assertEquals('Games 👾', $databaseTag->name);
+
+        $databaseTag2 = Tag::find(2);
+        $this->assertEquals('Захватывающе', $databaseTag2->name);
+
+        $databaseTag2 = Tag::find(3);
+        $this->assertEquals('उत्तेजित करनेवाला', $databaseTag2->name);
+    }
+
     public function testInvalidCreateRequest(): void
     {
         $response = $this->postJsonAuthorized('api/v1/links', [
