@@ -57,7 +57,7 @@ COPY ./artisan /app
 COPY ./composer.json /app
 COPY ./composer.lock /app
 COPY ./README.md /app
-COPY ./package.json ./app
+COPY ./package.json /app
 COPY ./server.php /app
 COPY ./.env.example /app/.env
 
