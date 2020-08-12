@@ -160,10 +160,11 @@
                         <div id="link-history" class="collapse">
                     @endif
                     <x-links.history-entry :entry="$entry"/>
-                    @if($loop->last && $loop->count >= 10)
-                        </div>
-                    @endif
                 @endforeach
+                <div>{{ formatDateTime($link->created_at) }}: @lang('link.history_created')</div>
+                @if(count($history) >= 10)
+                    </div>
+                @endif
             </div>
         </div>
     @endif

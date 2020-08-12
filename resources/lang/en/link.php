@@ -22,6 +22,7 @@ return [
     'history_removed' => 'Removed <code>:oldvalue</code> from :fieldname.',
     'history_deleted' => 'Link was deleted',
     'history_restored' => 'Link was restored',
+    'history_created' => 'Link was created',
 
     'url' => 'URL',
     'title' => 'Title',
