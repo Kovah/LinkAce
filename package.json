@@ -1,6 +1,6 @@
 {
   "name": "linkace",
-  "version": "0.0.40",
+  "version": "0.0.41",
   "description": "A small, selfhosted bookmark manager with advanced features, built with Laravel and Docker",
   "homepage": "https://github.com/Kovah/LinkAce",
   "repository": {
@@ -24,7 +24,7 @@
     "@fortawesome/fontawesome-svg-core": "^1.2.30",
     "@fortawesome/free-brands-svg-icons": "^5.14.0",
     "@fortawesome/free-solid-svg-icons": "^5.14.0",
-    "bootstrap": "^4.5.1",
+    "bootstrap": "^4.5.2",
     "jquery": "^3.5.1",
     "popper.js": "^1.16.1",
     "selectize": "git+https://github.com/Kovah/selectize.js.git"

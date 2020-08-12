@@ -78,6 +78,66 @@ class LinkApiTest extends ApiTestCase
         Queue::assertPushed(SaveLinkToWaybackmachine::class);
     }
 
+    public function testCreateRequestWithTagsAsString(): void
+    {
+        $response = $this->postJsonAuthorized('api/v1/links', [
+            'url' => 'http://example.com',
+            'tags' => 'tag 1, tag 2',
+        ]);
+
+        $response->assertOk()
+            ->assertJson([
+                'url' => 'http://example.com',
+            ]);
+
+        $databaseLink = Link::first();
+        $this->assertEquals('http://example.com', $databaseLink->url);
+
+        $databaseTag = Tag::first();
+        $this->assertEquals('tag 1', $databaseTag->name);
+    }
+
+    public function testCreateRequestWithTagsAsArray(): void
+    {
+        $response = $this->postJsonAuthorized('api/v1/links', [
+            'url' => 'http://example.com',
+            'tags' => ['tag 1', 'tag 2'],
+        ]);
+
+        $response->assertOk()
+            ->assertJson([
+                'url' => 'http://example.com',
+            ]);
+
+        $databaseLink = Link::first();
+        $this->assertEquals('http://example.com', $databaseLink->url);
+
+        $databaseTag = Tag::first();
+        $this->assertEquals('tag 1', $databaseTag->name);
+    }
+
+    public function testCreateRequestWithUnicodeTags(): void
+    {
+        $response = $this->postJsonAuthorized('api/v1/links', [
+            'url' => 'http://example.com',
+            'tags' => 'Games 👾, Захватывающе, उत्तेजित करनेवाला',
+        ]);
+
+        $response->assertOk()
+            ->assertJson([
+                'url' => 'http://example.com',
+            ]);
+
+        $databaseTag = Tag::find(1);
+        $this->assertEquals('Games 👾', $databaseTag->name);
+
+        $databaseTag2 = Tag::find(2);
+        $this->assertEquals('Захватывающе', $databaseTag2->name);
+
+        $databaseTag2 = Tag::find(3);
+        $this->assertEquals('उत्तेजित करनेवाला', $databaseTag2->name);
+    }
+
     public function testInvalidCreateRequest(): void
     {
         $response = $this->postJsonAuthorized('api/v1/links', [
@@ -90,8 +150,6 @@ class LinkApiTest extends ApiTestCase
 
         $response->assertJsonValidationErrors([
             'url' => 'The url field is required.',
-            'lists' => 'The lists must be an array.',
-            'tags' => 'The tags must be an array.',
             'is_private' => 'The is private field must be true or false.',
             'check_disabled' => 'The check disabled field must be true or false.',
         ]);
@@ -177,8 +235,6 @@ class LinkApiTest extends ApiTestCase
 
         $response->assertJsonValidationErrors([
             'url' => 'The url field is required.',
-            'lists' => 'The lists must be an array.',
-            'tags' => 'The tags must be an array.',
             'is_private' => 'The is private field must be true or false.',
             'check_disabled' => 'The check disabled field must be true or false.',
         ]);

@@ -13,9 +13,6 @@ use Illuminate\Validation\Rule;
  */
 class LinkStoreRequest extends FormRequest
 {
-    /** @var bool */
-    private $isApiRequest;
-
     /**
      * Determine if the user is authorized to make this request.
      *
@@ -23,8 +20,6 @@ class LinkStoreRequest extends FormRequest
      */
     public function authorize(Request $request): bool
     {
-        $this->isApiRequest = $request->isJson();
-
         return true;
     }
 
@@ -45,8 +40,8 @@ class LinkStoreRequest extends FormRequest
             ],
             'title' => 'nullable|string',
             'description' => 'nullable|string',
-            'lists' => $this->isApiRequest ? 'array' : 'nullable|string',
-            'tags' => $this->isApiRequest ? 'array' : 'nullable|string',
+            'lists' => 'nullable',
+            'tags' => 'nullable',
             'is_private' => 'sometimes|boolean',
             'check_disabled' => 'sometimes|boolean',
         ];

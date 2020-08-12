@@ -24,7 +24,7 @@
                     <small>{{ formatDateTime($note->created_at) }}</small>
                 </td>
                 <td class="text-right">
-                    <form action="{{ route('trash-restore') }}">
+                    <form action="{{ route('trash-restore') }}" method="post">
                         @csrf
                         <input type="hidden" name="model" value="note">
                         <input type="hidden" name="id" value="{{ $note->id }}">
