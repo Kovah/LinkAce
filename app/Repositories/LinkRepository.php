@@ -124,6 +124,8 @@ class LinkRepository
 
             $link->lists()->detach();
         }
+
+        $link->load(['tags', 'lists']);
     }
 
     /**

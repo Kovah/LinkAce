@@ -69,6 +69,13 @@ class LinkApiTest extends ApiTestCase
         $response->assertOk()
             ->assertJson([
                 'url' => 'http://example.com',
+                'lists' => [
+                    ['name' => $list->name],
+                ],
+                'tags' => [
+                    ['name' => $tag->name],
+                    ['name' => $tag2->name],
+                ],
             ]);
 
         $databaseLink = Link::first();
@@ -88,6 +95,10 @@ class LinkApiTest extends ApiTestCase
         $response->assertOk()
             ->assertJson([
                 'url' => 'http://example.com',
+                'tags' => [
+                    ['name' => 'tag 1'],
+                    ['name' => 'tag 2'],
+                ],
             ]);
 
         $databaseLink = Link::first();
@@ -107,6 +118,10 @@ class LinkApiTest extends ApiTestCase
         $response->assertOk()
             ->assertJson([
                 'url' => 'http://example.com',
+                'tags' => [
+                    ['name' => 'tag 1'],
+                    ['name' => 'tag 2'],
+                ],
             ]);
 
         $databaseLink = Link::first();
@@ -126,6 +141,11 @@ class LinkApiTest extends ApiTestCase
         $response->assertOk()
             ->assertJson([
                 'url' => 'http://example.com',
+                'tags' => [
+                    ['name' => 'Games 👾'],
+                    ['name' => 'Захватывающе'],
+                    ['name' => 'उत्तेजित करनेवाला'],
+                ],
             ]);
 
         $databaseTag = Tag::find(1);

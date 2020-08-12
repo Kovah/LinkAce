@@ -65,16 +65,6 @@ class Link extends Model
         'check_disabled' => 'boolean',
     ];
 
-    protected $appends = [
-        'tag_ids',
-        'list_ids',
-    ];
-
-    protected $hidden = [
-        'tags',
-        'lists',
-    ];
-
     public const STATUS_OK = 1;
     public const STATUS_MOVED = 2;
     public const STATUS_BROKEN = 3;
@@ -156,21 +146,6 @@ class Link extends Model
     public function notes()
     {
         return $this->hasMany(Note::class, 'link_id');
-    }
-
-    /*
-     | ========================================================================
-     | GETTER
-     */
-
-    public function getTagIdsAttribute()
-    {
-        return $this->attributes['tags'] = $this->tags()->pluck('id');
-    }
-
-    public function getListIdsAttribute()
-    {
-        return $this->attributes['lists'] = $this->lists()->pluck('id');
     }
 
     /*
