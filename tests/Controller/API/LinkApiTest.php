@@ -52,9 +52,9 @@ class LinkApiTest extends ApiTestCase
 
     public function testFullCreateRequest(): void
     {
-        $list = factory(LinkList::class)->create();
-        $tag = factory(Tag::class)->create();
-        $tag2 = factory(Tag::class)->create();
+        $list = factory(LinkList::class)->create(['name' => 'Test List 1']);
+        $tag = factory(Tag::class)->create(['name' => 'a test 1']);
+        $tag2 = factory(Tag::class)->create(['name' => 'tag #2']);
 
         $response = $this->postJsonAuthorized('api/v1/links', [
             'url' => 'http://example.com',
@@ -70,11 +70,11 @@ class LinkApiTest extends ApiTestCase
             ->assertJson([
                 'url' => 'http://example.com',
                 'lists' => [
-                    ['name' => $list->name],
+                    ['name' => 'Test List 1'],
                 ],
                 'tags' => [
-                    ['name' => $tag->name],
-                    ['name' => $tag2->name],
+                    ['name' => 'a test 1'],
+                    ['name' => 'tag #2'],
                 ],
             ]);
 
