@@ -51,3 +51,14 @@ printf "\n> Migrating database...\n"
 docker-compose run php php artisan migrate --force
 
 printf "\n${CG}LinkAce was upgraded successfully!\n"
+
+# Ask the user for caching
+printf "\n${CR}Should the configuration and routes be cached now? This might improve overall performance. [y/n]${CW} "
+read -n 1 -r
+if [[ ! $REPLY =~ ^[Yy]$ ]]; then exit;
+fi
+
+docker-compose run php php artisan config:cache
+docker-compose run php php artisan route:cache
+
+printf "\n${CG}Thanks for using LinkAce! :)\n"
