@@ -18,7 +18,7 @@ return [
     'links_private_default_help' => 'Enabling this will make all new links private by default',
     'notes_private_default' => 'Private Notes by default',
     'notes_private_default_help' => 'Enabling this will make all new notes private by default',
-    'tags_private_default' => 'Private Notes by default',
+    'tags_private_default' => 'Private Tags by default',
     'tags_private_default_help' => 'Enabling this will make all new tags private by default',
     'lists_private_default' => 'Private Lists by default',
     'lists_private_default_help' => 'Enabling this will make all new lists private by default',
