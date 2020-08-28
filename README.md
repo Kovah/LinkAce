@@ -100,25 +100,13 @@ want to use for the application.
 
 #### 2. Modify the .env.docker file
 
-Make a copy of the `.env.docker` file and name it `.env`. By default, you only must change two variables set in this 
-file before starting the setup:
+Make a copy of the `.env.docker.production` file and name it `.env`. By default, you must change two options 
+in this file before starting the setup:
 
 * DB_PASSWORD - Please set a secure password here
 * REDIS_PASSWORD - Please set a secure password here
 
-#### 3. Modify the nginx.conf file (optional)
-
-This step is optional but may depend on your setup. You probably want to run the app standalon on a server. For this I
-highly recommend providing SSL certificates ([Let's Encrypt](https://letsencrypt.org/)) and change the `nginx.conf` as 
-well as the `docker-compose.production.yml` file:
-
-* In `nginx.conf`: replace `listen 0.0.0.0:8085` with `listen 0.0.0.0:8085 ssl;`
-* In `nginx.conf`: uncomment the lines beginning with `ssl_certificate` and change the certificate file names
-* In `docker-compose.production.yml`: replace `"127.0.0.1:80:8085"` with `"127.0.0.1:443:8085"`.
-* In `docker-compose.production.yml`: uncommend the `/path/to/ssl/certificates:/bitnami/nginx/conf/bitnami/certs` line 
-  and set the correct path to your certificates before the colon.
-
-#### 4. Run the application
+#### 3. Start the application
 
 After you completed the above steps, run the following command to start up the container setup:
 
@@ -126,7 +114,7 @@ After you completed the above steps, run the following command to start up the c
 docker-compose up -d
 ```
 
-#### 5. Run the Setup
+#### 4. Run the Setup
 
 After you started the Docker containers, you are almost ready to run the setup. Before the setup, we have to generate
 a secret key.
@@ -138,7 +126,7 @@ docker-compose run php php artisan key:generate
 ```
 
 Open the URL which points to your Docker container in your browser now. You have to configure the database, and your 
-user account in this process.
+user account in the following setup.
 
 Please make sure to follow the post-installation tasks to fully enable all features. A guide can be found in the 
 [wiki](https://www.linkace.org/docs/v1/setup/post-setup).
@@ -146,9 +134,9 @@ Please make sure to follow the post-installation tasks to fully enable all featu
 
 #### Setup without Docker
 
-The application was developed with being used with Docker in mind. If you don't want to or if you can't use Docker,
-you can also run LinkAce as a regular PHP application. Please notice that there won't be any support for custom 
-environments, unsupported PHP versions or help with setting up Apache or your nginx proxy.
+The application was developed forthe usage with Docker. If you don't want to or can't use Docker, you can also run 
+LinkAce as a regular PHP application. Please notice that there won't be any support for custom environments,
+unsupported PHP versions or help with setting up Apache or your nginx web server.
 
 Please note that you **must have shell access to your server**. A shared hosting may not be suitable for this.
 
@@ -184,9 +172,12 @@ while the `master` branch may contains the stable version (which may be outdated
 
 #### 1. Basic Setup
 
-Simply clone the repository to your machine and run the following command to build the container setup:
+The following steps assume that you are using Docker for development, which I highly encourage. If you use
+other ways to work with PHP projects you must adapt the commands to your system.
+Clone the repository to your machine and run the following commands to start the Docker container system:
 
 ```bash
+cp .env.docker .env
 docker-compose up -d --build
 ```
 
