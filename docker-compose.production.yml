@@ -4,7 +4,7 @@ services:
 
   # --- MariaDB
   db:
-    image: bitnami/mariadb:10.4
+    image: bitnami/mariadb:10.5
     restart: unless-stopped
     environment:
       - MARIADB_ROOT_PASSWORD=${DB_PASSWORD}
@@ -18,6 +18,8 @@ services:
   php:
     image: linkace/linkace:latest
     restart: unless-stopped
+    depends_on:
+      - db
     volumes:
       - linkace_app:/app
       - ./logs:/app/storage/logs
@@ -25,21 +27,21 @@ services:
 
   # --- nginx
   nginx:
-    image: bitnami/nginx:latest
+    image: bitnami/nginx:1.19
     restart: unless-stopped
     ports:
       - "0.0.0.0:80:8085"
-      #- "0.0.0.0:443:8085"
+      #- "0.0.0.0:443:8090"
     depends_on:
       - php
     volumes:
       - linkace_app:/app
-      - ./nginx.conf:/opt/bitnami/nginx/conf/vhosts/site.conf:ro
-      #- /path/to/ssl/certificates:/bitnami/nginx/conf/bitnami/certs
+      - ./nginx.conf:/opt/bitnami/nginx/conf/server_blocks/linkace.conf:ro
+      #- /path/to/your/ssl/certificates:/certs
 
   # --- Redis
   redis:
-    image: bitnami/redis:5.0
+    image: bitnami/redis:6.0
     restart: unless-stopped
     environment:
       - REDIS_PASSWORD=${REDIS_PASSWORD}
