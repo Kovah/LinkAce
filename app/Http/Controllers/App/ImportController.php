@@ -92,14 +92,17 @@ class ImportController extends Controller
             if (!empty($link['tags'])) {
                 $tags = explode(' ', $link['tags']);
 
+                $newTags = [];
                 foreach ($tags as $tag) {
                     $newTag = Tag::firstOrCreate([
                         'user_id' => $userId,
                         'name' => $tag,
                     ]);
 
-                    $newLink->tags()->attach($newTag->id);
+                    $newTags[] = $newTag->id;
                 }
+
+                $newLink->tags()->sync($newTags);
             }
 
             $imported++;
