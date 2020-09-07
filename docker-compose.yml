@@ -34,7 +34,7 @@ services:
     container_name: "linkace-nginx"
     image: bitnami/nginx:1.19
     ports:
-      - "80:8085"
+      - "80:8080"
     depends_on:
       - php
     volumes:

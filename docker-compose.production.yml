@@ -15,7 +15,7 @@ services:
       - db:/bitnami
 
   # --- LinkAce Image with PHP 7.4
-  php:
+  app:
     image: linkace/linkace:latest
     restart: unless-stopped
     depends_on:
@@ -30,8 +30,8 @@ services:
     image: bitnami/nginx:1.19
     restart: unless-stopped
     ports:
-      - "0.0.0.0:80:8085"
-      #- "0.0.0.0:443:8090"
+      - "0.0.0.0:80:8080"
+      #- "0.0.0.0:443:8443"
     depends_on:
       - php
     volumes:

@@ -1,0 +1,34 @@
+version: "3"
+
+services:
+
+  # --- MariaDB
+  db:
+    image: bitnami/mariadb:10.5
+    restart: unless-stopped
+    environment:
+      - MARIADB_ROOT_PASSWORD=${DB_PASSWORD}
+      - MARIADB_USER=${DB_USERNAME}
+      - MARIADB_PASSWORD=${DB_PASSWORD}
+      - MARIADB_DATABASE=${DB_DATABASE}
+    volumes:
+      - db:/bitnami
+
+  # --- LinkAce Image with PHP 7.4 and nginx
+  app:
+    image: linkace/linkace:php-nginx
+    restart: unless-stopped
+    depends_on:
+      - db
+    ports:
+      - "0.0.0.0:80:8080"
+      #- "0.0.0.0:443:8443"
+    volumes:
+      - ./logs:/app/storage/logs
+      - ./.env:/app/.env
+      - ./nginx-simple.conf:/opt/docker/etc/nginx/conf.d/linkace.conf:ro
+      #- /path/to/your/ssl/certificates:/opt/docker/etc/nginx/ssl
+
+volumes:
+  db:
+    driver: local
