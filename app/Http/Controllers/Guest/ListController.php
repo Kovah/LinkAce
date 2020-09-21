@@ -38,7 +38,7 @@ class ListController extends Controller
         $links = $list->links()
             ->privateOnly(false)
             ->orderBy(
-                $request->input('orderBy', 'name'),
+                $request->input('orderBy', 'title'),
                 $request->input('orderDir', 'ASC')
             )->paginate(getPaginationLimit());
 
@@ -46,7 +46,7 @@ class ListController extends Controller
             'list' => $list,
             'list_links' => $links,
             'route' => $request->getBaseUrl(),
-            'order_by' => $request->input('orderBy', 'name'),
+            'order_by' => $request->input('orderBy', 'title'),
             'order_dir' => $request->input('orderDir', 'ASC'),
         ]);
     }

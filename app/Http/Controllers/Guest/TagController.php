@@ -23,7 +23,7 @@ class TagController extends Controller
         $links = $tag->links()
             ->privateOnly(false)
             ->orderBy(
-                $request->input('orderBy', 'name'),
+                $request->input('orderBy', 'title'),
                 $request->input('orderDir', 'ASC')
             )->paginate(getPaginationLimit());
 
@@ -31,7 +31,7 @@ class TagController extends Controller
             'tag' => $tag,
             'tag_links' => $links,
             'route' => $request->getBaseUrl(),
-            'order_by' => $request->input('orderBy', 'name'),
+            'order_by' => $request->input('orderBy', 'title'),
             'order_dir' => $request->input('orderDir', 'ASC'),
         ]);
     }
