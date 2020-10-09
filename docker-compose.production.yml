@@ -22,8 +22,10 @@ services:
       - db
     volumes:
       - linkace_app:/app
-      - ./logs:/app/storage/logs
       - ./.env:/app/.env
+      - ./logs:/app/storage/logs
+      # Remove the hash of the following line if you want to use local backups
+      #- ./backups:/app/storage/app/backups
 
   # --- nginx
   nginx:

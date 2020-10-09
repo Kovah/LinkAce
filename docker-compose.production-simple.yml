@@ -24,9 +24,12 @@ services:
       - "0.0.0.0:80:8080"
       #- "0.0.0.0:443:8443"
     volumes:
-      - ./logs:/app/storage/logs
       - ./.env:/app/.env
       - ./nginx-simple.conf:/opt/docker/etc/nginx/conf.d/linkace.conf:ro
+      - ./logs:/app/storage/logs
+      # Remove the hash of the following line if you want to use local backups
+      #- ./backups:/app/storage/app/backups
+      # Remove the hash of the following line if you are using HTTPS
       #- /path/to/your/ssl/certificates:/opt/docker/etc/nginx/ssl
 
 volumes:
