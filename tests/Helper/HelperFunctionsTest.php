@@ -37,6 +37,7 @@ class HelperFunctionsTest extends TestCase
         $this->actingAs($this->user);
 
         $this->post('settings/app', [
+            'locale' => 'en_US',
             'timezone' => 'Europe/Berlin',
         ]);
 
@@ -44,6 +45,8 @@ class HelperFunctionsTest extends TestCase
 
         $settings = usersettings();
 
+        $this->assertArrayHasKey('locale', $settings);
+        $this->assertEquals('en_US', $settings['locale']);
         $this->assertArrayHasKey('timezone', $settings);
         $this->assertEquals('Europe/Berlin', $settings['timezone']);
     }
@@ -75,6 +78,7 @@ class HelperFunctionsTest extends TestCase
         $this->actingAs($this->user);
 
         $this->post('settings/app', [
+            'locale' => 'en_US',
             'timezone' => 'Europe/Berlin',
             'date_format' => 'd.m.Y',
             'time_format' => 'H:i:s',
@@ -97,6 +101,7 @@ class HelperFunctionsTest extends TestCase
         $this->actingAs($this->user);
 
         $this->post('settings/app', [
+            'locale' => 'en_US',
             'timezone' => 'Europe/Berlin',
             'listitem_count' => '100',
         ]);
