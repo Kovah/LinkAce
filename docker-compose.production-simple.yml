@@ -14,41 +14,24 @@ services:
     volumes:
       - db:/bitnami
 
-  # --- LinkAce Image with PHP 7.4
+  # --- LinkAce Image with PHP 7.4 and nginx
   app:
-    image: linkace/linkace:latest
+    image: linkace/linkace:php-nginx
     restart: unless-stopped
     depends_on:
       - db
-    volumes:
-      - linkace_app:/app
-      - ./.env:/app/.env
-      - ./logs:/app/storage/logs
-      # Remove the hash of the following line if you want to use local backups
-      #- ./backups:/app/storage/app/backups
-
-  # --- nginx
-  nginx:
-    image: bitnami/nginx:1.19
-    restart: unless-stopped
     ports:
       - "0.0.0.0:80:8080"
       #- "0.0.0.0:443:8443"
-    depends_on:
-      - app
     volumes:
-      - linkace_app:/app
-      - ./nginx.conf:/opt/bitnami/nginx/conf/server_blocks/linkace.conf:ro
-      #- /path/to/your/ssl/certificates:/certs
-
-  # --- Redis
-  redis:
-    image: bitnami/redis:6.0
-    restart: unless-stopped
-    environment:
-      - REDIS_PASSWORD=${REDIS_PASSWORD}
+      - ./.env:/app/.env
+      - ./nginx-simple.conf:/opt/docker/etc/nginx/conf.d/linkace.conf:ro
+      - ./logs:/app/storage/logs
+      # Remove the hash of the following line if you want to use local backups
+      #- ./backups:/app/storage/app/backups
+      # Remove the hash of the following line if you are using HTTPS
+      #- /path/to/your/ssl/certificates:/opt/docker/etc/nginx/ssl
 
 volumes:
-  linkace_app:
   db:
     driver: local

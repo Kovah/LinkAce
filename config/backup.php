@@ -2,6 +2,8 @@
 
 use App\Models\User;
 
+$backupNotificationChannel = env('BACKUP_NOTIFICATIONS', true) ? [env('BACKUP_CHANNEL', true)] : [];
+
 return [
 
     'backup' => [
@@ -99,7 +101,7 @@ return [
              * The disk names on which the backups will be stored.
              */
             'disks' => [
-                env('BACKUP_DISK', 'local_backups'),
+                env('BACKUP_DISK', 'local'),
             ],
         ],
 
@@ -119,12 +121,12 @@ return [
     'notifications' => [
 
         'notifications' => [
-            \Spatie\Backup\Notifications\Notifications\BackupHasFailed::class => ['mail'],
-            \Spatie\Backup\Notifications\Notifications\UnhealthyBackupWasFound::class => ['mail'],
-            \Spatie\Backup\Notifications\Notifications\CleanupHasFailed::class => ['mail'],
-            \Spatie\Backup\Notifications\Notifications\BackupWasSuccessful::class => ['mail'],
-            \Spatie\Backup\Notifications\Notifications\HealthyBackupWasFound::class => ['mail'],
-            \Spatie\Backup\Notifications\Notifications\CleanupWasSuccessful::class => ['mail'],
+            \Spatie\Backup\Notifications\Notifications\BackupHasFailed::class => $backupNotificationChannel,
+            \Spatie\Backup\Notifications\Notifications\UnhealthyBackupWasFound::class => $backupNotificationChannel,
+            \Spatie\Backup\Notifications\Notifications\CleanupHasFailed::class => $backupNotificationChannel,
+            \Spatie\Backup\Notifications\Notifications\BackupWasSuccessful::class => $backupNotificationChannel,
+            \Spatie\Backup\Notifications\Notifications\HealthyBackupWasFound::class => $backupNotificationChannel,
+            \Spatie\Backup\Notifications\Notifications\CleanupWasSuccessful::class => $backupNotificationChannel,
         ],
 
         /*
@@ -138,16 +140,16 @@ return [
         ],
 
         'slack' => [
-            'webhook_url' => '',
+            'webhook_url' => env('BACKUP_NOTIFICATION_SLACK_WEBHOOK', ''),
 
             /*
              * If this is set to null the default channel of the webhook will be used.
              */
-            'channel' => null,
+            'channel' => env('BACKUP_NOTIFICATION_SLACK_CHANNEL', null),
 
-            'username' => null,
+            'username' => env('BACKUP_NOTIFICATION_SLACK_USERNAME', null),
 
-            'icon' => null,
+            'icon' => env('BACKUP_NOTIFICATION_SLACK_ICON', null),
 
         ],
     ],
@@ -166,17 +168,6 @@ return [
                 \Spatie\Backup\Tasks\Monitor\HealthChecks\MaximumStorageInMegabytes::class => env('BACKUP_MAX_SIZE', 512),
             ],
         ],
-
-        /*
-        [
-            'name' => 'name of the second app',
-            'disks' => ['local', 's3'],
-            'health_checks' => [
-                \Spatie\Backup\Tasks\Monitor\HealthChecks\MaximumAgeInDays::class => 1,
-                \Spatie\Backup\Tasks\Monitor\HealthChecks\MaximumStorageInMegabytes::class => 5000,
-            ],
-        ],
-        */
     ],
 
     'cleanup' => [

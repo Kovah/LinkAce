@@ -11,6 +11,12 @@ on your own risk.
 | 0.x     | :x:                |
 | 1.x     | :white_check_mark: |
 
+### Support for PHP versions
+
+The PHP version supported by LinkAce is the oldest version of PHP that is still **officially supported** in terms of
+security fixes. You can check the currently supported versions on [php.net](https://www.php.net/supported-versions.php).
+
+
 ## Reporting a Vulnerability
 
 All dependencies are updated regularly, security fixes for those dependencies are released as fast as possible.

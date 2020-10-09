@@ -38,8 +38,8 @@ RUN npm install
 RUN npm run production
 
 # ================================
-# Prepare the final image
-FROM bitnami/php-fpm:7.4-prod
+# Prepare the final image including nginx
+FROM webdevops/php-nginx:7.4
 WORKDIR /app
 
 # Copy the app into the container
@@ -62,10 +62,7 @@ COPY ./server.php /app
 COPY ./.env.example /app/.env
 
 # Copy the PHP config files
-COPY ./resources/docker/php/php.ini /opt/bitnami/php/etc/conf.d/php.ini
-
-# Install MySQL Dump for automated backups
-RUN install_packages mariadb-client
+COPY ./resources/docker/php/php.ini /opt/docker/etc/php/php.ini
 
 # Copy files from the composer build
 COPY --from=builder /app/vendor /app/vendor
@@ -80,4 +77,7 @@ COPY --from=npm_builder /srv/public/assets/dist/css /app/public/assets/dist/css
 COPY --from=npm_builder /srv/public/mix-manifest.json /app/public/mix-manifest.json
 
 # Set correct permissions for the storage directory
+RUN chown -R application:application /app
 RUN chmod -R 0777 /app/storage
+
+ENV WEB_DOCUMENT_ROOT /app/public

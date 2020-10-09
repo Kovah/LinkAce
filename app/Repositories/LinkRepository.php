@@ -48,7 +48,7 @@ class LinkRepository
         /** @var Link $link */
         $link = Link::create($data);
 
-        self::processLinkTaxonmies($link, $data);
+        self::processLinkTaxonomies($link, $data);
 
         $link->initiateInternetArchiveBackup();
 
@@ -68,7 +68,7 @@ class LinkRepository
 
         $link->update($data);
 
-        self::processLinkTaxonmies($link, $data);
+        self::processLinkTaxonomies($link, $data);
 
         return $link;
     }
@@ -91,7 +91,7 @@ class LinkRepository
         return true;
     }
 
-    protected static function processLinkTaxonmies(Link $link, array $data)
+    protected static function processLinkTaxonomies(Link $link, array $data): void
     {
         if (isset($data['tags'])) {
             self::updateTagsForLink($link, $data['tags']);
@@ -124,6 +124,8 @@ class LinkRepository
 
             $link->lists()->detach();
         }
+
+        $link->load(['tags', 'lists']);
     }
 
     /**

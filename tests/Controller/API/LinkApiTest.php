@@ -52,9 +52,9 @@ class LinkApiTest extends ApiTestCase
 
     public function testFullCreateRequest(): void
     {
-        $list = factory(LinkList::class)->create();
-        $tag = factory(Tag::class)->create();
-        $tag2 = factory(Tag::class)->create();
+        $list = factory(LinkList::class)->create(['name' => 'Test List 1']);
+        $tag = factory(Tag::class)->create(['name' => 'a test 1']);
+        $tag2 = factory(Tag::class)->create(['name' => 'tag #2']);
 
         $response = $this->postJsonAuthorized('api/v1/links', [
             'url' => 'http://example.com',
@@ -69,6 +69,13 @@ class LinkApiTest extends ApiTestCase
         $response->assertOk()
             ->assertJson([
                 'url' => 'http://example.com',
+                'lists' => [
+                    ['name' => 'Test List 1'],
+                ],
+                'tags' => [
+                    ['name' => 'a test 1'],
+                    ['name' => 'tag #2'],
+                ],
             ]);
 
         $databaseLink = Link::first();
@@ -88,6 +95,10 @@ class LinkApiTest extends ApiTestCase
         $response->assertOk()
             ->assertJson([
                 'url' => 'http://example.com',
+                'tags' => [
+                    ['name' => 'tag 1'],
+                    ['name' => 'tag 2'],
+                ],
             ]);
 
         $databaseLink = Link::first();
@@ -107,6 +118,10 @@ class LinkApiTest extends ApiTestCase
         $response->assertOk()
             ->assertJson([
                 'url' => 'http://example.com',
+                'tags' => [
+                    ['name' => 'tag 1'],
+                    ['name' => 'tag 2'],
+                ],
             ]);
 
         $databaseLink = Link::first();
@@ -126,6 +141,11 @@ class LinkApiTest extends ApiTestCase
         $response->assertOk()
             ->assertJson([
                 'url' => 'http://example.com',
+                'tags' => [
+                    ['name' => 'Games 👾'],
+                    ['name' => 'Захватывающе'],
+                    ['name' => 'उत्तेजित करनेवाला'],
+                ],
             ]);
 
         $databaseTag = Tag::find(1);
