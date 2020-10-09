@@ -6,6 +6,7 @@ return [
     'app_settings' => 'Application Settings',
     'system_settings' => 'System Settings',
 
+    'language' => 'Language',
     'timezone' => 'Timezone',
     'date_format' => 'Date Format',
     'time_format' => 'Time Format',
