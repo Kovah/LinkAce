@@ -11,6 +11,29 @@
                 <div class="col-12 col-sm-8 col-md-6">
 
                     <div class="form-group">
+                        <label for="locale">
+                            @lang('settings.language')
+                        </label>
+                        <select id="locale" name="locale"
+                            class="simple-select {{ $errors->has('locale') ? ' is-invalid' : '' }}">
+                            @foreach(config('app.available_locales') as $key => $locale)
+                                <option value="{{ $key }}"
+                                    @if($user->settings()->get('locale') === $key) selected @endif>
+                                    {{ $locale }}
+                                </option>
+                            @endforeach
+                        </select>
+                        @if ($errors->has('locale'))
+                            <p class="invalid-feedback" role="alert">
+                                {{ $errors->first('locale') }}
+                            </p>
+                        @endif
+                    </div>
+
+                </div>
+                <div class="col-12 col-sm-8 col-md-6">
+
+                    <div class="form-group">
                         <label for="timezone">
                             @lang('settings.timezone')
                         </label>
@@ -26,29 +49,6 @@
                         @if ($errors->has('timezone'))
                             <p class="invalid-feedback" role="alert">
                                 {{ $errors->first('timezone') }}
-                            </p>
-                        @endif
-                    </div>
-
-                </div>
-                <div class="col-12 col-sm-8 col-md-6">
-
-                    <div class="form-group">
-                        <label for="links_new_tab">
-                            @lang('settings.links_new_tab')
-                        </label>
-                        <select id="links_new_tab" name="links_new_tab"
-                            class="simple-select {{ $errors->has('links_new_tab') ? ' is-invalid' : '' }}">
-                            <option value="0" @if($user->settings()->get('links_new_tab') === '0') selected @endif>
-                                @lang('linkace.no')
-                            </option>
-                            <option value="1" @if($user->settings()->get('links_new_tab') === '1') selected @endif>
-                                @lang('linkace.yes')
-                            </option>
-                        </select>
-                        @if ($errors->has('links_new_tab'))
-                            <p class="invalid-feedback" role="alert">
-                                {{ $errors->first('links_new_tab') }}
                             </p>
                         @endif
                     </div>
@@ -105,7 +105,7 @@
                 </div>
             </div>
 
-            <div class="row">
+            <div class="row mt-4">
                 <div class="col-12 col-sm-8 col-md-6">
 
                     <div class="form-group">
@@ -164,6 +164,33 @@
                     </div>
 
                 </div>
+            </div>
+
+            <div class="row">
+                <div class="col-12 col-sm-8 col-md-6">
+
+                    <div class="form-group">
+                        <label for="links_new_tab">
+                            @lang('settings.links_new_tab')
+                        </label>
+                        <select id="links_new_tab" name="links_new_tab"
+                            class="simple-select {{ $errors->has('links_new_tab') ? ' is-invalid' : '' }}">
+                            <option value="0" @if($user->settings()->get('links_new_tab') === '0') selected @endif>
+                                @lang('linkace.no')
+                            </option>
+                            <option value="1" @if($user->settings()->get('links_new_tab') === '1') selected @endif>
+                                @lang('linkace.yes')
+                            </option>
+                        </select>
+                        @if ($errors->has('links_new_tab'))
+                            <p class="invalid-feedback" role="alert">
+                                {{ $errors->first('links_new_tab') }}
+                            </p>
+                        @endif
+                    </div>
+
+                </div>
+                <div class="col-12 col-sm-8 col-md-6"></div>
             </div>
 
             @include('actions.settings.partials.user.app-settings.archive-backups')

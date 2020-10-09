@@ -25,6 +25,10 @@ class SettingsMiddleware
             config(['app.timezone' => $user_timezone]);
         }
 
+        if ($userLocale = usersettings('locale')) {
+            app()->setLocale($userLocale);
+        }
+
         return $next($request);
     }
 }

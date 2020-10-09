@@ -52,6 +52,7 @@ class UserSettingsControllerTest extends TestCase
     public function testValidUpdateApplicationSettingsResponse(): void
     {
         $response = $this->post('settings/app', [
+            'locale' => 'en_US',
             'timezone' => 'Europe/Berlin',
             'links_private_default' => '1',
             'notes_private_default' => '1',
@@ -68,6 +69,7 @@ class UserSettingsControllerTest extends TestCase
 
         $this->user->load('rawSettings'); // Reload cached settings from other tests
 
+        $this->assertEquals('en_US', usersettings('locale'));
         $this->assertEquals('Europe/Berlin', usersettings('timezone'));
         $this->assertEquals('1', usersettings('links_private_default'));
         $this->assertEquals('1', usersettings('notes_private_default'));
