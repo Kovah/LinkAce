@@ -11,7 +11,7 @@
                         <div class="d-sm-inline-block mt-1 mb-2 mb-sm-0">
                             {!! $link->getIcon('mr-1 mr-sm-2') !!}
                             @if($link->is_private)
-                                <i class="fa fa-fw fa-lock mr-1 mr-sm-2" title="@lang('link.private')"></i>
+                                <x-icon.lock class="fw mr-1 mr-sm-2" title="@lang('link.private')"/>
                             @endif
                         </div>
                         <h3 class="d-inline-block mb-0">
@@ -52,12 +52,12 @@
             <div class="btn-group btn-block mb-4 mt-4 mt-md-0">
                 <a href="{{ route('links.edit', [$link->id]) }}" class="btn btn-sm btn-primary"
                     aria-label="@lang('link.edit')">
-                    <i class="fas fa-edit mr-2"></i>
+                    <x-icon.edit class="mr-2"/>
                     <span class="d-none d-sm-inline">@lang('linkace.edit')</span>
                 </a>
                 <a onclick="event.preventDefault();document.getElementById('link-delete-{{ $link->id }}').submit();"
                     class="btn btn-sm btn-outline-danger cursor-pointer" aria-label="@lang('link.delete')">
-                    <i class="fas fa-trash-alt mr-2"></i>
+                    <x-icon.trash class="mr-2"/>
                     <span class="d-none d-sm-inline">@lang('linkace.delete')</span>
                 </a>
             </div>
@@ -155,7 +155,7 @@
                     @if($loop->index === 5 && $loop->count >= 10)
                         <a data-toggle="collapse" href="#link-history" role="button" class="d-inline-block mb-1"
                             aria-expanded="false" aria-controls="link-history">
-                            @lang('linkace.more') <i class="fa fa-caret-down fa-fw"></i>
+                            @lang('linkace.more') <x-icon.caret-down class="fw"/>
                         </a>
                         <div id="link-history" class="collapse">
                     @endif

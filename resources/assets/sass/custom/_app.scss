@@ -103,7 +103,9 @@ body:not(.bookmarklet) {
   @include button-size($btn-padding-y-xs, $btn-padding-x-xs, $btn-font-size-xs, $btn-line-height-xs, $btn-border-radius-xs);
 }
 
-.btn-group-xs > .btn { @extend .btn-xs; }
+.btn-group-xs > .btn {
+  @extend .btn-xs;
+}
 
 code {
   @include font-size($code-font-size);
@@ -115,6 +117,44 @@ code {
 
   a > & {
     color: inherit;
+  }
+}
+
+.icon {
+  -moz-osx-font-smoothing: grayscale;
+  -webkit-font-smoothing: antialiased;
+  display: inline-block;
+  font-style: normal;
+  font-variant: normal;
+  text-rendering: auto;
+  font-size: inherit;
+  line-height: 1;
+  height: 1em;
+  overflow: visible;
+  vertical-align: -0.125em;
+
+  path {
+    fill: currentColor;
+  }
+
+  &.fw {
+    width: 1em;
+  }
+}
+
+.icon-spin {
+  -webkit-animation: icon-spin 4s infinite linear;
+  animation: icon-spin 4s infinite linear;
+}
+
+@-webkit-keyframes icon-spin {
+  0% {
+    -webkit-transform: rotate(0deg);
+    transform: rotate(0deg);
+  }
+  100% {
+    -webkit-transform: rotate(360deg);
+    transform: rotate(360deg);
   }
 }
 

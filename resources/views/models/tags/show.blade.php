@@ -10,12 +10,12 @@
             <div class="ml-auto">
                 <a href="{{ route('tags.edit', [$tag->id]) }}" class="btn btn-sm btn-primary"
                     aria-label="@lang('tag.edit')">
-                    <i class="fas fa-edit mr-2"></i>
+                    <x-icon.edit class="mr-2"/>
                     @lang('linkace.edit')
                 </a>
                 <a onclick="event.preventDefault();document.getElementById('tag-delete-{{ $tag->id }}').submit();"
                     class="btn btn-sm btn-outline-danger" aria-label="@lang('tag.delete')">
-                    <i class="fas fa-trash-alt mr-2"></i>
+                    <x-icon.trash class="mr-2"/>
                     @lang('linkace.delete')
                 </a>
             </div>

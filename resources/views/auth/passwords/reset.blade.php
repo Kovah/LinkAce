@@ -64,7 +64,7 @@
                         </div>
 
                         <button type="submit" class="btn btn-primary">
-                            <i class="fas fa-save mr-2"></i> @lang('linkace.reset_password')
+                            <x-icon.save class="mr-2"/> @lang('linkace.reset_password')
                         </button>
 
                     </form>

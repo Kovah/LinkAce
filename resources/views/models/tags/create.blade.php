@@ -60,7 +60,7 @@
                     </div>
 
                     <button type="submit" class="btn btn-primary">
-                        <i class="fas fa-save mr-2"></i> @lang('tag.add')
+                        <x-icon.save class="mr-2"/> @lang('tag.add')
                     </button>
 
                 </div>

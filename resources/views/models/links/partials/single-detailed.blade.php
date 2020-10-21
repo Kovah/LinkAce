@@ -4,7 +4,7 @@
         <div class="d-flex align-items-top flex-wrap">
             <div class="mr-2 mw-100">
                 @if($link->is_private)
-                    <i class="fa fa-lock mr-1" title="@lang('link.private')"></i>
+                    <x-icon.lock class="mr-1" title="@lang('link.private')"/>
                 @endif
                 {!! $link->getIcon('mr-1') !!}
                 <a href="{{ $link->url }}" {!! linkTarget() !!}>{{ $link->title }}</a>
@@ -15,7 +15,7 @@
                 <button type="button" class="btn btn-xs btn-outline-secondary" title="@lang('sharing.share_link')"
                     data-toggle="collapse" data-target="#sharing-{{ $link->id }}"
                     aria-expanded="false" aria-controls="sharing-{{ $link->id }}">
-                    <i class="fas fa-share-alt fa-fw"></i>
+                    <x-icon.share class="fw"/>
                 </button>
             </div>
         </div>
@@ -55,17 +55,17 @@
                 <div class="btn-group mt-1 ml-md-2">
                     <a href="{{ route('links.show', [$link->id]) }}" class="btn btn-xs btn-outline-secondary"
                         title="@lang('link.show')">
-                        <i class="fas fa-info fa-fw"></i> @lang('link.show')
+                        <x-icon.info class="fw"/> @lang('link.show')
                     </a>
 
                     <a href="{{ route('links.edit', [$link->id]) }}" class="btn btn-xs btn-outline-secondary"
                         title="@lang('link.edit')">
-                        <i class="fas fa-edit fa-fw"></i> @lang('link.edit')
+                        <x-icon.edit class="fw"/> @lang('link.edit')
                     </a>
 
                     <a href="#" title="@lang('link.delete')" class="btn btn-xs btn-outline-secondary"
                         onclick="event.preventDefault();document.getElementById('link-delete-{{ $link->id }}').submit();">
-                        <i class="fas fa-trash-alt fa-fw"></i> @lang('link.delete')
+                        <x-icon.trash class="fw"/> @lang('link.delete')
                     </a>
                 </div>
 

@@ -73,12 +73,12 @@
                     <div class="d-sm-inline-block mb-3 mb-sm-0 mr-auto">
                         <button type="button" class="btn btn-sm btn-outline-danger"
                             onclick="window.deleteList.submit()">
-                            <i class="fas fa-trash-alt mr-2"></i> @lang('list.delete')
+                            <x-icon.trash class="mr-2"/> @lang('list.delete')
                         </button>
                     </div>
 
                     <button type="submit" class="btn btn-primary">
-                        <i class="fas fa-save mr-2"></i> @lang('list.update')
+                        <x-icon.save class="mr-2"/> @lang('list.update')
                     </button>
 
                 </div>

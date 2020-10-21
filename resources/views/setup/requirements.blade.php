@@ -16,9 +16,9 @@
                             <li>
                                 @lang('setup.requirements.' . $key)
                                 @if($successful)
-                                    <i class="fa fa-fw fa-check text-success"></i>
+                                    <x-icon.check class="text-success"/>
                                 @else
-                                    <i class="fa fa-fw fa-ban text-danger"></i>
+                                    <x-icon.ban class="text-danger"/>
                                 @endif
                             </li>
                         @endforeach

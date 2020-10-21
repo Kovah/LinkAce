@@ -7,7 +7,7 @@
             @lang('link.links')
         </h3>
         <a href="{{ route('links.create') }}" class="btn btn-sm btn-primary ml-auto" aria-label="@lang('link.add')">
-            <i class="fas fa-plus mr-2"></i>
+            <x-icon.plus class="mr-2"/>
             @lang('linkace.add')
         </a>
     </header>

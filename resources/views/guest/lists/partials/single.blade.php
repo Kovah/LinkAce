@@ -4,7 +4,7 @@
             <div class="d-flex align-items-top">
                 <div class="mr-2">
                     @if($list->is_private)
-                        <i class="fas fa-lock text-muted mr-1" title="@lang('list.private')"></i>
+                        <x-icon.lock class="text-muted mr-1" title="@lang('list.private')"/>
                     @endif
                     <a href="{{ route('guest.lists.show', [$list->id]) }}">{{ $list->name }}</a>
                 </div>

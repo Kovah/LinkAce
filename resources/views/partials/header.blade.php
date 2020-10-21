@@ -20,7 +20,6 @@
 
 <script defer src="{{ mix('assets/dist/js/dependencies.js') }}"></script>
 <script defer src="{{ mix('assets/dist/js/app.js') }}"></script>
-<script defer src="{{ mix('assets/dist/js/fontawesome.js') }}"></script>
 
 <meta property="la-app-data" content="{{ json_encode([
     'user' => [

@@ -11,7 +11,7 @@ use App\Models\Link;
  */
 class Sharing
 {
-    public static $link_classes = 'share-link btn btn-xs btn-outline-secondary';
+    public static $linkClasses = 'share-link btn btn-xs btn-outline-secondary';
 
     public static $placeholders = [
         '#URL#',
@@ -29,20 +29,19 @@ class Sharing
      */
     public static function getShareLink(string $service, Link $link): string
     {
-        $service_details = config('sharing.services.' . $service);
-        $service_name = trans('sharing.service.' . $service);
-        $share_action = $service_details['action'];
-        $link_data = self::generateLinkData($link);
+        $serviceDetails = config('sharing.services.' . $service);
+        $serviceName = trans('sharing.service.' . $service);
+        $shareAction = $serviceDetails['action'];
+        $linkData = self::generateLinkData($link);
 
-        $share_action = str_replace(self::$placeholders, $link_data, $share_action);
+        $shareAction = str_replace(self::$placeholders, $linkData, $shareAction);
 
-        $share_link = '<a class="' . self::$link_classes . '"';
-        $share_link .= ' href="' . $share_action . '"';
-        $share_link .= ' title="' . trans('sharing.share', ['service' => $service_name]) . '">';
-        $share_link .= '<i class="fa-fw ' . $service_details['icon'] . '"></i>';
-        $share_link .= '</a>';
-
-        return $share_link;
+        return view('models.links.partials.share-link', [
+            'class' => self::$linkClasses,
+            'href' => $shareAction,
+            'title' => trans('sharing.share', ['service' => $serviceName]),
+            'icon' => $serviceDetails['icon'],
+        ]);
     }
 
     /**

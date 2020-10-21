@@ -6,7 +6,7 @@
         <p>@lang('linkace.bookmarklet_close')</p>
 
         <a href="{{ route('front') }}" target="_blank" class="btn btn-primary">
-            <i class="fas fa-link mr-2"></i>
+            <x-icon.linkace-icon class="mr-2"/>
             @lang('linkace.open_linkace')
         </a>
     </div>

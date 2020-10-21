@@ -59,12 +59,12 @@
                     <div class="d-sm-inline-block mb-3 mb-sm-0 mr-auto">
                         <button type="button" class="btn btn-sm btn-outline-danger"
                             onclick="window.deleteTag.submit()">
-                            <i class="fas fa-trash-alt mr-2"></i> @lang('tag.delete')
+                            <x-icon.trash class="mr-2"/> @lang('tag.delete')
                         </button>
                     </div>
 
                     <button type="submit" class="btn btn-primary">
-                        <i class="fas fa-save mr-2"></i> @lang('tag.update')
+                        <x-icon.save class="mr-2"/> @lang('tag.update')
                     </button>
 
                 </div>

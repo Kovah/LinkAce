@@ -8,8 +8,7 @@ mix.disableNotifications();
 
 mix.setPublicPath('public');
 
-mix.js('resources/assets/js/app.js', 'assets/dist/js');
-mix.js('resources/assets/js/fontawesome.js', 'assets/dist/js')
+mix.js('resources/assets/js/app.js', 'assets/dist/js')
   .version();
 
 mix.combine([

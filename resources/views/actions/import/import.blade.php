@@ -33,11 +33,11 @@
 
                 <button type="button" class="btn btn-primary import-submit">
                     <span class="import-submit-processing d-none">
-                        <i class="fas fa-cog fa-spin mr-2"></i>
+                        <x-icon.cog class="icon-spin mr-2"/>
                         @lang('import.import_running')
                     </span>
                     <span class="import-submit-default">
-                        <i class="fas fa-file-import mr-2"></i>
+                        <x-icon.file-import class="mr-2"/>
                         @lang('import.start_import')
                     </span>
                 </button>

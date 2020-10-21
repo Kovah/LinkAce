@@ -4,7 +4,7 @@
             <div class="d-flex align-items-top">
                 <div class="mr-2">
                     @if($list->is_private)
-                        <i class="fas fa-lock text-muted mr-1" title="@lang('list.private')"></i>
+                        <x-icon.lock class="text-muted mr-1" title="@lang('list.private')"/>
                     @endif
                     <a href="{{ route('lists.show', [$list->id]) }}">{{ $list->name }}</a>
                 </div>
@@ -27,12 +27,12 @@
         <div class="card-footer">
             <div class="btn-group w-100">
                 <a href="{{ route('lists.edit', [$list->id]) }}" class="card-link">
-                    <i class="fas fa-edit"></i>
+                    <x-icon.edit/>
                 </a>
                 <a href="#"
                     onclick="event.preventDefault();document.getElementById('list-delete-{{ $list->id }}').submit();"
                     title=" @lang('list.delete')" class="card-link cursor-pointer">
-                    <i class="fas fa-trash-alt"></i>
+                    <x-icon.trash/>
                 </a>
             </div>
 

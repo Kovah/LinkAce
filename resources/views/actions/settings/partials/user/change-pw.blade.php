@@ -33,7 +33,7 @@
                 </div>
 
                 <button type="submit" class="btn btn-primary">
-                    <i class="fas fa-key mr-2"></i> @lang('settings.change_password')
+                    <x-icon.key class="mr-2"/> @lang('settings.change_password')
                 </button>
 
             </form>

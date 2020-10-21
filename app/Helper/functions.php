@@ -97,10 +97,10 @@ function getPaginationLimit()
  */
 function getShareLinks(Link $link): string
 {
-    $cache_key = 'sharelinks_link_' . $link->id . (auth()->guest() ? '_guest' : '');
-    $cache_duration = config('linkace.default.cache_duration');
+    $cacheKey = 'sharelinks_link_' . $link->id . (auth()->guest() ? '_guest' : '');
+    $cacheDuration = config('linkace.default.cache_duration');
 
-    return Cache::remember($cache_key, $cache_duration, function () use ($link) {
+    return Cache::remember($cacheKey, $cacheDuration, function () use ($link) {
         $services = config('sharing.services');
         $links = '';
 
@@ -149,30 +149,26 @@ function displaySVG($path, $width = null, $height = null)
  */
 function tableSorter($label, $route, $type, $order_by, $order_dir): string
 {
-    $out = '<div class="d-flex">';
-    $out .= '<span class="mr-1">' . e($label) . '</span>';
-    $out .= '<span class="table-sorter ml-auto">';
-
-    $order_url = $route . '?orderBy=' . $type . '&orderDir=';
-    $order_icon = 'fa-sort';
+    $orderUrl = $route . '?orderBy=' . $type . '&orderDir=';
+    $orderIcon = 'icon.sort-up';
 
     if ($type === $order_by) {
         if ($order_dir === 'asc') {
-            $order_url .= 'desc';
-            $order_icon = 'fa-sort-up';
+            $orderUrl .= 'desc';
+            $orderIcon = 'icon.sort-up';
         } else {
-            $order_url .= 'asc';
-            $order_icon = 'fa-sort-down';
+            $orderUrl .= 'asc';
+            $orderIcon = 'icon.sort-down';
         }
     } else {
-        $order_url .= 'asc';
+        $orderUrl .= 'asc';
     }
 
-    $out .= '<a href="' . $order_url . '"><i class="fa ' . $order_icon . '"></i></a>';
-    $out .= '</span>';
-    $out .= '</div>';
-
-    return $out;
+    return view('partials.table-sorter', [
+        'label' => $label,
+        'url' => $orderUrl,
+        'icon' => $orderIcon,
+    ]);
 }
 
 /**

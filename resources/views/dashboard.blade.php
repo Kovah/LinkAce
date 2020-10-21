@@ -26,7 +26,7 @@
                         aria-label="@lang('link.url')">
                     <div class="input-group-append">
                         <button class="btn btn-primary" type="submit">
-                            <i class="fas fa-plus mr-2"></i> @lang('linkace.add')
+                            <x-icon.plus class="mr-2"/> @lang('linkace.add')
                         </button>
                     </div>
                 </div>

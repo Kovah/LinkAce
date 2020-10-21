@@ -14,7 +14,7 @@
                     <div class="input-group mb-3">
                         <div class="input-group-prepend">
                             <div class="input-group-text">
-                                <i class="fas fa-fw fa-envelope"></i>
+                                <x-icon.envelope class="fw"/>
                             </div>
                         </div>
                         <input type="email" name="email" id="email" class="form-control"
@@ -34,7 +34,7 @@
                     <div class="input-group mb-3">
                         <div class="input-group-prepend">
                             <div class="input-group-text">
-                                <i class="fas fa-fw fa-lock"></i>
+                                <x-icon.lock class="fw"/>
                             </div>
                         </div>
                         <input type="password" name="password" id="password" class="form-control"

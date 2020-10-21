@@ -120,7 +120,7 @@
                 @endif
 
                 <button type="submit" class="btn btn-primary">
-                    <i class="fas fa-save mr-2"></i> @lang('link.add')
+                    <x-icon.save class="mr-2"/> @lang('link.add')
                 </button>
 
             </div>

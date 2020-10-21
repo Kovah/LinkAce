@@ -16,7 +16,7 @@
                 <br>
 
                 <a href="{{ route('login') }}" class="btn btn-lg btn-primary">
-                    <i class="fas fa-unlock mr-2"></i> @lang('linkace.login')
+                    <x-icon.ban class="mr-2"/> @lang('linkace.login')
                 </a>
 
             </div>

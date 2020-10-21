@@ -18,7 +18,7 @@
                     @csrf
                     <input type="hidden" name="model" value="links">
                     <button class="btn btn-sm btn-danger" title="@lang('trash.clear_trash')">
-                        <i class="fas fa-recycle"></i> @lang('trash.clear_trash')
+                        <x-icon.recycle/> @lang('trash.clear_trash')
                     </button>
                 </form>
             </div>
@@ -43,7 +43,7 @@
                     @csrf
                     <input type="hidden" name="model" value="lists">
                     <button class="btn btn-sm btn-danger" title="@lang('trash.clear_trash')">
-                        <i class="fas fa-recycle"></i> @lang('trash.clear_trash')
+                        <x-icon.recycle/> @lang('trash.clear_trash')
                     </button>
                 </form>
             </div>
@@ -68,7 +68,7 @@
                     @csrf
                     <input type="hidden" name="model" value="tags">
                     <button class="btn btn-sm btn-danger" title="@lang('trash.clear_trash')">
-                        <i class="fas fa-recycle"></i> @lang('trash.clear_trash')
+                        <x-icon.recycle/> @lang('trash.clear_trash')
                     </button>
                 </form>
             </div>
@@ -93,7 +93,7 @@
                     @csrf
                     <input type="hidden" name="model" value="notes">
                     <button class="btn btn-sm btn-danger" title="@lang('trash.clear_trash')">
-                        <i class="fas fa-recycle"></i> @lang('trash.clear_trash')
+                        <x-icon.recycle/> @lang('trash.clear_trash')
                     </button>
                 </form>
             </div>

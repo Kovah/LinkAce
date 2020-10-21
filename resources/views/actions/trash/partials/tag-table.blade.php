@@ -23,7 +23,7 @@
                         <input type="hidden" name="model" value="tag">
                         <input type="hidden" name="id" value="{{ $tag->id }}">
                         <button type="submit" class="btn btn-sm btn-outline-primary" title="@lang('trash.restore')">
-                            <i class="fas fa-reply"></i>
+                            <x-icon.reply/>
                         </button>
                     </form>
                 </td>
