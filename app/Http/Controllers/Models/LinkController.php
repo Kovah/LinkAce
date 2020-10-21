@@ -27,15 +27,15 @@ class LinkController extends Controller
         $links = Link::byUser(auth()->id())
             ->orderBy(
                 $request->input('orderBy', 'created_at'),
-                $request->input('orderDir', 'DESC')
+                $request->input('orderDir', 'desc')
             )
             ->paginate(getPaginationLimit());
 
         return view('models.links.index', [
             'links' => $links,
             'route' => $request->getBaseUrl(),
-            'order_by' => $request->input('orderBy', 'created_at'),
-            'order_dir' => $request->input('orderDir', 'DESC'),
+            'orderBy' => $request->input('orderBy', 'created_at'),
+            'orderDir' => $request->input('orderDir', 'desc'),
         ]);
     }
 
@@ -83,7 +83,6 @@ class LinkController extends Controller
 
         if ($request->input('reload_view')) {
             session()->flash('reload_view', true);
-
             return redirect()->route($isBookmarklet ? 'bookmarklet-add' : 'links.create');
         }
 
@@ -136,7 +135,6 @@ class LinkController extends Controller
         $link = LinkRepository::update($link, $request->all());
 
         flash(trans('link.updated_successfully'), 'success');
-
         return redirect()->route('links.show', [$link->id]);
     }
 
@@ -160,7 +158,6 @@ class LinkController extends Controller
         }
 
         flash(trans('link.deleted_successfully'), 'warning');
-
         return redirect()->route('links.index');
     }
 

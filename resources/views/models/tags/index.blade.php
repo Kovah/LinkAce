@@ -15,7 +15,7 @@
     <div class="card my-3">
         <div class="card-table">
 
-            @if(!$tags->isEmpty())
+            @if($tags->isNotEmpty())
 
                 @include('models.tags.partials.table')
 
@@ -30,8 +30,8 @@
         </div>
     </div>
 
-    @if(!$tags->isEmpty())
-        {!! $tags->onEachSide(1)->links() !!}
+    @if($tags->isNotEmpty())
+        {!! $tags->onEachSide(1)->appends(['orderBy' => $orderBy, 'orderDir' => $orderDir])->links() !!}
     @endif
 
 @endsection

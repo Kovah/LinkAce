@@ -24,6 +24,7 @@ class TagController extends Controller
     public function index(Request $request): View
     {
         $tags = Tag::byUser(auth()->id())
+            ->withCount('links')
             ->orderBy(
                 $request->input('orderBy', 'name'),
                 $request->input('orderDir', 'ASC')
@@ -32,8 +33,8 @@ class TagController extends Controller
         return view('models.tags.index', [
             'tags' => $tags,
             'route' => $request->getBaseUrl(),
-            'order_by' => $request->input('orderBy', 'name'),
-            'order_dir' => $request->input('orderDir', 'ASC'),
+            'orderBy' => $request->input('orderBy', 'name'),
+            'orderDir' => $request->input('orderDir', 'ASC'),
         ]);
     }
 
@@ -80,22 +81,19 @@ class TagController extends Controller
     {
         $tag = Tag::findOrFail($id);
 
-        $links = $tag->links()->byUser(auth()->id());
-
-        if ($request->has('orderBy') && $request->has('orderDir')) {
-            $links->orderBy($request->input('orderBy'), $request->input('orderDir'));
-        } else {
-            $links->orderBy('created_at', 'DESC');
-        }
-
-        $links = $links->paginate(getPaginationLimit());
+        $links = $tag->links()->byUser(auth()->id())
+            ->orderBy(
+                $request->input('orderBy', 'created_at'),
+                $request->input('orderDir', 'desc')
+            )
+            ->paginate(getPaginationLimit());
 
         return view('models.tags.show', [
             'tag' => $tag,
-            'tag_links' => $links,
+            'tagLinks' => $links,
             'route' => $request->getBaseUrl(),
-            'order_by' => $request->input('orderBy'),
-            'order_dir' => $request->input('orderDir'),
+            'orderBy' => $request->input('orderBy', 'created_at'),
+            'orderDir' => $request->input('orderDir', 'desc'),
         ]);
     }
 
@@ -127,7 +125,6 @@ class TagController extends Controller
         $tag = TagRepository::update($tag, $data);
 
         flash(trans('tag.updated_successfully'), 'success');
-
         return redirect()->route('tags.show', [$tag->id]);
     }
 
@@ -151,7 +148,6 @@ class TagController extends Controller
         }
 
         flash(trans('tag.deleted_successfully'), 'warning');
-
         return redirect()->route('tags.index');
     }
 }

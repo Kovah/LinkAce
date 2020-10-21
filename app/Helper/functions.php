@@ -143,17 +143,17 @@ function displaySVG($path, $width = null, $height = null)
  * @param string $label
  * @param string $route
  * @param string $type
- * @param string $order_by
- * @param string $order_dir
+ * @param string $orderBy
+ * @param string $orderDir
  * @return string
  */
-function tableSorter($label, $route, $type, $order_by, $order_dir): string
+function tableSorter($label, $route, $type, $orderBy, $orderDir): string
 {
     $orderUrl = $route . '?orderBy=' . $type . '&orderDir=';
-    $orderIcon = 'icon.sort-up';
+    $orderIcon = 'icon.sort';
 
-    if ($type === $order_by) {
-        if ($order_dir === 'asc') {
+    if ($type === $orderBy) {
+        if ($orderDir === 'asc') {
             $orderUrl .= 'desc';
             $orderIcon = 'icon.sort-up';
         } else {
