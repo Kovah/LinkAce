@@ -18,6 +18,8 @@ return [
     'order_by.url:desc' => '按网址降序排序',
     'order_by.created_at:asc' => '按创建日期升序排序',
     'order_by.created_at:desc' => '按创建日期降序排序',
+    'order_by.number_links:asc' => '',
+    'order_by.number_links:desc' => '',
 
     'no_results' => '未找到任何结果。',
 
