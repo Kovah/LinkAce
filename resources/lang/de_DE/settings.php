@@ -6,7 +6,7 @@ return [
     'app_settings' => 'Anwendungseinstellungen',
     'system_settings' => 'Systemeinstellungen',
 
-    'language' => 'Sprache',
+    'language' => '',
     'timezone' => 'Zeitzone',
     'date_format' => 'Datumsformat',
     'time_format' => 'Zeitformat',
