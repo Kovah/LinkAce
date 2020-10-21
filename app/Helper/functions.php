@@ -213,3 +213,18 @@ function getVersionFromPackage(): ?string
 
     return isset($package->version) ? 'v' . $package->version : null;
 }
+
+/**
+ * Properly escape symbols used in search queries.
+ *
+ * @param string $query
+ * @return string
+ */
+function escapeSearchQuery(string $query): string
+{
+    return str_replace(
+        ['\\', '%', '_', '*'],
+        ['\\\\', '\\%', '\\_', '\\*'],
+        $query
+    );
+}
