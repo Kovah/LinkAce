@@ -6,7 +6,7 @@ return [
     'app_settings' => '应用程序设置',
     'system_settings' => '系统设置',
 
-    'language' => '语言',
+    'language' => '',
     'timezone' => '时区',
     'date_format' => '日期格式',
     'time_format' => '时间格式',
