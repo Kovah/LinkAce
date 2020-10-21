@@ -27,7 +27,6 @@
 
     <script src="{{ mix('assets/dist/js/dependencies.js') }}"></script>
     <script src="{{ mix('assets/dist/js/app.js') }}"></script>
-    <script src="{{ mix('assets/dist/js/fontawesome.js') }}"></script>
     @stack('scripts')
 
 </div>
