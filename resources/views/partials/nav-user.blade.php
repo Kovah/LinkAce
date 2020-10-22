@@ -24,7 +24,7 @@
                 @lang('export.export')
             </a>
             <div class="dropdown-divider"></div>
-            <a href="{{ route('get-sysstemsettings') }}" class="dropdown-item">
+            <a href="{{ route('get-systemsettings') }}" class="dropdown-item">
                 @lang('settings.system_settings')
             </a>
         </div>

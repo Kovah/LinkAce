@@ -105,7 +105,11 @@ function getShareLinks(Link $link): string
         $links = '';
 
         foreach ($services as $service => $details) {
-            if (usersettings('share_' . $service) || auth()->guest()) {
+            if (request()->is('guest/*')) {
+                if (systemsettings('guest_share_' . $service)) {
+                    $links .= Sharing::getShareLink($service, $link);
+                }
+            } elseif (usersettings('share_' . $service)) {
                 $links .= Sharing::getShareLink($service, $link);
             }
         }
@@ -191,7 +195,13 @@ function waybackLink($link): ?string
  */
 function linkTarget(): string
 {
-    return usersettings('links_new_tab') ? 'target="_blank" rel="noopener noreferrer"' : '';
+    $newTab = 'target="_blank" rel="noopener noreferrer"';
+
+    if (request()->is('guest/*')) {
+        return systemsettings('guest_links_new_tab') ? $newTab : '';
+    }
+
+    return usersettings('links_new_tab') ? $newTab : '';
 }
 
 /**

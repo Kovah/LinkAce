@@ -126,7 +126,7 @@ Route::group(['middleware' => ['auth']], function () {
         ->name('generate-api-token');
 
     Route::get('settings/system', [SystemSettingsController::class, 'getSystemSettings'])
-        ->name('get-sysstemsettings');
+        ->name('get-systemsettings');
     Route::post('settings/system', [SystemSettingsController::class, 'saveSystemSettings'])
         ->name('save-settings-system');
     Route::post('settings/generate-cron-token', [SystemSettingsController::class, 'generateCronToken'])

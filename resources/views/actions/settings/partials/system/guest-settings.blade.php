@@ -70,6 +70,37 @@
                 </div>
             </div>
 
+            <div class="row">
+                <div class="col-12 col-sm-8 col-md-6">
+
+                    <div class="form-group">
+                        <label for="guest_links_new_tab">
+                            @lang('settings.links_new_tab')
+                        </label>
+                        <select id="guest_links_new_tab" name="guest_links_new_tab"
+                            class="simple-select {{ $errors->has('guest_links_new_tab') ? ' is-invalid' : '' }}">
+                            <option value="0" @if(systemsettings('guest_links_new_tab') === '0') selected @endif>
+                                @lang('linkace.no')
+                            </option>
+                            <option value="1" @if(systemsettings('guest_links_new_tab') === '1') selected @endif>
+                                @lang('linkace.yes')
+                            </option>
+                        </select>
+                        @if ($errors->has('guest_links_new_tab'))
+                            <p class="invalid-feedback" role="alert">
+                                {{ $errors->first('guest_links_new_tab') }}
+                            </p>
+                        @endif
+                    </div>
+
+                </div>
+                <div class="col-12 col-sm-8 col-md-6"></div>
+            </div>
+
+            @include('actions.settings.partials.system.guest.dark-mode')
+
+            @include('actions.settings.partials.system.guest.sharing')
+
             <button type="submit" class="btn btn-primary">
                 <x-icon.save class="mr-2"/> @lang('settings.save_settings')
             </button>
