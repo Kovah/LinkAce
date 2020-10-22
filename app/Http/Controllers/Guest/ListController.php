@@ -12,15 +12,23 @@ class ListController extends Controller
     /**
      * Display an overview of all lists.
      *
+     * @param Request $request
      * @return View
      */
-    public function index(): View
+    public function index(Request $request): View
     {
         $lists = LinkList::isPrivate(false)
+            ->withCount('links')
+            ->orderBy(
+                $request->input('orderBy', 'name'),
+                $request->input('orderDir', 'asc')
+            )
             ->paginate(getPaginationLimit());
 
         return view('guest.lists.index', [
             'lists' => $lists,
+            'orderBy' => $request->input('orderBy', 'name'),
+            'orderDir' => $request->input('orderDir', 'asc'),
         ]);
     }
 
@@ -39,15 +47,15 @@ class ListController extends Controller
             ->privateOnly(false)
             ->orderBy(
                 $request->input('orderBy', 'title'),
-                $request->input('orderDir', 'ASC')
+                $request->input('orderDir', 'asc')
             )->paginate(getPaginationLimit());
 
         return view('guest.lists.show', [
             'list' => $list,
-            'list_links' => $links,
+            'listLinks' => $links,
             'route' => $request->getBaseUrl(),
-            'order_by' => $request->input('orderBy', 'title'),
-            'order_dir' => $request->input('orderDir', 'ASC'),
+            'orderBy' => $request->input('orderBy', 'title'),
+            'orderDir' => $request->input('orderDir', 'asc'),
         ]);
     }
 }

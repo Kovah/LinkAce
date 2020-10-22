@@ -147,6 +147,12 @@ Route::group(['middleware' => ['auth']], function () {
 // Guest access routes
 Route::prefix('guest')->middleware(['guestaccess'])->group(function () {
 
+    Route::resource('links', GuestLinkController::class)
+        ->only(['index'])
+        ->names([
+            'index' => 'guest.links.index',
+        ]);
+
     Route::resource('lists', GuestListController::class)
         ->only(['index', 'show'])
         ->names([
@@ -154,15 +160,10 @@ Route::prefix('guest')->middleware(['guestaccess'])->group(function () {
             'show' => 'guest.lists.show',
         ]);
 
-    Route::resource('links', GuestLinkController::class)
-        ->only(['index'])
-        ->names([
-            'index' => 'guest.links.index',
-        ]);
-
     Route::resource('tags', GuestTagController::class)
-        ->only(['show'])
+        ->only(['index', 'show'])
         ->names([
+            'index' => 'guest.tags.index',
             'show' => 'guest.tags.show',
         ]);
 });

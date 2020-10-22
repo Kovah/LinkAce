@@ -80,13 +80,13 @@ function formatDateTime(Carbon $date, bool $use_relational = false): string
  */
 function getPaginationLimit()
 {
-    $user_limit = usersettings('listitem_count');
+    $default = config('linkace.default.pagination');
 
-    if ($user_limit) {
-        return $user_limit;
+    if (request()->is('guest/*')) {
+        return systemsettings('guest_listitem_count') ?: $default;
     }
 
-    return config('linkace.default.pagination');
+    return usersettings('listitem_count') ?: $default;
 }
 
 /**

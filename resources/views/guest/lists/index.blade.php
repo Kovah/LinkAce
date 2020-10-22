@@ -3,9 +3,12 @@
 @section('content')
 
     <header class="d-flex align-items-center">
-        <h3 class="mb-0">
+        <h3 class="mb-0 mr-3">
             @lang('list.lists')
         </h3>
+        <div class="dropdown ml-auto">
+            @include('models.lists.partials.index-order-dropdown', ['baseRoute' => 'lists.index'])
+        </div>
     </header>
 
     @if(!$lists->isEmpty())
@@ -25,7 +28,7 @@
     @endif
 
     @if(!$lists->isEmpty())
-        {!! $lists->onEachSide(1)->links() !!}
+        {!! $lists->onEachSide(1)->appends(['orderBy' => $orderBy, 'orderDir' => $orderDir])->links() !!}
     @endif
 
 @endsection

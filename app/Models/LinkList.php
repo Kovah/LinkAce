@@ -26,6 +26,7 @@ use Illuminate\Database\Eloquent\SoftDeletes;
  * @property-read Collection|Link[] $links
  * @property-read User              $user
  * @method static Builder|Tag byUser($user_id)
+ * @method static Builder|Tag isPrivate(bool $private)
  */
 class LinkList extends Model
 {

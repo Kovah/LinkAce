@@ -5,6 +5,7 @@ return [
     'account_settings' => 'Account Settings',
     'app_settings' => 'Application Settings',
     'system_settings' => 'System Settings',
+    'guest_settings' => 'Guest Settings',
 
     'language' => 'Language',
     'timezone' => 'Timezone',
@@ -86,4 +87,6 @@ return [
     'update_check_version_found' => 'Update found. Version #VERSION# is available.',
     'update_check_success' => 'No update found.',
     'update_check_failed' => 'Could not check for updates.',
+
+    'guest_settings_info' => 'The following settings will apply to guests visiting your site, if guest mode is enabled.',
 ];

@@ -23,11 +23,11 @@
         </div>
         <div class="card-table">
 
-            @include('guest.links.partials.table', ['links' => $list_links])
+            @include('guest.links.partials.table', ['links' => $listLinks])
 
         </div>
     </div>
 
-    {!! $list_links->onEachSide(1)->links() !!}
+    {!! $listLinks->onEachSide(1)->appends(['orderBy' => $orderBy, 'orderDir' => $orderDir])->links() !!}
 
 @endsection

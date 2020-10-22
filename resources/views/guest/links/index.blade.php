@@ -6,14 +6,23 @@
         <h3 class="mb-0">
             @lang('link.links')
         </h3>
+        <div class="dropdown ml-auto">
+            @include('models.links.partials.index-order-dropdown', ['baseRoute' => 'guest.links.index'])
+        </div>
     </header>
 
-    <section class="link-wrapper my-3">
-        @if(!$links->isEmpty())
+    <section class="my-4">
+        @if($links->isNotEmpty())
 
-            @foreach($links as $link)
-                @include('guest.links.partials.single')
-            @endforeach
+            <div class="link-wrapper">
+                @if((int)systemsettings('guest_link_display_mode') === Link::DISPLAY_CARDS)
+                    @include('guest.links.partials.list-cards')
+                @elseif((int)systemsettings('guest_link_display_mode') === Link::DISPLAY_LIST_SIMPLE)
+                    @include('guest.links.partials.list-simple')
+                @else
+                    @include('guest.links.partials.list-detailed')
+                @endif
+            </div>
 
         @else
 
@@ -24,8 +33,8 @@
         @endif
     </section>
 
-    @if(!$links->isEmpty())
-        {!! $links->onEachSide(1)->links() !!}
+    @if($links->isNotEmpty())
+        {!! $links->onEachSide(1)->appends(['orderBy' => $orderBy, 'orderDir' => $orderDir])->links() !!}
     @endif
 
 @endsection
