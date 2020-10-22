@@ -4,7 +4,7 @@
 
     <header class="d-flex align-items-center">
         <h3 class="mb-0">
-            @lang('link.links')
+            @lang('tag.tags')
         </h3>
     </header>
 
@@ -27,7 +27,7 @@
     </div>
 
     @if(!$tags->isEmpty())
-        {!! $tags->onEachSide(1)->links() !!}
+        {!! $tags->onEachSide(1)->appends(['orderBy' => $orderBy, 'orderDir' => $orderDir])->links() !!}
     @endif
 
 @endsection

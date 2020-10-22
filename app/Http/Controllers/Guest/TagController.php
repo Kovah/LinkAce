@@ -3,12 +3,37 @@
 namespace App\Http\Controllers\Guest;
 
 use App\Http\Controllers\Controller;
+use App\Models\LinkList;
 use App\Models\Tag;
 use Illuminate\Http\Request;
 use Illuminate\View\View;
 
 class TagController extends Controller
 {
+    /**
+     * Display an overview of all lists.
+     *
+     * @param Request $request
+     * @return View
+     */
+    public function index(Request $request): View
+    {
+        $tags = Tag::isPrivate(false)
+            ->withCount('links')
+            ->orderBy(
+                $request->input('orderBy', 'name'),
+                $request->input('orderDir', 'asc')
+            )
+            ->paginate(getPaginationLimit());
+
+        return view('guest.tags.index', [
+            'tags' => $tags,
+            'route' => $request->getBaseUrl(),
+            'orderBy' => $request->input('orderBy', 'name'),
+            'orderDir' => $request->input('orderDir', 'asc'),
+        ]);
+    }
+
     /**
      * Display the specified resource.
      *
@@ -29,10 +54,10 @@ class TagController extends Controller
 
         return view('guest.tags.show', [
             'tag' => $tag,
-            'tag_links' => $links,
+            'tagLinks' => $links,
             'route' => $request->getBaseUrl(),
-            'order_by' => $request->input('orderBy', 'title'),
-            'order_dir' => $request->input('orderDir', 'ASC'),
+            'orderBy' => $request->input('orderBy', 'title'),
+            'orderDir' => $request->input('orderDir', 'ASC'),
         ]);
     }
 }
