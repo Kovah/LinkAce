@@ -21,14 +21,14 @@ class LinkUpdateTest extends TestCase
     {
         parent::setUp();
 
-        $this->user = factory(User::class)->create();
+        $this->user = User::factory()->create();
     }
 
     public function testValidLinkUpdate(): void
     {
         $this->be($this->user);
 
-        $link = factory(Link::class)->create();
+        $link = Link::factory()->create();
 
         $changedData = [
             'title' => 'This is a new title!',

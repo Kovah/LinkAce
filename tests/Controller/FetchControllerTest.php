@@ -18,15 +18,15 @@ class FetchControllerTest extends TestCase
     {
         parent::setUp();
 
-        $user = factory(User::class)->create();
+        $user = User::factory()->create();
         $this->actingAs($user);
     }
 
     public function testTagsQuery(): void
     {
-        factory(Tag::class)->create(['name' => 'testTag']); // must be found
-        factory(Tag::class)->create(['name' => 'test*Tag']); // must be found
-        factory(Tag::class)->create(['name' => 'blablaTag']); // must not be found
+        Tag::factory()->create(['name' => 'testTag']); // must be found
+        Tag::factory()->create(['name' => 'test*Tag']); // must be found
+        Tag::factory()->create(['name' => 'blablaTag']); // must not be found
 
         $response = $this->post('fetch/tags', [
             'query' => 'test',
@@ -43,9 +43,9 @@ class FetchControllerTest extends TestCase
 
     public function testListsQuery(): void
     {
-        factory(LinkList::class)->create(['name' => 'testList']); // must be found
-        factory(LinkList::class)->create(['name' => 'test*List']); // must be found
-        factory(LinkList::class)->create(['name' => 'blablaList']); // must not be found
+        LinkList::factory()->create(['name' => 'testList']); // must be found
+        LinkList::factory()->create(['name' => 'test*List']); // must be found
+        LinkList::factory()->create(['name' => 'blablaList']); // must not be found
 
         $response = $this->post('fetch/lists', [
             'query' => 'test',
@@ -62,7 +62,7 @@ class FetchControllerTest extends TestCase
 
     public function testExistingUrlSearch(): void
     {
-        factory(Link::class)->create(['url' => 'https://duckduckgo.com']);
+        Link::factory()->create(['url' => 'https://duckduckgo.com']);
 
         $response = $this->post('fetch/existing-links', [
             'query' => 'https://duckduckgo.com',
@@ -73,7 +73,7 @@ class FetchControllerTest extends TestCase
 
     public function testExistingUrlSearchWithoutResult(): void
     {
-        factory(Link::class)->create(['url' => 'https://duckduckgo.com']);
+        Link::factory()->create(['url' => 'https://duckduckgo.com']);
 
         $response = $this->post('fetch/existing-links', [
             'query' => 'https://microsoft.com',

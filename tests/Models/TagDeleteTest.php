@@ -21,14 +21,14 @@ class TagDeleteTest extends TestCase
     {
         parent::setUp();
 
-        $this->user = factory(User::class)->create();
+        $this->user = User::factory()->create();
     }
 
     public function testValidCategoryCreation(): void
     {
         $this->be($this->user);
 
-        $tag = factory(Tag::class)->create();
+        $tag = Tag::factory()->create();
 
         $deletionResult = TagRepository::delete($tag);
 

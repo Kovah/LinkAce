@@ -12,8 +12,8 @@ class LinkNotesTest extends ApiTestCase
 
     public function testLinksRequest(): void
     {
-        $link = factory(Link::class)->create();
-        $note = factory(Note::class)->create([
+        $link = Link::factory()->create();
+        $note = Note::factory()->create([
             'link_id' => $link->id,
         ]);
 
@@ -29,7 +29,7 @@ class LinkNotesTest extends ApiTestCase
 
     public function testLinksRequestWithoutLinks(): void
     {
-        factory(Link::class)->create();
+        Link::factory()->create();
 
         $response = $this->getJsonAuthorized('api/v1/links/1/notes');
 

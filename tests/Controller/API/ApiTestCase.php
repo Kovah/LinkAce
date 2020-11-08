@@ -18,7 +18,7 @@ abstract class ApiTestCase extends TestCase
     {
         parent::setUp();
 
-        $this->user = factory(User::class)->create();
+        $this->user = User::first() ?: User::factory()->create();
 
         Queue::fake();
         Notification::fake();

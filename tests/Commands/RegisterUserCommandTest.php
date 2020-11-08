@@ -48,7 +48,7 @@ class RegisterUserCommandTest extends TestCase
 
     public function testCommandWithDuplicateUser(): void
     {
-        factory(User::class)->create(['email' => 'test@linkace.org']);
+        User::factory()->create(['email' => 'test@linkace.org']);
 
         $this->artisan('registeruser', [
             'name' => 'Test',

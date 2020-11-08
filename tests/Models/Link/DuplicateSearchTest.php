@@ -20,13 +20,13 @@ class DuplicateSearchTest extends TestCase
     {
         parent::setUp();
 
-        $this->user = factory(User::class)->create();
+        $this->user = User::factory()->create();
     }
 
     public function testWithoutDuplicates(): void
     {
         /** @var Link $link */
-        $link = factory(Link::class)->create([
+        $link = Link::factory()->create([
             'url' => 'https://example.com',
         ]);
 
@@ -38,12 +38,12 @@ class DuplicateSearchTest extends TestCase
     public function testScheme(): void
     {
         /** @var Link $link */
-        $link = factory(Link::class)->create([
+        $link = Link::factory()->create([
             'url' => 'https://example.com',
         ]);
 
         /** @var Link $duplicateLink */
-        $duplicateLink = factory(Link::class)->create([
+        $duplicateLink = Link::factory()->create([
             'url' => 'http://example.com',
         ]);
 
@@ -56,12 +56,12 @@ class DuplicateSearchTest extends TestCase
     public function testTrailingSlashes(): void
     {
         /** @var Link $link */
-        $link = factory(Link::class)->create([
+        $link = Link::factory()->create([
             'url' => 'https://example.com',
         ]);
 
         /** @var Link $duplicateLink */
-        $duplicateLink = factory(Link::class)->create([
+        $duplicateLink = Link::factory()->create([
             'url' => 'https://example.com/',
         ]);
 
@@ -74,12 +74,12 @@ class DuplicateSearchTest extends TestCase
     public function testUrlFragments(): void
     {
         /** @var Link $link */
-        $link = factory(Link::class)->create([
+        $link = Link::factory()->create([
             'url' => 'https://example.com',
         ]);
 
         /** @var Link $duplicateLink */
-        $duplicateLink = factory(Link::class)->create([
+        $duplicateLink = Link::factory()->create([
             'url' => 'https://example.com#anchor',
         ]);
 
@@ -92,12 +92,12 @@ class DuplicateSearchTest extends TestCase
     public function testQueryParameters(): void
     {
         /** @var Link $link */
-        $link = factory(Link::class)->create([
+        $link = Link::factory()->create([
             'url' => 'https://example.com',
         ]);
 
         /** @var Link $duplicateLink */
-        $duplicateLink = factory(Link::class)->create([
+        $duplicateLink = Link::factory()->create([
             'url' => 'https://example.com?s=testing',
         ]);
 
@@ -110,12 +110,12 @@ class DuplicateSearchTest extends TestCase
     public function testUrlWithPort(): void
     {
         /** @var Link $link */
-        $link = factory(Link::class)->create([
+        $link = Link::factory()->create([
             'url' => 'https://localhost:8080',
         ]);
 
         /** @var Link $duplicateLink */
-        $duplicateLink = factory(Link::class)->create([
+        $duplicateLink = Link::factory()->create([
             'url' => 'https://localhost:8080/',
         ]);
 
@@ -128,12 +128,12 @@ class DuplicateSearchTest extends TestCase
     public function testUrlWithSimpleAuth(): void
     {
         /** @var Link $link */
-        $link = factory(Link::class)->create([
+        $link = Link::factory()->create([
             'url' => 'https://:password@ftp.cia.gov',
         ]);
 
         /** @var Link $duplicateLink */
-        $duplicateLink = factory(Link::class)->create([
+        $duplicateLink = Link::factory()->create([
             'url' => 'https://:password@ftp.cia.gov/',
         ]);
 
@@ -146,12 +146,12 @@ class DuplicateSearchTest extends TestCase
     public function testUrlWithFullAuth(): void
     {
         /** @var Link $link */
-        $link = factory(Link::class)->create([
+        $link = Link::factory()->create([
             'url' => 'https://:snowden@files.nsa.gov',
         ]);
 
         /** @var Link $duplicateLink */
-        $duplicateLink = factory(Link::class)->create([
+        $duplicateLink = Link::factory()->create([
             'url' => 'https://admin:snowden@files.nsa.gov/',
         ]);
 
@@ -164,7 +164,7 @@ class DuplicateSearchTest extends TestCase
     public function testBrokenUrl(): void
     {
         /** @var Link $link */
-        $link = factory(Link::class)->create([
+        $link = Link::factory()->create([
             'url' => 'example.com',
         ]);
 

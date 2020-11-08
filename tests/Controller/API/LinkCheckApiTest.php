@@ -18,7 +18,7 @@ class LinkCheckApiTest extends ApiTestCase
 
     public function testSuccessfulLinkCheck(): void
     {
-        factory(Link::class)->create([
+        Link::factory()->create([
             'url' => 'https://example.com',
         ]);
 
@@ -32,7 +32,7 @@ class LinkCheckApiTest extends ApiTestCase
 
     public function testNegativeLinkCheck(): void
     {
-        factory(Link::class)->create([
+        Link::factory()->create([
             'url' => 'https://test.com',
         ]);
 

@@ -12,7 +12,7 @@ class NoteApiTest extends ApiTestCase
 
     public function testMinimalCreateRequest(): void
     {
-        $link = factory(Link::class)->create();
+        $link = Link::factory()->create();
 
         $response = $this->postJsonAuthorized('api/v1/notes', [
             'link_id' => $link->id,
@@ -31,7 +31,7 @@ class NoteApiTest extends ApiTestCase
 
     public function testFullCreateRequest(): void
     {
-        $link = factory(Link::class)->create();
+        $link = Link::factory()->create();
 
         $response = $this->postJsonAuthorized('api/v1/notes', [
             'link_id' => $link->id,
@@ -65,8 +65,8 @@ class NoteApiTest extends ApiTestCase
 
     public function testUpdateRequest(): void
     {
-        $link = factory(Link::class)->create();
-        factory(Note::class)->create([
+        $link = Link::factory()->create();
+        Note::factory()->create([
             'link_id' => $link->id,
         ]);
 
@@ -88,7 +88,7 @@ class NoteApiTest extends ApiTestCase
 
     public function testInvalidUpdateRequest(): void
     {
-        factory(Note::class)->create();
+        Note::factory()->create();
 
         $response = $this->patchJsonAuthorized('api/v1/notes/1', [
             //
@@ -113,7 +113,7 @@ class NoteApiTest extends ApiTestCase
 
     public function testDeleteRequest(): void
     {
-        factory(Note::class)->create();
+        Note::factory()->create();
 
         $response = $this->deleteJsonAuthorized('api/v1/notes/1', []);
 

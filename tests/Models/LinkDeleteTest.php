@@ -21,14 +21,14 @@ class LinkDeleteTest extends TestCase
     {
         parent::setUp();
 
-        $this->user = factory(User::class)->create();
+        $this->user = User::factory()->create();
     }
 
     public function testValidCategoryCreation(): void
     {
         $this->be($this->user);
 
-        $link = factory(Link::class)->create();
+        $link = Link::factory()->create();
 
         $deletionResult = LinkRepository::delete($link);
 

@@ -12,8 +12,8 @@ class ListLinksTest extends ApiTestCase
 
     public function testLinksRequest(): void
     {
-        $link = factory(Link::class)->create();
-        $list = factory(LinkList::class)->create();
+        $link = Link::factory()->create();
+        $list = LinkList::factory()->create();
 
         $link->lists()->sync([$list->id]);
 
@@ -29,7 +29,7 @@ class ListLinksTest extends ApiTestCase
 
     public function testLinksRequestWithoutLinks(): void
     {
-        factory(LinkList::class)->create();
+        LinkList::factory()->create();
 
         $response = $this->getJsonAuthorized('api/v1/lists/1/links');
 

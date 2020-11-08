@@ -13,7 +13,7 @@ class ResetPasswordCommandTest extends TestCase
 
     public function testCommand(): void
     {
-        factory(User::class)->create(['email' => 'test@linkace.org']);
+        User::factory()->create(['email' => 'test@linkace.org']);
 
         $this->artisan('reset-password')
             ->expectsQuestion('Please enter the user email address', 'wrong@linkace.org')

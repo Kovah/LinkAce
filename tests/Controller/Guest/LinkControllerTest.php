@@ -19,10 +19,10 @@ class LinkControllerTest extends TestCase
             'value' => '1',
         ]);
 
-        factory(User::class)->create();
+        User::factory()->create();
 
-        $linkPublic = factory(Link::class)->create(['is_private' => false]);
-        $linkPrivate = factory(Link::class)->create(['is_private' => true]);
+        $linkPublic = Link::factory()->create(['is_private' => false]);
+        $linkPrivate = Link::factory()->create(['is_private' => true]);
 
         $response = $this->get('guest/links');
 

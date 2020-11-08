@@ -19,14 +19,14 @@ class NoteControllerTest extends TestCase
     {
         parent::setUp();
 
-        $this->user = factory(User::class)->create();
+        $this->user = User::factory()->create();
 
         $this->actingAs($this->user);
     }
 
     public function testMinimalStoreRequest(): void
     {
-        $link = factory(Link::class)->create();
+        $link = Link::factory()->create();
 
         $response = $this->post('notes', [
             'link_id' => $link->id,
@@ -47,7 +47,7 @@ class NoteControllerTest extends TestCase
             'value' => '1',
         ]);
 
-        $link = factory(Link::class)->create();
+        $link = Link::factory()->create();
 
         $response = $this->post('notes', [
             'link_id' => $link->id,
@@ -62,7 +62,7 @@ class NoteControllerTest extends TestCase
 
     public function testValidationErrorForCreate(): void
     {
-        $link = factory(Link::class)->create();
+        $link = Link::factory()->create();
 
         $response = $this->post('notes', [
             'link_id' => $link->id,
@@ -88,7 +88,7 @@ class NoteControllerTest extends TestCase
 
     public function testEditView(): void
     {
-        factory(Note::class)->create();
+        Note::factory()->create();
 
         $response = $this->get('notes/1/edit');
 
@@ -105,7 +105,7 @@ class NoteControllerTest extends TestCase
 
     public function testUpdateResponse(): void
     {
-        $baseNote = factory(Note::class)->create();
+        $baseNote = Note::factory()->create();
 
         $response = $this->patch('notes/1', [
             'link_id' => $baseNote->link_id,
@@ -133,7 +133,7 @@ class NoteControllerTest extends TestCase
 
     public function testValidationErrorForUpdate(): void
     {
-        $baseNote = factory(Note::class)->create();
+        $baseNote = Note::factory()->create();
 
         $response = $this->patch('notes/1', [
             'note_id' => $baseNote->id,
@@ -148,11 +148,11 @@ class NoteControllerTest extends TestCase
 
     public function testDeleteResponse(): void
     {
-        $link = factory(Note::class)->create([
+        $link = Note::factory()->create([
             'user_id' => $this->user->id,
         ]);
 
-        $note = factory(Note::class)->create([
+        $note = Note::factory()->create([
             'link_id' => $link->id,
         ]);
 

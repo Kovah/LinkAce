@@ -21,14 +21,14 @@ class ListUpdateTest extends TestCase
     {
         parent::setUp();
 
-        $this->user = factory(User::class)->create();
+        $this->user = User::factory()->create();
     }
 
     public function testValidListUpdate(): void
     {
         $this->be($this->user);
 
-        $list = factory(LinkList::class)->create();
+        $list = LinkList::factory()->create();
 
         $changedData = [
             'name' => 'Changed List Title',

@@ -20,7 +20,7 @@ class LoginControllerTest extends TestCase
 
     public function testValidLoginRedirect(): void
     {
-        $user = factory(User::class)->create();
+        $user = User::factory()->create();
         $this->actingAs($user);
 
         $response = $this->get('login');
@@ -30,7 +30,7 @@ class LoginControllerTest extends TestCase
 
     public function testValidLoginSubmit(): void
     {
-        $user = factory(User::class)->create();
+        $user = User::factory()->create();
 
         $response = $this->post('login', [
             'email' => $user->email,
@@ -42,7 +42,7 @@ class LoginControllerTest extends TestCase
 
     public function testInvalidLoginSubmit(): void
     {
-        $user = factory(User::class)->create();
+        $user = User::factory()->create();
 
         $response = $this->post('login', [
             'email' => $user->email,

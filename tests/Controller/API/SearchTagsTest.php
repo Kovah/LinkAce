@@ -27,7 +27,7 @@ class SearchTagsTest extends ApiTestCase
     public function testWithEmptyQuery(): void
     {
         // This tag must not be present in the results
-        factory(Tag::class)->create([
+        Tag::factory()->create([
             'user_id' => $this->user->id,
             'name' => 'artificial-intelligence',
         ]);
@@ -40,23 +40,23 @@ class SearchTagsTest extends ApiTestCase
 
     public function testWithMultipleResults(): void
     {
-        $tag = factory(Tag::class)->create([
+        $tag = Tag::factory()->create([
             'user_id' => $this->user->id,
             'name' => 'programming',
         ]);
 
-        $tag2 = factory(Tag::class)->create([
+        $tag2 = Tag::factory()->create([
             'user_id' => $this->user->id,
             'name' => 'programming-books',
         ]);
 
-        $tag3 = factory(Tag::class)->create([
+        $tag3 = Tag::factory()->create([
             'user_id' => $this->user->id,
             'name' => 'pair-programming',
         ]);
 
         // This tag must not be present in the results
-        factory(Tag::class)->create([
+        Tag::factory()->create([
             'user_id' => $this->user->id,
             'name' => 'learning',
         ]);
@@ -74,18 +74,18 @@ class SearchTagsTest extends ApiTestCase
 
     public function testWithShortQuery(): void
     {
-        $tag = factory(Tag::class)->create([
+        $tag = Tag::factory()->create([
             'user_id' => $this->user->id,
             'name' => 'programming',
         ]);
 
-        $tag2 = factory(Tag::class)->create([
+        $tag2 = Tag::factory()->create([
             'user_id' => $this->user->id,
             'name' => 'programming-books',
         ]);
 
         // This tag must not be present in the results
-        factory(Tag::class)->create([
+        Tag::factory()->create([
             'user_id' => $this->user->id,
             'name' => 'learning',
         ]);

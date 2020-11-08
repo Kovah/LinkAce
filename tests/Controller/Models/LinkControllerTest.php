@@ -24,7 +24,7 @@ class LinkControllerTest extends TestCase
     {
         parent::setUp();
 
-        $this->user = factory(User::class)->create();
+        $this->user = User::factory()->create();
         $this->actingAs($this->user);
 
         $testHtml = '<!DOCTYPE html><head>' .
@@ -41,7 +41,7 @@ class LinkControllerTest extends TestCase
 
     public function testIndexView(): void
     {
-        $link = factory(Link::class)->create();
+        $link = Link::factory()->create();
 
         $response = $this->get('links');
 
@@ -75,8 +75,8 @@ class LinkControllerTest extends TestCase
 
     public function testFullStoreRequest(): void
     {
-        $tag = factory(Tag::class)->create();
-        $list = factory(LinkList::class)->create();
+        $tag = Tag::factory()->create();
+        $list = LinkList::factory()->create();
 
         $response = $this->post('links', [
             'url' => 'https://example.com',
@@ -124,7 +124,7 @@ class LinkControllerTest extends TestCase
 
     public function testStoreRequestWithDuplicate(): void
     {
-        factory(Link::class)->create([
+        Link::factory()->create([
             'url' => 'https://example.com/',
         ]);
 
@@ -240,7 +240,7 @@ class LinkControllerTest extends TestCase
 
     public function testDetailView(): void
     {
-        $link = factory(Link::class)->create();
+        $link = Link::factory()->create();
 
         $response = $this->get('links/1');
 
@@ -250,7 +250,7 @@ class LinkControllerTest extends TestCase
 
     public function testEditView(): void
     {
-        factory(Link::class)->create();
+        Link::factory()->create();
 
         $response = $this->get('links/1/edit');
 
@@ -260,7 +260,7 @@ class LinkControllerTest extends TestCase
 
     public function testUpdateResponse(): void
     {
-        $baseLink = factory(Link::class)->create();
+        $baseLink = Link::factory()->create();
 
         $response = $this->patch('links/1', [
             'url' => 'https://new-example.com',
@@ -304,8 +304,8 @@ class LinkControllerTest extends TestCase
 
     public function testUniquePropertyValidation(): void
     {
-        factory(Link::class)->create(['url' => 'https://old-example.com']);
-        $baseLink = factory(Link::class)->create();
+        Link::factory()->create(['url' => 'https://old-example.com']);
+        $baseLink = Link::factory()->create();
 
         $response = $this->patch('links/2', [
             'link_id' => $baseLink->id,
@@ -324,7 +324,7 @@ class LinkControllerTest extends TestCase
 
     public function testValidationErrorForUpdate(): void
     {
-        $baseLink = factory(Link::class)->create();
+        $baseLink = Link::factory()->create();
 
         $response = $this->patch('links/1', [
             'link_id' => $baseLink->id,
@@ -343,7 +343,7 @@ class LinkControllerTest extends TestCase
 
     public function testDeleteResponse(): void
     {
-        factory(Link::class)->create();
+        Link::factory()->create();
 
         $response = $this->delete('links/1');
 
@@ -363,7 +363,7 @@ class LinkControllerTest extends TestCase
 
     public function testCheckToggleRequest(): void
     {
-        $link = factory(Link::class)->create();
+        $link = Link::factory()->create();
 
         $response = $this->post('links/toggle-check/1', [
             'toggle' => '1',
@@ -378,7 +378,7 @@ class LinkControllerTest extends TestCase
 
     public function testInvalidCheckToggleRequest(): void
     {
-        factory(Link::class)->create();
+        Link::factory()->create();
 
         $response = $this->post('links/toggle-check/1', [
             'toggle' => 'blabla',

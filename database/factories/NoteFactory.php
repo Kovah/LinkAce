@@ -1,21 +1,35 @@
 <?php
 
-use Faker\Generator as Faker;
+namespace Database\Factories;
 
-$factory->define(\App\Models\Note::class, function (Faker $faker) {
+use App\Models\Link;
+use App\Models\Note;
+use App\Models\User;
+use Exception;
+use Illuminate\Database\Eloquent\Factories\Factory;
 
-    $user = \App\Models\User::first();
+class NoteFactory extends Factory
+{
+    /**
+     * The name of the factory's corresponding model.
+     *
+     * @var string
+     */
+    protected $model = Note::class;
 
-    if (empty($user)) {
-        throw new Exception('Users need to be generated prior to generating tags.');
+    /**
+     * Define the model's default state.
+     *
+     * @return array
+     * @throws Exception
+     */
+    public function definition(): array
+    {
+        return [
+            'user_id' => User::first()->id ?? User::factory(),
+            'link_id' => Link::first()->id ?? Link::factory(),
+            'note' => $this->faker->words(random_int(10, 30), true),
+            'is_private' => $this->faker->boolean(10),
+        ];
     }
-
-    return [
-        'user_id' => $user->id,
-        'link_id' => function () {
-            return factory(App\Models\Link::class)->create()->id;
-        },
-        'note' => $faker->words(random_int(10, 30), true),
-        'is_private' => $faker->boolean(10),
-    ];
-});
+}

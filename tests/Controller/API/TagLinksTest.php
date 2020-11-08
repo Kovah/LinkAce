@@ -12,8 +12,8 @@ class TagLinksTest extends ApiTestCase
 
     public function testLinksRequest(): void
     {
-        $link = factory(Link::class)->create();
-        $tag = factory(Tag::class)->create();
+        $link = Link::factory()->create();
+        $tag = Tag::factory()->create();
 
         $link->tags()->sync([$tag->id]);
 
@@ -29,7 +29,7 @@ class TagLinksTest extends ApiTestCase
 
     public function testLinksRequestWithoutLinks(): void
     {
-        factory(Tag::class)->create();
+        Tag::factory()->create();
 
         $response = $this->getJsonAuthorized('api/v1/tags/1/links');
 

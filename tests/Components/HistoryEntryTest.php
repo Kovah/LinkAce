@@ -21,13 +21,13 @@ class HistoryEntryTest extends TestCase
     {
         parent::setUp();
 
-        $this->user = factory(User::class)->create();
+        $this->user = User::factory()->create();
         $this->actingAs($this->user);
     }
 
     public function testAddedChange(): void
     {
-        $link = factory(Link::class)->create([
+        $link = Link::factory()->create([
             'description' => null,
         ]);
 
@@ -43,7 +43,7 @@ class HistoryEntryTest extends TestCase
 
     public function testRegularChange(): void
     {
-        $link = factory(Link::class)->create([
+        $link = Link::factory()->create([
             'description' => 'Test Description',
         ]);
 
@@ -62,7 +62,7 @@ class HistoryEntryTest extends TestCase
 
     public function testRemoveChange(): void
     {
-        $link = factory(Link::class)->create([
+        $link = Link::factory()->create([
             'description' => 'Test Description',
         ]);
 
@@ -78,7 +78,7 @@ class HistoryEntryTest extends TestCase
 
     public function testModelDeletion(): void
     {
-        $link = factory(Link::class)->create();
+        $link = Link::factory()->create();
 
         $link->delete();
         $link->restore();
@@ -94,7 +94,7 @@ class HistoryEntryTest extends TestCase
 
     public function testTagsAddedChange(): void
     {
-        $link = factory(Link::class)->create();
+        $link = Link::factory()->create();
 
         $this->post('links/1', [
             '_method' => 'patch',
@@ -116,8 +116,8 @@ class HistoryEntryTest extends TestCase
 
     public function testTagsChange(): void
     {
-        $startTag = factory(Tag::class)->create();
-        $link = factory(Link::class)->create();
+        $startTag = Tag::factory()->create();
+        $link = Link::factory()->create();
 
         $link->tags()->sync($startTag->id);
 
@@ -144,8 +144,8 @@ class HistoryEntryTest extends TestCase
 
     public function testTagsRemoveChange(): void
     {
-        $startTag = factory(Tag::class)->create();
-        $link = factory(Link::class)->create();
+        $startTag = Tag::factory()->create();
+        $link = Link::factory()->create();
 
         $link->tags()->sync($startTag->id);
 
@@ -172,7 +172,7 @@ class HistoryEntryTest extends TestCase
 
     public function testLinksAddedChange(): void
     {
-        $link = factory(Link::class)->create();
+        $link = Link::factory()->create();
 
         $this->post('links/1', [
             '_method' => 'patch',
@@ -194,8 +194,8 @@ class HistoryEntryTest extends TestCase
 
     public function testLinksChange(): void
     {
-        $startList = factory(LinkList::class)->create();
-        $link = factory(Link::class)->create();
+        $startList = LinkList::factory()->create();
+        $link = Link::factory()->create();
 
         $link->lists()->sync($startList->id);
 
@@ -222,8 +222,8 @@ class HistoryEntryTest extends TestCase
 
     public function testLinksRemoveChange(): void
     {
-        $startList = factory(LinkList::class)->create();
-        $link = factory(Link::class)->create();
+        $startList = LinkList::factory()->create();
+        $link = Link::factory()->create();
 
         $link->lists()->sync($startList->id);
 
@@ -250,7 +250,7 @@ class HistoryEntryTest extends TestCase
 
     public function testIsPrivateChange(): void
     {
-        $link = factory(Link::class)->create([
+        $link = Link::factory()->create([
             'is_private' => '1',
         ]);
 

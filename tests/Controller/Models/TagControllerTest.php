@@ -18,14 +18,14 @@ class TagControllerTest extends TestCase
     {
         parent::setUp();
 
-        $this->user = factory(User::class)->create();
+        $this->user = User::factory()->create();
 
         $this->actingAs($this->user);
     }
 
     public function testIndexView(): void
     {
-        $tag = factory(Tag::class)->create([
+        $tag = Tag::factory()->create([
             'user_id' => $this->user->id,
         ]);
 
@@ -106,7 +106,7 @@ class TagControllerTest extends TestCase
 
     public function testDetailView(): void
     {
-        $tag = factory(Tag::class)->create([
+        $tag = Tag::factory()->create([
             'user_id' => $this->user->id,
         ]);
 
@@ -118,7 +118,7 @@ class TagControllerTest extends TestCase
 
     public function testEditView(): void
     {
-        factory(Tag::class)->create([
+        Tag::factory()->create([
             'user_id' => $this->user->id,
         ]);
 
@@ -138,7 +138,7 @@ class TagControllerTest extends TestCase
 
     public function testUpdateResponse(): void
     {
-        $baseTag = factory(Tag::class)->create([
+        $baseTag = Tag::factory()->create([
             'user_id' => $this->user->id,
         ]);
 
@@ -168,12 +168,12 @@ class TagControllerTest extends TestCase
 
     public function testUniquePropertyValidation(): void
     {
-        factory(Tag::class)->create([
+        Tag::factory()->create([
             'name' => 'taken-tag-name',
             'user_id' => $this->user->id,
         ]);
 
-        $baseTag = factory(Tag::class)->create([
+        $baseTag = Tag::factory()->create([
             'user_id' => $this->user->id,
         ]);
 
@@ -190,7 +190,7 @@ class TagControllerTest extends TestCase
 
     public function testValidationErrorForUpdate(): void
     {
-        $baseTag = factory(Tag::class)->create([
+        $baseTag = Tag::factory()->create([
             'user_id' => $this->user->id,
         ]);
 
@@ -207,7 +207,7 @@ class TagControllerTest extends TestCase
 
     public function testDeleteResponse(): void
     {
-        factory(Tag::class)->create([
+        Tag::factory()->create([
             'user_id' => $this->user->id,
         ]);
 

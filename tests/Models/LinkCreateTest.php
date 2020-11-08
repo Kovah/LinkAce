@@ -29,7 +29,7 @@ class LinkCreateTest extends TestCase
             '*' => Http::response($testHtml, 200),
         ]);
 
-        $this->user = factory(User::class)->create();
+        $this->user = User::factory()->create();
     }
 
     public function testValidLinkCreation(): void

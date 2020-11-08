@@ -24,10 +24,10 @@ class TagControllerTest extends TestCase
 
     public function testValidTagOverviewResponse(): void
     {
-        factory(User::class)->create();
+        User::factory()->create();
 
-        $tagPublic = factory(Tag::class)->create(['is_private' => false]);
-        $tagPrivate = factory(Tag::class)->create(['is_private' => true]);
+        $tagPublic = Tag::factory()->create(['is_private' => false]);
+        $tagPrivate = Tag::factory()->create(['is_private' => true]);
 
         $response = $this->get('guest/tags');
 
@@ -38,9 +38,9 @@ class TagControllerTest extends TestCase
 
     public function testValidTagDetailResponse(): void
     {
-        factory(User::class)->create();
+        User::factory()->create();
 
-        factory(Tag::class)->create([
+        Tag::factory()->create([
             'name' => 'testTag',
             'is_private' => false,
         ]);
@@ -53,9 +53,9 @@ class TagControllerTest extends TestCase
 
     public function testInvalidTagDetailResponse(): void
     {
-        factory(User::class)->create();
+        User::factory()->create();
 
-        factory(Tag::class)->create(['is_private' => true]);
+        Tag::factory()->create(['is_private' => true]);
 
         $response = $this->get('guest/tags/1');
 
