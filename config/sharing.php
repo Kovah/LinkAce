@@ -27,83 +27,83 @@ return [
     'services' => [
         'email' => [
             'action' => 'mailto:?subject=#E-SUBJECT#&body=#E-SHARETEXT#',
-            'icon' => 'fa fa-envelope',
+            'icon' => 'icon.envelope',
         ],
         'facebook' => [
             'action' => 'https://www.facebook.com/sharer/sharer.php?u=#URL#',
-            'icon' => 'fab fa-facebook-square',
+            'icon' => 'icon.brand.facebook',
         ],
         'twitter' => [
             'action' => 'https://twitter.com/intent/tweet?text=#SHARETEXT#',
-            'icon' => 'fab fa-twitter-square',
+            'icon' => 'icon.brand.twitter',
         ],
         'reddit' => [
             'action' => 'http://www.reddit.com/submit?url=#URL#&title=#SUBJECT#',
-            'icon' => 'fab fa-reddit-square',
+            'icon' => 'icon.brand.reddit',
         ],
         'pinterest' => [
             'action' => 'http://pinterest.com/pin/create/button/?url=#URL#&description=#SUBJECT#',
-            'icon' => 'fab fa-pinterest-square',
+            'icon' => 'icon.brand.pinterest',
         ],
         'whatsapp' => [
             'action' => 'whatsapp://send?text=#SHARETEXT#',
-            'icon' => 'fab fa-whatsapp-square',
+            'icon' => 'icon.brand.whatsapp',
         ],
         'telegram' => [
             'action' => 'tg://msg?text==#SHARETEXT#',
-            'icon' => 'fab fa-telegram',
+            'icon' => 'icon.brand.telegram',
         ],
         'wechat' => [
             'action' => 'https://www.addtoany.com/ext/wechat/share/#url=#URL#',
-            'icon' => 'fab fa-weixin',
+            'icon' => 'icon.brand.weixin',
         ],
         'sms' => [
             'action' => 'sms:?&body=#SHARETEXT#',
-            'icon' => 'fa fa-sms',
+            'icon' => 'icon.sms',
         ],
         'skype' => [
             'action' => 'https://web.skype.com/share?url=#E-URL#',
-            'icon' => 'fab fa-skype',
+            'icon' => 'icon.brand.skype',
         ],
         'hackernews' => [
             'action' => 'https://news.ycombinator.com/submitlink?u=#URL#&t=#SUBJECT#',
-            'icon' => 'fab fa-hacker-news-square',
+            'icon' => 'icon.brand.hacker-news',
         ],
         'mastodon' => [
             'action' => 'web+mastodon://share?text=#E-SHARETEXT#',
-            'icon' => 'fab fa-mastodon',
+            'icon' => 'icon.brand.mastodon',
         ],
         'pocket' => [
             'action' => 'https://getpocket.com/save?url=#URL#',
-            'icon' => 'fab fa-get-pocket',
+            'icon' => 'icon.brand.get-pocket',
         ],
         'flipboard' => [
             'action' => 'https://share.flipboard.com/bookmarklet/popout?v=#SUBJECT#&url=#E-URL#',
-            'icon' => 'fab fa-flipboard',
+            'icon' => 'icon.brand.flipboard',
         ],
         'evernote' => [
             'action' => 'https://www.evernote.com/clip.action?url=#E-URL#&title=#SUBJECT#',
-            'icon' => 'fab fa-evernote',
+            'icon' => 'icon.brand.evernote',
         ],
         'trello' => [
             'action' => 'https://trello.com/add-card?mode=popup&url=#E-URL#&name=#E-SUBJECT#&desc=',
-            'icon' => 'fab fa-trello',
+            'icon' => 'icon.brand.trello',
         ],
         'buffer' => [
             'action' => 'https://buffer.com/add?url=#E-URL#&text=#E-SUBJECT#',
-            'icon' => 'fab fa-buffer',
+            'icon' => 'icon.brand.buffer',
         ],
         'tumblr' => [
             'action' => 'http://tumblr.com/share/link?url=#URL#&name=#SUBJECT#',
-            'icon' => 'fab fa-tumblr-square',
+            'icon' => 'icon.brand.tumblr',
         ],
         'xing' => [
             'action' => 'https://www.xing.com/spi/shares/new?url=#URL#',
-            'icon' => 'fab fa-xing-square',
+            'icon' => 'icon.brand.xing',
         ],
         'linkedin' => [
             'action' => 'https://www.linkedin.com/shareArticle?mini=true&url=#E-URL#&title=#E-SUBJECT#&summary=&source=AddToAny',
-            'icon' => 'fab fa-linkedin',
+            'icon' => 'icon.brand.linkedin',
         ],
     ],
 ];

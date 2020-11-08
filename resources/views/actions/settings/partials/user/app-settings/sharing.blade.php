@@ -14,7 +14,7 @@
                     class="sharing-checkbox-input"
                     @if(old('share.' . $key) ?: usersettings('share_' . $key)) checked @endif>
                 <label for="share-{{ $key }}" title="@lang('sharing.service.' . $key)">
-                    <i class="fa-fw {{ $details['icon'] }}"></i>
+                    <x-dynamic-component :component="$details['icon']" class="fw" />
                 </label>
             </div>
         @endforeach
@@ -22,7 +22,7 @@
     </div>
 
     <button type="button" class="share-toggle btn btn-sm btn-outline-secondary">
-        <i class="fas fa-toggle-on"></i> @lang('settings.sharing_toggle')
+        <x-icon.toggle-on/> @lang('settings.sharing_toggle')
     </button>
 
     @if ($errors->has('timezone'))

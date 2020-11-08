@@ -31,18 +31,18 @@ class SearchLinksTest extends ApiTestCase
 
     public function testRegularSearchResult(): void
     {
-        $link = factory(Link::class)->create([
+        $link = Link::factory()->create([
             'user_id' => $this->user->id,
             'url' => 'https://example.com',
         ]);
 
-        $link2 = factory(Link::class)->create([
+        $link2 = Link::factory()->create([
             'user_id' => $this->user->id,
             'url' => 'https://another-example.org',
         ]);
 
         // This link must not be present in the results
-        $excludedLink = factory(Link::class)->create([
+        $excludedLink = Link::factory()->create([
             'user_id' => $this->user->id,
             'url' => 'https://test.com',
         ]);
@@ -67,13 +67,13 @@ class SearchLinksTest extends ApiTestCase
 
     public function testSearchByTitle(): void
     {
-        $link = factory(Link::class)->create([
+        $link = Link::factory()->create([
             'user_id' => $this->user->id,
             'title' => 'Test Title',
         ]);
 
         // This link must not be present in the results
-        $excludedLink = factory(Link::class)->create([
+        $excludedLink = Link::factory()->create([
             'user_id' => $this->user->id,
             'title' => 'Nobody cares',
         ]);
@@ -92,14 +92,14 @@ class SearchLinksTest extends ApiTestCase
 
     public function testSearchByDescription(): void
     {
-        $link = factory(Link::class)->create([
+        $link = Link::factory()->create([
             'user_id' => $this->user->id,
             'url' => 'https://test.com',
             'description' => 'Example description',
         ]);
 
         // This link must not be present in the results
-        $excludedLink = factory(Link::class)->create([
+        $excludedLink = Link::factory()->create([
             'user_id' => $this->user->id,
             'url' => 'https://test.org',
             'description' => 'Lorem Ipsum',
@@ -119,14 +119,14 @@ class SearchLinksTest extends ApiTestCase
 
     public function testSearchPrivateOnly(): void
     {
-        $link = factory(Link::class)->create([
+        $link = Link::factory()->create([
             'user_id' => $this->user->id,
             'url' => 'https://test.com',
             'is_private' => true,
         ]);
 
         // This link must not be present in the results
-        $excludedLink = factory(Link::class)->create([
+        $excludedLink = Link::factory()->create([
             'user_id' => $this->user->id,
             'url' => 'https://test.org',
             'is_private' => false,
@@ -146,14 +146,14 @@ class SearchLinksTest extends ApiTestCase
 
     public function testSearchBrokenOnly(): void
     {
-        $link = factory(Link::class)->create([
+        $link = Link::factory()->create([
             'user_id' => $this->user->id,
             'url' => 'https://test.com',
             'status' => Link::STATUS_BROKEN,
         ]);
 
         // This link must not be present in the results
-        $excludedLink = factory(Link::class)->create([
+        $excludedLink = Link::factory()->create([
             'user_id' => $this->user->id,
             'url' => 'https://test.org',
         ]);
@@ -172,12 +172,12 @@ class SearchLinksTest extends ApiTestCase
 
     public function testSearchWithLists(): void
     {
-        $list = factory(LinkList::class)->create([
+        $list = LinkList::factory()->create([
             'user_id' => $this->user->id,
             'name' => 'Scientific Articles',
         ]);
 
-        $link = factory(Link::class)->create([
+        $link = Link::factory()->create([
             'user_id' => $this->user->id,
             'url' => 'https://test.com',
         ]);
@@ -185,7 +185,7 @@ class SearchLinksTest extends ApiTestCase
         $link->lists()->sync([$list->id]);
 
         // This link must not be present in the results
-        $excludedLink = factory(Link::class)->create([
+        $excludedLink = Link::factory()->create([
             'user_id' => $this->user->id,
             'url' => 'https://test.org',
         ]);
@@ -204,12 +204,12 @@ class SearchLinksTest extends ApiTestCase
 
     public function testSearchWithTags(): void
     {
-        $tag = factory(Tag::class)->create([
+        $tag = Tag::factory()->create([
             'user_id' => $this->user->id,
             'name' => 'artificial-intelligence',
         ]);
 
-        $link = factory(Link::class)->create([
+        $link = Link::factory()->create([
             'user_id' => $this->user->id,
             'url' => 'https://test.com',
         ]);
@@ -217,7 +217,7 @@ class SearchLinksTest extends ApiTestCase
         $link->tags()->sync([$tag->id]);
 
         // This link must not be present in the results
-        $excludedLink = factory(Link::class)->create([
+        $excludedLink = Link::factory()->create([
             'user_id' => $this->user->id,
             'url' => 'https://test.org',
         ]);

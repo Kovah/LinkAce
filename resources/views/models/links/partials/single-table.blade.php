@@ -4,7 +4,7 @@
             {{ $link->title }}
         </a>
         @if($link->is_private)
-            <i class="fas fa-lock text-muted" title="@lang('link.private')"></i>
+            <x-icon.lock class="text-muted" title="@lang('link.private')"/>
         @endif
     </td>
     <td>
@@ -19,11 +19,11 @@
         <td class="text-right">
             <div class="btn-group btn-group-xs">
                 <a href="{{ route('links.edit', [$link->id]) }}" class="btn btn-outline-secondary">
-                    <i class="fas fa-edit"></i>
+                    <x-icon.edit/>
                 </a>
                 <a href="#" title=" @lang('link.delete')" class="btn btn-outline-secondary"
                     onclick="event.preventDefault();document.getElementById('link-delete-{{ $link->id }}').submit();">
-                    <i class="fas fa-trash-alt"></i>
+                    <x-icon.trash/>
                 </a>
             </div>
             <form id="link-delete-{{ $link->id }}" method="POST" style="display: none;"

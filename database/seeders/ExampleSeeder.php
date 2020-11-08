@@ -1,5 +1,11 @@
 <?php
 
+namespace Database\Seeders;
+
+use App\Models\Link;
+use App\Models\LinkList;
+use App\Models\Tag;
+use App\Models\User;
 use Illuminate\Database\Seeder;
 
 class ExampleSeeder extends Seeder
@@ -12,12 +18,12 @@ class ExampleSeeder extends Seeder
     public function run()
     {
         // Generate users, categories and tags
-        factory(\App\Models\User::class, 1)->create();
-        $lists = factory(\App\Models\LinkList::class, 10)->create();
-        $tags = factory(\App\Models\Tag::class, 30)->create();
+        User::factory()->create();
+        $lists = LinkList::factory()->count(10)->create();
+        $tags = Tag::factory()->count(30)->create();
 
         // Generate links and attach tags to them
-        factory(\App\Models\Link::class, 50)->create()->each(function (\App\Models\Link $link) use ($tags, $lists) {
+        Link::factory()->count(50)->create()->each(function (Link $link) use ($tags, $lists) {
             if (random_int(0, 1)) {
                 // Attach a random number of tags to the link
                 $link->tags()->sync($tags->random(random_int(1, 8))->pluck('id'));

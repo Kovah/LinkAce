@@ -7,7 +7,7 @@
             @lang('tag.tags')
         </h3>
         <a href="{{ route('tags.create') }}" class="btn btn-sm btn-primary ml-auto" aria-label="@lang('link.add')">
-            <i class="fas fa-plus mr-2"></i>
+            <x-icon.plus class="mr-2"/>
             @lang('linkace.add')
         </a>
     </header>
@@ -15,7 +15,7 @@
     <div class="card my-3">
         <div class="card-table">
 
-            @if(!$tags->isEmpty())
+            @if($tags->isNotEmpty())
 
                 @include('models.tags.partials.table')
 
@@ -30,8 +30,8 @@
         </div>
     </div>
 
-    @if(!$tags->isEmpty())
-        {!! $tags->onEachSide(1)->links() !!}
+    @if($tags->isNotEmpty())
+        {!! $tags->onEachSide(1)->appends(['orderBy' => $orderBy, 'orderDir' => $orderDir])->links() !!}
     @endif
 
 @endsection

@@ -74,7 +74,7 @@
                     </div>
 
                     <button type="submit" class="btn btn-primary">
-                        <i class="fas fa-save mr-2"></i> @lang('list.add')
+                        <x-icon.save class="mr-2"/> @lang('list.add')
                     </button>
 
                 </div>

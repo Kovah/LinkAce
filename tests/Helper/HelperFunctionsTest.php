@@ -24,8 +24,8 @@ class HelperFunctionsTest extends TestCase
     {
         parent::setUp();
 
-        $this->user = factory(User::class)->create();
-        $this->link = factory(Link::class)->create();
+        $this->user = User::factory()->create();
+        $this->link = Link::factory()->create();
     }
 
     /**

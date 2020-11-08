@@ -36,6 +36,7 @@ class RequirementsController extends Controller
             'extension_tokenizer' => extension_loaded('tokenizer'),
             'extension_xml' => extension_loaded('xml'),
             'env_writable' => File::isWritable(base_path('.env')),
+            'storage_writable' => File::isWritable(storage_path()) && File::isWritable(storage_path('logs')),
         ];
 
         $success = !in_array(false, $results);

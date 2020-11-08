@@ -24,10 +24,10 @@ class ListControllerTest extends TestCase
 
     public function testValidListOverviewResponse(): void
     {
-        factory(User::class)->create();
+        User::factory()->create();
 
-        $listPublic = factory(LinkList::class)->create(['is_private' => false]);
-        $listPrivate = factory(LinkList::class)->create(['is_private' => true]);
+        $listPublic = LinkList::factory()->create(['is_private' => false]);
+        $listPrivate = LinkList::factory()->create(['is_private' => true]);
 
         $response = $this->get('guest/lists');
 
@@ -38,9 +38,9 @@ class ListControllerTest extends TestCase
 
     public function testValidListDetailResponse(): void
     {
-        factory(User::class)->create();
+        User::factory()->create();
 
-        $listPublic = factory(LinkList::class)->create(['is_private' => false]);
+        $listPublic = LinkList::factory()->create(['is_private' => false]);
 
         $response = $this->get('guest/lists/1');
 
@@ -50,9 +50,9 @@ class ListControllerTest extends TestCase
 
     public function testInvalidListDetailResponse(): void
     {
-        factory(User::class)->create();
+        User::factory()->create();
 
-        factory(LinkList::class)->create(['is_private' => true]);
+        LinkList::factory()->create(['is_private' => true]);
 
         $response = $this->get('guest/lists/1');
 

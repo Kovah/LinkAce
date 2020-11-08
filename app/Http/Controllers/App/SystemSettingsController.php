@@ -8,7 +8,6 @@ use App\Models\Setting;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\File;
 use Illuminate\Support\Str;
 use Illuminate\View\View;
 
@@ -34,7 +33,7 @@ class SystemSettingsController extends Controller
      */
     public function saveSystemSettings(SystemSettingsUpdateRequest $request): RedirectResponse
     {
-        $settings = $request->except(['_token']);
+        $settings = $request->except(['_token', 'guest_share']);
 
         foreach ($settings as $key => $value) {
             Setting::updateOrCreate([
@@ -47,9 +46,27 @@ class SystemSettingsController extends Controller
             ]);
         }
 
+        // Enable / disable sharing services
+        $guestSharingSettings = $request->input('guest_share');
+
+        if ($guestSharingSettings) {
+            foreach (config('sharing.services') as $service => $details) {
+                $toggle = array_key_exists($service, $guestSharingSettings);
+
+                Setting::updateOrCreate([
+                    'user_id' => null,
+                    'key' => 'guest_share_' . $service,
+                ], [
+                    'key' => 'guest_share_' . $service,
+                    'value' => $toggle,
+                    'user_id' => null,
+                ]);
+            }
+        }
+
         flash(trans('settings.settings_saved'));
 
-        return redirect()->route('get-sysstemsettings');
+        return redirect()->route('get-systemsettings');
     }
 
     /**

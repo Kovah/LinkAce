@@ -20,6 +20,11 @@
                     @lang('list.lists')
                 </a>
             </li>
+            <li class="nav-item">
+                <a href="{{ route('guest.tags.index') }}" class="nav-link pl-3 pl-md-2">
+                    @lang('tag.tags')
+                </a>
+            </li>
         </ul>
 
         <ul class="navbar-nav ml-auto">

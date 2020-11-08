@@ -21,7 +21,7 @@ class CheckLinksCommandTest extends TestCase
     {
         parent::setUp();
 
-        $this->user = factory(User::class)->create();
+        $this->user = User::factory()->create();
     }
 
     public function testCheckWithHealthyLinks(): void
@@ -32,7 +32,7 @@ class CheckLinksCommandTest extends TestCase
 
         Notification::fake();
 
-        factory(Link::class)->create();
+        Link::factory()->create();
 
         $this->artisan('links:check');
 
@@ -47,7 +47,7 @@ class CheckLinksCommandTest extends TestCase
 
         Notification::fake();
 
-        factory(Link::class)->create();
+        Link::factory()->create();
 
         $this->artisan('links:check');
 
@@ -68,7 +68,7 @@ class CheckLinksCommandTest extends TestCase
 
         Notification::fake();
 
-        factory(Link::class)->create();
+        Link::factory()->create();
 
         $this->artisan('links:check');
 
@@ -89,7 +89,7 @@ class CheckLinksCommandTest extends TestCase
 
         Notification::fake();
 
-        factory(Link::class, 10)->create();
+        Link::factory()->count(10)->create();
 
         $this->artisan('links:check', [
             '--limit' => 5,

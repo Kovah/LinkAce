@@ -41,7 +41,7 @@ class ImportController extends Controller
     {
         $data = $request->file('import-file')->get();
 
-        $parser = new NetscapeBookmarkParser();
+        $parser = new NetscapeBookmarkParser(true, [], '0', storage_path('logs'));
 
         try {
             $links = $parser->parseString($data);

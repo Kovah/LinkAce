@@ -4,7 +4,7 @@
             <div class="d-flex align-items-top">
                 <div class="mr-2">
                     @if($link->is_private)
-                        <i class="fa fa-lock mr-1" title="@lang('link.private')"></i>
+                        <x-icon.lock class="mr-1" title="@lang('link.private')"/>
                     @endif
                     {!! $link->getIcon('mr-1') !!}
                     <a href="{{ $link->url }}" {!! linkTarget() !!}>
@@ -24,16 +24,16 @@
 
             <div class="btn-group w-100 mt-2 small">
                 <a href="{{ route('links.show', [$link->id]) }}" class="card-link" title="@lang('link.show')">
-                    <i class="fas fa-info fa-fw"></i>
+                    <x-icon.info class="fw"/>
                 </a>
 
                 <a href="{{ route('links.edit', [$link->id]) }}" class="card-link" title="@lang('link.edit')">
-                    <i class="fas fa-edit fa-fw"></i>
+                    <x-icon.edit class="fw"/>
                 </a>
 
                 <a href="#" title="@lang('link.delete')" class="card-link"
                     onclick="event.preventDefault();document.getElementById('link-delete-{{ $link->id }}').submit();">
-                    <i class="fas fa-trash-alt fa-fw"></i>
+                    <x-icon.trash class="fw"/>
                 </a>
             </div>
 

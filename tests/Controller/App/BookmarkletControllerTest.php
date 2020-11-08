@@ -12,7 +12,7 @@ class BookmarkletControllerTest extends TestCase
 
     public function testValidBookmarkletResponse(): void
     {
-        $user = factory(User::class)->create();
+        $user = User::factory()->create();
         $this->actingAs($user);
 
         $response = $this->get('bookmarklet/add?u=https://example.com&t=Example%20Title');

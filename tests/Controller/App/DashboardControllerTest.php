@@ -12,7 +12,7 @@ class DashboardControllerTest extends TestCase
 
     public function testValidDashboardResponse(): void
     {
-        $user = factory(User::class)->create();
+        $user = User::factory()->create();
         $this->actingAs($user);
 
         $response = $this->get('dashboard');

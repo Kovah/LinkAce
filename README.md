@@ -22,8 +22,6 @@
 * [About LinkAce](#about-linkace)
 * [Support Disclaimer](#bulb-support-for-linkace)
 * [Setup](#gear-setup)
-  * [Setup with Docker](#setup-with-docker)
-  * [Setup without Docker](#setup-without-docker)
 * [Contribution](#construction-contribution)
   * [Development](#development)
 
@@ -81,67 +79,13 @@ or **[Github Sponsor](https://github.com/sponsors/Kovah)**. :star:
 
 ### :gear: Setup
 
-Please check if your server supports the [requirements](https://www.linkace.org/docs/v1/setup/) before starting the
-setup.
+LinkAce provides multiple ways of installing it on your server. The complete documentation for all installation
+methods can be found [**in the wiki**](https://www.linkace.org/docs/v1/setup/).
 
-#### Setup with Docker
-
-Working with Docker is pretty straight forward. The image available on Docker Hub contains the application code, any
-precompiled assets as well as PHP installed. This means you can use any web server you want, any cache driver you want
-and any database system you want.
-
-To make things easier, we provide a Docker Compose file (docker-compose.production.yml) in the repository which
-contains all needed services, perfectly configured to run the application right away.
-
-#### 1. Copy all needed files
-
-All files you need are `docker-compose.production.yml`, `.env.docker` and `nginx.conf`. Copy both to the directory you
-want to use for the application.
-
-#### 2. Modify the .env.docker file
-
-Make a copy of the `.env.docker.production` file and name it `.env`. By default, you must change two options 
-in this file before starting the setup:
-
-* DB_PASSWORD - Please set a secure password here
-* REDIS_PASSWORD - Please set a secure password here
-
-#### 3. Start the application
-
-After you completed the above steps, run the following command to start up the container setup:
-
-```bash
-docker-compose up -d
-```
-
-#### 4. Run the Setup
-
-After you started the Docker containers, you are almost ready to run the setup. Before the setup, we have to generate
-a secret key.
-Please note that `linkace_php_1` is the name of your PHP container here. It may differ from your name. You will find
-the name of your container in the output of the previous command, but will most likely end with `_php_1`.
-
-```bash
-docker-compose run php php artisan key:generate
-```
-
-Open the URL which points to your Docker container in your browser now. You have to configure the database, and your 
-user account in the following setup.
-
-Please make sure to follow the post-installation tasks to fully enable all features. A guide can be found in the 
-[wiki](https://www.linkace.org/docs/v1/setup/post-setup).
-
-
-#### Setup without Docker
-
-The application was developed forthe usage with Docker. If you don't want to or can't use Docker, you can also run 
-LinkAce as a regular PHP application. Please notice that there won't be any support for custom environments,
-unsupported PHP versions or help with setting up Apache or your nginx web server.
-
-Please note that you **must have shell access to your server**. A shared hosting may not be suitable for this.
-
-Follow the instructions in the [wiki](https://www.linkace.org/docs/v1/setup/setup-without-docker) to install 
-LinkAce without Docker.
+* Setup with Docker (_recommended_)
+  * Simple setup with 1 Docker image
+  * Advanced setup with multiple Docker images
+* Setup without Docker
 
 
 ---
@@ -149,18 +93,7 @@ LinkAce without Docker.
 
 ### :construction: Contribution
 
-If you want to contribute to the project please open a [ticket](https://github.com/Kovah/LinkAce/issues) first and 
-describe what you want to do or what your idea is. Maybe there already is an existing ticket for your or a very similar 
-topic.
-
-I may decline contributions for features that may not fit into the application.
-
-#### Some Contribution Guidelines
-
-* Always use the `dev` branch to work on the application. The dev branch will contain the latest version of the app
-while the `master` branch may contains the stable version (which may be outdated in terms of development).
-* Consider using a separate branch if you are working on a larger feature.
-* When opening a pull request, link to your ticket and describe what you did to solve the problem.
+Please review the [**contribution guidelines**](CONTRIBUTING.md) before starting to work on any features.
 
 
 ### Development

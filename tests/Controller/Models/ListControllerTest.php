@@ -18,14 +18,14 @@ class ListControllerTest extends TestCase
     {
         parent::setUp();
 
-        $this->user = factory(User::class)->create();
+        $this->user = User::factory()->create();
 
         $this->actingAs($this->user);
     }
 
     public function testIndexView(): void
     {
-        $list = factory(LinkList::class)->create([
+        $list = LinkList::factory()->create([
             'user_id' => $this->user->id,
         ]);
 
@@ -122,7 +122,7 @@ class ListControllerTest extends TestCase
 
     public function testDetailView(): void
     {
-        $list = factory(LinkList::class)->create([
+        $list = LinkList::factory()->create([
             'user_id' => $this->user->id,
         ]);
 
@@ -134,7 +134,7 @@ class ListControllerTest extends TestCase
 
     public function testEditView(): void
     {
-        factory(LinkList::class)->create([
+        LinkList::factory()->create([
             'user_id' => $this->user->id,
         ]);
 
@@ -154,7 +154,7 @@ class ListControllerTest extends TestCase
 
     public function testUpdateResponse(): void
     {
-        $baseList = factory(LinkList::class)->create([
+        $baseList = LinkList::factory()->create([
             'user_id' => $this->user->id,
         ]);
 
@@ -184,12 +184,12 @@ class ListControllerTest extends TestCase
 
     public function testUniquePropertyValidation(): void
     {
-        factory(LinkList::class)->create([
+        LinkList::factory()->create([
             'name' => 'Taken List Name',
             'user_id' => $this->user->id,
         ]);
 
-        $baseList = factory(LinkList::class)->create([
+        $baseList = LinkList::factory()->create([
             'user_id' => $this->user->id,
         ]);
 
@@ -206,7 +206,7 @@ class ListControllerTest extends TestCase
 
     public function testValidationErrorForUpdate(): void
     {
-        $baseList = factory(LinkList::class)->create([
+        $baseList = LinkList::factory()->create([
             'user_id' => $this->user->id,
         ]);
 
@@ -223,7 +223,7 @@ class ListControllerTest extends TestCase
 
     public function testDeleteResponse(): void
     {
-        factory(LinkList::class)->create([
+        LinkList::factory()->create([
             'user_id' => $this->user->id,
         ]);
 

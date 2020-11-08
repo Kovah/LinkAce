@@ -21,14 +21,14 @@ class NoteUpdateTest extends TestCase
     {
         parent::setUp();
 
-        $this->user = factory(User::class)->create();
+        $this->user = User::factory()->create();
     }
 
     public function testValidTagUpdate(): void
     {
         $this->be($this->user);
 
-        $note = factory(Note::class)->create();
+        $note = Note::factory()->create();
 
         $changedData = [
             'note' => 'Cras mattis iudicium purus sit amet fermentum.',

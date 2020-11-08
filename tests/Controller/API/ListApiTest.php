@@ -18,7 +18,7 @@ class ListApiTest extends ApiTestCase
 
     public function testIndexRequest(): void
     {
-        $list = factory(LinkList::class)->create();
+        $list = LinkList::factory()->create();
 
         $response = $this->getJsonAuthorized('api/v1/lists');
 
@@ -82,7 +82,7 @@ class ListApiTest extends ApiTestCase
 
     public function testShowRequest(): void
     {
-        $list = factory(LinkList::class)->create();
+        $list = LinkList::factory()->create();
 
         $response = $this->getJsonAuthorized('api/v1/lists/1');
 
@@ -104,7 +104,7 @@ class ListApiTest extends ApiTestCase
 
     public function testUpdateRequest(): void
     {
-        factory(LinkList::class)->create();
+        LinkList::factory()->create();
 
         $response = $this->patchJsonAuthorized('api/v1/lists/1', [
             'name' => 'Updated List Title',
@@ -124,7 +124,7 @@ class ListApiTest extends ApiTestCase
 
     public function testInvalidUpdateRequest(): void
     {
-        factory(LinkList::class)->create();
+        LinkList::factory()->create();
 
         $response = $this->patchJsonAuthorized('api/v1/lists/1', [
             'name' => null,
@@ -152,7 +152,7 @@ class ListApiTest extends ApiTestCase
 
     public function testDeleteRequest(): void
     {
-        factory(LinkList::class)->create();
+        LinkList::factory()->create();
 
         $response = $this->deleteJsonAuthorized('api/v1/lists/1');
 

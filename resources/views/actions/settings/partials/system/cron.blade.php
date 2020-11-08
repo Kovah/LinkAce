@@ -14,7 +14,7 @@
                 aria-describedby="cron-token-generate">
             <div class="input-group-append">
                 <button class="cron-token-generate btn btn-outline-danger" type="button">
-                    <i class="fas fa-recycle mr-1"></i> @lang('settings.cron_token_generate')
+                    <x-icon.recycle class="mr-1"/> @lang('settings.cron_token_generate')
                 </button>
             </div>
         </div>

@@ -6,6 +6,7 @@ use App\Jobs\SaveLinkToWaybackmachine;
 use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Collection;
+use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
@@ -44,6 +45,7 @@ class Link extends Model
 {
     use SoftDeletes;
     use RevisionableTrait;
+    use HasFactory;
 
     public $table = 'links';
 
@@ -214,10 +216,10 @@ class Link extends Model
     }
 
     /**
-     * @param string|null $additional_classes
+     * @param string|null $additionalClasses
      * @return string
      */
-    public function getIcon(?string $additional_classes = null): string
+    public function getIcon(string $additionalClasses = ''): string
     {
         if ($this->icon === null) {
             return '';
@@ -228,19 +230,26 @@ class Link extends Model
 
         // Override the icon by status if applicable
         if ($this->status === self::STATUS_MOVED) {
-            $icon = 'fa fa-external-link-alt text-warning';
+            $icon = 'external-link';
+            $additionalClasses .= ' text-warning';
             $title = trans('link.status.2');
         }
 
         if ($this->status === self::STATUS_BROKEN) {
-            $icon = 'fa fa-unlink text-danger';
+            $icon = 'unlink';
+            $additionalClasses .= ' text-danger';
             $title = trans('link.status.3');
         }
 
-        // Build the correct attributes
-        $classes = 'fa-fw ' . $icon . ($additional_classes ? ' ' . $additional_classes : '');
+        if (!view()->exists('components.icon.' . $icon)) {
+            return "<!-- Icon icon.$icon could not be found! -->";
+        }
 
-        return sprintf('<i class="%s" title="%s"></i>', $classes, $title);
+        return view('models.links.partials.link-icon', [
+            'icon' => 'icon.'.$icon,
+            'class' => $additionalClasses .' fw',
+            'title' => $title,
+        ]);
     }
 
     /**

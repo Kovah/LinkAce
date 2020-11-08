@@ -29,7 +29,7 @@
                         <input type="hidden" name="model" value="note">
                         <input type="hidden" name="id" value="{{ $note->id }}">
                         <button type="submit" class="btn btn-sm btn-outline-primary" title="@lang('trash.restore')">
-                            <i class="fas fa-reply"></i>
+                            <x-icon.reply/>
                         </button>
                     </form>
                 </td>

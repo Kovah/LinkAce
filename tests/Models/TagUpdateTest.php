@@ -21,14 +21,14 @@ class TagUpdateTest extends TestCase
     {
         parent::setUp();
 
-        $this->user = factory(User::class)->create();
+        $this->user = User::factory()->create();
     }
 
     public function testValidTagUpdate(): void
     {
         $this->be($this->user);
 
-        $tag = factory(Tag::class)->create();
+        $tag = Tag::factory()->create();
 
         $changedData = [
             'name' => 'Changed Tag Title',

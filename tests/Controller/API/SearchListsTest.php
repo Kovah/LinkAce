@@ -27,7 +27,7 @@ class SearchListsTest extends ApiTestCase
     public function testWithEmptyQuery(): void
     {
         // This list must not be present in the results
-        factory(LinkList::class)->create([
+        LinkList::factory()->create([
             'user_id' => $this->user->id,
             'name' => 'Scientific Articles',
         ]);
@@ -40,18 +40,18 @@ class SearchListsTest extends ApiTestCase
 
     public function testWithMultipleResults(): void
     {
-        $list = factory(LinkList::class)->create([
+        $list = LinkList::factory()->create([
             'user_id' => $this->user->id,
             'name' => 'Scientific Articles',
         ]);
 
-        $list2 = factory(LinkList::class)->create([
+        $list2 = LinkList::factory()->create([
             'user_id' => $this->user->id,
             'name' => 'Articles about Web Development',
         ]);
 
         // This list must not be present in the results
-        factory(LinkList::class)->create([
+        LinkList::factory()->create([
             'user_id' => $this->user->id,
             'name' => 'Learning Theory Resources',
         ]);
@@ -68,18 +68,18 @@ class SearchListsTest extends ApiTestCase
 
     public function testWithShortQuery(): void
     {
-        $list = factory(LinkList::class)->create([
+        $list = LinkList::factory()->create([
             'user_id' => $this->user->id,
             'name' => 'Scientific Articles',
         ]);
 
-        $list2 = factory(LinkList::class)->create([
+        $list2 = LinkList::factory()->create([
             'user_id' => $this->user->id,
             'name' => 'Articles about Web Development',
         ]);
 
         // This list must not be present in the results
-        factory(LinkList::class)->create([
+        LinkList::factory()->create([
             'user_id' => $this->user->id,
             'name' => 'Quantum Theories',
         ]);

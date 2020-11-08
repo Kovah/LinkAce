@@ -11,7 +11,7 @@
                 <button type="button" class="btn btn-xs btn-outline-primary" title="@lang('sharing.share_link')"
                     data-toggle="collapse" data-target="#sharing-{{ $link->id }}"
                     aria-expanded="false" aria-controls="sharing-{{ $link->id }}">
-                    <i class="fas fa-share-alt fa-fw"></i>
+                    <x-icon.share class="fw"/>
                 </button>
             </div>
         </div>

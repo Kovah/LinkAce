@@ -80,13 +80,13 @@ function formatDateTime(Carbon $date, bool $use_relational = false): string
  */
 function getPaginationLimit()
 {
-    $user_limit = usersettings('listitem_count');
+    $default = config('linkace.default.pagination');
 
-    if ($user_limit) {
-        return $user_limit;
+    if (request()->is('guest/*')) {
+        return systemsettings('guest_listitem_count') ?: $default;
     }
 
-    return config('linkace.default.pagination');
+    return usersettings('listitem_count') ?: $default;
 }
 
 /**
@@ -97,15 +97,19 @@ function getPaginationLimit()
  */
 function getShareLinks(Link $link): string
 {
-    $cache_key = 'sharelinks_link_' . $link->id . (auth()->guest() ? '_guest' : '');
-    $cache_duration = config('linkace.default.cache_duration');
+    $cacheKey = 'sharelinks_link_' . $link->id . (auth()->guest() ? '_guest' : '');
+    $cacheDuration = config('linkace.default.cache_duration');
 
-    return Cache::remember($cache_key, $cache_duration, function () use ($link) {
+    return Cache::remember($cacheKey, $cacheDuration, function () use ($link) {
         $services = config('sharing.services');
         $links = '';
 
         foreach ($services as $service => $details) {
-            if (usersettings('share_' . $service) || auth()->guest()) {
+            if (request()->is('guest/*')) {
+                if (systemsettings('guest_share_' . $service)) {
+                    $links .= Sharing::getShareLink($service, $link);
+                }
+            } elseif (usersettings('share_' . $service)) {
                 $links .= Sharing::getShareLink($service, $link);
             }
         }
@@ -143,36 +147,32 @@ function displaySVG($path, $width = null, $height = null)
  * @param string $label
  * @param string $route
  * @param string $type
- * @param string $order_by
- * @param string $order_dir
+ * @param string $orderBy
+ * @param string $orderDir
  * @return string
  */
-function tableSorter($label, $route, $type, $order_by, $order_dir): string
+function tableSorter($label, $route, $type, $orderBy, $orderDir): string
 {
-    $out = '<div class="d-flex">';
-    $out .= '<span class="mr-1">' . e($label) . '</span>';
-    $out .= '<span class="table-sorter ml-auto">';
+    $orderUrl = $route . '?orderBy=' . $type . '&orderDir=';
+    $orderIcon = 'icon.sort';
 
-    $order_url = $route . '?orderBy=' . $type . '&orderDir=';
-    $order_icon = 'fa-sort';
-
-    if ($type === $order_by) {
-        if ($order_dir === 'asc') {
-            $order_url .= 'desc';
-            $order_icon = 'fa-sort-up';
+    if ($type === $orderBy) {
+        if ($orderDir === 'asc') {
+            $orderUrl .= 'desc';
+            $orderIcon = 'icon.sort-up';
         } else {
-            $order_url .= 'asc';
-            $order_icon = 'fa-sort-down';
+            $orderUrl .= 'asc';
+            $orderIcon = 'icon.sort-down';
         }
     } else {
-        $order_url .= 'asc';
+        $orderUrl .= 'asc';
     }
 
-    $out .= '<a href="' . $order_url . '"><i class="fa ' . $order_icon . '"></i></a>';
-    $out .= '</span>';
-    $out .= '</div>';
-
-    return $out;
+    return view('partials.table-sorter', [
+        'label' => $label,
+        'url' => $orderUrl,
+        'icon' => $orderIcon,
+    ]);
 }
 
 /**
@@ -195,7 +195,13 @@ function waybackLink($link): ?string
  */
 function linkTarget(): string
 {
-    return usersettings('links_new_tab') ? 'target="_blank" rel="noopener noreferrer"' : '';
+    $newTab = 'target="_blank" rel="noopener noreferrer"';
+
+    if (request()->is('guest/*')) {
+        return systemsettings('guest_links_new_tab') ? $newTab : '';
+    }
+
+    return usersettings('links_new_tab') ? $newTab : '';
 }
 
 /**
@@ -212,4 +218,19 @@ function getVersionFromPackage(): ?string
     }
 
     return isset($package->version) ? 'v' . $package->version : null;
+}
+
+/**
+ * Properly escape symbols used in search queries.
+ *
+ * @param string $query
+ * @return string
+ */
+function escapeSearchQuery(string $query): string
+{
+    return str_replace(
+        ['\\', '%', '_', '*'],
+        ['\\\\', '\\%', '\\_', '\\*'],
+        $query
+    );
 }

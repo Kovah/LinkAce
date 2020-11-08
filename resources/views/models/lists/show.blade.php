@@ -10,12 +10,12 @@
             <div class="ml-auto">
                 <a href="{{ route('lists.edit', [$list->id]) }}" class="btn btn-sm btn-primary"
                     aria-label="@lang('list.edit')">
-                    <i class="fas fa-edit mr-2"></i>
+                    <x-icon.edit class="mr-2"/>
                     @lang('linkace.edit')
                 </a>
                 <a onclick="event.preventDefault();document.getElementById('list-delete-{{ $list->id }}').submit();"
                     class="btn btn-sm btn-outline-danger" aria-label="@lang('list.delete')">
-                    <i class="fas fa-trash-alt mr-2"></i>
+                    <x-icon.trash class="mr-2"/>
                     @lang('linkace.delete')
                 </a>
             </div>
@@ -37,17 +37,17 @@
         </div>
     </div>
 
-    <div class="card mt-3">
+    <div class="card my-3">
         <div class="card-header">
             @lang('link.links')
         </div>
         <div class="card-table">
 
-            @include('models.links.partials.table', ['links' => $list_links])
+            @include('models.links.partials.table', ['links' => $listLinks])
 
         </div>
     </div>
 
-    {!! $list_links->onEachSide(1)->links() !!}
+    {!! $listLinks->onEachSide(1)->appends(['orderBy' => $orderBy, 'orderDir' => $orderDir])->links() !!}
 
 @endsection

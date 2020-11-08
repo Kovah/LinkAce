@@ -22,7 +22,7 @@ class LinkApiTest extends ApiTestCase
 
     public function testIndexRequest(): void
     {
-        $link = factory(Link::class)->create();
+        $link = Link::factory()->create();
 
         $response = $this->getJsonAuthorized('api/v1/links');
 
@@ -52,9 +52,9 @@ class LinkApiTest extends ApiTestCase
 
     public function testFullCreateRequest(): void
     {
-        $list = factory(LinkList::class)->create(['name' => 'Test List 1']);
-        $tag = factory(Tag::class)->create(['name' => 'a test 1']);
-        $tag2 = factory(Tag::class)->create(['name' => 'tag #2']);
+        $list = LinkList::factory()->create(['name' => 'Test List 1']);
+        $tag = Tag::factory()->create(['name' => 'a test 1']);
+        $tag2 = Tag::factory()->create(['name' => 'tag #2']);
 
         $response = $this->postJsonAuthorized('api/v1/links', [
             'url' => 'http://example.com',
@@ -177,7 +177,7 @@ class LinkApiTest extends ApiTestCase
 
     public function testShowRequest(): void
     {
-        $link = factory(Link::class)->create();
+        $link = Link::factory()->create();
 
         $response = $this->getJsonAuthorized('api/v1/links/1');
 
@@ -189,9 +189,9 @@ class LinkApiTest extends ApiTestCase
 
     public function testShowRequestWithRelations(): void
     {
-        $link = factory(Link::class)->create();
-        $list = factory(LinkList::class)->create();
-        $tag = factory(Tag::class)->create();
+        $link = Link::factory()->create();
+        $list = LinkList::factory()->create();
+        $tag = Tag::factory()->create();
 
         $link->lists()->sync([$list->id]);
         $link->tags()->sync([$tag->id]);
@@ -219,8 +219,8 @@ class LinkApiTest extends ApiTestCase
 
     public function testUpdateRequest(): void
     {
-        factory(Link::class)->create();
-        $list = factory(LinkList::class)->create();
+        Link::factory()->create();
+        $list = LinkList::factory()->create();
 
         $response = $this->patchJsonAuthorized('api/v1/links/1', [
             'url' => 'http://example.com',
@@ -243,7 +243,7 @@ class LinkApiTest extends ApiTestCase
 
     public function testInvalidUpdateRequest(): void
     {
-        factory(Link::class)->create();
+        Link::factory()->create();
 
         $response = $this->patchJsonAuthorized('api/v1/links/1', [
             'url' => null,
@@ -277,7 +277,7 @@ class LinkApiTest extends ApiTestCase
 
     public function testDeleteRequest(): void
     {
-        factory(Link::class)->create();
+        Link::factory()->create();
 
         $response = $this->deleteJsonAuthorized('api/v1/links/1');
 

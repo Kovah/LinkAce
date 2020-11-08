@@ -8,4 +8,6 @@
 
     @include('actions.settings.partials.system.general-settings')
 
+    @include('actions.settings.partials.system.guest-settings')
+
 @endsection

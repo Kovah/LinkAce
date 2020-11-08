@@ -6,14 +6,19 @@
         <h3 class="mb-0">
             @lang('link.links')
         </h3>
-        <a href="{{ route('links.create') }}" class="btn btn-sm btn-primary ml-auto" aria-label="@lang('link.add')">
-            <i class="fas fa-plus mr-2"></i>
-            @lang('linkace.add')
-        </a>
+
+        <div class="btn-group ml-auto">
+            <a href="{{ route('links.create') }}" class="btn btn-sm btn-primary"
+                aria-label="@lang('link.add')">
+                <x-icon.plus class="mr-2"/>
+                @lang('linkace.add')
+            </a>
+            @include('models.links.partials.index-order-dropdown', ['baseRoute' => 'links.index'])
+        </div>
     </header>
 
     <section class="my-4">
-        @if(!$links->isEmpty())
+        @if($links->isNotEmpty())
 
             <div class="link-wrapper">
                 @if((int)usersettings('link_display_mode') === Link::DISPLAY_CARDS)
@@ -34,8 +39,8 @@
         @endif
     </section>
 
-    @if(!$links->isEmpty())
-        {!! $links->onEachSide(1)->links() !!}
+    @if($links->isNotEmpty())
+        {!! $links->onEachSide(1)->appends(['orderBy' => $orderBy, 'orderDir' => $orderDir])->links() !!}
     @endif
 
 @endsection

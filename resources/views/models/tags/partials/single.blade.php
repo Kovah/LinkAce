@@ -10,11 +10,11 @@
     <td class="text-right">
         <div class="btn-group btn-group-xs">
             <a href="{{ route('tags.edit', [$tag->id]) }}" class="btn btn-outline-secondary">
-                <i class="fas fa-edit"></i>
+                <x-icon.edit class="fw"/>
             </a>
             <a href="#" title=" @lang('tag.delete')" class="btn btn-outline-secondary"
                 onclick="event.preventDefault();document.getElementById('tag-delete-{{ $tag->id }}').submit();">
-                <i class="fas fa-trash-alt"></i>
+                <x-icon.trash class="fw"/>
             </a>
         </div>
 

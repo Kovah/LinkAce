@@ -38,7 +38,7 @@
                     </div>
 
                     <button type="submit" class="btn btn-sm btn-primary">
-                        <i class="fas fa-save mr-2"></i> @lang('note.edit')
+                        <x-icon.save class="mr-2"/> @lang('note.edit')
                     </button>
 
                 </div>

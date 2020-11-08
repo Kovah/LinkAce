@@ -1,18 +1,33 @@
 <?php
 
-use Faker\Generator as Faker;
+namespace Database\Factories;
 
-$factory->define(\App\Models\Tag::class, function (Faker $faker) {
+use App\Models\Tag;
+use App\Models\User;
+use Exception;
+use Illuminate\Database\Eloquent\Factories\Factory;
 
-    $user = \App\Models\User::first();
+class TagFactory extends Factory
+{
+    /**
+     * The name of the factory's corresponding model.
+     *
+     * @var string
+     */
+    protected $model = Tag::class;
 
-    if (empty($user)) {
-        throw new Exception('Users need to be generated prior to generating tags.');
+    /**
+     * Define the model's default state.
+     *
+     * @return array
+     * @throws Exception
+     */
+    public function definition(): array
+    {
+        return [
+            'user_id' => User::first()->id ?? User::factory(),
+            'name' => $this->faker->words(random_int(1, 3), true),
+            'is_private' => $this->faker->boolean(10),
+        ];
     }
-
-    return [
-        'user_id' => $user->id,
-        'name' => $faker->words(random_int(1, 3), true),
-        'is_private' => $faker->boolean(10),
-    ];
-});
+}

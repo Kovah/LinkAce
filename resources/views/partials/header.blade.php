@@ -6,21 +6,10 @@
 
 @include('partials.favicon')
 
-@if(usersettings('darkmode_setting') === '1')
-    <link href="{{ mix('assets/dist/css/app-dark.css') }}" rel="stylesheet">
-@elseif(usersettings('darkmode_setting') === '2')
-    <style type="text/css"><?php include public_path('assets/dist/css/loader.css') ?></style>
-    <meta name="darkmode" content="1">
-    <link rel="stylesheet"
-        data-light-href="{{ mix('assets/dist/css/app.css') }}"
-        data-dark-href="{{ mix('assets/dist/css/app-dark.css') }}">
-@else
-    <link href="{{ mix('assets/dist/css/app.css') }}" rel="stylesheet">
-@endif
+@include('partials.configure-darkmode')
 
 <script defer src="{{ mix('assets/dist/js/dependencies.js') }}"></script>
 <script defer src="{{ mix('assets/dist/js/app.js') }}"></script>
-<script defer src="{{ mix('assets/dist/js/fontawesome.js') }}"></script>
 
 <meta property="la-app-data" content="{{ json_encode([
     'user' => [

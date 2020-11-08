@@ -5,6 +5,7 @@ return [
     'account_settings' => 'Kontoeinstellungen',
     'app_settings' => 'Anwendungseinstellungen',
     'system_settings' => 'Systemeinstellungen',
+    'guest_settings' => 'Gast-Einstellungen',
 
     'language' => 'Sprache',
     'timezone' => 'Zeitzone',
@@ -86,4 +87,6 @@ return [
     'update_check_version_found' => 'Update gefunden. Version #VERSION# ist verfügbar.',
     'update_check_success' => 'Kein Update gefunden.',
     'update_check_failed' => 'Konnte nicht nach Updates suchen.',
+
+    'guest_settings_info' => 'Die folgenden Einstellungen gelten für alle Gäste, die die Webseite besuchen, sofern der Gastzugang aktiviert ist.',
 ];

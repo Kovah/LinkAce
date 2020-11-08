@@ -18,6 +18,8 @@ return [
     'order_by.url:desc' => 'URL descending',
     'order_by.created_at:asc' => 'Creation Date ascending',
     'order_by.created_at:desc' => 'Creation Date descending',
+    'order_by.number_links:asc' => 'Number of Links ascending',
+    'order_by.number_links:desc' => 'Number of Links descending',
 
     'no_results' => 'No results found.',
 

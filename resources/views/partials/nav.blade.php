@@ -20,7 +20,7 @@
                     <a class="nav-link dropdown-toggle" href="#" id="navbar-lists-dd" role="button"
                         data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                         @lang('list.lists')
-                        <i class="fas fa-caret-down fa-fw"></i>
+                        <x-icon.caret-down class="fw"/>
                     </a>
                     <div class="dropdown-menu" aria-labelledby="navbar-lists-dd">
                         <a href="{{ route('lists.index') }}" class="dropdown-item">
@@ -35,7 +35,7 @@
                     <a class="nav-link dropdown-toggle" href="#" id="navbar-tags-dd" role="button"
                         data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                         @lang('tag.tags')
-                        <i class="fas fa-caret-down fa-fw"></i>
+                        <x-icon.caret-down class="fw"/>
                     </a>
                     <div class="dropdown-menu" aria-labelledby="navbar-tags-dd">
                         <a href="{{ route('tags.index') }}" class="dropdown-item">
@@ -54,12 +54,12 @@
             @auth
                 <li class="nav-item">
                     <a href="{{ route('get-search') }}" class="nav-link" title="@lang('search.search')">
-                        <i class="fas fa-search fa-fw"></i>
+                        <x-icon.search class="fw"/>
                     </a>
                 </li>
                 <li class="nav-item">
                     <a href="{{ route('get-trash') }}" class="nav-link" title="@lang('trash.trash')">
-                        <i class="fas fa-trash-alt fa-fw"></i>
+                        <x-icon.trash class="fw"/>
                     </a>
                 </li>
             @endauth
@@ -83,21 +83,21 @@
             <li class="nav-item">
                 <a href="{{ route('links.create') }}" class="nav-link">
                     <span class="d-none d-sm-inline mr-2">@lang('link.add')</span>
-                    <span class="d-sm-none"><i class="fa fa-plus fa-fw"></i></span>
+                    <span class="d-sm-none"><x-icon.plus class="fw"/></span>
                 </a>
             </li>
             <li class="nav-item">
                 <a href="{{ route('links.index') }}" class="nav-link">
                     <span class="d-none d-sm-inline mr-2">@lang('link.all_links')</span>
-                    <span class="d-sm-none"><i class="fa fa-link fa-fw"></i></span>
+                    <span class="d-sm-none"><x-icon.link class="fw"/></span>
                 </a>
             </li>
             <li class="nav-item dropup">
                 <a class="nav-link dropdown-toggle" href="#" id="navbar-lists-dd" role="button"
                     data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                     <span class="d-none d-sm-inline mr-2">@lang('list.lists')</span>
-                    <span class="d-sm-none"><i class="fa fa-list fa-fw"></i></span>
-                    <i class="fas fa-caret-down fa-fw"></i>
+                    <span class="d-sm-none"><x-icon.list class="fw"/></span>
+                    <x-icon.caret-down class="fw"/>
                 </a>
                 <div class="dropdown-menu" aria-labelledby="navbar-lists-dd">
                     <a href="{{ route('lists.index') }}" class="dropdown-item">
@@ -112,8 +112,8 @@
                 <a class="nav-link dropdown-toggle" href="#" id="navbar-tags-dd" role="button"
                     data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                     <span class="d-none d-sm-inline mr-2">@lang('tag.tags')</span>
-                    <span class="d-sm-none"><i class="fa fa-tags fa-fw"></i></span>
-                    <i class="fas fa-caret-down fa-fw"></i>
+                    <span class="d-sm-none"><x-icon.tags class="fw"/></span>
+                    <x-icon.caret-down class="fw"/>
                 </a>
                 <div class="dropdown-menu" aria-labelledby="navbar-tags-dd">
                     <a href="{{ route('tags.index') }}" class="dropdown-item">
@@ -130,13 +130,13 @@
             <li class="nav-item">
                 <a href="{{ route('get-search') }}" class="nav-link" title="@lang('search.search')">
                     <span class="d-none d-sm-inline">@lang('search.search')</span>
-                    <span class="d-sm-none"><i class="fas fa-search fa-fw"></i></span>
+                    <span class="d-sm-none"><x-icon.search class="fw"/></span>
                 </a>
             </li>
             <li class="nav-item">
                 <a href="{{ route('get-trash') }}" class="nav-link" title="@lang('trash.trash')">
                     <span class="d-none d-sm-inline">@lang('trash.trash')</span>
-                    <span class="d-sm-none"><i class="fas fa-trash-alt fa-fw"></i></span>
+                    <span class="d-sm-none"><x-icon.trash class="fw"/></span>
                 </a>
             </li>
         </ul>

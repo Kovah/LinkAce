@@ -21,7 +21,7 @@ class ListDeleteTest extends TestCase
     {
         parent::setUp();
 
-        $this->user = factory(User::class)->create();
+        $this->user = User::factory()->create();
     }
 
     /**
@@ -33,7 +33,7 @@ class ListDeleteTest extends TestCase
     {
         $this->be($this->user);
 
-        $list = factory(LinkList::class)->create();
+        $list = LinkList::factory()->create();
 
         $deletionResult = ListRepository::delete($list);
 

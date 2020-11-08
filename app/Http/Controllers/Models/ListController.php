@@ -24,17 +24,18 @@ class ListController extends Controller
     public function index(Request $request): View
     {
         $lists = LinkList::byUser(auth()->id())
+            ->withCount('links')
             ->orderBy(
                 $request->input('orderBy', 'name'),
-                $request->input('orderDir', 'ASC')
+                $request->input('orderDir', 'asc')
             )
             ->paginate(getPaginationLimit());
 
         return view('models.lists.index', [
             'lists' => $lists,
             'route' => $request->getBaseUrl(),
-            'order_by' => $request->input('orderBy', 'name'),
-            'order_dir' => $request->input('orderDir', 'ASC'),
+            'orderBy' => $request->input('orderBy', 'name'),
+            'orderDir' => $request->input('orderDir', 'asc'),
         ]);
     }
 
@@ -64,7 +65,6 @@ class ListController extends Controller
 
         if ($request->input('reload_view')) {
             session()->flash('reload_view', true);
-
             return redirect()->route('lists.create');
         }
 
@@ -82,22 +82,19 @@ class ListController extends Controller
     {
         $list = LinkList::findOrFail($id);
 
-        $links = $list->links()->byUser(auth()->id());
-
-        if ($request->has('orderBy') && $request->has('orderDir')) {
-            $links->orderBy($request->input('orderBy'), $request->input('orderDir'));
-        } else {
-            $links->orderBy('created_at', 'DESC');
-        }
-
-        $links = $links->paginate(getPaginationLimit());
+        $links = $list->links()
+            ->byUser(auth()->id())
+            ->orderBy(
+                $request->input('orderBy', 'created_at'),
+                $request->input('orderDir', 'desc')
+            )->paginate(getPaginationLimit());
 
         return view('models.lists.show', [
             'list' => $list,
-            'list_links' => $links,
+            'listLinks' => $links,
             'route' => $request->getBaseUrl(),
-            'order_by' => $request->input('orderBy'),
-            'order_dir' => $request->input('orderDir'),
+            'orderBy' => $request->input('orderBy', 'created_at'),
+            'orderDir' => $request->input('orderDir', 'desc'),
         ]);
     }
 
@@ -128,7 +125,6 @@ class ListController extends Controller
         $list = ListRepository::update($list, $request->all());
 
         flash(trans('list.updated_successfully'), 'success');
-
         return redirect()->route('lists.show', [$list->id]);
     }
 

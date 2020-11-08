@@ -41,7 +41,7 @@ trait SearchesLinks
 
         // Search for the URL
         if ($this->searchQuery = $request->input('query', false)) {
-            $query = '%' . $this->searchQuery . '%';
+            $query = '%' . escapeSearchQuery($this->searchQuery) . '%';
             $search->where('url', 'like', $query);
 
             // Also search for the title if applicable

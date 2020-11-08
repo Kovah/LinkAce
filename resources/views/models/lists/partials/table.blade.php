@@ -3,9 +3,11 @@
         <thead>
         <tr>
             <th>
-                {!! tableSorter(trans('list.name'), $route, 'name', $order_by, $order_dir) !!}
+                {!! tableSorter(trans('list.name'), $route, 'name', $orderBy, $orderDir) !!}
             </th>
-            <th>@lang('link.links')</th>
+            <th>
+                {!! tableSorter(trans('link.links'), $route, 'links_count', $orderBy, $orderDir) !!}
+            </th>
             <th></th>
         </tr>
         </thead>

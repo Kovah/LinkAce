@@ -18,7 +18,7 @@ class TagApiTest extends ApiTestCase
 
     public function testIndexRequest(): void
     {
-        $tag = factory(Tag::class)->create();
+        $tag = Tag::factory()->create();
 
         $response = $this->getJsonAuthorized('api/v1/tags');
 
@@ -78,7 +78,7 @@ class TagApiTest extends ApiTestCase
 
     public function testShowRequest(): void
     {
-        $tag = factory(Tag::class)->create();
+        $tag = Tag::factory()->create();
 
         $response = $this->getJsonAuthorized('api/v1/tags/1');
 
@@ -97,7 +97,7 @@ class TagApiTest extends ApiTestCase
 
     public function testUpdateRequest(): void
     {
-        factory(Tag::class)->create();
+        Tag::factory()->create();
 
         $response = $this->patchJsonAuthorized('api/v1/tags/1', [
             'name' => 'Updated Tag Title',
@@ -116,7 +116,7 @@ class TagApiTest extends ApiTestCase
 
     public function testInvalidUpdateRequest(): void
     {
-        factory(Tag::class)->create();
+        Tag::factory()->create();
 
         $response = $this->patchJsonAuthorized('api/v1/tags/1', [
             'name' => null,
@@ -141,7 +141,7 @@ class TagApiTest extends ApiTestCase
 
     public function testDeleteRequest(): void
     {
-        factory(Tag::class)->create();
+        Tag::factory()->create();
 
         $response = $this->deleteJsonAuthorized('api/v1/tags/1');
 
