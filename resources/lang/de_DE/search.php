@@ -18,6 +18,8 @@ return [
     'order_by.url:desc' => 'URL absteigend',
     'order_by.created_at:asc' => 'Erstellungsdatum aufsteigend',
     'order_by.created_at:desc' => 'Erstellungsdatum absteigend',
+    'order_by.number_links:asc' => 'Anzahl der Links aufsteigend',
+    'order_by.number_links:desc' => 'Anzahl der Links absteigend',
 
     'no_results' => 'Keine Ergebnisse gefunden.',
 

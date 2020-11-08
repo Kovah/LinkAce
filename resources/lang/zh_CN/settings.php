@@ -5,6 +5,7 @@ return [
     'account_settings' => '账号设置',
     'app_settings' => '应用程序设置',
     'system_settings' => '系统设置',
+    'guest_settings' => '访客设置',
 
     'language' => '语言',
     'timezone' => '时区',
@@ -86,4 +87,6 @@ return [
     'update_check_version_found' => '发现新版本 #VERSION# 可用。',
     'update_check_success' => '没有发现更新。',
     'update_check_failed' => '无法检查更新。',
+
+    'guest_settings_info' => '如果访客模式已启用，下面的设置将应用于访客访问您的网站。',
 ];
