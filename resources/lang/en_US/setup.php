@@ -22,6 +22,7 @@ return [
     'requirements.extension_tokenizer' => 'PHP Extension: Tokenizer',
     'requirements.extension_xml' => 'PHP Extension: XML',
     'requirements.env_writable' => '.env file is present and writable',
+    'requirements.storage_writable' => '/storage and /storage/logs directories are writable',
 
     'database_configuration' => 'Database Configuration',
     'database_configure' => 'Configure Database',
