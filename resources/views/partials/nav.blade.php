@@ -81,22 +81,22 @@
     <div class="navbar navbar-dark navbar-expand fixed-bottom bg-primary shadow-sm d-md-none px-2">
         <ul class="navbar-nav">
             <li class="nav-item">
-                <a href="{{ route('links.create') }}" class="nav-link">
+                <a href="{{ route('links.create') }}" class="nav-link pr-3">
                     <span class="d-none d-sm-inline mr-2">@lang('link.add')</span>
                     <span class="d-sm-none"><x-icon.plus class="fw"/></span>
                 </a>
             </li>
             <li class="nav-item">
-                <a href="{{ route('links.index') }}" class="nav-link">
+                <a href="{{ route('links.index') }}" class="nav-link pr-3">
                     <span class="d-none d-sm-inline mr-2">@lang('link.all_links')</span>
                     <span class="d-sm-none"><x-icon.link class="fw"/></span>
                 </a>
             </li>
             <li class="nav-item dropup">
-                <a class="nav-link dropdown-toggle" href="#" id="navbar-lists-dd" role="button"
+                <a class="nav-link dropdown-toggle pr-3" href="#" id="navbar-lists-dd" role="button"
                     data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                     <span class="d-none d-sm-inline mr-2">@lang('list.lists')</span>
-                    <span class="d-sm-none"><x-icon.list class="fw"/></span>
+                    <span class="d-sm-none mr-1"><x-icon.list class="fw"/></span>
                     <x-icon.caret-down class="fw"/>
                 </a>
                 <div class="dropdown-menu" aria-labelledby="navbar-lists-dd">
@@ -109,10 +109,10 @@
                 </div>
             </li>
             <li class="nav-item dropup">
-                <a class="nav-link dropdown-toggle" href="#" id="navbar-tags-dd" role="button"
+                <a class="nav-link dropdown-toggle pr-3" href="#" id="navbar-tags-dd" role="button"
                     data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                     <span class="d-none d-sm-inline mr-2">@lang('tag.tags')</span>
-                    <span class="d-sm-none"><x-icon.tags class="fw"/></span>
+                    <span class="d-sm-none mr-1"><x-icon.tags class="fw"/></span>
                     <x-icon.caret-down class="fw"/>
                 </a>
                 <div class="dropdown-menu" aria-labelledby="navbar-tags-dd">
@@ -128,7 +128,7 @@
 
         <ul class="navbar-nav ml-auto">
             <li class="nav-item">
-                <a href="{{ route('get-search') }}" class="nav-link" title="@lang('search.search')">
+                <a href="{{ route('get-search') }}" class="nav-link pr-3" title="@lang('search.search')">
                     <span class="d-none d-sm-inline">@lang('search.search')</span>
                     <span class="d-sm-none"><x-icon.search class="fw"/></span>
                 </a>
