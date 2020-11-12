@@ -25,8 +25,8 @@ return [
     'lists_private_default' => '默认私密列表',
     'lists_private_default_help' => '启用此选项将默认所有新列表都是私有的',
 
-    'archive_backups' => 'Internet Archive 备份',
-    'archive_backups_help' => '如果启用，LinkAce将告诉 <a href="https://archive.org/">Internet Archive</a> 来备份链接。 通过使用 Internet Archive，用户可以获得一个免费的、外部的书签内容备份解决方案。请考虑捐赠给 Internet Archive。',
+    'archive_backups' => 'Wayback Machine 备份',
+    'archive_backups_help' => '如果启用，LinkAce将告诉<a href="https://archive.org/"> Wayback Machine </a>备份您的链接。 Wayback Machine由非营利组织Internet Archive提供支持。 请考虑<a href="https://archive.org/donate/">捐赠给Internet Archive </a>。',
     'archive_backups_enabled' => '启用备份',
     'archive_backups_enabled_help' => '如果启用，非私人链接将存档在 Internet Archive 中。',
     'archive_private_backups_enabled' => '启用私密链接备份',

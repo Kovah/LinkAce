@@ -25,8 +25,8 @@ return [
     'lists_private_default' => 'Private Lists by default',
     'lists_private_default_help' => 'Enabling this will make all new lists private by default',
 
-    'archive_backups' => 'Internet Archive backups',
-    'archive_backups_help' => 'If enabled, LinkAce will tell the <a href="https://archive.org/">Internet Archive</a> to backup the link. By using the Internet Archive, users get a free, off-site backup solution for the content of their bookmarks. Please consider donating to the Internet Archive.',
+    'archive_backups' => 'Wayback Machine backups',
+    'archive_backups_help' => 'If enabled, LinkAce will tell the <a href="https://archive.org/">Wayback Machine</a> to backup your links. The Wayback Machine is powered by the Internet Archive, a non-profit organization. Please consider <a href="https://archive.org/donate/">donating to the Internet Archive</a>.',
     'archive_backups_enabled' => 'Enable backups',
     'archive_backups_enabled_help' => 'If enabled, non-private links will be saved by the Internet Archive.',
     'archive_private_backups_enabled' => 'Enable backups for private links',
