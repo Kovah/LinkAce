@@ -38,11 +38,11 @@ Route::get('setup/requirements', [RequirementsController::class, 'index'])
 Route::get('setup/database', [DatabaseController::class, 'index'])
     ->name('setup.database');
 Route::post('setup/database', [DatabaseController::class, 'configure'])
-    ->name('setup.database');
+    ->name('setup.save-database');
 Route::get('setup/account', [AccountController::class, 'index'])
     ->name('setup.account');
 Route::post('setup/account', [AccountController::class, 'register'])
-    ->name('setup.account');
+    ->name('setup.save-account');
 Route::get('setup/complete', [MetaController::class, 'complete'])
     ->name('setup.complete');
 
