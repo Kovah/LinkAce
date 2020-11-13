@@ -3,6 +3,7 @@
 namespace App\Console;
 
 use App\Console\Commands\CheckLinksCommand;
+use App\Console\Commands\CleanupLinkHistoriesCommand;
 use App\Console\Commands\RegisterUserCommand;
 use App\Console\Commands\ResetPasswordCommand;
 use Illuminate\Console\Scheduling\Schedule;
@@ -24,6 +25,7 @@ class Kernel extends ConsoleKernel
         RegisterUserCommand::class,
         CheckLinksCommand::class,
         ResetPasswordCommand::class,
+        CleanupLinkHistoriesCommand::class,
     ];
 
     /**
