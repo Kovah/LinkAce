@@ -138,7 +138,7 @@ class CheckLinksCommand extends Command
         $this->output->write('Checking link ' . $link->url . ' ');
 
         try {
-            $response = Http::timeout(5)->get($link->url);
+            $response = Http::timeout(10)->get($link->url);
             $statusCode = $response->status();
         } catch (\Exception $e) {
             // Set status code to null so the link will be marked as broken
