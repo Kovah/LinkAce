@@ -4,7 +4,6 @@
     @include('partials.header')
 </head>
 <body class="bookmarklet">
-<div id="loader"><div></div></div>
 <div id="app">
 
     <main class="main container">

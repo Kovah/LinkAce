@@ -4,7 +4,6 @@
     @include('partials.header')
 </head>
 <body>
-<div id="loader"><div></div></div>
 <div id="app">
 
     @include('partials.nav')

@@ -11,7 +11,7 @@
 
     @include('partials.favicon')
 </head>
-<body class="setup">
+<body>
 <div id="app">
 
     <main class="main container">
@@ -37,6 +37,5 @@
     @stack('scripts')
 
 </div>
-<div id="loader"><div></div></div>
 </body>
 </html>
