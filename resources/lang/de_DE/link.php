@@ -31,7 +31,8 @@ return [
     'revlists' => 'Listen',
     'is_private' => 'Privater Status',
 
-    'status' => [
+    'status' => 'Status',
+    'stati' => [
         '1' => 'Funktionierend',
         '2' => 'Verschoben',
         '3' => 'Kaputt',

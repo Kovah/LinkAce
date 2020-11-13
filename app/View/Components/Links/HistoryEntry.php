@@ -102,6 +102,10 @@ class HistoryEntry extends Component
             return $this->processPrivateField($oldValue, $newValue);
         }
 
+        if ($this->entry->fieldName() === 'status') {
+            return $this->processStatusField($oldValue, $newValue);
+        }
+
         return [$this->entry->oldValue(), $this->entry->newValue()];
     }
 
@@ -163,6 +167,22 @@ class HistoryEntry extends Component
     {
         $oldValue = $oldValue ? trans('linkace.yes') : trans('linkace.no');
         $newValue = $newValue ? trans('linkace.yes') : trans('linkace.no');
+
+        return [$oldValue, $newValue];
+    }
+
+    /**
+     * The Status field is a mapped constant field, thus needs to be formatted with
+     * the correct translated values.
+     *
+     * @param $oldValue
+     * @param $newValue
+     * @return array
+     */
+    protected function processStatusField($oldValue, $newValue): array
+    {
+        $oldValue = trans('link.stati.' . $oldValue);
+        $newValue = trans('link.stati.' . $newValue);
 
         return [$oldValue, $newValue];
     }

@@ -31,7 +31,8 @@ return [
     'revlists' => 'Lists',
     'is_private' => 'Private Status',
 
-    'status' => [
+    'status' => 'Status',
+    'stati' => [
         '1' => 'Working',
         '2' => 'Moved',
         '3' => 'Broken',

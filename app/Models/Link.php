@@ -232,13 +232,13 @@ class Link extends Model
         if ($this->status === self::STATUS_MOVED) {
             $icon = 'external-link';
             $additionalClasses .= ' text-warning';
-            $title = trans('link.status.2');
+            $title = trans('link.stati.2');
         }
 
         if ($this->status === self::STATUS_BROKEN) {
             $icon = 'unlink';
             $additionalClasses .= ' text-danger';
-            $title = trans('link.status.3');
+            $title = trans('link.stati.3');
         }
 
         if (!view()->exists('components.icon.' . $icon)) {
