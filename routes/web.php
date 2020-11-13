@@ -66,12 +66,9 @@ Route::post('password/reset', [ResetPasswordController::class, 'reset']);
 
 // Bookmarklet routes
 Route::prefix('bookmarklet')->group(function () {
-    Route::get('add', [BookmarkletController::class, 'getLinkAddForm'])
-        ->name('bookmarklet-add');
-    Route::get('show', [BookmarkletController::class, 'getCompleteView'])
-        ->name('bookmarklet-complete');
-    Route::get('login', [BookmarkletController::class, 'getLoginForm'])
-        ->name('bookmarklet-login');
+    Route::get('add', [BookmarkletController::class, 'getLinkAddForm'])->name('bookmarklet-add');
+    Route::get('show', [BookmarkletController::class, 'getCompleteView'])->name('bookmarklet-complete');
+    Route::get('login', [BookmarkletController::class, 'getLoginForm'])->name('bookmarklet-login');
 });
 
 Route::get('cron/{token}', CronController::class)->name('cron');

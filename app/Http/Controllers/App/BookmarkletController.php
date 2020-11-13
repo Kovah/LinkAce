@@ -39,9 +39,10 @@ class BookmarkletController extends Controller
 
         session(['bookmarklet.create' => true]);
 
-        return view('actions.bookmarklet.create')
-            ->with('bookmark_url', $newUrl)
-            ->with('bookmark_title', $newTitle);
+        return view('actions.bookmarklet.create', [
+            'bookmark_url' => $newUrl,
+            'bookmark_title' => $newTitle,
+        ]);
     }
 
     /**
