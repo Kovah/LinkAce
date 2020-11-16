@@ -11,7 +11,6 @@
   <a href="https://hub.docker.com/r/linkace/linkace"><img src="https://img.shields.io/badge/Docker-linkace%2Flinkace-2596EC.svg" alt="Docker Repository"></a>
   <a href="https://github.com/Kovah/LinkAce/releases"><img src="https://img.shields.io/github/v/release/kovah/linkace?include_prereleases&label=Latest%20Release" alt="Latest Release"></a>
   <a href="https://opensource.org/licenses/MIT"><img src="https://img.shields.io/github/license/kovah/linkace.svg" alt="License"></a>
-  <a href="https://crowdin.com/project/linkace"><img src="https://img.shields.io/badge/Translations-Crowdin-2b303d" alt="Translations"></a>
 </p>
 <p>&nbsp;</p>
 
@@ -83,6 +82,8 @@ LinkAce provides multiple ways of installing it on your server. The complete doc
 
 
 ### :construction: Contribution
+
+[![Translations](https://img.shields.io/badge/Translations-Crowdin-2b303d)](https://crowdin.com/project/linkace) [![Code Climate maintainability](https://img.shields.io/codeclimate/maintainability/Kovah/LinkAce) ![Code Climate coverage](https://img.shields.io/codeclimate/coverage/Kovah/LinkAce)](https://codeclimate.com/github/Kovah/LinkAce) [![GitHub Build Status](https://img.shields.io/github/workflow/status/Kovah/LinkAce/Testing/dev?label=Dev%20Build)](https://github.com/Kovah/LinkAce/actions?query=workflow%3ATesting+branch%3Adev)
 
 Please review the [**contribution guidelines**](CONTRIBUTING.md) before starting to work on any features.
 
