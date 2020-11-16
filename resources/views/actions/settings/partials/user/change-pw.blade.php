@@ -1,5 +1,5 @@
 @if(!env('APP_DEMO', false))
-    <div class="card mt-4">
+    <div class="card mt-5">
         <div class="card-header">
             @lang('settings.change_password')
         </div>

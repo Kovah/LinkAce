@@ -61,6 +61,15 @@ return [
     'password_updated' => 'Password changed successfully!',
     'old_password_invalid' => 'The old password is not valid!',
 
+    'two_factor_auth' => 'Two Factor Authentication',
+    'two_factor_enable' => 'Enable Two Factor Authentication',
+    'two_factor_disable' => 'Disable Two Factor Authentication',
+    'two_factor_setup_app' => 'Two factor authentication is enabled. Please configure your authentication device now by scanning the following QR code.',
+    'two_factor_setup_url' => 'QR code not working? You may also use this URL directly.',
+    'two_factor_recovery_codes' => 'Store these recovery codes in a secure password manager. They can be used to recover access to your account if your two factor authentication device is lost.',
+    'two_factor_recovery_codes_view' => 'View Recovery Codes',
+    'two_factor_regenerate_recovery_codes' => 'Generate new Recovery Codes',
+
     'api_token' => 'API Token',
     'api_token_generate' => 'Generate Token',
     'api_token_generate_confirm' => 'Do you really want to generate a new token?',

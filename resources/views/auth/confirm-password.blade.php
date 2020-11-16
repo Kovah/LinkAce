@@ -5,10 +5,6 @@
     <div class="row justify-content-center">
         <div class="col-12 col-md-8">
 
-            @if(env('APP_DEMO', false))
-                <div class="alert alert-info small">@lang('linkace.demo_login_hint')</div>
-            @endif
-
             <div class="card">
                 <div class="card-header">
                     @lang('auth.confirm_title')
@@ -39,7 +35,7 @@
                         </div>
 
                         <button type="submit" class="btn btn-primary">
-                            <x-icon.save class="mr-2"/> @lang('auth.confirm_action')
+                            @lang('auth.confirm_action')
                         </button>
 
                     </form>

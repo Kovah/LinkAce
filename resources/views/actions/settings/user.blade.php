@@ -10,6 +10,8 @@
 
     @include('actions.settings.partials.user.change-pw')
 
+    @include('actions.settings.partials.user.two-factor')
+
     @include('actions.settings.partials.user.app-settings')
 
 @endsection

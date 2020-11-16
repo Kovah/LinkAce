@@ -50,7 +50,7 @@ class FortifyServiceProvider extends ServiceProvider
         });
 
         Fortify::twoFactorChallengeView(function () {
-            return view(); // @TODO
+            return view('auth.two-factor-challenge');
         });
     }
 }
