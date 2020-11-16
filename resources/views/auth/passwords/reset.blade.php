@@ -11,11 +11,13 @@
                 </div>
                 <div class="card-body">
 
-                    <form method="POST" action="{{ route('password.request') }}"
+                    <form method="POST" action="{{ route('password.update') }}"
                         aria-label="@lang('linkace.reset_password')">
                         @csrf
 
-                        <input type="hidden" name="token" value="{{ $token }}">
+                        {{ implode('|',$errors->all()) }}
+
+                        <input type="hidden" name="token" value="{{ request()->route('token') }}">
 
                         <div class="form-group">
                             <label for="email">@lang('linkace.email')</label>

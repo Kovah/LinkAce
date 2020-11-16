@@ -46,24 +46,6 @@ Route::post('setup/account', [AccountController::class, 'register'])
 Route::get('setup/complete', [MetaController::class, 'complete'])
     ->name('setup.complete');
 
-// Authentication Routes
-Route::get('login', [LoginController::class, 'showLoginForm'])->name('login');
-Route::post('login', [LoginController::class, 'login']);
-Route::post('logout', [LoginController::class, 'logout'])->name('logout');
-
-// Registration Routes (disabled, use the `artisan registeruser` command)
-//Route::get('register', 'Auth\RegisterController@showRegistrationForm')->name('register');
-//Route::post('register', 'Auth\RegisterController@register');
-
-// Password Reset Routes
-Route::get('password/reset', [ForgotPasswordController::class, 'showLinkRequestForm'])
-    ->name('password.request');
-Route::post('password/email', [ForgotPasswordController::class, 'sendResetLinkEmail'])
-    ->name('password.email');
-Route::get('password/reset/{token}', [ResetPasswordController::class, 'showResetForm'])
-    ->name('password.reset');
-Route::post('password/reset', [ResetPasswordController::class, 'reset']);
-
 // Bookmarklet routes
 Route::prefix('bookmarklet')->group(function () {
     Route::get('add', [BookmarkletController::class, 'getLinkAddForm'])->name('bookmarklet-add');

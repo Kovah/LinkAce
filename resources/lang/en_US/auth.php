@@ -16,4 +16,8 @@ return [
     'failed' => 'These credentials do not match our records.',
     'throttle' => 'Too many login attempts. Please try again in :seconds seconds.',
 
+    'confirm_title' => 'Confirmation required',
+    'confirm' => 'Please confirm this action using your current password.',
+    'confirm_action' => 'Confirm action',
+
 ];

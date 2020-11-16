@@ -85,9 +85,9 @@ class UserSettingsControllerTest extends TestCase
     public function testValidUpdatePasswordResponse(): void
     {
         $response = $this->post('settings/change-password', [
-            'old_password' => 'secretpassword',
-            'new_password' => 'newuserpassword',
-            'new_password_confirmation' => 'newuserpassword',
+            'current_password' => 'secretpassword',
+            'password' => 'newuserpassword',
+            'password_confirmation' => 'newuserpassword',
         ]);
 
         $response->assertRedirect('/');

@@ -2,6 +2,8 @@
 
 namespace App\Http\Controllers\App;
 
+use App\Actions\Fortify\UpdateUserPassword;
+use App\Actions\Fortify\UpdateUserProfileInformation;
 use App\Helper\LinkAce;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\UserAccountUpdateRequest;
@@ -11,8 +13,6 @@ use App\Models\Setting;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Auth;
-use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Str;
 use Illuminate\View\View;
 
@@ -36,15 +36,12 @@ class UserSettingsController extends Controller
     /**
      * Handles changes of the user account itself.
      *
-     * @param UserAccountUpdateRequest $request
+     * @param Request $request
      * @return RedirectResponse
      */
-    public function saveAccountSettings(UserAccountUpdateRequest $request): RedirectResponse
+    public function saveAccountSettings(Request $request): RedirectResponse
     {
-        $request->user()->update($request->only([
-            'name',
-            'email',
-        ]));
+        (new UpdateUserProfileInformation())->update($request->user(), $request->input());
 
         flash(trans('settings.settings_saved'), 'success');
 
@@ -52,7 +49,7 @@ class UserSettingsController extends Controller
     }
 
     /**
-     * Handle changes of generall application settings like share services.
+     * Handle changes of general application settings like share services.
      *
      * @param UserSettingsUpdateRequest $request
      * @return RedirectResponse
@@ -95,26 +92,12 @@ class UserSettingsController extends Controller
     /**
      * Handles the user password change.
      *
-     * @param UserPasswordUpdateRequest $request
+     * @param Request $request
      * @return RedirectResponse
      */
-    public function changeUserPassword(UserPasswordUpdateRequest $request): RedirectResponse
+    public function changeUserPassword(Request $request): RedirectResponse
     {
-        $currentUser = $request->user();
-
-        $authorizationSuccessful = Auth::attempt([
-            'email' => $currentUser->email,
-            'password' => $request->input('old_password'),
-        ]);
-
-        if (!$authorizationSuccessful) {
-            flash(trans('settings.old_password_invalid'));
-
-            return redirect()->back()->withInput();
-        }
-
-        $currentUser->password = Hash::make($request->input('new_password'));
-        $currentUser->save();
+        (new UpdateUserPassword())->update($request->user(), $request->input());
 
         flash(trans('settings.password_updated'), 'success');
 
