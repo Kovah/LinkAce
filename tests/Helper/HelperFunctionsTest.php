@@ -4,15 +4,13 @@ namespace Tests\Helper;
 
 use App\Models\Link;
 use App\Models\User;
-use Illuminate\Foundation\Testing\DatabaseMigrations;
-use Illuminate\Foundation\Testing\DatabaseTransactions;
+use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Support\Facades\Storage;
 use Tests\TestCase;
 
 class HelperFunctionsTest extends TestCase
 {
-    use DatabaseMigrations;
-    use DatabaseTransactions;
+    use RefreshDatabase;
 
     /** @var User */
     private $user;

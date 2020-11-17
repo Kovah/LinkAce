@@ -15,8 +15,6 @@
                         aria-label="@lang('linkace.reset_password')">
                         @csrf
 
-                        {{ implode('|',$errors->all()) }}
-
                         <input type="hidden" name="token" value="{{ request()->route('token') }}">
 
                         <div class="form-group">
