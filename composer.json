@@ -62,7 +62,7 @@
       "Illuminate\\Foundation\\ComposerScripts::postAutoloadDump",
       "@php artisan package:discover --ansi"
     ],
-    "lint": "./vendor/bin/phpcs",
+    "lint": "./vendor/bin/phpcs --runtime-set ignore_warnings_on_exit 1",
     "test": "./vendor/bin/phpunit",
     "code-coverage": "./vendor/bin/phpunit --coverage-clover test-coverage.xml"
   },

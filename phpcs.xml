@@ -4,16 +4,18 @@
 
   <!-- Check the theme folder -->
   <file>./app</file>
+  <file>./database/factories</file>
+  <file>./database/seeders</file>
   <file>./tests</file>
 
   <!-- Enable the PSR-2 Code Standard rules -->
   <rule ref="PSR2"/>
 
-  <!-- Prevent warnings for lines that contain more than 80 characters, only enforce the hard cap -->
+  <!-- Prevent warnings for lines that contain more than 80 characters -->
   <rule ref="Generic.Files.LineLength">
     <properties>
       <property name="lineLimit" value="120"/>
-      <property name="absoluteLineLimit" value="120"/>
+      <property name="absoluteLineLimit" value="0"/>
     </properties>
   </rule>
 </ruleset>
