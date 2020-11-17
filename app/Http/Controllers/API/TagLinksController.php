@@ -11,13 +11,11 @@ class TagLinksController extends Controller
     /**
      * Get the links for a specific tag.
      *
-     * @param $tagID
+     * @param Tag $tag
      * @return JsonResponse
      */
-    public function __invoke($tagID): JsonResponse
+    public function __invoke(Tag $tag): JsonResponse
     {
-        $tag = Tag::findOrFail($tagID);
-
         $links = $tag->links()->paginate(getPaginationLimit());
 
         return response()->json($links);

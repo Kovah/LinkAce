@@ -268,17 +268,6 @@ class Link extends Model
         return $output;
     }
 
-    /**
-     * @param string|int $linkId
-     * @param string     $newUrl
-     * @return bool
-     */
-    public static function urlHasChanged($linkId, string $newUrl): bool
-    {
-        $oldUrl = self::find($linkId)->url ?? null;
-        return $oldUrl !== $newUrl;
-    }
-
     /*
      * Dispatch the SaveLinkToWaybackmachine job, if Internet Archive backups
      * are enabled.

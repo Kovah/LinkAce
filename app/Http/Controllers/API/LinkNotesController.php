@@ -11,13 +11,11 @@ class LinkNotesController extends Controller
     /**
      * Get the notes for a specific link.
      *
-     * @param $linkID
+     * @param Link $link
      * @return JsonResponse
      */
-    public function __invoke($linkID): JsonResponse
+    public function __invoke(Link $link): JsonResponse
     {
-        $link = Link::findOrFail($linkID);
-
         $notes = $link->notes()->paginate(getPaginationLimit());
 
         return response()->json($notes);

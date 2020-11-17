@@ -66,7 +66,7 @@ Route::group(['middleware' => ['auth']], function () {
     Route::resource('notes', NoteController::class)
         ->except(['index', 'show']);
 
-    Route::post('links/toggle-check/{id}', [LinkController::class, 'updateCheckToggle'])
+    Route::post('links/toggle-check/{link}', [LinkController::class, 'updateCheckToggle'])
         ->name('links.toggle-check');
 
     Route::get('search', [SearchController::class, 'getSearch'])

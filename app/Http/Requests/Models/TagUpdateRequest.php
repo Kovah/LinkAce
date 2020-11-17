@@ -26,10 +26,7 @@ class TagUpdateRequest extends FormRequest
     public function authorize(Request $request)
     {
         if ($request->input('name') !== null) {
-            $this->requireUniqueName = Tag::nameHasChanged(
-                $request->route('tag'),
-                $request->input('name')
-            );
+            $this->requireUniqueName = $request->route('tag')->name !== $request->input('name');
         }
 
         return true;

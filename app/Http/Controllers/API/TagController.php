@@ -48,13 +48,11 @@ class TagController extends Controller
     /**
      * Display the specified resource.
      *
-     * @param int $id
+     * @param Tag $tag
      * @return JsonResponse
      */
-    public function show($id): JsonResponse
+    public function show(Tag $tag): JsonResponse
     {
-        $tag = Tag::findOrFail($id);
-
         return response()->json($tag);
     }
 
@@ -62,13 +60,11 @@ class TagController extends Controller
      * Update the specified resource in storage.
      *
      * @param TagUpdateRequest $request
-     * @param int              $id
+     * @param Tag              $tag
      * @return JsonResponse
      */
-    public function update(TagUpdateRequest $request, $id): JsonResponse
+    public function update(TagUpdateRequest $request, Tag $tag): JsonResponse
     {
-        $tag = Tag::findOrFail($id);
-
         $updatedTag = TagRepository::update($tag, $request->all());
 
         return response()->json($updatedTag);
@@ -77,17 +73,14 @@ class TagController extends Controller
     /**
      * Remove the specified resource from storage.
      *
-     * @param TagDeleteRequest $request
-     * @param int              $id
+     * @param Tag $tag
      * @return JsonResponse
      */
-    public function destroy(TagDeleteRequest $request, $id): JsonResponse
+    public function destroy(Tag $tag): JsonResponse
     {
-        $tag = Tag::findOrFail($id);
+        $deletionSuccessful = TagRepository::delete($tag);
 
-        $deletionSuccessfull = TagRepository::delete($tag);
-
-        if ($deletionSuccessfull) {
+        if ($deletionSuccessful) {
             return response()->json(null, Response::HTTP_OK);
         }
 

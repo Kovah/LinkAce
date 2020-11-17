@@ -30,13 +30,11 @@ class NoteController extends Controller
      * Update the specified resource in storage.
      *
      * @param NoteUpdateRequest $request
-     * @param int               $id
+     * @param Note $note
      * @return JsonResponse
      */
-    public function update(NoteUpdateRequest $request, $id): JsonResponse
+    public function update(NoteUpdateRequest $request, Note $note): JsonResponse
     {
-        $note = Note::findOrFail($id);
-
         $updatedNote = NoteRepository::update($note, $request->all());
 
         return response()->json($updatedNote);
@@ -45,17 +43,14 @@ class NoteController extends Controller
     /**
      * Remove the specified resource from storage.
      *
-     * @param NoteDeleteRequest $request
-     * @param int               $id
+     * @param Note $note
      * @return JsonResponse
      */
-    public function destroy(NoteDeleteRequest $request, $id): JsonResponse
+    public function destroy(Note $note): JsonResponse
     {
-        $note = Note::findOrFail($id);
+        $deletionSuccessful = NoteRepository::delete($note);
 
-        $deletionSuccessfull = NoteRepository::delete($note);
-
-        if ($deletionSuccessfull) {
+        if ($deletionSuccessful) {
             return response()->json(null, Response::HTTP_OK);
         }
 

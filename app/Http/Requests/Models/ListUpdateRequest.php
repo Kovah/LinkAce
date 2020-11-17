@@ -26,10 +26,7 @@ class ListUpdateRequest extends FormRequest
     public function authorize(Request $request)
     {
         if ($request->input('name') !== null) {
-            $this->requireUniqueName = LinkList::nameHasChanged(
-                $request->route('list'),
-                $request->input('name')
-            );
+            $this->requireUniqueName = $request->route('list')->name !==  $request->input('name');
         }
 
         return true;

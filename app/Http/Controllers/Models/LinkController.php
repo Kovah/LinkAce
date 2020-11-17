@@ -126,7 +126,7 @@ class LinkController extends Controller
      */
     public function update(LinkUpdateRequest $request, Link $link): RedirectResponse
     {
-        $link = LinkRepository::update($link, $request->all());
+        $link = LinkRepository::update($link, $request->input());
 
         flash(trans('link.updated_successfully'), 'success');
         return redirect()->route('links.show', [$link->id]);

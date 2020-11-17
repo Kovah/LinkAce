@@ -48,14 +48,12 @@ class ListController extends Controller
     /**
      * Display the specified resource.
      *
-     * @param int $id
+     * @param LinkList $list
      * @return JsonResponse
      */
-    public function show($id): JsonResponse
+    public function show(LinkList $list): JsonResponse
     {
-        $list = LinkList::findOrFail($id);
-
-        $list->links = route('api.lists.links', [$id], true);
+        $list->setAttribute('links', route('api.lists.links', [$list->id], true));
 
         return response()->json($list);
     }
@@ -64,13 +62,11 @@ class ListController extends Controller
      * Update the specified resource in storage.
      *
      * @param ListUpdateRequest $request
-     * @param int               $id
+     * @param LinkList          $list
      * @return JsonResponse
      */
-    public function update(ListUpdateRequest $request, $id): JsonResponse
+    public function update(ListUpdateRequest $request, LinkList $list): JsonResponse
     {
-        $list = LinkList::findOrFail($id);
-
         $updatedList = ListRepository::update($list, $request->all());
 
         return response()->json($updatedList);
@@ -79,17 +75,14 @@ class ListController extends Controller
     /**
      * Remove the specified resource from storage.
      *
-     * @param ListDeleteRequest $request
-     * @param int               $id
+     * @param LinkList $list
      * @return JsonResponse
      */
-    public function destroy(ListDeleteRequest $request, $id): JsonResponse
+    public function destroy(LinkList $list): JsonResponse
     {
-        $list = LinkList::findOrFail($id);
+        $deletionSuccessful = ListRepository::delete($list);
 
-        $deletionSuccessfull = ListRepository::delete($list);
-
-        if ($deletionSuccessfull) {
+        if ($deletionSuccessful) {
             return response()->json(null, Response::HTTP_OK);
         }
 
