@@ -7,7 +7,7 @@ use App\Models\Link;
 use App\Models\LinkList;
 use App\Models\Note;
 use App\Models\Tag;
-use Illuminate\View\View;
+use Illuminate\Contracts\View\View;
 
 class DashboardController extends Controller
 {

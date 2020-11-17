@@ -13,7 +13,7 @@ use Exception;
 use Illuminate\Contracts\Filesystem\FileNotFoundException;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Support\Facades\Log;
-use Illuminate\View\View;
+use Illuminate\Contracts\View\View;
 use Shaarli\NetscapeBookmarkParser\NetscapeBookmarkParser;
 
 class ImportController extends Controller

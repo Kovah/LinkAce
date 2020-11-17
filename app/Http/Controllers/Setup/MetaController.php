@@ -4,7 +4,7 @@ namespace App\Http\Controllers\Setup;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\File;
-use Illuminate\View\View;
+use Illuminate\Contracts\View\View;
 
 class MetaController extends Controller
 {

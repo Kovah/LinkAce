@@ -103,7 +103,7 @@ class ListController extends Controller
      */
     public function edit(LinkList $list): View
     {
-        return view('models.lists.edit')->with('list', $list);
+        return view('models.lists.edit', ['list' => $list]);
     }
 
     /**

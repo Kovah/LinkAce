@@ -4,8 +4,8 @@ namespace App\Http\Controllers\Guest;
 
 use App\Http\Controllers\Controller;
 use App\Models\LinkList;
+use Illuminate\Contracts\View\View;
 use Illuminate\Http\Request;
-use Illuminate\View\View;
 
 class ListController extends Controller
 {
@@ -36,12 +36,12 @@ class ListController extends Controller
      * Display the specified resource.
      *
      * @param Request $request
-     * @param int     $id
+     * @param int     $listID
      * @return View
      */
-    public function show(Request $request, $id): View
+    public function show(Request $request, $listID): View
     {
-        $list = LinkList::isPrivate(false)->findOrFail($id);
+        $list = LinkList::isPrivate(false)->findOrFail($listID);
 
         $links = $list->links()
             ->privateOnly(false)

@@ -8,7 +8,7 @@ use Illuminate\Contracts\Container\BindingResolutionException;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Log;
-use Illuminate\View\View;
+use Illuminate\Contracts\View\View;
 use League\Csv\CannotInsertRecord;
 use League\Csv\Writer;
 use Symfony\Component\HttpFoundation\StreamedResponse;

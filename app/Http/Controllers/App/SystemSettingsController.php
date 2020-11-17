@@ -9,7 +9,7 @@ use Illuminate\Http\JsonResponse;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Str;
-use Illuminate\View\View;
+use Illuminate\Contracts\View\View;
 
 class SystemSettingsController extends Controller
 {
@@ -65,7 +65,6 @@ class SystemSettingsController extends Controller
         }
 
         flash(trans('settings.settings_saved'));
-
         return redirect()->route('get-systemsettings');
     }
 

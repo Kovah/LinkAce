@@ -11,7 +11,7 @@ use App\Models\Note;
 use App\Models\Tag;
 use App\Repositories\TrashRepository;
 use Illuminate\Http\RedirectResponse;
-use Illuminate\View\View;
+use Illuminate\Contracts\View\View;
 
 class TrashController extends Controller
 {
@@ -57,7 +57,6 @@ class TrashController extends Controller
         TrashRepository::delete($request->input('model'));
 
         flash(trans('trash.delete_success.' . $request->input('model')), 'success');
-
         return redirect()->route('get-trash');
     }
 
@@ -72,7 +71,6 @@ class TrashController extends Controller
         TrashRepository::restore($request->input('model'), $request->input('id'));
 
         flash(trans('trash.restore.' . $request->input('model')), 'success');
-
         return redirect()->route('get-trash');
     }
 }

@@ -49,7 +49,7 @@ class NoteController extends Controller
             abort(403);
         }
 
-        return view('models.notes.edit')->with('note', $note);
+        return view('models.notes.edit', ['note' => $note]);
     }
 
     /**

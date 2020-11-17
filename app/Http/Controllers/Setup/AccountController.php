@@ -7,7 +7,7 @@ use App\Http\Controllers\Controller;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
-use Illuminate\View\View;
+use Illuminate\Contracts\View\View;
 
 class AccountController extends Controller
 {

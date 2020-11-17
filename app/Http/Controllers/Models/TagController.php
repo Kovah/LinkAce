@@ -102,7 +102,7 @@ class TagController extends Controller
      */
     public function edit(Tag $tag): View
     {
-        return view('models.tags.edit')->with('tag', $tag);
+        return view('models.tags.edit', ['tag' => $tag]);
     }
 
     /**

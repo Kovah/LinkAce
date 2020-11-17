@@ -3,7 +3,7 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\RedirectResponse;
-use Illuminate\View\View;
+use Illuminate\Contracts\View\View;
 
 class FrontController extends Controller
 {

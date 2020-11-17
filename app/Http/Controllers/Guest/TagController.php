@@ -3,10 +3,9 @@
 namespace App\Http\Controllers\Guest;
 
 use App\Http\Controllers\Controller;
-use App\Models\LinkList;
 use App\Models\Tag;
+use Illuminate\Contracts\View\View;
 use Illuminate\Http\Request;
-use Illuminate\View\View;
 
 class TagController extends Controller
 {
@@ -38,12 +37,12 @@ class TagController extends Controller
      * Display the specified resource.
      *
      * @param Request $request
-     * @param int     $id
+     * @param int     $tagID
      * @return View
      */
-    public function show(Request $request, $id): View
+    public function show(Request $request, $tagID): View
     {
-        $tag = Tag::isPrivate(false)->findOrFail($id);
+        $tag = Tag::isPrivate(false)->findOrFail($tagID);
 
         $links = $tag->links()
             ->privateOnly(false)

@@ -4,8 +4,8 @@ namespace App\Http\Controllers\Guest;
 
 use App\Http\Controllers\Controller;
 use App\Models\Link;
+use Illuminate\Contracts\View\View;
 use Illuminate\Http\Request;
-use Illuminate\View\View;
 
 class LinkController extends Controller
 {
