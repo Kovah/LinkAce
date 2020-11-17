@@ -10,8 +10,8 @@ use App\Models\Link;
 use App\Models\Note;
 use App\Repositories\NoteRepository;
 use Exception;
+use Illuminate\Contracts\View\View;
 use Illuminate\Http\RedirectResponse;
-use Illuminate\View\View;
 
 class NoteController extends Controller
 {
@@ -40,13 +40,11 @@ class NoteController extends Controller
     /**
      * Show the form for editing the specified resource.
      *
-     * @param int $id
+     * @param Note $note
      * @return View
      */
-    public function edit($id): View
+    public function edit(Note $note): View
     {
-        $note = Note::findOrFail($id);
-
         if ($note->user_id !== auth()->id()) {
             abort(403);
         }
@@ -58,13 +56,11 @@ class NoteController extends Controller
      * Update the specified resource in storage.
      *
      * @param NoteUpdateRequest $request
-     * @param int               $id
+     * @param Note              $note
      * @return RedirectResponse
      */
-    public function update(NoteUpdateRequest $request, $id): RedirectResponse
+    public function update(NoteUpdateRequest $request, Note $note): RedirectResponse
     {
-        $note = Note::findOrFail($id);
-
         $note = NoteRepository::update($note, $request->except(['_token']));
 
         flash(trans('note.updated_successfully'), 'success');
@@ -75,20 +71,17 @@ class NoteController extends Controller
     /**
      * Remove the specified resource from storage.
      *
-     * @param NoteDeleteRequest $request
-     * @param int               $id
+     * @param Note $note
      * @return RedirectResponse
      * @throws Exception
      */
-    public function destroy(NoteDeleteRequest $request, $id): RedirectResponse
+    public function destroy(Note $note): RedirectResponse
     {
-        $note = Note::findOrFail($id);
-
         $linkId = $note->link->id;
 
-        $deletionSuccessfull = NoteRepository::delete($note);
+        $deletionSuccessful = NoteRepository::delete($note);
 
-        if (!$deletionSuccessfull) {
+        if (!$deletionSuccessful) {
             flash(trans('note.deletion_error'), 'error');
             return redirect()->back();
         }
