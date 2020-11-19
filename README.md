@@ -1,5 +1,5 @@
 <p align="center">
-  <img src="./public/assets/img/linkace_logo_padded.png" title="Linkace">
+  <img src="https://www.linkace.org/images/linkace-social.jpg" title="Linkace">
 </p>
 
 <p>&nbsp;</p>
@@ -7,7 +7,8 @@
 <p align="center"><b>Your self-hosted bookmark archive. Free and open source.</b></p>
 
 <p align="center">
-  <a href="https://twitter.com/LinkAceApp"><img src="https://img.shields.io/badge/Twitter-@LinkAceApp-1da1f2" alt="Follow LinkAce on Twitter"></a>
+  <a href="https://community.linkace.org"><img src="https://img.shields.io/twitter/url?label=Community&logo=discourse&logoColor=44679f&style=social&url=https%3A%2F%2Fcommunity.linkace.org%2F" alt="Get support for LinkAce and chat about the project"></a>
+  <a href="https://twitter.com/LinkAceApp"><img src="https://img.shields.io/twitter/url?label=%40LinkAceApp&style=social&url=https%3A%2F%2Ftwitter.com%2FLinkAceApp" alt="Follow LinkAce on Twitter"></a>
   <a href="https://hub.docker.com/r/linkace/linkace"><img src="https://img.shields.io/badge/Docker-linkace%2Flinkace-2596EC.svg" alt="Docker Repository"></a>
   <a href="https://github.com/Kovah/LinkAce/releases"><img src="https://img.shields.io/github/v/release/kovah/linkace?include_prereleases&label=Latest%20Release" alt="Latest Release"></a>
   <a href="https://opensource.org/licenses/MIT"><img src="https://img.shields.io/github/license/kovah/linkace.svg" alt="License"></a>
@@ -52,7 +53,7 @@ More features are already planned. Take a look at the [project board](https://gi
 
 #### Documentation and Community
 
-Any further information about all the available features and how to install the app, can be found on the  [LinkAce Website](https://www.linkace.org/). Additionally, you may visit the [community forums](https://spectrum.chat/linkace/) to share your ideas, talk with other users or find help for specific problems.
+Any further information about all the available features and how to install the app, can be found on the [LinkAce Website](https://www.linkace.org/). Additionally, you may visit the [community forums](https://community.linkace.org/) to share your ideas, talk with other users or find help for specific problems.
 
 
 ---
@@ -60,7 +61,7 @@ Any further information about all the available features and how to install the 
 
 ### :bulb: Support for LinkAce
 
-I built LinkAce to solve my problem, and I now offer my solution and code to your without charging anything. Thus I won't offer any free personal support, customization or installation help. If you need help please visit the [community forum](https://spectrum.chat/linkace/) and post your issue there.
+I built LinkAce to solve my problem, and I now offer my solution and code to your without charging anything. Thus I won't offer any free personal support, customization or installation help. If you need help please visit the [community forum](https://community.linkace.org/) and post your issue there.
 
 You can get personal and dedicated support by **becoming a [Patreon](https://www.patreon.com/Kovah)** or **[Github Sponsor](https://github.com/sponsors/Kovah)**. :star:
 
