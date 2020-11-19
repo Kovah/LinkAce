@@ -11,6 +11,7 @@ return [
     'logout' => 'Logout',
     'remember_me' => 'Remember me',
     'go_to_dashboard' => 'Go to the Dashboard',
+    'system_logs' => 'System Logs',
 
     'reset_password' => 'Reset Password',
     'send_reset_email' => 'Send Password Reset Link',

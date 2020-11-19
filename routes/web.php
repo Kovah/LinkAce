@@ -26,6 +26,7 @@ use App\Http\Controllers\Setup\DatabaseController;
 use App\Http\Controllers\Setup\MetaController;
 use App\Http\Controllers\Setup\RequirementsController;
 use Illuminate\Support\Facades\Route;
+use Rap2hpoutre\LaravelLogViewer\LogViewerController;
 
 // Frontpage
 Route::get('/', FrontController::class)->name('front');
@@ -121,6 +122,9 @@ Route::group(['middleware' => ['auth']], function () {
         ->name('fetch-html-for-url');
     Route::get('fetch/update-check', [FetchController::class, 'checkForUpdates'])
         ->name('fetch-update-check');
+
+    Route::get('system/logs', [LogViewerController::class, 'index'])
+        ->name('system-logs');
 });
 
 // Guest access routes
