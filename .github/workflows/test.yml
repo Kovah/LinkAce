@@ -9,7 +9,7 @@ jobs:
     runs-on: ubuntu-latest
     strategy:
       matrix:
-        node-version: [12.x]
+        node-version: ['12.x', '14.x']
 
     name: Test asset generation process on Node ${{ matrix.node-version }}
 

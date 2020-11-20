@@ -1,5 +1,5 @@
 @if(!env('APP_DEMO', false))
-    <div class="card mt-4">
+    <div class="card mt-5">
         <div class="card-header">
             @lang('settings.change_password')
         </div>
@@ -12,24 +12,24 @@
                     <label for="old_password">
                         @lang('settings.old_password')
                     </label>
-                    <input type="password" name="old_password" id="old_password" required
-                        class="form-control{{ $errors->has('old_password') ? ' is-invalid' : '' }}">
+                    <input type="password" name="current_password" id="current_password" required
+                        class="form-control{{ $errors->has('current_password') ? ' is-invalid' : '' }}">
                 </div>
 
                 <div class="form-group">
                     <label for="new_password">
                         @lang('settings.new_password')
                     </label>
-                    <input type="password" name="new_password" id="new_password" required
-                        class="form-control{{ $errors->has('new_password') ? ' is-invalid' : '' }}">
+                    <input type="password" name="password" id="password" required
+                        class="form-control{{ $errors->has('password') ? ' is-invalid' : '' }}">
                 </div>
 
                 <div class="form-group">
                     <label for="new_password_confirmation">
                         @lang('settings.new_password2')
                     </label>
-                    <input type="password" name="new_password_confirmation" id="new_password_confirmation" required
-                        class="form-control{{ $errors->has('new_password_confirmation') ? ' is-invalid' : '' }}">
+                    <input type="password" name="password_confirmation" id="password_confirmation" required
+                        class="form-control{{ $errors->has('password_confirmation') ? ' is-invalid' : '' }}">
                 </div>
 
                 <button type="submit" class="btn btn-primary">

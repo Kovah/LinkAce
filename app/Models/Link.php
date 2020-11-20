@@ -232,13 +232,13 @@ class Link extends Model
         if ($this->status === self::STATUS_MOVED) {
             $icon = 'external-link';
             $additionalClasses .= ' text-warning';
-            $title = trans('link.status.2');
+            $title = trans('link.stati.2');
         }
 
         if ($this->status === self::STATUS_BROKEN) {
             $icon = 'unlink';
             $additionalClasses .= ' text-danger';
-            $title = trans('link.status.3');
+            $title = trans('link.stati.3');
         }
 
         if (!view()->exists('components.icon.' . $icon)) {
@@ -266,17 +266,6 @@ class Link extends Model
         $output .= '</time-ago>';
 
         return $output;
-    }
-
-    /**
-     * @param string|int $linkId
-     * @param string     $newUrl
-     * @return bool
-     */
-    public static function urlHasChanged($linkId, string $newUrl): bool
-    {
-        $oldUrl = self::find($linkId)->url ?? null;
-        return $oldUrl !== $newUrl;
     }
 
     /*

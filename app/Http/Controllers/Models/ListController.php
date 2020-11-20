@@ -3,7 +3,6 @@
 namespace App\Http\Controllers\Models;
 
 use App\Http\Controllers\Controller;
-use App\Http\Requests\Models\ListDeleteRequest;
 use App\Http\Requests\Models\ListStoreRequest;
 use App\Http\Requests\Models\ListUpdateRequest;
 use App\Models\LinkList;
@@ -11,7 +10,7 @@ use App\Repositories\ListRepository;
 use Exception;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
-use Illuminate\View\View;
+use \Illuminate\Contracts\View\View;
 
 class ListController extends Controller
 {
@@ -74,14 +73,12 @@ class ListController extends Controller
     /**
      * Display the specified resource.
      *
-     * @param Request $request
-     * @param int     $id
+     * @param Request  $request
+     * @param LinkList $list
      * @return View
      */
-    public function show(Request $request, $id): View
+    public function show(Request $request, LinkList $list): View
     {
-        $list = LinkList::findOrFail($id);
-
         $links = $list->links()
             ->byUser(auth()->id())
             ->orderBy(
@@ -101,27 +98,23 @@ class ListController extends Controller
     /**
      * Show the form for editing the specified resource.
      *
-     * @param int $id
+     * @param LinkList $list
      * @return View
      */
-    public function edit($id): View
+    public function edit(LinkList $list): View
     {
-        $list = LinkList::findOrFail($id);
-
-        return view('models.lists.edit')->with('list', $list);
+        return view('models.lists.edit', ['list' => $list]);
     }
 
     /**
      * Update the specified resource in storage.
      *
      * @param ListUpdateRequest $request
-     * @param int               $id
+     * @param LinkList          $list
      * @return RedirectResponse
      */
-    public function update(ListUpdateRequest $request, $id): RedirectResponse
+    public function update(ListUpdateRequest $request, LinkList $list): RedirectResponse
     {
-        $list = LinkList::findOrFail($id);
-
         $list = ListRepository::update($list, $request->all());
 
         flash(trans('list.updated_successfully'), 'success');
@@ -131,18 +124,15 @@ class ListController extends Controller
     /**
      * Remove the specified resource from storage.
      *
-     * @param ListDeleteRequest $request
-     * @param int               $id
+     * @param LinkList $list
      * @return RedirectResponse
      * @throws Exception
      */
-    public function destroy(ListDeleteRequest $request, $id): RedirectResponse
+    public function destroy(LinkList $list): RedirectResponse
     {
-        $list = LinkList::findOrFail($id);
+        $deletionSuccessful = ListRepository::delete($list);
 
-        $deletionSuccessfull = ListRepository::delete($list);
-
-        if (!$deletionSuccessfull) {
+        if (!$deletionSuccessful) {
             flash(trans('list.deletion_error'), 'error');
             return redirect()->back();
         }

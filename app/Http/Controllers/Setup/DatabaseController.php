@@ -12,7 +12,7 @@ use Illuminate\Support\Facades\Config;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\File;
 use Illuminate\Support\Facades\Log;
-use Illuminate\View\View;
+use Illuminate\Contracts\View\View;
 use PDOException;
 
 class DatabaseController extends Controller
@@ -42,7 +42,6 @@ class DatabaseController extends Controller
 
         if ($this->databaseHasData() && !$request->has('overwrite_data')) {
             flash(trans('setup.database.data_present'), 'danger');
-
             return redirect()->back()->with('data_present', true)->withInput();
         }
 

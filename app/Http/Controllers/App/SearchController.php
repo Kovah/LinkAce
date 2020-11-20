@@ -5,7 +5,7 @@ namespace App\Http\Controllers\App;
 use App\Http\Controllers\Controller;
 use App\Http\Controllers\Traits\SearchesLinks;
 use App\Http\Requests\SearchRequest;
-use Illuminate\View\View;
+use Illuminate\Contracts\View\View;
 
 class SearchController extends Controller
 {

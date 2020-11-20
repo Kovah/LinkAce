@@ -31,7 +31,8 @@ return [
     'revlists' => '列表',
     'is_private' => '隐私状态',
 
-    'status' => [
+    'status' => '状态',
+    'stati' => [
         '1' => '运行中',
         '2' => '移动',
         '3' => '已失效',

@@ -3,16 +3,15 @@
 namespace App\Http\Controllers\Models;
 
 use App\Http\Controllers\Controller;
-use App\Http\Requests\Models\LinkDeleteRequest;
 use App\Http\Requests\Models\LinkStoreRequest;
 use App\Http\Requests\Models\LinkToggleCheckRequest;
 use App\Http\Requests\Models\LinkUpdateRequest;
 use App\Models\Link;
 use App\Repositories\LinkRepository;
 use Exception;
+use Illuminate\Contracts\View\View;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
-use Illuminate\View\View;
 
 class LinkController extends Controller
 {
@@ -94,13 +93,11 @@ class LinkController extends Controller
     /**
      * Display the specified resource.
      *
-     * @param int $id
+     * @param Link $link
      * @return View
      */
-    public function show($id): View
+    public function show(Link $link): View
     {
-        $link = Link::findOrFail($id);
-
         return view('models.links.show', [
             'link' => $link,
             'history' => $link->revisionHistory()->latest()->get(),
@@ -110,29 +107,26 @@ class LinkController extends Controller
     /**
      * Show the form for editing the specified resource.
      *
-     * @param int $id
+     * @param Link $link
      * @return View
      */
-    public function edit($id): View
+    public function edit(Link $link): View
     {
-        $link = Link::findOrFail($id);
-
-        return view('models.links.edit')
-            ->with('link', $link);
+        return view('models.links.edit', [
+            'link' => $link,
+        ]);
     }
 
     /**
      * Update the specified resource in storage.
      *
      * @param LinkUpdateRequest $request
-     * @param int               $id
+     * @param Link              $link
      * @return RedirectResponse
      */
-    public function update(LinkUpdateRequest $request, $id): RedirectResponse
+    public function update(LinkUpdateRequest $request, Link $link): RedirectResponse
     {
-        $link = Link::findOrFail($id);
-
-        $link = LinkRepository::update($link, $request->all());
+        $link = LinkRepository::update($link, $request->input());
 
         flash(trans('link.updated_successfully'), 'success');
         return redirect()->route('links.show', [$link->id]);
@@ -141,18 +135,15 @@ class LinkController extends Controller
     /**
      * Remove the specified resource from storage.
      *
-     * @param LinkDeleteRequest $request
-     * @param int               $id
+     * @param Link $link
      * @return RedirectResponse
      * @throws Exception
      */
-    public function destroy(LinkDeleteRequest $request, $id): RedirectResponse
+    public function destroy(Link $link): RedirectResponse
     {
-        $link = Link::findOrFail($id);
+        $deletionSuccessful = LinkRepository::delete($link);
 
-        $deletionSuccessfull = LinkRepository::delete($link);
-
-        if (!$deletionSuccessfull) {
+        if (!$deletionSuccessful) {
             flash(trans('link.deletion_error'), 'error');
             return redirect()->back();
         }
@@ -165,13 +156,11 @@ class LinkController extends Controller
      * Toggles the setting of a link to be either checked or not.
      *
      * @param LinkToggleCheckRequest $request
-     * @param                        $id
+     * @param Link                   $link
      * @return RedirectResponse
      */
-    public function updateCheckToggle(LinkToggleCheckRequest $request, $id): RedirectResponse
+    public function updateCheckToggle(LinkToggleCheckRequest $request, Link $link): RedirectResponse
     {
-        $link = Link::findOrFail($id);
-
         $link->check_disabled = $request->input('toggle');
         $link->save();
 

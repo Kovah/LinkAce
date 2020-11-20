@@ -1,9 +1,5 @@
 <?php
 
-use App\Models\User;
-
-$backupNotificationChannel = env('BACKUP_NOTIFICATIONS', true) ? [env('BACKUP_CHANNEL', true)] : [];
-
 return [
 
     'backup' => [
@@ -12,7 +8,7 @@ return [
          * The name of this application. You can use this name to monitor
          * the backups.
          */
-        'name' => 'backups',
+        'name' => env('APP_NAME', 'laravel-backup'),
 
         'source' => [
 
@@ -33,13 +29,17 @@ return [
                 'exclude' => [
                     base_path('vendor'),
                     base_path('node_modules'),
-                    storage_path('app/backups'),
                 ],
 
                 /*
                  * Determines if symlinks should be followed.
                  */
                 'follow_links' => false,
+
+                /*
+                 * Determines if it should avoid unreadable folders.
+                 */
+                'ignore_unreadable_directories' => false,
             ],
 
             /*
@@ -88,7 +88,7 @@ return [
          *
          * If you do not want any compressor at all, set it to null.
          */
-        'database_dump_compressor' => Spatie\DbDumper\Compressors\GzipCompressor::class,
+        'database_dump_compressor' => null,
 
         'destination' => [
 
@@ -101,7 +101,7 @@ return [
              * The disk names on which the backups will be stored.
              */
             'disks' => [
-                env('BACKUP_DISK', 'local'),
+                env('BACKUP_DISK', 'local_backups'),
             ],
         ],
 
@@ -113,7 +113,7 @@ return [
 
     /*
      * You can get notified when specific events occur. Out of the box you can use 'mail' and 'slack'.
-     * For Slack you need to install guzzlehttp/guzzle.
+     * For Slack you need to install guzzlehttp/guzzle and laravel/slack-notification-channel.
      *
      * You can also use your own notification classes, just make sure the class is named after one of
      * the `Spatie\Backup\Events` classes.
@@ -121,12 +121,12 @@ return [
     'notifications' => [
 
         'notifications' => [
-            \Spatie\Backup\Notifications\Notifications\BackupHasFailed::class => $backupNotificationChannel,
-            \Spatie\Backup\Notifications\Notifications\UnhealthyBackupWasFound::class => $backupNotificationChannel,
-            \Spatie\Backup\Notifications\Notifications\CleanupHasFailed::class => $backupNotificationChannel,
-            \Spatie\Backup\Notifications\Notifications\BackupWasSuccessful::class => $backupNotificationChannel,
-            \Spatie\Backup\Notifications\Notifications\HealthyBackupWasFound::class => $backupNotificationChannel,
-            \Spatie\Backup\Notifications\Notifications\CleanupWasSuccessful::class => $backupNotificationChannel,
+            \Spatie\Backup\Notifications\Notifications\BackupHasFailed::class => ['mail'],
+            \Spatie\Backup\Notifications\Notifications\UnhealthyBackupWasFound::class => ['mail'],
+            \Spatie\Backup\Notifications\Notifications\CleanupHasFailed::class => ['mail'],
+            \Spatie\Backup\Notifications\Notifications\BackupWasSuccessful::class => ['mail'],
+            \Spatie\Backup\Notifications\Notifications\HealthyBackupWasFound::class => ['mail'],
+            \Spatie\Backup\Notifications\Notifications\CleanupWasSuccessful::class => ['mail'],
         ],
 
         /*
@@ -136,20 +136,25 @@ return [
         'notifiable' => \Spatie\Backup\Notifications\Notifiable::class,
 
         'mail' => [
-            'to' => env('BACKUP_NOTIFICATION_EMAIL') ?: User::find(1)->mail ?? null,
+            'to' => env('BACKUP_NOTIFICATION_EMAIL'),
+
+            'from' => [
+                'address' => env('MAIL_FROM_ADDRESS', 'hello@example.com'),
+                'name' => env('MAIL_FROM_NAME', 'Example'),
+            ],
         ],
 
         'slack' => [
-            'webhook_url' => env('BACKUP_NOTIFICATION_SLACK_WEBHOOK', ''),
+            'webhook_url' => '',
 
             /*
              * If this is set to null the default channel of the webhook will be used.
              */
-            'channel' => env('BACKUP_NOTIFICATION_SLACK_CHANNEL', null),
+            'channel' => null,
 
-            'username' => env('BACKUP_NOTIFICATION_SLACK_USERNAME', null),
+            'username' => null,
 
-            'icon' => env('BACKUP_NOTIFICATION_SLACK_ICON', null),
+            'icon' => null,
 
         ],
     ],
@@ -161,13 +166,24 @@ return [
      */
     'monitor_backups' => [
         [
-            'name' => 'backups',
+            'name' => env('APP_NAME', 'laravel-backup'),
             'disks' => [env('BACKUP_DISK', 'local_backups')],
             'health_checks' => [
                 \Spatie\Backup\Tasks\Monitor\HealthChecks\MaximumAgeInDays::class => 1,
-                \Spatie\Backup\Tasks\Monitor\HealthChecks\MaximumStorageInMegabytes::class => env('BACKUP_MAX_SIZE', 512),
+                \Spatie\Backup\Tasks\Monitor\HealthChecks\MaximumStorageInMegabytes::class => 5000,
             ],
         ],
+
+        /*
+        [
+            'name' => 'name of the second app',
+            'disks' => ['local', 's3'],
+            'health_checks' => [
+                \Spatie\Backup\Tasks\Monitor\HealthChecks\MaximumAgeInDays::class => 1,
+                \Spatie\Backup\Tasks\Monitor\HealthChecks\MaximumStorageInMegabytes::class => 5000,
+            ],
+        ],
+        */
     ],
 
     'cleanup' => [
@@ -213,7 +229,8 @@ return [
              * After cleaning up the backups remove the oldest backup until
              * this amount of megabytes has been reached.
              */
-            'delete_oldest_backups_when_using_more_megabytes_than' => env('BACKUP_MAX_SIZE', 512),
+            'delete_oldest_backups_when_using_more_megabytes_than' => 5000,
         ],
     ],
+
 ];

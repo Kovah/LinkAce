@@ -20,5 +20,4 @@ mix.combine([
 
 mix.sass('resources/assets/sass/app.scss', 'assets/dist/css')
   .sass('resources/assets/sass/app-dark.scss', 'assets/dist/css')
-  .sass('resources/assets/sass/loader.scss', 'assets/dist/css')
   .version();

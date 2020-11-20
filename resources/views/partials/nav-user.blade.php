@@ -27,6 +27,9 @@
             <a href="{{ route('get-systemsettings') }}" class="dropdown-item">
                 @lang('settings.system_settings')
             </a>
+            <a href="{{ route('system-logs') }}" class="dropdown-item">
+                @lang('linkace.system_logs')
+            </a>
         </div>
     </li>
 @else

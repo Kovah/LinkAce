@@ -3,15 +3,14 @@
 namespace App\Http\Controllers\Models;
 
 use App\Http\Controllers\Controller;
-use App\Http\Requests\Models\TagDeleteRequest;
 use App\Http\Requests\Models\TagStoreRequest;
 use App\Http\Requests\Models\TagUpdateRequest;
 use App\Models\Tag;
 use App\Repositories\TagRepository;
 use Exception;
+use Illuminate\Contracts\View\View;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
-use Illuminate\View\View;
 
 class TagController extends Controller
 {
@@ -74,13 +73,11 @@ class TagController extends Controller
      * Display the specified resource.
      *
      * @param Request $request
-     * @param int     $id
+     * @param Tag     $tag
      * @return View
      */
-    public function show(Request $request, $id): View
+    public function show(Request $request, Tag $tag): View
     {
-        $tag = Tag::findOrFail($id);
-
         $links = $tag->links()->byUser(auth()->id())
             ->orderBy(
                 $request->input('orderBy', 'created_at'),
@@ -100,29 +97,24 @@ class TagController extends Controller
     /**
      * Show the form for editing the specified resource.
      *
-     * @param int $id
+     * @param Tag $tag
      * @return View
      */
-    public function edit($id): View
+    public function edit(Tag $tag): View
     {
-        $tag = Tag::findOrFail($id);
-
-        return view('models.tags.edit')->with('tag', $tag);
+        return view('models.tags.edit', ['tag' => $tag]);
     }
 
     /**
      * Update the specified resource in storage.
      *
      * @param TagUpdateRequest $request
-     * @param int              $id
+     * @param Tag              $tag
      * @return RedirectResponse
      */
-    public function update(TagUpdateRequest $request, $id): RedirectResponse
+    public function update(TagUpdateRequest $request, Tag $tag): RedirectResponse
     {
-        $tag = Tag::findOrFail($id);
-
-        $data = $request->all();
-        $tag = TagRepository::update($tag, $data);
+        $tag = TagRepository::update($tag, $request->input());
 
         flash(trans('tag.updated_successfully'), 'success');
         return redirect()->route('tags.show', [$tag->id]);
@@ -131,18 +123,15 @@ class TagController extends Controller
     /**
      * Remove the specified resource from storage.
      *
-     * @param TagDeleteRequest $request
-     * @param int              $id
+     * @param Tag $tag
      * @return RedirectResponse
      * @throws Exception
      */
-    public function destroy(TagDeleteRequest $request, $id): RedirectResponse
+    public function destroy(Tag $tag): RedirectResponse
     {
-        $tag = Tag::findOrFail($id);
+        $deletionSuccessful = TagRepository::delete($tag);
 
-        $deletionSuccessfull = TagRepository::delete($tag);
-
-        if (!$deletionSuccessfull) {
+        if (!$deletionSuccessful) {
             flash(trans('tag.deletion_error'), 'error');
             return redirect()->back();
         }

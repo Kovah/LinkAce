@@ -6,6 +6,7 @@ use App\Models\Link;
 use App\Models\LinkList;
 use App\Models\Tag;
 use App\Models\User;
+use Exception;
 use Illuminate\Database\Seeder;
 
 class ExampleSeeder extends Seeder
@@ -14,8 +15,9 @@ class ExampleSeeder extends Seeder
      * Run the database seeds.
      *
      * @return void
+     * @throws Exception
      */
-    public function run()
+    public function run(): void
     {
         // Generate users, categories and tags
         User::factory()->create();

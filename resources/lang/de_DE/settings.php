@@ -26,7 +26,7 @@ return [
     'lists_private_default_help' => 'Aktivieren macht alle neuen Listen standardmäßig privat',
 
     'archive_backups' => 'Internet Archive Backups',
-    'archive_backups_help' => 'Wenn aktiviert, teilt LinkAce dem <a href="https://archive.org/">Internet Archive</a> mit, den Link zu sichern. Durch die Nutzung des Internet Archive erhalten Benutzer eine kostenlose Off-Site Backup-Lösung für den Inhalt ihrer Lesezeichen. Bitte spenden Sie an das Internet Archive.',
+    'archive_backups_help' => 'Wenn aktiviert, teilt LinkAce dem <a href="https://archive.org/">Wayback Machine</a> mit, den Link zu sichern. Die Wayback Machine wird vom Internet Archive betrieben, einer gemeinnützigen Organisation. Bitte <a href="https://archive.org/donate/">spende an das Internet Archive</a>.',
     'archive_backups_enabled' => 'Sicherungen aktivieren',
     'archive_backups_enabled_help' => 'Wenn aktiviert, werden nicht-private Links vom Internet Archive gespeichert.',
     'archive_private_backups_enabled' => 'Sicherungen für private Links aktivieren',

@@ -48,12 +48,12 @@ class LinkController extends Controller
     /**
      * Display the specified resource.
      *
-     * @param int $id
+     * @param Link $link
      * @return JsonResponse
      */
-    public function show($id): JsonResponse
+    public function show(Link $link): JsonResponse
     {
-        $link = Link::with(['lists', 'tags'])->findOrFail($id);
+        $link->load(['lists', 'tags']);
 
         return response()->json($link);
     }
@@ -62,13 +62,11 @@ class LinkController extends Controller
      * Update the specified resource in storage.
      *
      * @param LinkUpdateRequest $request
-     * @param int               $id
+     * @param Link $link
      * @return JsonResponse
      */
-    public function update(LinkUpdateRequest $request, $id): JsonResponse
+    public function update(LinkUpdateRequest $request, Link $link): JsonResponse
     {
-        $link = Link::findOrFail($id);
-
         $updatedLink = LinkRepository::update($link, $request->all());
 
         return response()->json($updatedLink);
@@ -77,17 +75,14 @@ class LinkController extends Controller
     /**
      * Remove the specified resource from storage.
      *
-     * @param LinkDeleteRequest $request
-     * @param int               $id
+     * @param Link $link
      * @return JsonResponse
      */
-    public function destroy(LinkDeleteRequest $request, $id): JsonResponse
+    public function destroy(Link $link): JsonResponse
     {
-        $link = Link::findOrFail($id);
+        $deletionSuccessful = LinkRepository::delete($link);
 
-        $deletionSuccessfull = LinkRepository::delete($link);
-
-        if ($deletionSuccessfull) {
+        if ($deletionSuccessful) {
             return response()->json(null, Response::HTTP_OK);
         }
 

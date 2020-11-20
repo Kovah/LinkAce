@@ -30,6 +30,5 @@
     @stack('scripts')
 
 </div>
-<div id="loader"><div></div></div>
 </body>
 </html>

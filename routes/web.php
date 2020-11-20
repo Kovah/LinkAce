@@ -26,6 +26,7 @@ use App\Http\Controllers\Setup\DatabaseController;
 use App\Http\Controllers\Setup\MetaController;
 use App\Http\Controllers\Setup\RequirementsController;
 use Illuminate\Support\Facades\Route;
+use Rap2hpoutre\LaravelLogViewer\LogViewerController;
 
 // Frontpage
 Route::get('/', FrontController::class)->name('front');
@@ -38,40 +39,19 @@ Route::get('setup/requirements', [RequirementsController::class, 'index'])
 Route::get('setup/database', [DatabaseController::class, 'index'])
     ->name('setup.database');
 Route::post('setup/database', [DatabaseController::class, 'configure'])
-    ->name('setup.database');
+    ->name('setup.save-database');
 Route::get('setup/account', [AccountController::class, 'index'])
     ->name('setup.account');
 Route::post('setup/account', [AccountController::class, 'register'])
-    ->name('setup.account');
+    ->name('setup.save-account');
 Route::get('setup/complete', [MetaController::class, 'complete'])
     ->name('setup.complete');
 
-// Authentication Routes
-Route::get('login', [LoginController::class, 'showLoginForm'])->name('login');
-Route::post('login', [LoginController::class, 'login']);
-Route::post('logout', [LoginController::class, 'logout'])->name('logout');
-
-// Registration Routes (disabled, use the `artisan registeruser` command)
-//Route::get('register', 'Auth\RegisterController@showRegistrationForm')->name('register');
-//Route::post('register', 'Auth\RegisterController@register');
-
-// Password Reset Routes
-Route::get('password/reset', [ForgotPasswordController::class, 'showLinkRequestForm'])
-    ->name('password.request');
-Route::post('password/email', [ForgotPasswordController::class, 'sendResetLinkEmail'])
-    ->name('password.email');
-Route::get('password/reset/{token}', [ResetPasswordController::class, 'showResetForm'])
-    ->name('password.reset');
-Route::post('password/reset', [ResetPasswordController::class, 'reset']);
-
 // Bookmarklet routes
 Route::prefix('bookmarklet')->group(function () {
-    Route::get('add', [BookmarkletController::class, 'getLinkAddForm'])
-        ->name('bookmarklet-add');
-    Route::get('show', [BookmarkletController::class, 'getCompleteView'])
-        ->name('bookmarklet-complete');
-    Route::get('login', [BookmarkletController::class, 'getLoginForm'])
-        ->name('bookmarklet-login');
+    Route::get('add', [BookmarkletController::class, 'getLinkAddForm'])->name('bookmarklet-add');
+    Route::get('show', [BookmarkletController::class, 'getCompleteView'])->name('bookmarklet-complete');
+    Route::get('login', [BookmarkletController::class, 'getLoginForm'])->name('bookmarklet-login');
 });
 
 Route::get('cron/{token}', CronController::class)->name('cron');
@@ -87,7 +67,7 @@ Route::group(['middleware' => ['auth']], function () {
     Route::resource('notes', NoteController::class)
         ->except(['index', 'show']);
 
-    Route::post('links/toggle-check/{id}', [LinkController::class, 'updateCheckToggle'])
+    Route::post('links/toggle-check/{link}', [LinkController::class, 'updateCheckToggle'])
         ->name('links.toggle-check');
 
     Route::get('search', [SearchController::class, 'getSearch'])
@@ -142,6 +122,9 @@ Route::group(['middleware' => ['auth']], function () {
         ->name('fetch-html-for-url');
     Route::get('fetch/update-check', [FetchController::class, 'checkForUpdates'])
         ->name('fetch-update-check');
+
+    Route::get('system/logs', [LogViewerController::class, 'index'])
+        ->name('system-logs');
 });
 
 // Guest access routes

@@ -14,4 +14,7 @@ return [
     'list_name' => 'Actual name of the list',
     'tag_name' => 'Actual name of the tag',
 
+    'two_factor_otp' => 'One Time Password',
+    'two_factor_recovery_code' => 'Backup Code',
+
 ];

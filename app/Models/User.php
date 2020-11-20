@@ -3,13 +3,11 @@
 namespace App\Models;
 
 use Carbon\Carbon;
-use Illuminate\Contracts\Validation\Validator as ValidatorContract;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
-use Illuminate\Support\Facades\Hash;
-use Illuminate\Support\Facades\Validator;
+use Laravel\Fortify\TwoFactorAuthenticatable;
 
 /**
  * Class User
@@ -21,6 +19,8 @@ use Illuminate\Support\Facades\Validator;
  * @property string      $password
  * @property string|null $remember_token
  * @property string|null $api_token
+ * @property string|null $two_factor_recovery_codes
+ * @property string|null $two_factor_secret
  * @property Carbon|null $created_at
  * @property Carbon|null $updated_at
  */
@@ -28,6 +28,7 @@ class User extends Authenticatable
 {
     use Notifiable;
     use HasFactory;
+    use TwoFactorAuthenticatable;
 
     protected $fillable = [
         'name',
@@ -40,24 +41,6 @@ class User extends Authenticatable
         'password',
         'remember_token',
     ];
-
-    public static function validateRegistration(array $data): ValidatorContract
-    {
-        return Validator::make($data, [
-            'name' => 'required|string|max:255',
-            'email' => 'required|string|email|max:255|unique:users',
-            'password' => 'required|string|min:10|confirmed',
-        ]);
-    }
-
-    public static function createUser(array $data): self
-    {
-        return self::create([
-            'name' => $data['name'],
-            'email' => $data['email'],
-            'password' => Hash::make($data['password']),
-        ]);
-    }
 
     /*
      | ========================================================================

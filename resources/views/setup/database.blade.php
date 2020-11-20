@@ -15,7 +15,7 @@
 
                     @include('partials.alerts')
 
-                    <form action="{{ route('setup.database') }}" method="POST">
+                    <form action="{{ route('setup.save-database') }}" method="POST">
                         @csrf
 
                         <div class="form-group">

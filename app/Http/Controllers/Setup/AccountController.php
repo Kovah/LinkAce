@@ -2,16 +2,15 @@
 
 namespace App\Http\Controllers\Setup;
 
+use App\Actions\Fortify\CreateNewUser;
 use App\Http\Controllers\Controller;
-use App\Models\User;
-use Illuminate\Contracts\Validation\Validator;
-use Illuminate\Foundation\Auth\RegistersUsers;
-use Illuminate\View\View;
+use Illuminate\Http\RedirectResponse;
+use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Contracts\View\View;
 
 class AccountController extends Controller
 {
-    use RegistersUsers;
-
     protected function redirectTo(): string
     {
         return route('setup.complete');
@@ -28,20 +27,17 @@ class AccountController extends Controller
     }
 
     /**
-     * @param array $data
-     * @return Validator
+     * Validate and create the new user, then login him, and redirect him to the dashboard
+     *
+     * @param Request $request
+     * @return RedirectResponse
      */
-    protected function validator(array $data): Validator
+    protected function register(Request $request): RedirectResponse
     {
-        return User::validateRegistration($data);
-    }
+        $user = (new CreateNewUser())->create($request->input());
 
-    /**
-     * @param array $data
-     * @return User
-     */
-    protected function create(array $data): User
-    {
-        return User::createUser($data);
+        Auth::login($user, true);
+
+        return redirect()->route('dashboard');
     }
 }

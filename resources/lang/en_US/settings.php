@@ -25,8 +25,8 @@ return [
     'lists_private_default' => 'Private Lists by default',
     'lists_private_default_help' => 'Enabling this will make all new lists private by default',
 
-    'archive_backups' => 'Internet Archive backups',
-    'archive_backups_help' => 'If enabled, LinkAce will tell the <a href="https://archive.org/">Internet Archive</a> to backup the link. By using the Internet Archive, users get a free, off-site backup solution for the content of their bookmarks. Please consider donating to the Internet Archive.',
+    'archive_backups' => 'Wayback Machine backups',
+    'archive_backups_help' => 'If enabled, LinkAce will tell the <a href="https://archive.org/">Wayback Machine</a> to backup your links. The Wayback Machine is powered by the Internet Archive, a non-profit organization. Please consider <a href="https://archive.org/donate/">donating to the Internet Archive</a>.',
     'archive_backups_enabled' => 'Enable backups',
     'archive_backups_enabled_help' => 'If enabled, non-private links will be saved by the Internet Archive.',
     'archive_private_backups_enabled' => 'Enable backups for private links',
@@ -60,6 +60,15 @@ return [
     'new_password2' => 'Repeat new Password',
     'password_updated' => 'Password changed successfully!',
     'old_password_invalid' => 'The old password is not valid!',
+
+    'two_factor_auth' => 'Two Factor Authentication',
+    'two_factor_enable' => 'Enable Two Factor Authentication',
+    'two_factor_disable' => 'Disable Two Factor Authentication',
+    'two_factor_setup_app' => 'Two factor authentication is enabled. Please configure your authentication device now by scanning the following QR code.',
+    'two_factor_setup_url' => 'QR code not working? You may also use this URL directly.',
+    'two_factor_recovery_codes' => 'Store these recovery codes in a secure password manager. They can be used to recover access to your account if your two factor authentication device is lost.',
+    'two_factor_recovery_codes_view' => 'View Recovery Codes',
+    'two_factor_regenerate_recovery_codes' => 'Generate new Recovery Codes',
 
     'api_token' => 'API Token',
     'api_token_generate' => 'Generate Token',

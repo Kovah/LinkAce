@@ -11,13 +11,11 @@ class ListLinksController extends Controller
     /**
      * Get the links for a specific list.
      *
-     * @param $listID
+     * @param LinkList $list
      * @return JsonResponse
      */
-    public function __invoke($listID): JsonResponse
+    public function __invoke(LinkList $list): JsonResponse
     {
-        $list = LinkList::findOrFail($listID);
-
         $links = $list->links()->paginate(getPaginationLimit());
 
         return response()->json($links);
