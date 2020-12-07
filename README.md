@@ -61,7 +61,7 @@ Any further information about all the available features and how to install the 
 
 ### :bulb: Support for LinkAce
 
-I built LinkAce to solve my problem, and I now offer my solution and code to your without charging anything. I spent a lot of my free time building this application already, so I won't offer any *free* personal support, customization or installation help. If you need help please visit the [community forum](https://community.linkace.org/) and post your issue there.
+I built LinkAce to solve my own problem, and I now offer my solution and code without charging anything. I spent a lot of my free time building this application already, so I won't offer any *free* personal support, customization or installation help. If you need help please visit the [community forum](https://community.linkace.org/) and post your issue there.
 
 You can get personal and dedicated support by **becoming a [Patreon](https://www.patreon.com/Kovah)** or **[Github Sponsor](https://github.com/sponsors/Kovah)**. :star:
 
