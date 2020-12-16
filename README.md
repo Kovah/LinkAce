@@ -10,8 +10,8 @@
   <a href="https://community.linkace.org"><img src="https://img.shields.io/twitter/url?label=Community&logo=discourse&logoColor=44679f&style=social&url=https%3A%2F%2Fcommunity.linkace.org%2F" alt="Get support for LinkAce and chat about the project"></a>
   <a href="https://twitter.com/LinkAceApp"><img src="https://img.shields.io/twitter/url?label=%40LinkAceApp&style=social&url=https%3A%2F%2Ftwitter.com%2FLinkAceApp" alt="Follow LinkAce on Twitter"></a>
   <a href="https://hub.docker.com/r/linkace/linkace"><img src="https://img.shields.io/badge/Docker-linkace%2Flinkace-2596EC.svg" alt="Docker Repository"></a>
-  <a href="https://github.com/Kovah/LinkAce/releases"><img src="https://img.shields.io/github/v/release/kovah/linkace?include_prereleases&label=Latest%20Release" alt="Latest Release"></a>
-  <a href="https://opensource.org/licenses/MIT"><img src="https://img.shields.io/github/license/kovah/linkace.svg" alt="License"></a>
+  <a href="https://github.com/Kovah/LinkAce/releases"><img src="https://img.shields.io/github/v/release/kovah/linkace?label=Latest%20Release" alt="Latest Release"></a>
+  <a href="https://opensource.org/licenses/GPL-3.0"><img src="https://img.shields.io/github/license/kovah/linkace.svg" alt="License"></a>
 </p>
 <p>&nbsp;</p>
 
@@ -32,15 +32,15 @@
 
 ![Preview Screenshot](https://www.linkace.org/images/preview/linkace_dashboard.png)
 
-LinkAce is a bookmark manager similar to Shaarli and other tools. See this tool as a long-term archive for sites you want to remember, but don't access frequently. I built this tool to have something that fits my actual needs which other bookmark managers couldn't solve, even if some features look almost the same.
+LinkAce is a bookmark archive. It wasn't built to manage the bookmarks of your browser but has its very own philosophy. My browser bookmarks contain only websites I regularly use and access. LinkAce, in contrast, is meant to provide a _long-term_ archive of links to websites, media files or anything else which has a valid URL. I store interesting articles, neat web tools or libraries I _may_ use sometime in the future.
 
 #### Feature Highlights
 
 * Save links with automatic title and description generation.
-* Automated link checks inform you when any links become unavailable or were moved.
-* Automated “backups” of saved sites via the [Waybackmachine](https://web.archive.org/).
-* Organize bookmarks with lists and tags.
-* A full REST API offers access to all features of LinkAce from third-party apps and services.
+* Automated link monitoring informs you when any links become unavailable or were moved.
+* Automated backups of saved sites via the [Internet Archive](https://web.archive.org/).
+* Organize bookmarks with the help of lists and tags.
+* A full REST API offers access to all features of LinkAce from other apps and services.
 * A bookmarklet to quickly save links from any browser.
 * Links can be private or public, so friends or internet strangers may see your collection.
 * Add notes to links to add thoughts or other relevant information.
