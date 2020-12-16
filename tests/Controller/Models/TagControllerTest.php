@@ -25,22 +25,21 @@ class TagControllerTest extends TestCase
 
     public function testIndexView(): void
     {
-        $tag = Tag::factory()->create([
+        Tag::factory()->create([
+            'name' => 'Test Tag',
             'user_id' => $this->user->id,
         ]);
 
         $response = $this->get('tags');
 
-        $response->assertOk()
-            ->assertSee($tag->name);
+        $response->assertOk()->assertSee('Test Tag');
     }
 
     public function testCreateView(): void
     {
         $response = $this->get('tags/create');
 
-        $response->assertOk()
-            ->assertSee('Add Tag');
+        $response->assertOk()->assertSee('Add Tag');
     }
 
     public function testMinimalStoreRequest(): void
