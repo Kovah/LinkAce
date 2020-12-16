@@ -1,6 +1,6 @@
 ---
-name: Bug report
-about: Create a report to help us improve
+name: Bug Report
+about: Create a report to help us improve LinkAce
 title: ''
 labels: Bug
 assignees: ''
@@ -26,7 +26,7 @@ If applicable, add screenshots to help explain your problem.
 **LinkAce setup (please complete the following information):**
  - Version: [e.g. 0.0.43]
  - Installed via: [e.g. PHP, Docker]
- - OS: [e.g. Ubuntu, CentOS]
+ - OS: [e.g. Ubuntu, CentOS, Windows]
 
 **Desktop (please complete the following information if applicable):**
  - OS: [e.g. iOS]
