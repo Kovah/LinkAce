@@ -22,6 +22,7 @@ return [
     'requirements.extension_tokenizer' => 'PHP Extension: Tokenizer',
     'requirements.extension_xml' => 'PHP Extension: XML',
     'requirements.env_writable' => '.env Datei ist vorhanden und beschreibbar',
+    'requirements.storage_writable' => '/storage und /storage/logs Verzeichnisse sind beschreibbar',
 
     'database_configuration' => 'Datenbankkonfiguration',
     'database_configure' => 'Datenbank konfigurieren',

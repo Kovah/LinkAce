@@ -33,9 +33,9 @@ return [
 
     'status' => 'Status',
     'stati' => [
-        '1' => 'Funktionierend',
+        '1' => 'Funktioniert',
         '2' => 'Verschoben',
-        '3' => 'Kaputt',
+        '3' => 'Defekt',
     ],
 
     'author' => 'von :user',

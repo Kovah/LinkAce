@@ -14,4 +14,7 @@ return [
     'list_name' => 'Name der Liste',
     'tag_name' => 'Name des Tags',
 
+    'two_factor_otp' => 'Einmalpasswort',
+    'two_factor_recovery_code' => 'Wiederherstellungscode',
+
 ];

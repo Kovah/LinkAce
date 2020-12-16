@@ -25,7 +25,7 @@ return [
     'lists_private_default' => 'Standardmäßig private Listen',
     'lists_private_default_help' => 'Aktivieren macht alle neuen Listen standardmäßig privat',
 
-    'archive_backups' => 'Internet Archive Backups',
+    'archive_backups' => 'Wayback Machine Backups',
     'archive_backups_help' => 'Wenn aktiviert, teilt LinkAce dem <a href="https://archive.org/">Wayback Machine</a> mit, den Link zu sichern. Die Wayback Machine wird vom Internet Archive betrieben, einer gemeinnützigen Organisation. Bitte <a href="https://archive.org/donate/">spende an das Internet Archive</a>.',
     'archive_backups_enabled' => 'Sicherungen aktivieren',
     'archive_backups_enabled_help' => 'Wenn aktiviert, werden nicht-private Links vom Internet Archive gespeichert.',
@@ -60,6 +60,15 @@ return [
     'new_password2' => 'Neues Passwort wiederholen',
     'password_updated' => 'Passwort erfolgreich geändert!',
     'old_password_invalid' => 'Das alte Passwort ist ungültig!',
+
+    'two_factor_auth' => 'Zwei-Faktor-Authentifizierung',
+    'two_factor_enable' => 'Zwei-Faktor-Authentifizierung aktivieren',
+    'two_factor_disable' => 'Zwei-Faktor-Authentifizierung deaktivieren',
+    'two_factor_setup_app' => 'Zwei-Faktor-Authentifizierung aktiviert. Bitte konfiguriere jetzt das Authentifizierungsgerät, indem der folgende QR-Code gescannt wird.',
+    'two_factor_setup_url' => 'QR-Code funktioniert nicht? Alternativ kann auch die folgende URL verwendet werden.',
+    'two_factor_recovery_codes' => 'Speicher diese Wiederherstellungscodes in einem sicheren Passwort-Manager. Sie können verwendet werden, um den Zugriff zum Konto wiederherzustellen, wenn das Zwei-Faktor-Authentifizierungsgerät verloren geht.',
+    'two_factor_recovery_codes_view' => 'Wiederherstellungscodes anzeigen',
+    'two_factor_regenerate_recovery_codes' => 'Neue Wiederherstellungscodes generieren',
 
     'api_token' => 'API Token',
     'api_token_generate' => 'Token generieren',
