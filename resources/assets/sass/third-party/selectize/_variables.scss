@@ -1,140 +1,46 @@
-$enable-shadows: true !default;
-$selectize-font-family: inherit !default;
-$selectize-font-size: inherit !default;
-$selectize-line-height: $input-btn-line-height !default; //formerly line-height-computed
+$enable-shadows: false;
+$select-font-family: inherit;
+$select-font-size: inherit;
+$select-line-height: $input-btn-line-height; //formerly line-height-computed
 
-$selectize-color-text: $input-color !default; //$gray-800
-$selectize-color-highlight: $gray-400 !default;
-$selectize-color-input: $input-bg !default;
-$selectize-color-input-full: $input-bg !default;
-$selectize-color-input-error: theme-color("danger") !default;
-$selectize-color-input-error-focus: darken($selectize-color-input-error, 10%) !default;
-$selectize-color-disabled: $input-bg !default;
-$selectize-color-item: $gray-300 !default;
-$selectize-color-item-border: $gray-500 !default;
-$selectize-color-item-active: $component-active-bg !default;
-$selectize-color-item-active-text: $white !default;
-$selectize-color-item-active-border: rgba(0, 0, 0, 0) !default;
-$selectize-color-optgroup: $dropdown-bg !default;
-$selectize-color-optgroup-text: $dropdown-header-color !default;
-$selectize-color-optgroup-border: $dropdown-divider-bg !default;
-$selectize-color-dropdown: $dropdown-bg !default;
-$selectize-color-dropdown-border-top: mix($input-border-color, $input-bg, 0.8) !default;
-$selectize-color-dropdown-item-active: $dropdown-link-hover-bg !default;
-$selectize-color-dropdown-item-active-text: $dropdown-link-hover-color !default;
-$selectize-color-dropdown-item-create-active-text: $dropdown-link-hover-color !default;
-$selectize-opacity-disabled: 0.5 !default;
-$selectize-shadow-input: none !default;
-$selectize-shadow-input-focus: inset 0 1px 2px rgba($black, 0.15) !default;
-$selectize-shadow-input-error: inset 0 1px 1px rgba($black, .075) !default;
-$selectize-shadow-input-error-focus: inset 0 1px 1px rgba($black, .075), 0 0 6px lighten($selectize-color-input-error, 20%) !default;
-$selectize-border: 1px solid $input-border-color !default;
-$selectize-border-radius: $input-border-radius !default;
+$select-color-text: $input-color; //$gray-800
+$select-color-highlight: $gray-400;
+$select-color-input: $white;
+$select-color-input-full: $select-color-input;
+$select-color-input-error: theme-color("danger");
+$select-color-input-error-focus: darken($select-color-input-error, 10%);
+$select-color-disabled: $input-bg;
+$select-color-item: $gray-300;
+$select-color-item-border: $gray-500;
+$select-color-item-active: $component-active-bg;
+$select-color-item-active-text: $white;
+$select-color-item-active-border: rgba(0, 0, 0, 0);
+$select-color-optgroup: $white;
+$select-color-optgroup-text: $dropdown-header-color;
+$select-color-optgroup-border: $dropdown-divider-bg;
+$select-color-dropdown: $white;
+$select-color-dropdown-border-top: mix($input-border-color, $input-bg, 0.8);
+$select-color-dropdown-item-active: $dropdown-link-hover-bg;
+$select-color-dropdown-item-active-text: $dropdown-link-hover-color;
+$select-color-dropdown-item-create-active-text: $dropdown-link-hover-color;
+$select-opacity-disabled: 0.5;
+$select-shadow-input: none;
+$select-shadow-input-focus: inset 0 1px 2px rgba($black, 0.15);
+$select-shadow-input-error: inset 0 1px 1px rgba($black, .075);
+$select-shadow-input-error-focus: inset 0 1px 1px rgba($black, .075), 0 0 6px lighten($select-color-input-error, 20%);
+$select-border: 1px solid $input-border-color;
+$select-border-radius: $input-border-radius;
 
-$selectize-width-item-border: 0px !default;
-$selectize-padding-x: $input-btn-padding-x !default;
-$selectize-padding-y: $input-btn-padding-y !default;
-$selectize-padding-dropdown-item-x: $input-btn-padding-x !default;
-$selectize-padding-dropdown-item-y: 3px !default;
-$selectize-padding-item-x: 3px !default;
-$selectize-padding-item-y: 1px !default;
-$selectize-margin-item-x: 3px !default;
-$selectize-margin-item-y: 3px !default;
-$selectize-caret-margin: 0 !default;
+$select-width-item-border: 0px;
+$select-padding-x: $input-btn-padding-x;
+$select-padding-y: $input-btn-padding-y;
+$select-padding-dropdown-item-x: $input-btn-padding-x;
+$select-padding-dropdown-item-y: 3px;
+$select-padding-item-x: 3px;
+$select-padding-item-y: 1px;
+$select-margin-item-x: 3px;
+$select-margin-item-y: 3px;
 
-$selectize-arrow-size: 5px !default;
-$selectize-arrow-color: $selectize-color-text !default;
-$selectize-arrow-offset: calc(#{$selectize-padding-x} + 5px) !default;
-
-// base styles
-
-$selectize-font-family: inherit !default;
-$selectize-font-smoothing: inherit !default;
-$selectize-font-size: 13px !default;
-$selectize-line-height: 18px !default;
-
-$selectize-color-text: $gray-800 !default;
-$selectize-color-border: $gray-300 !default;
-$selectize-color-highlight: rgba($black, 0.2) !default;
-$selectize-color-input: $white !default;
-$selectize-color-input-full: $selectize-color-input !default;
-$selectize-color-disabled: #fafafa !default;
-$selectize-color-item: #f2f2f2 !default;
-$selectize-color-item-text: $selectize-color-text !default;
-$selectize-color-item-border: #d0d0d0 !default;
-$selectize-color-item-active: #e8e8e8 !default;
-$selectize-color-item-active-text: $selectize-color-text !default;
-$selectize-color-item-active-border: #cacaca !default;
-$selectize-color-dropdown: $white !default;
-$selectize-color-dropdown-border: $selectize-color-border !default;
-$selectize-color-dropdown-border-top: #f0f0f0 !default;
-$selectize-color-dropdown-item-active: #f5fafd !default;
-$selectize-color-dropdown-item-active-text: #495c68 !default;
-$selectize-color-dropdown-item-create-text: rgba(red($selectize-color-text), green($selectize-color-text), blue($selectize-color-text), 0.5) !default;
-$selectize-color-dropdown-item-create-active-text: $selectize-color-dropdown-item-active-text !default;
-$selectize-color-optgroup: $selectize-color-dropdown !default;
-$selectize-color-optgroup-text: $selectize-color-text !default;
-$selectize-lighten-disabled-item: 30% !default;
-$selectize-lighten-disabled-item-text: 30% !default;
-$selectize-lighten-disabled-item-border: 30% !default;
-$selectize-opacity-disabled: 0.5 !default;
-
-$selectize-shadow-input: inset 0 1px 1px rgba(0, 0, 0, 0.1) !default;
-$selectize-shadow-input-focus: inset 0 1px 2px rgba(0, 0, 0, 0.15) !default;
-$selectize-border: 1px solid $selectize-color-border !default;
-$selectize-dropdown-border: 1px solid $selectize-color-dropdown-border !default;
-$selectize-border-radius: 3px !default;
-
-$selectize-width-item-border: 0 !default;
-$selectize-max-height-dropdown: 200px !default;
-
-$selectize-padding-x: 8px !default;
-$selectize-padding-y: 8px !default;
-$selectize-padding-item-x: 6px !default;
-$selectize-padding-item-y: 2px !default;
-$selectize-padding-dropdown-item-x: $selectize-padding-x !default;
-$selectize-padding-dropdown-item-y: 5px !default;
-$selectize-margin-item-x: 3px !default;
-$selectize-margin-item-y: 3px !default;
-
-$selectize-arrow-size: 5px !default;
-$selectize-arrow-color: $gray-600 !default;
-$selectize-arrow-offset: 15px !default;
-
-$selectize-caret-margin: 0 2px 0 0 !default;
-$selectize-caret-margin-rtl: 0 4px 0 -2px !default;
-
-@mixin selectize-border-radius($radii) {
-  -webkit-border-radius: $radii;
-  -moz-border-radius: $radii;
-  border-radius: $radii;
-}
-
-@mixin selectize-unselectable() {
-  -webkit-user-select: none;
-  -moz-user-select: none;
-  -ms-user-select: none;
-  user-select: none;
-}
-
-@mixin selectize-box-shadow($shadow) {
-  -webkit-box-shadow: $shadow;
-  box-shadow: $shadow;
-}
-
-@mixin selectize-box-sizing($type: border-box) {
-  -webkit-box-sizing: $type;
-  -moz-box-sizing: $type;
-  box-sizing: $type;
-}
-
-@mixin selectize-vertical-gradient($color-top, $color-bottom) {
-  background-color: mix($color-top, $color-bottom, 60%);
-  background-image: -moz-linear-gradient(top, $color-top, $color-bottom); // FF 3.6+
-  background-image: -webkit-gradient(linear, 0 0, 0 100%, from($color-top), to($color-bottom)); // Safari 4+, Chrome 2+
-  background-image: -webkit-linear-gradient(top, $color-top, $color-bottom); // Safari 5.1+, Chrome 10+
-  background-image: -o-linear-gradient(top, $color-top, $color-bottom); // Opera 11.10
-  background-image: linear-gradient(to bottom, $color-top, $color-bottom); // Standard, IE10
-  background-repeat: repeat-x;
-  //filter: e(%("progid:DXImageTransform.Microsoft@include gradient(startColorstr='%d', endColorstr='%d', GradientType=0)",argb($color-top),argb($color-bottom))); // IE9 and down
-}
+$select-arrow-size: 5px;
+$select-arrow-color: $select-color-text;
+$select-arrow-offset: calc(#{$select-padding-x} + 5px);
