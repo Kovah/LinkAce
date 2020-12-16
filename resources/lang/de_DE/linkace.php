@@ -11,6 +11,7 @@ return [
     'logout' => 'Abmelden',
     'remember_me' => 'Angemeldet bleiben',
     'go_to_dashboard' => 'Zur Übersicht gehen',
+    'system_logs' => 'System Logs',
 
     'reset_password' => 'Passwort zurücksetzen',
     'send_reset_email' => 'E-Mail zum Zurücksetzen des Passworts senden',

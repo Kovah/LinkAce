@@ -22,6 +22,7 @@ return [
     'requirements.extension_tokenizer' => 'PHP Extension: Tokenizer',
     'requirements.extension_xml' => 'PHP Extension: XML',
     'requirements.env_writable' => '.env 文件已存在并可写',
+    'requirements.storage_writable' => '',
 
     'database_configuration' => '数据库配置',
     'database_configure' => '配置数据库',

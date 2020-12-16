@@ -61,6 +61,15 @@ return [
     'password_updated' => '密码修改完成！',
     'old_password_invalid' => '旧密码无效！',
 
+    'two_factor_auth' => '',
+    'two_factor_enable' => '',
+    'two_factor_disable' => '',
+    'two_factor_setup_app' => '',
+    'two_factor_setup_url' => '',
+    'two_factor_recovery_codes' => '',
+    'two_factor_recovery_codes_view' => '',
+    'two_factor_regenerate_recovery_codes' => '',
+
     'api_token' => 'API 令牌',
     'api_token_generate' => '生成令牌',
     'api_token_generate_confirm' => '您确定要生成新令牌吗？',
