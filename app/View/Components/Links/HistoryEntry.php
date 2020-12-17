@@ -58,18 +58,18 @@ class HistoryEntry extends Component
         if ($oldValue === null) {
             $change = trans('link.history_added', [
                 'fieldname' => $fieldname,
-                'newvalue' => $newValue,
+                'newvalue' => htmlspecialchars($newValue),
             ]);
         } elseif ($newValue === null) {
             $change = trans('link.history_removed', [
                 'fieldname' => $fieldname,
-                'oldvalue' => $oldValue,
+                'oldvalue' => htmlspecialchars($oldValue),
             ]);
         } else {
             $change = trans('link.history_changed', [
                 'fieldname' => $fieldname,
-                'oldvalue' => $oldValue,
-                'newvalue' => $newValue,
+                'oldvalue' => htmlspecialchars($oldValue),
+                'newvalue' => htmlspecialchars($newValue),
             ]);
         }
 
@@ -83,9 +83,9 @@ class HistoryEntry extends Component
      * Apply specialized methods for different fields to handle particular
      * formatting needs of these fields.
      *
-     * @return array|null[]
+     * @return array
      */
-    protected function processValues()
+    protected function processValues(): array
     {
         $oldValue = $this->entry->oldValue();
         $newValue = $this->entry->newValue();
@@ -138,9 +138,9 @@ class HistoryEntry extends Component
      *
      * @param $oldValue
      * @param $newValue
-     * @return null[]
+     * @return array
      */
-    protected function processListsField($oldValue, $newValue)
+    protected function processListsField($oldValue, $newValue): array
     {
         $oldTags = $oldValue
             ? LinkList::whereIn('id', explode(',', $oldValue))
