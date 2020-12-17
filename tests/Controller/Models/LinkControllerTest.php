@@ -69,8 +69,6 @@ class LinkControllerTest extends TestCase
 
         $this->assertEquals('https://example.com', $databaseLink->url);
         $this->assertEquals('Example Title', $databaseLink->title);
-
-        Queue::assertPushed(SaveLinkToWaybackmachine::class);
     }
 
     public function testFullStoreRequest(): void

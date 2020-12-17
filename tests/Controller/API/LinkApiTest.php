@@ -81,8 +81,6 @@ class LinkApiTest extends ApiTestCase
         $databaseLink = Link::first();
 
         $this->assertEquals('http://example.com', $databaseLink->url);
-
-        Queue::assertPushed(SaveLinkToWaybackmachine::class);
     }
 
     public function testCreateRequestWithTagsAsString(): void
