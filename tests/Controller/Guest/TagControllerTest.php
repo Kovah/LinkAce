@@ -26,14 +26,21 @@ class TagControllerTest extends TestCase
     {
         User::factory()->create();
 
-        $tagPublic = Tag::factory()->create(['is_private' => false]);
-        $tagPrivate = Tag::factory()->create(['is_private' => true]);
+        Tag::factory()->create([
+            'name' => 'public tag',
+            'is_private' => false
+        ]);
+
+        Tag::factory()->create([
+            'name' => 'private tag',
+            'is_private' => true
+        ]);
 
         $response = $this->get('guest/tags');
 
         $response->assertOk()
-            ->assertSee($tagPublic->name)
-            ->assertDontSee($tagPrivate->name);
+            ->assertSee('public tag')
+            ->assertDontSee('private tag');
     }
 
     public function testValidTagDetailResponse(): void
