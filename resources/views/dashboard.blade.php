@@ -20,7 +20,7 @@
                 <input type="hidden" name="tags" value="">
 
                 <div class="input-group">
-                    <input type="text" id="url" name="url" required
+                    <input type="url" id="url" name="url" required
                         class="form-control{{ $errors->has('url') ? ' is-invalid' : '' }}"
                         placeholder="@lang('link.url')" value="{{ old('url') }}"
                         aria-label="@lang('link.url')">

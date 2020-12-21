@@ -284,7 +284,7 @@ class Link extends Model
             return;
         }
 
-        SaveLinkToWaybackmachine::dispatch($this);
+        SaveLinkToWaybackmachine::dispatchAfterResponse($this);
     }
 
     /**

@@ -7,7 +7,7 @@
   margin: 2px 0 0 0;
   z-index: $zindex-dropdown;
   background: $select-color-dropdown;
-  border: 1px solid $dropdown-border-color; //$dropdown-fallback-border
+  border: 1px solid $select-color-dropdown-border-top; //$dropdown-fallback-border
   border-radius: $border-radius;
   box-shadow: 0 6px 12px rgba(0, 0, 0, 0.175);
 }

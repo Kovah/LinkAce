@@ -121,6 +121,10 @@ class FetchController extends Controller
      */
     public function htmlForUrl(Request $request): Response
     {
+        $request->validate([
+            'url' => ['url'],
+        ]);
+
         $url = $request->input('url');
         $response = Http::timeout(3)->get($url);
 

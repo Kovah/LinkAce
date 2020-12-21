@@ -103,6 +103,15 @@ class FetchControllerTest extends TestCase
         $this->assertEquals($testHtml, $responseHtml);
     }
 
+    public function testGetHtmlForInvalidUrl(): void
+    {
+        $response = $this->post('fetch/html-for-url', [
+            'url' => 'not a url',
+        ]);
+
+        $response->assertSessionHasErrors('url');
+    }
+
     public function testGetHtmlForUrlWithFailure(): void
     {
         Http::fake([
