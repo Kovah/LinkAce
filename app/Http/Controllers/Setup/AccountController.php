@@ -38,6 +38,6 @@ class AccountController extends Controller
 
         Auth::login($user, true);
 
-        return redirect()->route('dashboard');
+        return redirect()->route('setup.complete');
     }
 }
