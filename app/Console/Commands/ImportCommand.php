@@ -46,7 +46,6 @@ class ImportCommand extends Command
         }
 
 
-
         // Read file
         $this->info('Reading file "' . $filename . '"...');
         $data = file_get_contents($filename);
@@ -79,7 +78,6 @@ class ImportCommand extends Command
         $bar->start();
 
 
-
         foreach ($links as $link) {
             if (Link::whereUrl($link['uri'])->first()) {
                 $skipped++;
@@ -88,7 +86,7 @@ class ImportCommand extends Command
 
             $bar->advance();
 
-            if($lookup) {
+            if ($lookup) {
                 $linkMeta = HtmlMeta::getFromUrl($link['uri']);
 
                 $title = $link['title'] ?: $linkMeta['title'];
@@ -136,7 +134,7 @@ class ImportCommand extends Command
         // Force new line
         $this->comment(PHP_EOL);
 
-        if($check) {
+        if ($check) {
             // Queue link check
             Artisan::queue('links:check');
         }
@@ -145,7 +143,5 @@ class ImportCommand extends Command
             'imported' => $imported,
             'skipped' => $skipped,
         ]));
-
     }
-
 }
