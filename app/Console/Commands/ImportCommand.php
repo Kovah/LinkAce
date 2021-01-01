@@ -19,7 +19,10 @@ use Shaarli\NetscapeBookmarkParser\NetscapeBookmarkParser;
  */
 class ImportCommand extends Command
 {
-    protected $signature = 'links:import {filename} {--skip-lookup} {--skip-check}';
+    protected $signature = 'links:import
+                        {filename : Bookmarks file to import}
+                        {--skip-lookup : Whether the lookup should be skipped.}
+                        {--skip-check : Whether the links checking should be skipped afterwards}';
 
     public function handle(): void
     {
