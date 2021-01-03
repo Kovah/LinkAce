@@ -88,12 +88,13 @@ jobs:
         run: rm .env
 
       - name: Build the final package
-        uses: montudor/action-zip@v0.1.1
+        uses: papeloto/action-zip@v1
         with:
-          args: zip -r /tmp/linkace.zip /github/workspace
+          files: ./
+          dest: linkace.zip
 
       - name: Upload the package
         uses: actions/upload-artifact@v2
         with:
           name: mix-manifest
-          path: /tmp/linkace.zip
+          path: linkace.zip
