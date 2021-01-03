@@ -1,4 +1,4 @@
-name: Testing
+name: Build
 
 #on:
 #  push:
@@ -87,10 +87,10 @@ jobs:
       - name: Remove .env file
         run: rm .env
 
-      - name: Install zip
-        run: apt install -y zip
-      - name: Create zip package with all files
-        run: zip -r /tmp/linkace.zip $GITHUB_WORKSPACE
+      - name: Build the final package
+        uses: montudor/action-zip@v0.1.1
+        with:
+          args: zip -r /tmp/linkace.zip $GITHUB_WORKSPACE
 
       - name: Upload the package
         uses: actions/upload-artifact@v2
