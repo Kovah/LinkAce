@@ -140,9 +140,9 @@ class CheckLinksCommand extends Command
     {
         $this->output->write('Checking link ' . $link->url . ' ');
 
-        $_url_scheme = parse_url($link->url, PHP_URL_SCHEME);
-        if (in_array($_url_scheme, $this->validUrlSchemes) === false) {
-            $this->warn('› Missing scheme [' . $_url_scheme . '], skipping.');
+        $urlScheme = parse_url($link->url, PHP_URL_SCHEME);
+        if (in_array($urlScheme, $this->validUrlSchemes) === false) {
+            $this->warn('› Invalid scheme [' . $urlScheme . '], skipping Link.');
             return;
         }
 
@@ -205,7 +205,7 @@ class CheckLinksCommand extends Command
      *
      * @return void
      */
-    protected function sendNotification()
+    protected function sendNotification(): void
     {
         if (empty($this->movedLinks) && empty($this->brokenLinks)) {
             // Do not send a notification if there are no errors
