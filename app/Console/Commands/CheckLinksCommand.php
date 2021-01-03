@@ -46,6 +46,9 @@ class CheckLinksCommand extends Command
     /** @var array */
     protected $brokenLinks = [];
 
+    /** @var array */
+    protected $validUrlSchemes = ['http', 'https'];
+
     public function handle(): void
     {
         // Check if the command should skip the execution
@@ -137,8 +140,14 @@ class CheckLinksCommand extends Command
     {
         $this->output->write('Checking link ' . $link->url . ' ');
 
+        $_url_scheme = parse_url($link->url, PHP_URL_SCHEME);
+        if (in_array($_url_scheme, $this->validUrlSchemes) === false) {
+            $this->warn('› Missing scheme [' . $_url_scheme . '], skipping.');
+            return;
+        }
+
         try {
-            $response = Http::timeout(10)->get($link->url);
+            $response = Http::timeout(10)->head($link->url);
             $statusCode = $response->status();
         } catch (\Exception $e) {
             // Set status code to null so the link will be marked as broken
