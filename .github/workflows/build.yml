@@ -90,7 +90,7 @@ jobs:
       - name: Build the final package
         uses: montudor/action-zip@v0.1.1
         with:
-          args: zip -r /tmp/linkace.zip $GITHUB_WORKSPACE
+          args: zip -r /tmp/linkace.zip /github/workspace
 
       - name: Upload the package
         uses: actions/upload-artifact@v2
