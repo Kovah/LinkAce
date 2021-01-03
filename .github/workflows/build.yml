@@ -1,9 +1,12 @@
 name: Build
 
+#on:
+#  push:
+#    branches:
+#      - master
+# FOR TESTING ENABLED ON PULL REQUEST
 on:
-  push:
-    branches:
-      - master
+  pull_request:
 
 jobs:
 
@@ -88,10 +91,10 @@ jobs:
         run: rm .env
 
       - name: Build the final package
-        uses: papeloto/action-zip@v1
+        uses: thedoctor0/zip-release@master
         with:
-          files: ./
-          dest: linkace.zip
+          filename: linkace.zip
+          exclusions: '*.git*'
 
       - name: Upload the package
         uses: actions/upload-artifact@v2
