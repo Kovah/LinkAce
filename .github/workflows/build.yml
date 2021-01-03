@@ -1,12 +1,9 @@
 name: Build
 
-#on:
-#  push:
-#    branches:
-#      - master
-# FOR TESTING ENABLED ON PULL REQUEST
 on:
-  pull_request:
+  push:
+    branches:
+      - master
 
 jobs:
 
