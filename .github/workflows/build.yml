@@ -1,12 +1,9 @@
 name: Build
 
-#on:
-#  push:
-#    branches:
-#      - master
-# FOR TESTING ENABLED ON PULL REQUEST
 on:
-  pull_request:
+  push:
+    branches:
+      - master
 
 jobs:
 
@@ -84,6 +81,9 @@ jobs:
       - name: Install dependencies
         run: composer install --prefer-dist --no-progress --no-suggest
 
+      - name: Publish package configuration
+        run: 'php artisan vendor:publish --provider="Spatie\Backup\BackupServiceProvider"'
+
       - name: Remove .env file
         run: rm .env
 
@@ -96,5 +96,5 @@ jobs:
       - name: Upload the package
         uses: actions/upload-artifact@v2
         with:
-          name: mix-manifest
+          name: linkace-package
           path: linkace.zip
