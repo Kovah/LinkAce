@@ -1,5 +1,7 @@
 <?php
 
+require_once 'utils.php';
+
 return [
 
     /*
@@ -67,8 +69,8 @@ return [
 
         's3' => [
             'driver' => 's3',
-            'key' => env('AWS_ACCESS_KEY_ID'),
-            'secret' => env('AWS_SECRET_ACCESS_KEY'),
+            'key' => env_file('AWS_ACCESS_KEY_ID'),
+            'secret' => env_file('AWS_SECRET_ACCESS_KEY'),
             'region' => env('AWS_DEFAULT_REGION'),
             'bucket' => env('AWS_BUCKET'),
             'url' => env('AWS_URL'),

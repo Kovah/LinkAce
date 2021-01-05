@@ -2,6 +2,8 @@
 
 use Illuminate\Support\Str;
 
+require_once 'utils.php';
+
 return [
 
     /*
@@ -56,7 +58,7 @@ return [
             'persistent_id' => env('MEMCACHED_PERSISTENT_ID'),
             'sasl' => [
                 env('MEMCACHED_USERNAME'),
-                env('MEMCACHED_PASSWORD'),
+                env_file('MEMCACHED_PASSWORD'),
             ],
             'options' => [
                 // Memcached::OPT_CONNECT_TIMEOUT  => 2000,

@@ -1,5 +1,7 @@
 <?php
 
+require_once 'utils.php';
+
 return [
 
     /*
@@ -86,7 +88,7 @@ return [
 
     'username' => env('MAIL_USERNAME'),
 
-    'password' => env('MAIL_PASSWORD'),
+    'password' => env_file('MAIL_PASSWORD'),
 
     /*
     |--------------------------------------------------------------------------
