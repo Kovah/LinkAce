@@ -15,6 +15,7 @@
                     @if(old('share.' . $key) ?: usersettings('share_' . $key)) checked @endif>
                 <label for="share-{{ $key }}" title="@lang('sharing.service.' . $key)">
                     <x-dynamic-component :component="$details['icon']" class="fw" />
+                    <span class="sr-only">@lang('sharing.service.' . $key)</span>
                 </label>
             </div>
         @endforeach
@@ -22,7 +23,7 @@
     </div>
 
     <button type="button" class="share-toggle btn btn-sm btn-outline-secondary">
-        <x-icon.toggle-on/> @lang('settings.sharing_toggle')
+        <x-icon.toggle-on class="fw mr-2"/> @lang('settings.sharing_toggle')
     </button>
 
     @if ($errors->has('timezone'))

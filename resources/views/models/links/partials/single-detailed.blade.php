@@ -4,7 +4,10 @@
         <div class="d-flex align-items-top flex-wrap">
             <div class="mr-2 mw-100">
                 @if($link->is_private)
-                    <x-icon.lock class="mr-1" title="@lang('link.private')"/>
+                    <span>
+                        <x-icon.lock class="mr-1" title="@lang('link.private')"/>
+                        <span class="sr-only">@lang('link.private')</span>
+                    </span>
                 @endif
                 {!! $link->getIcon('mr-1') !!}
                 <a href="{{ $link->url }}" {!! linkTarget() !!}>{{ $link->title }}</a>
@@ -16,6 +19,7 @@
                     data-toggle="collapse" data-target="#sharing-{{ $link->id }}"
                     aria-expanded="false" aria-controls="sharing-{{ $link->id }}">
                     <x-icon.share class="fw"/>
+                    <span class="sr-only">@lang('sharing.share_link')</span>
                 </button>
             </div>
         </div>
