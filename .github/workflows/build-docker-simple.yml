@@ -1,12 +1,13 @@
 ---
 name: Build simple LinkAce Docker image
 
-on:
-  push:
-    branches:
-      - master
-    tags:
-      - "*"
+#on:
+#  push:
+#    branches:
+#      - master
+#    tags:
+#      - "*"
+on: workflow_dispatch
 
 jobs:
   publish_to_docker_hub:
