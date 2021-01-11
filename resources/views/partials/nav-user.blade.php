@@ -5,6 +5,7 @@
             <span class="d-none d-sm-inline">{{ auth()->user()->name }}</span>
             <span class="d-sm-none">
                 <x-icon.cog class="fw"/>
+                <span class="sr-only">@lang('settings.settings')</span>
             </span>
             <x-icon.caret-down class="fw"/>
         </a>

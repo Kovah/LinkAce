@@ -23,8 +23,8 @@ class SearchController extends Controller
             ->with('order_by_options', $this->orderByOptions)
             ->with('query_settings', [
                 'old_query' => null,
-                'search_title' => false,
-                'search_description' => false,
+                'search_title' => true,
+                'search_description' => true,
                 'private_only' => false,
                 'broken_only' => false,
                 'only_lists' => '',

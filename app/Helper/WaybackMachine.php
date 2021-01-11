@@ -30,7 +30,7 @@ class WaybackMachine
 
         $archiveUrl = self::$baseUrl . '/save/' . $url;
 
-        $response = Http::get($archiveUrl);
+        $response = Http::head($archiveUrl);
 
         try {
             $response->throw();

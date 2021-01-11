@@ -1,0 +1,100 @@
+name: Build Release Package
+
+on:
+  push:
+    branches:
+      - master
+
+jobs:
+
+  build-js:
+    runs-on: ubuntu-latest
+
+    name: Build assets for the package
+
+    steps:
+      - uses: actions/checkout@v2
+      - name: Use Node.js 14.x
+        uses: actions/setup-node@v1
+        with:
+          node-version: '14.x'
+
+      - name: Try to build the assets
+        run: |
+          npm ci
+          npm run production
+
+      - name: Upload built assets
+        uses: actions/upload-artifact@v2
+        with:
+          name: assets
+          path: public/assets/dist
+
+      - name: Upload mix manifest
+        uses: actions/upload-artifact@v2
+        with:
+          name: mix-manifest
+          path: public/mix-manifest.json
+
+  build-package:
+    runs-on: ubuntu-latest
+    needs: build-js
+
+    name: Build final dist package
+
+    steps:
+      - uses: actions/checkout@v2
+
+      - uses: actions/download-artifact@v2
+        with:
+          name: assets
+          path: public/assets/dist
+
+      - uses: actions/download-artifact@v2
+        with:
+          name: mix-manifest
+          path: public
+
+      - name: Setup PHP
+        uses: shivammathur/setup-php@v2
+        with:
+          php-version: '7.3'
+          extensions: mbstring
+
+      - name: Get Composer Cache Directory
+        id: composer-cache
+        run: echo "::set-output name=dir::$(composer config cache-files-dir)"
+
+      - name: Cache dependencies
+        uses: actions/cache@v1
+        with:
+          path: ${{ steps.composer-cache.outputs.dir }}
+          key: ${{ runner.os }}-composer-${{ hashFiles('**/composer.lock') }}
+          restore-keys: ${{ runner.os }}-composer-
+
+      - name: Prepare the environment
+        run: cp .env.example .env
+
+      - name: Validate composer.json and composer.lock
+        run: composer validate
+
+      - name: Install dependencies
+        run: composer install --prefer-dist --no-progress --no-suggest
+
+      - name: Publish package configuration
+        run: 'php artisan vendor:publish --provider="Spatie\Backup\BackupServiceProvider"'
+
+      - name: Remove .env file
+        run: rm .env
+
+      - name: Build the final package
+        uses: thedoctor0/zip-release@master
+        with:
+          filename: linkace.zip
+          exclusions: '*.git*'
+
+      - name: Upload the package
+        uses: actions/upload-artifact@v2
+        with:
+          name: linkace-package
+          path: linkace.zip

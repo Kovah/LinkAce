@@ -3,7 +3,10 @@
         <div class="mr-3 one-line-sm">
             <a href="{{ $link->url }}" title="{{ $link->url }}">
                 @if($link->is_private)
-                    <x-icon.lock class="mr-1" title="@lang('link.private')"/>
+                    <span>
+                        <x-icon.lock class="mr-1" title="@lang('link.private')"/>
+                        <span class="sr-only">@lang('link.private')</span>
+                    </span>
                 @endif
                 {!! $link->getIcon('mr-1') !!}
                 {{ $link->shortTitle(100) }}
@@ -13,6 +16,7 @@
             <small class="text-muted mr-3">{!! $link->domainOfURL() !!}</small>
             <a href="{{ route('links.show', [$link->id]) }}" title="@lang('link.show')">
                 <x-icon.info class="fw"/>
+                <span class="sr-only">@lang('link.details')</span>
             </a>
         </div>
     </div>
