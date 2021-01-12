@@ -9,7 +9,7 @@ trait AsksForUser
     /** @var User */
     protected $user;
 
-    protected function askForUserEmail(): void
+    protected function askForUser(): void
     {
         do {
             $email = $this->ask('Please enter the user email address');
