@@ -5,6 +5,6 @@
         </a>
     </td>
     <td>
-        {{ $tag->links->count() }}
+        {{ $tag->links_count }}
     </td>
 </tr>

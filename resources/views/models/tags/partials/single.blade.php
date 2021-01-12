@@ -11,7 +11,7 @@
         </a>
     </td>
     <td>
-        {{ $tag->links->count() }}
+        {{ $tag->links_count }}
     </td>
     <td class="text-right">
         <div class="btn-group btn-group-xs">

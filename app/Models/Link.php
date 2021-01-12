@@ -39,6 +39,7 @@ use Venturecraft\Revisionable\RevisionableTrait;
  * @property Collection|Tag[]      $tags
  * @property User                  $user
  * @method static Builder|Link  byUser($user_id)
+ * @method static Builder|Link  privateOnly($is_private)
  * @method static MorphMany     revisionHistory()
  */
 class Link extends Model
@@ -93,24 +94,24 @@ class Link extends Model
      * Scope for the user relation
      *
      * @param Builder $query
-     * @param int     $user_id
+     * @param int     $userId
      * @return mixed
      */
-    public function scopeByUser($query, $user_id)
+    public function scopeByUser($query, $userId)
     {
-        return $query->where('user_id', $user_id);
+        return $query->where('user_id', $userId);
     }
 
     /**
      * Scope for the user relation
      *
      * @param Builder $query
-     * @param bool    $is_private
+     * @param bool    $isPrivate
      * @return mixed
      */
-    public function scopePrivateOnly($query, bool $is_private)
+    public function scopePrivateOnly($query, bool $isPrivate)
     {
-        return $query->where('is_private', $is_private);
+        return $query->where('is_private', $isPrivate);
     }
 
     /*
@@ -181,16 +182,13 @@ class Link extends Model
      *
      * @return string
      */
-    public function domainOfURL()
+    public function domainOfURL(): string
     {
         $urlDetails = parse_url($this->url);
         return $urlDetails['host'] ?? $this->shortUrl(20);
     }
 
-    /**
-     * @return null|string
-     */
-    public function tagsForInput()
+    public function tagsForInput(): ?string
     {
         $tags = $this->tags;
 
@@ -201,10 +199,7 @@ class Link extends Model
         return $tags->implode('name', ',');
     }
 
-    /**
-     * @return null|string
-     */
-    public function listsForInput()
+    public function listsForInput(): ?string
     {
         $lists = $this->lists;
 
@@ -215,10 +210,6 @@ class Link extends Model
         return $lists->implode('name', ',');
     }
 
-    /**
-     * @param string|null $additionalClasses
-     * @return string
-     */
     public function getIcon(string $additionalClasses = ''): string
     {
         if ($this->icon === null) {
@@ -257,7 +248,7 @@ class Link extends Model
      *
      * @return string
      */
-    public function addedAt()
+    public function addedAt(): string
     {
         $output = '<time-ago class="cursor-help"';
         $output .= ' datetime="' . $this->created_at->toIso8601String() . '"';
