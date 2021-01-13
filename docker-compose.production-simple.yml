@@ -11,6 +11,7 @@ services:
       - MARIADB_USER=${DB_USERNAME}
       - MARIADB_PASSWORD=${DB_PASSWORD}
       - MARIADB_DATABASE=${DB_DATABASE}
+      - MARIADB_COLLATE=utf8mb4_bin
     volumes:
       - db:/bitnami
 
