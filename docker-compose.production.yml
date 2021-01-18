@@ -4,14 +4,14 @@ services:
 
   # --- MariaDB
   db:
-    image: bitnami/mariadb:10.5
+    image: mariadb:10.5
     restart: unless-stopped
+    command: mysqld --character-set-server=utf8mb4 --collation-server=utf8mb4_bin
     environment:
       - MARIADB_ROOT_PASSWORD=${DB_PASSWORD}
       - MARIADB_USER=${DB_USERNAME}
       - MARIADB_PASSWORD=${DB_PASSWORD}
       - MARIADB_DATABASE=${DB_DATABASE}
-      - MARIADB_COLLATE=utf8mb4_bin
     volumes:
       - db:/bitnami
 
