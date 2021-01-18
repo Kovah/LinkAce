@@ -44,7 +44,7 @@
                     <div class="form-group">
                         <label for="description">@lang('link.description')</label>
                         <textarea name="description" id="description" rows="4" class="form-control"
-                            >{{ old('description') }}</textarea>
+                            >{{ old('description') ?: $bookmark_description ?? '' }}</textarea>
 
                         @if ($errors->has('description'))
                             <p class="invalid-feedback" role="alert">
