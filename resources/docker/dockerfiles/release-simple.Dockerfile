@@ -23,6 +23,9 @@ COPY ./.env.example /app/.env
 # Install dependencies using Composer
 RUN composer install -n --prefer-dist --no-dev
 
+# Install MySQL Dump for automated backups
+RUN install_packages mariadb-client
+
 # ================================
 # Compile all assets
 FROM node:12.19.0 AS npm_builder
