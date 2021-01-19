@@ -23,9 +23,6 @@ COPY ./.env.example /app/.env
 # Install dependencies using Composer
 RUN composer install -n --prefer-dist --no-dev
 
-# Install MySQL Dump for automated backups
-RUN install_packages mariadb-client
-
 # ================================
 # Compile all assets
 FROM node:12.19.0 AS npm_builder
@@ -70,6 +67,9 @@ COPY ./resources/docker/php/php.ini /opt/docker/etc/php/php.ini
 # Copy files from the composer build
 COPY --from=builder /app/vendor /app/vendor
 COPY --from=builder /app/bootstrap/cache /app/bootstrap/cache
+
+# Install MySQL Dump for automated backups
+RUN install_packages mariadb-client
 
 # Publish package resources
 RUN php artisan vendor:publish --provider="Spatie\Backup\BackupServiceProvider"
