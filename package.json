@@ -16,12 +16,12 @@
     "cross-env": "^6.0.3",
     "laravel-mix": "^5.0.9",
     "resolve-url-loader": "^3.1.2",
-    "sass": "^1.32.2",
+    "sass": "^1.32.5",
     "sass-loader": "^8.0.2",
     "vue-template-compiler": "^2.6.12"
   },
   "dependencies": {
-    "bootstrap": "^4.5.3",
+    "bootstrap": "^4.6.0",
     "jquery": "^3.5.1",
     "popper.js": "^1.16.1",
     "selectize": "github:selectize/selectize.js#master"

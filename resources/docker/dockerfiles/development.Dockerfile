@@ -5,10 +5,11 @@ FROM php:7.3-fpm
 WORKDIR /app
 
 RUN apt-get update && apt-get install -y \
-        mariadb-client \
-        autoconf \
-        build-essential \
-        libpq-dev
+    zip \
+    mariadb-client \
+    autoconf \
+    build-essential \
+    libpq-dev
 
 RUN pecl install xdebug pcov
 RUN docker-php-ext-install bcmath pdo_mysql pdo_pgsql
