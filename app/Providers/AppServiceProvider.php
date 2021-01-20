@@ -14,15 +14,11 @@ class AppServiceProvider extends ServiceProvider
      *
      * @return void
      */
-    public function boot(UrlGenerator $url)
+    public function boot(): void
     {
         Schema::defaultStringLength(191);
 
         Paginator::useBootstrap();
-
-        if (env('FORCE_HTTPS', false)) {
-            $url->forceScheme('https');
-        }
     }
 
     /**

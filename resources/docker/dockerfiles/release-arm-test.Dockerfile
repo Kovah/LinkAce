@@ -2,8 +2,12 @@
 
 # ================================
 # PHP Dependency Setup
-FROM bitnami/php-fpm:7.4-prod AS builder
+FROM php:8.0-fpm-alpine AS builder
 WORKDIR /app
+
+# Install Composer
+RUN apk add --no-cache git
+RUN curl -sS https://getcomposer.org/installer | php -- --install-dir=/usr/local/bin --filename=composer
 
 # Make needed parts of the app available in the container
 COPY ./app /app/app
@@ -25,7 +29,7 @@ RUN composer install -n --prefer-dist --no-dev
 
 # ================================
 # Compile all assets
-FROM node:12.19.0 AS npm_builder
+FROM node:14 AS npm_builder
 WORKDIR /srv
 
 # Copy package.json and Gruntfile
@@ -38,8 +42,8 @@ RUN npm install
 RUN npm run production
 
 # ================================
-# Prepare the final image including nginx
-FROM webdevops/php-nginx:7.4
+# Prepare the final image
+FROM php:8.0-fpm-alpine
 WORKDIR /app
 
 # Copy the app into the container
@@ -62,14 +66,14 @@ COPY ./server.php /app
 COPY ./.env.example /app/.env
 
 # Copy the PHP config files
-COPY ./resources/docker/php/php.ini /opt/docker/etc/php/php.ini
+COPY ./resources/docker/php/php.ini /opt/bitnami/php/etc/conf.d/php.ini
+
+# Install MySQL Dump for automated backups and other dependencies
+RUN apk add --no-cache mariadb-client && docker-php-ext-install bcmath pdo_mysql pdo_pgsql
 
 # Copy files from the composer build
 COPY --from=builder /app/vendor /app/vendor
 COPY --from=builder /app/bootstrap/cache /app/bootstrap/cache
-
-# Install MySQL Dump for automated backups
-RUN install_packages mariadb-client
 
 # Publish package resources
 RUN php artisan vendor:publish --provider="Spatie\Backup\BackupServiceProvider"
@@ -80,7 +84,4 @@ COPY --from=npm_builder /srv/public/assets/dist/css /app/public/assets/dist/css
 COPY --from=npm_builder /srv/public/mix-manifest.json /app/public/mix-manifest.json
 
 # Set correct permissions for the storage directory
-RUN chown -R application:application /app
 RUN chmod -R 0777 /app/storage
-
-ENV WEB_DOCUMENT_ROOT /app/public

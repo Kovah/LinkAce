@@ -26,33 +26,44 @@ class ListControllerTest extends TestCase
     {
         User::factory()->create();
 
-        $listPublic = LinkList::factory()->create(['is_private' => false]);
-        $listPrivate = LinkList::factory()->create(['is_private' => true]);
+        LinkList::factory()->create([
+            'name' => 'public list',
+            'is_private' => false,
+        ]);
+        LinkList::factory()->create([
+            'name' => 'private list',
+            'is_private' => true,
+        ]);
 
         $response = $this->get('guest/lists');
 
         $response->assertOk()
-            ->assertSee($listPublic->name)
-            ->assertDontSee($listPrivate->name);
+            ->assertSee('public list')
+            ->assertDontSee('private list');
     }
 
     public function testValidListDetailResponse(): void
     {
         User::factory()->create();
 
-        $listPublic = LinkList::factory()->create(['is_private' => false]);
+        LinkList::factory()->create([
+            'name' => 'test list name',
+            'is_private' => false,
+        ]);
 
         $response = $this->get('guest/lists/1');
 
-        $response->assertOk()
-            ->assertSee($listPublic->name);
+        $response->assertOk()->assertSee('test list name');
     }
 
     public function testInvalidListDetailResponse(): void
     {
         User::factory()->create();
 
-        LinkList::factory()->create(['is_private' => true]);
+        LinkList::factory()->create([
+            'name' => 'test list name',
+            'is_private' => true,
+        ]);
 
         $response = $this->get('guest/lists/1');
 

@@ -6,12 +6,13 @@ services:
   # --- MariaDB
   db:
     container_name: "linkace-db"
-    image: bitnami/mariadb:10.5
+    image: mariadb:10.5
+    command: mysqld --character-set-server=utf8mb4 --collation-server=utf8mb4_bin
     environment:
-      - MARIADB_ROOT_PASSWORD=${DB_PASSWORD}
-      - MARIADB_USER=${DB_USERNAME}
-      - MARIADB_PASSWORD=${DB_PASSWORD}
-      - MARIADB_DATABASE=${DB_DATABASE}
+      - MYSQL_ROOT_PASSWORD=${DB_PASSWORD}
+      - MYSQL_USER=${DB_USERNAME}
+      - MYSQL_PASSWORD=${DB_PASSWORD}
+      - MYSQL_DATABASE=${DB_DATABASE}
     ports:
       - "127.0.0.1:3306:3306"
     volumes:
@@ -27,7 +28,7 @@ services:
       - db
     volumes:
       - .:/app:delegated
-      - ./resources/docker/php/php-dev.ini:/opt/bitnami/php/etc/conf.d/php.ini:ro
+      - ./resources/docker/php/php-dev.ini:/usr/local/etc/php/conf.d/php.ini:ro
 
   # --- nginx
   nginx:

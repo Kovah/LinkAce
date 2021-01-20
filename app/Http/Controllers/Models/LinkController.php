@@ -24,6 +24,7 @@ class LinkController extends Controller
     public function index(Request $request): View
     {
         $links = Link::byUser(auth()->id())
+            ->with('tags')
             ->orderBy(
                 $request->input('orderBy', 'created_at'),
                 $request->input('orderDir', 'desc')

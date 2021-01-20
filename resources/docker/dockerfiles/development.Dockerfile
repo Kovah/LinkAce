@@ -1,9 +1,21 @@
 # DOCKERFILE DEVELOPMENT
-# Installs MySQL Client for database exports, and xDebug
-FROM bitnami/php-fpm:7.4
+# Installs MySQL Client for database exports, xDebug with PCov and Composer
 
-RUN install_packages mariadb-client autoconf build-essential php-pear
+FROM php:7.3-fpm
+WORKDIR /app
+
+RUN apt-get update && apt-get install -y \
+    zip \
+    mariadb-client \
+    autoconf \
+    build-essential \
+    libpq-dev \
+    libzip-dev
 
 RUN pecl install xdebug pcov
+RUN docker-php-ext-install bcmath pdo_mysql pdo_pgsql zip
+RUN docker-php-ext-enable xdebug pcov
+
+RUN curl -sS https://getcomposer.org/installer | php -- --install-dir=/usr/local/bin --filename=composer
 
 EXPOSE 10000

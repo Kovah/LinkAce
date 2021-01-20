@@ -21,7 +21,7 @@ class ViewRecoveryCodesCommand extends Command
     {
         $this->line('This tool allows you to view the 2FA recovery codes for any user.');
 
-        $this->askForUserEmail();
+        $this->askForUser();
         $this->viewBackupCodes();
     }
 

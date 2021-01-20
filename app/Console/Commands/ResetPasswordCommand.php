@@ -21,7 +21,7 @@ class ResetPasswordCommand extends Command
     {
         $this->line('This tool allows you to reset the password for any user.');
 
-        $this->askForUserEmail();
+        $this->askForUser();
         $this->resetUserPassword();
     }
 

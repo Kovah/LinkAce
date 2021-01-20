@@ -79,7 +79,7 @@ jobs:
         run: composer validate
 
       - name: Install dependencies
-        run: composer install --prefer-dist --no-progress --no-suggest
+        run: composer install --prefer-dist --no-progress --no-suggest --no-dev
 
       - name: Publish package configuration
         run: 'php artisan vendor:publish --provider="Spatie\Backup\BackupServiceProvider"'

@@ -8,6 +8,7 @@ use App\Models\Setting;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Cache;
 use Illuminate\Support\Str;
 use Illuminate\Contracts\View\View;
 
@@ -63,6 +64,8 @@ class SystemSettingsController extends Controller
                 ]);
             }
         }
+
+        Cache::forget('systemsettings');
 
         flash(trans('settings.settings_saved'));
         return redirect()->route('get-systemsettings');

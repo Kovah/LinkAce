@@ -20,12 +20,14 @@ class BookmarkletController extends Controller
     {
         $newUrl = $request->input('u');
         $newTitle = $request->input('t');
+        $newDescription = $request->input('d');
 
         // Redirect to the login if the user is not logged in
         if (!auth()->check()) {
             // Save details for the link in the session
             session(['bookmarklet.new_url' => $newUrl]);
             session(['bookmarklet.new_title' => $newTitle]);
+            session(['bookmarklet.new_description' => $newDescription]);
             session(['bookmarklet.login_redirect' => true]);
 
             return redirect()->route('bookmarklet-login');
@@ -35,6 +37,7 @@ class BookmarkletController extends Controller
             // Receive the link details from the session after the user logged in
             $newUrl = session()->pull('bookmarklet.new_url');
             $newTitle = session()->pull('bookmarklet.new_title');
+            $newDescription = session()->pull('bookmarklet.new_description');
         }
 
         session(['bookmarklet.create' => true]);
@@ -42,6 +45,7 @@ class BookmarkletController extends Controller
         return view('actions.bookmarklet.create', [
             'bookmark_url' => $newUrl,
             'bookmark_title' => $newTitle,
+            'bookmark_description' => $newDescription,
         ]);
     }
 

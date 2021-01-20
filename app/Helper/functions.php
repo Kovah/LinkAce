@@ -6,6 +6,7 @@ use App\Helper\WaybackMachine;
 use App\Models\Link;
 use App\Models\Setting;
 use Carbon\Carbon;
+use Illuminate\Support\Collection;
 use Illuminate\Support\Facades\Cache;
 use Illuminate\Support\Facades\Storage;
 
@@ -32,17 +33,19 @@ function usersettings(string $key = '')
  * Retrieve system settings
  *
  * @param string $key
- * @return mixed
+ * @return null|Collection
  */
 function systemsettings(string $key = '')
 {
+    $settings = Cache::rememberForever('systemsettings', function () {
+        return Setting::systemOnly()->get()->pluck('value', 'key');
+    });
+
     if ($key === '') {
-        return Setting::systemOnly()->get()->mapWithKeys(function ($item) {
-            return [$item['key'] => $item['value']];
-        });
+        return $settings;
     }
 
-    return Setting::systemOnly()->where('key', $key)->pluck('value')->first() ?: null;
+    return $settings[$key] ?? null;
 }
 
 /**
@@ -126,7 +129,7 @@ function getShareLinks(Link $link): string
  * @param int|null $height
  * @return string
  */
-function displaySVG($path, $width = null, $height = null)
+function displaySVG(string $path, $width = null, $height = null)
 {
     $svg = file_get_contents($path);
 
@@ -213,7 +216,7 @@ function getVersionFromPackage(): ?string
 {
     try {
         $package = json_decode(Storage::disk('root')->get('package.json'), false);
-    } catch (\Exception $e) {
+    } catch (Exception $e) {
         return null;
     }
 

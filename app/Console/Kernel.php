@@ -6,6 +6,7 @@ use App\Console\Commands\CheckLinksCommand;
 use App\Console\Commands\CleanupLinkHistoriesCommand;
 use App\Console\Commands\RegisterUserCommand;
 use App\Console\Commands\ResetPasswordCommand;
+use App\Console\Commands\ImportCommand;
 use Illuminate\Console\Scheduling\Schedule;
 use Illuminate\Foundation\Console\Kernel as ConsoleKernel;
 
@@ -26,6 +27,7 @@ class Kernel extends ConsoleKernel
         CheckLinksCommand::class,
         ResetPasswordCommand::class,
         CleanupLinkHistoriesCommand::class,
+        ImportCommand::class,
     ];
 
     /**
@@ -41,7 +43,7 @@ class Kernel extends ConsoleKernel
         $schedule->command('queue:work --daemon --once')
             ->withoutOverlapping();
 
-        if (env('BACKUP_ENABLED', false)) {
+        if (config('backup.backup.enabled')) {
             $schedule->command('backup:clean')->daily()->at('01:00');
             $schedule->command('backup:run')->daily()->at('02:00');
         }
