@@ -24,6 +24,7 @@
   "require-dev": {
     "barryvdh/laravel-debugbar": "^3.2",
     "barryvdh/laravel-ide-helper": "^2.6",
+    "enlightn/enlightn": "^1.1",
     "facade/ignition": "^2.3.6",
     "fakerphp/faker": "^1.12",
     "laravel/tinker": "^2.2.0",
