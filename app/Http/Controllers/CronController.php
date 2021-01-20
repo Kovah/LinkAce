@@ -14,13 +14,13 @@ class CronController extends Controller
      * cron is not available.
      *
      * @param Request $request
-     * @param string  $cron_token
+     * @param string  $cronToken
      * @return ResponseFactory|Response
      */
-    public function __invoke(Request $request, $cron_token)
+    public function __invoke(Request $request, $cronToken)
     {
         // Verify the cron token
-        if ($cron_token !== systemsettings('cron_token')) {
+        if ($cronToken !== systemsettings('cron_token')) {
             return response(trans('settings.cron_token_auth_failure'), 403);
         }
 

@@ -6,6 +6,7 @@ use App\Helper\WaybackMachine;
 use App\Models\Link;
 use App\Models\Setting;
 use Carbon\Carbon;
+use Illuminate\Support\Collection;
 use Illuminate\Support\Facades\Cache;
 use Illuminate\Support\Facades\Storage;
 
@@ -32,7 +33,7 @@ function usersettings(string $key = '')
  * Retrieve system settings
  *
  * @param string $key
- * @return \Illuminate\Support\Collection
+ * @return null|Collection
  */
 function systemsettings(string $key = '')
 {
@@ -128,7 +129,7 @@ function getShareLinks(Link $link): string
  * @param int|null $height
  * @return string
  */
-function displaySVG($path, $width = null, $height = null)
+function displaySVG(string $path, $width = null, $height = null)
 {
     $svg = file_get_contents($path);
 
@@ -215,7 +216,7 @@ function getVersionFromPackage(): ?string
 {
     try {
         $package = json_decode(Storage::disk('root')->get('package.json'), false);
-    } catch (\Exception $e) {
+    } catch (Exception $e) {
         return null;
     }
 

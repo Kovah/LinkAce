@@ -4,6 +4,8 @@ return [
 
     'backup' => [
 
+        'enabled' => env('BACKUP_ENABLED', false),
+
         /*
          * The name of this application. You can use this name to monitor
          * the backups.

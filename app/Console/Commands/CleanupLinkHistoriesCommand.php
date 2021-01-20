@@ -30,7 +30,7 @@ class CleanupLinkHistoriesCommand extends Command
             return;
         }
 
-        $linkCount = $baseQuery->groupBy('revisionable_id')->get('revisionable_id')->count();
+        $linkCount = $baseQuery->groupBy('revisionable_id')->count('revisionable_id');
 
         $this->info(" Found $count entries across $linkCount links.");
 
