@@ -8,10 +8,10 @@ services:
     restart: unless-stopped
     command: mysqld --character-set-server=utf8mb4 --collation-server=utf8mb4_bin
     environment:
-      - MARIADB_ROOT_PASSWORD=${DB_PASSWORD}
-      - MARIADB_USER=${DB_USERNAME}
-      - MARIADB_PASSWORD=${DB_PASSWORD}
-      - MARIADB_DATABASE=${DB_DATABASE}
+      - MYSQL_ROOT_PASSWORD=${DB_PASSWORD}
+      - MYSQL_USER=${DB_USERNAME}
+      - MYSQL_PASSWORD=${DB_PASSWORD}
+      - MYSQL_DATABASE=${DB_DATABASE}
     volumes:
       - db:/bitnami
 
