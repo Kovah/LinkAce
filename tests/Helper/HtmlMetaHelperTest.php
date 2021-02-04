@@ -12,10 +12,8 @@ use Tests\TestCase;
 class HtmlMetaHelperTest extends TestCase
 {
     /**
-     * Test the titleFromURL() helper funtion with a valid URL
-     * Will return the title of the Google frontpage: "Google"
-     *
-     * @return void
+     * Test the titleFromURL() helper function with a valid URL
+     * Will return the title of the DuckDuckGo frontpage: "DuckDuckGo"
      */
     public function testTitleFromValidURL(): void
     {
@@ -40,10 +38,8 @@ class HtmlMetaHelperTest extends TestCase
     }
 
     /**
-     * Test the titleFromURL() helper funtion with a valid URL
-     * Will return the title of the Google frontpage: "Google"
-     *
-     * @return void
+     * Test the titleFromURL() helper function with a valid URL
+     * Will return the title of the DuckDuckGo frontpage: "DuckDuckGo".
      */
     public function testAlternativeDescriptionFromValidURL(): void
     {
@@ -67,10 +63,8 @@ class HtmlMetaHelperTest extends TestCase
     }
 
     /**
-     * Test the titleFromURL() helper funtion with an invalid URL
-     * Will geturn just the host of the given URL
-     *
-     * @return void
+     * Test the titleFromURL() helper function with an invalid URL
+     * Will return just the host of the given URL.
      */
     public function testTitleFromInvalidURL(): void
     {
@@ -88,10 +82,8 @@ class HtmlMetaHelperTest extends TestCase
     }
 
     /**
-     * Test the titleFromURL() helper funtion with an invalid URL
-     * Will geturn just the host of the given URL
-     *
-     * @return void
+     * Test the titleFromURL() helper function with an invalid URL
+     * Will return just the host of the given URL.
      */
     public function testTitleFromURLwithoutProtocol(): void
     {
@@ -109,7 +101,7 @@ class HtmlMetaHelperTest extends TestCase
     }
 
     /**
-     * Test the titleFromURL() helper funtion with an valid URL that returns
+     * Test the titleFromURL() helper function with an valid URL that returns
      * a certificate error.
      * Will return just the host of the given URL and issue a new flash message.
      */
@@ -139,7 +131,7 @@ class HtmlMetaHelperTest extends TestCase
     }
 
     /**
-     * Test the titleFromURL() helper funtion with an valid URL that is not
+     * Test the titleFromURL() helper function with an valid URL that is not
      * accessible due to connection errors, such as a refused connection for
      * a specific port.
      * Will return just the host of the given URL and issue a new flash message.
@@ -216,5 +208,29 @@ class HtmlMetaHelperTest extends TestCase
 
         $this->assertArrayHasKey('title', $result);
         $this->assertEquals('duckduckgo.com', $result['title']);
+    }
+
+    /**
+     * Test the titleFromURL() helper function with a valid URL.
+     * Should return the host as the title because conversion is not possible
+     * in this case.
+     */
+    public function testMetaEncodingWithIncorrectCharset(): void
+    {
+        $testHtml = '<!DOCTYPE html><head>' .
+            '<title>DuckDuckGo</title>' .
+            '<meta charset="utf-8,windows-1251">' .
+            '</head></html>';
+
+        Http::fake([
+            '*' => Http::response($testHtml, 200),
+        ]);
+
+        $url = 'https://duckduckgo.com/';
+        $result = HtmlMeta::getFromUrl($url);
+
+        $this->assertArrayHasKey('title', $result);
+        $this->assertEquals('duckduckgo.com', $result['title']);
+        $this->assertTrue($result['success']);
     }
 }

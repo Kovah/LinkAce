@@ -126,8 +126,13 @@ class HtmlMeta
             ?? self::$fallback['description'];
 
         if (isset($metaTags['charset']) && strtolower($metaTags['charset']) !== 'utf-8') {
-            $title = iconv($metaTags['charset'], 'UTF-8', $title) ?: null;
-            $description = iconv($metaTags['charset'], 'UTF-8', $description) ?: null;
+            try {
+                $title = iconv($metaTags['charset'], 'UTF-8', $title) ?: null;
+                $description = iconv($metaTags['charset'], 'UTF-8', $description) ?: null;
+            } catch (\ErrorException $e) {
+                $title = null;
+                $description = null;
+            }
         } elseif (mb_detect_encoding($title, 'UTF-8', true) === false) {
             $title = null;
             $description = null;
