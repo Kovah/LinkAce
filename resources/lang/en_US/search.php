@@ -23,7 +23,5 @@ return [
 
     'no_results' => 'No results found.',
 
-    'validation_query_missing' => 'A search query must be present if no lists or tags were provided.',
-    'validation_lists_missing' => 'A list must be present if no query or some tags were provided.',
-    'validation_tags_missing' => 'A tag must be present if no query or some lists were provided.',
+    'validation_query_missing' => 'You must either enter a search query, or select a list, a tag or enable searching for broken links.',
 ];
