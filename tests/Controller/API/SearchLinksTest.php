@@ -21,11 +21,13 @@ class SearchLinksTest extends ApiTestCase
     public function testWithoutQuery(): void
     {
         $response = $this->getJsonAuthorized('api/v1/search/links');
+        $msg = 'You must either enter a search query, or select a list, a tag or enable searching for broken links.';
 
         $response->assertJsonValidationErrors([
-            'query' => 'A search query must be present if no lists or tags were provided.',
-            'only_lists' => 'A list must be present if no query or some tags were provided.',
-            'only_tags' => 'A tag must be present if no query or some lists were provided.',
+            'query' => $msg,
+            'only_lists' => $msg,
+            'only_tags' => $msg,
+            'broken_only' => $msg,
         ]);
     }
 

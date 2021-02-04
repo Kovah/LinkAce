@@ -29,9 +29,10 @@ class SearchRequest extends FormRequest
     public function rules()
     {
         return [
-            'query' => 'bail|required_without_all:only_lists,only_tags',
-            'only_lists' => 'bail|required_without_all:query,only_tags',
-            'only_tags' => 'bail|required_without_all:query,only_lists',
+            'query' => 'bail|required_without_all:only_lists,only_tags,broken_only',
+            'only_lists' => 'bail|required_without_all:query,only_tags,broken_only',
+            'only_tags' => 'bail|required_without_all:query,only_lists,broken_only',
+            'broken_only' => 'bail|required_without_all:query,only_lists,only_tags',
         ];
     }
 
@@ -44,8 +45,9 @@ class SearchRequest extends FormRequest
     {
         return [
             'query.required_without_all' => trans('search.validation_query_missing'),
-            'only_lists.required_without_all'  => trans('search.validation_lists_missing'),
-            'only_tags.required_without_all'  => trans('search.validation_tags_missing'),
+            'only_lists.required_without_all'  => trans('search.validation_query_missing'),
+            'only_tags.required_without_all'  => trans('search.validation_query_missing'),
+            'broken_only.required_without_all'  => trans('search.validation_query_missing'),
         ];
     }
 }
