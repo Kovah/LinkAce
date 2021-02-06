@@ -2,7 +2,7 @@
 
 # ================================
 # PHP Dependency Setup
-FROM bitnami/php-fpm:7.4-prod AS builder
+FROM composer AS builder
 WORKDIR /app
 
 # Make needed parts of the app available in the container
@@ -25,7 +25,7 @@ RUN composer install -n --prefer-dist --no-dev
 
 # ================================
 # Compile all assets
-FROM node:12.19.0 AS npm_builder
+FROM node:14.15.4 AS npm_builder
 WORKDIR /srv
 
 # Copy package.json and Gruntfile
@@ -39,7 +39,7 @@ RUN npm run production
 
 # ================================
 # Prepare the final image
-FROM bitnami/php-fpm:7.4-prod
+FROM bitnami/php-fpm:8.0-prod
 WORKDIR /app
 
 # Copy the app into the container
