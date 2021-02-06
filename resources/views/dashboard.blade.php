@@ -100,9 +100,14 @@
                     <li class="list-group-item">
                         <div class="d-flex align-items-center">
                             <span class="mr-1">@lang('stats.total_broken_links')</span>
-                            <span class="badge {{ $stats['total_broken_links'] > 0 ? 'badge-danger' : 'badge-secondary' }} ml-auto">
-                                {{ $stats['total_broken_links'] }}
-                            </span>
+                            <form action="{{ route('do-search') }}" method="post" class="d-inline-block ml-auto">
+                                @csrf
+                                <input type="hidden" name="broken_only" value="on">
+                                <button type="submit"
+                                    class="badge border-0 {{ $stats['total_broken_links'] > 0 ? 'badge-danger' : 'badge-secondary' }}">
+                                    {{ $stats['total_broken_links'] }}
+                                </button>
+                            </form>
                         </div>
                     </li>
                 </ul>
