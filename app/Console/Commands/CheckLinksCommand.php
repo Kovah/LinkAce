@@ -81,7 +81,7 @@ class CheckLinksCommand extends Command
         $links->each(function ($link) {
             $this->checkLink($link);
 
-            // Prevent spam-ish behaviour by limiting outgoing HTTP requests
+            // Prevent spam-ish behaviour by throttling outgoing HTTP requests
             if ($this->option('noWait') === null) {
                 sleep(1);
             }
@@ -147,15 +147,17 @@ class CheckLinksCommand extends Command
         }
 
         try {
-            $response = Http::timeout(10)->head($link->url);
+            $response = Http::timeout(20)->head($link->url);
             $statusCode = $response->status();
         } catch (\Exception $e) {
             // Set status code to null so the link will be marked as broken
             $statusCode = 0;
         }
 
-        if ($statusCode !== 200) {
-            $this->processBrokenLink($statusCode, $link);
+        if ($statusCode >= 400) {
+            $this->processBrokenLink($link);
+        } elseif ($statusCode >= 300) {
+            $this->processMovedLink($link);
         } else {
             $this->processWorkingLink($link);
         }
@@ -165,24 +167,30 @@ class CheckLinksCommand extends Command
      * Set the Link status to either moved or broken depending on the given
      * status code.
      *
-     * @param int  $status_code
      * @param Link $link
      */
-    protected function processBrokenLink(int $status_code, Link $link): void
+    protected function processMovedLink(Link $link): void
     {
-        if ($status_code === 301 || $status_code === 302) {
-            $link->status = Link::STATUS_MOVED;
-            $this->warn('› Link moved to another URL!');
-
-            $this->movedLinks[] = $link;
-        } else {
-            $link->status = Link::STATUS_BROKEN;
-            $this->error('› Link seems to be broken!');
-
-            $this->brokenLinks[] = $link;
-        }
-
+        $link->status = Link::STATUS_MOVED;
         $link->save();
+
+        $this->warn('› Link moved to another URL!');
+        $this->movedLinks[] = $link;
+    }
+
+    /**
+     * Set the Link status to either moved or broken depending on the given
+     * status code.
+     *
+     * @param Link $link
+     */
+    protected function processBrokenLink(Link $link): void
+    {
+        $link->status = Link::STATUS_BROKEN;
+        $link->save();
+
+        $this->error('› Link seems to be broken!');
+        $this->brokenLinks[] = $link;
     }
 
     /**
