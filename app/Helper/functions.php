@@ -208,22 +208,6 @@ function linkTarget(): string
 }
 
 /**
- * Get the current version from the package.json file
- *
- * @return string|null
- */
-function getVersionFromPackage(): ?string
-{
-    try {
-        $package = json_decode(Storage::disk('root')->get('package.json'), false);
-    } catch (Exception $e) {
-        return null;
-    }
-
-    return isset($package->version) ? 'v' . $package->version : null;
-}
-
-/**
  * Properly escape symbols used in search queries.
  *
  * @param string $query

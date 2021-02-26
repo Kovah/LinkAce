@@ -9,10 +9,8 @@ export default class UrlField {
 
     this.$field.addEventListener('keyup', this.onKeyup.bind(this));
 
-    this.tagSuggestions = getInstance(
-      document.querySelector('#tags'),
-      TagsSelect
-    );
+    const $tags = document.querySelector('#tags');
+    this.tagSuggestions = $tags ? getInstance($tags, TagsSelect) : null;
   }
 
   onKeyup () {

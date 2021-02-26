@@ -9,6 +9,7 @@ mix.disableNotifications();
 mix.setPublicPath('public');
 
 mix.js('resources/assets/js/app.js', 'assets/dist/js')
+  .sourceMaps()
   .version();
 
 mix.combine([

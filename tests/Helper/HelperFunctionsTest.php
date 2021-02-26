@@ -136,31 +136,4 @@ class HelperFunctionsTest extends TestCase
 
         $this->assertNull($link);
     }
-
-    public function testVersionFromPackage(): void
-    {
-        Storage::fake('root')->put('package.json', '{"version":"0.0.39"}');
-
-        $version = getVersionFromPackage();
-
-        $this->assertEquals('v0.0.39', $version);
-    }
-
-    public function testVersionFromPackageWithInvalidFile(): void
-    {
-        Storage::fake('root')->put('package.json', '{"foo":"bar"}');
-
-        $version = getVersionFromPackage(); // should now return null because there is no version field
-
-        $this->assertNull($version);
-    }
-
-    public function testVersionFromPackageWithMissingFile(): void
-    {
-        Storage::fake('root');
-
-        $version = getVersionFromPackage(); // should now return null because there is no package.json
-
-        $this->assertNull($version);
-    }
 }
