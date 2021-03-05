@@ -17,7 +17,7 @@ class CronController extends Controller
      * @param string  $cronToken
      * @return ResponseFactory|Response
      */
-    public function __invoke(Request $request, $cronToken)
+    public function __invoke(Request $request, string $cronToken)
     {
         // Verify the cron token
         if ($cronToken !== systemsettings('cron_token')) {

@@ -75,7 +75,9 @@ jobs:
           restore-keys: ${{ runner.os }}-composer-
 
       - name: Prepare the environment
-        run: cp .env.example .env
+        run: |
+          cp .env.example .env
+          php artisan key:generate
 
       - name: Validate composer.json and composer.lock
         run: composer validate

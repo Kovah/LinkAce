@@ -17,6 +17,10 @@ return [
     // If you wish to skip running some analyzers, list the classes in the array below.
     'exclude_analyzers' => [
         Enlightn\Enlightn\Analyzers\Performance\QueueDriverAnalyzer::class,
+        Enlightn\Enlightn\Analyzers\Performance\CacheDriverAnalyzer::class,
+        Enlightn\Enlightn\Analyzers\Performance\UnusedGlobalMiddlewareAnalyzer::class,
+        Enlightn\Enlightn\Analyzers\Security\StableDependencyAnalyzer::class,
+        Enlightn\Enlightn\Analyzers\Security\FrontendVulnerableDependencyAnalyzer::class,
     ],
 
     /*
@@ -86,8 +90,18 @@ return [
     |
     */
     'license_whitelist' => [
-        'Apache-2.0', 'Apache2', 'BSD-2-Clause', 'BSD-3-Clause', 'LGPL-2.1-only', 'LGPL-2.1',
-        'LGPL-2.1-or-later', 'LGPL-3.0', 'LGPL-3.0-only', 'LGPL-3.0-or-later', 'MIT', 'ISC',
+        'Apache-2.0',
+        'Apache2',
+        'BSD-2-Clause',
+        'BSD-3-Clause',
+        'LGPL-2.1-only',
+        'LGPL-2.1',
+        'LGPL-2.1-or-later',
+        'LGPL-3.0',
+        'LGPL-3.0-only',
+        'LGPL-3.0-or-later',
+        'MIT',
+        'ISC',
     ],
 
     // List your commercial packages (licensed by you) below, so that they are not
