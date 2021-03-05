@@ -15,7 +15,9 @@ return [
     'analyzers' => ['*'],
 
     // If you wish to skip running some analyzers, list the classes in the array below.
-    'exclude_analyzers' => [],
+    'exclude_analyzers' => [
+        Enlightn\Enlightn\Analyzers\Performance\QueueDriverAnalyzer::class,
+    ],
 
     /*
     |--------------------------------------------------------------------------
