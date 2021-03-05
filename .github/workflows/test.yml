@@ -75,9 +75,7 @@ jobs:
           restore-keys: ${{ runner.os }}-composer-
 
       - name: Prepare the environment
-        run: |
-          cp .env.example .env
-          php artisan key:generate
+        run: cp .env.example .env
 
       - name: Validate composer.json and composer.lock
         run: composer validate
@@ -89,6 +87,7 @@ jobs:
         run: |
           composer config http-basic.satis.laravel-enlightn.com "$ENLIGHTN_USERNAME" "$ENLIGHTN_API_TOKEN"
           composer install --prefer-dist --no-progress --no-suggest
+          php artisan key:generate
 
       - name: Run PHP CS
         run: composer run lint
