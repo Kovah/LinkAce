@@ -81,26 +81,13 @@ jobs:
         run: composer validate
 
       - name: Install dependencies
-        env:
-          ENLIGHTN_USERNAME: ${{ secrets.ENLIGHTN_USERNAME }}
-          ENLIGHTN_API_TOKEN: ${{ secrets.ENLIGHTN_API_TOKEN }}
-        run: |
-          composer config http-basic.satis.laravel-enlightn.com "$ENLIGHTN_USERNAME" "$ENLIGHTN_API_TOKEN"
-          composer install --prefer-dist --no-progress --no-suggest
-          php artisan key:generate
+        run: composer install --prefer-dist --no-progress --no-suggest
 
       - name: Run PHP CS
         run: composer run lint
 
       - name: Run PHPunit
         run: composer run test
-
-      - name: Run Enlightn
-        env:
-          ENLIGHTN_USERNAME: ${{ secrets.ENLIGHTN_USERNAME }}
-          ENLIGHTN_API_TOKEN: ${{ secrets.ENLIGHTN_API_TOKEN }}
-          ENLIGHTN_GITHUB_REPO: ${{ github.repository }}
-        run: php artisan enlightn --ci
 
       - uses: actions/upload-artifact@v1
         if: failure()
