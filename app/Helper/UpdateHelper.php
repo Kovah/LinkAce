@@ -3,7 +3,10 @@
 namespace App\Helper;
 
 use Composer\Semver\Comparator;
+use Exception;
+use Illuminate\Support\Facades\Cache;
 use Illuminate\Support\Facades\Http;
+use Illuminate\Support\Facades\Storage;
 
 /**
  * Class UpdateHelper
@@ -15,27 +18,48 @@ class UpdateHelper
     protected static $releaseApiUrl = 'https://api.github.com/repos/kovah/linkace/releases';
 
     /**
+     * Get the current version from the package.json file and cache it for a day.
+     *
+     * @return mixed
+     */
+    public static function currentVersion()
+    {
+        return Cache::remember('current-version', 86400, function () {
+            try {
+                $package = json_decode(Storage::disk('root')->get('package.json'), false);
+            } catch (Exception $e) {
+                return null;
+            }
+
+            return isset($package->version) ? 'v' . $package->version : null;
+        });
+    }
+
+    /**
      * Returns the version string if there is a newer version is available.
      * Returns true if the check was successful, but no updates was found.
      * Returns false if the check could not be executed, e.g. due to network
      * issues.
      *
+     * @param bool $cacheResult
      * @return bool|string
      */
-    public static function checkForUpdates()
+    public static function checkForUpdates(bool $cacheResult = false)
     {
-        $currentVersion = getVersionFromPackage();
-        $latestVersion = self::getCurrentVersionFromAPI();
+        return Cache::remember('updatecheck', $cacheResult ? 86400 : 0, function () {
+            $currentVersion = self::currentVersion();
+            $latestVersion = self::getCurrentVersionFromAPI();
 
-        if ($latestVersion === null) {
-            return false;
-        }
+            if ($latestVersion === null) {
+                return false;
+            }
 
-        if (Comparator::greaterThan($latestVersion, $currentVersion)) {
-            return $latestVersion;
-        }
+            if (Comparator::greaterThan($latestVersion, $currentVersion)) {
+                return $latestVersion;
+            }
 
-        return true;
+            return true;
+        });
     }
 
     /**

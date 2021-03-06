@@ -31,7 +31,11 @@ printf "\n> Deleting the application container volume...\n"
 docker volume rm linkace_linkace_app
 
 printf "\n> Pulling latest LinkAce image from the Docker Hub...\n"
-docker pull linkace/linkace
+if grep -q "linkace/linkace:php-nginx" docker-compose.yml; then
+  docker pull linkace/linkace:php-nginx
+else
+  docker pull linkace/linkace
+fi
 
 printf "\n> Restarting the application...\n"
 docker-compose up -d

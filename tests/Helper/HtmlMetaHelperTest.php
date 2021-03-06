@@ -233,4 +233,31 @@ class HtmlMetaHelperTest extends TestCase
         $this->assertEquals('duckduckgo.com', $result['title']);
         $this->assertTrue($result['success']);
     }
+
+    /**
+     * Test the HTML Meta helper function with a valid URL and the charset
+     * defined in the content-type header.
+     * The hex2bin('3c6d6574612...') translates to '<meta name="description" content="Qualität">'
+     * in this case. 'Qualität' must be correctly parsed and converted into
+     * UTF-8 as the description.
+     */
+    public function testMetaEncodingWithContentType(): void
+    {
+        $testHtml = '<!DOCTYPE html><head>' .
+            hex2bin('3c6d657461206e616d653d226465736372697074696f6e2220636f6e74656e743d225175616c6974e474223e') .
+            '</head></html>';
+
+        Http::fake([
+            '*' => Http::response($testHtml, 200, [
+                'Content-Type' => 'text/html; charset=iso-8859-1'
+            ]),
+        ]);
+
+        $url = 'https://encoding-test.com/';
+
+        $result = HtmlMeta::getFromUrl($url);
+
+        $this->assertArrayHasKey('description', $result);
+        $this->assertEquals('Qualität', $result['description']);
+    }
 }

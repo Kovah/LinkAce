@@ -88,7 +88,7 @@ export default class TagsSelect {
       newTag = newTag.trim();
 
       const $tag = document.createElement('span');
-      $tag.classList.add('badge', 'badge-light', 'badge-pill', 'cursor-pointer');
+      $tag.classList.add('badge', 'badge-light', 'badge-pill', 'cursor-pointer', 'badge-wrap');
       $tag.innerText = newTag;
 
       $tag.onclick = this.onSuggestionClick.bind(this, $tag);

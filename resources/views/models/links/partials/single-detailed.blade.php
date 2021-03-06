@@ -14,24 +14,28 @@
                 <br>
                 <small class="text-muted">{{ $link->shortUrl() }}</small>
             </div>
-            <div class="ml-auto text-right">
-                <button type="button" class="btn btn-xs btn-outline-secondary" title="@lang('sharing.share_link')"
-                    data-toggle="collapse" data-target="#sharing-{{ $link->id }}"
-                    aria-expanded="false" aria-controls="sharing-{{ $link->id }}">
-                    <x-icon.share class="fw"/>
-                    <span class="sr-only">@lang('sharing.share_link')</span>
-                </button>
-            </div>
+            @if(getShareLinks($link) !== '')
+                <div class="ml-auto text-right">
+                    <button type="button" class="btn btn-xs btn-outline-secondary" title="@lang('sharing.share_link')"
+                        data-toggle="collapse" data-target="#sharing-{{ $link->id }}"
+                        aria-expanded="false" aria-controls="sharing-{{ $link->id }}">
+                        <x-icon.share class="fw"/>
+                        <span class="sr-only">@lang('sharing.share_link')</span>
+                    </button>
+                </div>
+            @endif
         </div>
     </div>
 
-    <div class="collapse" id="sharing-{{ $link->id }}">
-        <div class="card-body py-2 px-3">
-            <div class="share-links">
-                {!! getShareLinks($link) !!}
+    @if(getShareLinks($link) !== '')
+        <div class="collapse" id="sharing-{{ $link->id }}">
+            <div class="card-body py-2 px-3">
+                <div class="share-links">
+                    {!! getShareLinks($link) !!}
+                </div>
             </div>
         </div>
-    </div>
+    @endif
 
     <div class="card-body py-2 px-3">
 

@@ -15,7 +15,13 @@ return [
     'analyzers' => ['*'],
 
     // If you wish to skip running some analyzers, list the classes in the array below.
-    'exclude_analyzers' => [],
+    'exclude_analyzers' => [
+        Enlightn\Enlightn\Analyzers\Performance\QueueDriverAnalyzer::class,
+        Enlightn\Enlightn\Analyzers\Performance\CacheDriverAnalyzer::class,
+        Enlightn\Enlightn\Analyzers\Performance\UnusedGlobalMiddlewareAnalyzer::class,
+        Enlightn\Enlightn\Analyzers\Security\StableDependencyAnalyzer::class,
+        Enlightn\Enlightn\Analyzers\Security\FrontendVulnerableDependencyAnalyzer::class,
+    ],
 
     /*
     |--------------------------------------------------------------------------
@@ -84,8 +90,18 @@ return [
     |
     */
     'license_whitelist' => [
-        'Apache-2.0', 'Apache2', 'BSD-2-Clause', 'BSD-3-Clause', 'LGPL-2.1-only', 'LGPL-2.1',
-        'LGPL-2.1-or-later', 'LGPL-3.0', 'LGPL-3.0-only', 'LGPL-3.0-or-later', 'MIT', 'ISC',
+        'Apache-2.0',
+        'Apache2',
+        'BSD-2-Clause',
+        'BSD-3-Clause',
+        'LGPL-2.1-only',
+        'LGPL-2.1',
+        'LGPL-2.1-or-later',
+        'LGPL-3.0',
+        'LGPL-3.0-only',
+        'LGPL-3.0-or-later',
+        'MIT',
+        'ISC',
     ],
 
     // List your commercial packages (licensed by you) below, so that they are not
@@ -115,4 +131,21 @@ return [
         storage_path(),
         app()->bootstrapPath('cache'),
     ],
+
+    /*
+    |--------------------------------------------------------------------------
+    | Credentials
+    |--------------------------------------------------------------------------
+    |
+    | The following credentials are used to share your Enlightn report with
+    | the Enlightn Github Bot. This allows the bot to compile the report
+    | and add review comments on your pull requests.
+    |
+    */
+    'credentials' => [
+        'username' => env('ENLIGHTN_USERNAME'),
+        'api_token' => env('ENLIGHTN_API_TOKEN'),
+    ],
+    'github_repo' => env('ENLIGHTN_GITHUB_REPO', 'Kovah/LinkAce'),
+
 ];

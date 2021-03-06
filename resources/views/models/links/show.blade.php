@@ -26,7 +26,11 @@
                     <div class="row">
                         @if($link->description)
                             <div class="col">
-                                {{ $link->description }}
+                                @if(usersettings('markdown_for_text') === '1')
+                                    {!! Str::markdown($link->description, ['html_input' => 'strip']) !!}
+                                @else
+                                    {{ $link->description }}
+                                @endif
                             </div>
                         @endif
                     </div>
@@ -34,16 +38,18 @@
                 </div>
             </div>
 
-            <div class="card mt-4">
-                <div class="card-header">
-                    @lang('sharing.share_link')
-                </div>
-                <div class="card-body py-2">
-                    <div class="share-links">
-                        {!! getShareLinks($link) !!}
+            @if(getShareLinks($link) !== '')
+                <div class="card mt-4">
+                    <div class="card-header">
+                        @lang('sharing.share_link')
+                    </div>
+                    <div class="card-body py-2">
+                        <div class="share-links">
+                            {!! getShareLinks($link) !!}
+                        </div>
                     </div>
                 </div>
-            </div>
+            @endif
 
         </div>
 
@@ -154,16 +160,17 @@
                 @if($loop->index === 5 && $loop->count >= 10)
                     <a data-toggle="collapse" href="#link-history" role="button" class="d-inline-block mb-1"
                         aria-expanded="false" aria-controls="link-history">
-                        @lang('linkace.more') <x-icon.caret-down class="fw"/>
+                        @lang('linkace.more')
+                        <x-icon.caret-down class="fw"/>
                     </a>
                     <div id="link-history" class="collapse">
+                        @endif
+                        <x-links.history-entry :entry="$entry"/>
+                        @endforeach
+                        <div>{{ formatDateTime($link->created_at) }}: @lang('link.history_created')</div>
+                        @if(count($history) >= 10)
+                    </div>
                 @endif
-                <x-links.history-entry :entry="$entry"/>
-            @endforeach
-            <div>{{ formatDateTime($link->created_at) }}: @lang('link.history_created')</div>
-            @if(count($history) >= 10)
-                </div>
-            @endif
         </div>
     </div>
 

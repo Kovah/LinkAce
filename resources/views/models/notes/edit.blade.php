@@ -12,8 +12,6 @@
                 @method('PATCH')
                 @csrf
 
-                <input type="hidden" name="note_id" value="{{ $note->id }}">
-
                 <div class="form-group">
                     <label class="label" for="note">@lang('note.note_content')</label>
                     <textarea name="note" id="note"

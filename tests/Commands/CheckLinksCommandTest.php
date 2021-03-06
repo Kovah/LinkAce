@@ -24,10 +24,25 @@ class CheckLinksCommandTest extends TestCase
         $this->user = User::factory()->create();
     }
 
-    public function testCheckWithHealthyLinks(): void
+    public function testCheckWith200Response(): void
     {
         Http::fake([
             '*' => Http::response('', 200),
+        ]);
+
+        Notification::fake();
+
+        Link::factory()->create();
+
+        $this->artisan('links:check');
+
+        Notification::assertNothingSent();
+    }
+
+    public function testCheckWith204Response(): void
+    {
+        Http::fake([
+            '*' => Http::response('', 204),
         ]);
 
         Notification::fake();

@@ -71,7 +71,6 @@ class NoteApiTest extends ApiTestCase
         ]);
 
         $response = $this->patchJsonAuthorized('api/v1/notes/1', [
-            'link_id' => $link->id,
             'note' => 'Gallia est omnis divisa in partes tres, quarum.',
             'is_private' => false,
         ]);
@@ -95,7 +94,6 @@ class NoteApiTest extends ApiTestCase
         ]);
 
         $response->assertJsonValidationErrors([
-            'link_id' => 'The link id field is required.',
             'note' => 'The note field is required.',
         ]);
     }
@@ -103,7 +101,6 @@ class NoteApiTest extends ApiTestCase
     public function testUpdateRequestNotFound(): void
     {
         $response = $this->patchJsonAuthorized('api/v1/notes/1', [
-            'link_id' => 1,
             'note' => 'Sed haec quis possit intrepidus aestimare tellus.',
             'is_private' => false,
         ]);

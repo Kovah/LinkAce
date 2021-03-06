@@ -17,12 +17,10 @@ export default class UpdateCheck {
   }
 
   init () {
-    debounce(() => {
-      this.checkForUpdate().then(result => {
-        this.result = result;
-        this.updateCheckStatus();
-      });
-    }, 500);
+    this.checkForUpdate().then(result => {
+      this.result = result;
+      this.updateCheckStatus();
+    });
   }
 
   updateCheckStatus () {

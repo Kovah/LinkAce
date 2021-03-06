@@ -129,7 +129,7 @@ function getShareLinks(Link $link): string
  * @param int|null $height
  * @return string
  */
-function displaySVG(string $path, $width = null, $height = null)
+function displaySVG(string $path, $width = null, $height = null): string
 {
     $svg = file_get_contents($path);
 
@@ -205,22 +205,6 @@ function linkTarget(): string
     }
 
     return usersettings('links_new_tab') ? $newTab : '';
-}
-
-/**
- * Get the current version from the package.json file
- *
- * @return string|null
- */
-function getVersionFromPackage(): ?string
-{
-    try {
-        $package = json_decode(Storage::disk('root')->get('package.json'), false);
-    } catch (Exception $e) {
-        return null;
-    }
-
-    return isset($package->version) ? 'v' . $package->version : null;
 }
 
 /**

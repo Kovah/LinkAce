@@ -60,6 +60,28 @@ class NoteControllerTest extends TestCase
         $this->assertTrue($link->notes()->first()->is_private);
     }
 
+    public function testStoreRequestWithMarkdown(): void
+    {
+        Setting::create([
+            'user_id' => 1,
+            'key' => 'markdown_for_text',
+            'value' => '1',
+        ]);
+
+        $link = Link::factory()->create();
+
+        $response = $this->post('notes', [
+            'link_id' => $link->id,
+            'note' => 'Lorem _ipsum dolor_',
+            'is_private' => '0',
+        ]);
+
+        $response->assertRedirect('links/1');
+
+        $response = $this->get('links/1');
+        $response->assertSee('Lorem <em>ipsum dolor</em>', false);
+    }
+
     public function testValidationErrorForCreate(): void
     {
         $link = Link::factory()->create();

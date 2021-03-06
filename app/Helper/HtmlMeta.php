@@ -20,6 +20,9 @@ class HtmlMeta
     /** @var bool */
     protected static $flashAlerts;
 
+    /** @var string|null */
+    protected static $charset;
+
     /**
      * Get the title and description of an URL.
      *
@@ -79,7 +82,6 @@ class HtmlMeta
             }
 
             Log::warning($url . ': ' . $e->getMessage());
-
             return null;
         } catch (RequestException $e) {
             if (self::$flashAlerts) {
@@ -87,7 +89,6 @@ class HtmlMeta
             }
 
             Log::warning($url . ': ' . $e->getMessage());
-
             return null;
         }
 
@@ -95,6 +96,7 @@ class HtmlMeta
             return null;
         }
 
+        self::$charset = explode('charset=', $response->header('content-type'))[1] ?? null;
         return $response->body();
     }
 
@@ -125,7 +127,7 @@ class HtmlMeta
             ?? $metaTags['twitter:description']
             ?? self::$fallback['description'];
 
-        if (isset($metaTags['charset']) && strtolower($metaTags['charset']) !== 'utf-8') {
+        if ($metaTags['charset'] && $metaTags['charset'] !== 'utf-8') {
             try {
                 $title = iconv($metaTags['charset'], 'UTF-8', $title) ?: null;
                 $description = iconv($metaTags['charset'], 'UTF-8', $description) ?: null;
@@ -164,7 +166,9 @@ class HtmlMeta
         $pattern = '/<[\s]*meta[\s]*(charset)="?([^>"]*)"?[\s]*>/i';
 
         if (preg_match($pattern, $html, $out)) {
-            $tags['charset'] = $out[2];
+            $tags['charset'] = strtolower($out[2]);
+        } else {
+            $tags['charset'] = self::$charset ? strtolower(self::$charset) : null;
         }
 
         return $tags;
