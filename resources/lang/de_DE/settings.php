@@ -15,6 +15,8 @@ return [
 
     'links_new_tab' => 'Externe Links in neuen Tabs öffnen',
 
+    'markdown_for_text' => 'Markdown für Beschreibungen und Notizen aktivieren',
+
     'privacy' => 'Privatsphäre',
     'links_private_default' => 'Standardmäßig private Links',
     'links_private_default_help' => 'Aktivieren wird alle neuen Links standardmäßig privat machen',
