@@ -26,7 +26,11 @@
                     <div class="row">
                         @if($link->description)
                             <div class="col">
-                                {{ $link->description }}
+                                @if(usersettings('markdown_for_text') === '1')
+                                    {!! Str::markdown($link->description, ['html_input' => 'strip']) !!}
+                                @else
+                                    {{ $link->description }}
+                                @endif
                             </div>
                         @endif
                     </div>

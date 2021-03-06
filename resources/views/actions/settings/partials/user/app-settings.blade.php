@@ -190,7 +190,29 @@
                     </div>
 
                 </div>
-                <div class="col-12 col-sm-8 col-md-6"></div>
+                <div class="col-12 col-sm-8 col-md-6">
+
+                    <div class="form-group">
+                        <label for="links_new_tab">
+                            @lang('settings.markdown_for_text')
+                        </label>
+                        <select id="markdown_for_text" name="markdown_for_text"
+                            class="simple-select {{ $errors->has('markdown_for_text') ? ' is-invalid' : '' }}">
+                            <option value="1" @if($user->settings()->get('markdown_for_text') === '1') selected @endif>
+                                @lang('linkace.yes')
+                            </option>
+                            <option value="0" @if($user->settings()->get('markdown_for_text') === '0') selected @endif>
+                                @lang('linkace.no')
+                            </option>
+                        </select>
+                        @if ($errors->has('markdown_for_text'))
+                            <p class="invalid-feedback" role="alert">
+                                {{ $errors->first('markdown_for_text') }}
+                            </p>
+                        @endif
+                    </div>
+
+                </div>
             </div>
 
             @include('actions.settings.partials.user.app-settings.archive-backups')

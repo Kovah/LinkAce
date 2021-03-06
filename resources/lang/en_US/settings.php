@@ -15,6 +15,8 @@ return [
 
     'links_new_tab' => 'Open external links in new tabs',
 
+    'markdown_for_text' => 'Enable Markdown for descriptions and notes',
+
     'privacy' => 'Privacy',
     'links_private_default' => 'Private Links by default',
     'links_private_default_help' => 'Enabling this will make all new links private by default',
