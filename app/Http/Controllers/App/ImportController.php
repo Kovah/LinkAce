@@ -30,7 +30,7 @@ class ImportController extends Controller
      * @return JsonResponse
      * @throws FileNotFoundException
      */
-    public function doImport(DoImportRequest $request)
+    public function doImport(DoImportRequest $request): JsonResponse
     {
         $data = $request->file('import-file')->get();
 

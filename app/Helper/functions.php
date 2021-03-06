@@ -129,7 +129,7 @@ function getShareLinks(Link $link): string
  * @param int|null $height
  * @return string
  */
-function displaySVG(string $path, $width = null, $height = null)
+function displaySVG(string $path, $width = null, $height = null): string
 {
     $svg = file_get_contents($path);
 
