@@ -1,7 +1,11 @@
 <div class="card card-body p-3 mb-3">
 
     <div class="note-content small">
-        {{ usersettings('markdown_for_text') ? Str::markdown($note->note, ['html_input' => 'strip']) : $note->note }}
+        @if(usersettings('markdown_for_text'))
+            {!! Str::markdown($note->note, ['html_input' => 'strip']) !!}
+        @else
+            {{ $note->note }}
+        @endif
     </div>
     <div class="note-meta mt-2 small d-flex align-items-center">
         <div class="ml-auto mr-2 text-muted">
