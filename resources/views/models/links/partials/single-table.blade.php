@@ -1,13 +1,25 @@
 <tr>
     <td>
-        <a href="{{ route('links.show', [$link->id]) }}">
-            {{ $link->title }}
-        </a>
-        @if($link->is_private)
-            <span>
+        <div>
+            <a href="{{ route('links.show', [$link->id]) }}">
+                {{ $link->title }}
+            </a>
+            @if($link->is_private)
+                <span>
                 <x-icon.lock class="mr-1" title="@lang('link.private')"/>
                 <span class="sr-only">@lang('link.private')</span>
             </span>
+            @endif
+        </div>
+        @if($link->tags->count() > 0)
+            <div class="mt-1">
+                <label class="small mb-0">@lang('tag.tags'):</label>
+                @foreach($link->tags as $tag)
+                    <a href="{{ route('tags.show', [$tag->id]) }}" class="badge badge-light">
+                        {{ $tag->name }}
+                    </a>
+                @endforeach
+            </div>
         @endif
     </td>
     <td>
