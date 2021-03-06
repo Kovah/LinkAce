@@ -6,6 +6,7 @@ WORKDIR /app
 
 RUN apt-get update && apt-get install -y \
     zip \
+    git \
     mariadb-client \
     autoconf \
     build-essential \
