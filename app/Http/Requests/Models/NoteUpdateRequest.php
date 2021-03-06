@@ -31,7 +31,6 @@ class NoteUpdateRequest extends FormRequest
     public function rules()
     {
         return [
-            'link_id' => 'required',
             'note' => 'required',
             'is_private' => 'sometimes|boolean',
         ];
