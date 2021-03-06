@@ -35,6 +35,12 @@
     "roave/security-advisories": "dev-latest",
     "squizlabs/php_codesniffer": "^3.5"
   },
+  "repositories": [
+    {
+      "type": "composer",
+      "url": "https://satis.laravel-enlightn.com"
+    }
+  ],
   "autoload": {
     "files": [
       "app/Helper/functions.php"
