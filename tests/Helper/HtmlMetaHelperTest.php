@@ -85,7 +85,7 @@ class HtmlMetaHelperTest extends TestCase
      * Test the titleFromURL() helper function with an invalid URL
      * Will return just the host of the given URL.
      */
-    public function testTitleFromURLwithoutProtocol(): void
+    public function testTitleFromUrlWithoutProtocol(): void
     {
         $url = 'duckduckgo.com/about-us';
 
@@ -124,8 +124,7 @@ class HtmlMetaHelperTest extends TestCase
 
         $flashMessage = session('flash_notification', collect())->first();
         $this->assertEquals(
-            'The Link was added but an error occured when trying to request the URL, ' .
-            'for example an invalid certificate. Details can be found in the logs.',
+            'The Link was added but an error occurred when trying to request the URL, for example an invalid certificate. Details can be found in the logs.',
             $flashMessage['message']
         );
     }
@@ -154,8 +153,7 @@ class HtmlMetaHelperTest extends TestCase
 
         $flashMessage = session('flash_notification', collect())->first();
         $this->assertEquals(
-            'The Link was added but a connection error occured when trying to access the URL.' .
-            ' Details can be found in the logs.',
+            'The Link was added but an error occurred when trying to request the URL, for example an invalid certificate. Details can be found in the logs.',
             $flashMessage['message']
         );
     }
