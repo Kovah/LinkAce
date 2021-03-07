@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "9cf68002add091cb3c5cb683a1fd652f",
+    "content-hash": "970e7c41642a1817c593f6f2a9423513",
     "packages": [
         {
             "name": "asm89/stack-cors",
@@ -1368,16 +1368,16 @@
         },
         {
             "name": "guzzlehttp/promises",
-            "version": "1.4.0",
+            "version": "1.4.1",
             "source": {
                 "type": "git",
                 "url": "https://github.com/guzzle/promises.git",
-                "reference": "60d379c243457e073cff02bc323a2a86cb355631"
+                "reference": "8e7d04f1f6450fef59366c399cfad4b9383aa30d"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/guzzle/promises/zipball/60d379c243457e073cff02bc323a2a86cb355631",
-                "reference": "60d379c243457e073cff02bc323a2a86cb355631",
+                "url": "https://api.github.com/repos/guzzle/promises/zipball/8e7d04f1f6450fef59366c399cfad4b9383aa30d",
+                "reference": "8e7d04f1f6450fef59366c399cfad4b9383aa30d",
                 "shasum": ""
             },
             "require": {
@@ -1417,9 +1417,9 @@
             ],
             "support": {
                 "issues": "https://github.com/guzzle/promises/issues",
-                "source": "https://github.com/guzzle/promises/tree/1.4.0"
+                "source": "https://github.com/guzzle/promises/tree/1.4.1"
             },
-            "time": "2020-09-30T07:37:28+00:00"
+            "time": "2021-03-07T09:25:29+00:00"
         },
         {
             "name": "guzzlehttp/psr7",
@@ -1662,6 +1662,79 @@
                 "source": "https://github.com/katzgrau/KLogger/tree/master"
             },
             "time": "2016-11-07T19:29:14+00:00"
+        },
+        {
+            "name": "kovah/laravel-html-meta",
+            "version": "v1.0.0",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/Kovah/laravel-html-meta.git",
+                "reference": "d6690f3520d81479927239d498d62455626c5448"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/Kovah/laravel-html-meta/zipball/d6690f3520d81479927239d498d62455626c5448",
+                "reference": "d6690f3520d81479927239d498d62455626c5448",
+                "shasum": ""
+            },
+            "require": {
+                "guzzlehttp/guzzle": "^7.2",
+                "illuminate/http": "^7.0 | ^8.0",
+                "illuminate/support": "^7.0 | ^8.0",
+                "php": "^7.3 | ^8.0"
+            },
+            "require-dev": {
+                "mockery/mockery": "^1.4.2",
+                "orchestra/testbench": "^6.13",
+                "phpunit/phpunit": "^9.0"
+            },
+            "type": "library",
+            "extra": {
+                "laravel": {
+                    "providers": [
+                        "Kovah\\HtmlMeta\\HtmlMetaServiceProvider"
+                    ],
+                    "aliases": {
+                        "HtmlMeta": "Kovah\\HtmlMeta\\Facades\\HtmlMeta"
+                    }
+                }
+            },
+            "autoload": {
+                "psr-4": {
+                    "Kovah\\HtmlMeta\\": "src"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Kevin Woblick",
+                    "email": "mail@kovah.de",
+                    "homepage": "https://kovah.de",
+                    "role": "Developer"
+                }
+            ],
+            "description": "A Laravel package to parse meta information from an URL.",
+            "homepage": "https://github.com/kovah/laravel-html-meta",
+            "keywords": [
+                "html",
+                "laravel",
+                "meta",
+                "parser"
+            ],
+            "support": {
+                "issues": "https://github.com/Kovah/laravel-html-meta/issues",
+                "source": "https://github.com/Kovah/laravel-html-meta/tree/v1.0.0"
+            },
+            "funding": [
+                {
+                    "url": "https://github.com/sponsors/kovah",
+                    "type": "github"
+                }
+            ],
+            "time": "2021-03-07T13:17:14+00:00"
         },
         {
             "name": "laracasts/flash",
