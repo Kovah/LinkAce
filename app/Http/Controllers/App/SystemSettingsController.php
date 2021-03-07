@@ -90,6 +90,8 @@ class SystemSettingsController extends Controller
             ['value' => $newToken]
         );
 
+        Cache::forget('systemsettings');
+
         return response()->json([
             'new_token' => $newToken,
         ]);
