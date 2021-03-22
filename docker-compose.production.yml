@@ -13,7 +13,7 @@ services:
       - MYSQL_PASSWORD=${DB_PASSWORD}
       - MYSQL_DATABASE=${DB_DATABASE}
     volumes:
-      - db:/bitnami
+      - db:/var/lib/mysql
 
   # --- LinkAce Image with PHP 7.4
   app:
