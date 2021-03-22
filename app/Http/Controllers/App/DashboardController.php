@@ -25,12 +25,12 @@ class DashboardController extends Controller
 
         $recentTags = Tag::byUser(auth()->user()->id)
             ->latest()
-            ->limit(5)
+            ->limit(25)
             ->get();
 
         $recentLists = LinkList::byUser(auth()->user()->id)
             ->latest()
-            ->limit(5)
+            ->limit(15)
             ->get();
 
         $brokenLinks = Link::byUser(auth()->user()->id)

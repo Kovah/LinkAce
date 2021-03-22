@@ -160,18 +160,17 @@
                     @lang('list.recent_lists')
                 </div>
 
-                <ul class="list-group list-group-flush">
+                <div class="card-body">
                     @forelse($recent_lists as $list)
-                        <a href="{{ route('lists.show', [$list->id]) }}"
-                            class="list-group-item list-group-item-action one-line">
+                        <a href="{{ route('lists.show', [$list->id]) }}" class="badge badge-light badge-lg">
                             {{ $list->name }}
                         </a>
                     @empty
-                        <li class="list-group-item text-danger">
+                        <div class="text-danger">
                             @lang('linkace.no_results_found', ['model' => trans('list.lists')])
-                        </li>
+                        </div>
                     @endforelse
-                </ul>
+                </div>
             </div>
 
         </div>
@@ -182,18 +181,17 @@
                     @lang('tag.recent_tags')
                 </div>
 
-                <ul class="list-group list-group-flush">
+                <div class="card-body">
                     @forelse($recent_tags as $tag)
-                        <a href="{{ route('tags.show', [$tag->id]) }}"
-                            class="list-group-item list-group-item-action one-line">
+                        <a href="{{ route('tags.show', [$tag->id]) }}" class="badge badge-light badge-lg">
                             {{ $tag->name }}
                         </a>
                     @empty
-                        <li class="list-group-item text-danger">
+                        <div class="text-danger">
                             @lang('linkace.no_results_found', ['model' => trans('tag.tags')])
-                        </li>
+                        </div>
                     @endforelse
-                </ul>
+                </div>
             </div>
 
         </div>
