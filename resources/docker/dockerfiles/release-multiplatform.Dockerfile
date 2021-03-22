@@ -61,15 +61,15 @@ COPY ./package.json /app
 COPY ./server.php /app
 COPY ./.env.example /app/.env
 
-# Copy the PHP and nginx config files
-COPY ./resources/docker/php/php.ini /usr/local/etc/php/php.ini
-COPY ./resources/docker/nginx/nginx.conf /etc/nginx/conf.d/default.conf
-
 # Install nginx, MySQL Dump for automated backups and other dependencies
 RUN apk add --no-cache mariadb-client postgresql postgresql-dev zip libzip-dev ; \
 	docker-php-ext-configure zip ; \
 	docker-php-ext-install bcmath pdo_mysql pdo_pgsql zip ; \
 	mkdir /ssl-certs
+
+# Copy the PHP and nginx config files
+COPY ./resources/docker/php/php.ini /usr/local/etc/php/php.ini
+COPY ./resources/docker/nginx/nginx.conf /etc/nginx/conf.d/default.conf
 
 # Copy files from the composer build
 COPY --from=builder /app/vendor /app/vendor

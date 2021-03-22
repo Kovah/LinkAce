@@ -33,8 +33,8 @@ services:
     image: bitnami/nginx:1.19
     restart: unless-stopped
     ports:
-      - "0.0.0.0:80:8080"
-      #- "0.0.0.0:443:8443"
+      - "0.0.0.0:80:80"
+      #- "0.0.0.0:443:443"
     depends_on:
       - app
     volumes:

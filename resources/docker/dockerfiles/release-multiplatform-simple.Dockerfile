@@ -61,10 +61,6 @@ COPY ./package.json /app
 COPY ./server.php /app
 COPY ./.env.example /app/.env
 
-# Copy the PHP and nginx config files
-COPY ./resources/docker/php/php.ini /usr/local/etc/php/php.ini
-COPY ./resources/docker/nginx/nginx.conf /etc/nginx/conf.d/default.conf
-
 # Install nginx, MySQL Dump for automated backups and other dependencies
 RUN apk add --no-cache mariadb-client nginx supervisor postgresql postgresql-dev zip libzip-dev ; \
 	docker-php-ext-configure zip ; \
@@ -77,6 +73,10 @@ RUN mkdir /etc/supervisor.d/; \
 	ln -sf /dev/stdout /var/log/nginx/access.log ; \
 	ln -sf /dev/stderr /var/log/nginx/error.log
 COPY ./resources/docker/supervisord.ini /etc/supervisor.d/supervisord.ini
+
+# Copy the PHP and nginx config files
+COPY ./resources/docker/php/php.ini /usr/local/etc/php/php.ini
+COPY ./resources/docker/nginx/nginx.conf /etc/nginx/conf.d/default.conf
 
 # Copy files from the composer build
 COPY --from=builder /app/vendor /app/vendor

@@ -22,8 +22,8 @@ services:
     depends_on:
       - db
     ports:
-      - "0.0.0.0:80:8080"
-      #- "0.0.0.0:443:8443"
+      - "0.0.0.0:80:80"
+      #- "0.0.0.0:443:443"
     volumes:
       - ./.env:/app/.env
       - linkace_logs:/app/storage/logs
