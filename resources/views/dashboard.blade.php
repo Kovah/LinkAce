@@ -152,4 +152,51 @@
         </div>
     </div>
 
+    <div class="row">
+        <div class="col-12 col-md-7">
+
+            <div class="card mt-4">
+                <div class="card-header">
+                    @lang('list.recent_lists')
+                </div>
+
+                <ul class="list-group list-group-flush">
+                    @forelse($recent_lists as $list)
+                        <a href="{{ route('lists.show', [$list->id]) }}"
+                            class="list-group-item list-group-item-action one-line">
+                            {{ $list->name }}
+                        </a>
+                    @empty
+                        <li class="list-group-item text-danger">
+                            @lang('linkace.no_results_found', ['model' => trans('list.lists')])
+                        </li>
+                    @endforelse
+                </ul>
+            </div>
+
+        </div>
+        <div class="col-12 col-md-5">
+
+            <div class="card mt-4">
+                <div class="card-header">
+                    @lang('tag.recent_tags')
+                </div>
+
+                <ul class="list-group list-group-flush">
+                    @forelse($recent_tags as $tag)
+                        <a href="{{ route('tags.show', [$tag->id]) }}"
+                            class="list-group-item list-group-item-action one-line">
+                            {{ $tag->name }}
+                        </a>
+                    @empty
+                        <li class="list-group-item text-danger">
+                            @lang('linkace.no_results_found', ['model' => trans('tag.tags')])
+                        </li>
+                    @endforelse
+                </ul>
+            </div>
+
+        </div>
+    </div>
+
 @endsection
