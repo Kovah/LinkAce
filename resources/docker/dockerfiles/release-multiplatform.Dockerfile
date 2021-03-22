@@ -2,12 +2,8 @@
 
 # ================================
 # PHP Dependency Setup
-FROM php:8.0-fpm-alpine AS builder
+FROM composer AS builder
 WORKDIR /app
-
-# Install Composer
-RUN apk add --no-cache git
-RUN curl -sS https://getcomposer.org/installer | php -- --install-dir=/usr/local/bin --filename=composer
 
 # Make needed parts of the app available in the container
 COPY ./app /app/app
@@ -65,11 +61,15 @@ COPY ./package.json /app
 COPY ./server.php /app
 COPY ./.env.example /app/.env
 
-# Copy the PHP config files
-COPY ./resources/docker/php/php.ini /opt/bitnami/php/etc/conf.d/php.ini
+# Copy the PHP and nginx config files
+COPY ./resources/docker/php/php.ini /usr/local/etc/php/php.ini
+COPY ./resources/docker/nginx/nginx.conf /etc/nginx/conf.d/default.conf
 
-# Install MySQL Dump for automated backups and other dependencies
-RUN apk add --no-cache mariadb-client && docker-php-ext-install bcmath pdo_mysql pdo_pgsql
+# Install nginx, MySQL Dump for automated backups and other dependencies
+RUN apk add --no-cache mariadb-client postgresql postgresql-dev zip libzip-dev ; \
+	docker-php-ext-configure zip ; \
+	docker-php-ext-install bcmath pdo_mysql pdo_pgsql zip ; \
+	mkdir /ssl-certs
 
 # Copy files from the composer build
 COPY --from=builder /app/vendor /app/vendor
