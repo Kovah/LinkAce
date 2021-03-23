@@ -3,6 +3,7 @@ return [
     'tag' => 'Tag',
     'tags' => 'Tags',
     'all_tags' => 'Alle Tags',
+    'recent_tags' => 'Letzte Tags',
 
     'add' => 'Tag hinzufügen',
     'show' => 'Tag anzeigen',

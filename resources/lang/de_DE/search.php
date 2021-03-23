@@ -23,7 +23,5 @@ return [
 
     'no_results' => 'Keine Ergebnisse gefunden.',
 
-    'validation_query_missing' => 'Eine Suchabfrage muss vorhanden sein, wenn keine Listen oder Tags angegeben wurden.',
-    'validation_lists_missing' => 'Eine Liste muss vorhanden sein, wenn keine Abfrage oder einige Tags angegeben wurden.',
-    'validation_tags_missing' => 'Ein Tag muss vorhanden sein, wenn keine Abfrage oder einige Listen angegeben wurden.',
+    'validation_query_missing' => 'Es muss entweder eine Suchanfrage eingeben oder eine Liste oder ein Tag ausgewählt werden, oder die Suche nach kaputten Links muss aktiviert sein.',
 ];
