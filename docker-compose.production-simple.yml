@@ -4,7 +4,7 @@ services:
 
   # --- MariaDB
   db:
-    image: mariadb:10.5
+    image: linuxserver/mariadb:10.5
     restart: unless-stopped
     command: mysqld --character-set-server=utf8mb4 --collation-server=utf8mb4_bin
     environment:
