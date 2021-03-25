@@ -40,7 +40,7 @@ services:
       - php
     volumes:
       - .:/app:delegated
-      - ./resources/docker/nginx/site.conf:/opt/bitnami/nginx/conf/server_blocks/linkace.conf:ro
+      - ./resources/docker/nginx/dev.conf:/opt/bitnami/nginx/conf/server_blocks/linkace.conf:ro
 
   # --- Redis
   redis:

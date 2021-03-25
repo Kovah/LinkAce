@@ -3,6 +3,7 @@ return [
     'list' => 'Liste',
     'lists' => 'Listen',
     'all_lists' => 'Alle Listen',
+    'recent_lists' => 'Letzte Listen',
 
     'add' => 'Liste hinzufügen',
     'show' => 'Liste anzeigen',

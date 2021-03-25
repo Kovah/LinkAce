@@ -15,6 +15,8 @@ return [
 
     'links_new_tab' => '始终在新的标签页打开外部链接',
 
+    'markdown_for_text' => '',
+
     'privacy' => '隐私',
     'links_private_default' => '默认私密链接',
     'links_private_default_help' => '启用此选项将默认所有新链接为私密链接',

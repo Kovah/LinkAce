@@ -19,8 +19,18 @@ class DashboardController extends Controller
     public function index(): View
     {
         $recentLinks = Link::byUser(auth()->user()->id)
-            ->orderBy('created_at', 'DESC')
+            ->latest()
             ->limit(5)
+            ->get();
+
+        $recentTags = Tag::byUser(auth()->user()->id)
+            ->latest()
+            ->limit(25)
+            ->get();
+
+        $recentLists = LinkList::byUser(auth()->user()->id)
+            ->latest()
+            ->limit(15)
             ->get();
 
         $brokenLinks = Link::byUser(auth()->user()->id)
@@ -37,6 +47,8 @@ class DashboardController extends Controller
 
         return view('dashboard', [
             'recent_links' => $recentLinks,
+            'recent_tags' => $recentTags,
+            'recent_lists' => $recentLists,
             'stats' => $stats,
         ]);
     }

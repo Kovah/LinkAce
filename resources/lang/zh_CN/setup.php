@@ -12,7 +12,7 @@ return [
     'intro.step3' => '创建您的帐户。',
 
     'check_requirements' => '检查要求',
-    'requirements.php_version' => 'PHP version >= 7.3.0',
+    'requirements.php_version' => 'PHP version >= 7.2.0',
     'requirements.extension_bcmath' => 'PHP Extension: BCMath',
     'requirements.extension_ctype' => 'PHP Extension: Ctype',
     'requirements.extension_json' => 'PHP Extension: JSON',

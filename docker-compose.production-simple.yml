@@ -13,7 +13,7 @@ services:
       - MYSQL_PASSWORD=${DB_PASSWORD}
       - MYSQL_DATABASE=${DB_DATABASE}
     volumes:
-      - db:/bitnami
+      - db:/var/lib/mysql
 
   # --- LinkAce Image with PHP 7.4 and nginx
   app:
@@ -22,16 +22,17 @@ services:
     depends_on:
       - db
     ports:
-      - "0.0.0.0:80:8080"
-      #- "0.0.0.0:443:8443"
+      - "0.0.0.0:80:80"
+      #- "0.0.0.0:443:443"
     volumes:
       - ./.env:/app/.env
-      - ./nginx-simple.conf:/opt/docker/etc/nginx/conf.d/linkace.conf:ro
       - linkace_logs:/app/storage/logs
+      # Remove the hash of the following line if you want to use HTTPS for this container
+      #- ./nginx-ssl.conf:/etc/nginx/conf.d/default.conf:ro
+      #- /path/to/your/ssl/certificates:/certs:ro
       # Remove the hash of the following line if you want to use local backups
       #- ./backups:/app/storage/app/backups
-      # Remove the hash of the following line if you are using HTTPS
-      #- /path/to/your/ssl/certificates:/opt/docker/etc/nginx/ssl
+
 
 volumes:
   linkace_logs:

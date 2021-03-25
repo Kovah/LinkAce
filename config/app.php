@@ -87,6 +87,7 @@ return [
     'available_locales' => [
         'en_US' => 'English',
         'de_DE' => 'Deutsch',
+        'fr_FR' => 'Français',
         'zh_CN' => '简体中文',
     ],
 

@@ -1,13 +1,10 @@
 ---
 name: Build simple LinkAce Docker image
 
-#on:
-#  push:
-#    branches:
-#      - master
-#    tags:
-#      - "*"
-on: workflow_dispatch
+on:
+  push:
+    tags:
+      - "*"
 
 jobs:
   publish_to_docker_hub:
@@ -22,24 +19,9 @@ jobs:
         id: prep
         run: |
           DOCKER_IMAGE=linkace/linkace
-          VERSION=noop
-
-          if [[ $GITHUB_REF == refs/tags/* ]]; then
-            VERSION=${GITHUB_REF#refs/tags/}
-          elif [[ $GITHUB_REF == refs/heads/master ]]; then
-            VERSION=php-nginx
-          fi
-
-          TAGS="${DOCKER_IMAGE}:${VERSION}"
-          if [[ $VERSION =~ ^v[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}$ ]]; then
-            MINOR=${VERSION%.*}
-            MAJOR=${MINOR%.*}
-            TAGS="$TAGS-php-nginx,${DOCKER_IMAGE}:php-nginx"
-          fi
-
-          echo ::set-output name=version::${VERSION}
+          VERSION=${GITHUB_REF#refs/tags/}
+          TAGS="${DOCKER_IMAGE}:${VERSION}-php-nginx,${DOCKER_IMAGE}:php-nginx,${DOCKER_IMAGE}:${VERSION}-simple,${DOCKER_IMAGE}:simple"
           echo ::set-output name=tags::${TAGS}
-          echo ::set-output name=created::$(date -u +'%Y-%m-%dT%H:%M:%SZ')
 
       - name: Set up QEMU
         uses: docker/setup-qemu-action@v1
@@ -60,6 +42,6 @@ jobs:
         with:
           context: .
           file: ./resources/docker/dockerfiles/release-simple.Dockerfile
-          platforms: linux/amd64,linux/arm64,linux/arm/v6,linux/arm/v7
+          platforms: linux/amd64,linux/arm64,linux/arm/v7
           push: true
           tags: ${{ steps.prep.outputs.tags }}

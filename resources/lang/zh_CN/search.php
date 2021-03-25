@@ -23,7 +23,5 @@ return [
 
     'no_results' => '未找到任何结果。',
 
-    'validation_query_missing' => '如果没有提供列表或标签，搜索查询必须存在。',
-    'validation_lists_missing' => '如果没有提供查询或某些标签，列表必须存在。',
-    'validation_tags_missing' => '如果没有提供查询或某些标签，列表必须存在。',
+    'validation_query_missing' => '',
 ];

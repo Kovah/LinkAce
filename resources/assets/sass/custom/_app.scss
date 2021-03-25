@@ -107,6 +107,10 @@ body:not(.bookmarklet) {
   @extend .btn-xs;
 }
 
+.badge.badge-lg {
+  font-size: $font-size-sm;
+}
+
 code {
   @include font-size($code-font-size);
   color: $code-color;

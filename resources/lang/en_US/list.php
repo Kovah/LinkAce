@@ -3,6 +3,7 @@ return [
     'list' => 'List',
     'lists' => 'Lists',
     'all_lists' => 'All Lists',
+    'recent_lists' => 'Recent Lists',
 
     'add' => 'Add List',
     'show' => 'Show List',

@@ -75,6 +75,11 @@ return [
             'connection' => 'default',
         ],
 
+        'redis-socket' => [
+            'driver' => 'redis',
+            'connection' => 'redis-socket',
+        ],
+
     ],
 
     /*
