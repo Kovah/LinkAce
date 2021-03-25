@@ -17,7 +17,7 @@ services:
 
   # --- LinkAce Image with PHP 7.4 and nginx
   app:
-    image: linkace/linkace:php-nginx
+    image: linkace/linkace:simple
     restart: unless-stopped
     depends_on:
       - db
