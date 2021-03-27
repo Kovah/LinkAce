@@ -84,6 +84,10 @@ COPY --from=builder /app/bootstrap/cache /app/bootstrap/cache
 
 # Publish package resources
 RUN php artisan vendor:publish --provider="Spatie\Backup\BackupServiceProvider"
+RUN mv vendor/spatie/laravel-backup/resources/lang/en vendor/spatie/laravel-backup/resources/lang/en_US; \
+  mv vendor/spatie/laravel-backup/resources/lang/de vendor/spatie/laravel-backup/resources/lang/de_DE; \
+  mv vendor/spatie/laravel-backup/resources/lang/fr vendor/spatie/laravel-backup/resources/lang/fr_FR; \
+  mv vendor/spatie/laravel-backup/resources/lang/zh-CN vendor/spatie/laravel-backup/resources/lang/zh_CN
 
 # Copy files from the theme build
 COPY --from=npm_builder /srv/public/assets/dist/js /app/public/assets/dist/js
