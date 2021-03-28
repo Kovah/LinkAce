@@ -1,12 +1,20 @@
 @extends('layouts.guest')
 
+@push('html-header')
+    <link rel="alternate" type="application/atom+xml" href="{{ route('guest.lists.feed') }}">
+@endpush
+
 @section('content')
 
     <header class="d-flex align-items-center">
         <h3 class="mb-0 mr-3">
             @lang('list.lists')
         </h3>
-        <div class="dropdown ml-auto">
+        <a href="{{ route('guest.lists.feed') }}" class="ml-auto btn btn-sm btn-outline-secondary">
+            <x-icon.feed/>
+            <span class="sr-only">@lang('linkace.add')</span>
+        </a>
+        <div class="dropdown ml-1">
             @include('models.lists.partials.index-order-dropdown', ['baseRoute' => 'lists.index'])
         </div>
     </header>

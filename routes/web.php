@@ -11,6 +11,7 @@ use App\Http\Controllers\App\UserSettingsController;
 use App\Http\Controllers\CronController;
 use App\Http\Controllers\FetchController;
 use App\Http\Controllers\FrontController;
+use App\Http\Controllers\Guest\FeedController;
 use App\Http\Controllers\Guest\LinkController as GuestLinkController;
 use App\Http\Controllers\Guest\ListController as GuestListController;
 use App\Http\Controllers\Guest\TagController as GuestTagController;
@@ -128,6 +129,10 @@ Route::group(['middleware' => ['auth']], function () {
 
 // Guest access routes
 Route::prefix('guest')->middleware(['guestaccess'])->group(function () {
+
+    Route::get('links/feed', [FeedController::class, 'links'])->name('guest.links.feed');
+    Route::get('lists/feed', [FeedController::class, 'lists'])->name('guest.lists.feed');
+    Route::get('tags/feed', [FeedController::class, 'tags'])->name('guest.tags.feed');
 
     Route::resource('links', GuestLinkController::class)
         ->only(['index'])

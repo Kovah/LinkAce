@@ -4,6 +4,7 @@
 
 <title>{{ systemsettings('system_page_title') ?: config('app.name', 'LinkAce') }}</title>
 
+@stack('html-header')
 @include('partials.favicon')
 
 @include('partials.configure-darkmode')
