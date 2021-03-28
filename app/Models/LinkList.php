@@ -27,7 +27,8 @@ use Illuminate\Database\Eloquent\SoftDeletes;
  * @property-read Collection|Link[] $links
  * @property-read User              $user
  * @method static Builder|Tag byUser($user_id)
- * @method static Builder|Tag isPrivate(bool $private)
+ * @method static Builder|Tag privateOnly()
+ * @method static Builder|Tag publicOnly()
  */
 class LinkList extends Model
 {
@@ -70,21 +71,31 @@ class LinkList extends Model
      * @param int     $user_id
      * @return mixed
      */
-    public function scopeByUser($query, $user_id)
+    public function scopeByUser(Builder $query, $user_id)
     {
         return $query->where('user_id', $user_id);
     }
 
     /**
-     * Scope for selecting private or non-private lists
+     * Scope for selecting private lists only
      *
      * @param Builder $query
-     * @param bool    $is_private
      * @return mixed
      */
-    public function scopeIsPrivate($query, bool $is_private)
+    public function scopePrivateOnly(Builder $query)
     {
-        return $query->where('is_private', $is_private);
+        return $query->where('is_private', true);
+    }
+
+    /**
+     * Scope for selecting public lists only
+     *
+     * @param Builder $query
+     * @return mixed
+     */
+    public function scopePublicOnly(Builder $query)
+    {
+        return $query->where('is_private', false);
     }
 
     /*

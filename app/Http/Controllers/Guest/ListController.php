@@ -17,7 +17,7 @@ class ListController extends Controller
      */
     public function index(Request $request): View
     {
-        $lists = LinkList::isPrivate(false)
+        $lists = LinkList::publicOnly()
             ->withCount('links')
             ->orderBy(
                 $request->input('orderBy', 'name'),
@@ -41,10 +41,10 @@ class ListController extends Controller
      */
     public function show(Request $request, $listID): View
     {
-        $list = LinkList::isPrivate(false)->findOrFail($listID);
+        $list = LinkList::publicOnly()->findOrFail($listID);
 
         $links = $list->links()
-            ->privateOnly(false)
+            ->publicOnly()
             ->orderBy(
                 $request->input('orderBy', 'title'),
                 $request->input('orderDir', 'asc')

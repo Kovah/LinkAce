@@ -5,12 +5,12 @@
   "type": "project",
   "require": {
     "php": "^7.3 | ^8.0",
-    "kovah/laravel-html-meta": "^1.0",
     "composer/semver": "^1.5",
     "doctrine/dbal": "^2.10.2",
     "fideloper/proxy": "^4.4",
     "fruitcake/laravel-cors": "^2.0",
     "guzzlehttp/guzzle": "^7.0.1",
+    "kovah/laravel-html-meta": "^1.0",
     "laracasts/flash": "^3.1",
     "laravel/fortify": "^1.7",
     "laravel/framework": "^8.0",

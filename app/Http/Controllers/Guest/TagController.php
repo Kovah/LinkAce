@@ -17,7 +17,7 @@ class TagController extends Controller
      */
     public function index(Request $request): View
     {
-        $tags = Tag::isPrivate(false)
+        $tags = Tag::publicOnly()
             ->withCount('links')
             ->orderBy(
                 $request->input('orderBy', 'name'),
@@ -42,7 +42,7 @@ class TagController extends Controller
      */
     public function show(Request $request, $tagID): View
     {
-        $tag = Tag::isPrivate(false)->findOrFail($tagID);
+        $tag = Tag::publicOnly()->findOrFail($tagID);
 
         $links = $tag->links()
             ->privateOnly(false)
