@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Http\Controllers\Guest;
+namespace App\Http\Controllers\App;
 
 use App\Http\Controllers\Controller;
 use App\Models\Link;
@@ -13,7 +13,7 @@ class FeedController extends Controller
 {
     public function links(Request $request)
     {
-        $links = Link::publicOnly()->latest()->with('user')->get();
+        $links = Link::latest()->with('user')->get();
         $meta = [
             'title' => 'LinkAce Links',
             'link' => $request->fullUrl(),
@@ -29,7 +29,7 @@ class FeedController extends Controller
 
     public function lists(Request $request)
     {
-        $lists = LinkList::publicOnly()->latest()->with('user')->get();
+        $lists = LinkList::latest()->with('user')->get();
         $meta = [
             'title' => 'LinkAce Lists',
             'link' => $request->fullUrl(),
@@ -45,7 +45,7 @@ class FeedController extends Controller
 
     public function tags(Request $request)
     {
-        $tags = Tag::publicOnly()->latest()->with('user')->get();
+        $tags = Tag::latest()->with('user')->get();
         $meta = [
             'title' => 'LinkAce Links',
             'link' => $request->fullUrl(),

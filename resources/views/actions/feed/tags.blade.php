@@ -6,8 +6,9 @@
     <id>{{ $meta['id'] }}</id>
     @foreach($tags as $tag)
         <entry>
-            <title><![CDATA[{{ $tag->name }}]]></title>
             <id>{{ route('tags.show', ['tag' => $tag]) }}</id>
+            <title><![CDATA[{{ $tag->name }}]]></title>
+            <link rel="alternate" href="{{ route('tags.show', ['tag' => $tag]) }}" />
             <author>
                 <name> <![CDATA[{{ $tag->user->name }}]]></name>
             </author>

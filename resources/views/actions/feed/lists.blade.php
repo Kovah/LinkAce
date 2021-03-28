@@ -6,9 +6,9 @@
     <id>{{ $meta['id'] }}</id>
     @foreach($lists as $list)
         <entry>
+            <id>{{ route('lists.show', ['list' => $list]) }}</id>
             <title><![CDATA[{{ $list->name }}]]></title>
-            <link rel="alternate" href="{{ route('guest.lists.show', ['list' => $list]) }}"/>
-            <id>{{ url($list->id) }}</id>
+            <link rel="alternate" href="{{ route('lists.show', ['list' => $list]) }}"/>
             <author>
                 <name> <![CDATA[{{ $list->user->name }}]]></name>
             </author>

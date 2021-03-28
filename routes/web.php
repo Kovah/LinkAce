@@ -3,6 +3,7 @@
 use App\Http\Controllers\App\BookmarkletController;
 use App\Http\Controllers\App\DashboardController;
 use App\Http\Controllers\App\ExportController;
+use App\Http\Controllers\App\FeedController;
 use App\Http\Controllers\App\ImportController;
 use App\Http\Controllers\App\SearchController;
 use App\Http\Controllers\App\SystemSettingsController;
@@ -11,7 +12,7 @@ use App\Http\Controllers\App\UserSettingsController;
 use App\Http\Controllers\CronController;
 use App\Http\Controllers\FetchController;
 use App\Http\Controllers\FrontController;
-use App\Http\Controllers\Guest\FeedController;
+use App\Http\Controllers\Guest\FeedController as GuestFeedController;
 use App\Http\Controllers\Guest\LinkController as GuestLinkController;
 use App\Http\Controllers\Guest\ListController as GuestListController;
 use App\Http\Controllers\Guest\TagController as GuestTagController;
@@ -53,6 +54,12 @@ Route::prefix('bookmarklet')->group(function () {
 });
 
 Route::get('cron/{token}', CronController::class)->name('cron');
+
+Route::group(['middleware' => 'auth:api'], function () {
+    Route::get('links/feed', [FeedController::class, 'links'])->name('links.feed');
+    Route::get('lists/feed', [FeedController::class, 'lists'])->name('lists.feed');
+    Route::get('tags/feed', [FeedController::class, 'tags'])->name('tags.feed');
+});
 
 // Model routes
 Route::group(['middleware' => ['auth']], function () {
@@ -130,9 +137,9 @@ Route::group(['middleware' => ['auth']], function () {
 // Guest access routes
 Route::prefix('guest')->middleware(['guestaccess'])->group(function () {
 
-    Route::get('links/feed', [FeedController::class, 'links'])->name('guest.links.feed');
-    Route::get('lists/feed', [FeedController::class, 'lists'])->name('guest.lists.feed');
-    Route::get('tags/feed', [FeedController::class, 'tags'])->name('guest.tags.feed');
+    Route::get('links/feed', [GuestFeedController::class, 'links'])->name('guest.links.feed');
+    Route::get('lists/feed', [GuestFeedController::class, 'lists'])->name('guest.lists.feed');
+    Route::get('tags/feed', [GuestFeedController::class, 'tags'])->name('guest.tags.feed');
 
     Route::resource('links', GuestLinkController::class)
         ->only(['index'])
