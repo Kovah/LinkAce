@@ -8,6 +8,7 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\SoftDeletes;
+use Illuminate\Support\Str;
 
 /**
  * Class Note
@@ -87,6 +88,24 @@ class Note extends Model
      | ========================================================================
      | METHODS
      */
+
+    /**
+     * Get the formatted note content of the note
+     *
+     * @return string
+     */
+    public function getFormattedNoteAttribute(): string
+    {
+        if ($this->note === null) {
+            return '';
+        }
+
+        if (usersettings('markdown_for_text') !== '1') {
+            return htmlentities($this->note);
+        }
+
+        return Str::markdown($this->note, ['html_input' => 'escape']);
+    }
 
     /**
      * Output a relative time inside a span with real time information

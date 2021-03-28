@@ -11,6 +11,7 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 use Illuminate\Database\Eloquent\SoftDeletes;
+use Illuminate\Support\Str;
 
 /**
  * Class LinkList
@@ -123,6 +124,24 @@ class LinkList extends Model
      | ========================================================================
      | METHODS
      */
+
+    /**
+     * Get the formatted description of the list
+     *
+     * @return string
+     */
+    public function getFormattedDescriptionAttribute(): string
+    {
+        if ($this->description === null) {
+            return '';
+        }
+
+        if (usersettings('markdown_for_text') !== '1') {
+            return htmlentities($this->description);
+        }
+
+        return Str::markdown($this->description, ['html_input' => 'escape']);
+    }
 
     /**
      * Get a collection of all lists for the current user, ordered by name

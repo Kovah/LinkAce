@@ -23,17 +23,9 @@
                         <a href="{{ $link->url }}" {!! linkTarget() !!}>{{ $link->url }}</a>
                     </div>
 
-                    <div class="row">
-                        @if($link->description)
-                            <div class="col">
-                                @if(usersettings('markdown_for_text') === '1')
-                                    {!! Str::markdown($link->description, ['html_input' => 'strip']) !!}
-                                @else
-                                    {{ $link->description }}
-                                @endif
-                            </div>
-                        @endif
-                    </div>
+                    @if($link->description)
+                        <div>{!! $link->formatted_description !!}</div>
+                    @endif
 
                 </div>
             </div>

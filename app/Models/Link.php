@@ -166,9 +166,23 @@ class Link extends Model
      | ========================================================================
      | METHODS
      */
-    public function getMarkdownDescriptionAttribute()
+
+    /**
+     * Get the formatted description of the link
+     *
+     * @return string
+     */
+    public function getFormattedDescriptionAttribute(): string
     {
-        return Str::markdown($this->description, ['html_input' => 'strip']);
+        if ($this->description === null) {
+            return '';
+        }
+
+        if (usersettings('markdown_for_text') !== '1') {
+            return htmlentities($this->description);
+        }
+
+        return Str::markdown($this->description, ['html_input' => 'escape']);
     }
 
     /**
@@ -252,8 +266,8 @@ class Link extends Model
         }
 
         return view('models.links.partials.link-icon', [
-            'icon' => 'icon.'.$icon,
-            'class' => $additionalClasses .' fw',
+            'icon' => 'icon.' . $icon,
+            'class' => $additionalClasses . ' fw',
             'title' => $title,
         ]);
     }
