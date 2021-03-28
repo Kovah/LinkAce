@@ -48,6 +48,9 @@ return [
     'check_enable' => 'Enable Check',
     'check_enabled' => 'Check is enabled',
 
+    'status_is_broken' => 'Link is marked as broken',
+    'status_mark_working' => 'Mark as working',
+
     'added_successfully' => 'Link added successfully.',
     'added_connection_error' => 'The Link was added but a connection error occurred when trying to access the URL. Details can be found in the logs.',
     'added_request_error' => 'The Link was added but an error occurred when trying to request the URL, for example an invalid certificate. Details can be found in the logs.',

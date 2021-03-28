@@ -66,6 +66,8 @@ Route::group(['middleware' => ['auth']], function () {
 
     Route::post('links/toggle-check/{link}', [LinkController::class, 'updateCheckToggle'])
         ->name('links.toggle-check');
+    Route::post('links/mark-working/{link}', [LinkController::class, 'markWorking'])
+        ->name('links.mark-working');
 
     Route::get('search', [SearchController::class, 'getSearch'])
         ->name('get-search');

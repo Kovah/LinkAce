@@ -386,4 +386,17 @@ class LinkControllerTest extends TestCase
             'toggle',
         ]);
     }
+
+    public function testMarkWorkingRequest(): void
+    {
+        $link = Link::factory()->create();
+
+        $response = $this->post('links/mark-working/1');
+
+        $response->assertRedirect('links/1');
+
+        $updatedLink = $link->fresh();
+
+        $this->assertEquals(Link::STATUS_OK, $updatedLink->status);
+    }
 }
