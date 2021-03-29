@@ -3,13 +3,18 @@
 @section('content')
 
     <div class="card">
-        <header class="card-header">
-            @lang('tag.tag')
+        <header class="card-header d-flex align-items-center">
+
+            <span class="mr-3">@lang('tag.tag')</span>
+            <a href="{{ route('guest.tags.links.feed', ['tag' => $tag]) }}"
+                class="ml-auto btn btn-xs btn-outline-secondary">
+                <x-icon.feed/>
+                <span class="sr-only">@lang('linkace.feed')</span>
+            </a>
+
         </header>
         <div class="card-body">
-
             <h2 class="mb-0">{{ $tag->name }}</h2>
-
         </div>
     </div>
 

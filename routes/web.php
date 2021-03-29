@@ -58,7 +58,9 @@ Route::get('cron/{token}', CronController::class)->name('cron');
 Route::group(['middleware' => 'auth:api'], function () {
     Route::get('links/feed', [FeedController::class, 'links'])->name('links.feed');
     Route::get('lists/feed', [FeedController::class, 'lists'])->name('lists.feed');
+    Route::get('lists/{list}/feed', [FeedController::class, 'listLinks'])->name('lists.links.feed');
     Route::get('tags/feed', [FeedController::class, 'tags'])->name('tags.feed');
+    Route::get('tags/{tag}/feed', [FeedController::class, 'tagLinks'])->name('tags.links.feed');
 });
 
 // Model routes
@@ -139,7 +141,9 @@ Route::prefix('guest')->middleware(['guestaccess'])->group(function () {
 
     Route::get('links/feed', [GuestFeedController::class, 'links'])->name('guest.links.feed');
     Route::get('lists/feed', [GuestFeedController::class, 'lists'])->name('guest.lists.feed');
+    Route::get('lists/{list}/feed', [GuestFeedController::class, 'listLinks'])->name('guest.lists.links.feed');
     Route::get('tags/feed', [GuestFeedController::class, 'tags'])->name('guest.tags.feed');
+    Route::get('tags/{tag}/feed', [GuestFeedController::class, 'tagLinks'])->name('guest.tags.links.feed');
 
     Route::resource('links', GuestLinkController::class)
         ->only(['index'])

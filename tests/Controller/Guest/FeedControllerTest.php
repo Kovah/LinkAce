@@ -47,6 +47,33 @@ class FeedControllerTest extends TestCase
             ->assertDontSee($listPrivate->name);
     }
 
+    public function testListLinkFeed(): void
+    {
+        $link = LinkList::factory()->create(['is_private' => false]);
+        $listLink = Link::factory()->create(['is_private' => false]);
+        $privateListLink = Link::factory()->create(['is_private' => true]);
+        $unrelatedLink = Link::factory()->create();
+
+        $listLink->lists()->sync([$link->id]);
+
+        $response = $this->get('guest/lists/1/feed');
+
+        $response->assertOk()
+            ->assertSee($link->name)
+            ->assertSee($listLink->url)
+            ->assertDontSee($privateListLink->url)
+            ->assertDontSee($unrelatedLink->url);
+    }
+
+    public function testPrivateListLinkFeed(): void
+    {
+        LinkList::factory()->create(['is_private' => true]);
+
+        $response = $this->get('guest/lists/1/feed');
+
+        $response->assertNotFound();
+    }
+
     public function testTagsFeed(): void
     {
         $tagPublic = Tag::factory()->create(['is_private' => false]);
@@ -57,5 +84,32 @@ class FeedControllerTest extends TestCase
         $response->assertOk()
             ->assertSee($tagPublic->name)
             ->assertDontSee($tagPrivate->name);
+    }
+
+    public function testTagLinkFeed(): void
+    {
+        $tag = Tag::factory()->create(['is_private' => false]);
+        $tagLink = Link::factory()->create(['is_private' => false]);
+        $privateTagLink = Link::factory()->create(['is_private' => true]);
+        $unrelatedLink = Link::factory()->create();
+
+        $tagLink->tags()->sync([$tag->id]);
+
+        $response = $this->get('guest/tags/1/feed');
+
+        $response->assertOk()
+            ->assertSee($tag->name)
+            ->assertSee($tagLink->url)
+            ->assertDontSee($privateTagLink->url)
+            ->assertDontSee($unrelatedLink->url);
+    }
+
+    public function testPrivateTagLinkFeed(): void
+    {
+        Tag::factory()->create(['is_private' => true]);
+
+        $response = $this->get('guest/tags/1/feed');
+
+        $response->assertNotFound();
     }
 }

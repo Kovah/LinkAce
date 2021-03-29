@@ -50,6 +50,22 @@ class FeedControllerTest extends TestCase
             ->assertSee($list->name);
     }
 
+    public function testListLinkFeed(): void
+    {
+        $link = LinkList::factory()->create();
+        $listLink = Link::factory()->create();
+        $unrelatedLink = Link::factory()->create();
+
+        $listLink->lists()->sync([$link->id]);
+
+        $response = $this->getAuthorized('lists/1/feed');
+
+        $response->assertOk()
+            ->assertSee($link->name)
+            ->assertSee($listLink->url)
+            ->assertDontSee($unrelatedLink->url);
+    }
+
     public function testTagsFeed(): void
     {
         $tag = Tag::factory()->create();
@@ -58,6 +74,22 @@ class FeedControllerTest extends TestCase
 
         $response->assertOk()
             ->assertSee($tag->name);
+    }
+
+    public function testTagLinkFeed(): void
+    {
+        $tag = Tag::factory()->create();
+        $tagLink = Link::factory()->create();
+        $unrelatedLink = Link::factory()->create();
+
+        $tagLink->tags()->sync([$tag->id]);
+
+        $response = $this->getAuthorized('tags/1/feed');
+
+        $response->assertOk()
+            ->assertSee($tag->name)
+            ->assertSee($tagLink->url)
+            ->assertDontSee($unrelatedLink->url);
     }
 
     /**

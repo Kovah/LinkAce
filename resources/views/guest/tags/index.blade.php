@@ -12,7 +12,7 @@
         </h3>
         <a href="{{ route('guest.tags.feed') }}" class="ml-auto btn btn-sm btn-outline-secondary">
             <x-icon.feed/>
-            <span class="sr-only">@lang('linkace.add')</span>
+            <span class="sr-only">@lang('linkace.feed')</span>
         </a>
     </header>
 

@@ -12,7 +12,7 @@
         </h3>
         <a href="{{ route('guest.lists.feed') }}" class="ml-auto btn btn-sm btn-outline-secondary">
             <x-icon.feed/>
-            <span class="sr-only">@lang('linkace.add')</span>
+            <span class="sr-only">@lang('linkace.feed')</span>
         </a>
         <div class="dropdown ml-1">
             @include('models.lists.partials.index-order-dropdown', ['baseRoute' => 'lists.index'])

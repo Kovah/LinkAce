@@ -11,7 +11,7 @@ use Illuminate\Http\Response;
 
 class FeedController extends Controller
 {
-    public function links(Request $request)
+    public function links(Request $request): Response
     {
         $links = Link::latest()->with('user')->get();
         $meta = [
@@ -27,7 +27,7 @@ class FeedController extends Controller
         ]), 200, ['Content-Type' => 'application/xml']);
     }
 
-    public function lists(Request $request)
+    public function lists(Request $request): Response
     {
         $lists = LinkList::latest()->with('user')->get();
         $meta = [
@@ -43,7 +43,23 @@ class FeedController extends Controller
         ]), 200, ['Content-Type' => 'application/xml']);
     }
 
-    public function tags(Request $request)
+    public function listLinks(Request $request, LinkList $list): Response
+    {
+        $links = $list->links()->with('user')->latest()->get();
+        $meta = [
+            'title' => $list->name,
+            'link' => $request->fullUrl(),
+            'updated' => now()->toRfc3339String(),
+            'id' => $request->fullUrl(),
+        ];
+
+        return new Response(view('actions.feed.links', [
+            'meta' => $meta,
+            'links' => $links,
+        ]), 200, ['Content-Type' => 'application/xml']);
+    }
+
+    public function tags(Request $request): Response
     {
         $tags = Tag::latest()->with('user')->get();
         $meta = [
@@ -56,6 +72,22 @@ class FeedController extends Controller
         return new Response(view('actions.feed.tags', [
             'meta' => $meta,
             'tags' => $tags,
+        ]), 200, ['Content-Type' => 'application/xml']);
+    }
+
+    public function tagLinks(Request $request, Tag $tag): Response
+    {
+        $links = $tag->links()->with('user')->latest()->get();
+        $meta = [
+            'title' => $tag->name,
+            'link' => $request->fullUrl(),
+            'updated' => now()->toRfc3339String(),
+            'id' => $request->fullUrl(),
+        ];
+
+        return new Response(view('actions.feed.links', [
+            'meta' => $meta,
+            'links' => $links,
         ]), 200, ['Content-Type' => 'application/xml']);
     }
 }
