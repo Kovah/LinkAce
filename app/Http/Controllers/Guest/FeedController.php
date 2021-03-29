@@ -11,7 +11,7 @@ use Illuminate\Http\Response;
 
 class FeedController extends Controller
 {
-    public function links(Request $request)
+    public function links(Request $request): Response
     {
         $links = Link::publicOnly()->latest()->with('user')->get();
         $meta = [
@@ -27,7 +27,7 @@ class FeedController extends Controller
         ]), 200, ['Content-Type' => 'application/xml']);
     }
 
-    public function lists(Request $request)
+    public function lists(Request $request): Response
     {
         $lists = LinkList::publicOnly()->latest()->with('user')->get();
         $meta = [
@@ -43,7 +43,7 @@ class FeedController extends Controller
         ]), 200, ['Content-Type' => 'application/xml']);
     }
 
-    public function listLinks(Request $request, $listID)
+    public function listLinks(Request $request, $listID): Response
     {
         $list = LinkList::publicOnly()->findOrFail($listID);
         $links = $list->links()->publicOnly()->latest()->with('user')->get();
@@ -60,7 +60,7 @@ class FeedController extends Controller
         ]), 200, ['Content-Type' => 'application/xml']);
     }
 
-    public function tags(Request $request)
+    public function tags(Request $request): Response
     {
         $tags = Tag::publicOnly()->latest()->with('user')->get();
         $meta = [
@@ -76,7 +76,7 @@ class FeedController extends Controller
         ]), 200, ['Content-Type' => 'application/xml']);
     }
 
-    public function tagLinks(Request $request, $tagID)
+    public function tagLinks(Request $request, $tagID): Response
     {
         $tag = Tag::publicOnly()->findOrFail($tagID);
         $links = $tag->links()->publicOnly()->latest()->with('user')->get();
