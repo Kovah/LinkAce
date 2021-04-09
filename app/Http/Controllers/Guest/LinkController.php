@@ -17,7 +17,7 @@ class LinkController extends Controller
      */
     public function index(Request $request): View
     {
-        $links = Link::privateOnly(false)
+        $links = Link::publicOnly()
             ->with('tags')
             ->orderBy(
                 $request->input('orderBy', 'created_at'),

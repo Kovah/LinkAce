@@ -26,7 +26,7 @@ class TagFactory extends Factory
     {
         return [
             'user_id' => User::first()->id ?? User::factory(),
-            'name' => $this->faker->words(random_int(1, 3), true),
+            'name' => $this->faker->words(random_int(2, 3), true),
             'is_private' => $this->faker->boolean(10),
         ];
     }

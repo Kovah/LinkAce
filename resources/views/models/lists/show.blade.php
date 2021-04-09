@@ -31,7 +31,7 @@
             <h2 class="mb-0">{{ $list->name }}</h2>
 
             @if($list->description)
-                <p class="mt-2 mb-0">{{ $list->description }}</p>
+                <div class="mt-2 mb-0">{!! $list->formatted_description !!}</div>
             @endif
 
         </div>

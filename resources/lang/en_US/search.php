@@ -10,6 +10,8 @@ return [
     'search_description' => 'Search Description',
     'private_only' => 'Private Links only',
     'broken_links' => 'Broken Links only',
+    'empty_tags' => 'without Tags',
+    'empty_lists' => 'without Lists',
 
     'order_by' => 'Order by',
     'order_by.title:asc' => 'Title ascending',

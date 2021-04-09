@@ -26,9 +26,12 @@
                     @if($link->tags->count() > 0)
                         <label>@lang('tag.tags'):</label>
                         @foreach($link->tags as $tag)
-                            <a href="{{ route('guest.tags.show', [$tag->id]) }}" class="badge badge-primary badge-pill">
-                                {{ $tag->name }}
-                            </a>
+                            @if(!$tag->is_private)
+                                <a href="{{ route('guest.tags.show', [$tag->id]) }}"
+                                    class="badge badge-primary">
+                                    {{ $tag->name }}
+                                </a>
+                            @endif
                         @endforeach
                     @else
                         @lang('tag.no_tags')

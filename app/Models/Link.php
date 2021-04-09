@@ -39,7 +39,8 @@ use Venturecraft\Revisionable\RevisionableTrait;
  * @property Collection|Tag[]      $tags
  * @property User                  $user
  * @method static Builder|Link  byUser($user_id)
- * @method static Builder|Link  privateOnly($is_private)
+ * @method static Builder|Link  privateOnly()
+ * @method static Builder|Link  publicOnly()
  * @method static MorphMany     revisionHistory()
  */
 class Link extends Model
@@ -106,12 +107,22 @@ class Link extends Model
      * Scope for the user relation
      *
      * @param Builder $query
-     * @param bool    $isPrivate
      * @return mixed
      */
-    public function scopePrivateOnly($query, bool $isPrivate)
+    public function scopePrivateOnly(Builder $query)
     {
-        return $query->where('is_private', $isPrivate);
+        return $query->where('is_private', true);
+    }
+
+    /**
+     * Scope for the user relation
+     *
+     * @param Builder $query
+     * @return mixed
+     */
+    public function scopePublicOnly(Builder $query)
+    {
+        return $query->where('is_private', false);
     }
 
     /*
@@ -155,6 +166,24 @@ class Link extends Model
      | ========================================================================
      | METHODS
      */
+
+    /**
+     * Get the formatted description of the link
+     *
+     * @return string
+     */
+    public function getFormattedDescriptionAttribute(): string
+    {
+        if ($this->description === null) {
+            return '';
+        }
+
+        if (usersettings('markdown_for_text') !== '1') {
+            return htmlentities($this->description);
+        }
+
+        return Str::markdown($this->description, ['html_input' => 'escape']);
+    }
 
     /**
      * Get the URL shortened to max 50 characters
@@ -237,8 +266,8 @@ class Link extends Model
         }
 
         return view('models.links.partials.link-icon', [
-            'icon' => 'icon.'.$icon,
-            'class' => $additionalClasses .' fw',
+            'icon' => 'icon.' . $icon,
+            'class' => $additionalClasses . ' fw',
             'title' => $title,
         ]);
     }

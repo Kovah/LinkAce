@@ -27,6 +27,8 @@ class SearchController extends Controller
                 'search_description' => true,
                 'private_only' => false,
                 'broken_only' => false,
+                'empty_tags' => false,
+                'empty_lists' => false,
                 'only_lists' => '',
                 'only_tags' => '',
                 'order_by' => $this->orderByOptions[0],
@@ -55,6 +57,8 @@ class SearchController extends Controller
                 'broken_only' => $this->searchBrokenOnly,
                 'only_lists' => $this->searchLists,
                 'only_tags' => $this->searchTags,
+                'empty_tags' => $this->emptyTags,
+                'empty_lists' => $this->emptyLists,
                 'order_by' => $this->searchOrderBy,
             ]);
     }

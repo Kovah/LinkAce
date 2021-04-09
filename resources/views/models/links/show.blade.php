@@ -23,17 +23,9 @@
                         <a href="{{ $link->url }}" {!! linkTarget() !!}>{{ $link->url }}</a>
                     </div>
 
-                    <div class="row">
-                        @if($link->description)
-                            <div class="col">
-                                @if(usersettings('markdown_for_text') === '1')
-                                    {!! Str::markdown($link->description, ['html_input' => 'strip']) !!}
-                                @else
-                                    {{ $link->description }}
-                                @endif
-                            </div>
-                        @endif
-                    </div>
+                    @if($link->description)
+                        <div>{!! $link->formatted_description !!}</div>
+                    @endif
 
                 </div>
             </div>
@@ -55,7 +47,7 @@
 
         <div class="col-12 col-md-4">
 
-            <div class="btn-group btn-block mb-4 mt-4 mt-md-0">
+            <div class="btn-group btn-block mb-3 mt-4 mt-md-0">
                 <a href="{{ route('links.edit', [$link->id]) }}" class="btn btn-sm btn-primary"
                     aria-label="@lang('link.edit')">
                     <x-icon.edit class="mr-2"/>
@@ -74,33 +66,48 @@
                 <input type="hidden" name="link_id" value="{{ $link->id }}">
             </form>
 
-            @if($link->status !== 1)
-                <div class="mb-2">
-                    <a href="{{ waybackLink($link) }}" class="btn btn-sm btn-block btn-outline-warning" target="_blank">
-                        @lang('link.wayback')
-                    </a>
-                </div>
+            <div class="mb-3">
+                <a href="{{ waybackLink($link) }}" class="btn btn-sm btn-block btn-outline-warning" target="_blank">
+                    @lang('link.wayback')
+                </a>
+            </div>
 
-                <form action="{{ route('links.toggle-check', [$link->id]) }}" method="POST"
-                    class="mb-4 d-flex align-items-center">
+            <form action="{{ route('links.toggle-check', [$link->id]) }}" method="POST"
+                class="mb-2 d-flex align-items-center">
+                @csrf
+                @if($link->check_disabled)
+                    <small class="mr-3">@lang('link.check_disabled')</small>
+                    <input type="hidden" name="toggle" value="0">
+                    <button type="submit" class="btn btn-xs btn-outline-secondary ml-auto">
+                        @lang('link.check_enable')
+                    </button>
+                @else
+                    <small class="mr-3">@lang('link.check_enabled')</small>
+                    <input type="hidden" name="toggle" value="1">
+                    <button type="submit" class="btn btn-xs btn-outline-secondary ml-auto">
+                        @lang('link.check_disable')
+                    </button>
+                @endif
+            </form>
+
+            @if($link->status !== 1)
+                <form action="{{ route('links.mark-working', [$link->id]) }}" method="POST"
+                    class="mt-2 d-flex align-items-center">
                     @csrf
-                    @if($link->check_disabled)
-                        <small class="mr-3">@lang('link.check_disabled')</small>
-                        <input type="hidden" name="toggle" value="0">
-                        <button type="submit" class="btn btn-xs btn-outline-secondary ml-auto">
-                            @lang('link.check_enable')
-                        </button>
-                    @else
-                        <small class="mr-3">@lang('link.check_enabled')</small>
-                        <input type="hidden" name="toggle" value="1">
-                        <button type="submit" class="btn btn-xs btn-outline-secondary ml-auto">
-                            @lang('link.check_disable')
-                        </button>
-                    @endif
+                    <small class="mr-3">@lang('link.status_is_broken')</small>
+                    <input type="hidden" name="toggle" value="0">
+                    <button type="submit" class="btn btn-xs btn-outline-secondary ml-auto">
+                        @lang('link.status_mark_working')
+                    </button>
                 </form>
             @endif
 
-            <div class="card mb-4">
+        </div>
+    </div>
+
+    <div class="row mt-4">
+        <div class="col-12 col-md-6">
+            <div class="card">
                 <div class="card-header">
                     @lang('list.lists')
                 </div>
@@ -116,7 +123,8 @@
                     @endif
                 </div>
             </div>
-
+        </div>
+        <div class="col-12 col-md-6">
             <div class="card">
                 <div class="card-header">
                     @lang('tag.tags')
@@ -133,9 +141,7 @@
                     @endif
                 </div>
             </div>
-
         </div>
-
     </div>
 
     <div class="link-notes mt-5">

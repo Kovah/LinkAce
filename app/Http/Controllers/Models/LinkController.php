@@ -167,4 +167,18 @@ class LinkController extends Controller
 
         return redirect()->route('links.show', [$link->id]);
     }
+
+    /**
+     * Mark the link as working manually.
+     *
+     * @param Link $link
+     * @return RedirectResponse
+     */
+    public function markWorking(Link $link): RedirectResponse
+    {
+        $link->status = Link::STATUS_OK;
+        $link->save();
+
+        return redirect()->route('links.show', [$link->id]);
+    }
 }

@@ -26,7 +26,7 @@ class LinkListFactory extends Factory
     {
         return [
             'user_id' => User::first()->id ?? User::factory(),
-            'name' => ucwords($this->faker->words(random_int(1, 2), true)),
+            'name' => ucwords($this->faker->words(random_int(2, 5), true)),
             'description' => random_int(0, 1) ? $this->faker->sentences(random_int(1, 2), true) : null,
             'is_private' => $this->faker->boolean(10),
         ];
