@@ -51,6 +51,29 @@
 
                     <div class="col-md d-flex align-items-center">
                         <div class="custom-control custom-checkbox">
+                            <input type="checkbox" id="empty_tags" name="empty_tags" class="custom-control-input"
+                                @if($query_settings['empty_tags']) checked @endif>
+                            <label class="custom-control-label" for="empty_tags">
+                                @lang('search.empty_tags')
+                            </label>
+                        </div>
+                    </div>
+
+                </div>
+                <div class="row">
+
+                    <div class="col-md d-flex align-items-center">
+                        <div class="custom-control custom-checkbox">
+                            <input type="checkbox" id="broken_only" name="broken_only" class="custom-control-input"
+                                @if($query_settings['broken_only']) checked @endif>
+                            <label class="custom-control-label" for="broken_only">
+                                @lang('search.broken_links')
+                            </label>
+                        </div>
+                    </div>
+
+                    <div class="col-md d-flex align-items-center">
+                        <div class="custom-control custom-checkbox">
                             <input type="checkbox" id="private_only" name="private_only" class="custom-control-input"
                                 @if($query_settings['private_only']) checked @endif>
                             <label class="custom-control-label" for="private_only">
@@ -61,10 +84,10 @@
 
                     <div class="col-md d-flex align-items-center">
                         <div class="custom-control custom-checkbox">
-                            <input type="checkbox" id="broken_only" name="broken_only" class="custom-control-input"
-                                @if($query_settings['broken_only']) checked @endif>
-                            <label class="custom-control-label" for="broken_only">
-                                @lang('search.broken_links')
+                            <input type="checkbox" id="empty_lists" name="empty_lists" class="custom-control-input"
+                                @if($query_settings['empty_lists']) checked @endif>
+                            <label class="custom-control-label" for="empty_lists">
+                                @lang('search.empty_lists')
                             </label>
                         </div>
                     </div>

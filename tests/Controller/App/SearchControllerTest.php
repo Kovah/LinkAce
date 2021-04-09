@@ -126,6 +126,18 @@ class SearchControllerTest extends TestCase
             ->assertDontSee('https://example.com');
     }
 
+    public function testEmptyListSearchResult(): void
+    {
+        $response = $this->post('search', [
+            'query' => 'Test',
+            'empty_lists' => 'on',
+        ]);
+
+        $response->assertOk()
+            ->assertSee('https://empty-test.com')
+            ->assertDontSee('https://test.com');
+    }
+
     protected function setupTestData(): void
     {
         $tagExample = Tag::create([
@@ -165,6 +177,14 @@ class SearchControllerTest extends TestCase
             'description' => 'Something must be broken here',
             'is_private' => false,
             'status' => Link::STATUS_BROKEN,
+        ]);
+
+        Link::create([
+            'user_id' => $this->user->id,
+            'url' => 'https://empty-test.com',
+            'title' => 'Empty Test Site',
+            'description' => null,
+            'is_private' => false,
         ]);
     }
 }
