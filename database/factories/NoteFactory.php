@@ -28,7 +28,7 @@ class NoteFactory extends Factory
         return [
             'user_id' => User::first()->id ?? User::factory(),
             'link_id' => Link::first()->id ?? Link::factory(),
-            'note' => $this->faker->words(random_int(10, 30), true),
+            'note' => $this->faker->sentences(random_int(1, 5), true),
             'is_private' => $this->faker->boolean(10),
         ];
     }

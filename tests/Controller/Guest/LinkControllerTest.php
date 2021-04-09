@@ -25,17 +25,17 @@ class LinkControllerTest extends TestCase
         $publicTag = Tag::factory()->create(['is_private' => false]);
         $privateTag = Tag::factory()->create(['is_private' => true]);
 
-        $linkPublic = Link::factory()->create(['is_private' => false]);
-        $linkPrivate = Link::factory()->create(['is_private' => true]);
+        $publicLink = Link::factory()->create(['is_private' => false]);
+        $privateLink = Link::factory()->create(['is_private' => true]);
 
-        $linkPublic->tags()->sync([$publicTag->id, $privateTag->id]);
+        $publicLink->tags()->sync([$publicTag->id, $privateTag->id]);
 
         $response = $this->get('guest/links');
 
         $response->assertOk()
-            ->assertSee($linkPublic->url)
+            ->assertSee($publicLink->url)
             ->assertSee($publicTag->name)
-            ->assertDontSee($linkPrivate->url)
+            ->assertDontSee($privateLink->url)
             ->assertDontSee($privateTag->name);
     }
 }

@@ -28,7 +28,7 @@ class LinkFactory extends Factory
             'user_id' => User::first()->id ?? User::factory(),
             'url' => $this->faker->url,
             'title' => $this->faker->boolean(70)
-                ? $this->faker->words(random_int(1, 5), true)
+                ? $this->faker->words(random_int(2, 5), true)
                 : $this->faker->domainName,
             'description' => $this->faker->boolean(70) ? $this->faker->sentences(random_int(1, 3), true) : null,
             'is_private' => $this->faker->boolean(10),
