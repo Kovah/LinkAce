@@ -31,8 +31,8 @@ printf "\n> Deleting the application container volume...\n"
 docker volume rm linkace_linkace_app
 
 printf "\n> Pulling latest LinkAce image from the Docker Hub...\n"
-if grep -q "linkace/linkace:php-nginx" docker-compose.yml; then
-  docker pull linkace/linkace:php-nginx
+if grep -q "linkace/linkace:simple" docker-compose.yml; then
+  docker pull linkace/linkace:simple
 else
   docker pull linkace/linkace
 fi
