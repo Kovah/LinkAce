@@ -22,7 +22,7 @@ class SystemSettingsController extends Controller
      */
     public function getSystemSettings(): View
     {
-        return view('actions.settings.system', [
+        return view('app.settings.system', [
             'linkaceVersion' => UpdateHelper::currentVersion(),
         ]);
     }

@@ -42,7 +42,7 @@ class BookmarkletController extends Controller
 
         session(['bookmarklet.create' => true]);
 
-        return view('actions.bookmarklet.create', [
+        return view('app.bookmarklet.create', [
             'bookmark_url' => $newUrl,
             'bookmark_title' => $newTitle,
             'bookmark_description' => $newDescription,
@@ -56,7 +56,7 @@ class BookmarkletController extends Controller
      */
     public function getCompleteView(): View
     {
-        return view('actions.bookmarklet.complete');
+        return view('app.bookmarklet.complete');
     }
 
     /**
@@ -66,6 +66,6 @@ class BookmarkletController extends Controller
      */
     public function getLoginForm(): View
     {
-        return view('actions.bookmarklet.login');
+        return view('app.bookmarklet.login');
     }
 }

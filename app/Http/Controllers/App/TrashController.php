@@ -38,7 +38,7 @@ class TrashController extends Controller
             ->byUser(auth()->id())
             ->get();
 
-        return view('actions.trash.index', [
+        return view('app.trash.index', [
             'links' => $links,
             'lists' => $lists,
             'tags' => $tags,

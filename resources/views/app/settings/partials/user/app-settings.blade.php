@@ -215,13 +215,13 @@
                 </div>
             </div>
 
-            @include('actions.settings.partials.user.app-settings.archive-backups')
+            @include('app.settings.partials.user.app-settings.archive-backups')
 
-            @include('actions.settings.partials.user.app-settings.privacy')
+            @include('app.settings.partials.user.app-settings.privacy')
 
-            @include('actions.settings.partials.user.app-settings.dark-mode')
+            @include('app.settings.partials.user.app-settings.dark-mode')
 
-            @include('actions.settings.partials.user.app-settings.sharing')
+            @include('app.settings.partials.user.app-settings.sharing')
 
             <button type="submit" class="btn btn-primary">
                 <x-icon.save class="mr-2"/> @lang('settings.save_settings')
