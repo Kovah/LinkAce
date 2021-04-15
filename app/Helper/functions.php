@@ -32,7 +32,7 @@ function usersettings(string $key = '')
  * Retrieve system settings
  *
  * @param string $key
- * @return null|Collection
+ * @return null|Collection|string
  */
 function systemsettings(string $key = '')
 {

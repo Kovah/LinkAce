@@ -115,7 +115,7 @@ class HistoryEntry extends Component
      *
      * @param $oldValue
      * @param $newValue
-     * @return null[]
+     * @return null[]|string[]
      */
     protected function processTagsField($oldValue, $newValue)
     {
