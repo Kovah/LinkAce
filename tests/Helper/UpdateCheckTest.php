@@ -16,7 +16,7 @@ class UpdateCheckTest extends TestCase
     public function testSuccessfulCheck(): void
     {
         Http::fake([
-            '*' => Http::response('v100.0.0',),
+            '*' => Http::response('v100.0.0'),
         ]);
 
         $result = UpdateHelper::checkForUpdates();
