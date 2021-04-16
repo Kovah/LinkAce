@@ -45,26 +45,42 @@ class HtmlMeta
             return self::$fallback;
         }
 
-        return self::buildLinkMeta($meta);
+        return self::buildLinkMeta($meta, $url);
     }
 
     /**
      * Build a response array containing the link meta including a success flag.
      *
      * @param array $metaTags
+     * @param string $url
      * @return array
      */
-    protected static function buildLinkMeta(array $metaTags): array
+    protected static function buildLinkMeta(array $metaTags, string $url): array
     {
         $metaTags['description'] = $metaTags['description']
             ?? $metaTags['og:description']
             ?? $metaTags['twitter:description']
             ?? null;
 
+        $thumbnail = $metaTags['og:image']
+            ?? $metaTags['twitter:image']
+            ?? null;
+
+        //Edge case of Youtube only (because of Youtube EU cookie consent)
+        if (str_contains($url, 'youtube')) {
+            if (is_null($thumbnail)) {
+                //Formula based on https://stackoverflow.com/a/2068371
+                $explode = explode('v=', $url);
+                //https://img.youtube.com/vi/[video-id]/mqdefault.jpg
+                $thumbnail = 'https://img.youtube.com/vi/'.$explode[1].'/mqdefault.jpg';
+            }
+        }
+
         return [
             'success' => true,
             'title' => $metaTags['title'] ?? self::$fallback['title'],
             'description' => $metaTags['description'],
+            'thumbnail' => $thumbnail,
         ];
     }
 
