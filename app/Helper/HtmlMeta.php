@@ -96,6 +96,7 @@ class HtmlMeta
             'success' => false,
             'title' => parse_url($url, PHP_URL_HOST) ?? $url,
             'description' => false,
+            'thumbnail' => null,
         ];
     }
 }
