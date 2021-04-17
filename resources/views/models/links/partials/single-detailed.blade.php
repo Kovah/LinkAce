@@ -1,7 +1,13 @@
 <div class="card mb-4">
 
     <div class="card-header">
-        <div class="d-flex align-items-top flex-wrap">
+        <div class="d-flex align-items-top flex-wrap flex-md-nowrap">
+            @if($link->thumbnail)
+                <div class="d-flex justify-content-center mr-2 mb-2 mb-md-0 link-thumbnail-list-holder">
+                    <a href="{{ $link->url }}" {!! linkTarget() !!} class="border rounded d-block link-thumbnail-list" style="background: url('{{ $link->thumbnail }}') no-repeat center;">
+                    </a>
+                </div>
+            @endif
             <div class="mr-2 mw-100">
                 @if($link->is_private)
                     <span>

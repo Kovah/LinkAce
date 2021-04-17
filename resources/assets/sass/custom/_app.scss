@@ -165,3 +165,22 @@ code {
 #loader {
   display: none !important;
 }
+
+.link-thumbnail-detail {
+  width: 180px;
+  height: 100px;
+  background-size: cover !important;
+}
+
+.link-thumbnail-list-holder {
+  width: 100%;
+  @include media-breakpoint-up('md') {
+    width: auto;
+  }
+
+  .link-thumbnail-list {
+    width: 100px;
+    height: 75px;
+    background-size: cover !important;
+  }
+}

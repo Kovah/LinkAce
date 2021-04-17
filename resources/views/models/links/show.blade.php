@@ -7,7 +7,15 @@
         <div class="col-12 col-md-8">
             <div class="card">
                 <div class="card-body">
-                    <div class="d-sm-flex mb-3">
+                    <div class="d-flex flex-column flex-lg-row mb-3">
+                        @if($link->thumbnail)
+                            <div class="mt-1 mr-2 align-self-center">
+                                <a href="{{ $link->url }}" {!! linkTarget() !!}
+                                class="border rounded d-block link-thumbnail-detail" style="background: url('{{ $link->thumbnail }}') no-repeat center;">
+                                </a>
+                            </div>
+
+                        @endif
                         <div class="d-sm-inline-block mt-1 mb-2 mb-sm-0">
                             {!! $link->getIcon('mr-1 mr-sm-2') !!}
                             @if($link->is_private)

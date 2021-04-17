@@ -38,6 +38,7 @@ class LinkRepository
         $data['description'] = $data['description'] ?? $linkMeta['description'];
         $data['user_id'] = auth()->user()->id;
         $data['icon'] = LinkIconMapper::mapLink($data['url']);
+        $data['thumbnail'] = $linkMeta['thumbnail'];
 
         // If the meta helper was not successfull, disable future checks and set the status to broken
         if ($linkMeta['success'] === false) {
