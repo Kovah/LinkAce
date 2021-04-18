@@ -7,6 +7,7 @@ use App\Console\Commands\CleanupLinkHistoriesCommand;
 use App\Console\Commands\RegisterUserCommand;
 use App\Console\Commands\ResetPasswordCommand;
 use App\Console\Commands\ImportCommand;
+use App\Console\Commands\UpdateLinkThumbnails;
 use Illuminate\Console\Scheduling\Schedule;
 use Illuminate\Foundation\Console\Kernel as ConsoleKernel;
 
@@ -28,6 +29,7 @@ class Kernel extends ConsoleKernel
         ResetPasswordCommand::class,
         CleanupLinkHistoriesCommand::class,
         ImportCommand::class,
+        UpdateLinkThumbnails::class,
     ];
 
     /**

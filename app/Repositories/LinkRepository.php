@@ -32,20 +32,20 @@ class LinkRepository
      */
     public static function create(array $data, bool $flashAlerts = false): Link
     {
-        $linkMeta = HtmlMeta::getFromUrl($data['url'], $flashAlerts);
+        $linkMeta = (new HtmlMeta)->getFromUrl($data['url'], $flashAlerts);
 
         $data['title'] = $data['title'] ?? $linkMeta['title'];
         $data['description'] = $data['description'] ?? $linkMeta['description'];
         $data['user_id'] = auth()->user()->id;
         $data['icon'] = LinkIconMapper::mapLink($data['url']);
+        $data['thumbnail'] = $linkMeta['thumbnail'];
 
-        // If the meta helper was not successfull, disable future checks and set the status to broken
+        // If the meta helper was not successful, disable future checks and set the status to broken
         if ($linkMeta['success'] === false) {
             $data['check_disabled'] = true;
             $data['status'] = Link::STATUS_BROKEN;
         }
 
-        /** @var Link $link */
         $link = Link::create($data);
 
         self::processLinkTaxonomies($link, $data);
@@ -189,7 +189,7 @@ class LinkRepository
     /**
      * Tags or lists are passed as comma-delimited strings or integers.
      * If integers are passed we assume that the tags or lists are referenced
-     * by their ID. n that case we try to reetrieve the tag or list by the
+     * by their ID. n that case we try to retrieve the tag or list by the
      * provided ID.
      * If tags or lists are passed as strings, we create them and pass the new
      * entity to the taxonomy list.

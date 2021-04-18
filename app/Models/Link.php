@@ -60,6 +60,7 @@ class Link extends Model
         'is_private',
         'status',
         'check_disabled',
+        'thumbnail',
     ];
 
     protected $casts = [

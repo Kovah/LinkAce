@@ -15,7 +15,7 @@ use Illuminate\Support\Facades\Storage;
  */
 class UpdateHelper
 {
-    protected static $releaseApiUrl = 'https://api.github.com/repos/kovah/linkace/releases';
+    protected const RELEASE_API_URL = 'https://updates.linkace.org/api/current-version';
 
     /**
      * Get the current version from the package.json file and cache it for a day.
@@ -71,14 +71,8 @@ class UpdateHelper
      */
     protected static function getCurrentVersionFromAPI(): ?string
     {
-        $response = Http::get(self::$releaseApiUrl);
+        $response = Http::get(self::RELEASE_API_URL);
 
-        if (!$response->successful()) {
-            return null;
-        }
-
-        $releases = $response->json();
-
-        return $releases[0]['tag_name'] ?? null;
+        return $response->successful() ? $response->body() : null;
     }
 }

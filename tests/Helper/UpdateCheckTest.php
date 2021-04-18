@@ -16,10 +16,7 @@ class UpdateCheckTest extends TestCase
     public function testSuccessfulCheck(): void
     {
         Http::fake([
-            'github.com/*' => Http::response(
-                [['tag_name' => 'v100.0.0']],
-                200
-            ),
+            '*' => Http::response('v100.0.0'),
         ]);
 
         $result = UpdateHelper::checkForUpdates();
@@ -34,10 +31,7 @@ class UpdateCheckTest extends TestCase
     public function testSuccessfulCheckWithoutVersion(): void
     {
         Http::fake([
-            'github.com/*' => Http::response(
-                [['tag_name' => 'v0.0.0']],
-                200
-            ),
+            '*' => Http::response('v0.0.0'),
         ]);
 
         $result = UpdateHelper::checkForUpdates();
@@ -52,7 +46,7 @@ class UpdateCheckTest extends TestCase
     public function testUpdateCheckWithNetworkError(): void
     {
         Http::fake([
-            'github.com/*' => Http::response([], 404),
+            '*' => Http::response('', 404),
         ]);
 
         $result = UpdateHelper::checkForUpdates();

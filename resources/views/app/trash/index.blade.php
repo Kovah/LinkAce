@@ -25,7 +25,7 @@
         </div>
         <div class="card-body">
 
-            @includeWhen($links->isNotempty(), 'actions.trash.partials.link-table', ['links' => $links])
+            @includeWhen($links->isNotempty(), 'app.trash.partials.link-table', ['links' => $links])
             @if($links->isEmpty())
                 <small class="text-muted">@lang('trash.delete_no_entries')</small>
             @endif
@@ -50,7 +50,7 @@
         </div>
         <div class="card-body">
 
-            @includeWhen($lists->isNotEmpty(), 'actions.trash.partials.list-table', ['lists' => $lists])
+            @includeWhen($lists->isNotEmpty(), 'app.trash.partials.list-table', ['lists' => $lists])
             @if($lists->isEmpty())
                 <small class="text-muted">@lang('trash.delete_no_entries')</small>
             @endif
@@ -75,7 +75,7 @@
         </div>
         <div class="card-body">
 
-            @includeWhen($tags->isNotEmpty(), 'actions.trash.partials.tag-table', ['tags' => $tags])
+            @includeWhen($tags->isNotEmpty(), 'app.trash.partials.tag-table', ['tags' => $tags])
             @if($tags->isEmpty())
                 <small class="text-muted">@lang('trash.delete_no_entries')</small>
             @endif
@@ -100,7 +100,7 @@
         </div>
         <div class="card-body">
 
-            @includeWhen($notes->isNotEmpty(), 'actions.trash.partials.note-table', ['notes' => $notes])
+            @includeWhen($notes->isNotEmpty(), 'app.trash.partials.note-table', ['notes' => $notes])
 
             @if($notes->isEmpty())
                 <small class="text-muted">@lang('trash.delete_no_entries')</small>

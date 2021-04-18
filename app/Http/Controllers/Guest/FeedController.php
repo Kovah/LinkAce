@@ -21,7 +21,7 @@ class FeedController extends Controller
             'id' => $request->fullUrl(),
         ];
 
-        return new Response(view('actions.feed.links', [
+        return new Response(view('app.feed.links', [
             'meta' => $meta,
             'links' => $links,
         ]), 200, ['Content-Type' => 'application/xml']);
@@ -37,7 +37,7 @@ class FeedController extends Controller
             'id' => $request->fullUrl(),
         ];
 
-        return new Response(view('actions.feed.lists', [
+        return new Response(view('app.feed.lists', [
             'meta' => $meta,
             'lists' => $lists,
         ]), 200, ['Content-Type' => 'application/xml']);
@@ -54,7 +54,7 @@ class FeedController extends Controller
             'id' => $request->fullUrl(),
         ];
 
-        return new Response(view('actions.feed.links', [
+        return new Response(view('app.feed.links', [
             'meta' => $meta,
             'links' => $links,
         ]), 200, ['Content-Type' => 'application/xml']);
@@ -70,7 +70,7 @@ class FeedController extends Controller
             'id' => $request->fullUrl(),
         ];
 
-        return new Response(view('actions.feed.tags', [
+        return new Response(view('app.feed.tags', [
             'meta' => $meta,
             'tags' => $tags,
         ]), 200, ['Content-Type' => 'application/xml']);
@@ -87,7 +87,7 @@ class FeedController extends Controller
             'id' => $request->fullUrl(),
         ];
 
-        return new Response(view('actions.feed.links', [
+        return new Response(view('app.feed.links', [
             'meta' => $meta,
             'links' => $links,
         ]), 200, ['Content-Type' => 'application/xml']);

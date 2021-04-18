@@ -22,7 +22,7 @@ class ExportController extends Controller
      */
     public function getExport(): View
     {
-        return view('actions.export.export');
+        return view('app.export.export');
     }
 
     /**
@@ -39,7 +39,7 @@ class ExportController extends Controller
     {
         $links = Link::orderBy('title', 'asc')->with('tags')->get();
 
-        $fileContent = view()->make('actions.export.html-export', ['links' => $links])->render();
+        $fileContent = view()->make('app.export.html-export', ['links' => $links])->render();
         $fileName = config('app.name') . '_export.html';
 
         return response()->streamDownload(function () use ($fileContent) {

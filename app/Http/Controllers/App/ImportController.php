@@ -18,7 +18,7 @@ class ImportController extends Controller
      */
     public function getImport(): View
     {
-        return view('actions.import.import');
+        return view('app.import.import');
     }
 
     /**
