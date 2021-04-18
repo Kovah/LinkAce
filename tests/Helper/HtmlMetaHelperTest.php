@@ -30,7 +30,6 @@ class HtmlMetaHelperTest extends TestCase
 
         $result = (new HtmlMeta)->getFromUrl($url);
 
-        $this->assertArrayHasKey('title', $result);
         $this->assertEquals('DuckDuckGo', $result['title']);
         $this->assertEquals('This an example description', $result['description']);
         $this->assertEquals('https://duckduckgo.com/assets/logo_social-media.png', $result['thumbnail']);
@@ -53,9 +52,24 @@ class HtmlMetaHelperTest extends TestCase
 
         $result = (new HtmlMeta)->getFromUrl($url);
 
-        $this->assertArrayHasKey('title', $result);
         $this->assertEquals('DuckDuckGo', $result['title']);
         $this->assertEquals('This an example description', $result['description']);
+        $this->assertTrue($result['success']);
+    }
+
+    public function testThumbnailWithoutHostFromValidURL(): void
+    {
+        $testHtml = '<!DOCTYPE html><head>' .
+            '<meta property="og:image" content="/assets/logo_social-media.png">' .
+            '</head></html>';
+
+        Http::fake(['*' => Http::response($testHtml)]);
+
+        $url = 'https://duckduckgo.com/about-us?utm_source=foo';
+
+        $result = (new HtmlMeta)->getFromUrl($url);
+
+        $this->assertEquals('https://duckduckgo.com/assets/logo_social-media.png', $result['thumbnail']);
         $this->assertTrue($result['success']);
     }
 

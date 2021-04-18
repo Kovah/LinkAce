@@ -100,6 +100,13 @@ class HtmlMeta
             ?? $this->meta['twitter:image']
             ?? null;
 
+        if (parse_url($thumbnail, PHP_URL_HOST) === null) {
+            // If the thumbnail does not contain the domain, add it in front of it
+            $urlInfo = parse_url($this->url);
+            $baseUrl = sprintf('%s://%s/', $urlInfo['scheme'], $urlInfo['host']);
+            $thumbnail = $baseUrl . trim($thumbnail, '/');
+        }
+
         /*
          * Edge case of Youtube only (because of Youtube EU cookie consent)
          * Formula based on https://stackoverflow.com/a/2068371, returns Youtube image url
