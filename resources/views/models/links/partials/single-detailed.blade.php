@@ -4,7 +4,8 @@
         <div class="d-flex align-items-top flex-wrap flex-md-nowrap">
             @if($link->thumbnail)
                 <div class="d-flex justify-content-center mr-2 mb-2 mb-md-0 link-thumbnail-list-holder">
-                    <a href="{{ $link->url }}" {!! linkTarget() !!} class="border rounded d-block link-thumbnail-list" style="background: url('{{ $link->thumbnail }}') no-repeat center;">
+                    <a href="{{ $link->url }}" {!! linkTarget() !!} class="rounded d-block link-thumbnail link-thumbnail-list"
+                        style="background-image: url('{{ $link->thumbnail }}');">
                     </a>
                 </div>
             @endif

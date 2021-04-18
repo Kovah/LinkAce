@@ -166,21 +166,38 @@ code {
   display: none !important;
 }
 
+.link-thumbnail {
+  box-shadow: inset 0 0 1px $secondary;
+}
+
 .link-thumbnail-detail {
-  width: 180px;
-  height: 100px;
-  background-size: cover !important;
+  width: 100%;
+  height: auto;
+  padding-bottom: 52.5%;
+  background-repeat: no-repeat;
+  background-position: center center;
+  background-size: cover;
+
+  @include media-breakpoint-up('lg') {
+    width: 180px;
+    height: 93px;
+    padding-bottom: 0;
+  }
 }
 
 .link-thumbnail-list-holder {
-  width: 100%;
-  @include media-breakpoint-up('md') {
-    width: auto;
-  }
+  width: 180px;
+  height: 93px;
+
+  //@include media-breakpoint-up('lg') {
+  //  width: 180px;
+  //}
 
   .link-thumbnail-list {
-    width: 100px;
-    height: 75px;
+    width: 100%;
+    height: 100%;
+    background-repeat: no-repeat;
+    background-position: center center;
     background-size: cover !important;
   }
 }
