@@ -100,7 +100,7 @@ class HtmlMeta
             ?? $this->meta['twitter:image']
             ?? null;
 
-        if (parse_url($thumbnail, PHP_URL_HOST) === null) {
+        if (!is_null($thumbnail) && parse_url($thumbnail, PHP_URL_HOST) === null) {
             // If the thumbnail does not contain the domain, add it in front of it
             $urlInfo = parse_url($this->url);
             $baseUrl = sprintf('%s://%s/', $urlInfo['scheme'], $urlInfo['host']);
