@@ -39,7 +39,7 @@ class ImportHtmlBookmarks
             }
 
             if ($generateMeta) {
-                $linkMeta = HtmlMeta::getFromUrl($link['uri']);
+                $linkMeta = (new HtmlMeta)->getFromUrl($link['uri']);
                 $title = $link['title'] ?: $linkMeta['title'];
                 $description = $link['note'] ?: $linkMeta['description'];
             } else {

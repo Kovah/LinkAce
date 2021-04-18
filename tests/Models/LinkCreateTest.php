@@ -2,8 +2,6 @@
 
 namespace Tests\Models;
 
-use App\Helper\HtmlMeta;
-use App\Helper\LinkIconMapper;
 use App\Models\User;
 use App\Repositories\LinkRepository;
 use Illuminate\Foundation\Testing\DatabaseMigrations;
@@ -23,11 +21,14 @@ class LinkCreateTest extends TestCase
     {
         parent::setUp();
 
-        $testHtml = '<!DOCTYPE html><head><title>Google</title></head></html>';
+        $testHtml = '<!DOCTYPE html><head>' .
+            '<title>DuckDuckGo</title>' .
+            '<meta name="test" content="Bla">' .
+            '<meta name="description" content="This an example description">' .
+            '<meta property="og:image" content="https://duckduckgo.com/assets/logo_social-media.png">' .
+            '</head></html>';
 
-        Http::fake([
-            '*' => Http::response($testHtml, 200),
-        ]);
+        Http::fake(['*' => Http::response($testHtml)]);
 
         $this->user = User::factory()->create();
     }
@@ -36,30 +37,31 @@ class LinkCreateTest extends TestCase
     {
         $this->be($this->user);
 
-        $url = 'https://google.com/';
-
-        $meta = HtmlMeta::getFromUrl($url);
+        $url = 'https://duckduckgo.com/';
 
         $originalData = [
             'url' => $url,
-            'title' => $meta['title'],
-            'description' => $meta['description'],
+            'title' => null,
+            'description' => null,
             'is_private' => false,
         ];
 
         $link = LinkRepository::create($originalData);
 
-        $automatedData = [
+        $assertedData = [
             'id' => $link->id,
-            'icon' => LinkIconMapper::mapLink($url),
-            'user_id' => auth()->user()->id,
+            'url' => $url,
+            'title' => 'DuckDuckGo',
+            'description' => 'This an example description',
+            'icon' => 'link',
+            'thumbnail' => 'https://duckduckgo.com/assets/logo_social-media.png',
+            'is_private' => 0,
+            'user_id' => 1,
             'status' => 1,
             'created_at' => $link->created_at,
             'updated_at' => $link->updated_at,
             'deleted_at' => null,
         ];
-
-        $assertedData = array_merge($automatedData, $originalData);
 
         $this->assertDatabaseHas('links', $assertedData);
     }
