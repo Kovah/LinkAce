@@ -114,7 +114,7 @@ class HtmlMeta
          */
         if (is_null($thumbnail)) {
             if (str_contains($this->url, 'youtube.com') && str_contains($this->url, 'v=')) {
-                preg_match('/v=([a-zA-Z0-9]+)/', $this->url, $matched);
+                preg_match('/v=([a-zA-Z0-9_]+)/', $this->url, $matched);
                 $thumbnail = isset($matched[1]) ? 'https://img.youtube.com/vi/' . $matched[1] . '/mqdefault.jpg' : null;
             }
 
