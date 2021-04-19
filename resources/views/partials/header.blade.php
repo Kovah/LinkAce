@@ -6,6 +6,7 @@
 
 @stack('html-header')
 @include('partials.favicon')
+@include('partials.social-meta')
 
 @include('partials.configure-darkmode')
 
