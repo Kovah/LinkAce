@@ -107,7 +107,7 @@ class FetchController extends Controller
      */
     public static function checkForUpdates(): JsonResponse
     {
-        $updateCheck = UpdateHelper::checkForUpdates();
+        $updateCheck = UpdateHelper::checkForUpdates(true);
 
         return response()->json(['checkResult' => $updateCheck]);
     }

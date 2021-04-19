@@ -1,7 +1,7 @@
 <nav class="navbar navbar-dark navbar-expand bg-primary shadow-sm d-none d-md-flex">
     <div class="container px-0 px-lg-3">
         <a class="navbar-brand d-none d-md-inline-block" href="{{ route('dashboard') }}">
-            {!! displaySVG(public_path('assets/img/linkace_logo.svg')) !!}
+            <x-icon.linkace/>
         </a>
 
         @auth
@@ -72,7 +72,7 @@
 
 <div class="navbar navbar-dark navbar-expand brand-only bg-primary shadow-sm d-md-none">
     <a class="navbar-brand" href="{{ route('dashboard') }}">
-        {!! displaySVG(public_path('assets/img/linkace_logo.svg')) !!}
+        <x-icon.linkace/>
     </a>
     <ul class="navbar-nav ml-auto">
         @include('partials.nav-user')
