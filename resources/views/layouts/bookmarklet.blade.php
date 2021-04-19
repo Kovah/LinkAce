@@ -7,10 +7,10 @@
 <div id="app">
 
     <main class="main container">
-        <div class="mb-4 text-center">
+        <div class="mb-4 text-center h2">
             <a class="bookmarklet-logo d-inline-block"
                 href="{{ auth()->guest() ? route('front') : route('dashboard') }}">
-                {!! displaySVG(public_path('assets/img/linkace_logo.svg'), 103, 30) !!}
+                <x-icon.linkace/>
             </a>
         </div>
 

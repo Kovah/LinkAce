@@ -120,40 +120,10 @@ function getShareLinks(Link $link): string
     });
 }
 
-/**
- * Get an SVG from a path and return it as a string
- *
- * @param string   $path
- * @param int|null $width
- * @param int|null $height
- * @return string
- */
-function displaySVG(string $path, $width = null, $height = null): string
-{
-    $svg = file_get_contents($path);
-
-    if ($width) {
-        $svg = preg_replace('/\swidth="([\d]+)"/i', "width='$width'", $svg);
-    }
-
-    if ($height) {
-        $svg = preg_replace('/\sheight="([\d]+)"/i', "height='$height'", $svg);
-    }
-
-    return $svg;
-}
-
-/**
+/*
  * Build sorting links for a table column
- *
- * @param string $label
- * @param string $route
- * @param string $type
- * @param string $orderBy
- * @param string $orderDir
- * @return string
  */
-function tableSorter($label, $route, $type, $orderBy, $orderDir): string
+function tableSorter(string $label, string $route, string $type, string $orderBy, string $orderDir): string
 {
     $orderUrl = $route . '?orderBy=' . $type . '&orderDir=';
     $orderIcon = 'icon.sort';

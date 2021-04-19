@@ -8,24 +8,6 @@
   border: 0;
 }
 
-// Style fix for the navbar logo
-.navbar-dark {
-
-  .svg {
-    margin-top: -7px;
-    max-height: 28px;
-    max-width: 91px;
-  }
-
-  .svg-path {
-    fill: $white;
-  }
-
-  .svg-stroke {
-    stroke: $white;
-  }
-}
-
 [disabled] {
   cursor: not-allowed;
 }
