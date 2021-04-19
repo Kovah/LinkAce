@@ -17,9 +17,8 @@
 <div id="app">
 
     <main class="main container">
-        <div class="mb-5 text-center">
-            <img src="{{ asset('assets/img/linkace_logo.svg') }}" alt="@lang('linkace.linkace')"
-                width="150" height="55">
+        <div class="mb-5 h1 text-center text-primary">
+            <x-icon.linkace/>
         </div>
 
         @yield('content')
