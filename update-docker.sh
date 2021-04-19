@@ -1,5 +1,6 @@
 #!/bin/bash
 # (C) 2020 Kevin Woblick / LinkAce
+set -e
 
 CR='\033[0;31m'
 CG='\033[0;32m'
@@ -10,7 +11,7 @@ printf "\n${CG}==============================\n"
 printf " LinkAce Docker Update Script \n"
 printf "==============================\n\n"
 
-printf "${CW}This script assumes you are using the standard Docker setup for Linkace. It is only save to use if you did not modify any Docker-related files.\nPlease make a backup of your database before you continue.\n"
+printf "${CW}This script assumes you are using the standard Docker setup for Linkace. Only use this script if you did NOT modify any Docker-related files.\n${CR}Please make a backup of your database before you continue!\n"
 
 # Confirm that the user wants to update now
 printf "\n${CR}Do you want to upgrade LinkAce now? [y/n]${CW} "
@@ -47,12 +48,12 @@ printf "\n${CY}You should upgrade the database now. Should the script take care 
 read -n 1 -r
 if [[ ! $REPLY =~ ^[Yy]$ ]]; then
   printf "\nYou can manually update the database by running"
-  printf "\n$ docker-compose run php php artisan migrate\n"
+  printf "\n$ docker-compose run app php artisan migrate\n"
   exit;
 fi
 
 printf "\n> Migrating database...\n"
-docker-compose run php php artisan migrate --force
+docker-compose run app php artisan migrate --force
 
 printf "\n${CG}LinkAce was upgraded successfully!\n"
 
@@ -62,7 +63,7 @@ read -n 1 -r
 if [[ ! $REPLY =~ ^[Yy]$ ]]; then exit;
 fi
 
-docker-compose run php php artisan config:cache
-docker-compose run php php artisan route:cache
+docker-compose run app php artisan config:cache
+docker-compose run app php artisan route:cache
 
 printf "\n${CG}Thanks for using LinkAce! :)\n"
