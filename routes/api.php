@@ -74,9 +74,9 @@ Route::prefix('v1')->group(function () {
 
         Route::get('search/links', [SearchController::class, 'searchLinks'])
             ->name('api.search.links');
-        Route::get('search/tags', [SearchController::class, 'searchTags'])
+        Route::get('search/tags', [SearchController::class, 'searchByTags'])
             ->name('api.search.tags');
-        Route::get('search/lists', [SearchController::class, 'searchLists'])
+        Route::get('search/lists', [SearchController::class, 'searchByLists'])
             ->name('api.search.lists');
 
         Route::get('trash/links', [TrashController::class, 'getLinks'])

@@ -53,7 +53,7 @@ class LinkList extends Model
     /**
      * Add the OrderNameScope to the Tag model
      */
-    protected static function boot()
+    protected static function boot(): void
     {
         parent::boot();
 
@@ -70,9 +70,9 @@ class LinkList extends Model
      *
      * @param Builder $query
      * @param int     $user_id
-     * @return mixed
+     * @return Builder
      */
-    public function scopeByUser(Builder $query, $user_id)
+    public function scopeByUser(Builder $query, int $user_id): Builder
     {
         return $query->where('user_id', $user_id);
     }
@@ -81,9 +81,9 @@ class LinkList extends Model
      * Scope for selecting private lists only
      *
      * @param Builder $query
-     * @return mixed
+     * @return Builder
      */
-    public function scopePrivateOnly(Builder $query)
+    public function scopePrivateOnly(Builder $query): Builder
     {
         return $query->where('is_private', true);
     }
@@ -92,9 +92,9 @@ class LinkList extends Model
      * Scope for selecting public lists only
      *
      * @param Builder $query
-     * @return mixed
+     * @return Builder
      */
-    public function scopePublicOnly(Builder $query)
+    public function scopePublicOnly(Builder $query): Builder
     {
         return $query->where('is_private', false);
     }
@@ -107,7 +107,7 @@ class LinkList extends Model
     /**
      * @return BelongsTo
      */
-    public function user()
+    public function user(): BelongsTo
     {
         return $this->belongsTo('App\Models\User', 'user_id');
     }
@@ -115,7 +115,7 @@ class LinkList extends Model
     /**
      * @return BelongsToMany
      */
-    public function links()
+    public function links(): BelongsToMany
     {
         return $this->belongsToMany('App\Models\Link', 'link_lists', 'list_id', 'link_id');
     }

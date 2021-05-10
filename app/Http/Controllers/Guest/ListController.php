@@ -39,7 +39,7 @@ class ListController extends Controller
      * @param int     $listID
      * @return View
      */
-    public function show(Request $request, $listID): View
+    public function show(Request $request, int $listID): View
     {
         $list = LinkList::publicOnly()->findOrFail($listID);
 

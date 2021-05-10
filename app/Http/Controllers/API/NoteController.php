@@ -3,7 +3,6 @@
 namespace App\Http\Controllers\API;
 
 use App\Http\Controllers\Controller;
-use App\Http\Requests\Models\NoteDeleteRequest;
 use App\Http\Requests\Models\NoteStoreRequest;
 use App\Http\Requests\Models\NoteUpdateRequest;
 use App\Models\Note;
@@ -30,7 +29,7 @@ class NoteController extends Controller
      * Update the specified resource in storage.
      *
      * @param NoteUpdateRequest $request
-     * @param Note $note
+     * @param Note              $note
      * @return JsonResponse
      */
     public function update(NoteUpdateRequest $request, Note $note): JsonResponse

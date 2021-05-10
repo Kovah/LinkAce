@@ -4,11 +4,6 @@ namespace App\Http\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
 
-/**
- * Class SearchRequest
- *
- * @package App\Http\Requests
- */
 class SearchRequest extends FormRequest
 {
     /**
@@ -16,7 +11,7 @@ class SearchRequest extends FormRequest
      *
      * @return bool
      */
-    public function authorize()
+    public function authorize(): bool
     {
         return true;
     }
@@ -26,7 +21,7 @@ class SearchRequest extends FormRequest
      *
      * @return array
      */
-    public function rules()
+    public function rules(): array
     {
         return [
             'query' => 'bail|required_without_all:only_lists,only_tags,broken_only',
@@ -45,9 +40,9 @@ class SearchRequest extends FormRequest
     {
         return [
             'query.required_without_all' => trans('search.validation_query_missing'),
-            'only_lists.required_without_all'  => trans('search.validation_query_missing'),
-            'only_tags.required_without_all'  => trans('search.validation_query_missing'),
-            'broken_only.required_without_all'  => trans('search.validation_query_missing'),
+            'only_lists.required_without_all' => trans('search.validation_query_missing'),
+            'only_tags.required_without_all' => trans('search.validation_query_missing'),
+            'broken_only.required_without_all' => trans('search.validation_query_missing'),
         ];
     }
 }

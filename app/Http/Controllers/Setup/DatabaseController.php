@@ -5,14 +5,13 @@ namespace App\Http\Controllers\Setup;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\SetupDatabaseRequest;
 use Exception;
-use Illuminate\Contracts\Filesystem\FileNotFoundException;
+use Illuminate\Contracts\View\View;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Support\Facades\Artisan;
 use Illuminate\Support\Facades\Config;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\File;
 use Illuminate\Support\Facades\Log;
-use Illuminate\Contracts\View\View;
 use PDOException;
 
 class DatabaseController extends Controller
@@ -34,7 +33,6 @@ class DatabaseController extends Controller
      *
      * @param SetupDatabaseRequest $request
      * @return RedirectResponse
-     * @throws FileNotFoundException
      */
     public function configure(SetupDatabaseRequest $request): RedirectResponse
     {
@@ -61,7 +59,7 @@ class DatabaseController extends Controller
      *
      * @param array $credentials
      */
-    protected function createTempDatabaseConnection($credentials): void
+    protected function createTempDatabaseConnection(array $credentials): void
     {
         $this->dbConfig = config('database.connections.mysql');
 

@@ -3,14 +3,8 @@
 namespace App\Http\Requests\Models;
 
 use Illuminate\Foundation\Http\FormRequest;
-use Illuminate\Http\Request;
 use Illuminate\Validation\Rule;
 
-/**
- * Class LinkStoreRequest
- *
- * @package App\Http\Requests\Models
- */
 class LinkStoreRequest extends FormRequest
 {
     /**
@@ -18,7 +12,7 @@ class LinkStoreRequest extends FormRequest
      *
      * @return bool
      */
-    public function authorize(Request $request): bool
+    public function authorize(): bool
     {
         return true;
     }

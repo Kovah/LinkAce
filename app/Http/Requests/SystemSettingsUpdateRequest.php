@@ -3,22 +3,15 @@
 namespace App\Http\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
-use Illuminate\Http\Request;
 
-/**
- * Class SystemSettingsUpdateRequest
- *
- * @package App\Http\Requests
- */
 class SystemSettingsUpdateRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
      *
-     * @param Request $request
      * @return bool
      */
-    public function authorize(Request $request)
+    public function authorize(): bool
     {
         return true;
     }
@@ -28,7 +21,7 @@ class SystemSettingsUpdateRequest extends FormRequest
      *
      * @return array
      */
-    public function rules()
+    public function rules(): array
     {
         return [
             'system_page_title' => 'max:256',

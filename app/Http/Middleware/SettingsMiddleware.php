@@ -3,22 +3,18 @@
 namespace App\Http\Middleware;
 
 use Closure;
+use Illuminate\Http\Request;
 
-/**
- * Class SettingsMiddleware
- *
- * @package App\Http\Middleware
- */
 class SettingsMiddleware
 {
     /**
      * Handle an incoming request.
      *
-     * @param  \Illuminate\Http\Request $request
-     * @param  \Closure                 $next
+     * @param Request $request
+     * @param Closure $next
      * @return mixed
      */
-    public function handle($request, Closure $next)
+    public function handle(Request $request, Closure $next)
     {
         // Set global configs based on the user settings
         if ($user_timezone = usersettings('timezone')) {

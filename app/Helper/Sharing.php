@@ -4,11 +4,6 @@ namespace App\Helper;
 
 use App\Models\Link;
 
-/**
- * Class Sharing
- *
- * @package App\Helper
- */
 class Sharing
 {
     public static $linkClasses = 'share-link btn btn-xs btn-outline-secondary';

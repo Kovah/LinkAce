@@ -6,15 +6,14 @@ use App\Actions\Fortify\UpdateUserPassword;
 use App\Actions\Fortify\UpdateUserProfileInformation;
 use App\Helper\LinkAce;
 use App\Http\Controllers\Controller;
-use App\Http\Requests\UserAccountUpdateRequest;
-use App\Http\Requests\UserPasswordUpdateRequest;
 use App\Http\Requests\UserSettingsUpdateRequest;
 use App\Models\Setting;
+use Illuminate\Contracts\View\View;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Str;
-use Illuminate\Contracts\View\View;
+use Illuminate\Validation\ValidationException;
 
 class UserSettingsController extends Controller
 {
@@ -38,6 +37,7 @@ class UserSettingsController extends Controller
      *
      * @param Request $request
      * @return RedirectResponse
+     * @throws ValidationException
      */
     public function saveAccountSettings(Request $request): RedirectResponse
     {
@@ -92,6 +92,7 @@ class UserSettingsController extends Controller
      *
      * @param Request $request
      * @return RedirectResponse
+     * @throws ValidationException
      */
     public function changeUserPassword(Request $request): RedirectResponse
     {

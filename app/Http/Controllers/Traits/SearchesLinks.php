@@ -36,7 +36,7 @@ trait SearchesLinks
      * @param SearchRequest $request
      * @return Builder
      */
-    protected function buildDatabaseQuery(SearchRequest $request)
+    protected function buildDatabaseQuery(SearchRequest $request): Builder
     {
         // Start building the search
         $search = Link::byUser($request->user()->id);

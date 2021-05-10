@@ -52,7 +52,7 @@ class User extends Authenticatable
         return $this->hasMany(Setting::class, 'user_id', 'id');
     }
 
-    public function settings()
+    public function settings(): \Illuminate\Support\Collection
     {
         if ($this->rawSettings->isEmpty()) {
             $this->load('rawSettings');

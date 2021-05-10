@@ -10,8 +10,8 @@ use App\Models\LinkList;
 use App\Models\Note;
 use App\Models\Tag;
 use App\Repositories\TrashRepository;
-use Illuminate\Http\RedirectResponse;
 use Illuminate\Contracts\View\View;
+use Illuminate\Http\RedirectResponse;
 
 class TrashController extends Controller
 {

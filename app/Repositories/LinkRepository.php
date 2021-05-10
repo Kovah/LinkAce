@@ -7,17 +7,13 @@ use App\Helper\LinkIconMapper;
 use App\Models\Link;
 use App\Models\LinkList;
 use App\Models\Tag;
+use DateTime;
 use Exception;
 use Illuminate\Support\Collection;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Log;
 use Venturecraft\Revisionable\Revisionable;
 
-/**
- * Class LinkRepository
- *
- * @package App\Repositories
- */
 class LinkRepository
 {
     /**
@@ -239,8 +235,8 @@ class LinkRepository
             'old_value' => $oldData,
             'new_value' => $newData,
             'user_id' => $link->getSystemUserId(),
-            'created_at' => new \DateTime(),
-            'updated_at' => new \DateTime(),
+            'created_at' => new DateTime(),
+            'updated_at' => new DateTime(),
         ];
 
         $revisionable = Revisionable::newModel();

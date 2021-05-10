@@ -3,7 +3,6 @@
 namespace App\Http\Controllers\API;
 
 use App\Http\Controllers\Controller;
-use App\Http\Requests\Models\LinkDeleteRequest;
 use App\Http\Requests\Models\LinkStoreRequest;
 use App\Http\Requests\Models\LinkUpdateRequest;
 use App\Models\Link;
@@ -62,7 +61,7 @@ class LinkController extends Controller
      * Update the specified resource in storage.
      *
      * @param LinkUpdateRequest $request
-     * @param Link $link
+     * @param Link              $link
      * @return JsonResponse
      */
     public function update(LinkUpdateRequest $request, Link $link): JsonResponse

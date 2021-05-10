@@ -3,8 +3,8 @@
 namespace App\Http\Controllers\Setup;
 
 use App\Http\Controllers\Controller;
-use Illuminate\Support\Facades\File;
 use Illuminate\Contracts\View\View;
+use Illuminate\Support\Facades\File;
 
 class RequirementsController extends Controller
 {
@@ -39,7 +39,7 @@ class RequirementsController extends Controller
             'storage_writable' => File::isWritable(storage_path()) && File::isWritable(storage_path('logs')),
         ];
 
-        $success = !in_array(false, $results);
+        $success = !in_array(false, $results, true);
 
         return [$success, $results];
     }

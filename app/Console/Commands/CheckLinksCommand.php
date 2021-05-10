@@ -5,19 +5,16 @@ namespace App\Console\Commands;
 use App\Models\Link;
 use App\Models\User;
 use App\Notifications\LinkCheckNotification;
+use Exception;
 use Illuminate\Console\Command;
 use Illuminate\Support\Facades\Cache;
 use Illuminate\Support\Facades\Http;
 use Illuminate\Support\Facades\Notification;
 
-/**
- * Class CheckLinksCommand
- *
- * @package App\Console\Commands
- */
 class CheckLinksCommand extends Command
 {
     protected $signature = 'links:check {--limit=} {--noWait}';
+    protected $description = 'This command checks the current status of a chunk of links. It is intended to be run on a schedule.';
 
     /** @var int $limit Check a maximum of 100 links at once */
     public $limit = 100;
@@ -115,7 +112,7 @@ class CheckLinksCommand extends Command
      * Get links but limit the results to a fixed number of links.
      * If there is an offset saved, use this instead of beginning from the first entry.
      *
-     * @return mixed
+     * @return \LaravelIdea\Helper\App\Models\_IH_Link_C|Link[]
      */
     protected function getLinks()
     {
@@ -149,7 +146,7 @@ class CheckLinksCommand extends Command
         try {
             $response = Http::timeout(20)->head($link->url);
             $statusCode = $response->status();
-        } catch (\Exception $e) {
+        } catch (Exception $e) {
             // Set status code to null so the link will be marked as broken
             $statusCode = 0;
         }

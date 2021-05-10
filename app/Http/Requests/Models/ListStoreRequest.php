@@ -4,11 +4,6 @@ namespace App\Http\Requests\Models;
 
 use Illuminate\Foundation\Http\FormRequest;
 
-/**
- * Class ListStoreRequest
- *
- * @package App\Http\Requests\Models
- */
 class ListStoreRequest extends FormRequest
 {
     /**
@@ -16,7 +11,7 @@ class ListStoreRequest extends FormRequest
      *
      * @return bool
      */
-    public function authorize()
+    public function authorize(): bool
     {
         return true;
     }
@@ -26,7 +21,7 @@ class ListStoreRequest extends FormRequest
      *
      * @return array
      */
-    public function rules()
+    public function rules(): array
     {
         return [
             'name' => 'required|string',

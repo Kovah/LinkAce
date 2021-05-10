@@ -7,11 +7,6 @@ use Illuminate\Console\Command;
 use Illuminate\Support\Facades\Artisan;
 use Illuminate\Support\Facades\File;
 
-/**
- * Class ImportCommand
- *
- * @package App\Console\Commands
- */
 class ImportCommand extends Command
 {
     use AsksForUser;
@@ -20,6 +15,8 @@ class ImportCommand extends Command
                         {filepath : Bookmarks file to import}
                         {--skip-meta-generation : Whether the automatic generation of titles should be skipped.}
                         {--skip-check : Whether the links checking should be skipped afterwards}';
+
+    protected $description = 'Import links from a bookmarks file which is stored locally in your file system.';
 
     public function handle(): void
     {
@@ -37,7 +34,7 @@ class ImportCommand extends Command
         $this->info('Reading file "' . $this->argument('filepath') . '"...');
         $data = File::get(storage_path($this->argument('filepath')));
 
-        if ($data === false || empty($data)) {
+        if (empty($data)) {
             $this->warn('The provided file is empty or could not be read!');
             return;
         }

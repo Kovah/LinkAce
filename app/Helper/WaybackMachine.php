@@ -5,11 +5,6 @@ namespace App\Helper;
 use Illuminate\Support\Facades\Http;
 use Illuminate\Support\Facades\Log;
 
-/**
- * Class WaybackMachine
- *
- * @package App\Helper
- */
 class WaybackMachine
 {
     /** @var string */

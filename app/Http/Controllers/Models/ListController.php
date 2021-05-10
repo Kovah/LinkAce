@@ -8,9 +8,9 @@ use App\Http\Requests\Models\ListUpdateRequest;
 use App\Models\LinkList;
 use App\Repositories\ListRepository;
 use Exception;
+use Illuminate\Contracts\View\View;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
-use \Illuminate\Contracts\View\View;
 
 class ListController extends Controller
 {

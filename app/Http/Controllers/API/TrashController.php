@@ -16,7 +16,7 @@ use Illuminate\Http\Response;
 
 class TrashController extends Controller
 {
-    public function getLinks(Request $request)
+    public function getLinks(Request $request): JsonResponse
     {
         $links = Link::onlyTrashed()
             ->byUser($request->user()->id)
@@ -25,7 +25,7 @@ class TrashController extends Controller
         return response()->json($links->toArray());
     }
 
-    public function getLists(Request $request)
+    public function getLists(Request $request): JsonResponse
     {
         $lists = LinkList::onlyTrashed()
             ->byUser($request->user()->id)
@@ -34,7 +34,7 @@ class TrashController extends Controller
         return response()->json($lists);
     }
 
-    public function getTags(Request $request)
+    public function getTags(Request $request): JsonResponse
     {
         $tags = Tag::onlyTrashed()
             ->byUser($request->user()->id)
@@ -43,7 +43,7 @@ class TrashController extends Controller
         return response()->json($tags);
     }
 
-    public function getNotes(Request $request)
+    public function getNotes(Request $request): JsonResponse
     {
         $notes = Note::onlyTrashed()
             ->byUser($request->user()->id)

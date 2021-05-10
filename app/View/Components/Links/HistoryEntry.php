@@ -5,6 +5,8 @@ namespace App\View\Components\Links;
 use App\Models\Link;
 use App\Models\LinkList;
 use App\Models\Tag;
+use Illuminate\Contracts\Foundation\Application;
+use Illuminate\Contracts\View\Factory;
 use Illuminate\View\Component;
 use Illuminate\View\View;
 use Venturecraft\Revisionable\Revision;
@@ -41,9 +43,6 @@ class HistoryEntry extends Component
         $this->entry = $entry;
     }
 
-    /**
-     * @return View|string
-     */
     public function render()
     {
         if ($this->entry->fieldName() === 'deleted_at') {
@@ -117,7 +116,7 @@ class HistoryEntry extends Component
      * @param $newValue
      * @return null[]|string[]
      */
-    protected function processTagsField($oldValue, $newValue)
+    protected function processTagsField($oldValue, $newValue): array
     {
         $oldTags = $oldValue
             ? Tag::whereIn('id', explode(',', $oldValue))
@@ -191,7 +190,7 @@ class HistoryEntry extends Component
      * The deleted field displays its own string based on whether the link
      * was deleted or restored.
      *
-     * @return View|string
+     * @return Application|Factory|\Illuminate\Contracts\View\View
      */
     protected function processDeletedField()
     {

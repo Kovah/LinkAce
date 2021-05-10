@@ -6,17 +6,10 @@ use App\Models\User;
 use Illuminate\Console\Command;
 use Illuminate\Support\Facades\Hash;
 
-/**
- * Class RegisterUser
- *
- * Provides a php artisan command to register a new user:
- * php artisan registeruser UserName mail@user.com
- *
- * @package App\Console\Commands
- */
 class RegisterUserCommand extends Command
 {
     protected $signature = 'registeruser {name? : Username} {email? : User email address}';
+    protected $description = 'Register a new user with a given user name and an email address.';
 
     public function handle(): void
     {

@@ -6,11 +6,6 @@ use App\Models\Tag;
 use Exception;
 use Illuminate\Support\Facades\Log;
 
-/**
- * Class TagRepository
- *
- * @package App\Repositories
- */
 class TagRepository
 {
     /**

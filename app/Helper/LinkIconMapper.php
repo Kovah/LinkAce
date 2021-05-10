@@ -2,11 +2,6 @@
 
 namespace App\Helper;
 
-/**
- * Class LinkIconMapper
- *
- * @package App\Helper
- */
 class LinkIconMapper
 {
     /** @var string Default icon as fallback if no specific icon was found */

@@ -56,9 +56,9 @@ class Note extends Model
      *
      * @param Builder $query
      * @param int     $user_id
-     * @return mixed
+     * @return Builder
      */
-    public function scopeByUser($query, $user_id)
+    public function scopeByUser(Builder $query, int $user_id): Builder
     {
         return $query->where('user_id', $user_id);
     }
@@ -71,7 +71,7 @@ class Note extends Model
     /**
      * @return BelongsTo
      */
-    public function user()
+    public function user(): BelongsTo
     {
         return $this->belongsTo('App\Models\User', 'user_id');
     }
@@ -79,7 +79,7 @@ class Note extends Model
     /**
      * @return BelongsTo
      */
-    public function link()
+    public function link(): BelongsTo
     {
         return $this->belongsTo('App\Models\Link', 'link_id');
     }
@@ -112,7 +112,7 @@ class Note extends Model
      *
      * @return string
      */
-    public function addedAt()
+    public function addedAt(): string
     {
         $output = '<time-ago class="cursor-help"';
         $output .= ' datetime="' . $this->created_at->toIso8601String() . '"';
