@@ -37,7 +37,7 @@ class HtmlMeta
         $this->buildFallback();
 
         try {
-            $this->meta = \Kovah\HtmlMeta\Facades\HtmlMeta::forUrl($url);
+            $this->meta = \Kovah\HtmlMeta\Facades\HtmlMeta::forUrl($url)->getMeta();
         } catch (InvalidUrlException $e) {
             Log::warning($url . ': ' . $e->getMessage());
             if ($flashAlerts) {
