@@ -97,9 +97,9 @@ class Link extends Model
      *
      * @param Builder $query
      * @param int     $userId
-     * @return mixed
+     * @return Builder
      */
-    public function scopeByUser($query, $userId)
+    public function scopeByUser(Builder $query, int $userId): Builder
     {
         return $query->where('user_id', $userId);
     }
@@ -108,9 +108,9 @@ class Link extends Model
      * Scope for the user relation
      *
      * @param Builder $query
-     * @return mixed
+     * @return Builder
      */
-    public function scopePrivateOnly(Builder $query)
+    public function scopePrivateOnly(Builder $query): Builder
     {
         return $query->where('is_private', true);
     }
@@ -119,9 +119,9 @@ class Link extends Model
      * Scope for the user relation
      *
      * @param Builder $query
-     * @return mixed
+     * @return Builder
      */
-    public function scopePublicOnly(Builder $query)
+    public function scopePublicOnly(Builder $query): Builder
     {
         return $query->where('is_private', false);
     }
@@ -134,7 +134,7 @@ class Link extends Model
     /**
      * @return BelongsTo
      */
-    public function user()
+    public function user(): BelongsTo
     {
         return $this->belongsTo(User::class, 'user_id');
     }
@@ -142,7 +142,7 @@ class Link extends Model
     /**
      * @return BelongsToMany
      */
-    public function lists()
+    public function lists(): BelongsToMany
     {
         return $this->belongsToMany(LinkList::class, 'link_lists', 'link_id', 'list_id');
     }
@@ -150,7 +150,7 @@ class Link extends Model
     /**
      * @return BelongsToMany
      */
-    public function tags()
+    public function tags(): BelongsToMany
     {
         return $this->belongsToMany(Tag::class, 'link_tags', 'link_id', 'tag_id');
     }
@@ -158,7 +158,7 @@ class Link extends Model
     /**
      * @return HasMany
      */
-    public function notes()
+    public function notes(): HasMany
     {
         return $this->hasMany(Note::class, 'link_id');
     }
@@ -191,9 +191,9 @@ class Link extends Model
      *
      * @return string
      */
-    public function shortUrl()
+    public function shortUrl(int $maxLength = 50): string
     {
-        return Str::limit(trim($this->url, '/'), 50);
+        return Str::limit(trim($this->url, '/'), $maxLength);
     }
 
     /**

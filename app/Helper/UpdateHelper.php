@@ -8,11 +8,6 @@ use Illuminate\Support\Facades\Cache;
 use Illuminate\Support\Facades\Http;
 use Illuminate\Support\Facades\Storage;
 
-/**
- * Class UpdateHelper
- *
- * @package App\Helper
- */
 class UpdateHelper
 {
     protected const RELEASE_API_URL = 'https://updates.linkace.org/api/current-version';

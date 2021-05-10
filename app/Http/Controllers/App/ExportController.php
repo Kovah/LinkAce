@@ -5,10 +5,9 @@ namespace App\Http\Controllers\App;
 use App\Http\Controllers\Controller;
 use App\Models\Link;
 use Illuminate\Contracts\Container\BindingResolutionException;
-use Illuminate\Http\RedirectResponse;
-use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Log;
 use Illuminate\Contracts\View\View;
+use Illuminate\Http\RedirectResponse;
+use Illuminate\Support\Facades\Log;
 use League\Csv\CannotInsertRecord;
 use League\Csv\Writer;
 use Symfony\Component\HttpFoundation\StreamedResponse;
@@ -31,13 +30,12 @@ class ExportController extends Controller
      * importing/exporting bookmarks in browsers. The rendered view is then
      * streamed to the user as a file download.
      *
-     * @param Request $request
      * @return StreamedResponse
      * @throws BindingResolutionException
      */
-    public function doHtmlExport(Request $request): StreamedResponse
+    public function doHtmlExport(): StreamedResponse
     {
-        $links = Link::orderBy('title', 'asc')->with('tags')->get();
+        $links = Link::orderBy('title')->with('tags')->get();
 
         $fileContent = view()->make('app.export.html-export', ['links' => $links])->render();
         $fileName = config('app.name') . '_export.html';
@@ -52,12 +50,11 @@ class ExportController extends Controller
      * names. A CSV file is generated with the League\Csv\Writer and made
      * available to download.
      *
-     * @param Request $request
      * @return RedirectResponse|StreamedResponse
      */
-    public function doCsvExport(Request $request)
+    public function doCsvExport()
     {
-        $links = Link::orderBy('title', 'asc')->get();
+        $links = Link::orderBy('title')->get();
 
         $rows = $links->map(function (Link $link) {
             $link->tags = $link->tags()->get()->pluck('name')->join(',');
@@ -66,7 +63,7 @@ class ExportController extends Controller
         })->toArray();
 
         try {
-            $csv = Writer::createFromString('');
+            $csv = Writer::createFromString();
             $csv->insertOne(array_keys($rows[0]));
             $csv->insertAll($rows);
         } catch (CannotInsertRecord $e) {

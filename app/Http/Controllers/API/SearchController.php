@@ -44,7 +44,7 @@ class SearchController extends Controller
      * @param Request $request
      * @return JsonResponse
      */
-    public function searchTags(Request $request): JsonResponse
+    public function searchByTags(Request $request): JsonResponse
     {
         $query = $request->input('query', false);
 
@@ -54,7 +54,7 @@ class SearchController extends Controller
 
         $tags = Tag::byUser($request->user()->id)
             ->where('name', 'like', '%' . $query . '%')
-            ->orderBy('name', 'asc')
+            ->orderBy('name')
             ->pluck('name', 'id');
 
         return response()->json($tags);
@@ -68,7 +68,7 @@ class SearchController extends Controller
      * @param Request $request
      * @return JsonResponse
      */
-    public function searchLists(Request $request): JsonResponse
+    public function searchByLists(Request $request): JsonResponse
     {
         $query = $request->input('query', false);
 
@@ -78,7 +78,7 @@ class SearchController extends Controller
 
         $tags = LinkList::byUser($request->user()->id)
             ->where('name', 'like', '%' . $query . '%')
-            ->orderBy('name', 'asc')
+            ->orderBy('name')
             ->pluck('name', 'id');
 
         return response()->json($tags);

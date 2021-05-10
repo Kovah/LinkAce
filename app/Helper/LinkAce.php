@@ -2,11 +2,6 @@
 
 namespace App\Helper;
 
-/**
- * Class LinkAce
- *
- * @package App\Helper
- */
 class LinkAce
 {
     /**
@@ -21,8 +16,6 @@ class LinkAce
             "'_blank','menubar=no,height=720,width=600,toolbar=no," .
             "scrollbars=yes,status=no,dialog=1');})();";
 
-        $bmCode = str_replace('##URL##', route('bookmarklet-add'), $bmCode);
-
-        return $bmCode;
+        return str_replace('##URL##', route('bookmarklet-add'), $bmCode);
     }
 }

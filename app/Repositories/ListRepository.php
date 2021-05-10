@@ -6,11 +6,6 @@ use App\Models\LinkList;
 use Exception;
 use Illuminate\Support\Facades\Log;
 
-/**
- * Class ListRepository
- *
- * @package App\Repositories
- */
 class ListRepository
 {
     /**

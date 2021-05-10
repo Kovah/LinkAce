@@ -3,8 +3,8 @@
 namespace App\Http\Controllers\Setup;
 
 use App\Http\Controllers\Controller;
-use Illuminate\Support\Facades\File;
 use Illuminate\Contracts\View\View;
+use Illuminate\Support\Facades\File;
 
 class MetaController extends Controller
 {

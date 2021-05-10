@@ -3,22 +3,15 @@
 namespace App\Http\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
-use Illuminate\Http\Request;
 
-/**
- * Class UserSettingsUpdateRequest
- *
- * @package App\Http\Requests
- */
 class UserSettingsUpdateRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
      *
-     * @param Request $request
      * @return bool
      */
-    public function authorize(Request $request)
+    public function authorize(): bool
     {
         return true;
     }
@@ -28,7 +21,7 @@ class UserSettingsUpdateRequest extends FormRequest
      *
      * @return array
      */
-    public function rules()
+    public function rules(): array
     {
         return [
             'locale' => 'required',

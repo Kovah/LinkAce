@@ -6,11 +6,6 @@ use App\Models\Note;
 use Exception;
 use Illuminate\Support\Facades\Log;
 
-/**
- * Class NoteRepository
- *
- * @package App\Repositories
- */
 class NoteRepository
 {
     /**

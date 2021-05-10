@@ -2,16 +2,10 @@
 
 namespace App\Http\Requests\Models;
 
-use App\Models\Link;
 use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Http\Request;
 use Illuminate\Validation\Rule;
 
-/**
- * Class LinkUpdateRequest
- *
- * @package App\Http\Requests\Models
- */
 class LinkUpdateRequest extends FormRequest
 {
     /** @var bool */
@@ -23,7 +17,7 @@ class LinkUpdateRequest extends FormRequest
      * @param Request $request
      * @return bool
      */
-    public function authorize(Request $request)
+    public function authorize(Request $request): bool
     {
         if ($request->input('url') !== null) {
             $this->requireUniqueUrl = $request->route('link')->url !== $request->input('url');
@@ -37,7 +31,7 @@ class LinkUpdateRequest extends FormRequest
      *
      * @return array
      */
-    public function rules()
+    public function rules(): array
     {
         $rules = [
             'url' => 'required|string',

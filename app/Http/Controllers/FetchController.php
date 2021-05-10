@@ -29,7 +29,7 @@ class FetchController extends Controller
 
         $tags = Tag::byUser(auth()->user()->id)
             ->where('name', 'like', '%' . escapeSearchQuery($query) . '%')
-            ->orderBy('name', 'asc')
+            ->orderBy('name')
             ->get();
 
         if (!$tags->isEmpty()) {
@@ -61,7 +61,7 @@ class FetchController extends Controller
 
         $tags = LinkList::byUser(auth()->user()->id)
             ->where('name', 'like', '%' . escapeSearchQuery($query) . '%')
-            ->orderBy('name', 'asc')
+            ->orderBy('name')
             ->get();
 
         if (!$tags->isEmpty()) {

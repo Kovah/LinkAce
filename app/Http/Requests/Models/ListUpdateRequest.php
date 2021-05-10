@@ -2,7 +2,6 @@
 
 namespace App\Http\Requests\Models;
 
-use App\Models\LinkList;
 use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Http\Request;
 use Illuminate\Validation\Rule;
@@ -23,10 +22,10 @@ class ListUpdateRequest extends FormRequest
      * @param Request $request
      * @return bool
      */
-    public function authorize(Request $request)
+    public function authorize(Request $request): bool
     {
         if ($request->input('name') !== null) {
-            $this->requireUniqueName = $request->route('list')->name !==  $request->input('name');
+            $this->requireUniqueName = $request->route('list')->name !== $request->input('name');
         }
 
         return true;
@@ -37,7 +36,7 @@ class ListUpdateRequest extends FormRequest
      *
      * @return array
      */
-    public function rules()
+    public function rules(): array
     {
         $rules = [
             'name' => 'required|string',

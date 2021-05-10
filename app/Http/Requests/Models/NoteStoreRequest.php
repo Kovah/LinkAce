@@ -4,11 +4,6 @@ namespace App\Http\Requests\Models;
 
 use Illuminate\Foundation\Http\FormRequest;
 
-/**
- * Class NoteStoreRequest
- *
- * @package App\Http\Requests\Models
- */
 class NoteStoreRequest extends FormRequest
 {
     /**
@@ -16,7 +11,7 @@ class NoteStoreRequest extends FormRequest
      *
      * @return bool
      */
-    public function authorize()
+    public function authorize(): bool
     {
         return true;
     }
@@ -26,7 +21,7 @@ class NoteStoreRequest extends FormRequest
      *
      * @return array
      */
-    public function rules()
+    public function rules(): array
     {
         return [
             'link_id' => 'required',

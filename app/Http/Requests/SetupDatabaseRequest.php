@@ -4,11 +4,6 @@ namespace App\Http\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
 
-/**
- * Class SetupDatabaseRequest
- *
- * @package App\Http\Requests
- */
 class SetupDatabaseRequest extends FormRequest
 {
     /**
@@ -16,7 +11,7 @@ class SetupDatabaseRequest extends FormRequest
      *
      * @return bool
      */
-    public function authorize()
+    public function authorize(): bool
     {
         return true;
     }
@@ -26,7 +21,7 @@ class SetupDatabaseRequest extends FormRequest
      *
      * @return array
      */
-    public function rules()
+    public function rules(): array
     {
         return [
             'db_host' => 'required',

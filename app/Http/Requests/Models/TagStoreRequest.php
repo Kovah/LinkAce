@@ -5,11 +5,6 @@ namespace App\Http\Requests\Models;
 use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Validation\Rule;
 
-/**
- * Class TagStoreRequest
- *
- * @package App\Http\Requests\Models
- */
 class TagStoreRequest extends FormRequest
 {
     /**
@@ -17,7 +12,7 @@ class TagStoreRequest extends FormRequest
      *
      * @return bool
      */
-    public function authorize()
+    public function authorize(): bool
     {
         return true;
     }
@@ -27,7 +22,7 @@ class TagStoreRequest extends FormRequest
      *
      * @return array
      */
-    public function rules()
+    public function rules(): array
     {
         return [
             'name' => [

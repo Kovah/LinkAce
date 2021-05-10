@@ -53,7 +53,7 @@ class TagController extends Controller
      * @param TagStoreRequest $request
      * @return RedirectResponse
      */
-    public function store(TagStoreRequest $request)
+    public function store(TagStoreRequest $request): RedirectResponse
     {
         $data = $request->except(['reload_view']);
 

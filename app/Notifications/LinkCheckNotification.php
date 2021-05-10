@@ -30,10 +30,9 @@ class LinkCheckNotification extends Notification
     /**
      * Get the notification's delivery channels.
      *
-     * @param  mixed $notifiable
      * @return array
      */
-    public function via($notifiable)
+    public function via(): array
     {
         return ['mail'];
     }
@@ -41,10 +40,9 @@ class LinkCheckNotification extends Notification
     /**
      * Get the mail representation of the notification.
      *
-     * @param  mixed $notifiable
-     * @return \Illuminate\Notifications\Messages\MailMessage
+     * @return MailMessage
      */
-    public function toMail($notifiable)
+    public function toMail(): MailMessage
     {
         return (new MailMessage)
             ->subject(trans('link.notifications.linkcheck.errors'))
@@ -58,10 +56,9 @@ class LinkCheckNotification extends Notification
     /**
      * Get the array representation of the notification.
      *
-     * @param  mixed $notifiable
      * @return array
      */
-    public function toArray($notifiable)
+    public function toArray(): array
     {
         return [
             'subject' => trans('link.notifications.linkcheck.errors'),

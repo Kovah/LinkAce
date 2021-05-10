@@ -2,20 +2,16 @@
 
 namespace App\Console\Commands;
 
-use App\Models\User;
 use Illuminate\Console\Command;
 use Illuminate\Support\Facades\Validator;
 
-/**
- * Class ResetPasswordCommand
- *
- * @package App\Console\Commands
- */
 class ResetPasswordCommand extends Command
 {
     use AsksForUser;
 
     protected $signature = 'reset-password';
+
+    protected $description = 'Reset the password for a given user without the need of configuring email sending.';
 
     public function handle(): void
     {
@@ -25,7 +21,7 @@ class ResetPasswordCommand extends Command
         $this->resetUserPassword();
     }
 
-    protected function resetUserPassword()
+    protected function resetUserPassword(): void
     {
         do {
             $newPassword = $this->secret('Please enter a new password for this user');

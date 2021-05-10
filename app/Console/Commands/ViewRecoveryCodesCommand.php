@@ -2,20 +2,15 @@
 
 namespace App\Console\Commands;
 
-use App\Models\User;
 use Illuminate\Console\Command;
-use Illuminate\Support\Facades\Validator;
 
-/**
- * Class ViewRecoveryCodesCommand
- *
- * @package App\Console\Commands
- */
 class ViewRecoveryCodesCommand extends Command
 {
     use AsksForUser;
 
     protected $signature = '2fa:view-recovery-codes';
+
+    protected $description = 'View the recovery codes for a given user, in case the user has no access to the dashboard anymore.';
 
     public function handle(): void
     {
@@ -32,7 +27,7 @@ class ViewRecoveryCodesCommand extends Command
             return;
         }
 
-        $this->info('Recovery Codes for user ' . $this->user->name .':');
+        $this->info('Recovery Codes for user ' . $this->user->name . ':');
 
         $recoveryCodes = json_decode(decrypt($this->user->two_factor_recovery_codes), true);
         foreach ($recoveryCodes as $code) {

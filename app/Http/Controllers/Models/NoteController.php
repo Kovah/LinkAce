@@ -3,7 +3,6 @@
 namespace App\Http\Controllers\Models;
 
 use App\Http\Controllers\Controller;
-use App\Http\Requests\Models\NoteDeleteRequest;
 use App\Http\Requests\Models\NoteStoreRequest;
 use App\Http\Requests\Models\NoteUpdateRequest;
 use App\Models\Link;

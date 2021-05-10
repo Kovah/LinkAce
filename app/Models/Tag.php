@@ -67,9 +67,9 @@ class Tag extends Model
      *
      * @param Builder $query
      * @param int     $user_id
-     * @return mixed
+     * @return Builder
      */
-    public function scopeByUser($query, $user_id)
+    public function scopeByUser(Builder $query, int $user_id): Builder
     {
         return $query->where('user_id', $user_id);
     }
@@ -78,9 +78,9 @@ class Tag extends Model
      * Scope for selecting private tags only
      *
      * @param Builder $query
-     * @return mixed
+     * @return Builder
      */
-    public function scopePrivateOnly(Builder $query)
+    public function scopePrivateOnly(Builder $query): Builder
     {
         return $query->where('is_private', true);
     }
@@ -89,9 +89,9 @@ class Tag extends Model
      * Scope for selecting public tags only
      *
      * @param Builder $query
-     * @return mixed
+     * @return Builder
      */
-    public function scopePublicOnly(Builder $query)
+    public function scopePublicOnly(Builder $query): Builder
     {
         return $query->where('is_private', false);
     }
@@ -104,7 +104,7 @@ class Tag extends Model
     /**
      * @return BelongsTo
      */
-    public function user()
+    public function user(): BelongsTo
     {
         return $this->belongsTo('App\Models\User', 'user_id');
     }
@@ -112,7 +112,7 @@ class Tag extends Model
     /**
      * @return BelongsToMany
      */
-    public function links()
+    public function links(): BelongsToMany
     {
         return $this->belongsToMany('App\Models\Link', 'link_tags', 'tag_id', 'link_id');
     }

@@ -3,22 +3,15 @@
 namespace App\Http\Requests\Models;
 
 use Illuminate\Foundation\Http\FormRequest;
-use Illuminate\Http\Request;
 
-/**
- * Class NoteUpdateRequest
- *
- * @package App\Http\Requests\Models
- */
 class NoteUpdateRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
      *
-     * @param Request $request
      * @return bool
      */
-    public function authorize(Request $request)
+    public function authorize(): bool
     {
         return true;
     }
@@ -28,7 +21,7 @@ class NoteUpdateRequest extends FormRequest
      *
      * @return array
      */
-    public function rules()
+    public function rules(): array
     {
         return [
             'note' => 'required',

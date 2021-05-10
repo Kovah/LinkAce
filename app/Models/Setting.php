@@ -42,9 +42,9 @@ class Setting extends Model
      *
      * @param Builder $query
      * @param int     $user_id
-     * @return mixed
+     * @return Builder
      */
-    public function scopeByUser($query, $user_id)
+    public function scopeByUser(Builder $query, int $user_id): Builder
     {
         return $query->where('user_id', $user_id);
     }
@@ -53,9 +53,9 @@ class Setting extends Model
      * Scope to get system settings only
      *
      * @param Builder $query
-     * @return mixed
+     * @return Builder
      */
-    public function scopeSystemOnly($query)
+    public function scopeSystemOnly(Builder $query): Builder
     {
         return $query->whereNull('user_id');
     }

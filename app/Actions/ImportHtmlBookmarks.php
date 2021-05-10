@@ -15,6 +15,14 @@ class ImportHtmlBookmarks
     protected $imported = 0;
     protected $skipped = 0;
 
+    /**
+     * Import all links from a given bookmarks file.
+     *
+     * @param string $data
+     * @param string $userId
+     * @param bool   $generateMeta
+     * @return bool
+     */
     public function run(string $data, string $userId, bool $generateMeta = true): bool
     {
         $parser = new NetscapeBookmarkParser(true, [], '0', storage_path('logs'));

@@ -40,7 +40,7 @@ class TagController extends Controller
      * @param int     $tagID
      * @return View
      */
-    public function show(Request $request, $tagID): View
+    public function show(Request $request, int $tagID): View
     {
         $tag = Tag::publicOnly()->findOrFail($tagID);
 

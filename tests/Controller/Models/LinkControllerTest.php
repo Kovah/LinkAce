@@ -165,6 +165,28 @@ class LinkControllerTest extends TestCase
         $this->assertEquals('example.com', $databaseLink->title);
     }
 
+    public function testStoreRequestWithHugeThumbnail(): void
+    {
+        $img = 'https://assets.imgix.net/unsplash/unsplash006.jpg?w=640&h=400&usm=20&fit=crop&blend-mode=normal&blend-alpha=80&blend-x=30&blend-y=20&blend=https%3A%2F%2Fassets.imgix.net%2F~text%3Ftxt-color%3D9fb64d%26txt-font%3DAvenir%2BNext%2BHeavy%26txt-shad%3D20%26txt-size%3D32%26w%3D580%26txt%3Di%2Bthank%2Byou%2Bgod%2Bfor%2Bmost%2Bthis%2Bamazing%2Bday%3Afor%2Bthe%2Bleaping%2Bgreenly%2Bspirits%2Bof%2Btrees%2B-e.e.%2Bcummings';
+
+        $testHtml = '<!DOCTYPE html><head>' .
+            '<title>Example Title</title>' .
+            '<meta property="og:image" content="' . $img . '">' .
+            '</head></html>';
+
+        Http::fake(['huge-thumbnail.com' => Http::response($testHtml)]);
+
+        $response = $this->post('links', [
+            'url' => 'https://huge-thumbnail.com',
+        ]);
+
+        $response->assertRedirect('links/1');
+
+        $databaseLink = Link::first();
+
+        $this->assertEquals($img, $databaseLink->thumbnail);
+    }
+
     public function testStoreRequestWithContinue(): void
     {
         $response = $this->post('links', [

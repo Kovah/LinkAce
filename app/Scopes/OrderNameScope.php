@@ -6,11 +6,6 @@ use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Scope;
 
-/**
- * Class OrderNameScope
- *
- * @package App\Scopes
- */
 class OrderNameScope implements Scope
 {
     /**
@@ -20,7 +15,7 @@ class OrderNameScope implements Scope
      * @param Model   $model
      * @return void
      */
-    public function apply(Builder $builder, Model $model)
+    public function apply(Builder $builder, Model $model): void
     {
         $builder->orderBy('name', 'ASC');
     }
