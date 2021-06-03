@@ -55,16 +55,18 @@ class ImportHtmlBookmarks
                 $description = $link['note'];
             }
 
-            $newLink = Link::create([
+            $newLink = new Link([
                 'user_id' => $userId,
                 'url' => $link['uri'],
                 'title' => $title,
                 'description' => $description,
                 'icon' => LinkIconMapper::mapLink($link['uri']),
-                'is_private' => $link['pub'],
-                'created_at' => Carbon::createFromTimestamp($link['time']),
-                'updated_at' => Carbon::now(),
+                'is_private' => $link['pub']
             ]);
+            $newLink->created_at = Carbon::createFromTimestamp($link['time']);
+            $newLink->updated_at = Carbon::now();
+            $newLink->timestamps = false;
+            $newLink->save();
 
             if (!empty($link['tags'])) {
                 $tags = explode(' ', $link['tags']);
