@@ -60,7 +60,8 @@
                         <input type="hidden" name="search_description" value="on">
 
                         <div class="input-group">
-                            <input type="text" name="query" id="query" autofocus
+                            <label for="query" class="sr-only">@lang('search.query')</label>
+                            <input type="text" name="query" id="query" autofocus required minlength="1"
                                 class="form-control" placeholder="@lang('search.query')">
                             <div class="input-group-append">
                                 <button class="btn btn-primary" type="submit">
