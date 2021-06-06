@@ -14,10 +14,20 @@
                     <a href="{{ route('links.show', [$link->id]) }}">
                         {{ $link->title }}
                     </a>
+                    @if($link->tags->count() > 0)
+                        <div class="mt-1">
+                            <label class="small mb-0">@lang('tag.tags'):</label>
+                            @foreach($link->tags as $tag)
+                                <a href="{{ route('tags.show', [$tag->id]) }}" class="badge badge-light">
+                                    {{ $tag->name }}
+                                </a>
+                            @endforeach
+                        </div>
+                    @endif
                 </td>
                 <td>
                     <a href="{{ $link->url }}" {!! linkTarget() !!}>
-                        {{ $link->url }}
+                        {{ $link->shortUrl() }}
                     </a>
                 </td>
                 <td class="text-muted">
