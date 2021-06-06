@@ -187,13 +187,16 @@ class Link extends Model
     }
 
     /**
-     * Get the URL shortened to max 50 characters
+     * Get the URL shortened to max 50 characters and with https:// removed.
+     * Other protocols like magnet://, ftp:// and so on will be kept to make
+     * those protocols more obvious for the user.
      *
+     * @param int $maxLength
      * @return string
      */
     public function shortUrl(int $maxLength = 50): string
     {
-        return Str::limit(trim($this->url, '/'), $maxLength);
+        return preg_replace('/http(s)?:\/\//', '', Str::limit(trim($this->url, '/'), $maxLength));
     }
 
     /**
