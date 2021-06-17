@@ -15,7 +15,7 @@ return [
 
     'links_new_tab' => '始终在新的标签页打开外部链接',
 
-    'markdown_for_text' => '',
+    'markdown_for_text' => '启用Markdown使用描述和注释',
 
     'privacy' => '隐私',
     'links_private_default' => '默认私密链接',
@@ -63,14 +63,14 @@ return [
     'password_updated' => '密码修改完成！',
     'old_password_invalid' => '旧密码无效！',
 
-    'two_factor_auth' => '',
-    'two_factor_enable' => '',
-    'two_factor_disable' => '',
-    'two_factor_setup_app' => '',
-    'two_factor_setup_url' => '',
-    'two_factor_recovery_codes' => '',
-    'two_factor_recovery_codes_view' => '',
-    'two_factor_regenerate_recovery_codes' => '',
+    'two_factor_auth' => '双重验证',
+    'two_factor_enable' => '启用双重验证',
+    'two_factor_disable' => '禁用双重验证',
+    'two_factor_setup_app' => '已启用双重验证。请通过扫描以下二维码来配置您的身份验证设备。',
+    'two_factor_setup_url' => '二维码无法正常工作？您也可以直接使用此链接。',
+    'two_factor_recovery_codes' => '将恢复码存储在安全密码管理器中。 如果您的双重验证设备丢失，它们可以用来恢复对您账户的使用。',
+    'two_factor_recovery_codes_view' => '查看恢复码',
+    'two_factor_regenerate_recovery_codes' => '生成新的恢复码',
 
     'api_token' => 'API 令牌',
     'api_token_generate' => '生成令牌',

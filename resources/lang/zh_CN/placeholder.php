@@ -14,7 +14,7 @@ return [
     'list_name' => '列表的实际名称',
     'tag_name' => '标签的实际名称',
 
-    'two_factor_otp' => '',
-    'two_factor_recovery_code' => '',
+    'two_factor_otp' => '一次性密码',
+    'two_factor_recovery_code' => '恢复码',
 
 ];

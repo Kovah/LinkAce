@@ -78,7 +78,7 @@
                             <label for="db_password">
                                 @lang('setup.database.db_password')
                             </label>
-                            <input type="password" name="db_password" id="db_password" required
+                            <input type="password" name="db_password" id="db_password"
                                 class="form-control{{ $errors->has('db_password') ? ' is-invalid' : '' }}"
                                 value="{{ old('db_password') ?: env('DB_PASSWORD') }}">
                             @if ($errors->has('db_password'))

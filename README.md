@@ -32,7 +32,8 @@
 
 ![Preview Screenshot](https://www.linkace.org/images/preview/linkace_dashboard.png)
 
-LinkAce is a bookmark archive. It wasn't built to manage the bookmarks of your browser but has its very own philosophy. My browser bookmarks contain only websites I regularly use and access. LinkAce, in contrast, is meant to provide a _long-term_ archive of links to websites, media files or anything else which has a valid URL. I store interesting articles, neat web tools or libraries I _may_ use sometime in the future.
+LinkAce is a self-hosted archive to collect links of your favorite websites. Save articles to read them later, tools to use them in your next project, or historic content to archive it for the long term. LinkAce comes with a lot of features while keeping a clean and minimal interface.  
+It wasn't built to manage the bookmarks of your browser but has its very own philosophy. My browser bookmarks contain only websites I regularly use and access. LinkAce, in contrast, is meant to provide a _long-term_ archive of links to websites, media files or anything else which has a valid URL.
 
 #### Feature Highlights
 
@@ -41,13 +42,14 @@ LinkAce is a bookmark archive. It wasn't built to manage the bookmarks of your b
 * Automated backups of saved sites via the [Internet Archive](https://web.archive.org/).
 * Organize bookmarks with the help of lists and tags.
 * A full REST API offers access to all features of LinkAce from other apps and services.
+* LinkAce ships with a light and dark theme, that can be toggled or changes automatically.
 * A bookmarklet to quickly save links from any browser.
 * Links can be private or public, so friends or internet strangers may see your collection.
+* Both private and public links are accessible via RSS feeds.
 * Add notes to links to add thoughts or other relevant information.
 * An advanced search including different filters and ordering.
 * Import and export of bookmarks from HTML.
-* Support for complete database and application backups to Amazon AWS S3.
-* A built-in light and dark color scheme.
+* Support for complete database and application backups to any AWS S3 storage.
 
 More features are already planned. Take a look at the [project board](https://github.com/Kovah/LinkAce/projects/1) for more information.
 
@@ -86,68 +88,15 @@ LinkAce provides multiple ways of installing it on your server. The complete doc
 
 [![Translations](https://img.shields.io/badge/Translations-Crowdin-2b303d)](https://crowdin.com/project/linkace) [![Code Climate maintainability](https://img.shields.io/codeclimate/maintainability/Kovah/LinkAce) ![Code Climate coverage](https://img.shields.io/codeclimate/coverage/Kovah/LinkAce)](https://codeclimate.com/github/Kovah/LinkAce) [![GitHub Build Status](https://img.shields.io/github/workflow/status/Kovah/LinkAce/Testing/dev?label=Dev%20Build)](https://github.com/Kovah/LinkAce/actions?query=workflow%3ATesting+branch%3Adev)
 
-Please review the [**contribution guidelines**](CONTRIBUTING.md) before starting to work on any features.
+Please consult the [**contribution guidelines**](CONTRIBUTING.md) to start working on LinkAce.
 
 
-### Development
+Thanks go to these wonderful people for their contributions:
 
-#### Requirements
-
-* [Docker](https://www.docker.com/products/docker-desktop)
-* [Node](https://nodejs.org/en/) (12 LTS)
-
-#### 1. Basic Setup
-
-The following steps assume that you are using Docker for development, which I highly encourage. If you use other ways to work with PHP projects you must adapt the commands to your system. Clone the repository to your machine and run the following commands to start the Docker container system:
-
-```bash
-cp .env.docker .env
-docker-compose up -d --build
-```
-
-Now, install all dependencies from inside the PHP container:
-
-```bash
-docker exec linkace-php bash -c "composer install"
-```
-
-Last step: compile all assets. Node 10 LTS is the minimum version required and recommended to use. You may use either NPM or Yarn for installing the asset dependencies.
-
-```bash
-npm install
-OR
-yarn install
-
-npm run dev
-```
-
-#### 2. Working with the Artisan command line
-
-I recommend using the Artisan command line tool in the PHP container only, to make sure that the same environment is  used. To do so, use the following example command:
-
-```bash
-docker exec linkace-php bash -c "php artisan migrate"
-```
-
-#### 3. Registering a new user
-
-Currently, you can do this by using the command line:
-
-```bash
-docker exec -it linkace-php bash -c "php artisan registeruser [user name] [user email]"
-```
-
-
-#### Tests
-
-You can run existing tests with the following command:
-
-```bash
-docker exec -it linkace-php composer run tests
-```
+[![List of contributors](https://contrib.rocks/image?repo=kovah/linkace)](https://github.com/Kovah/LinkAce/graphs/contributors)
 
 
 ---
 
 
-LinkAce is a project by [Kovah](https://kovah.de) | [Contributors](https://github.com/Kovah/LinkAce/graphs/contributors)
+LinkAce is a project by [Kevin Woblick](https://kovah.de) and [Contributors](https://github.com/Kovah/LinkAce/graphs/contributors)

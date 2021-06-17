@@ -10,6 +10,8 @@ return [
     'search_description' => 'Beschreibung durchsuchen',
     'private_only' => 'Nur private Links',
     'broken_links' => 'Nur kaputte Links',
+    'empty_tags' => 'ohne Tags',
+    'empty_lists' => 'ohne Listen',
 
     'order_by' => 'Sortieren nach',
     'order_by.title:asc' => 'Titel aufsteigend',
