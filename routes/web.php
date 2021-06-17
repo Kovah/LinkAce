@@ -31,20 +31,22 @@ use Rap2hpoutre\LaravelLogViewer\LogViewerController;
 Route::get('/', FrontController::class)->name('front');
 
 // Setup routes
-Route::get('setup/start', [MetaController::class, 'welcome'])
-    ->name('setup.welcome');
-Route::get('setup/requirements', [RequirementsController::class, 'index'])
-    ->name('setup.requirements');
-Route::get('setup/database', [DatabaseController::class, 'index'])
-    ->name('setup.database');
-Route::post('setup/database', [DatabaseController::class, 'configure'])
-    ->name('setup.save-database');
-Route::get('setup/account', [AccountController::class, 'index'])
-    ->name('setup.account');
-Route::post('setup/account', [AccountController::class, 'register'])
-    ->name('setup.save-account');
-Route::get('setup/complete', [MetaController::class, 'complete'])
-    ->name('setup.complete');
+Route::prefix('setup')->group(function () {
+    Route::get('start', [MetaController::class, 'welcome'])
+        ->name('setup.welcome');
+    Route::get('requirements', [RequirementsController::class, 'index'])
+        ->name('setup.requirements');
+    Route::get('database', [DatabaseController::class, 'index'])
+        ->name('setup.database');
+    Route::post('database', [DatabaseController::class, 'configure'])
+        ->name('setup.save-database');
+    Route::get('account', [AccountController::class, 'index'])
+        ->name('setup.account');
+    Route::post('account', [AccountController::class, 'register'])
+        ->name('setup.save-account');
+    Route::get('complete', [MetaController::class, 'complete'])
+        ->name('setup.complete');
+});
 
 // Bookmarklet routes
 Route::prefix('bookmarklet')->group(function () {
