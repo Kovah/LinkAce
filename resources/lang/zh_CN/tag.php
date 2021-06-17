@@ -3,7 +3,7 @@ return [
     'tag' => '标签',
     'tags' => '标签',
     'all_tags' => '所有标签',
-    'recent_tags' => '',
+    'recent_tags' => '最近的标签',
 
     'add' => '添加标签',
     'show' => '显示标签',

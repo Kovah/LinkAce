@@ -3,7 +3,7 @@ return [
     'tag' => 'Étiquette',
     'tags' => 'Étiquettes',
     'all_tags' => 'Toutes Étiquettes',
-    'recent_tags' => '',
+    'recent_tags' => 'Mes balises récentes',
 
     'add' => 'Ajouter Étiquette',
     'show' => 'Afficher Étiquette',
