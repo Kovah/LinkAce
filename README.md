@@ -2,7 +2,7 @@
   <img src="https://www.linkace.org/images/linkace-social.jpg" title="Linkace">
 </p>
 
-<p>&nbsp;</p>
+&nbsp;
 
 <p align="center"><b>Your self-hosted bookmark archive. Free and open source.</b></p>
 
@@ -19,13 +19,12 @@
 ### Contents
 
 * [About LinkAce](#about-linkace)
-* [Support Disclaimer](#bulb-support-for-linkace)
+* [Support](#bulb-support-for-linkace)
 * [Setup](#gear-setup)
 * [Contribution](#construction-contribution)
-  * [Development](#development)
 
 
----
+&nbsp;
 
 
 ### About LinkAce
@@ -33,7 +32,8 @@
 ![Preview Screenshot](https://www.linkace.org/images/preview/linkace_dashboard.png)
 
 LinkAce is a self-hosted archive to collect links of your favorite websites. Save articles to read them later, tools to use them in your next project, or historic content to archive it for the long term. LinkAce comes with a lot of features while keeping a clean and minimal interface.  
-It wasn't built to manage the bookmarks of your browser but has its very own philosophy. My browser bookmarks contain only websites I regularly use and access. LinkAce, in contrast, is meant to provide a _long-term_ archive of links to websites, media files or anything else which has a valid URL.
+It provides a long-term archive to store links to websites, media files or anything else with a valid URL. The user is able to categorize the added links to be able to find them later, and share lists of links with friends, family or coworkers. However, LinkAce should not provide a solution to sync your browser bookmarks.
+
 
 #### Feature Highlights
 
@@ -53,22 +53,25 @@ It wasn't built to manage the bookmarks of your browser but has its very own phi
 
 More features are already planned. Take a look at the [project board](https://github.com/Kovah/LinkAce/projects/1) for more information.
 
-#### Documentation and Community
-
-Any further information about all the available features and how to install the app, can be found on the [LinkAce Website](https://www.linkace.org/). Additionally, you may visit the [community forums](https://community.linkace.org/) to share your ideas, talk with other users or find help for specific problems.
+More screenshots of the app and further details about the features can be found on the [LinkAce Website](https://www.linkace.org/).
 
 
----
+&nbsp;
 
 
 ### :bulb: Support for LinkAce
 
-I built LinkAce to solve my own problem, and I now offer my solution and code without charging anything. I spent a lot of my free time building this application already, so I won't offer any *free* personal support, customization or installation help. If you need help please visit the [community forum](https://community.linkace.org/) and post your issue there.
+I built LinkAce to solve my own problem, and I now offer my solution and code without charging any money. I spent a lot of my free time building this application, so I won't offer any *free* personal support, customization or installation help. If you need help please visit the [community forum](https://community.linkace.org/) and post your issue there.
 
 You can get personal and dedicated support by **becoming a [Patreon](https://www.patreon.com/Kovah)** or **[Github Sponsor](https://github.com/sponsors/Kovah)**. :star:
 
+#### Documentation and Community
 
----
+Details about all features and advanced configuration can be found in the [**project documentation**](https://www.linkace.org/docs/).  
+Additionally, you may visit the [community forums](https://community.linkace.org/) to share your ideas, talk with other users or find help for specific problems.
+
+
+&nbsp;
 
 
 ### :gear: Setup
@@ -81,7 +84,7 @@ LinkAce provides multiple ways of installing it on your server. The complete doc
 * Setup without Docker
 
 
----
+&nbsp;
 
 
 ### :construction: Contribution
@@ -91,12 +94,15 @@ LinkAce provides multiple ways of installing it on your server. The complete doc
 Please consult the [**contribution guidelines**](CONTRIBUTING.md) to start working on LinkAce.
 
 
+&nbsp;
+
+
 Thanks go to these wonderful people for their contributions:
 
 [![List of contributors](https://contrib.rocks/image?repo=kovah/linkace)](https://github.com/Kovah/LinkAce/graphs/contributors)
 
 
----
+&nbsp;
 
 
 LinkAce is a project by [Kevin Woblick](https://kovah.de) and [Contributors](https://github.com/Kovah/LinkAce/graphs/contributors)
