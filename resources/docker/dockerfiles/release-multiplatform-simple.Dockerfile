@@ -65,7 +65,7 @@ COPY ./resources/docker/supervisord.ini /etc/supervisor.d/supervisord.ini
 
 # Copy the PHP and nginx config files
 COPY ./resources/docker/php/php.ini /usr/local/etc/php/php.ini
-COPY ./resources/docker/nginx/nginx.conf /etc/nginx/conf.d/default.conf
+COPY ./resources/docker/nginx/nginx.conf /etc/nginx/http.d/default.conf
 
 # Copy files from the composer build
 COPY --from=builder /app/vendor /app/vendor
