@@ -16,7 +16,19 @@ services:
     ports:
       - "127.0.0.1:3306:3306"
     volumes:
-      - linkace-db:/bitnami
+      - linkace-db:/var/lib/mysql
+
+  pg-db:
+    container_name: "linkace-pg-db"
+    image: postgres:13
+    environment:
+      - POSTGRES_PASSWORD=${DB_PASSWORD}
+      - POSTGRES_USER=${DB_USERNAME}
+      - POSTGRES_DB=${DB_DATABASE}
+    ports:
+      - "127.0.0.1:5432:5432"
+    volumes:
+      - linkace-pg-db:/var/lib/postgresql/data
 
   # --- PHP
   php:
@@ -53,4 +65,6 @@ services:
 
 volumes:
   linkace-db:
+    driver: local
+  linkace-pg-db:
     driver: local

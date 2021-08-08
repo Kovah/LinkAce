@@ -10,6 +10,8 @@ return [
     'search_description' => '搜索描述',
     'private_only' => '仅私有链接',
     'broken_links' => '仅失效的链接',
+    'empty_tags' => '没有标签',
+    'empty_lists' => '没有列表',
 
     'order_by' => '排序方式',
     'order_by.title:asc' => '按标题升序排序',
@@ -23,5 +25,5 @@ return [
 
     'no_results' => '未找到任何结果。',
 
-    'validation_query_missing' => '',
+    'validation_query_missing' => '您必须输入一个搜索查询，或者选择一个列表、一个标签或者启用搜索已失效的链接。',
 ];

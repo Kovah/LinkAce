@@ -11,7 +11,7 @@ return [
     'logout' => '登出',
     'remember_me' => '记住我的登陆',
     'go_to_dashboard' => '转到控制面板',
-    'system_logs' => '',
+    'system_logs' => '系统日志',
 
     'reset_password' => '重置密码',
     'send_reset_email' => '发送密码重置链接',

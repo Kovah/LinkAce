@@ -5,6 +5,12 @@
     <div class="card">
         <header class="card-header d-flex align-items-center">
             <span class="mr-3">
+                @if($list->is_private)
+                    <span>
+                        <x-icon.lock class="mr-1" title="@lang('list.private')"/>
+                        <span class="sr-only">@lang('list.private')</span>
+                    </span>
+                @endif
                 @lang('list.list')
             </span>
             <div class="ml-auto">

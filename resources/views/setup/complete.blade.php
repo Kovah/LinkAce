@@ -7,7 +7,7 @@
 
             <div class="card">
                 <div class="card-header">
-                    @lang('setup.completed')
+                    @lang('setup.complete')
                 </div>
                 <div class="card-body">
 

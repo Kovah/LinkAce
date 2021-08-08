@@ -3,7 +3,7 @@ return [
     'list' => '列表',
     'lists' => '列表',
     'all_lists' => '所有列表',
-    'recent_lists' => '',
+    'recent_lists' => '最近列表',
 
     'add' => '添加列表',
     'show' => '显示列表',

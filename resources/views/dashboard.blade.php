@@ -163,7 +163,7 @@
 
                 <div class="card-body">
                     @forelse($recent_lists as $list)
-                        <a href="{{ route('lists.show', [$list->id]) }}" class="badge badge-light badge-lg">
+                        <a href="{{ route('lists.show', [$list->id]) }}" class="badge badge-light badge-lg badge-wrap">
                             {{ $list->name }}
                         </a>
                     @empty
@@ -184,7 +184,7 @@
 
                 <div class="card-body">
                     @forelse($recent_tags as $tag)
-                        <a href="{{ route('tags.show', [$tag->id]) }}" class="badge badge-light badge-lg">
+                        <a href="{{ route('tags.show', [$tag->id]) }}" class="badge badge-light badge-lg badge-wrap">
                             {{ $tag->name }}
                         </a>
                     @empty
