@@ -11,6 +11,8 @@ return [
     'update' => 'Update Tag',
     'delete' => 'Delete Tag',
 
+    'filter_tags' => 'Filter Tags...',
+
     'private' => 'Private Tag',
 
     'name' => 'Tag Name',

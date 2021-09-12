@@ -27,13 +27,20 @@ class TagController extends Controller
             ->orderBy(
                 $request->input('orderBy', 'name'),
                 $request->input('orderDir', 'ASC')
-            )->paginate(getPaginationLimit());
+            );
+
+        if($request->input('filter')) {
+            $tags = $tags->where('name', 'like', '%' . $request->input('filter') . '%');
+        }
+
+        $tags = $tags->paginate(getPaginationLimit());
 
         return view('models.tags.index', [
             'tags' => $tags,
             'route' => $request->getBaseUrl(),
             'orderBy' => $request->input('orderBy', 'name'),
             'orderDir' => $request->input('orderDir', 'ASC'),
+            'filter' => $request->input('filter')
         ]);
     }
 
