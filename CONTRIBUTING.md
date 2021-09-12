@@ -74,5 +74,6 @@ docker exec -it linkace-php bash -c "php artisan registeruser [user name] [user 
 You can run existing tests with the following command:
 
 ```bash
-docker exec -it linkace-php composer run tests
+docker exec -it linkace-php composer run lint
+docker exec -it linkace-php composer run test
 ```
