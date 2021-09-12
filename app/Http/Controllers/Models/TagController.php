@@ -29,7 +29,7 @@ class TagController extends Controller
                 $request->input('orderDir', 'ASC')
             );
 
-        if($request->input('filter')) {
+        if ($request->input('filter')) {
             $tags = $tags->where('name', 'like', '%' . $request->input('filter') . '%');
         }
 
