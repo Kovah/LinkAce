@@ -25,14 +25,42 @@ class ListControllerTest extends TestCase
 
     public function testIndexView(): void
     {
-        $list = LinkList::factory()->create([
+        LinkList::factory()->create([
+            'name' => 'Test List',
             'user_id' => $this->user->id,
         ]);
 
         $response = $this->get('lists');
 
         $response->assertOk()
-            ->assertSee($list->name);
+            ->assertSee('Test List');
+    }
+
+    public function testIndexViewWithValidFilterResult(): void
+    {
+        LinkList::factory()->create([
+            'name' => 'Test List',
+            'user_id' => $this->user->id,
+        ]);
+
+        $response = $this->get('lists?filter=Test');
+
+        $response->assertOk()
+            ->assertSee('Test List')
+            ->assertDontSee('No Tags found');
+    }
+
+    public function testIndexViewWithNoFilterResult(): void
+    {
+        LinkList::factory()->create([
+            'name' => 'Test List',
+            'user_id' => $this->user->id,
+        ]);
+
+        $response = $this->get('lists?filter=asdfasdfasdf');
+
+        $response->assertOk()
+            ->assertSee('No Lists found');
     }
 
     public function testCreateView(): void

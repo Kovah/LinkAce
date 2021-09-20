@@ -27,8 +27,13 @@ class ListController extends Controller
             ->orderBy(
                 $request->input('orderBy', 'name'),
                 $request->input('orderDir', 'asc')
-            )
-            ->paginate(getPaginationLimit());
+            );
+
+        if ($request->input('filter')) {
+            $lists = $lists->where('name', 'like', '%' . $request->input('filter') . '%');
+        }
+
+        $lists = $lists->paginate(getPaginationLimit());
 
         return view('models.lists.index', [
             'lists' => $lists,
