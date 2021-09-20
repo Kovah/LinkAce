@@ -11,7 +11,7 @@ return [
     'update' => 'Tag aktualisieren',
     'delete' => 'Tag löschen',
 
-    'filter_tags' => '',
+    'filter_tags' => 'Tags filtern...',
 
     'private' => 'Privater Tag',
 
