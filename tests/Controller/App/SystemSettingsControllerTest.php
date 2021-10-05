@@ -32,9 +32,13 @@ class SystemSettingsControllerTest extends TestCase
 
     public function testValidSettingsUpdateResponse(): void
     {
+        $response = $this->get('dashboard');
+        $response->assertDontSee('Begin of custom header scripts');
+
         $response = $this->post('settings/system', [
             'system_page_title' => 'New Title',
             'system_guest_access' => '1',
+            'system_custom_header_content' => '<script>console.log(\'scripts work\')</script>',
         ]);
 
         $response->assertRedirect('settings/system');
@@ -50,6 +54,15 @@ class SystemSettingsControllerTest extends TestCase
             'key' => 'system_guest_access',
             'value' => '1',
         ]);
+
+        $this->assertDatabaseHas('settings', [
+            'user_id' => null,
+            'key' => 'system_custom_header_content',
+            'value' => '<script>console.log(\'scripts work\')</script>',
+        ]);
+
+        $response = $this->get('dashboard');
+        $response->assertSee('<script>console.log(\'scripts work\')</script>', false);
     }
 
     public function testValidCronGeneratonResponse(): void
