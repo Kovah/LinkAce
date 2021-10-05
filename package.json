@@ -13,9 +13,9 @@
     "url": "https://github.com/Kovah/LinkAce/issues"
   },
   "devDependencies": {
-    "laravel-mix": "^6.0.27",
-    "postcss": "^8.3.6",
-    "sass": "^1.37.5",
+    "laravel-mix": "^6.0.31",
+    "postcss": "^8.3.9",
+    "sass": "^1.42.1",
     "sass-loader": "^10.2.0"
   },
   "dependencies": {
