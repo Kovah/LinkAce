@@ -11,6 +11,8 @@ return [
     'update' => 'Actualitzar etiqueta',
     'delete' => 'Elimina etiqueta',
 
+    'filter_tags' => '',
+
     'private' => 'Etiqueta privada',
 
     'name' => 'Nom de l\'etiqueta',
