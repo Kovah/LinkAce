@@ -45,7 +45,7 @@ class TagController extends Controller
         $tag = Tag::publicOnly()->findOrFail($tagID);
 
         $links = $tag->links()
-            ->privateOnly()
+            ->publicOnly()
             ->orderBy(
                 $request->input('orderBy', 'title'),
                 $request->input('orderDir', 'ASC')
