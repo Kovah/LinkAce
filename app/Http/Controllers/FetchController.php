@@ -92,11 +92,15 @@ class FetchController extends Controller
             return response()->json([]);
         }
 
-        $linkCount = Link::byUser(auth()->user()->id)
+        $link = Link::byUser(auth()->user()->id)
             ->where('url', trim($query))
-            ->count();
+            ->where('id', '!=', $request->input('ignore_id', 0))
+            ->first();
 
-        return response()->json(['linkFound' => $linkCount > 0]);
+        return response()->json([
+            'linkFound' => $link !== null,
+            'editLink' => $link ? route('links.edit', ['link' => $link]) : null,
+        ]);
     }
 
     /**

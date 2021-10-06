@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\App;
 
 use App\Http\Controllers\Controller;
+use App\Models\Link;
 use Illuminate\Contracts\View\Factory;
 use Illuminate\Contracts\View\View;
 use Illuminate\Http\RedirectResponse;
@@ -43,6 +44,7 @@ class BookmarkletController extends Controller
         session(['bookmarklet.create' => true]);
 
         return view('app.bookmarklet.create', [
+            'existing_link' => Link::withTrashed()->whereUrl($newUrl)->first() ?: false,
             'bookmark_url' => $newUrl,
             'bookmark_title' => $newTitle,
             'bookmark_description' => $newDescription,

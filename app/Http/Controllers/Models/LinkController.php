@@ -49,7 +49,9 @@ class LinkController extends Controller
         // Reset the bookmarklet session identifier to prevent issues on regular pages
         session()->forget('bookmarklet.create');
 
-        return view('models.links.create');
+        return view('models.links.create', [
+            'existing_link' => null,
+        ]);
     }
 
     /**
@@ -115,6 +117,7 @@ class LinkController extends Controller
     {
         return view('models.links.edit', [
             'link' => $link,
+            'existing_link' => null,
         ]);
     }
 

@@ -8,6 +8,8 @@ export default class UrlField {
     this.$field = $el;
 
     this.$field.addEventListener('keyup', this.onKeyup.bind(this));
+    this.$linkExistsWarning = document.querySelector('.link-exists');
+    this.$linkExistsLink = this.$linkExistsWarning.querySelector('a');
 
     const $tags = document.querySelector('#tags');
     this.tagSuggestions = $tags ? getInstance($tags, TagsSelect) : null;
@@ -20,14 +22,14 @@ export default class UrlField {
 
       // Check for existing links if the value is longer than http://
       if (value.length > 6) {
-        this.checkforExistingUrl(value);
+        this.checkForExistingUrl(value);
       } else {
         this.resetField();
       }
     });
   }
 
-  checkforExistingUrl (url) {
+  checkForExistingUrl (url) {
     const checkUrl = window.appData.routes.fetch.existingLinks;
 
     fetch(checkUrl, {
@@ -36,6 +38,7 @@ export default class UrlField {
       headers: {'Content-Type': 'application/json'},
       body: JSON.stringify({
         _token: window.appData.user.token,
+        ignore_id: this.$field.dataset.ignoreId ?? null,
         query: url
       })
     }).then((response) => {
@@ -45,8 +48,12 @@ export default class UrlField {
       // If the link already exist, mark the field as invalid
       if (result.linkFound === true) {
         this.$field.classList.add('is-invalid');
+        this.$linkExistsLink.href = result.editLink;
+        this.$linkExistsWarning.classList.remove('d-none');
       } else {
         this.$field.classList.remove('is-invalid');
+        this.$linkExistsWarning.classList.add('d-none');
+        this.$linkExistsLink.href = '';
         this.querySiteForMetaTags(url);
       }
 

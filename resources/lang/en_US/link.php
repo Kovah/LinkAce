@@ -59,6 +59,7 @@ return [
     'deletion_error' => 'Link could not be deleted.',
 
     'duplicates_found' => 'LinkAce found possible duplicates of the submitted URL:',
+    'existing_found' => 'A Link with that URL already exists.',
 
     'notifications.linkcheck.errors' => 'LinkAce found errors while checking your Links.',
     'notifications.linkcheck.errors.moved' => '⚠ ️The following Links moved to a new location:',
