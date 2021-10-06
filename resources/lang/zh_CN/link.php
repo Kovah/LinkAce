@@ -56,6 +56,7 @@ return [
     'deletion_error' => '无法删除链接。',
 
     'duplicates_found' => 'LinkAce发现提交的 URL可能重复：',
+    'existing_found' => '',
 
     'notifications.linkcheck.errors' => 'LinkAce在检查您的链接时发生错误。',
     'notifications.linkcheck.errors.moved' => '⚠ 以下链接移动到一个新位置:',

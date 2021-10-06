@@ -82,6 +82,8 @@ return [
     'sys_page_title' => 'Seitentitel',
     'sys_guest_access' => 'Gastzugang aktivieren',
     'sys_guest_access_help' => 'Wenn aktiviert, können Gäste alle Links sehen, die nicht privat sind.',
+    'sys_custom_header_content' => 'Benutzerdefinierter Inhalt für HTML Head',
+    'sys_custom_header_content_help' => 'Hier eingegebener Inhalt wird auf jeder LinkAce Seite im HTML &lt;/head&gt; platziert. Nützlich für Analytics Skripte. Achtung: Inhalte werden nicht geprüft und können die Seite kaputt machen!',
 
     'cron_token' => 'Cron-Token',
     'cron_token_generate' => 'Token generieren',

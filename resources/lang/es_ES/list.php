@@ -11,6 +11,8 @@ return [
     'update' => 'Actualizar lista',
     'delete' => 'Borrar lista',
 
+    'filter_lists' => 'Filtrar listas...',
+
     'private' => 'Lista privada',
 
     'name' => 'Nombre de la lista',
