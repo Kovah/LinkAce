@@ -11,6 +11,8 @@ return [
     'update' => 'Update List',
     'delete' => 'Delete List',
 
+    'filter_lists' => 'Filter Lists...',
+
     'private' => 'Private List',
 
     'name' => 'List Name',

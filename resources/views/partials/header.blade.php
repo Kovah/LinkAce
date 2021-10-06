@@ -29,3 +29,9 @@
         ]
     ]
 ]) }}">
+
+@if(systemsettings('system_custom_header_content'))
+    <!-- Begin of custom header scripts -->
+    {!! systemsettings('system_custom_header_content') !!}
+    <!-- End of custom header scripts -->
+@endif

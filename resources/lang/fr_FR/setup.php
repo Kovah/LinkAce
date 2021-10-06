@@ -12,7 +12,7 @@ return [
     'intro.step3' => 'Créez votre compte utilisateur.',
 
     'check_requirements' => 'Vérifier Prérequis',
-    'requirements.php_version' => 'Version PHP >= 7.2.0',
+    'requirements.php_version' => 'Version PHP >= 7.3.0',
     'requirements.extension_bcmath' => 'Module PHP : BCMath',
     'requirements.extension_ctype' => 'Module PHP : Ctype',
     'requirements.extension_json' => 'Module PHP : JSON',

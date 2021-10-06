@@ -45,10 +45,10 @@ class TagController extends Controller
         $tag = Tag::publicOnly()->findOrFail($tagID);
 
         $links = $tag->links()
-            ->privateOnly()
+            ->publicOnly()
             ->orderBy(
                 $request->input('orderBy', 'title'),
-                $request->input('orderDir', 'ASC')
+                $request->input('orderDir', 'asc')
             )->paginate(getPaginationLimit());
 
         return view('guest.tags.show', [
@@ -56,7 +56,7 @@ class TagController extends Controller
             'tagLinks' => $links,
             'route' => $request->getBaseUrl(),
             'orderBy' => $request->input('orderBy', 'title'),
-            'orderDir' => $request->input('orderDir', 'ASC'),
+            'orderDir' => $request->input('orderDir', 'asc'),
         ]);
     }
 }

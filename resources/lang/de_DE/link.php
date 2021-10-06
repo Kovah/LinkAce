@@ -48,6 +48,9 @@ return [
     'check_enable' => 'Prüfung aktivieren',
     'check_enabled' => 'Prüfung ist aktiviert',
 
+    'status_is_broken' => 'Link ist als defekt markiert',
+    'status_mark_working' => 'Als funktionierend markieren',
+
     'added_successfully' => 'Link erfolgreich hinzugefügt.',
     'added_connection_error' => 'Der Link wurde hinzugefügt, aber beim Zugriff auf die URL ist ein Verbindungsfehler aufgetreten. Details finden Sie in den Logs.',
     'added_request_error' => 'Der Link wurde hinzugefügt, aber ein Fehler trat auf, wenn versucht wurde, die URL anzufordern, zum Beispiel ein ungültiges Zertifikat. Details finden Sie in den Logs.',
@@ -56,6 +59,7 @@ return [
     'deletion_error' => 'Link konnte nicht gelöscht werden.',
 
     'duplicates_found' => 'LinkAce hat mögliche Duplikate der URL gefunden:',
+    'existing_found' => 'Ein Link mit dieser URL existiert bereits.',
 
     'notifications.linkcheck.errors' => 'LinkAce hat Fehler beim Überprüfen Ihrer Links gefunden.',
     'notifications.linkcheck.errors.moved' => '⚠ Die folgenden Links wurden an einen neuen Ort verschoben:',

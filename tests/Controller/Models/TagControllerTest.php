@@ -35,6 +35,33 @@ class TagControllerTest extends TestCase
         $response->assertOk()->assertSee('Test Tag');
     }
 
+    public function testIndexViewWithValidFilterResult(): void
+    {
+        Tag::factory()->create([
+            'name' => 'Test Tag',
+            'user_id' => $this->user->id,
+        ]);
+
+        $response = $this->get('tags?filter=Test');
+
+        $response->assertOk()
+            ->assertSee('Test Tag')
+            ->assertDontSee('No Tags found');
+    }
+
+    public function testIndexViewWithNoFilterResult(): void
+    {
+        Tag::factory()->create([
+            'name' => 'Test Tag',
+            'user_id' => $this->user->id,
+        ]);
+
+        $response = $this->get('tags?filter=asdfasdfasdf');
+
+        $response->assertOk()
+            ->assertSee('No Tags found');
+    }
+
     public function testCreateView(): void
     {
         $response = $this->get('tags/create');

@@ -8,7 +8,7 @@
             @csrf
 
             <div class="row">
-                <div class="col">
+                <div class="col-12 col-sm-8 col-md-6">
 
                     <div class="form-group">
                         <label for="system_page_title">
@@ -24,7 +24,7 @@
                     </div>
 
                 </div>
-                <div class="col">
+                <div class="col-12 col-sm-8 col-md-6">
 
                     <div class="form-group">
                         <label for="system_guest_access">
@@ -49,6 +49,25 @@
                         @endif
                     </div>
 
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="col-12 col-sm-8 col-md-6">
+                    <div class="form-group">
+                        <label for="system_custom_header_content">@lang('settings.sys_custom_header_content')</label>
+
+                        <textarea name="system_custom_header_content" id="system_custom_header_content" rows="4"
+                            class="form-control{{ $errors->has('system_custom_header_content') ? ' is-invalid' : '' }}"
+                        >{{ old('system_custom_header_content', systemsettings('system_custom_header_content')) }}</textarea>
+                        <p class="small text-muted mt-1">@lang('settings.sys_custom_header_content_help')</p>
+
+                        @error('system_custom_header_content')
+                        <p class="invalid-feedback" role="alert">
+                            {{ $errors->first('system_custom_header_content') }}
+                        </p>
+                        @enderror
+                    </div>
                 </div>
             </div>
 

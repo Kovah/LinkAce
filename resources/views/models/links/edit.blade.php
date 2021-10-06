@@ -16,10 +16,14 @@
 
                 <div class="form-group">
                     <label class="label" for="url">@lang('link.url')</label>
-                    <input name="url" id="url" type="url"
+                    <input name="url" id="url" type="url" data-ignore-id="{{ $link->id }}"
                         class="form-control form-control-lg{{ $errors->has('url') ? ' is-invalid' : '' }}"
                         placeholder="@lang('placeholder.link_url')" value="{{ old('url') ?: $link->url }}"
                         required autofocus>
+                    <p class="invalid-feedback link-exists {{ $existing_link ? '' : 'd-none' }}">
+                        @lang('link.existing_found')
+                        <a href="{{ route('links.edit', [$existing_link->id ?? 0]) }}">@lang('link.edit')</a>
+                    </p>
                     @if ($errors->has('url'))
                         <p class="invalid-feedback" role="alert">
                             {{ $errors->first('url') }}

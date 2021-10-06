@@ -89,6 +89,9 @@ return [
         'de_DE' => 'Deutsch',
         'fr_FR' => 'Français',
         'zh_CN' => '简体中文',
+        'ca_ES' => 'Català',
+        'es_ES' => 'Español',
+        'hu_HU' => 'Magyar',
     ],
 
     /*

@@ -82,6 +82,8 @@ return [
     'sys_page_title' => 'Page Title',
     'sys_guest_access' => 'Enable Guest Access',
     'sys_guest_access_help' => 'If enabled, guest will be able to see all links that are not private.',
+    'sys_custom_header_content' => 'Custom Header Content',
+    'sys_custom_header_content_help' => 'Content entered here will be placed before the &lt;/head&gt; tag on all LinkAce sites. Useful to place analytics or customization scripts. Caution: contents are not escaped and may break the site!',
 
     'cron_token' => 'Cron Token',
     'cron_token_generate' => 'Generate Token',

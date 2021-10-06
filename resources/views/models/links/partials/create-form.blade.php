@@ -10,19 +10,20 @@
             <div class="form-group">
                 <label class="label" for="url">@lang('link.url')</label>
                 <input name="url" id="url" type="url"
-                    class="form-control form-control-lg{{ $errors->has('url') ? ' is-invalid' : '' }}"
+                    class="form-control form-control-lg{{ $errors->has('url') || $existing_link ? ' is-invalid' : '' }}"
                     placeholder="@lang('placeholder.link_url')" value="{{ old('url') ?: $bookmark_url ?? '' }}"
                     required autofocus>
 
-                <p class="invalid-feedback {{ $errors->has('url') ? 'd-none' : '' }}">
-                    @lang('validation.unique', ['attribute' => trans('link.url')])
+                <p class="invalid-feedback link-exists {{ $existing_link ? '' : 'd-none' }}">
+                    @lang('link.existing_found')
+                    <a href="{{ route('links.edit', [$existing_link->id ?? 0]) }}">@lang('link.edit')</a>
                 </p>
 
-                @if ($errors->has('url'))
-                    <p class="invalid-feedback" role="alert">
-                        {{ $errors->first('url') }}
-                    </p>
-                @endif
+                @error('url')
+                <p class="invalid-feedback" role="alert">
+                    {{ $errors->first('url') }}
+                </p>
+                @enderror
             </div>
 
             <div class="row">
@@ -44,7 +45,7 @@
                     <div class="form-group">
                         <label for="description">@lang('link.description')</label>
                         <textarea name="description" id="description" rows="4" class="form-control"
-                            >{{ old('description') ?: $bookmark_description ?? '' }}</textarea>
+                        >{{ old('description') ?: $bookmark_description ?? '' }}</textarea>
 
                         @if ($errors->has('description'))
                             <p class="invalid-feedback" role="alert">
