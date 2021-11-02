@@ -30,7 +30,7 @@ return [
 
     /*
     |--------------------------------------------------------------------------
-    | Application Debug Mode
+    | Application Debug & Demo Mode
     |--------------------------------------------------------------------------
     |
     | When your application is in debug mode, detailed error messages with
@@ -40,6 +40,8 @@ return [
     */
 
     'debug' => env('APP_DEBUG', false),
+
+    'demo' => env('APP_DEMO', false),
 
     /*
     |--------------------------------------------------------------------------
