@@ -22,6 +22,8 @@ class BookmarkletController extends Controller
         $newUrl = $request->input('u');
         $newTitle = $request->input('t');
         $newDescription = $request->input('d');
+        $newTags = $request->input('tags');
+        $newLists = $request->input('lists');
 
         // Redirect to the login if the user is not logged in
         if (!auth()->check()) {
@@ -29,6 +31,8 @@ class BookmarkletController extends Controller
             session(['bookmarklet.new_url' => $newUrl]);
             session(['bookmarklet.new_title' => $newTitle]);
             session(['bookmarklet.new_description' => $newDescription]);
+            session(['bookmarklet.new_tags' => $newTags]);
+            session(['bookmarklet.new_lists' => $newLists]);
             session(['bookmarklet.login_redirect' => true]);
 
             return redirect()->route('bookmarklet-login');
@@ -39,6 +43,8 @@ class BookmarkletController extends Controller
             $newUrl = session()->pull('bookmarklet.new_url');
             $newTitle = session()->pull('bookmarklet.new_title');
             $newDescription = session()->pull('bookmarklet.new_description');
+            $newTags = session()->pull('bookmarklet.new_tags');
+            $newLists = session()->pull('bookmarklet.new_lists');
         }
 
         session(['bookmarklet.create' => true]);
@@ -48,6 +54,8 @@ class BookmarkletController extends Controller
             'bookmark_url' => $newUrl,
             'bookmark_title' => $newTitle,
             'bookmark_description' => $newDescription,
+            'bookmark_tags' => $newTags,
+            'bookmark_lists' => $newLists,
         ]);
     }
 
