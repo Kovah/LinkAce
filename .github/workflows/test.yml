@@ -74,7 +74,7 @@ jobs:
           restore-keys: ${{ runner.os }}-composer-
 
       - name: Prepare the environment
-        run: cp .env.example .env
+        run: cp .env.example .env && touch database/testing.sqlite
 
       - name: Validate composer.json and composer.lock
         run: composer validate
