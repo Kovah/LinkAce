@@ -22,7 +22,7 @@ RUN composer install -n --prefer-dist --no-dev
 
 # ================================
 # Compile all assets
-FROM node:14 AS npm_builder
+FROM node:16 AS npm_builder
 WORKDIR /srv
 
 COPY ./resources/assets ./resources/assets
