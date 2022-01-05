@@ -6,15 +6,16 @@ on:
 jobs:
 
   test-js:
-    name: Test asset generation process on Node 14 LTS
+    name: Test asset generation process on Node 16 LTS
     runs-on: ubuntu-latest
 
     steps:
       - uses: actions/checkout@v1
-      - name: Use Node.js 14 LTS
+
+      - name: Use Node.js 16 LTS
         uses: actions/setup-node@v1
         with:
-          node-version: '14.x'
+          node-version: 16.x
 
       - name: Try to build the assets
         run: |
@@ -41,7 +42,7 @@ jobs:
     strategy:
       matrix:
         operating-system: [ ubuntu-latest ]
-        php-versions: [ '7.3', '7.4', '8.0' ]
+        php-versions: [ '7.4', '8.0' ]
 
     steps:
       - uses: actions/checkout@v1
