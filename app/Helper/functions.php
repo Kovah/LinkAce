@@ -81,6 +81,10 @@ function formatDateTime(Carbon $date, bool $use_relational = false): string
  */
 function getPaginationLimit()
 {
+    if (request()->has('per_page') && (int)request()->get('per_page') > 0) {
+        return (int)request()->get('per_page');
+    }
+
     $default = config('linkace.default.pagination');
 
     if (request()->is('guest/*')) {
