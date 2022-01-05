@@ -257,7 +257,7 @@ class ListControllerTest extends TestCase
 
         $response = $this->deleteJson('lists/1');
 
-        $response->assertRedirect('lists');
+        $response->assertRedirect();
 
         $databaseList = LinkList::withTrashed()->first();
 

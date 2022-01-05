@@ -86,7 +86,6 @@ class NoteController extends Controller
         }
 
         flash(trans('note.deleted_successfully'), 'warning');
-
         return redirect()->route('links.show', [$linkId]);
     }
 }

@@ -239,7 +239,7 @@ class TagControllerTest extends TestCase
 
         $response = $this->delete('tags/1');
 
-        $response->assertRedirect('tags');
+        $response->assertRedirect();
 
         $databaseTag = Tag::withTrashed()->first();
 
