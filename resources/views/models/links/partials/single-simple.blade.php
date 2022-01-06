@@ -1,7 +1,7 @@
 <li class="list-group-item">
     <div class="d-sm-flex align-items-center">
         <div class="mr-3 one-line-sm">
-            <a href="{{ $link->url }}" title="{{ $link->url }}">
+            <a href="{{ $link->url }}" title="{{ $link->url }}" {!! linkTarget() !!}>
                 @if($link->is_private)
                     <span>
                         <x-icon.lock class="mr-1" title="@lang('link.private')"/>
