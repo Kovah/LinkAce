@@ -1,3 +1,10 @@
+import TomSelect from 'tom-select';
+import TomSelect_caret_position from 'tom-select/dist/js/plugins/caret_position';
+import TomSelect_input_autogrow from 'tom-select/dist/js/plugins/input_autogrow';
+
+TomSelect.define('caret_position', TomSelect_caret_position);
+TomSelect.define('input_autogrow', TomSelect_input_autogrow);
+
 export default class TagsSelect {
 
   constructor ($el) {
@@ -7,22 +14,17 @@ export default class TagsSelect {
 
     this.$el = $el;
     this.type = this.$el.dataset.tagType;
-    this.selectize = null;
+    this.select = null;
 
     this.$suggestions = $el.parentElement.querySelector('.tag-suggestions');
     this.$suggestionsContent = $el.parentElement.querySelector('.tag-suggestions-content');
 
     this.config = {
+      plugins: ['caret_position', 'input_autogrow'],
       delimiter: ',',
       persist: false,
       load: (query, callback) => {
         this.handleTagLoading(query, callback);
-      },
-      create: function (input) {
-        return {
-          value: input.replace(',', ''),
-          text: input.replace(',', '')
-        };
       }
     };
 
@@ -32,8 +34,7 @@ export default class TagsSelect {
   init () {
     this.prepareConfig();
 
-    const $select = $(this.$el).selectize(this.config);
-    this.selectize = $select[0].selectize;
+    this.select = new TomSelect(this.$el, this.config);
   }
 
   prepareConfig () {
@@ -102,9 +103,8 @@ export default class TagsSelect {
   onSuggestionClick ($tag) {
     const value = $tag.innerText;
 
-    this.selectize.addOption({value: value, text: value});
-    this.selectize.refreshOptions();
-    this.selectize.addItem(value);
+    this.select.addOption({value: value, text: value});
+    this.select.addItem(value);
 
     $tag.onclick = null;
     $tag.classList.remove('cursor-pointer');

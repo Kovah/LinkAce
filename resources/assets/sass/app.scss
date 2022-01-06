@@ -3,10 +3,9 @@
 @import "~bootstrap/scss/functions";
 @import "variables";
 @import "third-party/bootstrap/bootstrap";
-// Selectize
-@import "~selectize/src/scss/selectize";
-@import "third-party/selectize/variables";
-@import "third-party/selectize/selectize";
+// Tom Select
+@import "third-party/tom-select/variables";
+@import "third-party/tom-select/select";
 // Custom styles
 @import "custom/app";
 @import "custom/helper";

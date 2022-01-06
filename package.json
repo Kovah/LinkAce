@@ -22,7 +22,7 @@
     "bootstrap": "^4.6.0",
     "jquery": "^3.6.0",
     "popper.js": "^1.16.1",
-    "selectize": "github:selectize/selectize.js#master"
+    "tom-select": "^2.0.0"
   },
   "scripts": {
     "dev": "npm run development",
