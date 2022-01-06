@@ -14,10 +14,16 @@ jobs:
 
     steps:
       - uses: actions/checkout@v2
-      - name: Use Node.js 14.x
+
+      - name: Reconfigure Git to use HTTP authentication
+        run: >
+          git config --global url."https://github.com/".insteadOf
+          ssh://git@github.com/
+
+      - name: Use Node.js 16.x
         uses: actions/setup-node@v2
         with:
-          node-version: '14.x'
+          node-version: 16
 
       - name: Try to build the assets
         run: |
@@ -58,7 +64,7 @@ jobs:
       - name: Setup PHP
         uses: shivammathur/setup-php@v2
         with:
-          php-version: '7.3'
+          php-version: 7.4
           extensions: mbstring
 
       - name: Get Composer Cache Directory

@@ -45,7 +45,7 @@ jobs:
         php-versions: [ '7.4', '8.0' ]
 
     steps:
-      - uses: actions/checkout@v1
+      - uses: actions/checkout@v2
 
       - uses: actions/download-artifact@v1
         with:
