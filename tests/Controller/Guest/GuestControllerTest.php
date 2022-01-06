@@ -26,8 +26,7 @@ class GuestControllerTest extends TestCase
     {
         $response = $this->get('/');
 
-        $response->assertOk()
-            ->assertSee('Login');
+        $response->assertRedirect('login');
     }
 
     public function testGuestModeDisabledWithLogin(): void

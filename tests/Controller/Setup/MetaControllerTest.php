@@ -29,7 +29,7 @@ class MetaControllerTest extends TestCase
 
         $response = $this->get('/');
 
-        $response->assertOk();
+        $response->assertRedirect('login');
     }
 
     public function testRedirectIfSetupCompleted(): void

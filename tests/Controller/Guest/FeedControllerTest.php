@@ -37,19 +37,19 @@ class FeedControllerTest extends TestCase
 
     public function testListFeed(): void
     {
-        $listPublic = LinkList::factory()->create(['is_private' => false]);
-        $listPrivate = LinkList::factory()->create(['is_private' => true]);
+        LinkList::factory()->create(['name' => 'public list', 'is_private' => false]);
+        LinkList::factory()->create(['name' => 'private list', 'is_private' => true]);
 
         $response = $this->get('guest/lists/feed');
 
         $response->assertOk()
-            ->assertSee($listPublic->name)
-            ->assertDontSee($listPrivate->name);
+            ->assertSee('public list')
+            ->assertDontSee('private list');
     }
 
     public function testListLinkFeed(): void
     {
-        $link = LinkList::factory()->create(['is_private' => false]);
+        $link = LinkList::factory()->create(['name' => 'test link', 'is_private' => false]);
         $listLink = Link::factory()->create(['is_private' => false]);
         $privateListLink = Link::factory()->create(['is_private' => true]);
         $unrelatedLink = Link::factory()->create();
@@ -59,7 +59,7 @@ class FeedControllerTest extends TestCase
         $response = $this->get('guest/lists/1/feed');
 
         $response->assertOk()
-            ->assertSee($link->name)
+            ->assertSee('test link')
             ->assertSee($listLink->url)
             ->assertDontSee($privateListLink->url)
             ->assertDontSee($unrelatedLink->url);
@@ -76,19 +76,19 @@ class FeedControllerTest extends TestCase
 
     public function testTagsFeed(): void
     {
-        $tagPublic = Tag::factory()->create(['is_private' => false]);
-        $tagPrivate = Tag::factory()->create(['is_private' => true]);
+        Tag::factory()->create(['name' => 'public tag', 'is_private' => false]);
+        Tag::factory()->create(['name' => 'private tag', 'is_private' => true]);
 
         $response = $this->get('guest/tags/feed');
 
         $response->assertOk()
-            ->assertSee($tagPublic->name)
-            ->assertDontSee($tagPrivate->name);
+            ->assertSee('public tag')
+            ->assertDontSee('private tag');
     }
 
     public function testTagLinkFeed(): void
     {
-        $tag = Tag::factory()->create(['is_private' => false]);
+        $tag = Tag::factory()->create(['name' => 'test tag', 'is_private' => false]);
         $tagLink = Link::factory()->create(['is_private' => false]);
         $privateTagLink = Link::factory()->create(['is_private' => true]);
         $unrelatedLink = Link::factory()->create();
@@ -98,7 +98,7 @@ class FeedControllerTest extends TestCase
         $response = $this->get('guest/tags/1/feed');
 
         $response->assertOk()
-            ->assertSee($tag->name)
+            ->assertSee('test tag')
             ->assertSee($tagLink->url)
             ->assertDontSee($privateTagLink->url)
             ->assertDontSee($unrelatedLink->url);

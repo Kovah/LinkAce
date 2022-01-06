@@ -367,7 +367,7 @@ class LinkControllerTest extends TestCase
 
         $response = $this->delete('links/1');
 
-        $response->assertRedirect('links');
+        $response->assertRedirect();
 
         $databaseLink = Link::withTrashed()->first();
 

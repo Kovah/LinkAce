@@ -6,7 +6,7 @@ services:
   # --- MariaDB
   db:
     container_name: "linkace-db"
-    image: mariadb:10.5
+    image: mariadb:10.6
     command: mysqld --character-set-server=utf8mb4 --collation-server=utf8mb4_bin
     environment:
       - MYSQL_ROOT_PASSWORD=${DB_PASSWORD}

@@ -20,7 +20,7 @@ class FrontController extends Controller
                 return redirect()->route('guest.links.index');
             }
 
-            return view('welcome');
+            return redirect()->route('login');
         }
 
         return redirect()->route('dashboard');

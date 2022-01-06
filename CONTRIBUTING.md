@@ -39,15 +39,15 @@ docker-compose up -d --build
 Now, install all dependencies from inside the PHP container:
 
 ```bash
-docker exec linkace-php bash -c "composer install"
+docker exec -it linkace-php composer install
+
+docker exec -it linkace-php php artisan key:generate
 ```
 
 Last step: compile all assets. Node 10 LTS is the minimum version required and recommended to use. You may use either NPM or Yarn for installing the asset dependencies.
 
 ```bash
 npm install
-OR
-yarn install
 
 npm run dev
 ```

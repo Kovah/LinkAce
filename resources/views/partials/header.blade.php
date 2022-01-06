@@ -30,7 +30,7 @@
     ]
 ]) }}">
 
-@if(systemsettings('system_custom_header_content'))
+@if(systemsettings('system_custom_header_content') && config('app.demo') === false)
     <!-- Begin of custom header scripts -->
     {!! systemsettings('system_custom_header_content') !!}
     <!-- End of custom header scripts -->

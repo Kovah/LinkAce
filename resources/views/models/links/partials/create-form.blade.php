@@ -60,7 +60,7 @@
                     <div class="form-group">
                         <label for="lists">@lang('list.lists')</label>
                         <input name="lists" id="lists" type="text" placeholder="@lang('placeholder.list_select')"
-                            class="tags-select" value="{{ old('lists') }}" data-tag-type="lists">
+                            class="tags-select" value="{{ old('lists', $bookmark_lists ?? null) }}" data-tag-type="lists">
 
                         @if ($errors->has('lists'))
                             <p class="invalid-feedback" role="alert">
@@ -72,7 +72,7 @@
                     <div class="form-group">
                         <label for="tags">@lang('tag.tags')</label>
                         <input name="tags" id="tags" type="text" placeholder="@lang('placeholder.tags_select')"
-                            class="tags-select" value="{{ old('tags') }}" data-tag-type="tags">
+                            class="tags-select" value="{{ old('tags', $bookmark_tags ?? null) }}" data-tag-type="tags">
 
                         @if ($errors->has('tags'))
                             <p class="invalid-feedback" role="alert">

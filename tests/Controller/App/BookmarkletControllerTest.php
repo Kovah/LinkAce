@@ -45,4 +45,19 @@ class BookmarkletControllerTest extends TestCase
             ->assertSessionHas('bookmarklet.new_url', 'https://example.com')
             ->assertSessionHas('bookmarklet.new_title', 'Example Title');
     }
+
+    public function testValidBookmarkletWithTagsAndLists(): void
+    {
+        $user = User::factory()->create();
+        $this->actingAs($user);
+
+        $response = $this->get('bookmarklet/add?u=https://example.com&t=Example%20Title&tags=some%20%26%20tag&lists=a%20new%20list');
+
+        $response->assertOk()
+            ->assertSee('https://example.com')
+            ->assertSee('Example Title')
+            ->assertSee('some & tag')
+            ->assertSee('a new list')
+        ;
+    }
 }

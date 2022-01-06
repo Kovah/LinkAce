@@ -34,6 +34,8 @@
 LinkAce is a self-hosted archive to collect links of your favorite websites. Save articles to read them later, tools to use them in your next project, or historic content to archive it for the long term. LinkAce comes with a lot of features while keeping a clean and minimal interface.  
 It provides a long-term archive to store links to websites, media files or anything else with a valid URL. The user is able to categorize the added links to be able to find them later, and share lists of links with friends, family or coworkers. However, LinkAce should not provide a solution to sync your browser bookmarks.
 
+👉 [**Try the Demo**](https://demo.linkace.org)
+
 
 #### Feature Highlights
 
@@ -51,7 +53,7 @@ It provides a long-term archive to store links to websites, media files or anyth
 * Import and export of bookmarks from HTML.
 * Support for complete database and application backups to any AWS S3 storage.
 
-More features are already planned. Take a look at the [project board](https://github.com/Kovah/LinkAce/projects/1) for more information.
+More features are already planned. Take a look at the [project board](https://github.com/Kovah/LinkAce/projects/3) for more information.
 
 More screenshots of the app and further details about the features can be found on the [LinkAce Website](https://www.linkace.org/).
 
