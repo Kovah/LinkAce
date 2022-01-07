@@ -13,7 +13,7 @@
             <form action="{{ route('do-html-export') }}" method="post" class="mb-3">
                 @csrf
                 <button type="submit" name="method" value="html" class="btn btn-primary export-submit">
-                    <x-icon.upload class="mr-2"/>
+                    <x-icon.upload class="me-2"/>
                     @lang('export.start_export_html')
                 </button>
             </form>
@@ -21,7 +21,7 @@
             <form action="{{ route('do-csv-export') }}" method="post">
                 @csrf
                 <button type="submit" name="method" value="csv" class="btn btn-primary export-submit">
-                    <x-icon.upload class="mr-2"/>
+                    <x-icon.upload class="me-2"/>
                     @lang('export.start_export_csv')
                 </button>
             </form>

@@ -29,7 +29,7 @@
                                 aria-label="@lang('link.url')">
                             <div class="input-group-append">
                                 <button class="btn btn-primary" type="submit">
-                                    <x-icon.plus class="mr-2"/> @lang('linkace.add')
+                                    <x-icon.plus class="me-2"/> @lang('linkace.add')
                                 </button>
                             </div>
                         </div>
@@ -59,13 +59,13 @@
                         <input type="hidden" name="search_title" value="on">
                         <input type="hidden" name="search_description" value="on">
 
+                        <label for="query" class="visually-hidden">@lang('search.query')</label>
                         <div class="input-group">
-                            <label for="query" class="sr-only">@lang('search.query')</label>
                             <input type="text" name="query" id="query" autofocus required minlength="1"
                                 class="form-control" placeholder="@lang('search.query')">
                             <div class="input-group-append">
                                 <button class="btn btn-primary" type="submit">
-                                    <x-icon.search class="mr-2"/>
+                                    <x-icon.search class="me-2"/>
                                     @lang('search.search')
                                 </button>
                             </div>
@@ -90,7 +90,7 @@
                     @forelse($recent_links as $link)
                         <a href="{{ route('links.show', [$link->id]) }}"
                             class="list-group-item list-group-item-action one-line">
-                            {!! $link->getIcon('mr-1') !!}
+                            {!! $link->getIcon('me-1') !!}
                             {{ $link->title }}
                         </a>
                     @empty
@@ -110,42 +110,32 @@
                 </div>
 
                 <ul class="list-group list-group-flush">
-                    <li class="list-group-item">
-                        <div class="d-flex align-items-center">
-                            <span class="mr-1">@lang('stats.total_links')</span>
-                            <span class="badge badge-secondary ml-auto">{{ $stats['total_links'] }}</span>
-                        </div>
+                    <li class="list-group-item d-flex justify-content-between align-items-center">
+                        <span class="me-1">@lang('stats.total_links')</span>
+                        <span class="badge bg-secondary">{{ $stats['total_links'] }}</span>
                     </li>
-                    <li class="list-group-item">
-                        <div class="d-flex align-items-center">
-                            <span class="mr-1">@lang('stats.total_lists')</span>
-                            <span class="badge badge-secondary ml-auto">{{ $stats['total_lists'] }}</span>
-                        </div>
+                    <li class="list-group-item d-flex justify-content-between align-items-center">
+                        <span class="me-1">@lang('stats.total_lists')</span>
+                        <span class="badge bg-secondary">{{ $stats['total_lists'] }}</span>
                     </li>
-                    <li class="list-group-item">
-                        <div class="d-flex align-items-center">
-                            <span class="mr-1">@lang('stats.total_tags')</span>
-                            <span class="badge badge-secondary ml-auto">{{ $stats['total_tags'] }}</span>
-                        </div>
+                    <li class="list-group-item d-flex justify-content-between align-items-center">
+                        <span class="me-1">@lang('stats.total_tags')</span>
+                        <span class="badge bg-secondary">{{ $stats['total_tags'] }}</span>
                     </li>
-                    <li class="list-group-item">
-                        <div class="d-flex align-items-center">
-                            <span class="mr-1">@lang('stats.total_notes')</span>
-                            <span class="badge badge-secondary ml-auto">{{ $stats['total_notes'] }}</span>
-                        </div>
+                    <li class="list-group-item d-flex justify-content-between align-items-center">
+                        <span class="me-1">@lang('stats.total_notes')</span>
+                        <span class="badge bg-secondary">{{ $stats['total_notes'] }}</span>
                     </li>
-                    <li class="list-group-item">
-                        <div class="d-flex align-items-center">
-                            <span class="mr-1">@lang('stats.total_broken_links')</span>
-                            <form action="{{ route('do-search') }}" method="post" class="d-inline-block ml-auto">
-                                @csrf
-                                <input type="hidden" name="broken_only" value="on">
-                                <button type="submit"
-                                    class="badge border-0 {{ $stats['total_broken_links'] > 0 ? 'badge-danger' : 'badge-secondary' }}">
-                                    {{ $stats['total_broken_links'] }}
-                                </button>
-                            </form>
-                        </div>
+                    <li class="list-group-item d-flex justify-content-between align-items-center">
+                        <span class="me-1">@lang('stats.total_broken_links')</span>
+                        <form action="{{ route('do-search') }}" method="post" class="d-inline-block">
+                            @csrf
+                            <input type="hidden" name="broken_only" value="on">
+                            <button type="submit"
+                                class="badge border-0 {{ $stats['total_broken_links'] > 0 ? 'bg-danger' : 'bg-secondary' }}">
+                                {{ $stats['total_broken_links'] }}
+                            </button>
+                        </form>
                     </li>
                 </ul>
             </div>
@@ -163,7 +153,8 @@
 
                 <div class="card-body">
                     @forelse($recent_lists as $list)
-                        <a href="{{ route('lists.show', [$list->id]) }}" class="badge badge-light badge-lg badge-wrap">
+                        <a href="{{ route('lists.show', [$list->id]) }}"
+                            class="badge bg-light text-dark badge-lg badge-wrap text-decoration-none">
                             {{ $list->name }}
                         </a>
                     @empty
@@ -184,7 +175,8 @@
 
                 <div class="card-body">
                     @forelse($recent_tags as $tag)
-                        <a href="{{ route('tags.show', [$tag->id]) }}" class="badge badge-light badge-lg badge-wrap">
+                        <a href="{{ route('tags.show', [$tag->id]) }}"
+                            class="badge bg-light text-dark badge-lg badge-wrap text-decoration-none">
                             {{ $tag->name }}
                         </a>
                     @empty

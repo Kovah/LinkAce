@@ -102,7 +102,7 @@
             @include('app.settings.partials.system.guest.sharing')
 
             <button type="submit" class="btn btn-primary">
-                <x-icon.save class="mr-2"/> @lang('settings.save_settings')
+                <x-icon.save class="me-2"/> @lang('settings.save_settings')
             </button>
 
         </form>

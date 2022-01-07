@@ -43,7 +43,7 @@
                         </div>
 
                         <button type="button" class="btn btn-sm btn-outline-primary"
-                            data-toggle="collapse" data-target="#recovery-code"
+                            data-bs-toggle="collapse" data-target="#recovery-code"
                             aria-expanded="false" aria-controls="recovery-code">
                             @lang('auth.two_factor_with_recovery')
                         </button>

@@ -33,7 +33,7 @@
                 </div>
 
                 <button type="submit" class="btn btn-primary">
-                    <x-icon.key class="mr-2"/> @lang('settings.change_password')
+                    <x-icon.key class="me-2"/> @lang('settings.change_password')
                 </button>
 
             </form>

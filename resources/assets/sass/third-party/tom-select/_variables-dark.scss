@@ -7,7 +7,7 @@ $select-color-text: $input-color; //$gray-800
 $select-color-highlight: darken($primary, 10%);
 $select-color-input: $input-bg;
 $select-color-input-full: $input-bg;
-$select-color-input-error: theme-color("danger");
+$select-color-input-error: $danger;
 $select-color-input-error-focus: darken($select-color-input-error, 10%);
 $select-color-disabled: $gray-800;
 $select-color-item: $gray-900;

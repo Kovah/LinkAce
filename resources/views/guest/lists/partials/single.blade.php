@@ -2,9 +2,9 @@
     <div class="h-100 card">
         <div class="card-header">
             <div class="d-flex align-items-top">
-                <div class="mr-2">
+                <div class="me-2">
                     @if($list->is_private)
-                        <x-icon.lock class="text-muted mr-1" title="@lang('list.private')"/>
+                        <x-icon.lock class="text-muted me-1" title="@lang('list.private')"/>
                     @endif
                     <a href="{{ route('guest.lists.show', [$list->id]) }}">{{ $list->name }}</a>
                 </div>

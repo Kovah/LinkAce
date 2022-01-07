@@ -28,42 +28,32 @@ $danger: $red;
 $light: $gray-200;
 $dark: $gray-900;
 
-$colors: ();
-$colors: map-merge(
-    (
-      "blue": $blue,
-      "indigo": $indigo,
-      "purple": $purple,
-      "pink": $pink,
-      "red": $red,
-      "orange": $orange,
-      "yellow": $yellow,
-      "green": $green,
-      "teal": $teal,
-      "cyan": $cyan,
-      "white": $white,
-      "gray": $gray-600,
-      "gray-dark": $gray-800
-    ),
-    $colors
+$colors: (
+  "blue":       $blue,
+  "indigo":     $indigo,
+  "purple":     $purple,
+  "pink":       $pink,
+  "red":        $red,
+  "orange":     $orange,
+  "yellow":     $yellow,
+  "green":      $green,
+  "teal":       $teal,
+  "cyan":       $cyan,
+  "white":      $white,
+  "gray":       $gray-600,
+  "gray-dark":  $gray-800
 );
 
-$theme-colors: ();
-$theme-colors: map-merge(
-    (
-      "primary": $primary,
-      "secondary": $secondary,
-      "success": $success,
-      "info": $info,
-      "warning": $warning,
-      "danger": $danger,
-      "light": $light,
-      "dark": $dark
-    ),
-    $theme-colors
+$theme-colors: (
+  "primary":    $primary,
+  "secondary":  $secondary,
+  "success":    $success,
+  "info":       $info,
+  "warning":    $warning,
+  "danger":     $danger,
+  "light":      $light,
+  "dark":       $dark
 );
-
-$yiq-contrasted-threshold: 170;
 
 
 // Dark Theme

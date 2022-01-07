@@ -1,15 +1,15 @@
 @auth
     <li class="nav-item dropdown">
         <a class="nav-link dropdown-toggle" href="#" role="button"
-            data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+            data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
             <span class="d-none d-sm-inline">{{ auth()->user()->name }}</span>
             <span class="d-sm-none">
                 <x-icon.cog class="fw"/>
-                <span class="sr-only">@lang('settings.settings')</span>
+                <span class="visually-hidden">@lang('settings.settings')</span>
             </span>
             <x-icon.caret-down class="fw"/>
         </a>
-        <div class="dropdown-menu dropdown-menu-right">
+        <div class="dropdown-menu dropdown-menu-end">
             <a href="{{ route('get-usersettings') }}" class="dropdown-item">
                 @lang('settings.settings')
             </a>

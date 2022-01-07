@@ -19,7 +19,7 @@
                             value="{{ old('query') ?: $query_settings['old_query'] }}">
                         <div class="input-group-append">
                             <button class="btn btn-primary" type="submit">
-                                <x-icon.search class="mr-2"/>
+                                <x-icon.search class="me-2"/>
                                 @lang('search.search')
                             </button>
                         </div>

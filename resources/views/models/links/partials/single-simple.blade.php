@@ -1,22 +1,22 @@
 <li class="list-group-item">
     <div class="d-sm-flex align-items-center">
-        <div class="mr-3 one-line-sm">
+        <div class="me-3 one-line-sm">
             <a href="{{ $link->url }}" title="{{ $link->url }}" {!! linkTarget() !!}>
                 @if($link->is_private)
                     <span>
-                        <x-icon.lock class="mr-1" title="@lang('link.private')"/>
-                        <span class="sr-only">@lang('link.private')</span>
+                        <x-icon.lock class="me-1" title="@lang('link.private')"/>
+                        <span class="visually-hidden">@lang('link.private')</span>
                     </span>
                 @endif
-                {!! $link->getIcon('mr-1') !!}
+                {!! $link->getIcon('me-1') !!}
                 {{ $link->shortTitle(100) }}
             </a>
         </div>
-        <div class="mt-2 mt-sm-0 ml-auto flex-shrink-0 d-flex align-items-center">
-            <small class="text-muted mr-3">{!! $link->domainOfURL() !!}</small>
+        <div class="mt-2 mt-sm-0 ms-auto flex-shrink-0 d-flex align-items-center">
+            <small class="text-muted me-3">{!! $link->domainOfURL() !!}</small>
             <a href="{{ route('links.show', [$link->id]) }}" title="@lang('link.show')">
                 <x-icon.info class="fw"/>
-                <span class="sr-only">@lang('link.details')</span>
+                <span class="visually-hidden">@lang('link.details')</span>
             </a>
         </div>
     </div>

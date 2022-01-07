@@ -2,8 +2,8 @@
     <div class="h-100 card">
         <div class="card-body h-100 border-bottom-0">
             <div class="d-flex align-items-top">
-                <div class="mr-2">
-                    {!! $link->getIcon('mr-1') !!}
+                <div class="me-2">
+                    {!! $link->getIcon('me-1') !!}
                     <a href="{{ $link->url }}" {!! linkTarget() !!}>
                         {{ $link->shortTitle() }}
                     </a>

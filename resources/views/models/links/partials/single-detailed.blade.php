@@ -3,31 +3,31 @@
     <div class="card-header">
         <div class="d-flex align-items-top flex-wrap flex-md-nowrap">
             @if($link->thumbnail)
-                <div class="d-flex justify-content-center mr-2 mb-2 mb-md-0 link-thumbnail-list-holder">
+                <div class="d-flex justify-content-center me-2 mb-2 mb-md-0 link-thumbnail-list-holder">
                     <a href="{{ $link->url }}" {!! linkTarget() !!} class="rounded d-block link-thumbnail link-thumbnail-list"
                         style="background-image: url('{{ $link->thumbnail }}');">
                     </a>
                 </div>
             @endif
-            <div class="mr-2 mw-100">
+            <div class="me-2 mw-100">
                 @if($link->is_private)
                     <span>
-                        <x-icon.lock class="mr-1" title="@lang('link.private')"/>
-                        <span class="sr-only">@lang('link.private')</span>
+                        <x-icon.lock class="me-1" title="@lang('link.private')"/>
+                        <span class="visually-hidden">@lang('link.private')</span>
                     </span>
                 @endif
-                {!! $link->getIcon('mr-1') !!}
+                {!! $link->getIcon('me-1') !!}
                 <a href="{{ $link->url }}" {!! linkTarget() !!}>{{ $link->title }}</a>
                 <br>
                 <small class="text-muted">{{ $link->shortUrl() }}</small>
             </div>
             @if(getShareLinks($link) !== '')
-                <div class="ml-auto text-right">
+                <div class="ms-auto text-right">
                     <button type="button" class="btn btn-xs btn-outline-secondary" title="@lang('sharing.share_link')"
-                        data-toggle="collapse" data-target="#sharing-{{ $link->id }}"
+                        data-bs-toggle="collapse" data-target="#sharing-{{ $link->id }}"
                         aria-expanded="false" aria-controls="sharing-{{ $link->id }}">
                         <x-icon.share class="fw"/>
-                        <span class="sr-only">@lang('sharing.share_link')</span>
+                        <span class="visually-hidden">@lang('sharing.share_link')</span>
                     </button>
                 </div>
             @endif
@@ -67,7 +67,7 @@
                     @lang('linkace.added') {!! $link->addedAt() !!}
                 </div>
 
-                <div class="btn-group mt-1 ml-md-2">
+                <div class="btn-group mt-1 ms-md-2">
                     <a href="{{ route('links.show', [$link->id]) }}" class="btn btn-xs btn-outline-secondary"
                         title="@lang('link.show')">
                         <x-icon.info class="fw"/> @lang('link.show')

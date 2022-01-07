@@ -5,11 +5,11 @@
     <div class="card">
         <header class="card-header d-flex align-items-center">
 
-            <span class="mr-3">@lang('list.list')</span>
+            <span class="me-3">@lang('list.list')</span>
             <a href="{{ route('guest.lists.links.feed', ['list' => $list]) }}"
-                class="ml-auto btn btn-xs btn-outline-secondary">
+                class="ms-auto btn btn-xs btn-outline-secondary">
                 <x-icon.feed/>
-                <span class="sr-only">@lang('linkace.feed')</span>
+                <span class="visually-hidden">@lang('linkace.feed')</span>
             </a>
 
         </header>

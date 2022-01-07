@@ -65,7 +65,7 @@
 
                 <div class="mt-3 d-sm-flex align-items-center justify-content-end">
 
-                    <div class="custom-control custom-checkbox mb-3 mb-sm-0 mr-sm-4">
+                    <div class="custom-control custom-checkbox mb-3 mb-sm-0 me-sm-4">
                         <input class="custom-control-input" type="checkbox" id="reload_view" name="reload_view"
                             @if(session('reload_view')) checked @endif>
                         <label class="custom-control-label" for="reload_view">
@@ -74,7 +74,7 @@
                     </div>
 
                     <button type="submit" class="btn btn-primary">
-                        <x-icon.save class="mr-2"/> @lang('list.add')
+                        <x-icon.save class="me-2"/> @lang('list.add')
                     </button>
 
                 </div>

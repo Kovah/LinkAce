@@ -27,7 +27,7 @@
 
                 <div class="d-flex align-items-center">
 
-                    <div class="custom-control custom-checkbox ml-auto mr-3">
+                    <div class="custom-control custom-checkbox ms-auto me-3">
                         <input class="custom-control-input" type="checkbox" id="is_private" name="is_private" value="1"
                             @if($note->is_private) checked @endif>
                         <label class="custom-control-label" for="is_private">
@@ -36,7 +36,7 @@
                     </div>
 
                     <button type="submit" class="btn btn-sm btn-primary">
-                        <x-icon.save class="mr-2"/> @lang('note.edit')
+                        <x-icon.save class="me-2"/> @lang('note.edit')
                     </button>
 
                 </div>

@@ -12,20 +12,16 @@ $gray-900: #193C74;
 $gray: #6F747F;
 $black: #17181A;
 
-$grays: ();
-$grays: map-merge(
-    (
-      "100": $gray-100,
-      "200": $gray-200,
-      "300": $gray-300,
-      "400": $gray-400,
-      "500": $gray-500,
-      "600": $gray-600,
-      "700": $gray-700,
-      "800": $gray-800,
-      "900": $gray-900
-    ),
-    $grays
+$grays: (
+  "100": $gray-100,
+  "200": $gray-200,
+  "300": $gray-300,
+  "400": $gray-400,
+  "500": $gray-500,
+  "600": $gray-600,
+  "700": $gray-700,
+  "800": $gray-800,
+  "900": $gray-900
 );
 
 $blue: #44679F;
@@ -48,75 +44,39 @@ $danger: $red;
 $light: $gray-100;
 $dark: $gray-800;
 
-$colors: ();
-$colors: map-merge(
-    (
-      "blue": $blue,
-      "indigo": $indigo,
-      "purple": $purple,
-      "pink": $pink,
-      "red": $red,
-      "orange": $orange,
-      "yellow": $yellow,
-      "green": $green,
-      "teal": $teal,
-      "cyan": $cyan,
-      "white": $white,
-      "gray": $gray-600,
-      "gray-dark": $gray-800
-    ),
-    $colors
+$colors: (
+  "blue": $blue,
+  "indigo": $indigo,
+  "purple": $purple,
+  "pink": $pink,
+  "red": $red,
+  "orange": $orange,
+  "yellow": $yellow,
+  "green": $green,
+  "teal": $teal,
+  "cyan": $cyan,
+  "white": $white,
+  "gray": $gray-600,
+  "gray-dark": $gray-800
 );
 
-$theme-colors: ();
-$theme-colors: map-merge(
-    (
-      "primary": $primary,
-      "secondary": $secondary,
-      "success": $success,
-      "info": $info,
-      "warning": $warning,
-      "danger": $danger,
-      "light": $light,
-      "dark": $dark
-    ),
-    $theme-colors
+$theme-colors: (
+  "primary": $primary,
+  "secondary": $secondary,
+  "success": $success,
+  "info": $info,
+  "warning": $warning,
+  "danger": $danger,
+  "light": $light,
+  "dark": $dark
 );
 
-$yiq-text-dark: $black;
-$yiq-text-light: $white;
+$color-contrast-dark: $black;
+$color-contrast-light: $white;
 
 
 // Options
 $enable-caret: false;
-
-
-// Spacing
-$spacer: 1rem;
-$spacers: ();
-$spacers: map-merge(
-    (
-      0: 0,
-      1: ($spacer * .25),
-      2: ($spacer * .5),
-      3: $spacer,
-      4: ($spacer * 1.5),
-      5: ($spacer * 3)
-    ),
-    $spacers
-);
-
-$sizes: ();
-$sizes: map-merge(
-    (
-      25: 25%,
-      50: 50%,
-      75: 75%,
-      100: 100%,
-      auto: auto
-    ),
-    $sizes
-);
 
 
 // Body
@@ -126,8 +86,7 @@ $body-color-muted: $gray;
 
 
 // Links
-$link-color: theme-color("primary");
-$link-hover-color: darken($link-color, 20%);
+$link-color: $primary;
 $link-hover-decoration: none;
 
 

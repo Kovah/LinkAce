@@ -4,11 +4,11 @@
         {!! $note->formatted_note !!}
     </div>
     <div class="note-meta mt-2 small d-flex align-items-center">
-        <div class="ml-auto mr-2 text-muted">
+        <div class="ms-auto me-2 text-muted">
             @if($note->is_private)
                 <span>
-                    <x-icon.lock class="mr-1" title="@lang('note.private')"/>
-                    <span class="sr-only">@lang('note.private')</span>
+                    <x-icon.lock class="me-1" title="@lang('note.private')"/>
+                    <span class="visually-hidden">@lang('note.private')</span>
                 </span>
             @endif
             {!! $note->addedAt() !!}
@@ -18,12 +18,12 @@
             <div class="btn-group">
                 <a href="{{ route('notes.edit', [$note->id]) }}" class="btn btn-xs btn-outline-secondary"
                     aria-label="@lang('note.edit')">
-                    <x-icon.edit class="mr-2"/>
+                    <x-icon.edit class="me-2"/>
                     @lang('linkace.edit')
                 </a>
                 <a onclick="event.preventDefault();document.getElementById('note-delete-{{ $note->id }}').submit();"
                     class="btn btn-xs btn-outline-danger cursor-pointer" aria-label="@lang('note.delete')">
-                    <x-icon.trash class="mr-2"/>
+                    <x-icon.trash class="me-2"/>
                     @lang('linkace.delete')
                 </a>
             </div>

@@ -2,11 +2,11 @@
     <div class="h-100 card">
         <div class="card-header">
             <div class="d-flex align-items-top">
-                <div class="mr-2">
+                <div class="me-2">
                     @if($list->is_private)
                         <span>
-                            <x-icon.lock class="mr-1" title="@lang('list.private')"/>
-                            <span class="sr-only">@lang('list.private')</span>
+                            <x-icon.lock class="me-1" title="@lang('list.private')"/>
+                            <span class="visually-hidden">@lang('list.private')</span>
                         </span>
                     @endif
                     <a href="{{ route('lists.show', [$list->id]) }}">{{ $list->name }}</a>
@@ -31,13 +31,13 @@
             <div class="btn-group w-100">
                 <a href="{{ route('lists.edit', [$list->id]) }}" class="card-link">
                     <x-icon.edit/>
-                    <span class="sr-only">@lang('list.edit')</span>
+                    <span class="visually-hidden">@lang('list.edit')</span>
                 </a>
                 <a href="#"
                     onclick="event.preventDefault();document.getElementById('list-delete-{{ $list->id }}').submit();"
                     title=" @lang('list.delete')" class="card-link cursor-pointer">
                     <x-icon.trash/>
-                    <span class="sr-only">@lang('list.delete')</span>
+                    <span class="visually-hidden">@lang('list.delete')</span>
                 </a>
             </div>
 

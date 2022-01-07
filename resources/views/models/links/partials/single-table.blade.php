@@ -6,8 +6,8 @@
             </a>
             @if($link->is_private)
                 <span>
-                <x-icon.lock class="mr-1" title="@lang('link.private')"/>
-                <span class="sr-only">@lang('link.private')</span>
+                <x-icon.lock class="me-1" title="@lang('link.private')"/>
+                <span class="visually-hidden">@lang('link.private')</span>
             </span>
             @endif
         </div>
@@ -35,12 +35,12 @@
             <div class="btn-group btn-group-xs">
                 <a href="{{ route('links.edit', [$link->id]) }}" class="btn btn-outline-secondary">
                     <x-icon.edit/>
-                    <span class="sr-only">@lang('link.edit')</span>
+                    <span class="visually-hidden">@lang('link.edit')</span>
                 </a>
                 <a href="#" title=" @lang('link.delete')" class="btn btn-outline-secondary"
                     onclick="event.preventDefault();document.getElementById('link-delete-{{ $link->id }}').submit();">
                     <x-icon.trash/>
-                    <span class="sr-only">@lang('link.delete')</span>
+                    <span class="visually-hidden">@lang('link.delete')</span>
                 </a>
             </div>
             <form id="link-delete-{{ $link->id }}" method="POST" style="display: none;"

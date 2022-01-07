@@ -1,6 +1,11 @@
-// Bootstrap 4 Fixes
+// Bootstrap 5 Fixes
 .custom-control-label {
   cursor: pointer;
+}
+
+.navbar > .container {
+  align-items: normal;
+  justify-content: normal;
 }
 
 // Remove buplicate border from list groups inside cards
@@ -15,7 +20,7 @@
 // Generate a small pagination on mobile devices to prevent overflow
 .pagination {
   @include media-breakpoint-only(xs) {
-    @include pagination-size($pagination-padding-y-sm, $pagination-padding-x-sm, $font-size-sm, $line-height-sm, $border-radius-sm);
+    @include pagination-size($pagination-padding-y-sm, $pagination-padding-x-sm, $font-size-sm, $border-radius-sm);
   }
 }
 

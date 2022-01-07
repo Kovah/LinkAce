@@ -3,9 +3,9 @@
 @import "~bootstrap/scss/functions";
 @import "variables";
 @import "variables-dark";
-@import "third-party/bootstrap/bootstrap";
+@import "third-party/bootstrap/bootstrap5";
 // Tom Select
-@import "~tom-select/src/scss/tom-select.bootstrap4";
+@import "third-party/tom-select/variables";
 @import "third-party/tom-select/variables-dark";
 @import "third-party/tom-select/select";
 // Custom styles

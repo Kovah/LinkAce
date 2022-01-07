@@ -2,14 +2,14 @@
     <div class="h-100 card">
         <div class="card-body h-100 border-bottom-0">
             <div class="d-flex align-items-top">
-                <div class="mr-2">
+                <div class="me-2">
                     @if($link->is_private)
                         <span>
-                            <x-icon.lock class="mr-1" title="@lang('link.private')"/>
-                            <span class="sr-only">@lang('link.private')</span>
+                            <x-icon.lock class="me-1" title="@lang('link.private')"/>
+                            <span class="visually-hidden">@lang('link.private')</span>
                         </span>
                     @endif
-                    {!! $link->getIcon('mr-1') !!}
+                    {!! $link->getIcon('me-1') !!}
                     <a href="{{ $link->url }}" {!! linkTarget() !!}>
                         {{ $link->shortTitle() }}
                     </a>
@@ -28,18 +28,18 @@
             <div class="btn-group w-100 mt-2 small">
                 <a href="{{ route('links.show', [$link->id]) }}" class="card-link" title="@lang('link.show')">
                     <x-icon.info class="fw"/>
-                    <span class="sr-only">@lang('link.show')</span>
+                    <span class="visually-hidden">@lang('link.show')</span>
                 </a>
 
                 <a href="{{ route('links.edit', [$link->id]) }}" class="card-link" title="@lang('link.edit')">
                     <x-icon.edit class="fw"/>
-                    <span class="sr-only">@lang('link.edit')</span>
+                    <span class="visually-hidden">@lang('link.edit')</span>
                 </a>
 
                 <a href="#" title="@lang('link.delete')" class="card-link"
                     onclick="event.preventDefault();document.getElementById('link-delete-{{ $link->id }}').submit();">
                     <x-icon.trash class="fw"/>
-                    <span class="sr-only">@lang('link.delete')</span>
+                    <span class="visually-hidden">@lang('link.delete')</span>
                 </a>
             </div>
 

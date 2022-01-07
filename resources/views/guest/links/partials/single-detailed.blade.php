@@ -2,15 +2,15 @@
 
     <div class="card-header">
         <div class="d-flex align-items-top flex-wrap">
-            <div class="mr-2 mw-100">
-                {!! $link->getIcon('mr-1') !!}
+            <div class="me-2 mw-100">
+                {!! $link->getIcon('me-1') !!}
                 <a href="{{ $link->url }}" {!! linkTarget() !!}>{{ $link->title }}</a>
                 <br>
                 <small class="text-muted">{{ $link->shortUrl() }}</small>
             </div>
-            <div class="ml-auto text-right">
+            <div class="ms-auto text-right">
                 <button type="button" class="btn btn-xs btn-outline-secondary" title="@lang('sharing.share_link')"
-                    data-toggle="collapse" data-target="#sharing-{{ $link->id }}"
+                    data-bs-toggle="collapse" data-target="#sharing-{{ $link->id }}"
                     aria-expanded="false" aria-controls="sharing-{{ $link->id }}">
                     <x-icon.share class="fw"/>
                 </button>

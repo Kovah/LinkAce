@@ -13,7 +13,7 @@
             <div>
                 @lang('trash.deleted_links')
             </div>
-            <div class="ml-auto">
+            <div class="ms-auto">
                 <form action="{{ route('clear-trash') }}" method="post">
                     @csrf
                     <input type="hidden" name="model" value="links">
@@ -38,7 +38,7 @@
             <div>
                 @lang('trash.deleted_lists')
             </div>
-            <div class="ml-auto">
+            <div class="ms-auto">
                 <form action="{{ route('clear-trash') }}" method="post">
                     @csrf
                     <input type="hidden" name="model" value="lists">
@@ -63,7 +63,7 @@
             <div>
                 @lang('trash.deleted_tags')
             </div>
-            <div class="ml-auto">
+            <div class="ms-auto">
                 <form action="{{ route('clear-trash') }}" method="post">
                     @csrf
                     <input type="hidden" name="model" value="tags">
@@ -88,7 +88,7 @@
             <div>
                 @lang('trash.deleted_notes')
             </div>
-            <div class="ml-auto">
+            <div class="ms-auto">
                 <form action="{{ route('clear-trash') }}" method="post">
                     @csrf
                     <input type="hidden" name="model" value="notes">

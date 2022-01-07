@@ -56,15 +56,15 @@
 
                 <div class="mt-3 d-sm-flex flex-wrap align-items-center">
 
-                    <div class="d-sm-inline-block mb-3 mb-sm-0 mr-auto">
+                    <div class="d-sm-inline-block mb-3 mb-sm-0 me-auto">
                         <button type="button" class="btn btn-sm btn-outline-danger"
                             onclick="window.deleteTag.submit()">
-                            <x-icon.trash class="mr-2"/> @lang('tag.delete')
+                            <x-icon.trash class="me-2"/> @lang('tag.delete')
                         </button>
                     </div>
 
                     <button type="submit" class="btn btn-primary">
-                        <x-icon.save class="mr-2"/> @lang('tag.update')
+                        <x-icon.save class="me-2"/> @lang('tag.update')
                     </button>
 
                 </div>

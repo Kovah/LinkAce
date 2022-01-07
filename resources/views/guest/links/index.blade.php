@@ -7,14 +7,14 @@
 @section('content')
 
     <header class="d-flex align-items-center">
-        <h3 class="mb-0 mr-3">
+        <h3 class="mb-0 me-3">
             @lang('link.links')
         </h3>
-        <a href="{{ route('guest.links.feed') }}" class="ml-auto btn btn-sm btn-outline-secondary">
+        <a href="{{ route('guest.links.feed') }}" class="ms-auto btn btn-sm btn-outline-secondary">
             <x-icon.feed/>
-            <span class="sr-only">@lang('linkace.add')</span>
+            <span class="visually-hidden">@lang('linkace.add')</span>
         </a>
-        <div class="dropdown ml-1">
+        <div class="dropdown ms-1">
             @include('models.links.partials.index-order-dropdown', ['baseRoute' => 'guest.links.index'])
         </div>
     </header>

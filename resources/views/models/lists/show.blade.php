@@ -4,24 +4,24 @@
 
     <div class="card">
         <header class="card-header d-flex align-items-center">
-            <span class="mr-3">
+            <span class="me-3">
                 @if($list->is_private)
                     <span>
-                        <x-icon.lock class="mr-1" title="@lang('list.private')"/>
-                        <span class="sr-only">@lang('list.private')</span>
+                        <x-icon.lock class="me-1" title="@lang('list.private')"/>
+                        <span class="visually-hidden">@lang('list.private')</span>
                     </span>
                 @endif
                 @lang('list.list')
             </span>
-            <div class="ml-auto">
+            <div class="ms-auto">
                 <a href="{{ route('lists.edit', [$list->id]) }}" class="btn btn-sm btn-primary"
                     aria-label="@lang('list.edit')">
-                    <x-icon.edit class="mr-2"/>
+                    <x-icon.edit class="me-2"/>
                     @lang('linkace.edit')
                 </a>
                 <a onclick="event.preventDefault();document.getElementById('list-delete-{{ $list->id }}').submit();"
                     class="btn btn-sm btn-outline-danger" aria-label="@lang('list.delete')">
-                    <x-icon.trash class="mr-2"/>
+                    <x-icon.trash class="me-2"/>
                     @lang('linkace.delete')
                 </a>
             </div>
