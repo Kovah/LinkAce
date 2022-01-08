@@ -143,6 +143,6 @@ class ListController extends Controller
         }
 
         flash(trans('list.deleted_successfully'), 'warning');
-        return redirect()->back();
+        return request()->has('redirect_back') ? redirect()->back() : redirect()->route('lists.index');
     }
 }

@@ -44,9 +44,10 @@
                 </a>
             </div>
             <form id="link-delete-{{ $link->id }}" method="POST" style="display: none;"
-                action="{{ route('links.destroy', [$link->id]) }}">
+                action="{{ route('links.destroy', [$link]) }}">
                 @method('DELETE')
                 @csrf
+                <input type="hidden" name="redirect_back" value="1">
                 <input type="hidden" name="link_id" value="{{ $link->id }}">
             </form>
         </td>

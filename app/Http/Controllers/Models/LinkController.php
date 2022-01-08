@@ -153,7 +153,8 @@ class LinkController extends Controller
         }
 
         flash(trans('link.deleted_successfully'), 'warning');
-        return redirect()->back();
+
+        return request()->has('redirect_back') ? redirect()->back() : redirect()->route('links.index');
     }
 
     /**
