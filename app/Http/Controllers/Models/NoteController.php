@@ -76,7 +76,7 @@ class NoteController extends Controller
      */
     public function destroy(Note $note): RedirectResponse
     {
-        $linkId = $note->link->id;
+        $link = $note->link;
 
         $deletionSuccessful = NoteRepository::delete($note);
 
@@ -86,6 +86,6 @@ class NoteController extends Controller
         }
 
         flash(trans('note.deleted_successfully'), 'warning');
-        return redirect()->route('links.show', [$linkId]);
+        return redirect()->route('links.show', [$link]);
     }
 }

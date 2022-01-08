@@ -144,6 +144,7 @@ class TagController extends Controller
         }
 
         flash(trans('tag.deleted_successfully'), 'warning');
-        return redirect()->back();
+
+        return request()->has('redirect_back') ? redirect()->back() : redirect()->route('tags.index');
     }
 }
