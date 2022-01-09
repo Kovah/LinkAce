@@ -16,7 +16,7 @@
                     <form method="POST" action="{{ url('/two-factor-challenge') }}">
                         @csrf
 
-                        <div class="form-group">
+                        <div class="mb-3">
                             <div class="input-group mb-3">
                                 <div class="input-group-prepend">
                                     <div class="input-group-text">
@@ -43,13 +43,13 @@
                         </div>
 
                         <button type="button" class="btn btn-sm btn-outline-primary"
-                            data-bs-toggle="collapse" data-target="#recovery-code"
+                            data-bs-toggle="collapse" data-bs-target="#recovery-code"
                             aria-expanded="false" aria-controls="recovery-code">
                             @lang('auth.two_factor_with_recovery')
                         </button>
 
                         <div class="collapse mt-3" id="recovery-code">
-                            <div class="form-group">
+                            <div class="mb-3">
                                 <div class="input-group mb-3">
                                     <div class="input-group-prepend">
                                         <div class="input-group-text">

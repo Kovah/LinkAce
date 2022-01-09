@@ -27,11 +27,9 @@
                                 class="form-control{{ $errors->has('url') ? ' is-invalid' : '' }}"
                                 placeholder="@lang('link.url')" value="{{ old('url') }}"
                                 aria-label="@lang('link.url')">
-                            <div class="input-group-append">
-                                <button class="btn btn-primary" type="submit">
-                                    <x-icon.plus class="me-2"/> @lang('linkace.add')
-                                </button>
-                            </div>
+                            <button class="btn btn-primary" type="submit">
+                                <x-icon.plus class="me-2"/> @lang('linkace.add')
+                            </button>
                         </div>
 
                         @if ($errors->has('url'))
@@ -61,14 +59,12 @@
 
                         <label for="query" class="visually-hidden">@lang('search.query')</label>
                         <div class="input-group">
-                            <input type="text" name="query" id="query" autofocus required minlength="1"
+                            <input type="text" name="query" id="query" required minlength="1"
                                 class="form-control" placeholder="@lang('search.query')">
-                            <div class="input-group-append">
-                                <button class="btn btn-primary" type="submit">
-                                    <x-icon.search class="me-2"/>
-                                    @lang('search.search')
-                                </button>
-                            </div>
+                            <button class="btn btn-primary" type="submit">
+                                <x-icon.search class="me-2"/>
+                                @lang('search.search')
+                            </button>
                         </div>
                     </form>
 
@@ -153,8 +149,7 @@
 
                 <div class="card-body">
                     @forelse($recent_lists as $list)
-                        <a href="{{ route('lists.show', [$list->id]) }}"
-                            class="badge bg-light text-dark badge-lg badge-wrap text-decoration-none">
+                        <a href="{{ route('lists.show', [$list->id]) }}" class="btn btn-light btn-sm">
                             {{ $list->name }}
                         </a>
                     @empty
@@ -175,8 +170,7 @@
 
                 <div class="card-body">
                     @forelse($recent_tags as $tag)
-                        <a href="{{ route('tags.show', [$tag->id]) }}"
-                            class="badge bg-light text-dark badge-lg badge-wrap text-decoration-none">
+                        <a href="{{ route('tags.show', [$tag->id]) }}" class="btn btn-light btn-sm">
                             {{ $tag->name }}
                         </a>
                     @empty

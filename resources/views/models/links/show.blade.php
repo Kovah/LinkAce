@@ -21,7 +21,8 @@
                             @endif
                         </div>
                         <h3 class="d-inline-block mb-0">
-                            <a href="{{ $link->url }}" {!! linkTarget() !!}>{{ $link->title }}</a>
+                            <a href="{{ $link->url }}" {!! linkTarget() !!} class="text-decoration-none"
+                                >{{ $link->title }}</a>
                         </h3>
                     </div>
 
@@ -53,7 +54,7 @@
 
         <div class="col-12 col-md-4">
 
-            <div class="btn-group btn-block mb-3 mt-4 mt-md-0">
+            <div class="btn-group w-100 mb-3 mt-4 mt-md-0">
                 <a href="{{ route('links.edit', [$link->id]) }}" class="btn btn-sm btn-primary"
                     aria-label="@lang('link.edit')">
                     <x-icon.edit class="me-2"/>
@@ -73,7 +74,7 @@
             </form>
 
             <div class="mb-3">
-                <a href="{{ waybackLink($link) }}" class="btn btn-sm btn-block btn-outline-warning" target="_blank">
+                <a href="{{ waybackLink($link) }}" class="btn btn-sm w-100 btn-outline-info" target="_blank">
                     @lang('link.wayback')
                 </a>
             </div>
@@ -120,7 +121,7 @@
                 <div class="card-body py-2">
                     @if(!$link->lists->isEmpty())
                         @foreach($link->lists as $list)
-                            <a href="{{ route('lists.show', [$list->id]) }}" class="badge badge-primary badge-pill">
+                            <a href="{{ route('lists.show', [$list->id]) }}" class="btn btn-sm btn-light">
                                 {{ $list->name }}
                             </a>
                         @endforeach
@@ -138,7 +139,7 @@
                 <div class="card-body py-2">
                     @if(!$link->tags->isEmpty())
                         @foreach($link->tags as $tag)
-                            <a href="{{ route('tags.show', [$tag->id]) }}" class="badge badge-primary badge-pill">
+                            <a href="{{ route('tags.show', [$tag->id]) }}" class="btn btn-sm btn-light">
                                 {{ $tag->name }}
                             </a>
                         @endforeach

@@ -7,7 +7,7 @@
         <form action="{{ route('save-settings-account') }}" method="POST">
             @csrf
 
-            <div class="form-group">
+            <div class="mb-3">
                 <label for="username">
                     @lang('user.username')
                 </label>
@@ -21,7 +21,7 @@
                 @endif
             </div>
 
-            <div class="form-group">
+            <div class="mb-3">
                 <label for="email">
                     @lang('user.email')
                 </label>

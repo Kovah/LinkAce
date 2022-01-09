@@ -8,7 +8,7 @@
             <form action="{{ route('change-user-password') }}" method="POST">
                 @csrf
 
-                <div class="form-group">
+                <div class="mb-3">
                     <label for="old_password">
                         @lang('settings.old_password')
                     </label>
@@ -16,7 +16,7 @@
                         class="form-control{{ $errors->has('current_password') ? ' is-invalid' : '' }}">
                 </div>
 
-                <div class="form-group">
+                <div class="mb-3">
                     <label for="new_password">
                         @lang('settings.new_password')
                     </label>
@@ -24,7 +24,7 @@
                         class="form-control{{ $errors->has('password') ? ' is-invalid' : '' }}">
                 </div>
 
-                <div class="form-group">
+                <div class="mb-3">
                     <label for="new_password_confirmation">
                         @lang('settings.new_password2')
                     </label>

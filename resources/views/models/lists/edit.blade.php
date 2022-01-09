@@ -14,7 +14,7 @@
 
                 <input type="hidden" name="list_id" value="{{ $list->id }}">
 
-                <div class="form-group">
+                <div class="mb-3">
                     <label for="name">@lang('list.name')</label>
 
                     <input name="name" id="name"
@@ -31,7 +31,7 @@
 
                 <div class="row">
                     <div class="col-12 col-sm-6 col-md-7">
-                        <div class="form-group">
+                        <div class="mb-3">
                             <label for="description">@lang('list.description')</label>
 
                             <textarea name="description" id="description" rows="4"
@@ -46,11 +46,11 @@
                         </div>
                     </div>
                     <div class="col-12 col-sm-6 col-md-5">
-                        <div class="form-group">
+                        <div class="mb-3">
                             <label for="is_private">@lang('linkace.is_private')</label>
 
                             <select id="is_private" name="is_private"
-                                class="custom-select{{ $errors->has('is_private') ? ' is-invalid' : '' }}">
+                                class="form-select{{ $errors->has('is_private') ? ' is-invalid' : '' }}">
                                 <option value="0" @if($list->is_private === 0) selected @endif>
                                     @lang('linkace.no')
                                 </option>

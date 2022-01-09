@@ -3,26 +3,26 @@
         <div class="card-body h-100 border-bottom-0">
             <div class="d-flex align-items-top">
                 <div class="me-2">
-                    @if($link->is_private)
-                        <span>
+                    <div>
+                        {!! $link->getIcon('me-1') !!}
+                        <a href="{{ $link->url }}" {!! linkTarget() !!} class="text-decoration-none">{{ $link->title }}</a>
+                    </div>
+                    <div>
+                        @if($link->is_private)
                             <x-icon.lock class="me-1" title="@lang('link.private')"/>
                             <span class="visually-hidden">@lang('link.private')</span>
-                        </span>
-                    @endif
-                    {!! $link->getIcon('me-1') !!}
-                    <a href="{{ $link->url }}" {!! linkTarget() !!}>
-                        {{ $link->shortTitle() }}
-                    </a>
-                    <div class="mt-2 small text-muted">{{ $link->shortUrl() }}</div>
+                        @else
+                            <x-icon.unlock class="invisible me-1"/>
+                        @endif
+                        <small class="text-muted">{{ $link->shortUrl() }}</small>
+                    </div>
                 </div>
             </div>
         </div>
 
         <div class="card-footer">
-            <div>
-                <small class="text-muted">
-                    @lang('linkace.added') {!! $link->addedAt() !!}
-                </small>
+            <div class="text-muted text-xs">
+                @lang('linkace.added') {!! $link->addedAt() !!}
             </div>
 
             <div class="btn-group w-100 mt-2 small">

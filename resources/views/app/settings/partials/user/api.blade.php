@@ -10,11 +10,9 @@
             <input type="text" class="api-token-input form-control" value="{{ auth()->user()->api_token ?? '' }}"
                 readonly aria-readonly="true" aria-label="@lang('settings.api_token_generate')"
                 aria-describedby="api-token-generate">
-            <div class="input-group-append">
-                <button class="api-token-generate btn btn-outline-danger" type="button">
-                    <x-icon.recycle class="me-1"/> @lang('settings.api_token_generate')
-                </button>
-            </div>
+            <button class="api-token-generate btn btn-outline-danger" type="button">
+                <x-icon.recycle class="me-1"/> @lang('settings.api_token_generate')
+            </button>
         </div>
 
         <p class="api-token-generate-failure small text-danger d-none">

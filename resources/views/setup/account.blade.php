@@ -18,7 +18,7 @@
                     <form action="{{ route('setup.save-account') }}" method="post">
                         @csrf
 
-                        <div class="form-group">
+                        <div class="mb-3">
                             <label for="name">
                                 @lang('setup.account_setup.name')
                             </label>
@@ -34,7 +34,7 @@
                             @endif
                         </div>
 
-                        <div class="form-group">
+                        <div class="mb-3">
                             <label for="email">
                                 @lang('setup.account_setup.email')
                             </label>
@@ -50,7 +50,7 @@
                             @endif
                         </div>
 
-                        <div class="form-group">
+                        <div class="mb-3">
                             <label for="password">
                                 @lang('setup.account_setup.password')
                             </label>
@@ -68,7 +68,7 @@
                             @endif
                         </div>
 
-                        <div class="form-group">
+                        <div class="mb-3">
                             <label for="password_confirmation">
                                 @lang('setup.account_setup.password_confirmed')
                             </label>

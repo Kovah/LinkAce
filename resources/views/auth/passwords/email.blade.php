@@ -21,7 +21,7 @@
                         aria-label="@lang('linkace.reset_password')">
                         @csrf
 
-                        <div class="form-group">
+                        <div class="mb-3">
                             <label for="email">@lang('linkace.email')</label>
                             <div class="control">
                                 <input name="email" id="email"

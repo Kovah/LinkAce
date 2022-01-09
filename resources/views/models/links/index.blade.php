@@ -40,7 +40,7 @@
     </section>
 
     @if($links->isNotEmpty())
-        {!! $links->onEachSide(1)->appends(['orderBy' => $orderBy, 'orderDir' => $orderDir])->links() !!}
+        {!! $links->onEachSide(1)->withQueryString()->links() !!}
     @endif
 
 @endsection

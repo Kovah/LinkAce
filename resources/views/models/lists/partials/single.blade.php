@@ -9,7 +9,7 @@
                             <span class="visually-hidden">@lang('list.private')</span>
                         </span>
                     @endif
-                    <a href="{{ route('lists.show', [$list->id]) }}">{{ $list->name }}</a>
+                    <a href="{{ route('lists.show', [$list->id]) }}" class="text-decoration-none">{{ $list->name }}</a>
                 </div>
             </div>
         </div>
@@ -33,9 +33,8 @@
                     <x-icon.edit/>
                     <span class="visually-hidden">@lang('list.edit')</span>
                 </a>
-                <a href="#"
-                    onclick="event.preventDefault();document.getElementById('list-delete-{{ $list->id }}').submit();"
-                    title=" @lang('list.delete')" class="card-link cursor-pointer">
+                <a href="#" title="@lang('list.delete')" class="card-link cursor-pointer"
+                    onclick="event.preventDefault();document.getElementById('list-delete-{{ $list->id }}').submit();">
                     <x-icon.trash/>
                     <span class="visually-hidden">@lang('list.delete')</span>
                 </a>

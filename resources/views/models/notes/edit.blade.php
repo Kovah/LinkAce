@@ -12,7 +12,7 @@
                 @method('PATCH')
                 @csrf
 
-                <div class="form-group">
+                <div class="mb-3">
                     <label class="label" for="note">@lang('note.note_content')</label>
                     <textarea name="note" id="note"
                         class="form-control{{ $errors->has('note') ? ' is-invalid' : '' }}"
@@ -27,10 +27,10 @@
 
                 <div class="d-flex align-items-center">
 
-                    <div class="custom-control custom-checkbox ms-auto me-3">
-                        <input class="custom-control-input" type="checkbox" id="is_private" name="is_private" value="1"
+                    <div class="form-check ms-auto me-3">
+                        <input class="form-check-input" type="checkbox" id="is_private" name="is_private" value="1"
                             @if($note->is_private) checked @endif>
-                        <label class="custom-control-label" for="is_private">
+                        <label class="form-check-label" for="is_private">
                             <small>@lang('note.private')</small>
                         </label>
                     </div>

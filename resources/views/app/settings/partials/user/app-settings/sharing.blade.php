@@ -1,4 +1,4 @@
-<div class="form-group my-5">
+<div class="mb-3 my-5">
 
     <h5>
         @lang('settings.sharing')

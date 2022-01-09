@@ -11,49 +11,47 @@
             <form action="{{ route('do-search') }}" method="POST">
                 @csrf
 
-                <div class="form-group">
+                <div class="mb-3">
                     <div class="input-group">
                         <input type="text" name="query" id="query" autofocus
                             class="form-control form-control-lg{{ $errors->has('query') ? ' is-invalid' : '' }}"
                             placeholder="@lang('search.query')"
                             value="{{ old('query') ?: $query_settings['old_query'] }}">
-                        <div class="input-group-append">
-                            <button class="btn btn-primary" type="submit">
-                                <x-icon.search class="me-2"/>
-                                @lang('search.search')
-                            </button>
-                        </div>
+                        <button class="btn btn-primary" type="submit">
+                            <x-icon.search class="me-2"/>
+                            @lang('search.search')
+                        </button>
                     </div>
                 </div>
 
                 <div class="row">
 
                     <div class="col-md d-flex align-items-center">
-                        <div class="custom-control custom-checkbox">
-                            <input type="checkbox" id="search_title" name="search_title" class="custom-control-input"
+                        <div class="form-check">
+                            <input type="checkbox" id="search_title" name="search_title" class="form-check-input"
                                 @if($query_settings['search_title']) checked @endif>
-                            <label class="custom-control-label" for="search_title">
+                            <label class="form-check-label" for="search_title">
                                 @lang('search.search_title')
                             </label>
                         </div>
                     </div>
 
                     <div class="col-md d-flex align-items-center">
-                        <div class="custom-control custom-checkbox">
+                        <div class="form-check">
                             <input type="checkbox" id="search_description" name="search_description"
-                                class="custom-control-input"
+                                class="form-check-input"
                                 @if($query_settings['search_description']) checked @endif>
-                            <label class="custom-control-label" for="search_description">
+                            <label class="form-check-label" for="search_description">
                                 @lang('search.search_description')
                             </label>
                         </div>
                     </div>
 
                     <div class="col-md d-flex align-items-center">
-                        <div class="custom-control custom-checkbox">
-                            <input type="checkbox" id="empty_tags" name="empty_tags" class="custom-control-input"
+                        <div class="form-check">
+                            <input type="checkbox" id="empty_tags" name="empty_tags" class="form-check-input"
                                 @if($query_settings['empty_tags']) checked @endif>
-                            <label class="custom-control-label" for="empty_tags">
+                            <label class="form-check-label" for="empty_tags">
                                 @lang('search.empty_tags')
                             </label>
                         </div>
@@ -63,30 +61,30 @@
                 <div class="row">
 
                     <div class="col-md d-flex align-items-center">
-                        <div class="custom-control custom-checkbox">
-                            <input type="checkbox" id="broken_only" name="broken_only" class="custom-control-input"
+                        <div class="form-check">
+                            <input type="checkbox" id="broken_only" name="broken_only" class="form-check-input"
                                 @if($query_settings['broken_only']) checked @endif>
-                            <label class="custom-control-label" for="broken_only">
+                            <label class="form-check-label" for="broken_only">
                                 @lang('search.broken_links')
                             </label>
                         </div>
                     </div>
 
                     <div class="col-md d-flex align-items-center">
-                        <div class="custom-control custom-checkbox">
-                            <input type="checkbox" id="private_only" name="private_only" class="custom-control-input"
+                        <div class="form-check">
+                            <input type="checkbox" id="private_only" name="private_only" class="form-check-input"
                                 @if($query_settings['private_only']) checked @endif>
-                            <label class="custom-control-label" for="private_only">
+                            <label class="form-check-label" for="private_only">
                                 @lang('search.private_only')
                             </label>
                         </div>
                     </div>
 
                     <div class="col-md d-flex align-items-center">
-                        <div class="custom-control custom-checkbox">
-                            <input type="checkbox" id="empty_lists" name="empty_lists" class="custom-control-input"
+                        <div class="form-check">
+                            <input type="checkbox" id="empty_lists" name="empty_lists" class="form-check-input"
                                 @if($query_settings['empty_lists']) checked @endif>
-                            <label class="custom-control-label" for="empty_lists">
+                            <label class="form-check-label" for="empty_lists">
                                 @lang('search.empty_lists')
                             </label>
                         </div>
@@ -115,7 +113,7 @@
                         <label for="order_by" class="d-none" aria-hidden="true">
                             @lang('search.order_by')
                         </label>
-                        <select id="order_by" name="order_by" class="custom-select">
+                        <select id="order_by" name="order_by" class="form-select">
                             <option value="0">@lang('search.order_by')</option>
                             @foreach($order_by_options as $order_by)
                                 <option value="{{ $order_by }}"

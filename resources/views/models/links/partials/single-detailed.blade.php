@@ -4,27 +4,31 @@
         <div class="d-flex align-items-top flex-wrap flex-md-nowrap">
             @if($link->thumbnail)
                 <div class="d-flex justify-content-center me-2 mb-2 mb-md-0 link-thumbnail-list-holder">
-                    <a href="{{ $link->url }}" {!! linkTarget() !!} class="rounded d-block link-thumbnail link-thumbnail-list"
+                    <a href="{{ $link->url }}"
+                        {!! linkTarget() !!} class="rounded d-block link-thumbnail link-thumbnail-list"
                         style="background-image: url('{{ $link->thumbnail }}');">
                     </a>
                 </div>
             @endif
             <div class="me-2 mw-100">
-                @if($link->is_private)
-                    <span>
+                <div>
+                    {!! $link->getIcon('me-1') !!}
+                    <a href="{{ $link->url }}" {!! linkTarget() !!} class="text-decoration-none">{{ $link->title }}</a>
+                </div>
+                <div>
+                    @if($link->is_private)
                         <x-icon.lock class="me-1" title="@lang('link.private')"/>
                         <span class="visually-hidden">@lang('link.private')</span>
-                    </span>
-                @endif
-                {!! $link->getIcon('me-1') !!}
-                <a href="{{ $link->url }}" {!! linkTarget() !!}>{{ $link->title }}</a>
-                <br>
-                <small class="text-muted">{{ $link->shortUrl() }}</small>
+                    @else
+                        <x-icon.unlock class="invisible me-1"/>
+                    @endif
+                    <small class="text-muted">{{ $link->shortUrl() }}</small>
+                </div>
             </div>
             @if(getShareLinks($link) !== '')
                 <div class="ms-auto text-right">
                     <button type="button" class="btn btn-xs btn-outline-secondary" title="@lang('sharing.share_link')"
-                        data-bs-toggle="collapse" data-target="#sharing-{{ $link->id }}"
+                        data-bs-toggle="collapse" data-bs-target="#sharing-{{ $link->id }}"
                         aria-expanded="false" aria-controls="sharing-{{ $link->id }}">
                         <x-icon.share class="fw"/>
                         <span class="visually-hidden">@lang('sharing.share_link')</span>
@@ -52,7 +56,7 @@
                 @if($link->tags->count() > 0)
                     <label class="small mb-0">@lang('tag.tags'):</label>
                     @foreach($link->tags as $tag)
-                        <a href="{{ route('tags.show', [$tag->id]) }}" class="badge badge-light">
+                        <a href="{{ route('tags.show', [$tag->id]) }}" class="btn btn-light btn-xs">
                             {{ $tag->name }}
                         </a>
                     @endforeach
@@ -63,22 +67,22 @@
             </div>
             <div class="col-12 col-sm-6 d-sm-flex align-items-sm-center justify-content-sm-end flex-wrap">
 
-                <div class="small text-muted mt-3 mt-sm-0">
+                <div class="text-xs text-muted mt-3 mt-sm-0">
                     @lang('linkace.added') {!! $link->addedAt() !!}
                 </div>
 
                 <div class="btn-group mt-1 ms-md-2">
-                    <a href="{{ route('links.show', [$link->id]) }}" class="btn btn-xs btn-outline-secondary"
+                    <a href="{{ route('links.show', [$link->id]) }}" class="btn btn-xs btn-light"
                         title="@lang('link.show')">
                         <x-icon.info class="fw"/> @lang('link.show')
                     </a>
 
-                    <a href="{{ route('links.edit', [$link->id]) }}" class="btn btn-xs btn-outline-secondary"
+                    <a href="{{ route('links.edit', [$link->id]) }}" class="btn btn-xs btn-light"
                         title="@lang('link.edit')">
                         <x-icon.edit class="fw"/> @lang('link.edit')
                     </a>
 
-                    <a href="#" title="@lang('link.delete')" class="btn btn-xs btn-outline-secondary"
+                    <a href="#" title="@lang('link.delete')" class="btn btn-xs btn-light"
                         onclick="event.preventDefault();document.getElementById('link-delete-{{ $link->id }}').submit();">
                         <x-icon.trash class="fw"/> @lang('link.delete')
                     </a>

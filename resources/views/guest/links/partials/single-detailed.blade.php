@@ -10,7 +10,7 @@
             </div>
             <div class="ms-auto text-right">
                 <button type="button" class="btn btn-xs btn-outline-secondary" title="@lang('sharing.share_link')"
-                    data-bs-toggle="collapse" data-target="#sharing-{{ $link->id }}"
+                    data-bs-toggle="collapse" data-bs-target="#sharing-{{ $link->id }}"
                     aria-expanded="false" aria-controls="sharing-{{ $link->id }}">
                     <x-icon.share class="fw"/>
                 </button>

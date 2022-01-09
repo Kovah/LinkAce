@@ -8,13 +8,9 @@ export default class LoadingButton {
   }
 
   onClick () {
-    if (this.formIsValid()) {
+    if (this.$form.checkValidity()) {
       this.$btn.disabled = true;
       this.$form.submit();
     }
-  }
-
-  formIsValid () {
-    return this.$form.checkValidity();
   }
 }

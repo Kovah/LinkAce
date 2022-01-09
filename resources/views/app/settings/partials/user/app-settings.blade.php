@@ -10,7 +10,7 @@
             <div class="row">
                 <div class="col-12 col-sm-8 col-md-6">
 
-                    <div class="form-group">
+                    <div class="mb-3">
                         <label for="locale">
                             @lang('settings.language')
                         </label>
@@ -33,7 +33,7 @@
                 </div>
                 <div class="col-12 col-sm-8 col-md-6">
 
-                    <div class="form-group">
+                    <div class="mb-3">
                         <label for="timezone">
                             @lang('settings.timezone')
                         </label>
@@ -59,12 +59,12 @@
             <div class="row">
                 <div class="col-12 col-sm-8 col-md-6">
 
-                    <div class="form-group">
+                    <div class="mb-3">
                         <label for="date_format">
                             @lang('settings.date_format')
                         </label>
                         <select id="date_format" name="date_format"
-                            class="custom-select{{ $errors->has('date_format') ? ' is-invalid' : '' }}">
+                            class="form-select{{ $errors->has('date_format') ? ' is-invalid' : '' }}">
                             @foreach(config('linkace.formats.date') as $date_format)
                                 <option value="{{ $date_format }}"
                                     @if($user->settings()->get('date_format') === $date_format) selected @endif>
@@ -82,12 +82,12 @@
                 </div>
                 <div class="col-12 col-sm-8 col-md-6">
 
-                    <div class="form-group">
+                    <div class="mb-3">
                         <label for="time_format">
                             @lang('settings.time_format')
                         </label>
                         <select id="time_format" name="time_format"
-                            class="custom-select{{ $errors->has('time_format') ? ' is-invalid' : '' }}">
+                            class="form-select{{ $errors->has('time_format') ? ' is-invalid' : '' }}">
                             @foreach(config('linkace.formats.time') as $time_format)
                                 <option value="{{ $time_format }}"
                                     @if($user->settings()->get('time_format') === $time_format) selected @endif>
@@ -108,12 +108,12 @@
             <div class="row mt-4">
                 <div class="col-12 col-sm-8 col-md-6">
 
-                    <div class="form-group">
+                    <div class="mb-3">
                         <label for="listitem_count">
                             @lang('settings.listitem_count')
                         </label>
                         <select id="listitem_count" name="listitem_count"
-                            class="custom-select{{ $errors->has('listitem_count') ? ' is-invalid' : '' }}">
+                            class="form-select{{ $errors->has('listitem_count') ? ' is-invalid' : '' }}">
                             @foreach(config('linkace.listitem_count_values') as $item_count)
                                 <option value="{{ $item_count }}"
                                     @if($user->settings()->get('listitem_count') == $item_count) selected @endif>
@@ -131,12 +131,12 @@
                 </div>
                 <div class="col-12 col-sm-8 col-md-6">
 
-                    <div class="form-group">
+                    <div class="mb-3">
                         <label for="link_display_mode">
                             @lang('settings.display_mode')
                         </label>
                         <select id="link_display_mode" name="link_display_mode"
-                            class="custom-select{{ $errors->has('link_display_mode') ? ' is-invalid' : '' }}">
+                            class="form-select{{ $errors->has('link_display_mode') ? ' is-invalid' : '' }}">
                             <option value="{{ Link::DISPLAY_LIST_DETAILED }}"
                                 @if((int)$user->settings()->get('link_display_mode') === Link::DISPLAY_LIST_DETAILED)
                                 selected
@@ -169,7 +169,7 @@
             <div class="row">
                 <div class="col-12 col-sm-8 col-md-6">
 
-                    <div class="form-group">
+                    <div class="mb-3">
                         <label for="links_new_tab">
                             @lang('settings.links_new_tab')
                         </label>
@@ -192,7 +192,7 @@
                 </div>
                 <div class="col-12 col-sm-8 col-md-6">
 
-                    <div class="form-group">
+                    <div class="mb-3">
                         <label for="links_new_tab">
                             @lang('settings.markdown_for_text')
                         </label>

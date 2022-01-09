@@ -99,6 +99,10 @@ body:not(.bookmarklet) {
   font-size: 90%;
 }
 
+.text-xs {
+  font-size: $font-size-xs;
+}
+
 .btn-xs {
   @include button-size($btn-padding-y-xs, $btn-padding-x-xs, $btn-font-size-xs, $btn-border-radius-xs);
 }

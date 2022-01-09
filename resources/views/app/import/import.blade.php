@@ -12,7 +12,7 @@
 
                 <p>@lang('import.import_help')</p>
 
-                <div class="form-group mt-4 mb-4">
+                <div class="mt-4 mb-4">
                     <label for="username">
                         @lang('import.import_file')
                     </label>

@@ -87,6 +87,8 @@ $body-color-muted: $gray;
 
 // Links
 $link-color: $primary;
+$link-shade-percentage: 40%;
+$link-hover-color: shift-color($link-color, $link-shade-percentage);
 $link-hover-decoration: none;
 
 
@@ -126,6 +128,7 @@ $btn-padding-x-xs: $input-btn-padding-x-xs;
 $btn-font-size-xs: $input-btn-font-size-xs;
 $btn-line-height-xs: $input-btn-line-height-xs;
 
+$btn-hover-bg-tint-amount: 20%;
 $btn-border-radius-xs: $border-radius-xs;
 
 

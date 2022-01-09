@@ -17,7 +17,7 @@
                     <form method="POST" action="{{ route('login') }}" aria-label="@lang('linkace.login')">
                         @csrf
 
-                        <div class="form-group">
+                        <div class="mb-3">
                             <div class="input-group mb-3">
                                 <div class="input-group-prepend">
                                     <div class="input-group-text">
@@ -37,7 +37,7 @@
                             @endif
                         </div>
 
-                        <div class="form-group">
+                        <div class="mb-3">
                             <div class="input-group mb-3">
                                 <div class="input-group-prepend">
                                     <div class="input-group-text">
@@ -58,12 +58,12 @@
                         <div class="row mt-4">
                             <div class="col-8">
 
-                                <div class="custom-control custom-checkbox pt-1">
+                                <div class="form-check pt-1">
                                     <input type="hidden" name="remember_me" value="0">
-                                    <input type="checkbox" class="custom-control-input" id="remember_me"
+                                    <input type="checkbox" class="form-check-input" id="remember_me"
                                         @if(old('remember_me')) checked @endif>
 
-                                    <label class="custom-control-label" for="remember_me">
+                                    <label class="form-check-label" for="remember_me">
                                         @lang('linkace.remember_me')
                                     </label>
                                 </div>

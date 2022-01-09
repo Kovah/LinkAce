@@ -13,7 +13,7 @@
 
                 <div class="row">
                     <div class="col-12 col-sm-6 col-md-7">
-                        <div class="form-group">
+                        <div class="mb-3">
                             <label for="name">@lang('tag.name')</label>
 
                             <input name="name" id="name"
@@ -29,11 +29,11 @@
                         </div>
                     </div>
                     <div class="col-12 col-sm-6 col-md-5">
-                        <div class="form-group">
+                        <div class="mb-3">
                             <label for="is_private">@lang('linkace.is_private')</label>
 
                             <select id="is_private" name="is_private"
-                                class="custom-select{{ $errors->has('is_private') ? ' is-invalid' : '' }}">
+                                class="form-select{{ $errors->has('is_private') ? ' is-invalid' : '' }}">
                                 <option value="0">@lang('linkace.no')</option>
                                 <option value="1" @if(usersettings('tags_private_default') === '1') selected @endif>
                                     @lang('linkace.yes')
@@ -51,10 +51,10 @@
 
                 <div class="mt-3 d-sm-flex align-items-center justify-content-end">
 
-                    <div class="custom-control custom-checkbox mb-3 mb-sm-0 me-sm-4">
-                        <input class="custom-control-input" type="checkbox" id="reload_view" name="reload_view"
+                    <div class="form-check mb-3 mb-sm-0 me-sm-4">
+                        <input class="form-check-input" type="checkbox" id="reload_view" name="reload_view"
                             @if(session('reload_view')) checked @endif>
-                        <label class="custom-control-label" for="reload_view">
+                        <label class="form-check-label" for="reload_view">
                             @lang('linkace.continue_adding')
                         </label>
                     </div>

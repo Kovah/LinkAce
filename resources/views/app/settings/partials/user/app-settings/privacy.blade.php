@@ -1,4 +1,4 @@
-<div class="form-group my-5">
+<div class="mb-3 my-5">
     <h5>
         @lang('settings.privacy')
     </h5>
@@ -6,12 +6,12 @@
     <div class="row">
         <div class="col-12 col-sm-8 col-md-6">
 
-            <div class="form-group">
+            <div class="mb-3">
                 <label for="links_private_default">
                     @lang('settings.links_private_default')
                 </label>
                 <select id="links_private_default" name="links_private_default"
-                    class="custom-select{{ $errors->has('links_private_default') ? ' is-invalid' : '' }}">
+                    class="form-select{{ $errors->has('links_private_default') ? ' is-invalid' : '' }}">
                     <option value="0"
                         @if($user->settings()->get('links_private_default') === '0') selected @endif>
                         @lang('linkace.no')
@@ -32,12 +32,12 @@
         </div>
         <div class="col-12 col-sm-8 col-md-6">
 
-            <div class="form-group">
+            <div class="mb-3">
                 <label for="notes_private_default">
                     @lang('settings.notes_private_default')
                 </label>
                 <select id="notes_private_default" name="notes_private_default"
-                    class="custom-select{{ $errors->has('notes_private_default') ? ' is-invalid' : '' }}">
+                    class="form-select{{ $errors->has('notes_private_default') ? ' is-invalid' : '' }}">
                     <option value="0"
                         @if($user->settings()->get('notes_private_default') === '0') selected @endif>
                         @lang('linkace.no')
@@ -61,12 +61,12 @@
     <div class="row">
         <div class="col-12 col-sm-8 col-md-6">
 
-            <div class="form-group">
+            <div class="mb-3">
                 <label for="lists_private_default">
                     @lang('settings.lists_private_default')
                 </label>
                 <select id="lists_private_default" name="lists_private_default"
-                    class="custom-select{{ $errors->has('lists_private_default') ? ' is-invalid' : '' }}">
+                    class="form-select{{ $errors->has('lists_private_default') ? ' is-invalid' : '' }}">
                     <option value="0"
                         @if($user->settings()->get('lists_private_default') === '0') selected @endif>
                         @lang('linkace.no')
@@ -87,12 +87,12 @@
         </div>
         <div class="col-12 col-sm-8 col-md-6">
 
-            <div class="form-group">
+            <div class="mb-3">
                 <label for="tags_private_default">
                     @lang('settings.tags_private_default')
                 </label>
                 <select id="tags_private_default" name="tags_private_default"
-                    class="custom-select{{ $errors->has('tags_private_default') ? ' is-invalid' : '' }}">
+                    class="form-select{{ $errors->has('tags_private_default') ? ' is-invalid' : '' }}">
                     <option value="0"
                         @if($user->settings()->get('tags_private_default') === '0') selected @endif>
                         @lang('linkace.no')

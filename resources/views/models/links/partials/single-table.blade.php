@@ -1,7 +1,7 @@
 <tr>
     <td>
         <div>
-            <a href="{{ route('links.show', [$link->id]) }}">
+            <a href="{{ route('links.show', [$link]) }}" class="text-decoration-none">
                 {{ $link->title }}
             </a>
             @if($link->is_private)
@@ -15,7 +15,7 @@
             <div class="mt-1">
                 <label class="small mb-0">@lang('tag.tags'):</label>
                 @foreach($link->tags as $tag)
-                    <a href="{{ route('tags.show', [$tag->id]) }}" class="badge badge-light">
+                    <a href="{{ route('tags.show', [$tag]) }}" class="btn btn-xs btn-light">
                         {{ $tag->name }}
                     </a>
                 @endforeach
@@ -23,7 +23,7 @@
         @endif
     </td>
     <td>
-        <a href="{{ $link->url }}" {!! linkTarget() !!}>
+        <a href="{{ $link->url }}" {!! linkTarget() !!} class="text-decoration-none">
             {{ $link->shortUrl() }}
         </a>
     </td>
@@ -33,18 +33,18 @@
     @if(!isset($hide_edit))
         <td class="text-right">
             <div class="btn-group btn-group-xs">
-                <a href="{{ route('links.edit', [$link->id]) }}" class="btn btn-outline-secondary">
+                <a href="{{ route('links.edit', [$link]) }}" class="btn btn-outline-secondary">
                     <x-icon.edit/>
                     <span class="visually-hidden">@lang('link.edit')</span>
                 </a>
-                <a href="#" title=" @lang('link.delete')" class="btn btn-outline-secondary"
-                    onclick="event.preventDefault();document.getElementById('link-delete-{{ $link->id }}').submit();">
+                <button type="submit" form="link-delete-{{ $link->id }}" title="@lang('link.delete')"
+                    class="btn btn-outline-secondary">
                     <x-icon.trash/>
                     <span class="visually-hidden">@lang('link.delete')</span>
-                </a>
+                </button>
             </div>
-            <form id="link-delete-{{ $link->id }}" method="POST" style="display: none;"
-                action="{{ route('links.destroy', [$link->id]) }}">
+            <form id="link-delete-{{ $link->id }}" method="POST" class="d-none"
+                action="{{ route('links.destroy', [$link]) }}">
                 @method('DELETE')
                 @csrf
                 <input type="hidden" name="link_id" value="{{ $link->id }}">

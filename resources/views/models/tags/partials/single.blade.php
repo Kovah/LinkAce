@@ -6,7 +6,7 @@
                 <span class="visually-hidden">@lang('tag.private')</span>
             </span>
         @endif
-        <a href="{{ route('tags.show', [$tag->id]) }}">
+        <a href="{{ route('tags.show', [$tag->id]) }}" class="text-decoration-none">
             {{ $tag->name }}
         </a>
     </td>

@@ -1,4 +1,4 @@
-<div class="form-group my-5">
+<div class="mb-3 my-5">
 
     <h5>
         @lang('settings.darkmode')
@@ -10,7 +10,7 @@
         <div class="col-12 col-sm-8 col-md-6">
 
             <select id="darkmode_setting" name="darkmode_setting"
-                class="custom-select{{ $errors->has('darkmode_setting') ? ' is-invalid' : '' }}">
+                class="form-select{{ $errors->has('darkmode_setting') ? ' is-invalid' : '' }}">
                 <option value="0"
                     @if($user->settings()->get('darkmode_setting') === '0') selected @endif>
                     @lang('settings.darkmode_disabled')

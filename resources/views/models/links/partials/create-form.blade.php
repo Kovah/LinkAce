@@ -7,7 +7,7 @@
         <form action="{{ route('links.store') }}" method="POST">
             @csrf
 
-            <div class="form-group">
+            <div class="mb-3">
                 <label class="label" for="url">@lang('link.url')</label>
                 <input name="url" id="url" type="url"
                     class="form-control form-control-lg{{ $errors->has('url') || $existing_link ? ' is-invalid' : '' }}"
@@ -29,7 +29,7 @@
             <div class="row">
                 <div class="col-12 col-sm-6 col-md-7">
 
-                    <div class="form-group">
+                    <div class="mb-3">
                         <label class="label" for="title">@lang('link.title')</label>
                         <input name="title" id="title"
                             class="form-control{{ $errors->has('title') ? ' is-invalid' : '' }}"
@@ -42,7 +42,7 @@
                         @endif
                     </div>
 
-                    <div class="form-group">
+                    <div class="mb-3">
                         <label for="description">@lang('link.description')</label>
                         <textarea name="description" id="description" rows="4" class="form-control"
                         >{{ old('description') ?: $bookmark_description ?? '' }}</textarea>
@@ -57,7 +57,7 @@
                 </div>
                 <div class="col-12 col-sm-6 col-md-5">
 
-                    <div class="form-group">
+                    <div class="mb-3">
                         <label for="lists">@lang('list.lists')</label>
                         <input name="lists" id="lists" type="text" placeholder="@lang('placeholder.list_select')"
                             class="tags-select" value="{{ old('lists', $bookmark_lists ?? null) }}" data-tag-type="lists">
@@ -69,7 +69,7 @@
                         @endif
                     </div>
 
-                    <div class="form-group">
+                    <div class="mb-3">
                         <label for="tags">@lang('tag.tags')</label>
                         <input name="tags" id="tags" type="text" placeholder="@lang('placeholder.tags_select')"
                             class="tags-select" value="{{ old('tags', $bookmark_tags ?? null) }}" data-tag-type="tags">
@@ -86,10 +86,10 @@
                         </div>
                     </div>
 
-                    <div class="form-group">
+                    <div class="mb-3">
                         <label for="is_private">@lang('linkace.is_private')</label>
                         <select id="is_private" name="is_private"
-                            class="custom-select{{ $errors->has('is_private') ? ' is-invalid' : '' }}">
+                            class="form-select{{ $errors->has('is_private') ? ' is-invalid' : '' }}">
                             <option value="0">
                                 @lang('linkace.no')
                             </option>
@@ -111,10 +111,10 @@
             <div class="mt-3 d-sm-flex align-items-center justify-content-end">
 
                 @if(!isset($bookmark_url))
-                    <div class="custom-control custom-checkbox mb-3 mb-sm-0 me-sm-4">
-                        <input class="custom-control-input" type="checkbox" id="reload_view" name="reload_view"
+                    <div class="form-check mb-3 mb-sm-0 me-sm-4">
+                        <input class="form-check-input" type="checkbox" id="reload_view" name="reload_view"
                             @if(session('reload_view')) checked @endif>
-                        <label class="custom-control-label" for="reload_view">
+                        <label class="form-check-label" for="reload_view">
                             @lang('linkace.continue_adding')
                         </label>
                     </div>

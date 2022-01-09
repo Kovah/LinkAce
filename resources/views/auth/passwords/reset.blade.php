@@ -17,7 +17,7 @@
 
                         <input type="hidden" name="token" value="{{ request()->route('token') }}">
 
-                        <div class="form-group">
+                        <div class="mb-3">
                             <label for="email">@lang('linkace.email')</label>
                             <div class="control">
                                 <input name="email" id="email"
@@ -33,7 +33,7 @@
                             @endif
                         </div>
 
-                        <div class="form-group">
+                        <div class="mb-3">
                             <label for="password">@lang('linkace.password')</label>
                             <div class="control">
                                 <input name="password" id="password"
@@ -48,7 +48,7 @@
                             @endif
                         </div>
 
-                        <div class="form-group">
+                        <div class="mb-3">
                             <label for="password-confirm">@lang('linkace.password_confirm')</label>
                             <div class="control">
                                 <input name="password_confirmation" id="password-confirm"

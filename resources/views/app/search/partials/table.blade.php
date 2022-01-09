@@ -11,14 +11,14 @@
         @foreach($results as $link)
             <tr>
                 <td>
-                    <a href="{{ route('links.show', [$link->id]) }}">
+                    <a href="{{ route('links.show', [$link->id]) }}" class="text-decoration-none">
                         {{ $link->title }}
                     </a>
                     @if($link->tags->count() > 0)
                         <div class="mt-1">
                             <label class="small mb-0">@lang('tag.tags'):</label>
                             @foreach($link->tags as $tag)
-                                <a href="{{ route('tags.show', [$tag->id]) }}" class="badge badge-light">
+                                <a href="{{ route('tags.show', [$tag->id]) }}" class="btn btn-xs btn-light">
                                     {{ $tag->name }}
                                 </a>
                             @endforeach
@@ -26,7 +26,7 @@
                     @endif
                 </td>
                 <td>
-                    <a href="{{ $link->url }}" {!! linkTarget() !!}>
+                    <a href="{{ $link->url }}" {!! linkTarget() !!} class="text-decoration-none">
                         {{ $link->shortUrl() }}
                     </a>
                 </td>

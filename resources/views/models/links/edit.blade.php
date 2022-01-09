@@ -14,7 +14,7 @@
 
                 <input type="hidden" name="link_id" value="{{ $link->id }}">
 
-                <div class="form-group">
+                <div class="mb-3">
                     <label class="label" for="url">@lang('link.url')</label>
                     <input name="url" id="url" type="url" data-ignore-id="{{ $link->id }}"
                         class="form-control form-control-lg{{ $errors->has('url') ? ' is-invalid' : '' }}"
@@ -34,7 +34,7 @@
                 <div class="row">
                     <div class="col-12 col-sm-6 col-md-7">
 
-                        <div class="form-group">
+                        <div class="mb-3">
                             <label class="label" for="title">@lang('link.title')</label>
                             <input name="title" id="title"
                                 class="form-control{{ $errors->has('title') ? ' is-invalid' : '' }}"
@@ -47,7 +47,7 @@
                             @endif
                         </div>
 
-                        <div class="form-group">
+                        <div class="mb-3">
                             <label for="description">@lang('link.description')</label>
                             <textarea name="description" id="description" rows="4" class="form-control"
                             >{{ old('description') ?: $link->description }}</textarea>
@@ -62,7 +62,7 @@
                     </div>
                     <div class="col-12 col-sm-6 col-md-5">
 
-                        <div class="form-group">
+                        <div class="mb-3">
                             <label for="lists">@lang('list.lists')</label>
                             <input name="lists" id="lists" type="text" placeholder="@lang('placeholder.list_select')"
                                 class="tags-select" value="{{ old('lists', $link->listsForInput()) }}"
@@ -75,7 +75,7 @@
                             @endif
                         </div>
 
-                        <div class="form-group">
+                        <div class="mb-3">
                             <label for="tags">@lang('tag.tags')</label>
                             <input name="tags" id="tags" type="text" placeholder="@lang('placeholder.tags_select')"
                                 class="tags-select" value="{{ old('tags', $link->tagsForInput()) }}"
@@ -88,10 +88,10 @@
                             @endif
                         </div>
 
-                        <div class="form-group">
+                        <div class="mb-3">
                             <label for="is_private">@lang('linkace.is_private')</label>
                             <select id="is_private" name="is_private"
-                                class="custom-select{{ $errors->has('is_private') ? ' is-invalid' : '' }}">
+                                class="form-select{{ $errors->has('is_private') ? ' is-invalid' : '' }}">
                                 <option value="0" @if($link->is_private === false) selected @endif>
                                     @lang('linkace.no')
                                 </option>
