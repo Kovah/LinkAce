@@ -7,12 +7,18 @@ export default class UrlField {
   constructor ($el) {
     this.$field = $el;
 
-    this.$field.addEventListener('keyup', this.onKeyup.bind(this));
     this.$linkExistsWarning = document.querySelector('.link-exists');
+
+    if (!this.$linkExistsWarning) {
+      return;
+    }
+
     this.$linkExistsLink = this.$linkExistsWarning.querySelector('a');
 
     const $tags = document.querySelector('#tags');
     this.tagSuggestions = $tags ? getInstance($tags, TagsSelect) : null;
+
+    this.$field.addEventListener('keyup', this.onKeyup.bind(this));
   }
 
   onKeyup () {
@@ -82,7 +88,7 @@ export default class UrlField {
       .then(response => response.text())
       .then(body => {
         if (body !== null) {
-          this.parseHtmlForKeywords(body)
+          this.parseHtmlForKeywords(body);
         }
       });
   }
