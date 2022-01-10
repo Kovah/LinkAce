@@ -50,6 +50,6 @@
         </div>
     </div>
 
-    {!! $tagLinks->onEachSide(1)->appends(['orderBy' => $orderBy, 'orderDir' => $orderDir])->links() !!}
+    {!! $tagLinks->onEachSide(1)->withQueryString()->links() !!}
 
 @endsection

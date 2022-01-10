@@ -19,11 +19,13 @@
                 @if($list->description)
                     <p>{{ $list->description }}</p>
                 @endif
-                @if($list->links_count > 0)
-                    {{ trans_choice('list.number_links', $list->links_count, ['number' => $list->links_count]) }}
-                @else
-                    <span class="text-muted">@lang('link.no_links')</span>
-                @endif
+                <div class="text-xs text-muted">
+                    @if($list->links_count > 0)
+                        {{ trans_choice('list.number_links', $list->links_count, ['number' => $list->links_count]) }}
+                    @else
+                        @lang('link.no_links')
+                    @endif
+                </div>
             </li>
         </ul>
 

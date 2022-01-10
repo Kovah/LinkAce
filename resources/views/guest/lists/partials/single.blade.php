@@ -3,10 +3,8 @@
         <div class="card-header">
             <div class="d-flex align-items-top">
                 <div class="me-2">
-                    @if($list->is_private)
-                        <x-icon.lock class="text-muted me-1" title="@lang('list.private')"/>
-                    @endif
-                    <a href="{{ route('guest.lists.show', [$list->id]) }}">{{ $list->name }}</a>
+                    <a href="{{ route('guest.lists.show', [$list->id]) }}" class="text-decoration-none"
+                        >{{ $list->name }}</a>
                 </div>
             </div>
         </div>
@@ -16,11 +14,13 @@
                 @if($list->description)
                     <p>{{ $list->description }}</p>
                 @endif
-                @if($list->links_count > 0)
-                    {{ trans_choice('list.number_links', $list->links_count, ['number' => $list->links_count]) }}
-                @else
-                    <span class="text-muted">@lang('link.no_links')</span>
-                @endif
+                <div class="text-xs text-muted">
+                    @if($list->links_count > 0)
+                        {{ trans_choice('list.number_links', $list->links_count, ['number' => $list->links_count]) }}
+                    @else
+                        @lang('link.no_links')
+                    @endif
+                </div>
             </li>
         </ul>
     </div>

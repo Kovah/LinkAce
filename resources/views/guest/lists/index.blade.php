@@ -36,7 +36,7 @@
     @endif
 
     @if(!$lists->isEmpty())
-        {!! $lists->onEachSide(1)->appends(['orderBy' => $orderBy, 'orderDir' => $orderDir])->links() !!}
+        {!! $lists->onEachSide(1)->withQueryString()->links() !!}
     @endif
 
 @endsection

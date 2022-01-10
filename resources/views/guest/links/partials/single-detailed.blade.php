@@ -2,11 +2,15 @@
 
     <div class="card-header">
         <div class="d-flex align-items-top flex-wrap">
-            <div class="me-2 mw-100">
-                {!! $link->getIcon('me-1') !!}
-                <a href="{{ $link->url }}" {!! linkTarget() !!}>{{ $link->title }}</a>
-                <br>
-                <small class="text-muted">{{ $link->shortUrl() }}</small>
+            <div class="me-2 mw-100 d-flex">
+                <div class="me-2">
+                    {!! $link->getIcon() !!}
+                </div>
+                <div>
+                    <a href="{{ $link->url }}" {!! linkTarget() !!} class="text-decoration-none">{{ $link->title }}</a>
+                    <br>
+                    <small class="text-muted">{{ $link->shortUrl() }}</small>
+                </div>
             </div>
             <div class="ms-auto text-right">
                 <button type="button" class="btn btn-xs btn-outline-secondary" title="@lang('sharing.share_link')"
@@ -29,14 +33,14 @@
     <div class="card-body py-2 px-3">
 
         <div class="row">
-            <div class="col-12 col-sm-6 ">
+            <div class="col-12 col-sm-6">
 
                 @if($link->tags->count() > 0)
                     <label class="small mb-0">@lang('tag.tags'):</label>
                     @foreach($link->tags as $tag)
                         @if(!$tag->is_private)
                             <a href="{{ route('guest.tags.show', [$tag->id]) }}"
-                                class="badge badge-light">
+                                class="btn btn-xs btn-light">
                                 {{ $tag->name }}
                             </a>
                         @endif

@@ -3,7 +3,7 @@
         {{ $link->title }}
     </td>
     <td>
-        <a href="{{ $link->url }}" {!! linkTarget() !!}>
+        <a href="{{ $link->url }}" {!! linkTarget() !!} class="text-decoration-none">
             {{ $link->url }}
         </a>
     </td>

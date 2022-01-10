@@ -35,7 +35,7 @@
     </div>
 
     @if(!$tags->isEmpty())
-        {!! $tags->onEachSide(1)->appends(['orderBy' => $orderBy, 'orderDir' => $orderDir])->links() !!}
+        {!! $tags->onEachSide(1)->withQueryString()->links() !!}
     @endif
 
 @endsection

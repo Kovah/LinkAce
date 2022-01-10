@@ -8,7 +8,7 @@
             <span class="me-3">@lang('list.list')</span>
             <a href="{{ route('guest.lists.links.feed', ['list' => $list]) }}"
                 class="ms-auto btn btn-xs btn-outline-secondary">
-                <x-icon.feed/>
+                <x-icon.feed class="fw"/>
                 <span class="visually-hidden">@lang('linkace.feed')</span>
             </a>
 
@@ -35,6 +35,6 @@
         </div>
     </div>
 
-    {!! $listLinks->onEachSide(1)->appends(['orderBy' => $orderBy, 'orderDir' => $orderDir])->links() !!}
+    {!! $listLinks->onEachSide(1)->withQueryString()->links() !!}
 
 @endsection

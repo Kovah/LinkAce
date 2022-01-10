@@ -54,6 +54,6 @@
         </div>
     </div>
 
-    {!! $listLinks->onEachSide(1)->appends(['orderBy' => $orderBy, 'orderDir' => $orderDir])->links() !!}
+    {!! $listLinks->onEachSide(1)->withQueryString()->links() !!}
 
 @endsection

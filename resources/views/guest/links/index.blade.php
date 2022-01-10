@@ -11,7 +11,7 @@
             @lang('link.links')
         </h3>
         <a href="{{ route('guest.links.feed') }}" class="ms-auto btn btn-sm btn-outline-secondary">
-            <x-icon.feed/>
+            <x-icon.feed class="fw"/>
             <span class="visually-hidden">@lang('linkace.add')</span>
         </a>
         <div class="dropdown ms-1">
@@ -24,11 +24,11 @@
 
             <div class="link-wrapper">
                 @if((int)systemsettings('guest_link_display_mode') === Link::DISPLAY_CARDS)
-                    @include('models.links.partials.list-cards')
+                    @include('guest.links.partials.list-cards')
                 @elseif((int)systemsettings('guest_link_display_mode') === Link::DISPLAY_LIST_SIMPLE)
-                    @include('models.links.partials.list-simple')
+                    @include('guest.links.partials.list-simple')
                 @else
-                    @include('models.links.partials.list-detailed')
+                    @include('guest.links.partials.list-detailed')
                 @endif
             </div>
 
