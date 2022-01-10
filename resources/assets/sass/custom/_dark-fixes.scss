@@ -20,21 +20,3 @@
 .table thead th {
   border-top: 0;
 }
-
-.badge.badge-light {
-  background-color: $gray-800;
-  color: $body-color;
-
-  &:hover, &:focus, &:active {
-    background-color: $gray-700;
-  }
-}
-
-.btn-outline-primary {
-  background-color: $primary;
-  color: $body-color;
-
-  &:hover, &:focus, &:active {
-    background-color: lighten($primary, 5%);
-  }
-}

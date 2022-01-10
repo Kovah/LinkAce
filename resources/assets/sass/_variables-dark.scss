@@ -1,14 +1,15 @@
 // Colors
 $white: #fff;
-$gray-100: #f8f9fa;
-$gray-200: #e9ecef;
-$gray-300: #dee2e6;
-$gray-400: #ced4da;
-$gray-500: #9A9FA2;
-$gray-600: #7A8288;
-$gray-700: #52575C;
-$gray-800: #3A3F44;
-$gray-900: #272B30;
+$gray-100: #f1f5f9;
+$gray-200: #e2e8f0;
+$gray-300: #cbd5e1;
+$gray-400: #94a3b8;
+$gray-500: #64748b;
+$gray-600: #475569;
+$gray-700: #334155;
+$gray-800: #1e293b;
+$gray-900: #0f172a;
+$gray: $gray-500;
 $black: #000;
 
 $blue: #44679F;
@@ -20,39 +21,39 @@ $teal: #20c997;
 $cyan: #5bc0de;
 
 $primary: $blue;
-$secondary: $gray-600;
+$secondary: $gray-500;
 $success: $green;
 $info: $cyan;
 $warning: $yellow;
 $danger: $red;
-$light: $gray-200;
-$dark: $gray-900;
+$light: $gray-800;
+$dark: $gray-200;
 
 $colors: (
-  "blue":       $blue,
-  "indigo":     $indigo,
-  "purple":     $purple,
-  "pink":       $pink,
-  "red":        $red,
-  "orange":     $orange,
-  "yellow":     $yellow,
-  "green":      $green,
-  "teal":       $teal,
-  "cyan":       $cyan,
-  "white":      $white,
-  "gray":       $gray-600,
-  "gray-dark":  $gray-800
+  "blue": $blue,
+  "indigo": $indigo,
+  "purple": $purple,
+  "pink": $pink,
+  "red": $red,
+  "orange": $orange,
+  "yellow": $yellow,
+  "green": $green,
+  "teal": $teal,
+  "cyan": $cyan,
+  "white": $white,
+  "gray": $gray-600,
+  "gray-dark": $gray-800
 );
 
 $theme-colors: (
-  "primary":    $primary,
-  "secondary":  $secondary,
-  "success":    $success,
-  "info":       $info,
-  "warning":    $warning,
-  "danger":     $danger,
-  "light":      $light,
-  "dark":       $dark
+  "primary": $primary,
+  "secondary": $secondary,
+  "success": $success,
+  "info": $info,
+  "warning": $warning,
+  "danger": $danger,
+  "light": $light,
+  "dark": $dark
 );
 
 
@@ -61,10 +62,13 @@ $darkmode-bg: $gray-900;
 $darkmode-bg-dark: darken($gray-900, 3%);
 $darkmode-bg-darker: darken($gray-900, 6%);
 
+$color-contrast-dark: $white;
+$color-contrast-light: $black;
+
 
 // Body
 $body-bg: $darkmode-bg-darker;
-$body-color: $gray-400;
+$body-color: $gray-300;
 $body-color-muted: $gray-600;
 
 
@@ -72,9 +76,11 @@ $body-color-muted: $gray-600;
 $border-color: $darkmode-bg;
 
 
-// Links
+// Links & Typo
 $link-color: $gray-200;
 $link-hover-color: $white;
+
+$headings-color: $white;
 
 
 // Tables
@@ -96,13 +102,13 @@ $input-color: $body-color;
 
 
 // Dropdowns
-$dropdown-bg: $primary;
-$dropdown-border-color: darken($primary, 5%);
-$dropdown-divider-bg: darken($primary, 5%);
+$dropdown-bg: $darkmode-bg;
+$dropdown-border-color: $darkmode-bg-dark;
+$dropdown-divider-bg: $darkmode-bg-dark;
 
 $dropdown-link-color: $body-color;
 $dropdown-link-hover-color: $white;
-$dropdown-link-hover-bg: darken($primary, 5%);
+$dropdown-link-hover-bg: $darkmode-bg-darker;
 
 
 // Navs
@@ -142,6 +148,7 @@ $card-bg: $darkmode-bg;
 
 // List group
 $list-group-bg: $darkmode-bg;
+$list-group-color: $body-color;
 $list-group-border-color: $darkmode-bg-darker;
 
 $list-group-hover-bg: $darkmode-bg-dark;

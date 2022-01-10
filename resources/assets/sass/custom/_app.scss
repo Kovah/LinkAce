@@ -95,6 +95,10 @@ body:not(.bookmarklet) {
   }
 }
 
+a.badge {
+  text-decoration: none;
+}
+
 .alert {
   font-size: 90%;
 }

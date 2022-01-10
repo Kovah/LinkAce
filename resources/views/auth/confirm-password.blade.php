@@ -19,10 +19,8 @@
 
                         <div class="mb-3">
                             <div class="input-group mb-3">
-                                <div class="input-group-prepend">
-                                    <div class="input-group-text">
-                                        <x-icon.lock/>
-                                    </div>
+                                <div class="input-group-text">
+                                    <x-icon.lock/>
                                 </div>
                                 <input type="password" name="password" id="password" class="form-control"
                                     placeholder="@lang('placeholder.password')" aria-label="@lang('linkace.password')">

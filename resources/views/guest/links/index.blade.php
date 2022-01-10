@@ -24,11 +24,11 @@
 
             <div class="link-wrapper">
                 @if((int)systemsettings('guest_link_display_mode') === Link::DISPLAY_CARDS)
-                    @include('guest.links.partials.list-cards')
+                    @include('models.links.partials.list-cards')
                 @elseif((int)systemsettings('guest_link_display_mode') === Link::DISPLAY_LIST_SIMPLE)
-                    @include('guest.links.partials.list-simple')
+                    @include('models.links.partials.list-simple')
                 @else
-                    @include('guest.links.partials.list-detailed')
+                    @include('models.links.partials.list-detailed')
                 @endif
             </div>
 
@@ -42,7 +42,7 @@
     </section>
 
     @if($links->isNotEmpty())
-        {!! $links->onEachSide(1)->appends(['orderBy' => $orderBy, 'orderDir' => $orderDir])->links() !!}
+        {!! $links->onEachSide(1)->withQueryString()->links() !!}
     @endif
 
 @endsection

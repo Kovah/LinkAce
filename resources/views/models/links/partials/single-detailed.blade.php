@@ -56,7 +56,7 @@
                 @if($link->tags->count() > 0)
                     <label class="small mb-0">@lang('tag.tags'):</label>
                     @foreach($link->tags as $tag)
-                        <a href="{{ route('tags.show', [$tag->id]) }}" class="btn btn-light btn-xs">
+                        <a href="{{ route('tags.show', [$tag]) }}" class="btn btn-light btn-xs">
                             {{ $tag->name }}
                         </a>
                     @endforeach
@@ -72,20 +72,20 @@
                 </div>
 
                 <div class="btn-group mt-1 ms-md-2">
-                    <a href="{{ route('links.show', [$link->id]) }}" class="btn btn-xs btn-light"
+                    <a href="{{ route('links.show', [$link]) }}" class="btn btn-xs btn-light"
                         title="@lang('link.show')">
                         <x-icon.info class="fw"/> @lang('link.show')
                     </a>
 
-                    <a href="{{ route('links.edit', [$link->id]) }}" class="btn btn-xs btn-light"
+                    <a href="{{ route('links.edit', [$link]) }}" class="btn btn-xs btn-light"
                         title="@lang('link.edit')">
                         <x-icon.edit class="fw"/> @lang('link.edit')
                     </a>
 
-                    <a href="#" title="@lang('link.delete')" class="btn btn-xs btn-light"
-                        onclick="event.preventDefault();document.getElementById('link-delete-{{ $link->id }}').submit();">
+                    <button type="submit" form="link-delete-{{ $link->id }}" title="@lang('link.delete')"
+                        class="btn btn-xs btn-light">
                         <x-icon.trash class="fw"/> @lang('link.delete')
-                    </a>
+                    </button>
                 </div>
 
             </div>

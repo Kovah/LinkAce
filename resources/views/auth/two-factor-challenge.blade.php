@@ -18,10 +18,8 @@
 
                         <div class="mb-3">
                             <div class="input-group mb-3">
-                                <div class="input-group-prepend">
-                                    <div class="input-group-text">
-                                        <x-icon.shield/>
-                                    </div>
+                                <div class="input-group-text">
+                                    <x-icon.shield/>
                                 </div>
                                 <input type="text" name="code" id="code" class="form-control"
                                     autocomplete="one-time-code" inputmode="numeric" autofocus
@@ -51,10 +49,8 @@
                         <div class="collapse mt-3" id="recovery-code">
                             <div class="mb-3">
                                 <div class="input-group mb-3">
-                                    <div class="input-group-prepend">
-                                        <div class="input-group-text">
-                                            <x-icon.shield/>
-                                        </div>
+                                    <div class="input-group-text">
+                                        <x-icon.shield/>
                                     </div>
                                     <input type="text" name="recovery_code" id="recovery_code" class="form-control"
                                         autocomplete="one-time-code"

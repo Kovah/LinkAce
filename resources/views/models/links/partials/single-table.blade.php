@@ -33,10 +33,12 @@
     @if(!isset($hide_edit))
         <td class="text-right">
             <div class="btn-group btn-group-xs">
-                <a href="{{ route('links.edit', [$link]) }}" class="btn btn-outline-secondary">
-                    <x-icon.edit/>
-                    <span class="visually-hidden">@lang('link.edit')</span>
-                </a>
+                @auth()
+                    <a href="{{ route('links.edit', [$link]) }}" class="btn btn-outline-secondary">
+                        <x-icon.edit/>
+                        <span class="visually-hidden">@lang('link.edit')</span>
+                    </a>
+                @endauth
                 <button type="submit" form="link-delete-{{ $link->id }}" title="@lang('link.delete')"
                     class="btn btn-outline-secondary">
                     <x-icon.trash/>
