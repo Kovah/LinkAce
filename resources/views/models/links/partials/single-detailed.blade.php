@@ -1,6 +1,6 @@
 <div class="card mb-4">
 
-    <div class="card-header">
+    <div class="card-body">
         <div class="d-flex align-items-top flex-wrap flex-md-nowrap">
             @if($link->thumbnail)
                 <div class="d-flex justify-content-center me-2 mb-2 mb-md-0 link-thumbnail-list-holder">
@@ -10,18 +10,18 @@
                     </a>
                 </div>
             @endif
-            <div class="me-2 mw-100">
-                <div>
-                    {!! $link->getIcon('me-1') !!}
-                    <a href="{{ $link->url }}" {!! linkTarget() !!} class="text-decoration-none">{{ $link->title }}</a>
+            <div class="d-flex me-2 mw-100">
+                <div class="me-2">
+                    {!! $link->getIcon() !!}
+                    @if($link->is_private)
+                        <br>
+                        <x-icon.lock title="@lang('link.private')"/>
+                        <span class="visually-hidden">@lang('link.private')</span>
+                    @endif
                 </div>
                 <div>
-                    @if($link->is_private)
-                        <x-icon.lock class="me-1" title="@lang('link.private')"/>
-                        <span class="visually-hidden">@lang('link.private')</span>
-                    @else
-                        <x-icon.unlock class="invisible me-1"/>
-                    @endif
+                    <a href="{{ $link->url }}" {!! linkTarget() !!}>{{ $link->title }}</a>
+                    <br>
                     <small class="text-muted">{{ $link->shortUrl() }}</small>
                 </div>
             </div>
@@ -40,7 +40,7 @@
 
     @if(getShareLinks($link) !== '')
         <div class="collapse" id="sharing-{{ $link->id }}">
-            <div class="card-body py-2 px-3">
+            <div class="card-body py-0">
                 <div class="share-links">
                     {!! getShareLinks($link) !!}
                 </div>
@@ -48,20 +48,19 @@
         </div>
     @endif
 
-    <div class="card-body py-2 px-3">
+    <div class="card-body py-2">
 
         <div class="row">
-            <div class="col-12 col-sm-6 ">
+            <div class="col-12 col-sm-6">
 
                 @if($link->tags->count() > 0)
-                    <label class="small mb-0">@lang('tag.tags'):</label>
                     @foreach($link->tags as $tag)
                         <a href="{{ route('tags.show', [$tag]) }}" class="btn btn-light btn-xs">
                             {{ $tag->name }}
                         </a>
                     @endforeach
                 @else
-                    <span class="small">@lang('tag.no_tags')</span>
+                    <span class="small text-muted">@lang('tag.no_tags')</span>
                 @endif
 
             </div>

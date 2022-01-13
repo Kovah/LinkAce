@@ -98,6 +98,7 @@ $body-color-muted: $gray;
 
 // Links
 $link-color: $primary;
+$link-decoration: none;
 $link-shade-percentage: 40%;
 $link-hover-color: shift-color($link-color, $link-shade-percentage);
 $link-hover-decoration: none;

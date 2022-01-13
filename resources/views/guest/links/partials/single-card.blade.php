@@ -3,10 +3,10 @@
         <div class="card-body h-100 border-bottom-0">
             <div class="d-flex">
                 <div class="me-2">
-                    {!! $link->getIcon('me-2') !!}
+                    {!! $link->getIcon() !!}
                 </div>
                 <div>
-                    <a href="{{ $link->url }}" {!! linkTarget() !!} class="text-decoration-none">
+                    <a href="{{ $link->url }}" {!! linkTarget() !!}>
                         {{ $link->shortTitle() }}
                     </a>
                     <br>
@@ -15,10 +15,8 @@
             </div>
         </div>
 
-        <div class="card-footer">
-            <div class="text-xs text-muted">
-                @lang('linkace.added') {!! $link->addedAt() !!}
-            </div>
+        <div class="px-3 py-2 text-xs text-muted text-end">
+            @lang('linkace.added') {!! $link->addedAt() !!}
         </div>
     </div>
 

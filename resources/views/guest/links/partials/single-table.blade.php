@@ -1,9 +1,9 @@
 <tr>
     <td>
-        {{ $link->title }}
+        {{ $link->shortTitle() }}
     </td>
     <td>
-        <a href="{{ $link->url }}" {!! linkTarget() !!} class="text-decoration-none">
+        <a href="{{ $link->url }}" {!! linkTarget() !!}>
             {{ $link->url }}
         </a>
     </td>

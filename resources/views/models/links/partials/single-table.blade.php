@@ -1,7 +1,7 @@
 <tr>
     <td>
         <div>
-            <a href="{{ route('links.show', [$link]) }}" class="text-decoration-none">
+            <a href="{{ route('links.show', [$link]) }}">
                 {{ $link->title }}
             </a>
             @if($link->is_private)
@@ -23,7 +23,7 @@
         @endif
     </td>
     <td>
-        <a href="{{ $link->url }}" {!! linkTarget() !!} class="text-decoration-none">
+        <a href="{{ $link->url }}" {!! linkTarget() !!}>
             {{ $link->shortUrl() }}
         </a>
     </td>

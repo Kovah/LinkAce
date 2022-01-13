@@ -11,7 +11,7 @@
         @foreach($results as $link)
             <tr>
                 <td>
-                    <a href="{{ route('links.show', [$link->id]) }}" class="text-decoration-none">
+                    <a href="{{ route('links.show', [$link->id]) }}">
                         {{ $link->title }}
                     </a>
                     @if($link->tags->count() > 0)
@@ -26,7 +26,7 @@
                     @endif
                 </td>
                 <td>
-                    <a href="{{ $link->url }}" {!! linkTarget() !!} class="text-decoration-none">
+                    <a href="{{ $link->url }}" {!! linkTarget() !!}>
                         {{ $link->shortUrl() }}
                     </a>
                 </td>

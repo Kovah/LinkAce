@@ -3,7 +3,7 @@
         <div class="card-header">
             <div class="d-flex align-items-top">
                 <div class="me-2">
-                    <a href="{{ route('guest.lists.show', [$list->id]) }}" class="text-decoration-none"
+                    <a href="{{ route('guest.lists.show', [$list->id]) }}"
                         >{{ $list->name }}</a>
                 </div>
             </div>

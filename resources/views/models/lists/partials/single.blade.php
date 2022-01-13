@@ -9,7 +9,7 @@
                             <span class="visually-hidden">@lang('list.private')</span>
                         </span>
                     @endif
-                    <a href="{{ route('lists.show', [$list->id]) }}" class="text-decoration-none">{{ $list->name }}</a>
+                    <a href="{{ route('lists.show', [$list->id]) }}">{{ $list->name }}</a>
                 </div>
             </div>
         </div>

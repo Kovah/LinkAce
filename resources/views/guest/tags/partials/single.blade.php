@@ -1,6 +1,6 @@
 <tr>
     <td>
-        <a href="{{ route('guest.tags.show', [$tag]) }}" class="text-decoration-none">
+        <a href="{{ route('guest.tags.show', [$tag]) }}">
             {{ $tag->name }}
         </a>
     </td>

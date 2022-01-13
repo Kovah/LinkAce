@@ -15,9 +15,9 @@
 <div id="app">
 
     <main class="main container">
-        <div class="mb-5 text-center">
-            <img src="{{ asset('assets/img/linkace_logo.svg') }}" alt="@lang('linkace.linkace')"
-                width="150" height="55">
+        <div class="mb-5 text-center text-primary h1">
+            <x-icon.linkace/>
+            <span class="visually-hidden">@lang('linkace.linkace')</span>
         </div>
 
         <div class="card border-danger text-danger mb-3">
@@ -31,10 +31,6 @@
 
         <a href="{{ redirect()->back()->getTargetUrl() }}">Go back</a>
     </main>
-
-    <script src="{{ mix('assets/dist/js/dependencies.js') }}"></script>
-    <script src="{{ mix('assets/dist/js/app.js') }}"></script>
-    @stack('scripts')
 
 </div>
 </body>

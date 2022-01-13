@@ -21,7 +21,7 @@
                             @endif
                         </div>
                         <h3 class="d-inline-block mb-0">
-                            <a href="{{ $link->url }}" {!! linkTarget() !!} class="text-decoration-none"
+                            <a href="{{ $link->url }}" {!! linkTarget() !!}
                                 >{{ $link->title }}</a>
                         </h3>
                     </div>
