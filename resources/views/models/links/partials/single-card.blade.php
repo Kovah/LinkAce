@@ -19,11 +19,11 @@
         </div>
 
         <div class="d-flex align-items-center">
-            <div class="text-muted text-xs mr-2 ps-3">
+            <div class="text-muted text-xs me-3 ps-3">
                 @lang('linkace.added') {!! $link->addedAt() !!}
             </div>
 
-            <div class="btn-group ms-auto">
+            <div class="btn-group ms-auto me-2">
                 <a href="{{ route('links.show', [$link->id]) }}" class="btn btn-sm btn-link" title="@lang('link.show')">
                     <x-icon.info class="fw"/>
                     <span class="visually-hidden">@lang('link.show')</span>

@@ -14,7 +14,7 @@
                     <input type="text" name="filter" id="filter" minlength="1"
                         class="form-control" placeholder="@lang('list.filter_lists')"
                         value="{{ request()->input('filter') }}"/>
-                    <a href="{{ route('lists.index') }}" class="btn btn-sm btn-outline-warning">
+                    <a href="{{ route('lists.index') }}" class="btn btn-sm btn-outline-primary">
                         <x-icon.ban/>
                     </a>
                     <button class="btn btn-primary" type="submit" title="@lang('list.filter_lists')">

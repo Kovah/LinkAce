@@ -53,7 +53,7 @@
                         </details>
                     </div>
 
-                    <div class="col text-right">
+                    <div class="col text-end">
                         <form action="{{ url('/user/two-factor-recovery-codes') }}" method="POST">
                             @csrf
                             <button type="submit" class="btn btn-sm btn-outline-primary">

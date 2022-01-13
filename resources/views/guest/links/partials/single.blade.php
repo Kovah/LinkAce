@@ -7,7 +7,7 @@
                 <a href="{{ $link->url }}" {!! linkTarget() !!}>{{ $link->title }}</a>
                 <small>({{ $link->url }})</small>
             </div>
-            <div class="ms-auto text-right">
+            <div class="ms-auto text-end">
                 <button type="button" class="btn btn-xs btn-outline-primary" title="@lang('sharing.share_link')"
                     data-bs-toggle="collapse" data-bs-target="#sharing-{{ $link->id }}"
                     aria-expanded="false" aria-controls="sharing-{{ $link->id }}">

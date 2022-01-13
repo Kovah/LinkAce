@@ -40,13 +40,8 @@
     </div>
 
     <div class="card my-3">
-        <div class="card-header">
-            @lang('link.links')
-        </div>
         <div class="card-table">
-
             @include('models.links.partials.table', ['links' => $tagLinks])
-
         </div>
     </div>
 

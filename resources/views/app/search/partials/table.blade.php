@@ -16,7 +16,6 @@
                     </a>
                     @if($link->tags->count() > 0)
                         <div class="mt-1">
-                            <label class="small mb-0">@lang('tag.tags'):</label>
                             @foreach($link->tags as $tag)
                                 <a href="{{ route('tags.show', [$tag->id]) }}" class="btn btn-xs btn-light">
                                     {{ $tag->name }}
@@ -26,13 +25,11 @@
                     @endif
                 </td>
                 <td>
-                    <a href="{{ $link->url }}" {!! linkTarget() !!}>
+                    <a href="{{ $link->url }}" {!! linkTarget() !!} class="small">
                         {{ $link->shortUrl() }}
                     </a>
                 </td>
-                <td class="text-muted">
-                    <small>{!! $link->addedAt() !!}</small>
-                </td>
+                <td class="text-muted small">{!! $link->addedAt() !!}</td>
             </tr>
         @endforeach
         </tbody>

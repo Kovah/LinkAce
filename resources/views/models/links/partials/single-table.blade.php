@@ -13,7 +13,6 @@
         </div>
         @if($link->tags->count() > 0)
             <div class="mt-1">
-                <label class="small mb-0">@lang('tag.tags'):</label>
                 @foreach($link->tags as $tag)
                     <a href="{{ route('tags.show', [$tag]) }}" class="btn btn-xs btn-light">
                         {{ $tag->name }}
@@ -31,16 +30,16 @@
         <small>{!! $link->addedAt() !!}</small>
     </td>
     @if(!isset($hide_edit))
-        <td class="text-right">
-            <div class="btn-group btn-group-xs">
+        <td class="py-1 text-end">
+            <div class="btn-group btn-group-sm">
                 @auth()
-                    <a href="{{ route('links.edit', [$link]) }}" class="btn btn-outline-secondary">
+                    <a href="{{ route('links.edit', [$link]) }}" class="btn btn-link">
                         <x-icon.edit/>
                         <span class="visually-hidden">@lang('link.edit')</span>
                     </a>
                 @endauth
                 <button type="submit" form="link-delete-{{ $link->id }}" title="@lang('link.delete')"
-                    class="btn btn-outline-secondary">
+                    class="btn btn-link">
                     <x-icon.trash/>
                     <span class="visually-hidden">@lang('link.delete')</span>
                 </button>

@@ -12,7 +12,7 @@
                     <small class="text-muted">{{ $link->shortUrl() }}</small>
                 </div>
             </div>
-            <div class="ms-auto text-right">
+            <div class="ms-auto text-end">
                 <button type="button" class="btn btn-xs btn-outline-secondary" title="@lang('sharing.share_link')"
                     data-bs-toggle="collapse" data-bs-target="#sharing-{{ $link->id }}"
                     aria-expanded="false" aria-controls="sharing-{{ $link->id }}">

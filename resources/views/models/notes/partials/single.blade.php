@@ -13,7 +13,7 @@
             @endif
             {!! $note->addedAt() !!}
         </div>
-        <div class="text-right">
+        <div class="text-end">
 
             <div class="btn-group">
                 <a href="{{ route('notes.edit', [$note->id]) }}" class="btn btn-xs btn-outline-secondary"
