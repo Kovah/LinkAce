@@ -4,7 +4,7 @@
         @lang('settings.sharing')
     </h5>
 
-    <p>@lang('settings.sharing_help')</p>
+    <p class="mt-3 small">@lang('settings.sharing_help')</p>
 
     <div class="sharing-settings">
 

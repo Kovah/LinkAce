@@ -12,8 +12,8 @@
                 @method('PATCH')
                 @csrf
 
-                <div class="mb-3">
-                    <label class="label" for="note">@lang('note.note_content')</label>
+                <div class="mb-4">
+                    <label class="form-label" class="form-label" for="note">@lang('note.note_content')</label>
                     <textarea name="note" id="note"
                         class="form-control{{ $errors->has('note') ? ' is-invalid' : '' }}"
                         title="@lang('note.note_content')" required>{{ old('note') ?: $note->note ?: '' }}</textarea>

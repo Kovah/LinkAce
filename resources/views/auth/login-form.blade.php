@@ -6,7 +6,7 @@
         <form method="POST" action="{{ route('login') }}" aria-label="@lang('linkace.login')">
             @csrf
 
-            <div class="mb-3">
+            <div class="mb-4">
                 <div class="input-group mb-3">
                     <div class="input-group-text">
                         <x-icon.envelope/>
@@ -24,7 +24,7 @@
                 @endif
             </div>
 
-            <div class="mb-3">
+            <div class="mb-4">
                 <div class="input-group mb-3">
                     <div class="input-group-text">
                         <x-icon.lock/>

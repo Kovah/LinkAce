@@ -17,8 +17,8 @@
 
                         <input type="hidden" name="token" value="{{ request()->route('token') }}">
 
-                        <div class="mb-3">
-                            <label for="email">@lang('linkace.email')</label>
+                        <div class="mb-4">
+                            <label class="form-label" for="email">@lang('linkace.email')</label>
                             <div class="control">
                                 <input name="email" id="email"
                                     class="form-control{{ $errors->has('email') ? ' is-invalid' : '' }}"
@@ -33,8 +33,8 @@
                             @endif
                         </div>
 
-                        <div class="mb-3">
-                            <label for="password">@lang('linkace.password')</label>
+                        <div class="mb-4">
+                            <label class="form-label" for="password">@lang('linkace.password')</label>
                             <div class="control">
                                 <input name="password" id="password"
                                     class="form-control{{ $errors->has('password') ? ' is-invalid' : '' }}"
@@ -48,8 +48,8 @@
                             @endif
                         </div>
 
-                        <div class="mb-3">
-                            <label for="password-confirm">@lang('linkace.password_confirm')</label>
+                        <div class="mb-4">
+                            <label class="form-label" for="password-confirm">@lang('linkace.password_confirm')</label>
                             <div class="control">
                                 <input name="password_confirmation" id="password-confirm"
                                     class="form-control{{ $errors->has('password_confirmation') ? ' is-invalid' : '' }}"

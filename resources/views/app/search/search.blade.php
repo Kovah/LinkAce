@@ -11,7 +11,7 @@
             <form action="{{ route('do-search') }}" method="POST">
                 @csrf
 
-                <div class="mb-3">
+                <div class="mb-4">
                     <div class="input-group">
                         <input type="text" name="query" id="query" autofocus
                             class="form-control form-control-lg{{ $errors->has('query') ? ' is-invalid' : '' }}"
@@ -91,9 +91,9 @@
                     </div>
 
                 </div>
-                <div class="row mt-3">
+                <div class="row mt-4">
 
-                    <div class="col-md mb-2 mb-md-0">
+                    <div class="col-md mb-3 mb-md-0">
                         <label for="only_lists" class="d-none" aria-hidden="true">
                             @lang('search.filter_by_list')
                         </label>
@@ -101,7 +101,7 @@
                             placeholder="@lang('search.filter_by_list')" value="{{ $query_settings['only_lists'] }}">
                     </div>
 
-                    <div class="col-md mb-2 mb-md-0">
+                    <div class="col-md mb-3 mb-md-0">
                         <label for="only_tags" class="d-none" aria-hidden="true">
                             @lang('search.filter_by_tag')
                         </label>
@@ -129,7 +129,7 @@
             </form>
 
         </div>
-        <div class="card-table mt-3">
+        <div class="card-table mt-4">
 
             @if($results->isEmpty())
                 <div class="alert alert-info m-3">

@@ -10,8 +10,8 @@
             <div class="row">
                 <div class="col-12 col-sm-8 col-md-6">
 
-                    <div class="mb-3">
-                        <label for="system_page_title">
+                    <div class="mb-4">
+                        <label class="form-label" for="system_page_title">
                             @lang('settings.sys_page_title')
                         </label>
                         <input type="text" id="system_page_title" name="system_page_title" class="form-control"
@@ -26,8 +26,8 @@
                 </div>
                 <div class="col-12 col-sm-8 col-md-6">
 
-                    <div class="mb-3">
-                        <label for="system_guest_access">
+                    <div class="mb-4">
+                        <label class="form-label" for="system_guest_access">
                             @lang('settings.sys_guest_access')
                         </label>
                         <select id="system_guest_access" name="system_guest_access"
@@ -54,8 +54,10 @@
 
             <div class="row">
                 <div class="col-12 col-sm-8 col-md-6">
-                    <div class="mb-3">
-                        <label for="system_custom_header_content">@lang('settings.sys_custom_header_content')</label>
+                    <div class="mb-4">
+                        <label class="form-label" for="system_custom_header_content">
+                            @lang('settings.sys_custom_header_content')
+                        </label>
 
                         <textarea name="system_custom_header_content" id="system_custom_header_content" rows="4"
                             class="form-control{{ $errors->has('system_custom_header_content') ? ' is-invalid' : '' }}"

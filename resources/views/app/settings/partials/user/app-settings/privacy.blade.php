@@ -1,13 +1,13 @@
 <div class="mb-3 my-5">
-    <h5>
+    <h5 class="mb-3">
         @lang('settings.privacy')
     </h5>
 
     <div class="row">
         <div class="col-12 col-sm-8 col-md-6">
 
-            <div class="mb-3">
-                <label for="links_private_default">
+            <div class="mb-4">
+                <label class="form-label" for="links_private_default">
                     @lang('settings.links_private_default')
                 </label>
                 <select id="links_private_default" name="links_private_default"
@@ -32,8 +32,8 @@
         </div>
         <div class="col-12 col-sm-8 col-md-6">
 
-            <div class="mb-3">
-                <label for="notes_private_default">
+            <div class="mb-4">
+                <label class="form-label" for="notes_private_default">
                     @lang('settings.notes_private_default')
                 </label>
                 <select id="notes_private_default" name="notes_private_default"
@@ -61,8 +61,8 @@
     <div class="row">
         <div class="col-12 col-sm-8 col-md-6">
 
-            <div class="mb-3">
-                <label for="lists_private_default">
+            <div class="mb-4">
+                <label class="form-label" for="lists_private_default">
                     @lang('settings.lists_private_default')
                 </label>
                 <select id="lists_private_default" name="lists_private_default"
@@ -87,8 +87,8 @@
         </div>
         <div class="col-12 col-sm-8 col-md-6">
 
-            <div class="mb-3">
-                <label for="tags_private_default">
+            <div class="mb-4">
+                <label class="form-label" for="tags_private_default">
                     @lang('settings.tags_private_default')
                 </label>
                 <select id="tags_private_default" name="tags_private_default"

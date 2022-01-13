@@ -10,8 +10,8 @@
             <div class="row">
                 <div class="col-12 col-sm-8 col-md-6">
 
-                    <div class="mb-3">
-                        <label for="locale">
+                    <div class="mb-4">
+                        <label class="form-label" for="locale">
                             @lang('settings.language')
                         </label>
                         <select id="locale" name="locale"
@@ -33,8 +33,8 @@
                 </div>
                 <div class="col-12 col-sm-8 col-md-6">
 
-                    <div class="mb-3">
-                        <label for="timezone">
+                    <div class="mb-4">
+                        <label class="form-label" for="timezone">
                             @lang('settings.timezone')
                         </label>
                         <select id="timezone" name="timezone"
@@ -59,8 +59,8 @@
             <div class="row">
                 <div class="col-12 col-sm-8 col-md-6">
 
-                    <div class="mb-3">
-                        <label for="date_format">
+                    <div class="mb-4">
+                        <label class="form-label" for="date_format">
                             @lang('settings.date_format')
                         </label>
                         <select id="date_format" name="date_format"
@@ -82,8 +82,8 @@
                 </div>
                 <div class="col-12 col-sm-8 col-md-6">
 
-                    <div class="mb-3">
-                        <label for="time_format">
+                    <div class="mb-4">
+                        <label class="form-label" for="time_format">
                             @lang('settings.time_format')
                         </label>
                         <select id="time_format" name="time_format"
@@ -108,8 +108,8 @@
             <div class="row mt-4">
                 <div class="col-12 col-sm-8 col-md-6">
 
-                    <div class="mb-3">
-                        <label for="listitem_count">
+                    <div class="mb-4">
+                        <label class="form-label" for="listitem_count">
                             @lang('settings.listitem_count')
                         </label>
                         <select id="listitem_count" name="listitem_count"
@@ -131,8 +131,8 @@
                 </div>
                 <div class="col-12 col-sm-8 col-md-6">
 
-                    <div class="mb-3">
-                        <label for="link_display_mode">
+                    <div class="mb-4">
+                        <label class="form-label" for="link_display_mode">
                             @lang('settings.display_mode')
                         </label>
                         <select id="link_display_mode" name="link_display_mode"
@@ -169,8 +169,8 @@
             <div class="row">
                 <div class="col-12 col-sm-8 col-md-6">
 
-                    <div class="mb-3">
-                        <label for="links_new_tab">
+                    <div class="mb-4">
+                        <label class="form-label" for="links_new_tab">
                             @lang('settings.links_new_tab')
                         </label>
                         <select id="links_new_tab" name="links_new_tab"
@@ -192,8 +192,8 @@
                 </div>
                 <div class="col-12 col-sm-8 col-md-6">
 
-                    <div class="mb-3">
-                        <label for="links_new_tab">
+                    <div class="mb-4">
+                        <label class="form-label" for="links_new_tab">
                             @lang('settings.markdown_for_text')
                         </label>
                         <select id="markdown_for_text" name="markdown_for_text"

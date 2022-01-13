@@ -8,8 +8,8 @@
     <div class="row">
         <div class="col-12 col-sm-8 col-md-6">
 
-            <div class="mb-3">
-                <label for="archive_backups_enabled">
+            <div class="mb-4">
+                <label class="form-label" for="archive_backups_enabled">
                     @lang('settings.archive_backups_enabled')
                 </label>
                 <select id="archive_backups_enabled" name="archive_backups_enabled"
@@ -34,8 +34,8 @@
         </div>
         <div class="col-12 col-sm-8 col-md-6">
 
-            <div class="mb-3">
-                <label for="archive_private_backups_enabled">
+            <div class="mb-4">
+                <label class="form-label" for="archive_private_backups_enabled">
                     @lang('settings.archive_private_backups_enabled')
                 </label>
                 <select id="archive_private_backups_enabled"

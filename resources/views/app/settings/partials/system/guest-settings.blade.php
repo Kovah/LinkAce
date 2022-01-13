@@ -12,8 +12,8 @@
             <div class="row mt-4">
                 <div class="col-12 col-sm-8 col-md-6">
 
-                    <div class="mb-3">
-                        <label for="guest_listitem_count">
+                    <div class="mb-4">
+                        <label class="form-label" for="guest_listitem_count">
                             @lang('settings.listitem_count')
                         </label>
                         <select id="guest_listitem_count" name="guest_listitem_count"
@@ -35,8 +35,8 @@
                 </div>
                 <div class="col-12 col-sm-8 col-md-6">
 
-                    <div class="mb-3">
-                        <label for="guest_link_display_mode">
+                    <div class="mb-4">
+                        <label class="form-label" for="guest_link_display_mode">
                             @lang('settings.display_mode')
                         </label>
                         <select id="guest_link_display_mode" name="guest_link_display_mode"
@@ -73,8 +73,8 @@
             <div class="row">
                 <div class="col-12 col-sm-8 col-md-6">
 
-                    <div class="mb-3">
-                        <label for="guest_links_new_tab">
+                    <div class="mb-4">
+                        <label class="form-label" for="guest_links_new_tab">
                             @lang('settings.links_new_tab')
                         </label>
                         <select id="guest_links_new_tab" name="guest_links_new_tab"

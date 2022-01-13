@@ -13,8 +13,8 @@
 
                 <div class="row">
                     <div class="col-12 col-sm-6 col-md-7">
-                        <div class="mb-3">
-                            <label for="name">@lang('tag.name')</label>
+                        <div class="mb-4">
+                            <label class="form-label" for="name">@lang('tag.name')</label>
 
                             <input name="name" id="name"
                                 class="form-control{{ $errors->has('name') ? ' is-invalid' : '' }}"
@@ -29,8 +29,8 @@
                         </div>
                     </div>
                     <div class="col-12 col-sm-6 col-md-5">
-                        <div class="mb-3">
-                            <label for="is_private">@lang('linkace.is_private')</label>
+                        <div class="mb-4">
+                            <label class="form-label" for="is_private">@lang('linkace.is_private')</label>
 
                             <select id="is_private" name="is_private"
                                 class="form-select{{ $errors->has('is_private') ? ' is-invalid' : '' }}">

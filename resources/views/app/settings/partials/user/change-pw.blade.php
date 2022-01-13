@@ -8,24 +8,24 @@
             <form action="{{ route('change-user-password') }}" method="POST">
                 @csrf
 
-                <div class="mb-3">
-                    <label for="old_password">
+                <div class="mb-4">
+                    <label class="form-label" for="current_password">
                         @lang('settings.old_password')
                     </label>
                     <input type="password" name="current_password" id="current_password" required
                         class="form-control{{ $errors->has('current_password') ? ' is-invalid' : '' }}">
                 </div>
 
-                <div class="mb-3">
-                    <label for="new_password">
+                <div class="mb-4">
+                    <label class="form-label" for="password">
                         @lang('settings.new_password')
                     </label>
                     <input type="password" name="password" id="password" required
                         class="form-control{{ $errors->has('password') ? ' is-invalid' : '' }}">
                 </div>
 
-                <div class="mb-3">
-                    <label for="new_password_confirmation">
+                <div class="mb-4">
+                    <label class="form-label" for="password_confirmation">
                         @lang('settings.new_password2')
                     </label>
                     <input type="password" name="password_confirmation" id="password_confirmation" required

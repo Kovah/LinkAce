@@ -16,7 +16,7 @@
                     <form method="POST" action="{{ url('/two-factor-challenge') }}">
                         @csrf
 
-                        <div class="mb-3">
+                        <div class="mb-4">
                             <div class="input-group mb-3">
                                 <div class="input-group-text">
                                     <x-icon.shield/>
@@ -34,7 +34,7 @@
                             @endif
                         </div>
 
-                        <div class="mb-4">
+                        <div class="mb-5">
                             <button type="submit" class="btn btn-primary">
                                 @lang('linkace.login')
                             </button>
@@ -47,7 +47,7 @@
                         </button>
 
                         <div class="collapse mt-3" id="recovery-code">
-                            <div class="mb-3">
+                            <div class="mb-4">
                                 <div class="input-group mb-3">
                                     <div class="input-group-text">
                                         <x-icon.shield/>
