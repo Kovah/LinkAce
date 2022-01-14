@@ -20,12 +20,12 @@ class BookmarkRedirectMiddleware
      */
     public function handle(Request $request, Closure $next)
     {
-        if (Session::get('bookmarklet.login_redirect', false) && $request->is('dashboard')) {
-            Session::forget('bookmarklet.login_redirect');
-
+        if ($request->is('dashboard') && session()->pull('bookmarklet.login_redirect', false)) {
             return redirect()->route('bookmarklet-add', [
-                'u' => session('bookmarklet.new_url'),
-                't' => session('bookmarklet.new_title'),
+                'u' => session()->pull('bookmarklet.new_url'),
+                't' => session()->pull('bookmarklet.new_title'),
+                'tags' => session()->pull('bookmarklet.new_tags'),
+                'lists' => session()->pull('bookmarklet.new_lists'),
             ]);
         }
 
