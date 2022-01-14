@@ -3,29 +3,27 @@
 @section('content')
 
     <header class="d-flex align-items-center">
-        <h3 class="mb-0 mr-3">
+        <h3 class="mb-0 me-3">
             @lang('list.lists')
         </h3>
 
-        <div class="form-group mb-0 ml-auto">
+        <div class="mb-0 ms-auto">
             <form action="{{ route('lists.index') }}" method="GET" class="d-flex flex-column flex-sm-row">
-                <div class="input-group input-group-sm mb-1 mb-sm-0">
-                    <label for="filter" class="sr-only">@lang('list.filter_lists')</label>
+                <label for="filter" class="visually-hidden">@lang('list.filter_lists')</label>
+                <div class="input-group input-group-sm mb-1 mb-sm-0 me-sm-2">
                     <input type="text" name="filter" id="filter" minlength="1"
                         class="form-control" placeholder="@lang('list.filter_lists')"
                         value="{{ request()->input('filter') }}"/>
-                    <a href="{{ route('lists.index') }}" class="btn btn-sm bg-secondary">
+                    <a href="{{ route('lists.index') }}" class="btn btn-sm btn-outline-primary">
                         <x-icon.ban/>
                     </a>
-                    <div class="input-group-append mr-sm-2">
-                        <button class="btn btn-primary" type="submit" title="@lang('list.filter_lists')">
-                            <x-icon.search/>
-                        </button>
-                    </div>
+                    <button class="btn btn-primary" type="submit" title="@lang('list.filter_lists')">
+                        <x-icon.search/>
+                    </button>
                 </div>
-                <div class="btn-group ml-auto ml-sm-0 flex-sm-shrink-0">
+                <div class="btn-group ms-auto ms-sm-0 flex-sm-shrink-0">
                     <a href="{{ route('lists.create') }}" class="btn btn-sm btn-primary" aria-label="@lang('list.add')">
-                        <x-icon.plus class="mr-2"/>
+                        <x-icon.plus class="me-2"/>
                         @lang('linkace.add')
                     </a>
                     @include('models.lists.partials.index-order-dropdown', ['baseRoute' => 'lists.index'])
@@ -52,7 +50,7 @@
     @endif
 
     @if($lists->isNotEmpty())
-        {!! $lists->onEachSide(1)->appends(['orderBy' => $orderBy, 'orderDir' => $orderDir])->links() !!}
+        {!! $lists->onEachSide(1)->withQueryString()->links() !!}
     @endif
 
 @endsection

@@ -1,6 +1,6 @@
 <tr>
     <td>
-        {{ $link->title }}
+        {{ $link->shortTitle() }}
     </td>
     <td>
         <a href="{{ $link->url }}" {!! linkTarget() !!}>

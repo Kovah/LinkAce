@@ -5,11 +5,11 @@
     <div class="card">
         <header class="card-header d-flex align-items-center">
 
-            <span class="mr-3">@lang('tag.tag')</span>
+            <span class="me-3">@lang('tag.tag')</span>
             <a href="{{ route('guest.tags.links.feed', ['tag' => $tag]) }}"
-                class="ml-auto btn btn-xs btn-outline-secondary">
-                <x-icon.feed/>
-                <span class="sr-only">@lang('linkace.feed')</span>
+                class="ms-auto btn btn-xs btn-outline-secondary">
+                <x-icon.feed class="fw"/>
+                <span class="visually-hidden">@lang('linkace.feed')</span>
             </a>
 
         </header>
@@ -29,6 +29,6 @@
         </div>
     </div>
 
-    {!! $tagLinks->onEachSide(1)->appends(['orderBy' => $orderBy, 'orderDir' => $orderDir])->links() !!}
+    {!! $tagLinks->onEachSide(1)->withQueryString()->links() !!}
 
 @endsection

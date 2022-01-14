@@ -8,7 +8,7 @@
             <th>
                 {!! tableSorter(trans('link.url'), $route, 'url', $orderBy, $orderDir) !!}
             </th>
-            <th>
+            <th style="min-width: 120px">
                 {!! tableSorter(trans('linkace.added_at'), $route, 'created_at', $orderBy, $orderDir) !!}
             </th>
         </tr>

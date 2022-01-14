@@ -7,12 +7,12 @@
 @section('content')
 
     <header class="d-flex align-items-center">
-        <h3 class="mb-0 mr-3">
+        <h3 class="mb-0 me-3">
             @lang('tag.tags')
         </h3>
-        <a href="{{ route('guest.tags.feed') }}" class="ml-auto btn btn-sm btn-outline-secondary">
+        <a href="{{ route('guest.tags.feed') }}" class="ms-auto btn btn-sm btn-outline-secondary">
             <x-icon.feed/>
-            <span class="sr-only">@lang('linkace.feed')</span>
+            <span class="visually-hidden">@lang('linkace.feed')</span>
         </a>
     </header>
 
@@ -35,7 +35,7 @@
     </div>
 
     @if(!$tags->isEmpty())
-        {!! $tags->onEachSide(1)->appends(['orderBy' => $orderBy, 'orderDir' => $orderDir])->links() !!}
+        {!! $tags->onEachSide(1)->withQueryString()->links() !!}
     @endif
 
 @endsection

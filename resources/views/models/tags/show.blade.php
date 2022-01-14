@@ -4,24 +4,24 @@
 
     <div class="card">
         <header class="card-header d-flex align-items-center">
-            <span class="mr-3">
+            <span class="me-3">
                 @if($tag->is_private)
                     <span>
-                        <x-icon.lock class="mr-1" title="@lang('tag.private')"/>
-                        <span class="sr-only">@lang('tag.private')</span>
+                        <x-icon.lock class="me-1" title="@lang('tag.private')"/>
+                        <span class="visually-hidden">@lang('tag.private')</span>
                     </span>
                 @endif
                 @lang('tag.tag')
             </span>
-            <div class="ml-auto">
+            <div class="ms-auto">
                 <a href="{{ route('tags.edit', [$tag->id]) }}" class="btn btn-sm btn-primary"
                     aria-label="@lang('tag.edit')">
-                    <x-icon.edit class="mr-2"/>
+                    <x-icon.edit class="me-2"/>
                     @lang('linkace.edit')
                 </a>
                 <a onclick="event.preventDefault();document.getElementById('tag-delete-{{ $tag->id }}').submit();"
                     class="btn btn-sm btn-outline-danger" aria-label="@lang('tag.delete')">
-                    <x-icon.trash class="mr-2"/>
+                    <x-icon.trash class="me-2"/>
                     @lang('linkace.delete')
                 </a>
             </div>
@@ -40,16 +40,11 @@
     </div>
 
     <div class="card my-3">
-        <div class="card-header">
-            @lang('link.links')
-        </div>
         <div class="card-table">
-
             @include('models.links.partials.table', ['links' => $tagLinks])
-
         </div>
     </div>
 
-    {!! $tagLinks->onEachSide(1)->appends(['orderBy' => $orderBy, 'orderDir' => $orderDir])->links() !!}
+    {!! $tagLinks->onEachSide(1)->withQueryString()->links() !!}
 
 @endsection

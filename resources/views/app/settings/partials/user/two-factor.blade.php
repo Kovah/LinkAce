@@ -10,7 +10,7 @@
                     @csrf
 
                     <button type="submit" class="btn btn-primary">
-                        <x-icon.shield class="mr-2"/> @lang('settings.two_factor_enable')
+                        <x-icon.shield class="me-2"/> @lang('settings.two_factor_enable')
                     </button>
 
                 </form>
@@ -21,7 +21,7 @@
                     @method('DELETE')
 
                     <button type="submit" class="btn btn-outline-danger">
-                        <x-icon.shield class="mr-2"/> @lang('settings.two_factor_disable')
+                        <x-icon.shield class="me-2"/> @lang('settings.two_factor_disable')
                     </button>
 
                 </form>
@@ -53,11 +53,11 @@
                         </details>
                     </div>
 
-                    <div class="col text-right">
+                    <div class="col text-end">
                         <form action="{{ url('/user/two-factor-recovery-codes') }}" method="POST">
                             @csrf
                             <button type="submit" class="btn btn-sm btn-outline-primary">
-                                <x-icon.shield class="mr-2"/> @lang('settings.two_factor_regenerate_recovery_codes')
+                                <x-icon.shield class="me-2"/> @lang('settings.two_factor_regenerate_recovery_codes')
                             </button>
                         </form>
                     </div>

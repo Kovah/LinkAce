@@ -1,31 +1,38 @@
 // Colors
 $white: #fff;
-$gray-100: #F6F9FE;
-$gray-200: #E5EDFB;
-$gray-300: #CFDDF5;
-$gray-400: #C6D5EE;
-$gray-500: #98B1D8;
-$gray-600: #6686B9;
-$gray-700: #44679F;
-$gray-800: #2C528F;
-$gray-900: #193C74;
-$gray: #6F747F;
+$gray-100: #f1f5f9;
+$gray-200: #e2e8f0;
+$gray-300: #cbd5e1;
+$gray-400: #94a3b8;
+$gray-500: #64748b;
+$gray-600: #475569;
+$gray-700: #334155;
+$gray-800: #1e293b;
+$gray-900: #0f172a;
+
+//$gray-100: #F6F9FE;
+//$gray-200: #E5EDFB;
+//$gray-300: #CFDDF5;
+//$gray-400: #C6D5EE;
+//$gray-500: #98B1D8;
+//$gray-600: #6686B9;
+//$gray-700: #44679F;
+//$gray-800: #2C528F;
+//$gray-900: #193C74;
+
+$gray: $gray-500;
 $black: #17181A;
 
-$grays: ();
-$grays: map-merge(
-    (
-      "100": $gray-100,
-      "200": $gray-200,
-      "300": $gray-300,
-      "400": $gray-400,
-      "500": $gray-500,
-      "600": $gray-600,
-      "700": $gray-700,
-      "800": $gray-800,
-      "900": $gray-900
-    ),
-    $grays
+$grays: (
+  "100": $gray-100,
+  "200": $gray-200,
+  "300": $gray-300,
+  "400": $gray-400,
+  "500": $gray-500,
+  "600": $gray-600,
+  "700": $gray-700,
+  "800": $gray-800,
+  "900": $gray-900
 );
 
 $blue: #44679F;
@@ -40,7 +47,7 @@ $teal: #00A7BA;
 $cyan: #3498DB;
 
 $primary: $blue;
-$secondary: $gray-600;
+$secondary: $gray;
 $success: $green;
 $info: $cyan;
 $warning: $yellow;
@@ -48,75 +55,39 @@ $danger: $red;
 $light: $gray-100;
 $dark: $gray-800;
 
-$colors: ();
-$colors: map-merge(
-    (
-      "blue": $blue,
-      "indigo": $indigo,
-      "purple": $purple,
-      "pink": $pink,
-      "red": $red,
-      "orange": $orange,
-      "yellow": $yellow,
-      "green": $green,
-      "teal": $teal,
-      "cyan": $cyan,
-      "white": $white,
-      "gray": $gray-600,
-      "gray-dark": $gray-800
-    ),
-    $colors
+$colors: (
+  "blue": $blue,
+  "indigo": $indigo,
+  "purple": $purple,
+  "pink": $pink,
+  "red": $red,
+  "orange": $orange,
+  "yellow": $yellow,
+  "green": $green,
+  "teal": $teal,
+  "cyan": $cyan,
+  "white": $white,
+  "gray": $gray-600,
+  "gray-dark": $gray-800
 );
 
-$theme-colors: ();
-$theme-colors: map-merge(
-    (
-      "primary": $primary,
-      "secondary": $secondary,
-      "success": $success,
-      "info": $info,
-      "warning": $warning,
-      "danger": $danger,
-      "light": $light,
-      "dark": $dark
-    ),
-    $theme-colors
+$theme-colors: (
+  "primary": $primary,
+  "secondary": $secondary,
+  "success": $success,
+  "info": $info,
+  "warning": $warning,
+  "danger": $danger,
+  "light": $light,
+  "dark": $dark
 );
 
-$yiq-text-dark: $black;
-$yiq-text-light: $white;
+$color-contrast-dark: $black;
+$color-contrast-light: $white;
 
 
 // Options
 $enable-caret: false;
-
-
-// Spacing
-$spacer: 1rem;
-$spacers: ();
-$spacers: map-merge(
-    (
-      0: 0,
-      1: ($spacer * .25),
-      2: ($spacer * .5),
-      3: $spacer,
-      4: ($spacer * 1.5),
-      5: ($spacer * 3)
-    ),
-    $spacers
-);
-
-$sizes: ();
-$sizes: map-merge(
-    (
-      25: 25%,
-      50: 50%,
-      75: 75%,
-      100: 100%,
-      auto: auto
-    ),
-    $sizes
-);
 
 
 // Body
@@ -126,8 +97,10 @@ $body-color-muted: $gray;
 
 
 // Links
-$link-color: theme-color("primary");
-$link-hover-color: darken($link-color, 20%);
+$link-color: $primary;
+$link-decoration: none;
+$link-shade-percentage: 40%;
+$link-hover-color: shift-color($link-color, $link-shade-percentage);
 $link-hover-decoration: none;
 
 
@@ -154,6 +127,7 @@ $table-dark-color: $white;
 
 
 // Buttons + Forms
+$input-border-color: $gray-300;
 $input-btn-focus-width: .15rem;
 $input-btn-padding-y-xs: .15rem;
 $input-btn-padding-x-xs: .3rem;
@@ -167,6 +141,7 @@ $btn-padding-x-xs: $input-btn-padding-x-xs;
 $btn-font-size-xs: $input-btn-font-size-xs;
 $btn-line-height-xs: $input-btn-line-height-xs;
 
+$btn-hover-bg-tint-amount: 20%;
 $btn-border-radius-xs: $border-radius-xs;
 
 

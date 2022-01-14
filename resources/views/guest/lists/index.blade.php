@@ -7,14 +7,14 @@
 @section('content')
 
     <header class="d-flex align-items-center">
-        <h3 class="mb-0 mr-3">
+        <h3 class="mb-0 me-3">
             @lang('list.lists')
         </h3>
-        <a href="{{ route('guest.lists.feed') }}" class="ml-auto btn btn-sm btn-outline-secondary">
+        <a href="{{ route('guest.lists.feed') }}" class="ms-auto btn btn-sm btn-outline-secondary">
             <x-icon.feed/>
-            <span class="sr-only">@lang('linkace.feed')</span>
+            <span class="visually-hidden">@lang('linkace.feed')</span>
         </a>
-        <div class="dropdown ml-1">
+        <div class="dropdown ms-1">
             @include('models.lists.partials.index-order-dropdown', ['baseRoute' => 'lists.index'])
         </div>
     </header>
@@ -36,7 +36,7 @@
     @endif
 
     @if(!$lists->isEmpty())
-        {!! $lists->onEachSide(1)->appends(['orderBy' => $orderBy, 'orderDir' => $orderDir])->links() !!}
+        {!! $lists->onEachSide(1)->withQueryString()->links() !!}
     @endif
 
 @endsection

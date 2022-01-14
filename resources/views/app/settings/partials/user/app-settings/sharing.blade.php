@@ -1,10 +1,10 @@
-<div class="form-group my-5">
+<div class="mb-3 my-5">
 
     <h5>
         @lang('settings.sharing')
     </h5>
 
-    <p>@lang('settings.sharing_help')</p>
+    <p class="mt-3 small">@lang('settings.sharing_help')</p>
 
     <div class="sharing-settings">
 
@@ -15,7 +15,7 @@
                     @if(old('share.' . $key) ?: usersettings('share_' . $key)) checked @endif>
                 <label for="share-{{ $key }}" title="@lang('sharing.service.' . $key)">
                     <x-dynamic-component :component="$details['icon']" class="fw" />
-                    <span class="sr-only">@lang('sharing.service.' . $key)</span>
+                    <span class="visually-hidden">@lang('sharing.service.' . $key)</span>
                 </label>
             </div>
         @endforeach
@@ -23,7 +23,7 @@
     </div>
 
     <button type="button" class="share-toggle btn btn-sm btn-outline-secondary">
-        <x-icon.toggle-on class="fw mr-2"/> @lang('settings.sharing_toggle')
+        <x-icon.toggle-on class="fw me-2"/> @lang('settings.sharing_toggle')
     </button>
 
     @if ($errors->has('timezone'))

@@ -7,10 +7,10 @@
             @lang('link.links')
         </h3>
 
-        <div class="btn-group ml-auto">
+        <div class="btn-group ms-auto">
             <a href="{{ route('links.create') }}" class="btn btn-sm btn-primary"
                 aria-label="@lang('link.add')">
-                <x-icon.plus class="mr-2"/>
+                <x-icon.plus class="me-2"/>
                 @lang('linkace.add')
             </a>
             @include('models.links.partials.index-order-dropdown', ['baseRoute' => 'links.index'])
@@ -40,7 +40,7 @@
     </section>
 
     @if($links->isNotEmpty())
-        {!! $links->onEachSide(1)->appends(['orderBy' => $orderBy, 'orderDir' => $orderDir])->links() !!}
+        {!! $links->onEachSide(1)->withQueryString()->links() !!}
     @endif
 
 @endsection

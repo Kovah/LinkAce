@@ -12,11 +12,9 @@
             <input type="text" class="cron-token-input form-control" value="{{ systemsettings('cron_token') }}"
                 readonly aria-readonly="true" aria-label="@lang('settings.cron_token_generate')"
                 aria-describedby="cron-token-generate">
-            <div class="input-group-append">
-                <button class="cron-token-generate btn btn-outline-danger" type="button">
-                    <x-icon.recycle class="mr-1"/> @lang('settings.cron_token_generate')
-                </button>
-            </div>
+            <button class="cron-token-generate btn btn-outline-danger" type="button">
+                <x-icon.recycle class="me-1"/> @lang('settings.cron_token_generate')
+            </button>
         </div>
 
         <p class="cron-token-generate-failure small text-danger" style="display:none">

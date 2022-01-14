@@ -3,13 +3,13 @@
         <thead>
         <tr>
             <th>
-                 {!! tableSorter(trans('link.link'), $route, 'title', $orderBy, $orderDir) !!}
+                {!! tableSorter(trans('link.link'), $route, 'title', $orderBy, $orderDir) !!}
             </th>
             <th>
-                 {!! tableSorter(trans('link.url'), $route, 'url', $orderBy, $orderDir) !!}
+                {!! tableSorter(trans('link.url'), $route, 'url', $orderBy, $orderDir) !!}
             </th>
             <th>
-                 {!! tableSorter(trans('linkace.added_at'), $route, 'created_at', $orderBy, $orderDir) !!}
+                {!! tableSorter(trans('linkace.added_at'), $route, 'created_at', $orderBy, $orderDir) !!}
             </th>
             <th></th>
         </tr>

@@ -38,15 +38,6 @@ class BookmarkletController extends Controller
             return redirect()->route('bookmarklet-login');
         }
 
-        if ($newUrl === null) {
-            // Receive the link details from the session after the user logged in
-            $newUrl = session()->pull('bookmarklet.new_url');
-            $newTitle = session()->pull('bookmarklet.new_title');
-            $newDescription = session()->pull('bookmarklet.new_description');
-            $newTags = session()->pull('bookmarklet.new_tags');
-            $newLists = session()->pull('bookmarklet.new_lists');
-        }
-
         session(['bookmarklet.create' => true]);
 
         return view('app.bookmarklet.create', [

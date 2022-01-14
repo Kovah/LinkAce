@@ -17,7 +17,7 @@
                 <td class="text-muted">
                     <small>{{ formatDateTime($list->created_at) }}</small>
                 </td>
-                <td class="text-right">
+                <td class="text-end">
                     <form action="{{ route('trash-restore') }}" method="post">
                         @csrf
                         <input type="hidden" name="model" value="list">

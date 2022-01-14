@@ -18,7 +18,7 @@
                     <form action="{{ route('setup.save-database') }}" method="POST">
                         @csrf
 
-                        <div class="form-group">
+                        <div class="mb-3">
                             <label for="db_host">
                                 @lang('setup.database.db_host')
                             </label>
@@ -32,7 +32,7 @@
                             @endif
                         </div>
 
-                        <div class="form-group">
+                        <div class="mb-3">
                             <label for="db_port">
                                 @lang('setup.database.db_port')
                             </label>
@@ -46,7 +46,7 @@
                             @endif
                         </div>
 
-                        <div class="form-group">
+                        <div class="mb-3">
                             <label for="db_name">
                                 @lang('setup.database.db_name')
                             </label>
@@ -60,7 +60,7 @@
                             @endif
                         </div>
 
-                        <div class="form-group">
+                        <div class="mb-3">
                             <label for="db_user">
                                 @lang('setup.database.db_user')
                             </label>
@@ -74,7 +74,7 @@
                             @endif
                         </div>
 
-                        <div class="form-group">
+                        <div class="mb-3">
                             <label for="db_password">
                                 @lang('setup.database.db_password')
                             </label>
@@ -89,13 +89,13 @@
                         </div>
 
                         @if(session('data_present', false))
-                            <div class="form-group">
-                                <div class="custom-control custom-checkbox">
+                            <div class="mb-3">
+                                <div class="form-check">
                                     <input type="hidden" name="overwrite_data" value="0">
-                                    <input type="checkbox" class="custom-control-input" id="overwrite_data"
+                                    <input type="checkbox" class="form-check-input" id="overwrite_data"
                                         @if(old('overwrite_data')) checked @endif>
 
-                                    <label class="custom-control-label text-danger" for="overwrite_data">
+                                    <label class="form-check-label text-danger" for="overwrite_data">
                                         @lang('setup.database.overwrite_data')
                                     </label>
                                 </div>

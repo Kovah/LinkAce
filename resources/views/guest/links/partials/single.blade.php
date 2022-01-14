@@ -2,14 +2,14 @@
 
     <div class="card-header">
         <div class="d-flex align-items-center">
-            <div class="mr-2">
-                {!! $link->getIcon('mr-1') !!}
+            <div class="me-2">
+                {!! $link->getIcon('me-1') !!}
                 <a href="{{ $link->url }}" {!! linkTarget() !!}>{{ $link->title }}</a>
                 <small>({{ $link->url }})</small>
             </div>
-            <div class="ml-auto text-right">
+            <div class="ms-auto text-end">
                 <button type="button" class="btn btn-xs btn-outline-primary" title="@lang('sharing.share_link')"
-                    data-toggle="collapse" data-target="#sharing-{{ $link->id }}"
+                    data-bs-toggle="collapse" data-bs-target="#sharing-{{ $link->id }}"
                     aria-expanded="false" aria-controls="sharing-{{ $link->id }}">
                     <x-icon.share class="fw"/>
                 </button>

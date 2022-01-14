@@ -12,7 +12,7 @@
 
                 <p>@lang('import.import_help')</p>
 
-                <div class="form-group mt-4 mb-4">
+                <div class="mt-4 mb-4">
                     <label for="username">
                         @lang('import.import_file')
                     </label>
@@ -33,11 +33,11 @@
 
                 <button type="button" class="btn btn-primary import-submit">
                     <span class="import-submit-processing d-none">
-                        <x-icon.cog class="icon-spin mr-2"/>
+                        <x-icon.cog class="icon-spin me-2"/>
                         @lang('import.import_running')
                     </span>
                     <span class="import-submit-default">
-                        <x-icon.file-import class="mr-2"/>
+                        <x-icon.file-import class="me-2"/>
                         @lang('import.start_import')
                     </span>
                 </button>

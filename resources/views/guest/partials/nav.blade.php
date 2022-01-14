@@ -4,7 +4,7 @@
     </a>
 </div>
 <nav class="navbar navbar-expand-md navbar-dark bg-primary shadow-sm">
-    <div class="container px-0 px-lg-3">
+    <div class="container">
         <a class="navbar-brand d-none d-md-inline-block" href="{{ route('front') }}">
             <x-icon.linkace/>
         </a>
@@ -16,18 +16,18 @@
                 </a>
             </li>
             <li class="nav-item">
-                <a href="{{ route('guest.lists.index') }}" class="nav-link pl-3 pl-md-2">
+                <a href="{{ route('guest.lists.index') }}" class="nav-link ps-3 ps-md-2">
                     @lang('list.lists')
                 </a>
             </li>
             <li class="nav-item">
-                <a href="{{ route('guest.tags.index') }}" class="nav-link pl-3 pl-md-2">
+                <a href="{{ route('guest.tags.index') }}" class="nav-link ps-3 ps-md-2">
                     @lang('tag.tags')
                 </a>
             </li>
         </ul>
 
-        <ul class="navbar-nav ml-auto">
+        <ul class="navbar-nav ms-auto">
             <li class="nav-item">
                 <a class="nav-link" href="{{ route('login') }}">
                     @lang('linkace.login')

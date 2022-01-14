@@ -14,8 +14,8 @@
 
                 <input type="hidden" name="list_id" value="{{ $list->id }}">
 
-                <div class="form-group">
-                    <label for="name">@lang('list.name')</label>
+                <div class="mb-4">
+                    <label class="form-label" for="name">@lang('list.name')</label>
 
                     <input name="name" id="name"
                         class="form-control{{ $errors->has('name') ? ' is-invalid' : '' }}"
@@ -31,8 +31,8 @@
 
                 <div class="row">
                     <div class="col-12 col-sm-6 col-md-7">
-                        <div class="form-group">
-                            <label for="description">@lang('list.description')</label>
+                        <div class="mb-4">
+                            <label class="form-label" for="description">@lang('list.description')</label>
 
                             <textarea name="description" id="description" rows="4"
                                 class="form-control{{ $errors->has('description') ? ' is-invalid' : '' }}"
@@ -46,11 +46,11 @@
                         </div>
                     </div>
                     <div class="col-12 col-sm-6 col-md-5">
-                        <div class="form-group">
-                            <label for="is_private">@lang('linkace.is_private')</label>
+                        <div class="mb-4">
+                            <label class="form-label" for="is_private">@lang('linkace.is_private')</label>
 
                             <select id="is_private" name="is_private"
-                                class="custom-select{{ $errors->has('is_private') ? ' is-invalid' : '' }}">
+                                class="form-select{{ $errors->has('is_private') ? ' is-invalid' : '' }}">
                                 <option value="0" @if($list->is_private === 0) selected @endif>
                                     @lang('linkace.no')
                                 </option>
@@ -70,15 +70,15 @@
 
                 <div class="mt-3 d-sm-flex flex-wrap align-items-center">
 
-                    <div class="d-sm-inline-block mb-3 mb-sm-0 mr-auto">
+                    <div class="d-sm-inline-block mb-3 mb-sm-0 me-auto">
                         <button type="button" class="btn btn-sm btn-outline-danger"
                             onclick="window.deleteList.submit()">
-                            <x-icon.trash class="mr-2"/> @lang('list.delete')
+                            <x-icon.trash class="me-2"/> @lang('list.delete')
                         </button>
                     </div>
 
                     <button type="submit" class="btn btn-primary">
-                        <x-icon.save class="mr-2"/> @lang('list.update')
+                        <x-icon.save class="me-2"/> @lang('list.update')
                     </button>
 
                 </div>

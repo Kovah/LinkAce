@@ -1,9 +1,9 @@
 <button  type="button" id="tags-index-order-dd"
-    class="btn btn-sm btn-secondary dropdown-toggle dropdown-toggle-split"
-    data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+    class="btn btn-sm btn-outline-primary dropdown-toggle dropdown-toggle-split"
+    data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
     @lang('search.order_by') <x-icon.caret-down class="ml-1"/>
 </button>
-<div class="dropdown-menu dropdown-menu-right" aria-labelledby="tags-index-order-dd">
+<div class="dropdown-menu dropdown-menu-end" aria-labelledby="tags-index-order-dd">
     <a class="dropdown-item small"
         href="{{ route($baseRoute, ['orderBy' => 'created_at', 'orderDir' => 'asc']) }}">
         @lang('search.order_by.created_at:asc')

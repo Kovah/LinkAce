@@ -16,8 +16,8 @@
 
                 <div class="row">
                     <div class="col-12 col-sm-6 col-md-7">
-                        <div class="form-group">
-                            <label for="name">@lang('tag.name')</label>
+                        <div class="mb-4">
+                            <label class="form-label" for="name">@lang('tag.name')</label>
 
                             <input name="name" id="name"
                                 class="form-control{{ $errors->has('name') ? ' is-invalid' : '' }}"
@@ -32,11 +32,11 @@
                         </div>
                     </div>
                     <div class="col-12 col-sm-6 col-md-5">
-                        <div class="form-group">
-                            <label for="is_private">@lang('linkace.is_private')</label>
+                        <div class="mb-4">
+                            <label class="form-label" for="is_private">@lang('linkace.is_private')</label>
 
                             <select id="is_private" name="is_private"
-                                class="custom-select{{ $errors->has('is_private') ? ' is-invalid' : '' }}">
+                                class="form-select{{ $errors->has('is_private') ? ' is-invalid' : '' }}">
                                 <option value="0" @if($tag->is_private === 0) selected @endif>
                                     @lang('linkace.no')
                                 </option>
@@ -56,15 +56,15 @@
 
                 <div class="mt-3 d-sm-flex flex-wrap align-items-center">
 
-                    <div class="d-sm-inline-block mb-3 mb-sm-0 mr-auto">
+                    <div class="d-sm-inline-block mb-3 mb-sm-0 me-auto">
                         <button type="button" class="btn btn-sm btn-outline-danger"
                             onclick="window.deleteTag.submit()">
-                            <x-icon.trash class="mr-2"/> @lang('tag.delete')
+                            <x-icon.trash class="me-2"/> @lang('tag.delete')
                         </button>
                     </div>
 
                     <button type="submit" class="btn btn-primary">
-                        <x-icon.save class="mr-2"/> @lang('tag.update')
+                        <x-icon.save class="me-2"/> @lang('tag.update')
                     </button>
 
                 </div>

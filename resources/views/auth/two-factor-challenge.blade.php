@@ -16,12 +16,10 @@
                     <form method="POST" action="{{ url('/two-factor-challenge') }}">
                         @csrf
 
-                        <div class="form-group">
+                        <div class="mb-4">
                             <div class="input-group mb-3">
-                                <div class="input-group-prepend">
-                                    <div class="input-group-text">
-                                        <x-icon.shield/>
-                                    </div>
+                                <div class="input-group-text">
+                                    <x-icon.shield/>
                                 </div>
                                 <input type="text" name="code" id="code" class="form-control"
                                     autocomplete="one-time-code" inputmode="numeric" autofocus
@@ -36,25 +34,23 @@
                             @endif
                         </div>
 
-                        <div class="mb-4">
+                        <div class="mb-5">
                             <button type="submit" class="btn btn-primary">
                                 @lang('linkace.login')
                             </button>
                         </div>
 
                         <button type="button" class="btn btn-sm btn-outline-primary"
-                            data-toggle="collapse" data-target="#recovery-code"
+                            data-bs-toggle="collapse" data-bs-target="#recovery-code"
                             aria-expanded="false" aria-controls="recovery-code">
                             @lang('auth.two_factor_with_recovery')
                         </button>
 
                         <div class="collapse mt-3" id="recovery-code">
-                            <div class="form-group">
+                            <div class="mb-4">
                                 <div class="input-group mb-3">
-                                    <div class="input-group-prepend">
-                                        <div class="input-group-text">
-                                            <x-icon.shield/>
-                                        </div>
+                                    <div class="input-group-text">
+                                        <x-icon.shield/>
                                     </div>
                                     <input type="text" name="recovery_code" id="recovery_code" class="form-control"
                                         autocomplete="one-time-code"

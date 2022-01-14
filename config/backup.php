@@ -82,7 +82,7 @@ return [
              * For a complete list of available customization options, see https://github.com/spatie/db-dumper
              */
             'databases' => [
-                'mysql',
+                env('DB_CONNECTION', 'mysql')
             ],
         ],
 
@@ -261,7 +261,7 @@ return [
              * After cleaning up the backups remove the oldest backup until
              * this amount of megabytes has been reached.
              */
-            'delete_oldest_backups_when_using_more_megabytes_than' => 5000,
+            'delete_oldest_backups_when_using_more_megabytes_than' => env('BACKUP_MAX_SIZE', 500),
         ],
     ],
 

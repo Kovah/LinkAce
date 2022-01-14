@@ -7,8 +7,8 @@
         <form action="{{ route('save-settings-account') }}" method="POST">
             @csrf
 
-            <div class="form-group">
-                <label for="username">
+            <div class="mb-4">
+                <label class="form-label" for="username">
                     @lang('user.username')
                 </label>
                 <input type="text" name="name" id="name" required
@@ -21,8 +21,8 @@
                 @endif
             </div>
 
-            <div class="form-group">
-                <label for="email">
+            <div class="mb-4">
+                <label class="form-label" for="email">
                     @lang('user.email')
                 </label>
                 <input type="text" name="email" id="email" required
@@ -37,7 +37,7 @@
             </div>
 
             <button type="submit" class="btn btn-primary">
-                <x-icon.save class="mr-2"/> @lang('settings.save_settings')
+                <x-icon.save class="me-2"/> @lang('settings.save_settings')
             </button>
 
         </form>

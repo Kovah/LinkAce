@@ -6,7 +6,7 @@ use App\Models\Link;
 
 class Sharing
 {
-    public static $linkClasses = 'share-link btn btn-xs btn-outline-secondary';
+    public static $linkClasses = 'share-link btn btn-xs btn-light';
 
     public static $placeholders = [
         '#URL#',

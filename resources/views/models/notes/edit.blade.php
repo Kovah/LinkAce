@@ -12,8 +12,8 @@
                 @method('PATCH')
                 @csrf
 
-                <div class="form-group">
-                    <label class="label" for="note">@lang('note.note_content')</label>
+                <div class="mb-4">
+                    <label class="form-label" class="form-label" for="note">@lang('note.note_content')</label>
                     <textarea name="note" id="note"
                         class="form-control{{ $errors->has('note') ? ' is-invalid' : '' }}"
                         title="@lang('note.note_content')" required>{{ old('note') ?: $note->note ?: '' }}</textarea>
@@ -27,16 +27,16 @@
 
                 <div class="d-flex align-items-center">
 
-                    <div class="custom-control custom-checkbox ml-auto mr-3">
-                        <input class="custom-control-input" type="checkbox" id="is_private" name="is_private" value="1"
+                    <div class="form-check ms-auto me-3">
+                        <input class="form-check-input" type="checkbox" id="is_private" name="is_private" value="1"
                             @if($note->is_private) checked @endif>
-                        <label class="custom-control-label" for="is_private">
+                        <label class="form-check-label" for="is_private">
                             <small>@lang('note.private')</small>
                         </label>
                     </div>
 
                     <button type="submit" class="btn btn-sm btn-primary">
-                        <x-icon.save class="mr-2"/> @lang('note.edit')
+                        <x-icon.save class="me-2"/> @lang('note.edit')
                     </button>
 
                 </div>

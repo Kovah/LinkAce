@@ -1,21 +1,20 @@
 <tr>
     <td>
         <div>
-            <a href="{{ route('links.show', [$link->id]) }}">
+            <a href="{{ route('links.show', [$link]) }}">
                 {{ $link->title }}
             </a>
             @if($link->is_private)
                 <span>
-                <x-icon.lock class="mr-1" title="@lang('link.private')"/>
-                <span class="sr-only">@lang('link.private')</span>
+                <x-icon.lock class="me-1" title="@lang('link.private')"/>
+                <span class="visually-hidden">@lang('link.private')</span>
             </span>
             @endif
         </div>
         @if($link->tags->count() > 0)
             <div class="mt-1">
-                <label class="small mb-0">@lang('tag.tags'):</label>
                 @foreach($link->tags as $tag)
-                    <a href="{{ route('tags.show', [$tag->id]) }}" class="badge badge-light">
+                    <a href="{{ route('tags.show', [$tag]) }}" class="btn btn-xs btn-light">
                         {{ $tag->name }}
                     </a>
                 @endforeach
@@ -31,23 +30,24 @@
         <small>{!! $link->addedAt() !!}</small>
     </td>
     @if(!isset($hide_edit))
-        <td class="text-right">
-            <div class="btn-group btn-group-xs">
-                <a href="{{ route('links.edit', [$link->id]) }}" class="btn btn-outline-secondary">
-                    <x-icon.edit/>
-                    <span class="sr-only">@lang('link.edit')</span>
-                </a>
-                <a href="#" title=" @lang('link.delete')" class="btn btn-outline-secondary"
-                    onclick="event.preventDefault();document.getElementById('link-delete-{{ $link->id }}').submit();">
+        <td class="py-1 text-end">
+            <div class="btn-group btn-group-sm">
+                @auth()
+                    <a href="{{ route('links.edit', [$link]) }}" class="btn btn-link">
+                        <x-icon.edit/>
+                        <span class="visually-hidden">@lang('link.edit')</span>
+                    </a>
+                @endauth
+                <button type="submit" form="link-delete-{{ $link->id }}" title="@lang('link.delete')"
+                    class="btn btn-link">
                     <x-icon.trash/>
-                    <span class="sr-only">@lang('link.delete')</span>
-                </a>
+                    <span class="visually-hidden">@lang('link.delete')</span>
+                </button>
             </div>
-            <form id="link-delete-{{ $link->id }}" method="POST" style="display: none;"
+            <form id="link-delete-{{ $link->id }}" method="POST" class="d-none"
                 action="{{ route('links.destroy', [$link]) }}">
                 @method('DELETE')
                 @csrf
-                <input type="hidden" name="redirect_back" value="1">
                 <input type="hidden" name="link_id" value="{{ $link->id }}">
             </form>
         </td>

@@ -12,12 +12,12 @@
             <div class="row mt-4">
                 <div class="col-12 col-sm-8 col-md-6">
 
-                    <div class="form-group">
-                        <label for="guest_listitem_count">
+                    <div class="mb-4">
+                        <label class="form-label" for="guest_listitem_count">
                             @lang('settings.listitem_count')
                         </label>
                         <select id="guest_listitem_count" name="guest_listitem_count"
-                            class="custom-select{{ $errors->has('guest_listitem_count') ? ' is-invalid' : '' }}">
+                            class="form-select{{ $errors->has('guest_listitem_count') ? ' is-invalid' : '' }}">
                             @foreach(config('linkace.listitem_count_values') as $item_count)
                                 <option value="{{ $item_count }}"
                                     @if(systemsettings('guest_listitem_count') == $item_count) selected @endif>
@@ -35,12 +35,12 @@
                 </div>
                 <div class="col-12 col-sm-8 col-md-6">
 
-                    <div class="form-group">
-                        <label for="guest_link_display_mode">
+                    <div class="mb-4">
+                        <label class="form-label" for="guest_link_display_mode">
                             @lang('settings.display_mode')
                         </label>
                         <select id="guest_link_display_mode" name="guest_link_display_mode"
-                            class="custom-select{{ $errors->has('guest_link_display_mode') ? ' is-invalid' : '' }}">
+                            class="form-select{{ $errors->has('guest_link_display_mode') ? ' is-invalid' : '' }}">
                             <option value="{{ Link::DISPLAY_LIST_DETAILED }}"
                                 @if((int)systemsettings()->get('guest_link_display_mode') === Link::DISPLAY_LIST_DETAILED)
                                 selected
@@ -73,8 +73,8 @@
             <div class="row">
                 <div class="col-12 col-sm-8 col-md-6">
 
-                    <div class="form-group">
-                        <label for="guest_links_new_tab">
+                    <div class="mb-4">
+                        <label class="form-label" for="guest_links_new_tab">
                             @lang('settings.links_new_tab')
                         </label>
                         <select id="guest_links_new_tab" name="guest_links_new_tab"
@@ -102,7 +102,7 @@
             @include('app.settings.partials.system.guest.sharing')
 
             <button type="submit" class="btn btn-primary">
-                <x-icon.save class="mr-2"/> @lang('settings.save_settings')
+                <x-icon.save class="me-2"/> @lang('settings.save_settings')
             </button>
 
         </form>

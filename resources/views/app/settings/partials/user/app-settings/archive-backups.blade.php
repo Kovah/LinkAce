@@ -1,4 +1,4 @@
-<div class="form-group my-5">
+<div class="mb-3 my-5">
     <h5>
         @lang('settings.archive_backups')
     </h5>
@@ -8,12 +8,12 @@
     <div class="row">
         <div class="col-12 col-sm-8 col-md-6">
 
-            <div class="form-group">
-                <label for="archive_backups_enabled">
+            <div class="mb-4">
+                <label class="form-label" for="archive_backups_enabled">
                     @lang('settings.archive_backups_enabled')
                 </label>
                 <select id="archive_backups_enabled" name="archive_backups_enabled"
-                    class="custom-select{{ $errors->has('archive_backups_enabled') ? ' is-invalid' : '' }}">
+                    class="form-select{{ $errors->has('archive_backups_enabled') ? ' is-invalid' : '' }}">
                     <option value="1"
                         @if($user->settings()->get('archive_backups_enabled') === '1') selected @endif>
                         @lang('linkace.yes')
@@ -34,13 +34,13 @@
         </div>
         <div class="col-12 col-sm-8 col-md-6">
 
-            <div class="form-group">
-                <label for="archive_private_backups_enabled">
+            <div class="mb-4">
+                <label class="form-label" for="archive_private_backups_enabled">
                     @lang('settings.archive_private_backups_enabled')
                 </label>
                 <select id="archive_private_backups_enabled"
                     name="archive_private_backups_enabled"
-                    class="custom-select{{ $errors->has('archive_private_backups_enabled') ? ' is-invalid' : '' }}">
+                    class="form-select{{ $errors->has('archive_private_backups_enabled') ? ' is-invalid' : '' }}">
                     <option value="1"
                         @if($user->settings()->get('archive_private_backups_enabled') === '1') selected @endif>
                         @lang('linkace.yes')

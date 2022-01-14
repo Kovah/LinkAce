@@ -9,7 +9,7 @@
 
             <input type="hidden" name="link_id" value="{{ $link->id }}">
 
-            <div class="form-group mb-2">
+            <div class="mb-2">
                 <textarea name="note" id="note"
                     class="form-control{{ $errors->has('note') ? ' is-invalid' : '' }}"
                     title="@lang('note.note_content')" required>{{ old('note') ?: '' }}</textarea>
@@ -23,16 +23,16 @@
 
             <div class="d-flex align-items-center">
 
-                <div class="custom-control custom-checkbox ml-auto mr-3">
-                    <input class="custom-control-input" type="checkbox" id="is_private" name="is_private" value="1"
+                <div class="form-check ms-auto me-3">
+                    <input class="form-check-input" type="checkbox" id="is_private" name="is_private" value="1"
                         @if($link->is_private || usersettings('notes_private_default')) checked @endif>
-                    <label class="custom-control-label" for="is_private">
+                    <label class="form-check-label" for="is_private">
                         <small>@lang('note.private')</small>
                     </label>
                 </div>
 
                 <button type="submit" class="btn btn-sm btn-primary">
-                    <x-icon.save class="mr-2"/> @lang('note.add')
+                    <x-icon.save class="me-2"/> @lang('note.add')
                 </button>
 
             </div>

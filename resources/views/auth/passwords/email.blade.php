@@ -21,8 +21,8 @@
                         aria-label="@lang('linkace.reset_password')">
                         @csrf
 
-                        <div class="form-group">
-                            <label for="email">@lang('linkace.email')</label>
+                        <div class="mb-4">
+                            <label class="form-label" for="email">@lang('linkace.email')</label>
                             <div class="control">
                                 <input name="email" id="email"
                                     class="form-control{{ $errors->has('email') ? ' is-invalid' : '' }}"

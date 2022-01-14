@@ -14,7 +14,7 @@ body:not(.bookmarklet) {
 }
 
 .footer {
-  opacity: .5;
+  opacity: .75;
   padding-bottom: map_get($spacers, 4);
 }
 
@@ -95,12 +95,20 @@ body:not(.bookmarklet) {
   }
 }
 
+a.badge {
+  text-decoration: none;
+}
+
 .alert {
   font-size: 90%;
 }
 
+.text-xs {
+  font-size: $font-size-xs;
+}
+
 .btn-xs {
-  @include button-size($btn-padding-y-xs, $btn-padding-x-xs, $btn-font-size-xs, $btn-line-height-xs, $btn-border-radius-xs);
+  @include button-size($btn-padding-y-xs, $btn-padding-x-xs, $btn-font-size-xs, $btn-border-radius-xs);
 }
 
 .btn-group-xs > .btn {
