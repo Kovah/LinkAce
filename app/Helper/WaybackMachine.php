@@ -25,7 +25,12 @@ class WaybackMachine
 
         $archiveUrl = self::$baseUrl . '/save/' . $url;
 
-        $response = Http::head($archiveUrl);
+        $request = Http::timeout(10);
+        if (config('html-meta.user_agents', false)) {
+            $agents = config('html-meta.user_agents');
+            $request->withHeaders(['User-Agent' => $agents[array_rand($agents)]]);
+        }
+        $response = $request->head($archiveUrl);
 
         try {
             $response->throw();

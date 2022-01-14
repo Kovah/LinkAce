@@ -1922,23 +1922,23 @@
         },
         {
             "name": "kovah/laravel-html-meta",
-            "version": "v2.0.0",
+            "version": "v2.1.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/Kovah/laravel-html-meta.git",
-                "reference": "fde1e35a25d1ca6efaa1ca45bb1cf0fcf94fa6a8"
+                "reference": "7bb873ba811adb849319178b6276562cfb098c95"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/Kovah/laravel-html-meta/zipball/fde1e35a25d1ca6efaa1ca45bb1cf0fcf94fa6a8",
-                "reference": "fde1e35a25d1ca6efaa1ca45bb1cf0fcf94fa6a8",
+                "url": "https://api.github.com/repos/Kovah/laravel-html-meta/zipball/7bb873ba811adb849319178b6276562cfb098c95",
+                "reference": "7bb873ba811adb849319178b6276562cfb098c95",
                 "shasum": ""
             },
             "require": {
                 "guzzlehttp/guzzle": "^7.2",
                 "illuminate/http": "^7.0 | ^8.0",
                 "illuminate/support": "^7.0 | ^8.0",
-                "php": "^7.3 | ^8.0"
+                "php": "^7.4 | ^8.0 | ^8.1"
             },
             "require-dev": {
                 "mockery/mockery": "^1.4.2",
@@ -1983,7 +1983,7 @@
             ],
             "support": {
                 "issues": "https://github.com/Kovah/laravel-html-meta/issues",
-                "source": "https://github.com/Kovah/laravel-html-meta/tree/v2.0.0"
+                "source": "https://github.com/Kovah/laravel-html-meta/tree/v2.1.0"
             },
             "funding": [
                 {
@@ -1991,7 +1991,7 @@
                     "type": "github"
                 }
             ],
-            "time": "2021-05-10T09:59:33+00:00"
+            "time": "2022-01-14T11:05:20+00:00"
         },
         {
             "name": "laracasts/flash",
@@ -4708,16 +4708,16 @@
         },
         {
             "name": "sentry/sentry",
-            "version": "3.3.5",
+            "version": "3.3.6",
             "source": {
                 "type": "git",
                 "url": "https://github.com/getsentry/sentry-php.git",
-                "reference": "c186c44c32899ad0cf5b4e942d71035f01b87b64"
+                "reference": "1b1c35a3f5afe5c7c17d572205a7733b33ab5c87"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/getsentry/sentry-php/zipball/c186c44c32899ad0cf5b4e942d71035f01b87b64",
-                "reference": "c186c44c32899ad0cf5b4e942d71035f01b87b64",
+                "url": "https://api.github.com/repos/getsentry/sentry-php/zipball/1b1c35a3f5afe5c7c17d572205a7733b33ab5c87",
+                "reference": "1b1c35a3f5afe5c7c17d572205a7733b33ab5c87",
                 "shasum": ""
             },
             "require": {
@@ -4744,17 +4744,18 @@
                 "raven/raven": "*"
             },
             "require-dev": {
-                "friendsofphp/php-cs-fixer": "^2.17",
+                "friendsofphp/php-cs-fixer": "^2.19|3.4.*",
                 "http-interop/http-factory-guzzle": "^1.0",
                 "monolog/monolog": "^1.3|^2.0",
                 "nikic/php-parser": "^4.10.3",
                 "php-http/mock-client": "^1.3",
+                "phpbench/phpbench": "^1.0",
                 "phpstan/extension-installer": "^1.0",
-                "phpstan/phpstan": "^0.12",
-                "phpstan/phpstan-phpunit": "^0.12",
+                "phpstan/phpstan": "^1.3",
+                "phpstan/phpstan-phpunit": "^1.0",
                 "phpunit/phpunit": "^8.5.14|^9.4",
                 "symfony/phpunit-bridge": "^5.2|^6.0",
-                "vimeo/psalm": "^4.2"
+                "vimeo/psalm": "^4.17"
             },
             "suggest": {
                 "monolog/monolog": "Allow sending log messages to Sentry by using the included Monolog handler."
@@ -4796,7 +4797,7 @@
             ],
             "support": {
                 "issues": "https://github.com/getsentry/sentry-php/issues",
-                "source": "https://github.com/getsentry/sentry-php/tree/3.3.5"
+                "source": "https://github.com/getsentry/sentry-php/tree/3.3.6"
             },
             "funding": [
                 {
@@ -4808,7 +4809,7 @@
                     "type": "custom"
                 }
             ],
-            "time": "2021-12-27T12:31:24+00:00"
+            "time": "2022-01-14T09:05:19+00:00"
         },
         {
             "name": "sentry/sentry-laravel",

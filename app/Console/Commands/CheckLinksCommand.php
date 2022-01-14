@@ -144,7 +144,12 @@ class CheckLinksCommand extends Command
         }
 
         try {
-            $response = Http::timeout(20)->head($link->url);
+            $request = Http::timeout(20);
+            if (config('html-meta.user_agents', false)) {
+                $agents = config('html-meta.user_agents');
+                $request->withHeaders(['User-Agent' => $agents[array_rand($agents)]]);
+            }
+            $response = $request->head($link->url);
             $statusCode = $response->status();
         } catch (Exception $e) {
             // Set status code to null so the link will be marked as broken
