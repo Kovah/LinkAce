@@ -97,7 +97,7 @@
                         <label for="only_lists" class="d-none" aria-hidden="true">
                             @lang('search.filter_by_list')
                         </label>
-                        <input name="only_lists" id="only_lists" type="text" class="tags-select" data-tag-type="lists"
+                        <input name="only_lists" id="only_lists" type="text" class="tag-select" data-tag-type="lists"
                             placeholder="@lang('search.filter_by_list')" value="{{ $query_settings['only_lists'] }}">
                     </div>
 
@@ -105,7 +105,7 @@
                         <label for="only_tags" class="d-none" aria-hidden="true">
                             @lang('search.filter_by_tag')
                         </label>
-                        <input name="only_tags" id="only_tags" type="text" class="tags-select" data-tag-type="tags"
+                        <input name="only_tags" id="only_tags" type="text" class="tag-select" data-tag-type="tags"
                             placeholder="@lang('search.filter_by_tag')" value="{{ $query_settings['only_tags'] }}">
                     </div>
 

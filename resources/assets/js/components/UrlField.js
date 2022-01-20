@@ -98,7 +98,8 @@ export default class UrlField {
     const doc = parser.parseFromString(body, 'text/html');
 
     if (doc.head.children.length > 0) {
-      const keywords = doc.head.children.namedItem('keywords');
+      const keywords = doc.head.children.namedItem('keywords')
+        || doc.head.children.namedItem('Keywords');
 
       if (keywords !== null && keywords.content.length > 0) {
         this.tagSuggestions.displayNewSuggestions(keywords.content.split(','));

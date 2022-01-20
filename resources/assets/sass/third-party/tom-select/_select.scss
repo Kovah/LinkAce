@@ -1,1 +1,7 @@
 @import "~tom-select/src/scss/tom-select.bootstrap5";
+
+.#{$select-ns}-control {
+  > input::placeholder {
+    color: $input-placeholder-color;
+  }
+}
