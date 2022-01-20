@@ -48,6 +48,7 @@
                 action="{{ route('links.destroy', [$link]) }}">
                 @method('DELETE')
                 @csrf
+                <input type="hidden" name="redirect_back" value="1">
                 <input type="hidden" name="link_id" value="{{ $link->id }}">
             </form>
         </td>

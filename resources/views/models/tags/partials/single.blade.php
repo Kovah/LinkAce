@@ -30,6 +30,7 @@
             action="{{ route('tags.destroy', [$tag]) }}">
             @method('DELETE')
             @csrf
+            <input type="hidden" name="redirect_back" value="1">
             <input type="hidden" name="tag_id" value="{{ $tag->id }}">
         </form>
     </td>
