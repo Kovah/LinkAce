@@ -18,7 +18,7 @@ function registerViews () {
   register('input[id="url"]', UrlField);
   register('button[type="submit"]', LoadingButton);
   register('.bm-timer', BookmarkTimer);
-  register('.tags-select', TagsSelect);
+  register('.tag-select', TagsSelect);
   register('.simple-select', SimpleSelect);
   register('.share-toggle', ShareToggleAll);
   register('.api-token', GenerateApiToken);

@@ -1,6 +1,8 @@
 import TomSelect from 'tom-select';
-import TomSelect_caret_position from 'tom-select/dist/js/plugins/caret_position';
-import TomSelect_input_autogrow from 'tom-select/dist/js/plugins/input_autogrow';
+import TomSelect_caret_position
+  from 'tom-select/dist/js/plugins/caret_position';
+import TomSelect_input_autogrow
+  from 'tom-select/dist/js/plugins/input_autogrow';
 
 TomSelect.define('caret_position', TomSelect_caret_position);
 TomSelect.define('input_autogrow', TomSelect_input_autogrow);
@@ -23,29 +25,13 @@ export default class TagsSelect {
       plugins: ['caret_position', 'input_autogrow'],
       delimiter: ',',
       persist: false,
+      create: this.selectAllowsCreation(),
       load: (query, callback) => {
         this.handleTagLoading(query, callback);
       }
     };
 
-    this.init();
-  }
-
-  init () {
-    this.prepareConfig();
-
     this.select = new TomSelect(this.$el, this.config);
-  }
-
-  prepareConfig () {
-    if (this.selectAllowsCreation()) {
-      this.config.create = function (input) {
-        return {
-          value: input,
-          text: input
-        };
-      };
-    }
   }
 
   selectAllowsCreation () {
@@ -89,7 +75,7 @@ export default class TagsSelect {
       newTag = newTag.trim();
 
       const $tag = document.createElement('span');
-      $tag.classList.add('badge', 'badge-light', 'badge-pill', 'cursor-pointer', 'badge-wrap');
+      $tag.classList.add('btn', 'btn-outline-secondary', 'btn-xs');
       $tag.innerText = newTag;
 
       $tag.onclick = this.onSuggestionClick.bind(this, $tag);
