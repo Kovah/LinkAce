@@ -57,6 +57,6 @@ class TwoFactorTest extends TestCase
             'code' => '123456789',
         ]);
 
-        $otpResponse->assertRedirect('login');
+        $otpResponse->assertRedirect('two-factor-challenge');
     }
 }

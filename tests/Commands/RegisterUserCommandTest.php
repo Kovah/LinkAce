@@ -34,8 +34,8 @@ class RegisterUserCommandTest extends TestCase
     public function testCommandWithoutInput(): void
     {
         $this->artisan('registeruser')
-            ->expectsQuestion('Please enter the user name:', 'Test')
-            ->expectsQuestion('Please enter the user email address:', 'test@linkace.org')
+            ->expectsQuestion('Please enter the user name', 'Test')
+            ->expectsQuestion('Please enter the user email address', 'test@linkace.org')
             ->expectsQuestion('Please enter a password for Test', 'testpassword')
             ->expectsOutput('User Test registered.')
             ->assertExitCode(0);

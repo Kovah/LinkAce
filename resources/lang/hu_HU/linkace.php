@@ -31,6 +31,7 @@ return [
 
     'menu' => 'Menü',
     'entries' => 'Bejegyzések',
+    'feed' => 'Feed',
 
     'continue_adding' => 'Többet hozzáadni',
 

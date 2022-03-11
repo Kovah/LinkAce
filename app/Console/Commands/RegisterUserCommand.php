@@ -17,11 +17,11 @@ class RegisterUserCommand extends Command
         $email = $this->argument('email');
 
         if (empty($name)) {
-            $name = $this->ask('Please enter the user name:');
+            $name = $this->ask('Please enter the user name');
         }
 
         if (empty($email)) {
-            $email = $this->ask('Please enter the user email address:');
+            $email = $this->ask('Please enter the user email address');
         }
 
         // Check if the user exists
