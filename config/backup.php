@@ -29,6 +29,7 @@ return [
                  * Directories used by the backup process will automatically be excluded.
                  */
                 'exclude' => [
+                    base_path('.git'),
                     base_path('vendor'),
                     base_path('node_modules'),
                 ],
