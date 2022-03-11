@@ -31,6 +31,7 @@ return [
 
     'menu' => 'Menú',
     'entries' => 'Entradas',
+    'feed' => 'Feed',
 
     'continue_adding' => 'Continuar añadiendo',
 

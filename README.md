@@ -80,10 +80,8 @@ Additionally, you may visit the [community forums](https://community.linkace.org
 
 LinkAce provides multiple ways of installing it on your server. The complete documentation for all installation methods can be found [**in the wiki**](https://www.linkace.org/docs/v1/setup/).
 
-* Setup with Docker (_recommended_)
-  * Simple setup with 1 Docker image
-  * Advanced setup with multiple Docker images
-* Setup without Docker
+* [Setup with Docker](https://www.linkace.org/docs/v1/setup/setup-with-docker/) (_recommended_)
+* [Setup without Docker](https://www.linkace.org/docs/v1/setup/setup-without-docker/)
 
 
 &nbsp;
