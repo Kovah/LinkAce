@@ -4,7 +4,7 @@ return [
 
     'trash' => 'Papierkorb',
 
-    'deleted_links' => 'Löschte Links',
+    'deleted_links' => 'Gelöschte Links',
     'deleted_lists' => 'Gelöschte Listen',
     'deleted_tags' => 'Gelöschte Tags',
     'deleted_notes' => 'Gelöschte Notizen',
