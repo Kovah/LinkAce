@@ -3,12 +3,18 @@
 namespace App\Http\Middleware;
 
 use Closure;
+use Illuminate\Encryption\Encrypter;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\File;
+use Illuminate\Support\Facades\Log;
 
 class SetupCheckMiddleware
 {
+    public const GENERIC_APP_KEY = 'someRandomStringWith32Characters';
+
     /**
-     * Handle an incoming request.
+     * This middleware checks if LinkAce was correctly set up:
+     * Is a proper app key set and was the setup completed correctly?
      *
      * @param Request $request
      * @param Closure $next
@@ -16,6 +22,15 @@ class SetupCheckMiddleware
      */
     public function handle(Request $request, Closure $next)
     {
+        if (config('app.key') === self::GENERIC_APP_KEY) {
+            $envContent = File::get(base_path('.env'));
+            $envContent = preg_replace('/APP_KEY=(.*)\S/', 'APP_KEY=' . $this->generateRandomAppKey(), $envContent);
+            File::put(base_path('.env'), $envContent);
+
+            Log::warning('APP_KEY variable contained insecure standard value. New key was generated.');
+            return redirect()->refresh();
+        }
+
         if ($request->is('setup/*')) {
             if (config('app.setup_completed') === true) {
                 // Do not allow access to setup after it was completed
@@ -32,5 +47,10 @@ class SetupCheckMiddleware
         }
 
         return $next($request);
+    }
+
+    protected function generateRandomAppKey(): string
+    {
+        return 'base64:' . base64_encode(Encrypter::generateKey(config('app.cipher')));
     }
 }
