@@ -33,7 +33,7 @@ RUN npm run production
 
 # ================================
 # Prepare the final image
-FROM php:8.1-fpm-alpine
+FROM linkace/release-base:php-8.1-fpm-alpine
 WORKDIR /app
 
 # Copy the app into the container
@@ -50,12 +50,6 @@ COPY ./tests /app/tests
 COPY ["./artisan", "./composer.json", "./composer.lock", "./README.md", "./LICENSE.md", "./package.json", "./server.php", "/app/"]
 COPY ./.env.example /app/.env
 
-# Install nginx, MySQL Dump for automated backups and other dependencies
-RUN apk add --no-cache mariadb-client postgresql postgresql-dev zip libzip-dev ; \
-	docker-php-ext-configure zip ; \
-	docker-php-ext-install bcmath pdo_mysql pdo_pgsql zip ; \
-	mkdir /ssl-certs
-
 # Copy the PHP and nginx config files
 COPY ./resources/docker/php/php.ini /usr/local/etc/php/php.ini
 
@@ -65,8 +59,9 @@ COPY --from=builder /app/bootstrap/cache /app/bootstrap/cache
 
 # Publish package resources
 RUN php artisan vendor:publish --provider="Spatie\Backup\BackupServiceProvider"
-RUN mv vendor/spatie/laravel-backup/resources/lang/en vendor/spatie/laravel-backup/resources/lang/en_US; \
-  mv vendor/spatie/laravel-backup/resources/lang/de vendor/spatie/laravel-backup/resources/lang/de_DE; \
+RUN mv vendor/spatie/laravel-backup/resources/lang/de vendor/spatie/laravel-backup/resources/lang/de_DE; \
+  mv vendor/spatie/laravel-backup/resources/lang/en vendor/spatie/laravel-backup/resources/lang/en_US; \
+  mv vendor/spatie/laravel-backup/resources/lang/es vendor/spatie/laravel-backup/resources/lang/es_ES; \
   mv vendor/spatie/laravel-backup/resources/lang/fr vendor/spatie/laravel-backup/resources/lang/fr_FR; \
   mv vendor/spatie/laravel-backup/resources/lang/zh-CN vendor/spatie/laravel-backup/resources/lang/zh_CN
 
