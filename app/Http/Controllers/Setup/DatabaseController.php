@@ -16,7 +16,7 @@ use PDOException;
 
 class DatabaseController extends Controller
 {
-    protected $dbConfig;
+    protected array $dbConfig;
 
     /**
      * Display the form for configuration of the database.
@@ -100,7 +100,7 @@ class DatabaseController extends Controller
     /**
      * At this point we write the database credentials to the .env file.
      * We can ignore the FileNotFoundException exception as we already checked
-     * the presence and writability of the file in the previous setup step.
+     * the presence and write-ability of the file in the previous setup step.
      */
     protected function storeConfigurationInEnv(): void
     {
@@ -127,7 +127,7 @@ class DatabaseController extends Controller
 
     /**
      * To prevent unwanted data loss we check for data in the database. It does
-     * not matter which data, because users may accidentially enter the
+     * not matter which data, because users may accidentally enter the
      * credentials for a wrong database.
      *
      * @return bool

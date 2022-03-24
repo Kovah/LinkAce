@@ -12,7 +12,7 @@ return [
     'intro.step3' => 'Hozzon létre felhasználói fiókot.',
 
     'check_requirements' => 'Ellenőrizze a követelményeket',
-    'requirements.php_version' => 'PHP-verzió >= 7.3.0',
+    'requirements.php_version' => 'PHP-verzió >= 7.4.0',
     'requirements.extension_bcmath' => 'PHP-bővítmény: BCMath',
     'requirements.extension_ctype' => 'PHP-bővítmény: Ctype',
     'requirements.extension_json' => 'PHP-bővítmény: JSON',

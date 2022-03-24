@@ -7,6 +7,22 @@ use App\Models\Setting;
 use Carbon\Carbon;
 use Illuminate\Support\Collection;
 use Illuminate\Support\Facades\Cache;
+use Illuminate\Support\Facades\Log;
+
+/**
+ * Check if the setup was completed.
+ *
+ * @return bool
+ */
+function setupCompleted()
+{
+    try {
+        return systemsettings('system_setup_completed');
+    } catch (PDOException $e) {
+        Log::error($e->getMessage());
+        return false;
+    }
+}
 
 /**
  * Shorthand for the current user settings

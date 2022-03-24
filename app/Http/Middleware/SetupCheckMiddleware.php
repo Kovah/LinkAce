@@ -31,9 +31,11 @@ class SetupCheckMiddleware
             return redirect()->refresh();
         }
 
+        $setupCompleted = setupCompleted();
+
         if ($request->is('setup/*')) {
-            if (config('app.setup_completed') === true) {
-                // Do not allow access to setup after it was completed
+            if ($setupCompleted) {
+                // Do not allow access to the setup after it was completed
                 return redirect()->route('front');
             }
 
@@ -41,7 +43,7 @@ class SetupCheckMiddleware
             return $next($request);
         }
 
-        if (config('app.setup_completed') !== true) {
+        if (!$setupCompleted) {
             // Start the setup if it was not completed yet
             return redirect()->route('setup.welcome');
         }
