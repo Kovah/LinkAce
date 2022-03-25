@@ -93,6 +93,7 @@ $enable-caret: false;
 // Body
 $body-bg: $white;
 $body-color: $black;
+$body-color-pale: $gray-600;
 $body-color-muted: $gray;
 
 
@@ -108,6 +109,8 @@ $link-hover-decoration: none;
 $border-radius-xs: .2rem;
 
 $line-height-sm: 1.5;
+
+$link-thumbnail-placeholder-color: $gray-200;
 
 
 // Typography
