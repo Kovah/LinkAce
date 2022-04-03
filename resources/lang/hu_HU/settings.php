@@ -38,6 +38,7 @@ return [
     'display_mode_list_detailed' => 'lista sok részlettel',
     'display_mode_list_simple' => 'lista kevés részlettel',
     'display_mode_cards' => 'kártyák kevesebb részlettel',
+    'display_mode_cards_detailed' => 'Kártyák sok részlettel',
 
     'sharing' => 'Hivatkozás megosztása',
     'sharing_help' => 'Engedélyezzen minden olyan szolgáltatást, amelyet meg szeretne jeleníteni a hivatkozásokhoz, hogy könnyen, egyetlen kattintással megoszthassa azokat.',
@@ -82,6 +83,8 @@ return [
     'sys_page_title' => 'Oldalcím',
     'sys_guest_access' => 'Vendéghozzáférés engedélyezése',
     'sys_guest_access_help' => 'Ha ez engedélyezve van, a vendég láthatja az összes olyan hivatkozást, amely nem privát.',
+    'sys_custom_header_content' => 'Egyéni fejléctartalom',
+    'sys_custom_header_content_help' => 'Az itt megadott tartalom a &lt;/head&gt; címkét az összes LinkAce webhelyen. Hasznos elemzési vagy testreszabási szkriptek elhelyezéséhez. Vigyázat: a tartalom nem kerül kikerülésre, és feltörheti az oldalt!',
 
     'cron_token' => 'CRON-jogkivonat',
     'cron_token_generate' => 'Azonosító létrehozása',

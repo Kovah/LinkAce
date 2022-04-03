@@ -48,6 +48,9 @@ return [
     'check_enable' => 'Ellenőrzés bekapcsolása',
     'check_enabled' => 'Az ellenőrzés be van kapcsolva',
 
+    'status_is_broken' => 'A link megszakadtként van megjelölve',
+    'status_mark_working' => 'Megjelölés működőként',
+
     'added_successfully' => 'Hivatkozás sikeresen hozzáadva.',
     'added_connection_error' => 'A hivatkozás hozzáadásra került, de az URL elérésekor kapcsolati hiba lépett fel. A részletek a naplókban találhatók.',
     'added_request_error' => 'A hivatkozás hozzáadásra került, de hiba lépett fel az URL kérésekor, például érvénytelen tanúsítvány miatt. A részletek a naplókban találhatók.',
@@ -56,6 +59,7 @@ return [
     'deletion_error' => 'Nem sikerült törölni a hivatkozást.',
 
     'duplicates_found' => 'LinkAce talált lehetséges duplikátumokat az URL-hez:',
+    'existing_found' => 'Már létezik link ezzel az URL-lel.',
 
     'notifications.linkcheck.errors' => 'LinkAce hibákat talált a hivatkozások ellenőrzése során.',
     'notifications.linkcheck.errors.moved' => '⚠ ️A következő hivatkozások új helyre kerültek:',

@@ -11,6 +11,8 @@ return [
     'update' => '更新列表',
     'delete' => '删除列表',
 
+    'filter_lists' => '过滤列表...',
+
     'private' => '私有列表',
 
     'name' => '列表名称',

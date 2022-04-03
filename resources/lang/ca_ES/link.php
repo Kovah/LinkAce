@@ -48,6 +48,9 @@ return [
     'check_enable' => 'Habilitar comprovació',
     'check_enabled' => 'Comprovació habilitada',
 
+    'status_is_broken' => 'L\'enllaç està marcat com a trencat',
+    'status_mark_working' => 'Marca com a treballant',
+
     'added_successfully' => 'Enllaç afegit amb èxit.',
     'added_connection_error' => 'S\'ha afegit l\'enllaç, però s\'ha produït un error de connexió al intentar accedir a l\'adreça URL. Els detalls es poden trobar als registres.',
     'added_request_error' => 'S\'ha afegit l\'enllaç, però s\'ha produït un error de connexió al intentar accedir a l\'adreça URL, per exemple per certificat invalid. Els detalls es poden trobar als registres.',
@@ -56,6 +59,7 @@ return [
     'deletion_error' => 'L\'enllaç no s\'ha pogut suprimir.',
 
     'duplicates_found' => 'LinkAce ha trobat possibles duplicitats per l\'URL enviada:',
+    'existing_found' => 'Ja existeix un enllaç amb aquest URL.',
 
     'notifications.linkcheck.errors' => 'LinkAce ha trobat errors mentre es realitzava la comprovació dels teus enllaços.',
     'notifications.linkcheck.errors.moved' => '⚠ Els següents enllaços s\'han mogut a una nova ubicació:',
