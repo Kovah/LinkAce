@@ -192,6 +192,14 @@ code {
   transform: rotate(45deg);
 }
 
+.link-thumbnail-placeholder-detailed {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  height: 100%;
+}
+
 .link-thumbnail-detail {
   width: 100%;
   height: auto;
@@ -204,6 +212,24 @@ code {
     width: 180px;
     height: 93px;
     padding-bottom: 0;
+  }
+}
+
+.link-thumbnail-list-holder-detailed {
+  position: relative;
+  width: 100%;
+  padding-top: 56.25%;
+
+  .link-thumbnail-list-detailed {
+    position: absolute;
+    top: 0;
+    left: 0;
+    bottom: 0;
+    right: 0;
+    border-top-left-radius: $border-radius-sm;
+    border-top-right-radius: $border-radius-sm;
+    background-position: center center;
+    background-size: cover;
   }
 }
 

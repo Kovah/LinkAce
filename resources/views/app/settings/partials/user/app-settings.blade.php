@@ -155,6 +155,12 @@
                                 @endif>
                                 @lang('settings.display_mode_cards')
                             </option>
+                            <option value="{{ Link::DISPLAY_CARDS_DETAILED }}"
+                                @if((int)$user->settings()->get('link_display_mode') === Link::DISPLAY_CARDS_DETAILED)
+                                selected
+                                @endif>
+                                @lang('settings.display_mode_cards_detailed')
+                            </option>
                         </select>
                         @if ($errors->has('link_display_mode'))
                             <p class="invalid-feedback" role="alert">

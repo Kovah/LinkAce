@@ -23,6 +23,8 @@
             <div class="link-wrapper">
                 @if((int)usersettings('link_display_mode') === Link::DISPLAY_CARDS)
                     @include('models.links.partials.list-cards')
+                @elseif((int)usersettings('link_display_mode') === Link::DISPLAY_CARDS_DETAILED)
+                    @include('models.links.partials.list-cards-detailed')
                 @elseif((int)usersettings('link_display_mode') === Link::DISPLAY_LIST_SIMPLE)
                     @include('models.links.partials.list-simple')
                 @else
