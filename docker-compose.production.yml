@@ -4,7 +4,7 @@ services:
 
   # --- MariaDB
   db:
-    image: mariadb:10.5
+    image: mariadb:10.7
     restart: unless-stopped
     command: mysqld --character-set-server=utf8mb4 --collation-server=utf8mb4_bin
     environment:
@@ -15,7 +15,7 @@ services:
     volumes:
       - db:/var/lib/mysql
 
-  # --- LinkAce Image with PHP 7.4
+  # --- LinkAce Image with PHP
   app:
     image: linkace/linkace:latest
     restart: unless-stopped
@@ -30,7 +30,7 @@ services:
 
   # --- nginx
   nginx:
-    image: bitnami/nginx:1.19
+    image: bitnami/nginx:1.21
     restart: unless-stopped
     ports:
       - "0.0.0.0:80:8080"
@@ -46,7 +46,7 @@ services:
 
   # --- Redis
   redis:
-    image: bitnami/redis:6.0
+    image: bitnami/redis:6.2
     restart: unless-stopped
     environment:
       - REDIS_PASSWORD=${REDIS_PASSWORD}

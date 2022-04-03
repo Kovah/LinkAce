@@ -4,7 +4,7 @@ services:
 
   # --- MariaDB
   db:
-    image: mariadb:10.5
+    image: mariadb:10.7
     restart: unless-stopped
     command: mysqld --character-set-server=utf8mb4 --collation-server=utf8mb4_bin
     environment:
@@ -15,7 +15,7 @@ services:
     volumes:
       - db:/var/lib/mysql
 
-  # --- LinkAce Image with PHP 7.4 and nginx
+  # --- LinkAce Image with PHP and nginx
   app:
     image: linkace/linkace:simple
     restart: unless-stopped
