@@ -22,12 +22,15 @@ class TagController extends Controller
      */
     public function index(Request $request): View
     {
+        $orderBy = $request->input('orderBy', session()->get('tags.index.orderBy', 'name'));
+        $orderDir = $request->input('orderDir', session()->get('tags.index.orderDir', 'asc'));
+
+        session()->put('tags.index.orderBy', $orderBy);
+        session()->put('tags.index.orderDir', $orderDir);
+
         $tags = Tag::byUser(auth()->id())
             ->withCount('links')
-            ->orderBy(
-                $request->input('orderBy', 'name'),
-                $request->input('orderDir', 'ASC')
-            );
+            ->orderBy($orderBy, $orderDir);
 
         if ($request->input('filter')) {
             $tags = $tags->where('name', 'like', '%' . $request->input('filter') . '%');
@@ -38,9 +41,9 @@ class TagController extends Controller
         return view('models.tags.index', [
             'tags' => $tags,
             'route' => $request->getBaseUrl(),
-            'orderBy' => $request->input('orderBy', 'name'),
-            'orderDir' => $request->input('orderDir', 'ASC'),
-            'filter' => $request->input('filter')
+            'orderBy' => $orderBy,
+            'orderDir' => $orderDir,
+            'filter' => $request->input('filter'),
         ]);
     }
 
