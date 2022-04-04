@@ -102,9 +102,14 @@ jobs:
     steps:
       - uses: actions/checkout@v2
 
+      - name: Rename files
+        run: |
+          mv .env.docker.production .env
+          mv docker-compose.production-simple.yml docker-compose.yml
+
       - uses: papeloto/action-zip@v1
         with:
-          files: docker-compose.production-simple.yml .env.docker.production LICENSE.md README.md
+          files: docker-compose.production-simple.yml .env LICENSE.md README.md
           recursive: false
           dest: linkace-package-docker-simple.zip
 
@@ -113,9 +118,12 @@ jobs:
           name: linkace-package-docker-simple
           path: linkace-package-docker-simple.zip
 
+      - name: Rename files
+        run: mv docker-compose.production.yml docker-compose.yml
+
       - uses: papeloto/action-zip@v1
         with:
-          files: docker-compose.production.yml .env.docker.production nginx.conf nginx-ssl.conf LICENSE.md README.md
+          files: docker-compose.production.yml .env nginx.conf nginx-ssl.conf LICENSE.md README.md
           recursive: false
           dest: linkace-package-docker-advanced.zip
 
