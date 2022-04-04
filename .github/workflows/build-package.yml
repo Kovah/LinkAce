@@ -107,11 +107,9 @@ jobs:
           mv .env.docker.production .env
           mv docker-compose.production-simple.yml docker-compose.yml
 
-      - uses: papeloto/action-zip@v1
+      - uses: montudor/action-zip@v1
         with:
-          files: docker-compose.production-simple.yml .env LICENSE.md README.md
-          recursive: false
-          dest: linkace-package-docker-simple.zip
+          args: zip -qq linkace-package-docker-simple.zip docker-compose.yml .env LICENSE.md README.md
 
       - uses: actions/upload-artifact@v2
         with:
@@ -121,11 +119,9 @@ jobs:
       - name: Rename files
         run: mv docker-compose.production.yml docker-compose.yml
 
-      - uses: papeloto/action-zip@v1
+      - uses: montudor/action-zip@v1
         with:
-          files: docker-compose.production.yml .env nginx.conf nginx-ssl.conf LICENSE.md README.md
-          recursive: false
-          dest: linkace-package-docker-advanced.zip
+          args: zip -qq linkace-package-docker-advanced.zip docker-compose.yml .env nginx.conf nginx-ssl.conf LICENSE.md README.md
 
       - uses: actions/upload-artifact@v2
         with:
