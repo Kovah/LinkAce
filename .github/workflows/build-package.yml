@@ -105,6 +105,7 @@ jobs:
       - name: Rename files
         run: |
           mv .env.docker.production .env
+          chmod 0666 .env
           mv docker-compose.production-simple.yml docker-compose.yml
 
       - uses: montudor/action-zip@v1
