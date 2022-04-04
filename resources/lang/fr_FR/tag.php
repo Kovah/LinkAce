@@ -11,6 +11,8 @@ return [
     'update' => 'Mettre à jour Étiquette',
     'delete' => 'Supprimer Étiquette',
 
+    'filter_tags' => 'Filtrer les tags...',
+
     'private' => 'Étiquette Privée',
 
     'name' => 'Nom Étiquette',

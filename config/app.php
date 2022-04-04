@@ -133,15 +133,11 @@ return [
 
     'guest_access' => env('GUEST_ACCESS', false),
 
-    /*
+    /**
     |--------------------------------------------------------------------------
-    | setup Completed
+    | Setup Completed Flag
     |--------------------------------------------------------------------------
-    |
-    | After the user completed the app setup, the env file will change the
-    | SETUP_COMPLETED value in the .env file. This setting makes the
-    | environment variable available in the application.
-    |
+    * @deprecated v1.10.0 Setting is no longer actively used and remains for proper migration to a database setting.
     */
 
     'setup_completed' => env('SETUP_COMPLETED', false),

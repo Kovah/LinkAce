@@ -48,6 +48,9 @@ return [
     'check_enable' => 'Activer Vérification',
     'check_enabled' => 'La vérification est activée',
 
+    'status_is_broken' => 'Le lien est marqué comme cassé',
+    'status_mark_working' => 'Marquer comme fonctionnant',
+
     'added_successfully' => 'Lien ajouté avec succès.',
     'added_connection_error' => 'Le lien a été ajouté mais une erreur de connexion s\'est produite lors de la tentative d\'accès à l\'URL. Des détails peuvent être trouvés dans les journaux.',
     'added_request_error' => 'Le lien a été ajouté mais une erreur est survenue lors de la tentative de requête de l\'URL, à cause par exemple d\'un certificat invalide. Des détails peuvent être trouvés dans les logs.',
@@ -56,6 +59,7 @@ return [
     'deletion_error' => 'Le lien n\'a pas pu être supprimé.',
 
     'duplicates_found' => 'LinkAce a trouvé des doublons possibles de l\'URL soumise :',
+    'existing_found' => 'Un lien avec cette URL existe déjà.',
 
     'notifications.linkcheck.errors' => 'LinkAce a trouvé des erreurs lors de la vérification de vos liens.',
     'notifications.linkcheck.errors.moved' => '⚠ Les Liens suivants ont été déplacés vers un nouvel emplacement :',

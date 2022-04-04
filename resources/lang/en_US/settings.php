@@ -36,8 +36,9 @@ return [
 
     'display_mode' => 'Display links as',
     'display_mode_list_detailed' => 'list with many details',
-    'display_mode_list_simple' => 'list with few details',
+    'display_mode_list_simple' => 'list with less details',
     'display_mode_cards' => 'cards with less details',
+    'display_mode_cards_detailed' => 'cards with many details',
 
     'sharing' => 'Link Sharing',
     'sharing_help' => 'Enable all services you want to display for links, to be able to share them easily with one click.',

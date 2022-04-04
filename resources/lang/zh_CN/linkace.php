@@ -31,6 +31,7 @@ return [
 
     'menu' => '菜单',
     'entries' => '条目',
+    'feed' => '饲料',
 
     'continue_adding' => '继续添加',
 

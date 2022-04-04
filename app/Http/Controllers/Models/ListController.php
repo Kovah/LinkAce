@@ -22,12 +22,15 @@ class ListController extends Controller
      */
     public function index(Request $request): View
     {
+        $orderBy = $request->input('orderBy', session()->get('lists.index.orderBy', 'name'));
+        $orderDir = $request->input('orderDir', session()->get('lists.index.orderDir', 'asc'));
+
+        session()->put('lists.index.orderBy', $orderBy);
+        session()->put('lists.index.orderDir', $orderDir);
+
         $lists = LinkList::byUser(auth()->id())
             ->withCount('links')
-            ->orderBy(
-                $request->input('orderBy', 'name'),
-                $request->input('orderDir', 'asc')
-            );
+            ->orderBy($orderBy, $orderDir);
 
         if ($request->input('filter')) {
             $lists = $lists->where('name', 'like', '%' . $request->input('filter') . '%');
@@ -38,8 +41,8 @@ class ListController extends Controller
         return view('models.lists.index', [
             'lists' => $lists,
             'route' => $request->getBaseUrl(),
-            'orderBy' => $request->input('orderBy', 'name'),
-            'orderDir' => $request->input('orderDir', 'asc'),
+            'orderBy' => $orderBy,
+            'orderDir' => $orderDir,
         ]);
     }
 

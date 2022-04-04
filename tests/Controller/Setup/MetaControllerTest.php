@@ -2,22 +2,19 @@
 
 namespace Tests\Controller\Setup;
 
+use App\Models\Setting;
 use Illuminate\Foundation\Testing\RefreshDatabase;
+use Illuminate\Support\Facades\Cache;
 use Tests\TestCase;
 
 class MetaControllerTest extends TestCase
 {
     use RefreshDatabase;
 
-    protected function setUp(): void
-    {
-        parent::setUp();
-
-        config(['app.setup_completed' => false]);
-    }
-
     public function testSetupCheckRedirect(): void
     {
+        Setting::where('key', 'system_setup_completed')->delete();
+
         $response = $this->get('/');
 
         $response->assertRedirect('setup/start');
@@ -25,8 +22,6 @@ class MetaControllerTest extends TestCase
 
     public function testSetupCheckWithoutRedirect(): void
     {
-        config(['app.setup_completed' => true]);
-
         $response = $this->get('/');
 
         $response->assertRedirect('login');
@@ -34,8 +29,6 @@ class MetaControllerTest extends TestCase
 
     public function testRedirectIfSetupCompleted(): void
     {
-        config(['app.setup_completed' => true]);
-
         $response = $this->get('setup/start');
 
         $response->assertRedirect('/');
@@ -43,6 +36,8 @@ class MetaControllerTest extends TestCase
 
     public function testSetupWelcomeView(): void
     {
+        Setting::where('key', 'system_setup_completed')->delete();
+
         $response = $this->get('setup/start');
 
         $response->assertOk()

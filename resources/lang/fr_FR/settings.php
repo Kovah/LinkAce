@@ -38,6 +38,7 @@ return [
     'display_mode_list_detailed' => 'liste avec de nombreux détails',
     'display_mode_list_simple' => 'liste avec peu de détails',
     'display_mode_cards' => 'cartes avec moins de détails',
+    'display_mode_cards_detailed' => 'cartes avec de nombreux détails',
 
     'sharing' => 'Partage de Liens',
     'sharing_help' => 'Activer tous les services que vous voulez afficher, pour pouvoir partager les liens facilement en un clic.',
@@ -82,6 +83,8 @@ return [
     'sys_page_title' => 'Titre Page',
     'sys_guest_access' => 'Activer Accès Invité',
     'sys_guest_access_help' => 'Si activé, l\'invité sera en mesure de voir tous les liens qui ne sont pas privés.',
+    'sys_custom_header_content' => 'Contenu de l\'en-tête personnalisé',
+    'sys_custom_header_content_help' => 'Le contenu entré ici sera placé avant la balise &lt;/head&gt; sur tous les sites LinkAce. Utile pour placer des scripts d\'analyse ou de personnalisation. Attention : les contenus ne sont pas échappés et peuvent casser le site !',
 
     'cron_token' => 'Jeton Cron',
     'cron_token_generate' => 'Générer Jeton',

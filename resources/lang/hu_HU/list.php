@@ -11,6 +11,8 @@ return [
     'update' => 'Lista frissítése',
     'delete' => 'Lista törlése',
 
+    'filter_lists' => 'Listák szűrése...',
+
     'private' => 'Privát lista',
 
     'name' => 'Lista neve',

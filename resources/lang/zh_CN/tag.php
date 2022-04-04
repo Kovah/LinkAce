@@ -11,6 +11,8 @@ return [
     'update' => '更新标签',
     'delete' => '删除标签',
 
+    'filter_tags' => '过滤标签...',
+
     'private' => '私人标签',
 
     'name' => '标签名',

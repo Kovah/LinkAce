@@ -23,19 +23,22 @@ class LinkController extends Controller
      */
     public function index(Request $request): View
     {
+        $orderBy = $request->input('orderBy', session()->get('links.index.orderBy', 'created_at'));
+        $orderDir = $request->input('orderDir', session()->get('links.index.orderDir', 'desc'));
+
+        session()->put('links.index.orderBy', $orderBy);
+        session()->put('links.index.orderDir', $orderDir);
+
         $links = Link::byUser(auth()->id())
             ->with('tags')
-            ->orderBy(
-                $request->input('orderBy', 'created_at'),
-                $request->input('orderDir', 'desc')
-            )
+            ->orderBy($orderBy, $orderDir)
             ->paginate(getPaginationLimit());
 
         return view('models.links.index', [
             'links' => $links,
             'route' => $request->getBaseUrl(),
-            'orderBy' => $request->input('orderBy', 'created_at'),
-            'orderDir' => $request->input('orderDir', 'desc'),
+            'orderBy' => $orderBy,
+            'orderDir' => $orderDir,
         ]);
     }
 

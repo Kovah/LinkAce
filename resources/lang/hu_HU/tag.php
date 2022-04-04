@@ -11,6 +11,8 @@ return [
     'update' => 'Címke frissítése',
     'delete' => 'Címke törlése',
 
+    'filter_tags' => 'Címkék szűrése...',
+
     'private' => 'Privát címke',
 
     'name' => 'Címke neve',

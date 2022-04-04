@@ -38,6 +38,7 @@ return [
     'display_mode_list_detailed' => '列出更多信息',
     'display_mode_list_simple' => '列出部分信息',
     'display_mode_cards' => '细节较少的卡片',
+    'display_mode_cards_detailed' => '带有许多详细信息的卡片',
 
     'sharing' => '链接共享',
     'sharing_help' => '启用您想要显示链接的所有服务，以便能够轻松地通过单击分享链接。',
@@ -82,6 +83,8 @@ return [
     'sys_page_title' => '页面标题',
     'sys_guest_access' => '启用访客访问',
     'sys_guest_access_help' => '如果启用，访客将能够看到所有非私密链接。',
+    'sys_custom_header_content' => '自定义标题内容',
+    'sys_custom_header_content_help' => '此处输入的内容将放置在所有LinkAce网站的 &lt;/head&gt; 标签之前。 有助于放置分析或自定义脚本。注意：内容不会逃脱，可能会破坏网站！',
 
     'cron_token' => 'Cron 令牌',
     'cron_token_generate' => '生成令牌',

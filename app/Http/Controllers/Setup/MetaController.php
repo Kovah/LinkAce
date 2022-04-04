@@ -3,7 +3,9 @@
 namespace App\Http\Controllers\Setup;
 
 use App\Http\Controllers\Controller;
+use App\Models\Setting;
 use Illuminate\Contracts\View\View;
+use Illuminate\Support\Facades\Cache;
 use Illuminate\Support\Facades\File;
 
 class MetaController extends Controller
@@ -25,21 +27,9 @@ class MetaController extends Controller
      */
     public function complete(): View
     {
-        $this->markSetupCompleted();
+        Setting::create(['key' => 'system_setup_completed', 'value' => true]);
+        Cache::forget('systemsettings');
 
         return view('setup.complete');
-    }
-
-    /**
-     * After the setup is finished, we change the SETUP_COMPLETED variable
-     * from false to true to prevent the setup from being run again.
-     */
-    protected function markSetupCompleted(): void
-    {
-        $envContent = File::get(base_path('.env'));
-
-        $envContent = str_replace('SETUP_COMPLETED=false', 'SETUP_COMPLETED=true', $envContent);
-
-        File::put(base_path('.env'), $envContent);
     }
 }

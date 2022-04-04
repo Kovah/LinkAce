@@ -2,16 +2,20 @@
 
     <div class="card-body">
         <div class="d-flex align-items-top flex-wrap flex-md-nowrap">
-            @if($link->thumbnail)
-                <div class="d-flex justify-content-center me-2 mb-2 mb-md-0 link-thumbnail-list-holder">
-                    <a href="{{ $link->url }}"
-                        {!! linkTarget() !!} class="rounded d-block link-thumbnail link-thumbnail-list"
-                        style="background-image: url('{{ $link->thumbnail }}');">
-                    </a>
-                </div>
-            @endif
-            <div class="d-flex me-2 mw-100">
-                <div class="me-2">
+
+            <div class="link-thumbnail-list-holder order-0 me-2 me-lg-3 mb-2 mb-md-0">
+                <a href="{{ $link->url }}" {!! linkTarget() !!} class="link-thumbnail link-thumbnail-list"
+                    @if($link->thumbnail)
+                    style="background-image: url('{{ $link->thumbnail }}');"
+                    @endif>
+                    @if(!$link->thumbnail)
+                        <span class="link-thumbnail-placeholder"><x-icon.linkace-icon/></span>
+                    @endif
+                </a>
+            </div>
+
+            <div class="d-flex me-2 mw-100 order-2 order-md-1">
+                <div class="me-2 me-lg-3">
                     {!! $link->getIcon() !!}
                     @if($link->is_private)
                         <br>
@@ -20,14 +24,16 @@
                     @endif
                 </div>
                 <div>
-                    <a href="{{ $link->url }}" {!! linkTarget() !!}>{{ $link->title }}</a>
-                    <br>
-                    <small class="text-muted">{{ $link->shortUrl() }}</small>
+                    <div><a href="{{ $link->url }}" {!! linkTarget() !!}>{{ $link->title }}</a></div>
+                    <div><small class="text-muted">{{ $link->shortUrl(75) }}</small></div>
+                    @if($link->description)
+                        <div class="text-pale"><small>{{ Str::limit($link->description, 200) }}</small></div>
+                    @endif
                 </div>
             </div>
             @if(getShareLinks($link) !== '')
-                <div class="ms-auto text-end">
-                    <button type="button" class="btn btn-xs btn-outline-secondary" title="@lang('sharing.share_link')"
+                <div class="ms-auto text-end order-1 order-md-2">
+                    <button type="button" class="btn btn-xs btn-md-sm btn-outline-secondary" title="@lang('sharing.share_link')"
                         data-bs-toggle="collapse" data-bs-target="#sharing-{{ $link->id }}"
                         aria-expanded="false" aria-controls="sharing-{{ $link->id }}">
                         <x-icon.share class="fw"/>

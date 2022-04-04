@@ -1,5 +1,19 @@
 <div class="col-12 col-md-6 col-lg-4">
     <div class="h-100 card">
+
+        <div class="link-thumbnail-list-holder-detailed">
+            <a href="{{ $link->url }}" {!! linkTarget() !!} class="link-thumbnail-list-detailed"
+                @if($link->thumbnail)
+                style="background-image: url('{{ $link->thumbnail }}');"
+                @endif>
+                @if(!$link->thumbnail)
+                    <span class="link-thumbnail-placeholder link-thumbnail-placeholder-detailed">
+                        <x-icon.linkace-icon/>
+                    </span>
+                @endif
+            </a>
+        </div>
+
         <div class="card-body h-100 border-bottom-0">
             <div class="d-flex">
                 <div class="me-2">
@@ -16,6 +30,18 @@
                     <small class="text-muted">{{ $link->shortUrl() }}</small>
                 </div>
             </div>
+        </div>
+
+        <div class="px-3">
+            @if($link->tags->count() > 0)
+                @foreach($link->tags as $tag)
+                    <a href="{{ route('tags.show', [$tag]) }}" class="btn btn-light btn-xs">
+                        {{ $tag->name }}
+                    </a>
+                @endforeach
+            @else
+                <span class="small text-muted">@lang('tag.no_tags')</span>
+            @endif
         </div>
 
         <div class="d-flex align-items-center my-1">

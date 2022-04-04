@@ -38,6 +38,7 @@ return [
     'display_mode_list_detailed' => 'llista amb molts detalls',
     'display_mode_list_simple' => 'llista amb pocs detalls',
     'display_mode_cards' => 'tarja amb menys detalls',
+    'display_mode_cards_detailed' => 'targetes amb molts detalls',
 
     'sharing' => 'Compartir enllaços',
     'sharing_help' => 'Activa tots els serveis que vulguis mostra pels enllaços, per poder compartir-los fàcilment amb un sol clic.',
@@ -82,6 +83,8 @@ return [
     'sys_page_title' => 'Tí­tol de la pàgina',
     'sys_guest_access' => 'Habilitar l\'accés a convidats',
     'sys_guest_access_help' => 'Si está activat, el convidat pot veure tots els enllaços que no son privats.',
+    'sys_custom_header_content' => 'Contingut de capçalera personalitzat',
+    'sys_custom_header_content_help' => 'El contingut introduït aquí es col·locarà abans del &lt;/head&gt; etiqueta a tots els llocs de LinkAce. Útil per col·locar scripts d\'anàlisi o personalització. Atenció: el contingut no s\'escapa i pot trencar el lloc!',
 
     'cron_token' => 'Token de Cron',
     'cron_token_generate' => 'Generar token',

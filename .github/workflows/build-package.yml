@@ -8,10 +8,8 @@ on:
 jobs:
 
   build-js:
-    runs-on: ubuntu-latest
-
     name: Build assets for the package
-
+    runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v2
 
@@ -43,11 +41,9 @@ jobs:
           path: public/mix-manifest.json
 
   build-package:
+    name: Build final dist package
     runs-on: ubuntu-latest
     needs: build-js
-
-    name: Build final dist package
-
     steps:
       - uses: actions/checkout@v2
 
@@ -61,18 +57,15 @@ jobs:
           name: mix-manifest
           path: public
 
-      - name: Setup PHP
-        uses: shivammathur/setup-php@v2
+      - uses: shivammathur/setup-php@v2
         with:
           php-version: 7.4
           extensions: mbstring
 
-      - name: Get Composer Cache Directory
-        id: composer-cache
+      - id: composer-cache
         run: echo "::set-output name=dir::$(composer config cache-files-dir)"
 
-      - name: Cache dependencies
-        uses: actions/cache@v1
+      - uses: actions/cache@v1
         with:
           path: ${{ steps.composer-cache.outputs.dir }}
           key: ${{ runner.os }}-composer-${{ hashFiles('**/composer.lock') }}
@@ -93,14 +86,41 @@ jobs:
       - name: Remove .env file
         run: rm .env
 
-      - name: Build the final package
-        uses: thedoctor0/zip-release@master
+      - uses: thedoctor0/zip-release@master
         with:
           filename: linkace.zip
           exclusions: '*.git*'
 
-      - name: Upload the package
-        uses: actions/upload-artifact@v2
+      - uses: actions/upload-artifact@v2
         with:
           name: linkace-package
           path: linkace.zip
+
+  build-package-docker:
+    name: Build final dist package for Docker setup
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+
+      - uses: papeloto/action-zip@v1
+        with:
+          files: docker-compose.production-simple.yml .env.docker.production LICENSE.md README.md
+          recursive: false
+          dest: linkace-package-docker-simple.zip
+
+      - uses: actions/upload-artifact@v2
+        with:
+          name: linkace-package-docker-simple
+          path: linkace-package-docker-simple.zip
+
+      - uses: papeloto/action-zip@v1
+        with:
+          files: docker-compose.production.yml .env.docker.production nginx.conf nginx-ssl.conf LICENSE.md README.md
+          recursive: false
+          dest: linkace-package-docker-advanced.zip
+
+      - uses: actions/upload-artifact@v2
+        with:
+          name: linkace-package-docker-advanced
+          path: linkace-package-docker-advanced.zip
+

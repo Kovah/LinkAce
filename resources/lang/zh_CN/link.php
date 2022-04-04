@@ -48,6 +48,9 @@ return [
     'check_enable' => '启用网站检查',
     'check_enabled' => '已启用检查',
 
+    'status_is_broken' => '链接被标记为已损坏',
+    'status_mark_working' => '标记为工作',
+
     'added_successfully' => '已添加链接。',
     'added_connection_error' => '链接已添加，但在尝试访问 URL 时发生连接错误。详细信息可以在日志中找到。',
     'added_request_error' => '链接已添加，但在尝试请求URL时发生错误，例如无效的证书。 详细信息可以在日志中找到。',
@@ -56,7 +59,7 @@ return [
     'deletion_error' => '无法删除链接。',
 
     'duplicates_found' => 'LinkAce发现提交的 URL可能重复：',
-    'existing_found' => '',
+    'existing_found' => '链接地址已存在。',
 
     'notifications.linkcheck.errors' => 'LinkAce在检查您的链接时发生错误。',
     'notifications.linkcheck.errors.moved' => '⚠ 以下链接移动到一个新位置:',
