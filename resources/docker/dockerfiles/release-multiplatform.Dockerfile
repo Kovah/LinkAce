@@ -33,7 +33,7 @@ RUN npm run production
 
 # ================================
 # Prepare the final image
-FROM linkace/release-base:php-8.1-fpm-alpine
+FROM linkace/base-image:php-8.1-alpine
 WORKDIR /app
 
 # Copy the app into the container
