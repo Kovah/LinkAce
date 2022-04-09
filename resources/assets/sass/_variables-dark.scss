@@ -61,6 +61,8 @@ $theme-colors: (
 $darkmode-bg: $gray-900;
 $darkmode-bg-dark: darken($gray-900, 3%);
 $darkmode-bg-darker: darken($gray-900, 6%);
+$darkmode-bg-darkest: darken($gray-900, 9%);
+
 
 $color-contrast-dark: $white;
 $color-contrast-light: $black;
@@ -99,7 +101,7 @@ $table-dark-color: $white;
 
 // Forms
 $input-bg: $gray-800;
-$input-disabled-bg: $darkmode-bg;
+$input-disabled-bg: $darkmode-bg-darkest;
 $input-border-color: $darkmode-bg-dark;
 $input-color: $body-color;
 
