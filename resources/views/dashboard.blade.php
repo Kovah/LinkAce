@@ -6,71 +6,48 @@
 
     <div class="row">
         <div class="col-12 col-md-7">
+            <form action="{{ route('links.store') }}" method="POST">
+                @csrf
 
-            <div class="card">
-                <div class="card-header">
-                    @lang('link.add_quick')
+                <input type="hidden" name="is_private" value="{{ usersettings('private_default') ?: 0 }}">
+                <input type="hidden" name="title" value="">
+                <input type="hidden" name="description" value="">
+                <input type="hidden" name="lists" value="">
+                <input type="hidden" name="tags" value="">
+
+                <div class="input-group">
+                    <input type="url" id="url" name="url" required
+                        class="form-control{{ $errors->has('url') ? ' is-invalid' : '' }}"
+                        placeholder="@lang('link.url')" value="{{ old('url') }}"
+                        aria-label="@lang('link.url')">
+                    <button class="btn btn-primary" type="submit">
+                        <x-icon.plus class="me-2"/> @lang('link.add_quick')
+                    </button>
                 </div>
-                <div class="card-body">
 
-                    <form action="{{ route('links.store') }}" method="POST">
-                        @csrf
-
-                        <input type="hidden" name="is_private" value="{{ usersettings('private_default') ?: 0 }}">
-                        <input type="hidden" name="title" value="">
-                        <input type="hidden" name="description" value="">
-                        <input type="hidden" name="lists" value="">
-                        <input type="hidden" name="tags" value="">
-
-                        <div class="input-group">
-                            <input type="url" id="url" name="url" required
-                                class="form-control{{ $errors->has('url') ? ' is-invalid' : '' }}"
-                                placeholder="@lang('link.url')" value="{{ old('url') }}"
-                                aria-label="@lang('link.url')">
-                            <button class="btn btn-primary" type="submit">
-                                <x-icon.plus class="me-2"/> @lang('linkace.add')
-                            </button>
-                        </div>
-
-                        @if ($errors->has('url'))
-                            <p class="invalid-feedback" role="alert">
-                                {{ $errors->first('url') }}
-                            </p>
-                        @endif
-
-                    </form>
-
-                </div>
-            </div>
-
+                @if ($errors->has('url'))
+                    <p class="invalid-feedback" role="alert">
+                        {{ $errors->first('url') }}
+                    </p>
+                @endif
+            </form>
         </div>
-        <div class="col-12 col-md-5">
+        <div class="col-12 col-md-5 mt-4 mt-md-0">
+            <form action="{{ route('do-search') }}" method="POST">
+                @csrf
+                <input type="hidden" name="search_title" value="on">
+                <input type="hidden" name="search_description" value="on">
 
-            <div class="card">
-                <div class="card-header">
-                    @lang('search.search')
+                <label for="query" class="visually-hidden">@lang('search.query')</label>
+                <div class="input-group">
+                    <input type="text" name="query" id="query" required minlength="1"
+                        class="form-control" placeholder="@lang('search.query')">
+                    <button class="btn btn-primary" type="submit">
+                        <x-icon.search class="me-2"/>
+                        @lang('search.search')
+                    </button>
                 </div>
-                <div class="card-body">
-
-                    <form action="{{ route('do-search') }}" method="POST">
-                        @csrf
-                        <input type="hidden" name="search_title" value="on">
-                        <input type="hidden" name="search_description" value="on">
-
-                        <label for="query" class="visually-hidden">@lang('search.query')</label>
-                        <div class="input-group">
-                            <input type="text" name="query" id="query" required minlength="1"
-                                class="form-control" placeholder="@lang('search.query')">
-                            <button class="btn btn-primary" type="submit">
-                                <x-icon.search class="me-2"/>
-                                @lang('search.search')
-                            </button>
-                        </div>
-                    </form>
-
-                </div>
-            </div>
-
+            </form>
         </div>
     </div>
 
