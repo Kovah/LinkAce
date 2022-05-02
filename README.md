@@ -7,7 +7,6 @@
 <p align="center"><b>Your self-hosted bookmark archive. Free and open source.</b></p>
 
 <p align="center">
-  <a href="https://community.linkace.org"><img src="https://img.shields.io/twitter/url?label=Community&logo=discourse&logoColor=44679f&style=social&url=https%3A%2F%2Fcommunity.linkace.org%2F" alt="Get support for LinkAce and chat about the project"></a>
   <a href="https://twitter.com/LinkAceApp"><img src="https://img.shields.io/twitter/url?label=%40LinkAceApp&style=social&url=https%3A%2F%2Ftwitter.com%2FLinkAceApp" alt="Follow LinkAce on Twitter"></a>
   <a href="https://hub.docker.com/r/linkace/linkace"><img src="https://img.shields.io/badge/Docker-linkace%2Flinkace-2596EC.svg" alt="Docker Repository"></a>
   <a href="https://github.com/Kovah/LinkAce/releases"><img src="https://img.shields.io/github/v/release/kovah/linkace?label=Latest%20Release" alt="Latest Release"></a>
@@ -63,14 +62,14 @@ More screenshots of the app and further details about the features can be found 
 
 ### :bulb: Support for LinkAce
 
-I built LinkAce to solve my own problem, and I now offer my solution and code without charging any money. I spent a lot of my free time building this application, so I won't offer any *free* personal support, customization or installation help. If you need help please visit the [community forum](https://community.linkace.org/) and post your issue there.
+I built LinkAce to solve my own problem, and I now offer my solution and code without charging any money. I spent a lot of my free time building this application, so I won't offer any *free* personal support, customization or installation help. If you need help please visit the [community discussions](https://github.com/Kovah/LinkAce/discussions) and post your issue there.
 
 You can get personal and dedicated support by **becoming a [Patreon](https://www.patreon.com/Kovah)** or **[Github Sponsor](https://github.com/sponsors/Kovah)**. :star:
 
 #### Documentation and Community
 
 Details about all features and advanced configuration can be found in the [**project documentation**](https://www.linkace.org/docs/).  
-Additionally, you may visit the [community forums](https://community.linkace.org/) to share your ideas, talk with other users or find help for specific problems.
+Additionally, you may visit the [community discussions](https://github.com/Kovah/LinkAce/discussions) to share your ideas, talk with other users or find help for specific problems.
 
 
 &nbsp;
