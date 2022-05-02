@@ -26,8 +26,7 @@ class ImportControllerTest extends TestCase
     {
         $response = $this->get('import');
 
-        $response->assertOk()
-            ->assertSee('Import');
+        $response->assertOk()->assertSee('Import');
     }
 
     public function testValidImportActionResponse(): void
@@ -48,5 +47,9 @@ class ImportControllerTest extends TestCase
 
         $linkCount = Link::count();
         $this->assertEquals(5, $linkCount);
+
+        // Test correct tag creation with and without white space
+        $this->assertDatabaseHas('tags', ['name' => 'color-wheel']);
+        $this->assertDatabaseHas('tags', ['name' => 'design systems']);
     }
 }

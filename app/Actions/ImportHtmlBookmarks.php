@@ -69,10 +69,8 @@ class ImportHtmlBookmarks
             $newLink->save();
 
             if (!empty($link['tags'])) {
-                $tags = explode(' ', $link['tags']);
-
                 $newTags = [];
-                foreach ($tags as $tag) {
+                foreach ($link['tags'] as $tag) {
                     $newTag = Tag::firstOrCreate([
                         'user_id' => $userId,
                         'name' => $tag,
