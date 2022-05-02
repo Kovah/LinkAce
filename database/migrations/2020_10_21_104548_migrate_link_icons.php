@@ -95,7 +95,7 @@ class MigrateLinkIcons extends Migration
      *
      * @return void
      */
-    public function up()
+    public function up(): void
     {
         Link::withTrashed()->chunk(100, function ($links) {
             /** @var Link $link */
@@ -111,7 +111,7 @@ class MigrateLinkIcons extends Migration
      *
      * @return void
      */
-    public function down()
+    public function down(): void
     {
         //
     }

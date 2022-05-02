@@ -10,21 +10,13 @@ class LinkCheckNotification extends Notification
 {
     use Queueable;
 
-    /** @var array */
-    public $movedLinks = [];
-
-    /** @var array */
-    public $brokenLinks = [];
-
     /**
      * Create a new notification instance.
      *
      * @return void
      */
-    public function __construct($moved_links, $broken_links)
+    public function __construct(public array $movedLinks, public array $brokenLinks)
     {
-        $this->movedLinks = $moved_links;
-        $this->brokenLinks = $broken_links;
     }
 
     /**

@@ -27,9 +27,7 @@ class TagStoreRequest extends FormRequest
         return [
             'name' => [
                 'required',
-                Rule::unique('tags')->where(function ($query) {
-                    return $query->where('user_id', auth()->user()->id);
-                }),
+                Rule::unique('tags')->where(fn($query) => $query->where('user_id', auth()->user()->id)),
             ],
             'is_private' => 'sometimes|boolean',
         ];

@@ -7,6 +7,7 @@ use App\Models\User;
 use App\Notifications\LinkCheckNotification;
 use Exception;
 use Illuminate\Console\Command;
+use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Support\Facades\Cache;
 use Illuminate\Support\Facades\Http;
 use Illuminate\Support\Facades\Notification;
@@ -112,9 +113,9 @@ class CheckLinksCommand extends Command
      * Get links but limit the results to a fixed number of links.
      * If there is an offset saved, use this instead of beginning from the first entry.
      *
-     * @return \LaravelIdea\Helper\App\Models\_IH_Link_C|Link[]
+     * @return Collection
      */
-    protected function getLinks()
+    protected function getLinks(): Collection
     {
         // Get the total amount of remaining links
         $this->total = Link::count();

@@ -15,7 +15,7 @@ class ExampleSeedingTest extends TestCase
     use DatabaseTransactions;
     use DatabaseMigrations;
 
-    public function setUp(): void
+    protected function setUp(): void
     {
         parent::setUp();
 

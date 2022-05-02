@@ -30,8 +30,8 @@ class LinkRepository
     {
         $linkMeta = (new HtmlMeta)->getFromUrl($data['url'], $flashAlerts);
 
-        $data['title'] = $data['title'] ?? $linkMeta['title'];
-        $data['description'] = $data['description'] ?? $linkMeta['description'];
+        $data['title'] ??= $linkMeta['title'];
+        $data['description'] ??= $linkMeta['description'];
         $data['user_id'] = auth()->user()->id;
         $data['icon'] = LinkIconMapper::mapLink($data['url']);
         $data['thumbnail'] = $linkMeta['thumbnail'];

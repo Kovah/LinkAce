@@ -14,7 +14,7 @@ class GuestAccess
      * @param Closure $next
      * @return mixed
      */
-    public function handle(Request $request, Closure $next)
+    public function handle(Request $request, Closure $next): mixed
     {
         // Check for logged in users
         if (auth()->check()) {

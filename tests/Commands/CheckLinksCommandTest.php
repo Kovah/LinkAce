@@ -69,9 +69,7 @@ class CheckLinksCommandTest extends TestCase
         Notification::assertSentTo(
             $this->user,
             LinkCheckNotification::class,
-            function (LinkCheckNotification $notification, $channels) {
-                return count($notification->movedLinks) === 1;
-            }
+            fn(LinkCheckNotification $notification, $channels) => count($notification->movedLinks) === 1
         );
     }
 
@@ -90,9 +88,7 @@ class CheckLinksCommandTest extends TestCase
         Notification::assertSentTo(
             $this->user,
             LinkCheckNotification::class,
-            function (LinkCheckNotification $notification, $channels) {
-                return count($notification->brokenLinks) === 1;
-            }
+            fn(LinkCheckNotification $notification, $channels) => count($notification->brokenLinks) === 1
         );
     }
 

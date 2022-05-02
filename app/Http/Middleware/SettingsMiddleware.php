@@ -14,7 +14,7 @@ class SettingsMiddleware
      * @param Closure $next
      * @return mixed
      */
-    public function handle(Request $request, Closure $next)
+    public function handle(Request $request, Closure $next): mixed
     {
         if (!setupCompleted()) {
             return $next($request);

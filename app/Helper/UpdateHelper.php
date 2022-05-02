@@ -17,7 +17,7 @@ class UpdateHelper
      *
      * @return mixed
      */
-    public static function currentVersion()
+    public static function currentVersion(): mixed
     {
         return Cache::remember('current-version', 86400, function () {
             try {
@@ -39,7 +39,7 @@ class UpdateHelper
      * @param bool $cacheResult
      * @return bool|string
      */
-    public static function checkForUpdates(bool $cacheResult = false)
+    public static function checkForUpdates(bool $cacheResult = false): bool|string
     {
         return Cache::remember('updatecheck', $cacheResult ? 86400 : 0, function () {
             $currentVersion = self::currentVersion();

@@ -109,7 +109,7 @@ class LinkList extends Model
      */
     public function user(): BelongsTo
     {
-        return $this->belongsTo('App\Models\User', 'user_id');
+        return $this->belongsTo(User::class, 'user_id');
     }
 
     /**
@@ -117,7 +117,7 @@ class LinkList extends Model
      */
     public function links(): BelongsToMany
     {
-        return $this->belongsToMany('App\Models\Link', 'link_lists', 'list_id', 'link_id');
+        return $this->belongsToMany(Link::class, 'link_lists', 'list_id', 'link_id');
     }
 
     /*

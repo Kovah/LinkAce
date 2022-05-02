@@ -10,7 +10,7 @@ class ConvertLinkPrivacySetting extends Migration
      *
      * @return void
      */
-    public function up()
+    public function up(): void
     {
         Setting::create([
             'user_id' => 1,
@@ -24,7 +24,7 @@ class ConvertLinkPrivacySetting extends Migration
      *
      * @return void
      */
-    public function down()
+    public function down(): void
     {
         //
     }

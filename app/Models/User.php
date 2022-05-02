@@ -58,8 +58,6 @@ class User extends Authenticatable
             $this->load('rawSettings');
         }
 
-        return $this->rawSettings->mapWithKeys(function ($item) {
-            return [$item['key'] => $item['value']];
-        });
+        return $this->rawSettings->mapWithKeys(fn($item) => [$item['key'] => $item['value']]);
     }
 }

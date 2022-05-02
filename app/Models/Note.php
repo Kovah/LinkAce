@@ -73,7 +73,7 @@ class Note extends Model
      */
     public function user(): BelongsTo
     {
-        return $this->belongsTo('App\Models\User', 'user_id');
+        return $this->belongsTo(User::class, 'user_id');
     }
 
     /**
@@ -81,7 +81,7 @@ class Note extends Model
      */
     public function link(): BelongsTo
     {
-        return $this->belongsTo('App\Models\Link', 'link_id');
+        return $this->belongsTo(Link::class, 'link_id');
     }
 
     /*

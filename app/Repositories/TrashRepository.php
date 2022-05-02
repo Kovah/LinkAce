@@ -59,22 +59,13 @@ class TrashRepository
      */
     public static function restore(string $model, int $id): bool
     {
-        switch ($model) {
-            case 'link':
-                $entry = Link::withTrashed()->findOrFail($id);
-                break;
-            case 'list':
-                $entry = LinkList::withTrashed()->findOrFail($id);
-                break;
-            case 'tag':
-                $entry = Tag::withTrashed()->findOrFail($id);
-                break;
-            case 'note':
-                $entry = Note::withTrashed()->findOrFail($id);
-                break;
-            default:
-                $entry = null;
-        }
+        $entry = match ($model) {
+            'link' => Link::withTrashed()->findOrFail($id),
+            'list' => LinkList::withTrashed()->findOrFail($id),
+            'tag' => Tag::withTrashed()->findOrFail($id),
+            'note' => Note::withTrashed()->findOrFail($id),
+            default => null,
+        };
 
         $entry->restore();
 

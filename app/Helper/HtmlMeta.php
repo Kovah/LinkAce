@@ -62,10 +62,9 @@ class HtmlMeta
      */
     protected function buildLinkMeta(): array
     {
-        $this->meta['description'] = $this->meta['description']
-            ?? $this->meta['og:description']
-            ?? $this->meta['twitter:description']
-            ?? null;
+        $this->meta['description'] ??= $this->meta['og:description']
+        ?? $this->meta['twitter:description']
+        ?? null;
 
         return [
             'success' => true,

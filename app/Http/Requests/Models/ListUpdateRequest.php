@@ -47,9 +47,7 @@ class ListUpdateRequest extends FormRequest
         if ($this->requireUniqueName) {
             $rules['name'] = [
                 'required',
-                Rule::unique('lists')->where(function ($query) {
-                    return $query->where('user_id', auth()->id());
-                }),
+                Rule::unique('lists')->where(fn($query) => $query->where('user_id', auth()->id())),
             ];
         }
 

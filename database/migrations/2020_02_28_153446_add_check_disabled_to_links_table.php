@@ -11,7 +11,7 @@ class AddCheckDisabledToLinksTable extends Migration
      *
      * @return void
      */
-    public function up()
+    public function up(): void
     {
         Schema::table('links', function (Blueprint $table) {
             $table->boolean('check_disabled')->default(false)->after('status');
@@ -23,7 +23,7 @@ class AddCheckDisabledToLinksTable extends Migration
      *
      * @return void
      */
-    public function down()
+    public function down(): void
     {
         Schema::table('links', function (Blueprint $table) {
             $table->dropColumn(['check_disabled']);

@@ -13,7 +13,7 @@ class MoveCategoryToListTable extends Migration
      *
      * @return void
      */
-    public function up()
+    public function up(): void
     {
         // First, move child categories to list titles
         DB::table('categories')->whereNotNull('parent_category')->get()->each(function ($item) {
@@ -54,7 +54,7 @@ class MoveCategoryToListTable extends Migration
      *
      * @return void
      */
-    public function down()
+    public function down(): void
     {
         Schema::table('lists', function (Blueprint $table) {
             $table->rename('categories');

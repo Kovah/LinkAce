@@ -35,12 +35,8 @@ use Venturecraft\Revisionable\Revision;
  */
 class HistoryEntry extends Component
 {
-    /** @var Revision */
-    private $entry;
-
-    public function __construct(Revision $entry)
+    public function __construct(private Revision $entry)
     {
-        $this->entry = $entry;
     }
 
     public function render()

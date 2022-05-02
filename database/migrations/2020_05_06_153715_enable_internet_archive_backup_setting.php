@@ -10,7 +10,7 @@ class EnableInternetArchiveBackupSetting extends Migration
      *
      * @return void
      */
-    public function up()
+    public function up(): void
     {
         Setting::create([
             'user_id' => 1,
@@ -30,7 +30,7 @@ class EnableInternetArchiveBackupSetting extends Migration
      *
      * @return void
      */
-    public function down()
+    public function down(): void
     {
         Setting::where('key', 'archive_backups_enabled')->delete();
         Setting::where('key', 'archive_private_backups_enabled')->delete();

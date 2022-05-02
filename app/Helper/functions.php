@@ -30,7 +30,7 @@ function setupCompleted()
  * @param string $key
  * @return mixed
  */
-function usersettings(string $key = '')
+function usersettings(string $key = ''): mixed
 {
     if (!auth()->user()) {
         return null;
@@ -51,9 +51,7 @@ function usersettings(string $key = '')
  */
 function systemsettings(string $key = '')
 {
-    $settings = Cache::rememberForever('systemsettings', function () {
-        return Setting::systemOnly()->get()->pluck('value', 'key');
-    });
+    $settings = Cache::rememberForever('systemsettings', fn() => Setting::systemOnly()->get()->pluck('value', 'key'));
 
     if ($key === '') {
         return $settings;
@@ -95,7 +93,7 @@ function formatDateTime(Carbon $date, bool $use_relational = false): string
  *
  * @return mixed
  */
-function getPaginationLimit()
+function getPaginationLimit(): mixed
 {
     if (request()->has('per_page') && (int)request()->get('per_page') >= 0) {
         return (int)request()->get('per_page') > 0 ? (int)request()->get('per_page') : 999999999;
@@ -167,7 +165,7 @@ function tableSorter(string $label, string $route, string $type, string $orderBy
 }
 
 /**
- * Get the Wayback Machine link for an URL
+ * Get the Wayback Machine link for a URL
  *
  * @param string|Link $link
  * @return null|string

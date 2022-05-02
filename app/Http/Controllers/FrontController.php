@@ -11,7 +11,7 @@ class FrontController extends Controller
      * The front controller checks if the user is authenticated and the guest
      * access is enabled, and redirects the request accordingly.
      *
-     * @return RedirectResponse|View
+     * @return RedirectResponse
      */
     public function __invoke()
     {

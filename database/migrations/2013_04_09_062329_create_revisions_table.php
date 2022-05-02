@@ -9,7 +9,7 @@ class CreateRevisionsTable extends Migration
      *
      * @return void
      */
-    public function up()
+    public function up(): void
     {
         Schema::create('revisions', function ($table) {
             $table->increments('id');
@@ -30,7 +30,7 @@ class CreateRevisionsTable extends Migration
      *
      * @return void
      */
-    public function down()
+    public function down(): void
     {
         Schema::drop('revisions');
     }

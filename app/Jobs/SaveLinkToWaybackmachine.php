@@ -14,17 +14,13 @@ class SaveLinkToWaybackmachine implements ShouldQueue
 {
     use Dispatchable, InteractsWithQueue, Queueable, SerializesModels;
 
-    /** @var Link */
-    protected $link;
-
     /**
      * Create a new job instance.
      *
      * @param Link $link
      */
-    public function __construct(Link $link)
+    public function __construct(protected Link $link)
     {
-        $this->link = $link;
     }
 
     /**

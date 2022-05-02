@@ -41,9 +41,7 @@ class TagUpdateRequest extends FormRequest
         if ($this->requireUniqueName) {
             $rules['name'] = [
                 'required',
-                Rule::unique('tags')->where(function ($query) {
-                    return $query->where('user_id', auth()->id());
-                }),
+                Rule::unique('tags')->where(fn($query) => $query->where('user_id', auth()->id())),
             ];
         }
 

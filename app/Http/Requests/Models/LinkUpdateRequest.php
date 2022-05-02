@@ -46,9 +46,7 @@ class LinkUpdateRequest extends FormRequest
         if ($this->requireUniqueUrl) {
             $rules['url'] = [
                 'required',
-                Rule::unique('links')->where(function ($query) {
-                    return $query->where('user_id', auth()->id());
-                }),
+                Rule::unique('links')->where(fn($query) => $query->where('user_id', auth()->id())),
             ];
         }
 

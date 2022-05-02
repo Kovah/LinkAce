@@ -34,12 +34,10 @@ class FetchController extends Controller
 
         if (!$tags->isEmpty()) {
             // Properly format the results to be used by Selectize
-            $tags = $tags->map(function ($item) {
-                return [
-                    'value' => $item->name,
-                    'text' => $item->name,
-                ];
-            });
+            $tags = $tags->map(fn($item) => [
+                'value' => $item->name,
+                'text' => $item->name,
+            ]);
         }
 
         return response()->json($tags);
@@ -66,12 +64,10 @@ class FetchController extends Controller
 
         if (!$tags->isEmpty()) {
             // Properly format the results to be used by Selectize
-            $tags = $tags->map(function ($item) {
-                return [
-                    'value' => $item->name,
-                    'text' => $item->name,
-                ];
-            });
+            $tags = $tags->map(fn($item) => [
+                'value' => $item->name,
+                'text' => $item->name,
+            ]);
         }
 
         return response()->json($tags);

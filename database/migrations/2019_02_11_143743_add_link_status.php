@@ -11,7 +11,7 @@ class AddLinkStatus extends Migration
      *
      * @return void
      */
-    public function up()
+    public function up(): void
     {
         Schema::table('links', function (Blueprint $table) {
             $table->integer('status')->default(1)->after('is_private');
@@ -23,7 +23,7 @@ class AddLinkStatus extends Migration
      *
      * @return void
      */
-    public function down()
+    public function down(): void
     {
         Schema::table('links', function (Blueprint $table) {
             $table->dropColumn('status');

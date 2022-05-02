@@ -11,7 +11,7 @@ class CreateTaxonomyTables extends Migration
      *
      * @return void
      */
-    public function up()
+    public function up(): void
     {
         // Tags
         Schema::create('tags', function (Blueprint $table) {
@@ -48,7 +48,7 @@ class CreateTaxonomyTables extends Migration
      *
      * @return void
      */
-    public function down()
+    public function down(): void
     {
         Schema::dropIfExists('tags');
         Schema::dropIfExists('link_tags');

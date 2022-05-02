@@ -11,7 +11,7 @@ class CreateJobsTable extends Migration
      *
      * @return void
      */
-    public function up()
+    public function up(): void
     {
         Schema::create('jobs', function (Blueprint $table) {
             $table->bigIncrements('id');
@@ -29,7 +29,7 @@ class CreateJobsTable extends Migration
      *
      * @return void
      */
-    public function down()
+    public function down(): void
     {
         Schema::dropIfExists('jobs');
     }

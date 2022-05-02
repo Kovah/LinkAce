@@ -11,7 +11,7 @@ class AddThumbnailColumnToLinksTable extends Migration
      *
      * @return void
      */
-    public function up()
+    public function up(): void
     {
         Schema::table('links', function (Blueprint $table) {
             $table->string('thumbnail', 255)->nullable()->default(null)->after('icon');
@@ -23,7 +23,7 @@ class AddThumbnailColumnToLinksTable extends Migration
      *
      * @return void
      */
-    public function down()
+    public function down(): void
     {
         Schema::table('links', function (Blueprint $table) {
             $table->dropColumn('thumbnail');
