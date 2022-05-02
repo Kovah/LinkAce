@@ -132,7 +132,7 @@ class LinkRepository
      * @param Link         $link
      * @param array|string $tags
      */
-    protected static function updateTagsForLink(Link $link, $tags): void
+    protected static function updateTagsForLink(Link $link, array|string $tags): void
     {
         $oldTags = $link->tags->pluck('id');
 
@@ -160,7 +160,7 @@ class LinkRepository
      * @param Link         $link
      * @param array|string $lists
      */
-    protected static function updateListsForLink(Link $link, $lists): void
+    protected static function updateListsForLink(Link $link, array|string $lists): void
     {
         $oldLists = $link->lists->pluck('id');
 
@@ -226,7 +226,7 @@ class LinkRepository
      * @param mixed  $oldData
      * @param mixed  $newData
      */
-    protected static function createRelationshipRevision(Link $link, string $key, $oldData, $newData): void
+    protected static function createRelationshipRevision(Link $link, string $key, mixed $oldData, mixed $newData): void
     {
         $revision = [
             'revisionable_type' => $link->getMorphClass(),

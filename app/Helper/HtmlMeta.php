@@ -3,22 +3,18 @@
 namespace App\Helper;
 
 use Illuminate\Support\Facades\Log;
+use JetBrains\PhpStorm\ArrayShape;
 use Kovah\HtmlMeta\Exceptions\InvalidUrlException;
 use Kovah\HtmlMeta\Exceptions\UnreachableUrlException;
 
 class HtmlMeta
 {
-    /** @var string */
-    protected $url;
-
-    /** @var array */
-    protected $fallback;
-
-    /** @var array */
-    protected $meta;
+    protected string $url;
+    protected array $fallback;
+    protected array $meta;
 
     /**
-     * Get the title and description of an URL.
+     * Get the title and description of a URL.
      *
      * Returned array:
      * array [
@@ -63,8 +59,8 @@ class HtmlMeta
     protected function buildLinkMeta(): array
     {
         $this->meta['description'] ??= $this->meta['og:description']
-        ?? $this->meta['twitter:description']
-        ?? null;
+            ?? $this->meta['twitter:description']
+            ?? null;
 
         return [
             'success' => true,
@@ -107,7 +103,7 @@ class HtmlMeta
         }
 
         /*
-         * Edge case of Youtube only (because of Youtube EU cookie consent)
+         * Edge case of YouTube only (because of YouTube EU cookie consent)
          * Formula based on https://stackoverflow.com/a/2068371, returns Youtube image url
          * https://img.youtube.com/vi/[video-id]/mqdefault.jpg
          */

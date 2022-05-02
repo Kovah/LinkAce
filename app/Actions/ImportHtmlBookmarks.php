@@ -12,8 +12,8 @@ use Shaarli\NetscapeBookmarkParser\NetscapeBookmarkParser;
 
 class ImportHtmlBookmarks
 {
-    protected $imported = 0;
-    protected $skipped = 0;
+    protected int $imported = 0;
+    protected int $skipped = 0;
 
     /**
      * Import all links from a given bookmarks file.
@@ -25,7 +25,7 @@ class ImportHtmlBookmarks
      */
     public function run(string $data, string $userId, bool $generateMeta = true): bool
     {
-        $parser = new NetscapeBookmarkParser(true, [], '0', storage_path('logs'));
+        $parser = new NetscapeBookmarkParser(logDir: storage_path('logs'));
 
         try {
             $links = $parser->parseString($data);

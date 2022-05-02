@@ -46,23 +46,23 @@ class HistoryEntry extends Component
         }
 
         $timestamp = formatDateTime($this->entry->created_at);
-        $fieldname = trans('link.' . $this->entry->fieldName());
+        $fieldName = trans('link.' . $this->entry->fieldName());
 
         [$oldValue, $newValue] = $this->processValues();
 
         if ($oldValue === null) {
             $change = trans('link.history_added', [
-                'fieldname' => $fieldname,
+                'fieldname' => $fieldName,
                 'newvalue' => htmlspecialchars($newValue),
             ]);
         } elseif ($newValue === null) {
             $change = trans('link.history_removed', [
-                'fieldname' => $fieldname,
+                'fieldname' => $fieldName,
                 'oldvalue' => htmlspecialchars($oldValue),
             ]);
         } else {
             $change = trans('link.history_changed', [
-                'fieldname' => $fieldname,
+                'fieldname' => $fieldName,
                 'oldvalue' => htmlspecialchars($oldValue),
                 'newvalue' => htmlspecialchars($newValue),
             ]);
@@ -110,7 +110,7 @@ class HistoryEntry extends Component
      *
      * @param $oldValue
      * @param $newValue
-     * @return null[]|string[]
+     * @return array
      */
     protected function processTagsField($oldValue, $newValue): array
     {

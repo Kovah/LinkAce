@@ -3,7 +3,6 @@
 namespace App\Models;
 
 use App\Scopes\OrderNameScope;
-use Illuminate\Support\Carbon;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
@@ -11,6 +10,7 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 use Illuminate\Database\Eloquent\SoftDeletes;
+use Illuminate\Support\Carbon;
 use Illuminate\Support\Str;
 
 /**
@@ -148,7 +148,7 @@ class LinkList extends Model
      *
      * @return Builder[]|Collection
      */
-    public static function getAllForCurrentUser()
+    public static function getAllForCurrentUser(): Collection|array
     {
         return self::byUser(auth()->id())
             ->oldest('name')
@@ -156,11 +156,13 @@ class LinkList extends Model
     }
 
     /**
-     * @param string|int $listId
+     * Check if the list name has changed
+     *
+     * @param int|string $listId
      * @param string     $newName
      * @return bool
      */
-    public static function nameHasChanged($listId, string $newName): bool
+    public static function nameHasChanged(int|string $listId, string $newName): bool
     {
         $oldName = self::find($listId)->name ?? null;
         return $oldName !== $newName;

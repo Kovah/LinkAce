@@ -3,7 +3,6 @@
 namespace App\Models;
 
 use App\Scopes\OrderNameScope;
-use Illuminate\Support\Carbon;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
@@ -11,6 +10,7 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 use Illuminate\Database\Eloquent\SoftDeletes;
+use Illuminate\Support\Carbon;
 
 /**
  * Class Tag
@@ -33,8 +33,6 @@ class Tag extends Model
 {
     use SoftDeletes;
     use HasFactory;
-
-    public $table = 'tags';
 
     public $fillable = [
         'user_id',
@@ -123,11 +121,13 @@ class Tag extends Model
      */
 
     /**
-     * @param string|int $tagId
+     * Check if the tag name has changed
+     *
+     * @param int|string $tagId
      * @param string     $newName
      * @return bool
      */
-    public static function nameHasChanged($tagId, string $newName): bool
+    public static function nameHasChanged(int|string $tagId, string $newName): bool
     {
         $oldName = self::find($tagId)->name ?? null;
         return $oldName !== $newName;

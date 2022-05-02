@@ -8,6 +8,8 @@ use Illuminate\Support\Carbon;
 use Illuminate\Support\Collection;
 use Illuminate\Support\Facades\Cache;
 use Illuminate\Support\Facades\Log;
+use Psr\Container\ContainerExceptionInterface;
+use Psr\Container\NotFoundExceptionInterface;
 
 /**
  * Check if the setup was completed.
@@ -47,7 +49,7 @@ function usersettings(string $key = ''): mixed
  * Retrieve system settings
  *
  * @param string $key
- * @return null|Collection|string
+ * @return Collection|null|string
  */
 function systemsettings(string $key = '')
 {
@@ -137,7 +139,7 @@ function getShareLinks(Link $link): string
     });
 }
 
-/*
+/**
  * Build sorting links for a table column
  */
 function tableSorter(string $label, string $route, string $type, string $orderBy, string $orderDir): string
@@ -170,7 +172,7 @@ function tableSorter(string $label, string $route, string $type, string $orderBy
  * @param string|Link $link
  * @return null|string
  */
-function waybackLink($link): ?string
+function waybackLink(string|Link $link): ?string
 {
     $link = $link->url ?? $link;
 

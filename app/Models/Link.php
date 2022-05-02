@@ -49,8 +49,6 @@ class Link extends Model
     use RevisionableTrait;
     use HasFactory;
 
-    public $table = 'links';
-
     public $fillable = [
         'user_id',
         'url',
@@ -80,8 +78,8 @@ class Link extends Model
     public const DISPLAY_LIST_DETAILED = 0;
 
     // Revisions settings
-    protected $revisionCleanup = true;
-    protected $historyLimit = 50;
+    protected bool $revisionCleanup = true;
+    protected int $historyLimit = 50;
     protected $dontKeepRevisionOf = ['icon'];
 
     public const REV_TAGS_NAME = 'revtags';

@@ -13,7 +13,7 @@ class CleanupLinkHistoriesCommand extends Command
     protected $description = 'Removes all but the last 5 entries in the link histories.
         {field : If provided, only history entries of that field are deleted}';
 
-    private $offset;
+    private int $offset;
 
     public function handle(): void
     {

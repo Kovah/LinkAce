@@ -6,9 +6,9 @@ use App\Models\Link;
 
 class Sharing
 {
-    public static $linkClasses = 'share-link btn btn-xs btn-light';
+    public static string $linkClasses = 'share-link btn btn-xs btn-light';
 
-    public static $placeholders = [
+    public static array $placeholders = [
         '#URL#',
         '#E-URL#',
         '#SUBJECT#',
@@ -48,17 +48,17 @@ class Sharing
     protected static function generateLinkData(Link $link): array
     {
         $subject = $link->title ?: trans(config('sharing.defaults.subject'));
-        $sharetext = trans(config('sharing.defaults.sharetext'));
+        $shareText = trans(config('sharing.defaults.sharetext'));
 
-        $sharetext = str_replace('#URL#', $link->url, $sharetext);
+        $shareText = str_replace('#URL#', $link->url, $shareText);
 
         return [
             $link->url, // URL
             self::encode($link->url), // endoced URL
             $subject, // subject
             self::encode($subject), // encoded subject
-            $sharetext, // sharetext
-            self::encode($sharetext), // encoded sharetext
+            $shareText, // sharetext
+            self::encode($shareText), // encoded sharetext
         ];
     }
 

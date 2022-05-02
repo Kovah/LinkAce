@@ -31,8 +31,6 @@ class Note extends Model
     use SoftDeletes;
     use HasFactory;
 
-    public $table = 'notes';
-
     public $fillable = [
         'user_id',
         'link_id',

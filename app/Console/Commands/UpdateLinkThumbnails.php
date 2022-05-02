@@ -14,7 +14,8 @@ class UpdateLinkThumbnails extends Command
 
     public function handle(): void
     {
-        $this->confirm('This command updates the thumbnail for all links with the status "ok". This can take a long time, depending on the amount of links you have saved. Do you want to proceed?');
+        $this->confirm('This command updates the thumbnail for all links with the status "ok". ' .
+            'This can take a long time, depending on the amount of links you have saved. Do you want to proceed?');
 
         $totalCount = Link::where('status', Link::STATUS_OK)->count();
         $processedLinks = 0;

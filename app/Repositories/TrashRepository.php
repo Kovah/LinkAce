@@ -67,7 +67,7 @@ class TrashRepository
             default => null,
         };
 
-        $entry->restore();
+        $entry?->restore();
 
         return true;
     }

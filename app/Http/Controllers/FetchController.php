@@ -21,7 +21,7 @@ class FetchController extends Controller
      */
     public function getTags(Request $request): JsonResponse
     {
-        $query = $request->input('query', false);
+        $query = $request->input('query');
 
         if (!$query) {
             return response()->json([]);
@@ -34,7 +34,7 @@ class FetchController extends Controller
 
         if (!$tags->isEmpty()) {
             // Properly format the results to be used by Selectize
-            $tags = $tags->map(fn($item) => [
+            $tags = $tags->map(fn(Tag $item) => [
                 'value' => $item->name,
                 'text' => $item->name,
             ]);
@@ -64,7 +64,7 @@ class FetchController extends Controller
 
         if (!$tags->isEmpty()) {
             // Properly format the results to be used by Selectize
-            $tags = $tags->map(fn($item) => [
+            $tags = $tags->map(fn(LinkList $item) => [
                 'value' => $item->name,
                 'text' => $item->name,
             ]);

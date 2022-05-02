@@ -24,7 +24,7 @@ class FeedController extends Controller
         return new Response(view('app.feed.links', [
             'meta' => $meta,
             'links' => $links,
-        ]), 200, ['Content-Type' => 'application/xml']);
+        ]), headers: ['Content-Type' => 'application/xml']);
     }
 
     public function lists(Request $request): Response
@@ -40,7 +40,7 @@ class FeedController extends Controller
         return new Response(view('app.feed.lists', [
             'meta' => $meta,
             'lists' => $lists,
-        ]), 200, ['Content-Type' => 'application/xml']);
+        ]), headers: ['Content-Type' => 'application/xml']);
     }
 
     public function listLinks(Request $request, LinkList $list): Response
@@ -56,7 +56,7 @@ class FeedController extends Controller
         return new Response(view('app.feed.links', [
             'meta' => $meta,
             'links' => $links,
-        ]), 200, ['Content-Type' => 'application/xml']);
+        ]), headers: ['Content-Type' => 'application/xml']);
     }
 
     public function tags(Request $request): Response
@@ -72,7 +72,7 @@ class FeedController extends Controller
         return new Response(view('app.feed.tags', [
             'meta' => $meta,
             'tags' => $tags,
-        ]), 200, ['Content-Type' => 'application/xml']);
+        ]), headers: ['Content-Type' => 'application/xml']);
     }
 
     public function tagLinks(Request $request, Tag $tag): Response
@@ -88,6 +88,6 @@ class FeedController extends Controller
         return new Response(view('app.feed.links', [
             'meta' => $meta,
             'links' => $links,
-        ]), 200, ['Content-Type' => 'application/xml']);
+        ]), headers: ['Content-Type' => 'application/xml']);
     }
 }

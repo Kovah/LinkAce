@@ -7,8 +7,7 @@ use Illuminate\Support\Facades\Log;
 
 class WaybackMachine
 {
-    /** @var string */
-    public static $baseUrl = 'https://web.archive.org';
+    public static string $baseUrl = 'https://web.archive.org';
 
     /**
      * Save an URL to the Wayback Machine
@@ -19,7 +18,7 @@ class WaybackMachine
     public static function saveToArchive(string $url): bool
     {
         if (!filter_var($url, FILTER_VALIDATE_URL)) {
-            // Abort if provided string is not an URL
+            // Abort if provided string is not a URL
             return false;
         }
 
@@ -51,7 +50,7 @@ class WaybackMachine
     public static function getArchiveLink(string $url): ?string
     {
         if (!filter_var($url, FILTER_VALIDATE_URL)) {
-            // Abort if provided string is not an URL
+            // Abort if provided string is not a URL
             return null;
         }
 

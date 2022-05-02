@@ -4,11 +4,11 @@ namespace App\Helper;
 
 class LinkIconMapper
 {
-    /** @var string Default icon as fallback if no specific icon was found */
-    public static $defaultIcon = 'link';
+    // Default icon as fallback if no specific icon was found
+    public static string $defaultIcon = 'link';
 
-    /** @var array Array holding the pattern => icon map, sorted alphabetically */
-    public static $iconMap = [
+    // Array holding the pattern => icon map, sorted alphabetically
+    public static array $iconMap = [
         '500px\.com' => 'brand.500px',
         'amazon\.([a-zA-Z]*(\.)?[a-zA-Z]*)' => 'brand.amazon',
         'itunes\.apple\.com\/app' => 'brand.app-store-ios',

@@ -17,35 +17,26 @@ class CheckLinksCommand extends Command
     protected $signature = 'links:check {--limit=} {--noWait}';
     protected $description = 'This command checks the current status of a chunk of links. It is intended to be run on a schedule.';
 
-    /** @var int $limit Check a maximum of 100 links at once */
-    public $limit = 100;
+    // Check a maximum of 100 links at once
+    public int $limit = 100;
 
-    /** @var int */
-    protected $offset;
+    protected int $offset;
 
-    /** @var int */
-    protected $total;
+    protected int $total;
 
-    /** @var int */
-    protected $checkedLinkCount;
+    protected int $checkedLinkCount;
 
-    /** @var string */
-    protected $cacheKeyOffset = 'command_links:check_offset';
+    protected string $cacheKeyOffset = 'command_links:check_offset';
 
-    /** @var string */
-    protected $cacheKeySkipTimestamp = 'command_links:check_skip_timestamp';
+    protected string $cacheKeySkipTimestamp = 'command_links:check_skip_timestamp';
 
-    /** @var string */
-    protected $cacheKeyCheckedCount = 'command_links:check_checked_count';
+    protected string $cacheKeyCheckedCount = 'command_links:check_checked_count';
 
-    /** @var array */
-    protected $movedLinks = [];
+    protected array $movedLinks = [];
 
-    /** @var array */
-    protected $brokenLinks = [];
+    protected array $brokenLinks = [];
 
-    /** @var array */
-    protected $validUrlSchemes = ['http', 'https'];
+    protected array $validUrlSchemes = ['http', 'https'];
 
     public function handle(): void
     {

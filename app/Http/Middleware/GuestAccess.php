@@ -16,7 +16,7 @@ class GuestAccess
      */
     public function handle(Request $request, Closure $next): mixed
     {
-        // Check for logged in users
+        // Check for logged-in users
         if (auth()->check()) {
             return redirect()->route('dashboard');
         }

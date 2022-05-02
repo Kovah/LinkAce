@@ -138,7 +138,7 @@ class DatabaseController extends Controller
             $present_tables = DB::connection('setup')
                 ->getDoctrineSchemaManager()
                 ->listTableNames();
-        } catch (PDOException $e) {
+        } catch (PDOException|\Doctrine\DBAL\Exception $e) {
             Log::error($e->getMessage());
             return false;
         }

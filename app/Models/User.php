@@ -7,6 +7,7 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
+use Illuminate\Support\Collection;
 use Laravel\Fortify\TwoFactorAuthenticatable;
 
 /**
@@ -52,7 +53,7 @@ class User extends Authenticatable
         return $this->hasMany(Setting::class, 'user_id', 'id');
     }
 
-    public function settings(): \Illuminate\Support\Collection
+    public function settings(): Collection
     {
         if ($this->rawSettings->isEmpty()) {
             $this->load('rawSettings');
