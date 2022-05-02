@@ -154,7 +154,8 @@ $btn-border-radius-xs: $border-radius-xs;
 $navbar-dark-color: rgba($white, .75);
 $navbar-dark-hover-color: rgba($white, 1);
 $navbar-dark-disabled-color: rgba($white, .4);
-$navbar-brand-font-size: $font-size-base * 1.7;
+$navbar-brand-font-size: $font-size-base * 1.6;
+$navbar-brand-padding-y: 0;
 
 // Badges
 $badge-font-weight: $font-weight-normal;

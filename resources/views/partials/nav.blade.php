@@ -1,9 +1,8 @@
 <nav class="navbar navbar-dark navbar-expand bg-primary shadow-sm d-none d-md-flex">
     <div class="container">
-        <a class="navbar-brand d-none d-md-inline-block" href="{{ route('dashboard') }}">
+        <a class="navbar-brand" href="{{ route('dashboard') }}">
             <x-icon.linkace/>
         </a>
-
         @auth
             <ul class="navbar-nav">
                 <li class="nav-item">

@@ -8,6 +8,11 @@
   justify-content: normal;
 }
 
+.navbar-brand {
+  display: flex;
+  align-items: center;
+}
+
 // Remove buplicate border from list groups inside cards
 .card .list-group-item:last-of-type {
   border: 0;

@@ -86,12 +86,14 @@ return [
 
     'available_locales' => [
         'en_US' => 'English',
-        'de_DE' => 'Deutsch',
-        'fr_FR' => 'Français',
-        'zh_CN' => '简体中文',
+
         'ca_ES' => 'Català',
+        'de_DE' => 'Deutsch',
         'es_ES' => 'Español',
+        'fr_FR' => 'Français',
         'hu_HU' => 'Magyar',
+        'no_NO' => 'Norsk',
+        'zh_CN' => '简体中文',
     ],
 
     /*
@@ -134,11 +136,11 @@ return [
     'guest_access' => env('GUEST_ACCESS', false),
 
     /**
-    |--------------------------------------------------------------------------
-    | Setup Completed Flag
-    |--------------------------------------------------------------------------
-    * @deprecated v1.10.0 Setting is no longer actively used and remains for proper migration to a database setting.
-    */
+     * |--------------------------------------------------------------------------
+     * | Setup Completed Flag
+     * |--------------------------------------------------------------------------
+     * @deprecated v1.10.0 Setting is no longer actively used and remains for proper migration to a database setting.
+     */
 
     'setup_completed' => env('SETUP_COMPLETED', false),
 
