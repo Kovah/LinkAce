@@ -30,12 +30,28 @@ class LinkStoreRequest extends FormRequest
                 'string',
                 Rule::unique('links')->where(fn($query) => $query->where('user_id', auth()->user()->id)),
             ],
-            'title' => 'nullable|string',
-            'description' => 'nullable|string',
-            'lists' => 'nullable',
-            'tags' => 'nullable',
-            'is_private' => 'sometimes|boolean',
-            'check_disabled' => 'sometimes|boolean',
+            'title' => [
+                'nullable',
+                'string',
+            ],
+            'description' => [
+                'nullable',
+                'string',
+            ],
+            'lists' => [
+                'nullable',
+            ],
+            'tags' => [
+                'nullable',
+            ],
+            'is_private' => [
+                'sometimes',
+                'boolean',
+            ],
+            'check_disabled' => [
+                'sometimes',
+                'boolean',
+            ],
         ];
     }
 }

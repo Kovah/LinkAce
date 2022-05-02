@@ -24,7 +24,11 @@ class DoImportRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'import-file' => 'required|file|mimes:html,htm',
+            'import-file' => [
+                'required',
+                'file',
+                'mimes:html,htm',
+            ],
         ];
     }
 }

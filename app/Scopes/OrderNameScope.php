@@ -17,6 +17,6 @@ class OrderNameScope implements Scope
      */
     public function apply(Builder $builder, Model $model): void
     {
-        $builder->orderBy('name', 'ASC');
+        $builder->oldest('name');
     }
 }

@@ -24,8 +24,13 @@ class NoteUpdateRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'note' => 'required',
-            'is_private' => 'sometimes|boolean',
+            'note' => [
+                'required',
+            ],
+            'is_private' => [
+                'sometimes',
+                'boolean',
+            ],
         ];
     }
 }

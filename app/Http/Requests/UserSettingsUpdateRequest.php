@@ -24,8 +24,12 @@ class UserSettingsUpdateRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'locale' => 'required',
-            'timezone' => 'required',
+            'locale' => [
+                'required',
+            ],
+            'timezone' => [
+                'required',
+            ],
         ];
     }
 }

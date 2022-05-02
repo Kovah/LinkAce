@@ -24,7 +24,10 @@ class LinkToggleCheckRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'toggle' => 'required|boolean',
+            'toggle' => [
+                'required',
+                'boolean',
+            ],
         ];
     }
 }

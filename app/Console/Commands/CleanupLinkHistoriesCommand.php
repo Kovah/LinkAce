@@ -44,7 +44,7 @@ class CleanupLinkHistoriesCommand extends Command
         $bar->start();
 
         Link::withTrashed()->has('revisionHistory')->each(function (Link $link) use ($bar) {
-            $historyEntries = $link->revisionHistory()->orderBy('created_at', 'desc')
+            $historyEntries = $link->revisionHistory()->latest()
                 ->skip($this->offset)->take(9999999)
                 ->pluck('id');
 

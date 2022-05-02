@@ -24,9 +24,16 @@ class NoteStoreRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'link_id' => 'required',
-            'note' => 'required',
-            'is_private' => 'sometimes|boolean',
+            'link_id' => [
+                'required',
+            ],
+            'note' => [
+                'required',
+            ],
+            'is_private' => [
+                'sometimes',
+                'boolean',
+            ],
         ];
     }
 }

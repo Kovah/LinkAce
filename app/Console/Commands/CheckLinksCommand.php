@@ -122,7 +122,7 @@ class CheckLinksCommand extends Command
 
         // Get a portion of the remaining links based on the limit
         return Link::where('check_disabled', false)
-            ->orderBy('id', 'ASC')
+            ->oldest('id')
             ->offset($this->offset)
             ->limit($this->limit)
             ->get();

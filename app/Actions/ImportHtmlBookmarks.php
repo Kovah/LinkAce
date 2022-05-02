@@ -6,7 +6,7 @@ use App\Helper\HtmlMeta;
 use App\Helper\LinkIconMapper;
 use App\Models\Link;
 use App\Models\Tag;
-use Carbon\Carbon;
+use Illuminate\Support\Carbon;
 use Illuminate\Support\Facades\Log;
 use Shaarli\NetscapeBookmarkParser\NetscapeBookmarkParser;
 

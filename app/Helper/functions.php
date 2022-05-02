@@ -4,7 +4,7 @@ use App\Helper\Sharing;
 use App\Helper\WaybackMachine;
 use App\Models\Link;
 use App\Models\Setting;
-use Carbon\Carbon;
+use Illuminate\Support\Carbon;
 use Illuminate\Support\Collection;
 use Illuminate\Support\Facades\Cache;
 use Illuminate\Support\Facades\Log;

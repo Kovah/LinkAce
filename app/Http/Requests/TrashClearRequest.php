@@ -24,7 +24,10 @@ class TrashClearRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'model' => 'required|in:links,lists,tags,notes',
+            'model' => [
+                'required',
+                'in:links,lists,tags,notes',
+            ],
         ];
     }
 }
