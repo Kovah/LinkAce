@@ -4,12 +4,12 @@ use App\Helper\Sharing;
 use App\Helper\WaybackMachine;
 use App\Models\Link;
 use App\Models\Setting;
+use Illuminate\Http\Client\PendingRequest;
 use Illuminate\Support\Carbon;
 use Illuminate\Support\Collection;
 use Illuminate\Support\Facades\Cache;
+use Illuminate\Support\Facades\Http;
 use Illuminate\Support\Facades\Log;
-use Psr\Container\ContainerExceptionInterface;
-use Psr\Container\NotFoundExceptionInterface;
 
 /**
  * Check if the setup was completed.
@@ -208,4 +208,21 @@ function escapeSearchQuery(string $query): string
         ['\\\\', '\\%', '\\_', '\\*'],
         $query
     );
+}
+
+/**
+ * Set up an HTTP request with a random user agent
+ *
+ * @param int $timeout
+ * @return PendingRequest
+ */
+function setupHttpRequest(int $timeout = 10): PendingRequest
+{
+    $request = Http::timeout($timeout);
+    if (config('html-meta.user_agents', false)) {
+        $agents = config('html-meta.user_agents');
+        $request->withHeaders(['User-Agent' => $agents[array_rand($agents)]]);
+    }
+
+    return $request;
 }

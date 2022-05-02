@@ -66,11 +66,7 @@ class UpdateHelper
      */
     protected static function getCurrentVersionFromAPI(): ?string
     {
-        $request = Http::timeout(5);
-        if (config('html-meta.user_agents', false)) {
-            $agents = config('html-meta.user_agents');
-            $request->withHeaders(['User-Agent' => $agents[array_rand($agents)]]);
-        }
+        $request = setupHttpRequest(5);
         $response = $request->get(self::RELEASE_API_URL);
 
         return $response->successful() ? $response->body() : null;

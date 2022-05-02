@@ -2,7 +2,6 @@
 
 namespace App\Helper;
 
-use Illuminate\Support\Facades\Http;
 use Illuminate\Support\Facades\Log;
 
 class WaybackMachine
@@ -24,11 +23,7 @@ class WaybackMachine
 
         $archiveUrl = self::$baseUrl . '/save/' . $url;
 
-        $request = Http::timeout(10);
-        if (config('html-meta.user_agents', false)) {
-            $agents = config('html-meta.user_agents');
-            $request->withHeaders(['User-Agent' => $agents[array_rand($agents)]]);
-        }
+        $request = setupHttpRequest();
         $response = $request->head($archiveUrl);
 
         try {

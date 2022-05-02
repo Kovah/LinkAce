@@ -126,11 +126,7 @@ class FetchController extends Controller
         ]);
 
         $url = $request->input('url');
-        $newRequest = Http::timeout(3);
-        if (config('html-meta.user_agents', false)) {
-            $agents = config('html-meta.user_agents');
-            $newRequest->withHeaders(['User-Agent' => $agents[array_rand($agents)]]);
-        }
+        $newRequest = setupHttpRequest(3);
         $response = $newRequest->get($url);
 
         if ($response->successful()) {

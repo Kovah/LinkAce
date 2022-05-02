@@ -136,11 +136,7 @@ class CheckLinksCommand extends Command
         }
 
         try {
-            $request = Http::timeout(20);
-            if (config('html-meta.user_agents', false)) {
-                $agents = config('html-meta.user_agents');
-                $request->withHeaders(['User-Agent' => $agents[array_rand($agents)]]);
-            }
+            $request = setupHttpRequest(20);
             $response = $request->head($link->url);
             $statusCode = $response->status();
         } catch (Exception $e) {
