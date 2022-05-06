@@ -71,7 +71,7 @@ class Tag extends Model
      */
     public function scopeByUser(Builder $query, int $user_id = null): Builder
     {
-        if(is_null($user_id) && auth()->check()) {
+        if (is_null($user_id) && auth()->check()) {
             $user_id = auth()->id();
         }
         return $query->where('user_id', $user_id);
