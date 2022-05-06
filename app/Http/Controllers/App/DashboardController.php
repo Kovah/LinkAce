@@ -18,22 +18,22 @@ class DashboardController extends Controller
      */
     public function index(): View
     {
-        $recentLinks = Link::byUser(auth()->user()->id)
+        $recentLinks = Link::byUser()
             ->latest()
             ->limit(5)
             ->get();
 
-        $recentTags = Tag::byUser(auth()->user()->id)
+        $recentTags = Tag::byUser()
             ->latest()
             ->limit(25)
             ->get();
 
-        $recentLists = LinkList::byUser(auth()->user()->id)
+        $recentLists = LinkList::byUser()
             ->latest()
             ->limit(15)
             ->get();
 
-        $brokenLinks = Link::byUser(auth()->user()->id)
+        $brokenLinks = Link::byUser()
             ->where('status', '>', 1)
             ->count();
 
