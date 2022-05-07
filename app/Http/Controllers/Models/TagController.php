@@ -28,7 +28,7 @@ class TagController extends Controller
         session()->put('tags.index.orderBy', $orderBy);
         session()->put('tags.index.orderDir', $orderDir);
 
-        $tags = Tag::byUser(auth()->id())
+        $tags = Tag::byUser()
             ->withCount('links')
             ->orderBy($orderBy, $orderDir);
 
@@ -88,7 +88,7 @@ class TagController extends Controller
      */
     public function show(Request $request, Tag $tag): View
     {
-        $links = $tag->links()->byUser(auth()->id())
+        $links = $tag->links()->byUser()
             ->orderBy(
                 $request->input('orderBy', 'created_at'),
                 $request->input('orderDir', 'desc')
