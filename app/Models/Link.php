@@ -10,34 +10,34 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 use Illuminate\Database\Eloquent\Relations\HasMany;
+use Illuminate\Database\Eloquent\Relations\MorphMany;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Support\Carbon;
 use Illuminate\Support\Str;
 use OwenIt\Auditing\Auditable as AuditableTrait;
 use OwenIt\Auditing\Contracts\Auditable;
-use Venturecraft\Revisionable\Revision;
 
 /**
  * Class Link
  *
  * @package App\Models
- * @property int                   $id
- * @property int                   $user_id
- * @property string                $url
- * @property string                $title
- * @property string|null           $description
- * @property string|null           $icon
- * @property boolean               $is_private
- * @property int                   $status
- * @property boolean               $check_disabled
- * @property Carbon|null           $created_at
- * @property Carbon|null           $updated_at
- * @property string|null           $deleted_at
- * @property Collection|Tag[]      $lists
- * @property Collection|Note[]     $notes
- * @property Collection|Revision[] $revisionHistory
- * @property Collection|Tag[]      $tags
- * @property User                  $user
+ * @property int               $id
+ * @property int               $user_id
+ * @property string            $url
+ * @property string            $title
+ * @property string|null       $description
+ * @property string|null       $icon
+ * @property boolean           $is_private
+ * @property int               $status
+ * @property boolean           $check_disabled
+ * @property Carbon            $created_at
+ * @property Carbon            $updated_at
+ * @property string|null       $deleted_at
+ * @property MorphMany         $audits
+ * @property BelongsToMany     $lists
+ * @property HasMany           $notes
+ * @property BelongsToMany     $tags
+ * @property BelongsTo         $user
  * @method static Builder|Link  byUser($user_id)
  * @method static Builder|Link  privateOnly()
  * @method static Builder|Link  publicOnly()
@@ -130,33 +130,21 @@ class Link extends Model implements Auditable
      | RELATIONSHIPS
      */
 
-    /**
-     * @return BelongsTo
-     */
     public function user(): BelongsTo
     {
         return $this->belongsTo(User::class, 'user_id');
     }
 
-    /**
-     * @return BelongsToMany
-     */
     public function lists(): BelongsToMany
     {
         return $this->belongsToMany(LinkList::class, 'link_lists', 'link_id', 'list_id');
     }
 
-    /**
-     * @return BelongsToMany
-     */
     public function tags(): BelongsToMany
     {
         return $this->belongsToMany(Tag::class, 'link_tags', 'link_id', 'tag_id');
     }
 
-    /**
-     * @return HasMany
-     */
     public function notes(): HasMany
     {
         return $this->hasMany(Note::class, 'link_id');
@@ -168,7 +156,7 @@ class Link extends Model implements Auditable
      */
 
     /**
-     * Get the formatted description of the link
+     * Get the Markdown formatted description of the link
      *
      * @return string
      */
@@ -209,11 +197,6 @@ class Link extends Model implements Auditable
         return Str::limit($this->title, $maxLength);
     }
 
-    /**
-     * Get the domain of the URL
-     *
-     * @return string
-     */
     public function domainOfURL(): string
     {
         $urlDetails = parse_url($this->url);
@@ -291,7 +274,7 @@ class Link extends Model implements Auditable
         return $output;
     }
 
-    /*
+    /**
      * Dispatch the SaveLinkToWaybackmachine job, if Internet Archive backups
      * are enabled.
      * If the link is private, private Internet Archive backups must be enabled
