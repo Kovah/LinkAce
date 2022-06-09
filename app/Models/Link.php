@@ -2,6 +2,10 @@
 
 namespace App\Models;
 
+use App\Audits\Modifiers\BooleanModifier;
+use App\Audits\Modifiers\LinkStatusModifier;
+use App\Audits\Modifiers\ListRelationModifier;
+use App\Audits\Modifiers\TagRelationModifier;
 use App\Jobs\SaveLinkToWaybackmachine;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Collection;
@@ -21,23 +25,23 @@ use OwenIt\Auditing\Contracts\Auditable;
  * Class Link
  *
  * @package App\Models
- * @property int               $id
- * @property int               $user_id
- * @property string            $url
- * @property string            $title
- * @property string|null       $description
- * @property string|null       $icon
- * @property boolean           $is_private
- * @property int               $status
- * @property boolean           $check_disabled
- * @property Carbon            $created_at
- * @property Carbon            $updated_at
- * @property string|null       $deleted_at
- * @property MorphMany         $audits
- * @property BelongsToMany     $lists
- * @property HasMany           $notes
- * @property BelongsToMany     $tags
- * @property BelongsTo         $user
+ * @property int           $id
+ * @property int           $user_id
+ * @property string        $url
+ * @property string        $title
+ * @property string|null   $description
+ * @property string|null   $icon
+ * @property boolean       $is_private
+ * @property int           $status
+ * @property boolean       $check_disabled
+ * @property Carbon        $created_at
+ * @property Carbon        $updated_at
+ * @property string|null   $deleted_at
+ * @property MorphMany     $audits
+ * @property BelongsToMany $lists
+ * @property HasMany       $notes
+ * @property BelongsToMany $tags
+ * @property BelongsTo     $user
  * @method static Builder|Link  byUser($user_id)
  * @method static Builder|Link  privateOnly()
  * @method static Builder|Link  publicOnly()
@@ -77,14 +81,21 @@ class Link extends Model implements Auditable
     public const DISPLAY_LIST_DETAILED = 0;
 
     // Audit settings
-    protected array $auditExclude = [
-        'icon',
-    ];
-
     public const AUDIT_RELATION_EVENT = 'relatedModels';
     public const AUDIT_TAGS_NAME = 'revtags';
     public const AUDIT_LISTS_NAME = 'revlists';
 
+    protected array $auditExclude = [
+        'icon',
+    ];
+
+    public $auditModifiers = [
+        'is_private' => BooleanModifier::class,
+        'check_disabled' => BooleanModifier::class,
+        'status' => LinkStatusModifier::class,
+        self::AUDIT_TAGS_NAME => TagRelationModifier::class,
+        self::AUDIT_LISTS_NAME => ListRelationModifier::class,
+    ];
 
     /*
      | ========================================================================

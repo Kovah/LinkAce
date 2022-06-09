@@ -38,6 +38,11 @@ return [
     'private' => 'Private',
     'is_private' => 'Is private',
 
+    'history' => 'History',
+    'history_added' => 'Added <code>:newvalue</code> to :fieldname.',
+    'history_changed' => 'Changed :fieldname from <code>:oldvalue</code> to <code>:newvalue</code>',
+    'history_removed' => 'Removed <code>:oldvalue</code> from :fieldname.',
+
     'yes' => 'Yes',
     'no' => 'No',
     'more' => 'More',

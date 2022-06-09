@@ -6,7 +6,7 @@ use App\Models\Link;
 use App\Models\LinkList;
 use App\Models\Tag;
 use App\Models\User;
-use App\View\Components\Links\HistoryEntry;
+use App\View\Components\History\LinkEntry;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Tests\TestCase;
 
@@ -34,7 +34,7 @@ class HistoryEntryTest extends TestCase
 
         $historyEntry = $link->audits()->first();
 
-        $output = (new HistoryEntry($historyEntry))->render();
+        $output = (new LinkEntry($historyEntry))->render();
 
         $this->assertStringContainsString('Added <code>Test Description</code> to Description', $output);
     }
@@ -50,7 +50,7 @@ class HistoryEntryTest extends TestCase
 
         $historyEntry = $link->audits()->first();
 
-        $output = (new HistoryEntry($historyEntry))->render();
+        $output = (new LinkEntry($historyEntry))->render();
 
         $this->assertStringContainsString(
             'Changed Description from <code>Test Description</code> to <code>New Description</code>',
@@ -69,7 +69,7 @@ class HistoryEntryTest extends TestCase
 
         $historyEntry = $link->audits()->first();
 
-        $output = (new HistoryEntry($historyEntry))->render();
+        $output = (new LinkEntry($historyEntry))->render();
 
         $this->assertStringContainsString('Removed <code>Test Description</code> from Description', $output);
     }
@@ -83,10 +83,10 @@ class HistoryEntryTest extends TestCase
 
         $historyEntries = $link->audits()->get();
 
-        $output = (new HistoryEntry($historyEntries[0]))->render();
+        $output = (new LinkEntry($historyEntries[0]))->render();
         $this->assertStringContainsString('Link was deleted', $output);
 
-        $output = (new HistoryEntry($historyEntries[1]))->render();
+        $output = (new LinkEntry($historyEntries[1]))->render();
         $this->assertStringContainsString('Link was restored', $output);
     }
 
@@ -107,7 +107,7 @@ class HistoryEntryTest extends TestCase
 
         $historyEntry = $link->audits()->first();
 
-        $output = (new HistoryEntry($historyEntry))->render();
+        $output = (new LinkEntry($historyEntry))->render();
 
         $this->assertStringContainsString('Added <code>newtag</code> to Tags', $output);
     }
@@ -132,7 +132,7 @@ class HistoryEntryTest extends TestCase
 
         $historyEntry = $link->audits()->first();
 
-        $output = (new HistoryEntry($historyEntry))->render();
+        $output = (new LinkEntry($historyEntry))->render();
 
         $this->assertStringContainsString(
             sprintf('Changed Tags from <code>%s</code> to <code>newtag</code>', $startTag->name),
@@ -160,7 +160,7 @@ class HistoryEntryTest extends TestCase
 
         $historyEntry = $link->audits()->first();
 
-        $output = (new HistoryEntry($historyEntry))->render();
+        $output = (new LinkEntry($historyEntry))->render();
 
         $this->assertStringContainsString(
             sprintf('Removed <code>%s</code> from Tags', $startTag->name),
@@ -185,7 +185,7 @@ class HistoryEntryTest extends TestCase
 
         $historyEntry = $link->audits()->first();
 
-        $output = (new HistoryEntry($historyEntry))->render();
+        $output = (new LinkEntry($historyEntry))->render();
 
         $this->assertStringContainsString('Added <code>Example List, New List</code> to Lists', $output);
     }
@@ -210,7 +210,7 @@ class HistoryEntryTest extends TestCase
 
         $historyEntry = $link->audits()->first();
 
-        $output = (new HistoryEntry($historyEntry))->render();
+        $output = (new LinkEntry($historyEntry))->render();
 
         $this->assertStringContainsString(
             sprintf('Changed Lists from <code>%s</code> to <code>Example List, New List</code>', $startList->name),
@@ -238,7 +238,7 @@ class HistoryEntryTest extends TestCase
 
         $historyEntry = $link->audits()->first();
 
-        $output = (new HistoryEntry($historyEntry))->render();
+        $output = (new LinkEntry($historyEntry))->render();
 
         $this->assertStringContainsString(
             sprintf('Removed <code>%s</code> from Lists', $startList->name),
@@ -256,7 +256,7 @@ class HistoryEntryTest extends TestCase
 
         $historyEntry = $link->audits()->first();
 
-        $output = (new HistoryEntry($historyEntry))->render();
+        $output = (new LinkEntry($historyEntry))->render();
 
         $this->assertStringContainsString(
             'Changed Private Status from <code>Yes</code> to <code>No</code>',

@@ -16,10 +16,6 @@ return [
 
     'private' => 'Private Link',
 
-    'history' => 'History',
-    'history_added' => 'Added <code>:newvalue</code> to :fieldname.',
-    'history_changed' => 'Changed :fieldname from <code>:oldvalue</code> to <code>:newvalue</code>',
-    'history_removed' => 'Removed <code>:oldvalue</code> from :fieldname.',
     'history_deleted' => 'Link was deleted',
     'history_restored' => 'Link was restored',
     'history_created' => 'Link was created',

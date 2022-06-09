@@ -1,10 +1,8 @@
 <?php
 
-namespace App\View\Components\Links;
+namespace App\View\Components\History;
 
 use App\Models\Link;
-use App\Models\LinkList;
-use App\Models\Tag;
 use Illuminate\View\Component;
 use OwenIt\Auditing\Models\Audit;
 
@@ -28,9 +26,9 @@ use OwenIt\Auditing\Models\Audit;
  * with these IDs are returned. There entries are then joined into a comma
  * separated string, ready to be displayed.
  *
- * @package App\View\Components\Links
+ * @package App\View\Components\History
  */
-class HistoryEntry extends Component
+class LinkEntry extends Component
 {
     public function __construct(private Audit $entry, private array $changes = [])
     {
@@ -50,7 +48,7 @@ class HistoryEntry extends Component
             }
         }
 
-        return view('components.links.history-entry', [
+        return view('components.history-entry', [
             'timestamp' => $timestamp,
             'changes' => $this->changes,
         ]);
@@ -62,17 +60,17 @@ class HistoryEntry extends Component
         [$oldValue, $newValue] = $this->processValues($field, $changeData);
 
         if ($oldValue === null) {
-            $change = trans('link.history_added', [
+            $change = trans('linkace.history_added', [
                 'fieldname' => $fieldName,
                 'newvalue' => htmlspecialchars($newValue),
             ]);
         } elseif ($newValue === null) {
-            $change = trans('link.history_removed', [
+            $change = trans('linkace.history_removed', [
                 'fieldname' => $fieldName,
                 'oldvalue' => htmlspecialchars($oldValue),
             ]);
         } else {
-            $change = trans('link.history_changed', [
+            $change = trans('linkace.history_changed', [
                 'fieldname' => $fieldName,
                 'oldvalue' => htmlspecialchars($oldValue),
                 'newvalue' => htmlspecialchars($newValue),
@@ -95,95 +93,15 @@ class HistoryEntry extends Component
         $oldValue = $changeData['old'] ?? null;
         $newValue = $changeData['new'] ?? null;
 
-        if ($field === Link::AUDIT_TAGS_NAME) {
-            return $this->processTagsField($oldValue, $newValue);
+        /** @var Link $model */
+        $model = app($this->entry->auditable_type);
+
+        if (isset($model->auditModifiers[$field])) {
+            $modifier = app($model->auditModifiers[$field]);
+            $oldValue = $modifier->modify($oldValue);
+            $newValue = $modifier->modify($newValue);
+            return [$oldValue, $newValue];
         }
-
-        if ($field === Link::AUDIT_LISTS_NAME) {
-            return $this->processListsField($oldValue, $newValue);
-        }
-
-        if ($field === 'is_private') {
-            return $this->processPrivateField($oldValue, $newValue);
-        }
-
-        if ($field === 'status') {
-            return $this->processStatusField($oldValue, $newValue);
-        }
-
-        return [$oldValue, $newValue];
-    }
-
-    /**
-     * Tags are queried from the database based on the given IDs and then joined
-     * into one comma separated string.
-     *
-     * @param $oldValue
-     * @param $newValue
-     * @return array
-     */
-    protected function processTagsField($oldValue, $newValue): array
-    {
-        $oldTags = $oldValue
-            ? Tag::whereIn('id', $oldValue)->pluck('name')->join(', ')
-            : null;
-
-        $newTags = $newValue
-            ? Tag::whereIn('id', $newValue)->pluck('name')->join(', ')
-            : null;
-
-        return [$oldTags, $newTags];
-    }
-
-    /**
-     * Lists are queried from the database based on the given IDs and then
-     * joined into one comma separated string.
-     *
-     * @param $oldValue
-     * @param $newValue
-     * @return array
-     */
-    protected function processListsField($oldValue, $newValue): array
-    {
-        $oldTags = $oldValue
-            ? LinkList::whereIn('id', $oldValue)->pluck('name')->join(', ')
-            : null;
-
-        $newTags = $newValue ?
-            LinkList::whereIn('id', $newValue)->pluck('name')->join(', ')
-            : null;
-
-        return [$oldTags, $newTags];
-    }
-
-    /**
-     * The Private field is a boolean field, thus needs to be formatted with
-     * yes and no values.
-     *
-     * @param $oldValue
-     * @param $newValue
-     * @return array
-     */
-    protected function processPrivateField($oldValue, $newValue): array
-    {
-        $oldValue = $oldValue ? trans('linkace.yes') : trans('linkace.no');
-        $newValue = $newValue ? trans('linkace.yes') : trans('linkace.no');
-
-        return [$oldValue, $newValue];
-    }
-
-    /**
-     * The Status field is a mapped constant field, thus needs to be formatted with
-     * the correct translated values.
-     *
-     * @param $oldValue
-     * @param $newValue
-     * @return array
-     */
-    protected function processStatusField($oldValue, $newValue): array
-    {
-        $oldValue = trans('link.stati.' . $oldValue);
-        $newValue = trans('link.stati.' . $newValue);
 
         return [$oldValue, $newValue];
     }
