@@ -89,7 +89,7 @@ class Link extends Model implements Auditable
         'icon',
     ];
 
-    public $auditModifiers = [
+    public array $auditModifiers = [
         'is_private' => BooleanModifier::class,
         'check_disabled' => BooleanModifier::class,
         'status' => LinkStatusModifier::class,

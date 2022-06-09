@@ -97,6 +97,7 @@ class TagController extends Controller
 
         return view('models.tags.show', [
             'tag' => $tag,
+            'history' => $tag->audits()->latest()->get(),
             'tagLinks' => $links,
             'route' => $request->getBaseUrl(),
             'orderBy' => $request->input('orderBy', 'created_at'),

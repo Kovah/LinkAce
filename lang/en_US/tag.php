@@ -16,6 +16,11 @@ return [
     'private' => 'Private Tag',
 
     'name' => 'Tag Name',
+    'is_private' => 'Private Status',
+
+    'history_deleted' => 'Tag was deleted',
+    'history_restored' => 'Tag was restored',
+    'history_created' => 'Tag was created',
 
     'author' => 'by :user',
 

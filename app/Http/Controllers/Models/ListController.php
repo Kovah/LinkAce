@@ -96,6 +96,7 @@ class ListController extends Controller
 
         return view('models.lists.show', [
             'list' => $list,
+            'history' => $list->audits()->latest()->get(),
             'listLinks' => $links,
             'route' => $request->getBaseUrl(),
             'orderBy' => $request->input('orderBy', 'created_at'),

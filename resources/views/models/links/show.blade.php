@@ -168,7 +168,7 @@
     <div class="link-history mt-5">
         <h3 class="h6 mb-2">@lang('link.history')</h3>
 
-        <div class="small text-muted">
+        <div class="history small text-muted">
             @foreach($history as $entry)
                 @if($loop->index === 5 && $loop->count >= 10)
                     <a data-bs-toggle="collapse" href="#link-history" role="button" class="d-inline-block mb-1"

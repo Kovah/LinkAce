@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use App\Audits\Modifiers\BooleanModifier;
 use App\Scopes\OrderNameScope;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Collection;
@@ -11,6 +12,8 @@ use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Support\Carbon;
+use OwenIt\Auditing\Auditable as AuditableTrait;
+use OwenIt\Auditing\Contracts\Auditable;
 
 /**
  * Class Tag
@@ -29,8 +32,9 @@ use Illuminate\Support\Carbon;
  * @method static Builder|Tag publicOnly()
  * @method static Builder|Tag privateOnly()
  */
-class Tag extends Model
+class Tag extends Model implements Auditable
 {
+    use AuditableTrait;
     use SoftDeletes;
     use HasFactory;
 
@@ -43,6 +47,11 @@ class Tag extends Model
     protected $casts = [
         'user_id' => 'integer',
         'is_private' => 'boolean',
+    ];
+
+    // Audit settings
+    public array $auditModifiers = [
+        'is_private' => BooleanModifier::class,
     ];
 
     /**

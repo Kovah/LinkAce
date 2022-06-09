@@ -1,6 +1,6 @@
 <?php
 
-namespace Tests\Components;
+namespace Tests\Components\History;
 
 use App\Models\Link;
 use App\Models\LinkList;
@@ -10,18 +10,16 @@ use App\View\Components\History\LinkEntry;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Tests\TestCase;
 
-class HistoryEntryTest extends TestCase
+class LinkEntryTest extends TestCase
 {
     use RefreshDatabase;
-
-    private User $user;
 
     protected function setUp(): void
     {
         parent::setUp();
 
-        $this->user = User::factory()->create();
-        $this->actingAs($this->user);
+        $user = User::factory()->create();
+        $this->actingAs($user);
     }
 
     public function testAddedChange(): void

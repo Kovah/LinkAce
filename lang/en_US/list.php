@@ -17,6 +17,11 @@ return [
 
     'name' => 'List Name',
     'description' => 'List Description',
+    'is_private' => 'Private Status',
+
+    'history_deleted' => 'List was deleted',
+    'history_restored' => 'List was restored',
+    'history_created' => 'List was created',
 
     'author' => 'by :user',
 
