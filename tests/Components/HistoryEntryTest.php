@@ -14,8 +14,7 @@ class HistoryEntryTest extends TestCase
 {
     use RefreshDatabase;
 
-    /** @var User */
-    private $user;
+    private User $user;
 
     protected function setUp(): void
     {
@@ -31,10 +30,9 @@ class HistoryEntryTest extends TestCase
             'description' => null,
         ]);
 
-        $link->description = 'Test Description';
-        $link->save();
+        $link->update(['description' => 'Test Description']);
 
-        $historyEntry = $link->revisionHistory()->first();
+        $historyEntry = $link->audits()->first();
 
         $output = (new HistoryEntry($historyEntry))->render();
 
@@ -50,7 +48,7 @@ class HistoryEntryTest extends TestCase
         $link->description = 'New Description';
         $link->save();
 
-        $historyEntry = $link->revisionHistory()->first();
+        $historyEntry = $link->audits()->first();
 
         $output = (new HistoryEntry($historyEntry))->render();
 
@@ -69,7 +67,7 @@ class HistoryEntryTest extends TestCase
         $link->description = null;
         $link->save();
 
-        $historyEntry = $link->revisionHistory()->first();
+        $historyEntry = $link->audits()->first();
 
         $output = (new HistoryEntry($historyEntry))->render();
 
@@ -83,7 +81,7 @@ class HistoryEntryTest extends TestCase
         $link->delete();
         $link->restore();
 
-        $historyEntries = $link->revisionHistory;
+        $historyEntries = $link->audits()->get();
 
         $output = (new HistoryEntry($historyEntries[0]))->render();
         $this->assertStringContainsString('Link was deleted', $output);
@@ -107,7 +105,7 @@ class HistoryEntryTest extends TestCase
             'is_private' => $link->is_private,
         ]);
 
-        $historyEntry = $link->revisionHistory()->latest()->first();
+        $historyEntry = $link->audits()->first();
 
         $output = (new HistoryEntry($historyEntry))->render();
 
@@ -132,7 +130,7 @@ class HistoryEntryTest extends TestCase
             'is_private' => $link->is_private,
         ]);
 
-        $historyEntry = $link->revisionHistory()->latest()->first();
+        $historyEntry = $link->audits()->first();
 
         $output = (new HistoryEntry($historyEntry))->render();
 
@@ -160,7 +158,7 @@ class HistoryEntryTest extends TestCase
             'is_private' => $link->is_private,
         ]);
 
-        $historyEntry = $link->revisionHistory()->latest()->first();
+        $historyEntry = $link->audits()->first();
 
         $output = (new HistoryEntry($historyEntry))->render();
 
@@ -185,7 +183,7 @@ class HistoryEntryTest extends TestCase
             'is_private' => $link->is_private,
         ]);
 
-        $historyEntry = $link->revisionHistory()->latest()->first();
+        $historyEntry = $link->audits()->first();
 
         $output = (new HistoryEntry($historyEntry))->render();
 
@@ -210,7 +208,7 @@ class HistoryEntryTest extends TestCase
             'is_private' => $link->is_private,
         ]);
 
-        $historyEntry = $link->revisionHistory()->latest()->first();
+        $historyEntry = $link->audits()->first();
 
         $output = (new HistoryEntry($historyEntry))->render();
 
@@ -238,7 +236,7 @@ class HistoryEntryTest extends TestCase
             'is_private' => $link->is_private,
         ]);
 
-        $historyEntry = $link->revisionHistory()->latest()->first();
+        $historyEntry = $link->audits()->first();
 
         $output = (new HistoryEntry($historyEntry))->render();
 
@@ -251,13 +249,12 @@ class HistoryEntryTest extends TestCase
     public function testIsPrivateChange(): void
     {
         $link = Link::factory()->create([
-            'is_private' => '1',
+            'is_private' => true,
         ]);
 
-        $link->is_private = '0';
-        $link->save();
+        $link->update(['is_private' => false]);
 
-        $historyEntry = $link->revisionHistory()->first();
+        $historyEntry = $link->audits()->first();
 
         $output = (new HistoryEntry($historyEntry))->render();
 

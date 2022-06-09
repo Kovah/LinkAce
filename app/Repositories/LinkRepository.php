@@ -7,12 +7,11 @@ use App\Helper\LinkIconMapper;
 use App\Models\Link;
 use App\Models\LinkList;
 use App\Models\Tag;
-use DateTime;
 use Exception;
 use Illuminate\Support\Collection;
-use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Event;
 use Illuminate\Support\Facades\Log;
-use Venturecraft\Revisionable\Revisionable;
+use OwenIt\Auditing\Events\AuditCustom;
 
 class LinkRepository
 {
@@ -96,8 +95,8 @@ class LinkRepository
             if ($link->tags()->count() > 0) {
                 self::createRelationshipRevision(
                     $link,
-                    Link::REV_TAGS_NAME,
-                    $link->tags->pluck('id')->join(','),
+                    Link::AUDIT_TAGS_NAME,
+                    $link->tags->pluck('id')->toArray(),
                     null
                 );
             }
@@ -112,8 +111,8 @@ class LinkRepository
             if ($link->lists()->count() > 0) {
                 self::createRelationshipRevision(
                     $link,
-                    Link::REV_LISTS_NAME,
-                    $link->lists->pluck('id')->join(','),
+                    Link::AUDIT_LISTS_NAME,
+                    $link->lists->pluck('id')->toArray(),
                     null
                 );
             }
@@ -144,12 +143,12 @@ class LinkRepository
 
         $link->tags()->sync($newTags);
 
-        if ($oldTags->isEmpty() || $oldTags->diff($newTags)->isNotEmpty()) {
+        if ($oldTags->isEmpty() || $oldTags->diff($newTags)->isNotEmpty() || $newTags->diff($oldTags)->isNotEmpty()) {
             self::createRelationshipRevision(
                 $link,
-                Link::REV_TAGS_NAME,
-                $oldTags->join(','),
-                $newTags->join(',')
+                Link::AUDIT_TAGS_NAME,
+                $oldTags->toArray(),
+                $newTags->toArray()
             );
         }
     }
@@ -172,12 +171,13 @@ class LinkRepository
 
         $link->lists()->sync($newLists);
 
-        if ($oldLists->isEmpty() || $oldLists->diff($newLists)->isNotEmpty()) {
+        if ($oldLists->isEmpty()
+            || $oldLists->diff($newLists)->isNotEmpty() || $newLists->diff($oldLists)->isNotEmpty()) {
             self::createRelationshipRevision(
                 $link,
-                Link::REV_LISTS_NAME,
-                $oldLists->join(','),
-                $newLists->join(',')
+                Link::AUDIT_LISTS_NAME,
+                $oldLists->toArray(),
+                $newLists->toArray()
             );
         }
     }
@@ -221,26 +221,26 @@ class LinkRepository
      * have changed. Recorded are the IDs instead of names to make sure changes
      * of the corresponding models are taken into account.
      *
-     * @param Link   $link
-     * @param string $key
-     * @param mixed  $oldData
-     * @param mixed  $newData
+     * @param Link       $link
+     * @param string     $key
+     * @param array|null $oldData
+     * @param array|null $newData
      */
-    protected static function createRelationshipRevision(Link $link, string $key, mixed $oldData, mixed $newData): void
-    {
-        $revision = [
-            'revisionable_type' => $link->getMorphClass(),
-            'revisionable_id' => $link->getKey(),
-            'key' => $key,
-            'old_value' => $oldData,
-            'new_value' => $newData,
-            'user_id' => $link->getSystemUserId(),
-            'created_at' => new DateTime(),
-            'updated_at' => new DateTime(),
+    protected static function createRelationshipRevision(
+        Link $link,
+        string $key,
+        ?array $oldData,
+        ?array $newData
+    ): void {
+        $link->auditEvent = Link::AUDIT_RELATION_EVENT;
+        $link->isCustomEvent = true;
+        $link->auditCustomOld = [
+            $key => $oldData,
+        ];
+        $link->auditCustomNew = [
+            $key => $newData,
         ];
 
-        $revisionable = Revisionable::newModel();
-
-        DB::table($revisionable->getTable())->insert($revision);
+        Event::dispatch(AuditCustom::class, [$link]);
     }
 }

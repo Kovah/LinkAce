@@ -16,14 +16,14 @@
     "laravel/sanctum": "^2.15",
     "league/csv": "^9.6",
     "league/flysystem-aws-s3-v3": "^3.0.13",
+    "owen-it/laravel-auditing": "^13.0",
     "predis/predis": "^1.1",
     "rap2hpoutre/laravel-log-viewer": "^2.2",
     "sentry/sentry-laravel": "^2.3",
     "shaarli/netscape-bookmark-parser": "^v3.2",
     "spatie/laravel-backup": "^8.1.2",
     "symfony/http-client": "^6.0",
-    "symfony/mailgun-mailer": "^6.0",
-    "venturecraft/revisionable": "^1.34"
+    "symfony/mailgun-mailer": "^6.0"
   },
   "require-dev": {
     "barryvdh/laravel-debugbar": "^3.2",

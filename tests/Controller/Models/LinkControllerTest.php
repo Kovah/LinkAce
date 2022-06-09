@@ -300,11 +300,11 @@ class LinkControllerTest extends TestCase
         $this->assertEquals('New Title', $updatedLink->title);
         $this->assertEquals('New Description', $updatedLink->description);
 
-        $historyEntry = $updatedLink->revisionHistory()->first();
+        $historyData = $updatedLink->audits()->first()->getModified();
 
-        $this->assertEquals('url', $historyEntry->fieldName());
-        $this->assertEquals($baseLink->url, $historyEntry->oldValue());
-        $this->assertEquals($updatedLink->url, $historyEntry->newValue());
+        $this->assertTrue(array_key_exists('url', $historyData));
+        $this->assertEquals($baseLink->url, $historyData['url']['old']);
+        $this->assertEquals($updatedLink->url, $historyData['url']['new']);
     }
 
     public function testMissingModelErrorForUpdate(): void

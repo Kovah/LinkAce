@@ -5,19 +5,16 @@ namespace App\View\Components\Links;
 use App\Models\Link;
 use App\Models\LinkList;
 use App\Models\Tag;
-use Illuminate\Contracts\Foundation\Application;
-use Illuminate\Contracts\View\Factory;
 use Illuminate\View\Component;
-use Illuminate\View\View;
-use Venturecraft\Revisionable\Revision;
+use OwenIt\Auditing\Models\Audit;
 
 /**
  * Class HistoryEntry
  *
  * This view component renders a changeset from a history entry as complex
  * logic is needed to properly display all different cases.
- * First, if the deleted_at field is detected, the component will output
- * either a "was deleted" or "was restored" changeset.
+ * First it is checked if the entity was deleted or restored, which will shorten
+ * the processing. Otherwise, the modified fields are processed.
  *
  * For all other fields, the proper change is generated:
  * - If no old value is present, a field value was added.
@@ -35,20 +32,34 @@ use Venturecraft\Revisionable\Revision;
  */
 class HistoryEntry extends Component
 {
-    public function __construct(private Revision $entry)
+    public function __construct(private Audit $entry, private array $changes = [])
     {
     }
 
     public function render()
     {
-        if ($this->entry->fieldName() === 'deleted_at') {
-            return $this->processDeletedField();
+        $timestamp = formatDateTime($this->entry->created_at);
+
+        if ($this->entry->event === 'deleted') {
+            $this->changes[] = trans('link.history_deleted');
+        } elseif ($this->entry->event === 'restored') {
+            $this->changes[] = trans('link.history_restored');
+        } else {
+            foreach ($this->entry->getModified() as $field => $change) {
+                $this->processChange($field, $change);
+            }
         }
 
-        $timestamp = formatDateTime($this->entry->created_at);
-        $fieldName = trans('link.' . $this->entry->fieldName());
+        return view('components.links.history-entry', [
+            'timestamp' => $timestamp,
+            'changes' => $this->changes,
+        ]);
+    }
 
-        [$oldValue, $newValue] = $this->processValues();
+    protected function processChange(string $field, array $changeData): void
+    {
+        $fieldName = trans('link.' . $field);
+        [$oldValue, $newValue] = $this->processValues($field, $changeData);
 
         if ($oldValue === null) {
             $change = trans('link.history_added', [
@@ -68,40 +79,39 @@ class HistoryEntry extends Component
             ]);
         }
 
-        return view('components.links.history-entry', [
-            'timestamp' => $timestamp,
-            'change' => $change,
-        ]);
+        $this->changes[] = $change;
     }
 
     /**
      * Apply specialized methods for different fields to handle particular
      * formatting needs of these fields.
      *
+     * @param string $field
+     * @param array  $changeData
      * @return array
      */
-    protected function processValues(): array
+    protected function processValues(string $field, array $changeData): array
     {
-        $oldValue = $this->entry->oldValue();
-        $newValue = $this->entry->newValue();
+        $oldValue = $changeData['old'] ?? null;
+        $newValue = $changeData['new'] ?? null;
 
-        if ($this->entry->fieldName() === Link::REV_TAGS_NAME) {
+        if ($field === Link::AUDIT_TAGS_NAME) {
             return $this->processTagsField($oldValue, $newValue);
         }
 
-        if ($this->entry->fieldName() === Link::REV_LISTS_NAME) {
+        if ($field === Link::AUDIT_LISTS_NAME) {
             return $this->processListsField($oldValue, $newValue);
         }
 
-        if ($this->entry->fieldName() === 'is_private') {
+        if ($field === 'is_private') {
             return $this->processPrivateField($oldValue, $newValue);
         }
 
-        if ($this->entry->fieldName() === 'status') {
+        if ($field === 'status') {
             return $this->processStatusField($oldValue, $newValue);
         }
 
-        return [$this->entry->oldValue(), $this->entry->newValue()];
+        return [$oldValue, $newValue];
     }
 
     /**
@@ -115,13 +125,11 @@ class HistoryEntry extends Component
     protected function processTagsField($oldValue, $newValue): array
     {
         $oldTags = $oldValue
-            ? Tag::whereIn('id', explode(',', $oldValue))
-                ->pluck('name')->join(', ')
+            ? Tag::whereIn('id', $oldValue)->pluck('name')->join(', ')
             : null;
 
         $newTags = $newValue
-            ? Tag::whereIn('id', explode(',', $newValue))
-                ->pluck('name')->join(', ')
+            ? Tag::whereIn('id', $newValue)->pluck('name')->join(', ')
             : null;
 
         return [$oldTags, $newTags];
@@ -138,13 +146,11 @@ class HistoryEntry extends Component
     protected function processListsField($oldValue, $newValue): array
     {
         $oldTags = $oldValue
-            ? LinkList::whereIn('id', explode(',', $oldValue))
-                ->pluck('name')->join(', ')
+            ? LinkList::whereIn('id', $oldValue)->pluck('name')->join(', ')
             : null;
 
         $newTags = $newValue ?
-            LinkList::whereIn('id', explode(',', $newValue))
-                ->pluck('name')->join(', ')
+            LinkList::whereIn('id', $newValue)->pluck('name')->join(', ')
             : null;
 
         return [$oldTags, $newTags];
@@ -180,21 +186,5 @@ class HistoryEntry extends Component
         $newValue = trans('link.stati.' . $newValue);
 
         return [$oldValue, $newValue];
-    }
-
-    /**
-     * The deleted field displays its own string based on whether the link
-     * was deleted or restored.
-     *
-     * @return Application|Factory|\Illuminate\Contracts\View\View
-     */
-    protected function processDeletedField()
-    {
-        $change = $this->entry->oldValue() === null ? trans('link.history_deleted') : trans('link.history_restored');
-
-        return view('components.links.history-entry', [
-            'timestamp' => formatDateTime($this->entry->created_at),
-            'change' => $change,
-        ]);
     }
 }

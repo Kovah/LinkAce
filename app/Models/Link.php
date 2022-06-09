@@ -3,7 +3,6 @@
 namespace App\Models;
 
 use App\Jobs\SaveLinkToWaybackmachine;
-use Illuminate\Support\Carbon;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
@@ -11,11 +10,12 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 use Illuminate\Database\Eloquent\Relations\HasMany;
-use Illuminate\Database\Eloquent\Relations\MorphMany;
 use Illuminate\Database\Eloquent\SoftDeletes;
+use Illuminate\Support\Carbon;
 use Illuminate\Support\Str;
+use OwenIt\Auditing\Auditable as AuditableTrait;
+use OwenIt\Auditing\Contracts\Auditable;
 use Venturecraft\Revisionable\Revision;
-use Venturecraft\Revisionable\RevisionableTrait;
 
 /**
  * Class Link
@@ -41,13 +41,12 @@ use Venturecraft\Revisionable\RevisionableTrait;
  * @method static Builder|Link  byUser($user_id)
  * @method static Builder|Link  privateOnly()
  * @method static Builder|Link  publicOnly()
- * @method static MorphMany     revisionHistory()
  */
-class Link extends Model
+class Link extends Model implements Auditable
 {
-    use SoftDeletes;
-    use RevisionableTrait;
+    use AuditableTrait;
     use HasFactory;
+    use SoftDeletes;
 
     public $fillable = [
         'user_id',
@@ -77,13 +76,14 @@ class Link extends Model
     public const DISPLAY_LIST_SIMPLE = 2;
     public const DISPLAY_LIST_DETAILED = 0;
 
-    // Revisions settings
-    protected bool $revisionCleanup = true;
-    protected int $historyLimit = 50;
-    protected $dontKeepRevisionOf = ['icon'];
+    // Audit settings
+    protected array $auditExclude = [
+        'icon',
+    ];
 
-    public const REV_TAGS_NAME = 'revtags';
-    public const REV_LISTS_NAME = 'revlists';
+    public const AUDIT_RELATION_EVENT = 'relatedModels';
+    public const AUDIT_TAGS_NAME = 'revtags';
+    public const AUDIT_LISTS_NAME = 'revlists';
 
 
     /*

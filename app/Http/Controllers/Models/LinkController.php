@@ -106,7 +106,7 @@ class LinkController extends Controller
     {
         return view('models.links.show', [
             'link' => $link,
-            'history' => $link->revisionHistory()->latest()->get(),
+            'history' => $link->audits()->latest()->get(),
         ]);
     }
 

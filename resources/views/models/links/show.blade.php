@@ -60,11 +60,11 @@
                     <x-icon.edit class="me-2"/>
                     <span class="d-none d-sm-inline">@lang('linkace.edit')</span>
                 </a>
-                <a onclick="event.preventDefault();document.getElementById('link-delete-{{ $link->id }}').submit();"
-                    class="btn btn-sm btn-outline-danger cursor-pointer" aria-label="@lang('link.delete')">
+                <button type="submit" form="link-delete-{{ $link->id }}" aria-label="@lang('link.delete')"
+                    class="btn btn-sm btn-outline-danger cursor-pointer">
                     <x-icon.trash class="me-2"/>
                     <span class="d-none d-sm-inline">@lang('linkace.delete')</span>
-                </a>
+                </button>
             </div>
             <form id="link-delete-{{ $link->id }}" method="POST" style="display: none;"
                 action="{{ route('links.destroy', [$link->id]) }}">
@@ -177,13 +177,13 @@
                         <x-icon.caret-down class="fw"/>
                     </a>
                     <div id="link-history" class="collapse">
-                        @endif
-                        <x-links.history-entry :entry="$entry"/>
-                        @endforeach
-                        <div>{{ formatDateTime($link->created_at) }}: @lang('link.history_created')</div>
-                        @if(count($history) >= 10)
-                    </div>
                 @endif
+                <x-links.history-entry :entry="$entry"/>
+            @endforeach
+            <div>{{ formatDateTime($link->created_at) }}: @lang('link.history_created')</div>
+            @if(count($history) >= 10)
+                </div>
+            @endif
         </div>
     </div>
 
