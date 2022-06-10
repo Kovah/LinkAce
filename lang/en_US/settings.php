@@ -7,7 +7,7 @@ return [
     'system_settings' => 'System Settings',
     'guest_settings' => 'Guest Settings',
 
-    'language' => 'Language',
+    'locale' => 'Language',
     'timezone' => 'Timezone',
     'date_format' => 'Date Format',
     'time_format' => 'Time Format',
@@ -34,6 +34,7 @@ return [
     'archive_private_backups_enabled' => 'Enable backups for private links',
     'archive_private_backups_enabled_help' => 'If enabled, private links will also be saved. Backups must be enabled.',
 
+    'link_display_mode' => 'Link Display Mode',
     'display_mode' => 'Display links as',
     'display_mode_list_detailed' => 'list with many details',
     'display_mode_list_simple' => 'list with less details',
@@ -41,10 +42,11 @@ return [
     'display_mode_cards_detailed' => 'cards with many details',
 
     'sharing' => 'Link Sharing',
+    'guest_sharing' => 'Guest Link Sharing',
     'sharing_help' => 'Enable all services you want to display for links, to be able to share them easily with one click.',
     'sharing_toggle' => 'Toggle all on/off',
 
-    'darkmode' => 'Darkmode',
+    'darkmode_setting' => 'Darkmode',
     'darkmode_help' => 'You can either choose to turn on permanently or automatically based on your device settings. (<small>Check <a href="https://caniuse.com/#search=prefers-color-scheme">here</a> if your browser supports automatic detection</small>)',
     'darkmode_disabled' => 'Disabled',
     'darkmode_auto' => 'Automatically',

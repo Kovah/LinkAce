@@ -12,6 +12,7 @@ use Illuminate\Contracts\View\View;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Cache;
 use Illuminate\Support\Str;
 use Illuminate\Validation\ValidationException;
 
@@ -73,15 +74,17 @@ class UserSettingsController extends Controller
         $userServices = $userServices['share'] ?? [];
 
         foreach (config('sharing.services') as $service => $details) {
-            $toggle = array_key_exists($service, $userServices);
+            $toggle = (int)array_key_exists($service, $userServices);
 
             Setting::updateOrCreate([
                 'user_id' => $userId,
                 'key' => 'share_' . $service,
             ], [
-                'value' => $toggle,
+                'value' => (string)$toggle,
             ]);
         }
+
+        Cache::forget('settings_keys');
 
         flash(trans('settings.settings_saved'), 'success');
         return redirect()->back();

@@ -12,7 +12,7 @@
 
                     <div class="mb-4">
                         <label class="form-label" for="locale">
-                            @lang('settings.language')
+                            @lang('settings.locale')
                         </label>
                         <select id="locale" name="locale"
                             class="simple-select {{ $errors->has('locale') ? ' is-invalid' : '' }}">
@@ -23,7 +23,7 @@
                                 </option>
                             @endforeach
                         </select>
-                        @if ($errors->has('locale'))
+                        @if($errors->has('locale'))
                             <p class="invalid-feedback" role="alert">
                                 {{ $errors->first('locale') }}
                             </p>

@@ -2,7 +2,7 @@
 
 namespace App\View\Components\History;
 
-use App\Models\Link;
+use App\Models\LinkList;
 use Illuminate\View\Component;
 use OwenIt\Auditing\Models\Audit;
 
@@ -71,7 +71,7 @@ class ListEntry extends Component
         $oldValue = $changeData['old'] ?? null;
         $newValue = $changeData['new'] ?? null;
 
-        /** @var Link $model */
+        /** @var LinkList $model */
         $model = app($this->entry->auditable_type);
 
         if (isset($model->auditModifiers[$field])) {

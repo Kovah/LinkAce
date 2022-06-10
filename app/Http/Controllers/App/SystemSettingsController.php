@@ -52,20 +52,21 @@ class SystemSettingsController extends Controller
 
         if ($guestSharingSettings) {
             foreach (config('sharing.services') as $service => $details) {
-                $toggle = array_key_exists($service, $guestSharingSettings);
+                $toggle = (int)array_key_exists($service, $guestSharingSettings);
 
                 Setting::updateOrCreate([
                     'user_id' => null,
                     'key' => 'guest_share_' . $service,
                 ], [
                     'key' => 'guest_share_' . $service,
-                    'value' => $toggle,
+                    'value' => (string)$toggle,
                     'user_id' => null,
                 ]);
             }
         }
 
         Cache::forget('systemsettings');
+        Cache::forget('settings_keys');
 
         flash(trans('settings.settings_saved'));
         return redirect()->route('get-systemsettings');

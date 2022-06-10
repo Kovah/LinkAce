@@ -1,7 +1,7 @@
 <div class="mb-3 my-5">
 
     <h5>
-        @lang('settings.darkmode')
+        @lang('settings.darkmode_setting')
     </h5>
 
     <p class="my-3 small">@lang('settings.darkmode_help')</p>

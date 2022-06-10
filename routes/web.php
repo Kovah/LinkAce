@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\App\AuditController;
 use App\Http\Controllers\App\BookmarkletController;
 use App\Http\Controllers\App\DashboardController;
 use App\Http\Controllers\App\ExportController;
@@ -136,6 +137,8 @@ Route::group(['middleware' => ['auth']], function () {
 
     Route::get('system/logs', [LogViewerController::class, 'index'])
         ->name('system-logs');
+
+    Route::get('system/audit', AuditController::class)->name('system-audit');
 });
 
 // Guest access routes

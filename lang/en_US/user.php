@@ -7,4 +7,5 @@ return [
     'email' => 'Email',
 
     'hello' => 'Hello :user!',
+    'for_user' => 'for User',
 ];
