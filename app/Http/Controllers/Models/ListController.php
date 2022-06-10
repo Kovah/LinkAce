@@ -28,7 +28,7 @@ class ListController extends Controller
         session()->put('lists.index.orderBy', $orderBy);
         session()->put('lists.index.orderDir', $orderDir);
 
-        $lists = LinkList::byUser(auth()->id())
+        $lists = LinkList::byUser()
             ->withCount('links')
             ->orderBy($orderBy, $orderDir);
 
@@ -88,7 +88,7 @@ class ListController extends Controller
     public function show(Request $request, LinkList $list): View
     {
         $links = $list->links()
-            ->byUser(auth()->id())
+            ->byUser()
             ->orderBy(
                 $request->input('orderBy', 'created_at'),
                 $request->input('orderDir', 'desc')

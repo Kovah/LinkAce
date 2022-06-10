@@ -21,7 +21,7 @@ class TagController extends Controller
      */
     public function index(Request $request): JsonResponse
     {
-        $tags = Tag::byUser(auth()->id())
+        $tags = Tag::byUser()
             ->orderBy(
                 $request->input('order_by', 'created_at'),
                 $request->input('order_dir', 'DESC')

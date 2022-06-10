@@ -24,7 +24,7 @@ use Illuminate\Support\Str;
  * @property string|null $deleted_at
  * @property-read Link   $link
  * @property-read User   $user
- * @method static Builder|Link byUser($user_id)
+ * @method static Builder|Link byUser($user_id = null)
  */
 class Note extends Model
 {
@@ -52,12 +52,15 @@ class Note extends Model
     /**
      * Scope for the user relation
      *
-     * @param Builder $query
-     * @param int     $user_id
+     * @param Builder  $query
+     * @param int|null $user_id
      * @return Builder
      */
-    public function scopeByUser(Builder $query, int $user_id): Builder
+    public function scopeByUser(Builder $query, int $user_id = null): Builder
     {
+        if (is_null($user_id) && auth()->check()) {
+            $user_id = auth()->id();
+        }
         return $query->where('user_id', $user_id);
     }
 

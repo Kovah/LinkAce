@@ -51,7 +51,11 @@ class ImportCommand extends Command
         if ($this->option('skip-check')) {
             $this->info('Skipping link check.');
         } else {
-            Artisan::queue('links:check');
+            if (config('mail.host') !== null) {
+                Artisan::queue('links:check');
+            } else {
+                $this->warn('Links are configured to be checked, but email is not configured!');
+            }
         }
 
         $this->info(trans('import.import_successfully', [

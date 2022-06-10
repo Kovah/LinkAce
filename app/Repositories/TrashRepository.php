@@ -23,22 +23,22 @@ class TrashRepository
         switch ($model) {
             case 'links':
                 $entries = Link::onlyTrashed()
-                    ->byUser(auth()->id())
+                    ->byUser()
                     ->get();
                 break;
             case 'lists':
                 $entries = LinkList::onlyTrashed()
-                    ->byUser(auth()->id())
+                    ->byUser()
                     ->get();
                 break;
             case 'tags':
                 $entries = Tag::onlyTrashed()
-                    ->byUser(auth()->id())
+                    ->byUser()
                     ->get();
                 break;
             case 'notes':
                 $entries = Note::onlyTrashed()
-                    ->byUser(auth()->id())
+                    ->byUser()
                     ->get();
                 break;
         }

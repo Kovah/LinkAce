@@ -23,19 +23,19 @@ class TrashController extends Controller
     public function index(): View
     {
         $links = Link::onlyTrashed()
-            ->byUser(auth()->id())
+            ->byUser()
             ->get();
 
         $lists = LinkList::onlyTrashed()
-            ->byUser(auth()->id())
+            ->byUser()
             ->get();
 
         $tags = Tag::onlyTrashed()
-            ->byUser(auth()->id())
+            ->byUser()
             ->get();
 
         $notes = Note::onlyTrashed()
-            ->byUser(auth()->id())
+            ->byUser()
             ->get();
 
         return view('app.trash.index', [

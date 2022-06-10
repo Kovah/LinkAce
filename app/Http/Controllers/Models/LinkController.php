@@ -29,7 +29,7 @@ class LinkController extends Controller
         session()->put('links.index.orderBy', $orderBy);
         session()->put('links.index.orderDir', $orderDir);
 
-        $links = Link::byUser(auth()->id())
+        $links = Link::byUser()
             ->with('tags')
             ->orderBy($orderBy, $orderDir)
             ->paginate(getPaginationLimit());
