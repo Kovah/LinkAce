@@ -73,6 +73,12 @@ return [
             'bucket' => env('AWS_BUCKET'),
             'url' => env('AWS_URL'),
             'endpoint' => env('AWS_ENDPOINT'),
+            'scheme' => env('AWS_SCHEME', 'https'),
+            'bucket_endpoint' => env('AWS_BUCKET_ENDPOINT'),
+            'use_path_style_endpoint' => env('AWS_PATH_STYLE_ENDPOINT'),
+            'use_accelerate_endpoint' => env('AWS_ACCELERATE_ENDPOINT'),
+            'use_fips_endpoint' => env('AWS_FIPS_ENDPOINT'),
+            'use_dual_stack_endpoint' => env('AWS_DUAL_STACK_ENDPOINT'),
         ],
 
     ],
