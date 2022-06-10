@@ -9,6 +9,8 @@ use Illuminate\Notifications\Notifiable;
 use Illuminate\Support\Carbon;
 use Illuminate\Support\Collection;
 use Laravel\Fortify\TwoFactorAuthenticatable;
+use OwenIt\Auditing\Auditable as AuditableTrait;
+use OwenIt\Auditing\Contracts\Auditable;
 
 /**
  * Class User
@@ -25,8 +27,9 @@ use Laravel\Fortify\TwoFactorAuthenticatable;
  * @property Carbon|null $created_at
  * @property Carbon|null $updated_at
  */
-class User extends Authenticatable
+class User extends Authenticatable implements Auditable
 {
+    use AuditableTrait;
     use Notifiable;
     use HasFactory;
     use TwoFactorAuthenticatable;
@@ -41,7 +44,27 @@ class User extends Authenticatable
     protected $hidden = [
         'password',
         'remember_token',
+        'api_token',
     ];
+
+    /*
+     * ========================================================================
+     * AUDIT SETTINGS
+     */
+
+    protected array $auditEvents = [
+        'created',
+        'updated',
+        'deleted',
+        'restored',
+    ];
+
+    protected array $auditInclude = [
+        'name',
+        'email',
+    ];
+
+    public static array $auditModifiers = [];
 
     /*
      * ========================================================================
