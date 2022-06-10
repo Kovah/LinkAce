@@ -7,8 +7,7 @@ use Illuminate\Support\Facades\Log;
 
 class WaybackMachine
 {
-    /** @var string */
-    public static $baseUrl = 'https://web.archive.org';
+    public static string $baseUrl = 'https://web.archive.org';
 
     /**
      * Save an URL to the Wayback Machine
@@ -25,12 +24,19 @@ class WaybackMachine
 
         $archiveUrl = self::$baseUrl . '/save/' . $url;
 
-        $request = Http::timeout(10);
+        $request = Http::timeout(1);
         if (config('html-meta.user_agents', false)) {
             $agents = config('html-meta.user_agents');
             $request->withHeaders(['User-Agent' => $agents[array_rand($agents)]]);
         }
-        $response = $request->head($archiveUrl);
+        try {
+            $response = $request->head($archiveUrl);
+        } catch (\Exception $e) {
+            if (!str_contains($e->getMessage(), 'cURL error 28: Operation timed out')) {
+                Log::warning($archiveUrl . ': ' . $e->getMessage());
+            }
+            return false;
+        }
 
         try {
             $response->throw();
