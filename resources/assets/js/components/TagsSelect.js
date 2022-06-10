@@ -26,6 +26,10 @@ export default class TagsSelect {
       delimiter: ',',
       persist: false,
       create: this.selectAllowsCreation(),
+      onItemAdd:function(){
+        this.setTextboxValue('');
+        this.refreshOptions();
+      },
       load: (query, callback) => {
         this.handleTagLoading(query, callback);
       }
