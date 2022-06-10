@@ -38,7 +38,7 @@ use Venturecraft\Revisionable\RevisionableTrait;
  * @property Collection|Revision[] $revisionHistory
  * @property Collection|Tag[]      $tags
  * @property User                  $user
- * @method static Builder|Link  byUser($user_id)
+ * @method static Builder|Link  byUser($user_id = null)
  * @method static Builder|Link  privateOnly()
  * @method static Builder|Link  publicOnly()
  * @method static MorphMany     revisionHistory()
@@ -49,8 +49,18 @@ class Link extends Model
     use RevisionableTrait;
     use HasFactory;
 
+    public const STATUS_OK = 1;
+    public const STATUS_MOVED = 2;
+    public const STATUS_BROKEN = 3;
+    public const DISPLAY_CARDS = 1;
+    public const DISPLAY_CARDS_DETAILED = 3;
+    public const DISPLAY_LIST_SIMPLE = 2;
+    public const DISPLAY_LIST_DETAILED = 0;
+    public const REV_TAGS_NAME = 'revtags';
+    public const REV_LISTS_NAME = 'revlists';
     public $table = 'links';
 
+    // Revisions settings
     public $fillable = [
         'user_id',
         'url',
@@ -62,30 +72,15 @@ class Link extends Model
         'check_disabled',
         'thumbnail',
     ];
-
     protected $casts = [
         'user_id' => 'integer',
         'is_private' => 'boolean',
         'status' => 'integer',
         'check_disabled' => 'boolean',
     ];
-
-    public const STATUS_OK = 1;
-    public const STATUS_MOVED = 2;
-    public const STATUS_BROKEN = 3;
-
-    public const DISPLAY_CARDS = 1;
-    public const DISPLAY_CARDS_DETAILED = 3;
-    public const DISPLAY_LIST_SIMPLE = 2;
-    public const DISPLAY_LIST_DETAILED = 0;
-
-    // Revisions settings
     protected $revisionCleanup = true;
     protected $historyLimit = 50;
     protected $dontKeepRevisionOf = ['icon'];
-
-    public const REV_TAGS_NAME = 'revtags';
-    public const REV_LISTS_NAME = 'revlists';
 
 
     /*
@@ -96,13 +91,16 @@ class Link extends Model
     /**
      * Scope for the user relation
      *
-     * @param Builder $query
-     * @param int     $userId
+     * @param Builder  $query
+     * @param int|null $user_id
      * @return Builder
      */
-    public function scopeByUser(Builder $query, int $userId): Builder
+    public function scopeByUser(Builder $query, int $user_id = null): Builder
     {
-        return $query->where('user_id', $userId);
+        if (is_null($user_id) && auth()->check()) {
+            $user_id = auth()->id();
+        }
+        return $query->where('user_id', $user_id);
     }
 
     /**
@@ -188,19 +186,6 @@ class Link extends Model
     }
 
     /**
-     * Get the URL shortened to max 50 characters and with https:// removed.
-     * Other protocols like magnet://, ftp:// and so on will be kept to make
-     * those protocols more obvious for the user.
-     *
-     * @param int $maxLength
-     * @return string
-     */
-    public function shortUrl(int $maxLength = 50): string
-    {
-        return preg_replace('/http(s)?:\/\//', '', Str::limit(trim($this->url, '/'), $maxLength));
-    }
-
-    /**
      * Get the title shortened to max 50 characters
      *
      * @param int $maxLength
@@ -220,6 +205,19 @@ class Link extends Model
     {
         $urlDetails = parse_url($this->url);
         return $urlDetails['host'] ?? $this->shortUrl(20);
+    }
+
+    /**
+     * Get the URL shortened to max 50 characters and with https:// removed.
+     * Other protocols like magnet://, ftp:// and so on will be kept to make
+     * those protocols more obvious for the user.
+     *
+     * @param int $maxLength
+     * @return string
+     */
+    public function shortUrl(int $maxLength = 50): string
+    {
+        return preg_replace('/http(s)?:\/\//', '', Str::limit(trim($this->url, '/'), $maxLength));
     }
 
     public function tagsForInput(): ?string

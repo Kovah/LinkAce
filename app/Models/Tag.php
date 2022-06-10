@@ -25,7 +25,7 @@ use Illuminate\Database\Eloquent\SoftDeletes;
  * @property string|null            $deleted_at
  * @property-read Collection|Link[] $links
  * @property-read User              $user
- * @method static Builder|Tag byUser(int $user_id)
+ * @method static Builder|Tag byUser(int $user_id = null)
  * @method static Builder|Tag publicOnly()
  * @method static Builder|Tag privateOnly()
  */
@@ -48,6 +48,22 @@ class Tag extends Model
     ];
 
     /**
+     * @param string|int $tagId
+     * @param string     $newName
+     * @return bool
+     */
+    public static function nameHasChanged($tagId, string $newName): bool
+    {
+        $oldName = self::find($tagId)->name ?? null;
+        return $oldName !== $newName;
+    }
+
+    /*
+     | ========================================================================
+     | SCOPES
+     */
+
+    /**
      * Add the OrderNameScope to the Tag model
      */
     protected static function boot()
@@ -57,20 +73,18 @@ class Tag extends Model
         static::addGlobalScope(new OrderNameScope());
     }
 
-    /*
-     | ========================================================================
-     | SCOPES
-     */
-
     /**
      * Scope for the user relation
      *
-     * @param Builder $query
-     * @param int     $user_id
+     * @param Builder  $query
+     * @param int|null $user_id
      * @return Builder
      */
-    public function scopeByUser(Builder $query, int $user_id): Builder
+    public function scopeByUser(Builder $query, int $user_id = null): Builder
     {
+        if (is_null($user_id) && auth()->check()) {
+            $user_id = auth()->id();
+        }
         return $query->where('user_id', $user_id);
     }
 
@@ -85,6 +99,11 @@ class Tag extends Model
         return $query->where('is_private', true);
     }
 
+    /*
+     | ========================================================================
+     | RELATIONSHIPS
+     */
+
     /**
      * Scope for selecting public tags only
      *
@@ -96,11 +115,6 @@ class Tag extends Model
         return $query->where('is_private', false);
     }
 
-    /*
-     | ========================================================================
-     | RELATIONSHIPS
-     */
-
     /**
      * @return BelongsTo
      */
@@ -109,27 +123,16 @@ class Tag extends Model
         return $this->belongsTo('App\Models\User', 'user_id');
     }
 
-    /**
-     * @return BelongsToMany
-     */
-    public function links(): BelongsToMany
-    {
-        return $this->belongsToMany('App\Models\Link', 'link_tags', 'tag_id', 'link_id');
-    }
-
     /*
      | ========================================================================
      | METHODS
      */
 
     /**
-     * @param string|int $tagId
-     * @param string     $newName
-     * @return bool
+     * @return BelongsToMany
      */
-    public static function nameHasChanged($tagId, string $newName): bool
+    public function links(): BelongsToMany
     {
-        $oldName = self::find($tagId)->name ?? null;
-        return $oldName !== $newName;
+        return $this->belongsToMany('App\Models\Link', 'link_tags', 'tag_id', 'link_id');
     }
 }

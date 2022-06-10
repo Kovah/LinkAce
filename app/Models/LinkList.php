@@ -27,7 +27,7 @@ use Illuminate\Support\Str;
  * @property string|null            $deleted_at
  * @property-read Collection|Link[] $links
  * @property-read User              $user
- * @method static Builder|Tag byUser($user_id)
+ * @method static Builder|Tag byUser($user_id = null)
  * @method static Builder|Tag privateOnly()
  * @method static Builder|Tag publicOnly()
  */
@@ -51,6 +51,34 @@ class LinkList extends Model
     ];
 
     /**
+     * Get a collection of all lists for the current user, ordered by name
+     *
+     * @return Builder[]|Collection
+     */
+    public static function getAllForCurrentUser()
+    {
+        return self::byUser()
+            ->orderBy('name')
+            ->get();
+    }
+
+    /*
+     | ========================================================================
+     | SCOPES
+     */
+
+    /**
+     * @param string|int $listId
+     * @param string     $newName
+     * @return bool
+     */
+    public static function nameHasChanged($listId, string $newName): bool
+    {
+        $oldName = self::find($listId)->name ?? null;
+        return $oldName !== $newName;
+    }
+
+    /**
      * Add the OrderNameScope to the Tag model
      */
     protected static function boot(): void
@@ -60,22 +88,25 @@ class LinkList extends Model
         static::addGlobalScope(new OrderNameScope());
     }
 
-    /*
-     | ========================================================================
-     | SCOPES
-     */
-
     /**
      * Scope for the user relation
      *
-     * @param Builder $query
-     * @param int     $user_id
+     * @param Builder  $query
+     * @param int|null $user_id
      * @return Builder
      */
-    public function scopeByUser(Builder $query, int $user_id): Builder
+    public function scopeByUser(Builder $query, int $user_id = null): Builder
     {
+        if (is_null($user_id) && auth()->check()) {
+            $user_id = auth()->id();
+        }
         return $query->where('user_id', $user_id);
     }
+
+    /*
+     | ========================================================================
+     | RELATIONSHIPS
+     */
 
     /**
      * Scope for selecting private lists only
@@ -101,7 +132,7 @@ class LinkList extends Model
 
     /*
      | ========================================================================
-     | RELATIONSHIPS
+     | METHODS
      */
 
     /**
@@ -120,11 +151,6 @@ class LinkList extends Model
         return $this->belongsToMany('App\Models\Link', 'link_lists', 'list_id', 'link_id');
     }
 
-    /*
-     | ========================================================================
-     | METHODS
-     */
-
     /**
      * Get the formatted description of the list
      *
@@ -141,28 +167,5 @@ class LinkList extends Model
         }
 
         return Str::markdown($this->description, ['html_input' => 'escape']);
-    }
-
-    /**
-     * Get a collection of all lists for the current user, ordered by name
-     *
-     * @return Builder[]|Collection
-     */
-    public static function getAllForCurrentUser()
-    {
-        return self::byUser(auth()->id())
-            ->orderBy('name')
-            ->get();
-    }
-
-    /**
-     * @param string|int $listId
-     * @param string     $newName
-     * @return bool
-     */
-    public static function nameHasChanged($listId, string $newName): bool
-    {
-        $oldName = self::find($listId)->name ?? null;
-        return $oldName !== $newName;
     }
 }

@@ -3,8 +3,7 @@ _ide_*
 /.git
 /.idea
 /.tmp
-/storage/app/backup-temp
-/storage/app/backups
+/storage/app/backups/*
 /storage/debugbar/*
 /storage/framework/cache/*
 /storage/framework/sessions/*

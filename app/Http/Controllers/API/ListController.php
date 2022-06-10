@@ -21,7 +21,7 @@ class ListController extends Controller
      */
     public function index(Request $request): JsonResponse
     {
-        $lists = LinkList::byUser(auth()->id())
+        $lists = LinkList::byUser()
             ->orderBy(
                 $request->input('order_by', 'created_at'),
                 $request->input('order_dir', 'DESC')

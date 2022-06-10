@@ -21,7 +21,7 @@ class LinkController extends Controller
      */
     public function index(Request $request): JsonResponse
     {
-        $links = Link::byUser(auth()->id())
+        $links = Link::byUser()
             ->orderBy(
                 $request->input('order_by', 'created_at'),
                 $request->input('order_dir', 'DESC')
