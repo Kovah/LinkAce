@@ -64,7 +64,7 @@ class User extends Authenticatable implements Auditable
         'email',
     ];
 
-    public static array $auditModifiers = [];
+    public array $auditModifiers = [];
 
     /*
      * ========================================================================

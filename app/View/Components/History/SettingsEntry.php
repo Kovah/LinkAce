@@ -8,7 +8,12 @@ use OwenIt\Auditing\Models\Audit;
 
 class SettingsEntry extends Component
 {
-    public function __construct(private Audit $entry, private array $changes = [])
+    use ProcessesHistory;
+
+    private string $model = Setting::class;
+    private string $translateBase = 'settings';
+
+    public function __construct(private Audit $entry)
     {
     }
 
@@ -86,8 +91,10 @@ class SettingsEntry extends Component
             $field = 'share_service';
         }
 
-        if (isset(Setting::$auditModifiers[$field])) {
-            $modifier = app(Setting::$auditModifiers[$field]);
+        $model = app(Setting::class);
+
+        if (isset($model->auditModifiers[$field])) {
+            $modifier = app($model->auditModifiers[$field]);
             $oldValue = $modifier->modify($oldValue);
             $newValue = $modifier->modify($newValue);
             return [$oldValue, $newValue];

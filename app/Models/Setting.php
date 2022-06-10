@@ -49,7 +49,7 @@ class Setting extends Model implements Auditable
         'updated',
     ];
 
-    public static array $auditModifiers = [
+    public array $auditModifiers = [
         'archive_backups_enabled' => BooleanModifier::class,
         'archive_private_backups_enabled' => BooleanModifier::class,
         'darkmode_setting' => DarkmodeSettingModifier::class,
