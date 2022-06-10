@@ -13,7 +13,7 @@ use Illuminate\Database\Eloquent\Model;
  * @property int    $user_id
  * @property string $key
  * @property mixed  $value
- * @method static Builder|Setting byUser($user_id)
+ * @method static Builder|Setting byUser($user_id = null)
  * @method static Builder|Setting systemOnly()
  */
 class Setting extends Model
@@ -40,8 +40,8 @@ class Setting extends Model
     /**
      * Scope for the user relation
      *
-     * @param  Builder  $query
-     * @param  int|null  $user_id
+     * @param Builder  $query
+     * @param int|null $user_id
      * @return Builder
      */
     public function scopeByUser(Builder $query, int $user_id = null): Builder
