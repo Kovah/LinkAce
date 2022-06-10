@@ -109,13 +109,16 @@ class Link extends Model implements Auditable
     /**
      * Scope for the user relation
      *
-     * @param Builder $query
-     * @param int     $userId
+     * @param Builder  $query
+     * @param int|null $user_id
      * @return Builder
      */
-    public function scopeByUser(Builder $query, int $userId): Builder
+    public function scopeByUser(Builder $query, int $user_id = null): Builder
     {
-        return $query->where('user_id', $userId);
+        if (is_null($user_id) && auth()->check()) {
+            $user_id = auth()->id();
+        }
+        return $query->where('user_id', $user_id);
     }
 
     /**
