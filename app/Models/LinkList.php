@@ -54,11 +54,6 @@ class LinkList extends Model implements Auditable
         'is_private' => 'boolean',
     ];
 
-    // Audit settings
-    public array $auditModifiers = [
-        'is_private' => BooleanModifier::class,
-    ];
-
     /**
      * Add the OrderNameScope to the Tag model
      */
@@ -70,8 +65,17 @@ class LinkList extends Model implements Auditable
     }
 
     /*
-     | ========================================================================
-     | SCOPES
+     * ========================================================================
+     * AUDIT SETTINGS
+     */
+
+    public array $auditModifiers = [
+        'is_private' => BooleanModifier::class,
+    ];
+
+    /*
+     * ========================================================================
+     * SCOPES
      */
 
     /**
@@ -109,8 +113,8 @@ class LinkList extends Model implements Auditable
     }
 
     /*
-     | ========================================================================
-     | RELATIONSHIPS
+     * ========================================================================
+     * RELATIONSHIPS
      */
 
     /**
@@ -130,8 +134,8 @@ class LinkList extends Model implements Auditable
     }
 
     /*
-     | ========================================================================
-     | METHODS
+     * ========================================================================
+     * METHODS
      */
 
     /**

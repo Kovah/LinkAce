@@ -49,11 +49,6 @@ class Tag extends Model implements Auditable
         'is_private' => 'boolean',
     ];
 
-    // Audit settings
-    public array $auditModifiers = [
-        'is_private' => BooleanModifier::class,
-    ];
-
     /**
      * Add the OrderNameScope to the Tag model
      */
@@ -65,8 +60,17 @@ class Tag extends Model implements Auditable
     }
 
     /*
-     | ========================================================================
-     | SCOPES
+     * ========================================================================
+     * AUDIT SETTINGS
+     */
+
+    public array $auditModifiers = [
+        'is_private' => BooleanModifier::class,
+    ];
+
+    /*
+     * ========================================================================
+     * SCOPES
      */
 
     /**
@@ -104,29 +108,23 @@ class Tag extends Model implements Auditable
     }
 
     /*
-     | ========================================================================
-     | RELATIONSHIPS
+     * ========================================================================
+     * RELATIONSHIPS
      */
 
-    /**
-     * @return BelongsTo
-     */
     public function user(): BelongsTo
     {
         return $this->belongsTo(User::class, 'user_id');
     }
 
-    /**
-     * @return BelongsToMany
-     */
     public function links(): BelongsToMany
     {
         return $this->belongsToMany(Link::class, 'link_tags', 'tag_id', 'link_id');
     }
 
     /*
-     | ========================================================================
-     | METHODS
+     * ========================================================================
+     * METHODS
      */
 
     /**

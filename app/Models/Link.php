@@ -80,7 +80,11 @@ class Link extends Model implements Auditable
     public const DISPLAY_LIST_SIMPLE = 2;
     public const DISPLAY_LIST_DETAILED = 0;
 
-    // Audit settings
+    /*
+     * ========================================================================
+     * AUDIT SETTINGS
+     */
+
     public const AUDIT_RELATION_EVENT = 'relatedModels';
     public const AUDIT_TAGS_NAME = 'revtags';
     public const AUDIT_LISTS_NAME = 'revlists';
@@ -98,8 +102,8 @@ class Link extends Model implements Auditable
     ];
 
     /*
-     | ========================================================================
-     | SCOPES
+     * ========================================================================
+     * SCOPES
      */
 
     /**
@@ -137,8 +141,8 @@ class Link extends Model implements Auditable
     }
 
     /*
-     | ========================================================================
-     | RELATIONSHIPS
+     * ========================================================================
+     * RELATIONSHIPS
      */
 
     public function user(): BelongsTo
@@ -162,8 +166,8 @@ class Link extends Model implements Auditable
     }
 
     /*
-     | ========================================================================
-     | METHODS
+     * ========================================================================
+     * METHODS
      */
 
     /**

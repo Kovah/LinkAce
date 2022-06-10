@@ -45,8 +45,8 @@ class Note extends Model
     ];
 
     /*
-     | ========================================================================
-     | SCOPES
+     * ========================================================================
+     * SCOPES
      */
 
     /**
@@ -62,29 +62,23 @@ class Note extends Model
     }
 
     /*
-     | ========================================================================
-     | RELATIONSHIPS
+     * ========================================================================
+     * RELATIONSHIPS
      */
 
-    /**
-     * @return BelongsTo
-     */
     public function user(): BelongsTo
     {
         return $this->belongsTo(User::class, 'user_id');
     }
 
-    /**
-     * @return BelongsTo
-     */
     public function link(): BelongsTo
     {
         return $this->belongsTo(Link::class, 'link_id');
     }
 
     /*
-     | ========================================================================
-     | METHODS
+     * ========================================================================
+     * METHODS
      */
 
     /**
