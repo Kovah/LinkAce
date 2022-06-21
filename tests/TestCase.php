@@ -13,9 +13,11 @@ abstract class TestCase extends BaseTestCase
     {
         parent::setUp();
 
-        Setting::updateOrCreate(
-            ['key' => 'system_setup_completed'],
-            ['key' => 'system_setup_completed', 'value' => true]
-        );
+        Setting::withoutEvents(function () {
+            Setting::updateOrCreate(
+                ['key' => 'system_setup_completed'],
+                ['key' => 'system_setup_completed', 'value' => true]
+            );
+        });
     }
 }

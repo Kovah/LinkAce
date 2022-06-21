@@ -21,11 +21,12 @@ class HtmlMeta
      *   'success' => bool,
      *   'title' => string,
      *   'description' => string|null,
+     *   'thumbnail' => string|null,
      * ]
      *
      * @param string $url
      * @param bool   $flashAlerts
-     * @return array
+     * @return array{success: bool, title: string, description: string|null, thumbnail: string|null}
      */
     public function getFromUrl(string $url, bool $flashAlerts = false): array
     {

@@ -120,7 +120,7 @@ class CheckLinksCommand extends Command
     }
 
     /**
-     * Check the URL of an link and set the status accordingly.
+     * Check the URL of a link and set the status accordingly.
      *
      * @param Link $link
      * @return void
@@ -200,8 +200,6 @@ class CheckLinksCommand extends Command
 
     /**
      * Send notification to the main user if not running from the console.
-     *
-     * @return void
      */
     protected function sendNotification(): void
     {

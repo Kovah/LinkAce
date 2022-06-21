@@ -5,7 +5,6 @@ namespace App\Http\Controllers\App;
 use App\Actions\Fortify\UpdateUserPassword;
 use App\Actions\Fortify\UpdateUserProfileInformation;
 use App\Enums\ActivityLog;
-use App\Helper\LinkAce;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\UserSettingsUpdateRequest;
 use App\Models\Setting;
@@ -26,11 +25,9 @@ class UserSettingsController extends Controller
      */
     public function getUserSettings(): View
     {
-        $bookmarkletCode = LinkAce::generateBookmarkletCode();
-
         return view('app.settings.user', [
             'user' => auth()->user(),
-            'bookmarklet_code' => $bookmarkletCode,
+            'bookmarklet_code' => bookmarkletUrl(),
         ]);
     }
 

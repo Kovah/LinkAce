@@ -66,7 +66,7 @@ function systemsettings(string $key = '')
  * Output a correctly formatted date with the correct timezone
  *
  * @param CarbonInterface $date
- * @param bool   $use_relational
+ * @param bool            $use_relational
  * @return string
  */
 function formatDateTime(CarbonInterface $date, bool $use_relational = false): string
@@ -225,4 +225,21 @@ function setupHttpRequest(int $timeout = 10): PendingRequest
     }
 
     return $request;
+}
+
+/**
+ * Generates the bookmarklet code for the user settings page
+ *
+ * @return string
+ */
+function bookmarkletUrl(): string
+{
+    $bmCode = 'javascript:javascript:(function(){var%20url%20=%20location.href;' .
+        "var%20description=document.getSelection()||'';" .
+        "var%20title%20=%20document.title%20||%20url;window.open('##URL##?u='%20+%20encodeURIComponent(url)" .
+        "+'&t='%20+%20encodeURIComponent(title)+'&d='+encodeURIComponent(description)," .
+        "'_blank','menubar=no,height=720,width=600,toolbar=no," .
+        "scrollbars=yes,status=no,dialog=1');})();";
+
+    return str_replace('##URL##', route('bookmarklet-add'), $bmCode);
 }

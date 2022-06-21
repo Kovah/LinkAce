@@ -33,14 +33,17 @@ class CreateAuditsTable extends Migration
 
         $this->migrateExistingRevisions();
 
-        if (config('audit.delete_revisions_table')) {
+        if (Schema::hasTable('old_revisions')) {
             Schema::drop('revisions');
+        } else {
+            Schema::rename('revisions', 'old_revisions');
         }
     }
 
     public function down(): void
     {
         Schema::drop('audits');
+        Schema::rename('old_revisions', 'revisions');
     }
 
     protected function migrateExistingRevisions(): void

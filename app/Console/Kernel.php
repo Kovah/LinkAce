@@ -22,7 +22,6 @@ class Kernel extends ConsoleKernel
         RegisterUserCommand::class,
         CheckLinksCommand::class,
         ResetPasswordCommand::class,
-        CleanupLinkHistoriesCommand::class,
         ImportCommand::class,
         UpdateLinkThumbnails::class,
     ];

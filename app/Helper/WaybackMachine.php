@@ -2,6 +2,7 @@
 
 namespace App\Helper;
 
+use Illuminate\Support\Facades\Http;
 use Illuminate\Support\Facades\Log;
 
 class WaybackMachine
@@ -9,7 +10,7 @@ class WaybackMachine
     public static string $baseUrl = 'https://web.archive.org';
 
     /**
-     * Save an URL to the Wayback Machine
+     * Save a URL to the Wayback Machine
      *
      * @param string $url
      * @return bool
@@ -24,7 +25,14 @@ class WaybackMachine
         $archiveUrl = self::$baseUrl . '/save/' . $url;
 
         $request = setupHttpRequest();
-        $response = $request->head($archiveUrl);
+        try {
+            $response = $request->head($archiveUrl);
+        } catch (\Exception $e) {
+            if (!str_contains($e->getMessage(), 'cURL error 28: Operation timed out')) {
+                Log::warning($archiveUrl . ': ' . $e->getMessage());
+            }
+            return false;
+        }
 
         try {
             $response->throw();

@@ -166,15 +166,4 @@ return [
     */
 
     'console' => env('AUDIT_CONSOLE_EVENTS', true),
-
-    /*
-    |--------------------------------------------------------------------------
-    | Revision Migration
-    |--------------------------------------------------------------------------
-    |
-    | Whether the revisions table should be deleted after successful migration.
-    |
-    */
-
-    'delete_revisions_table' => true,
 ];

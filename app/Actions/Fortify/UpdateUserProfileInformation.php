@@ -2,6 +2,7 @@
 
 namespace App\Actions\Fortify;
 
+use App\Models\User;
 use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Validation\Rule;
@@ -13,7 +14,7 @@ class UpdateUserProfileInformation implements UpdatesUserProfileInformation
     /**
      * Validate and update the given user's profile information.
      *
-     * @param mixed $user
+     * @param User  $user
      * @param array $input
      * @throws ValidationException
      */
@@ -44,7 +45,7 @@ class UpdateUserProfileInformation implements UpdatesUserProfileInformation
     /**
      * Update the given verified user's profile information.
      *
-     * @param mixed $user
+     * @param User  $user
      * @param array $input
      */
     protected function updateVerifiedUser($user, array $input): void

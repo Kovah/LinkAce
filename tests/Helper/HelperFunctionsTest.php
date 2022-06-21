@@ -12,11 +12,9 @@ class HelperFunctionsTest extends TestCase
 {
     use RefreshDatabase;
 
-    /** @var User */
-    private $user;
+    private User $user;
 
-    /** @var Link */
-    private $link;
+    private Link $link;
 
     protected function setUp(): void
     {

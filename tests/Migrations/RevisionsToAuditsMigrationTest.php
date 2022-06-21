@@ -5,18 +5,31 @@ namespace Tests\Migrations;
 use App\Models\Link;
 use App\Models\User;
 use CreateAuditsTable;
+use Illuminate\Foundation\Testing\LazilyRefreshDatabase;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Schema;
 use OwenIt\Auditing\Models\Audit;
 use Tests\TestCase;
 
 class RevisionsToAuditsMigrationTest extends TestCase
 {
-    use RefreshDatabase;
+    use LazilyRefreshDatabase;
 
-    protected function beforeRefreshingDatabase(): void
+    protected function afterRefreshingDatabase(): void
     {
-        config()->set('audit.delete_revisions_table', false);
+        DB::table('audits')->truncate();
+
+        Schema::create('revisions', function ($table) {
+            $table->bigIncrements('id');
+            $table->string('revisionable_type');
+            $table->unsignedBigInteger('revisionable_id');
+            $table->unsignedBigInteger('user_id')->nullable();
+            $table->string('key');
+            $table->text('old_value')->nullable();
+            $table->text('new_value')->nullable();
+            $table->timestamps();
+        });
     }
 
     public function testRevisionMigration(): void
@@ -38,6 +51,8 @@ class RevisionsToAuditsMigrationTest extends TestCase
 
         $migrator = new CreateAuditsTable();
         $migrator->up();
+
+        $this->assertDatabaseCount('audits', 1);
 
         $audit = Audit::first();
 

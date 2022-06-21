@@ -30,7 +30,7 @@ use OwenIt\Auditing\Contracts\Auditable;
  * @property string|null            $deleted_at
  * @property-read Collection|Link[] $links
  * @property-read User              $user
- * @method static Builder|Tag byUser($user_id)
+ * @method static Builder|Tag byUser(int $user_id = null)
  * @method static Builder|Tag privateOnly()
  * @method static Builder|Tag publicOnly()
  */

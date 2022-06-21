@@ -42,7 +42,7 @@ use OwenIt\Auditing\Contracts\Auditable;
  * @property HasMany       $notes
  * @property BelongsToMany $tags
  * @property BelongsTo     $user
- * @method static Builder|Link  byUser($user_id)
+ * @method static Builder|Link  byUser(int $user_id = null)
  * @method static Builder|Link  privateOnly()
  * @method static Builder|Link  publicOnly()
  */

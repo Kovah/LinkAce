@@ -4,7 +4,6 @@ namespace App\Http\Controllers\App;
 
 use App\Http\Controllers\Controller;
 use App\Models\Link;
-use Illuminate\Contracts\View\Factory;
 use Illuminate\Contracts\View\View;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
@@ -15,7 +14,7 @@ class BookmarkletController extends Controller
      * Show the link creation form based on the information provided by the Bookmarklet.
      *
      * @param Request $request
-     * @return Factory|RedirectResponse|View
+     * @return RedirectResponse|View
      */
     public function getLinkAddForm(Request $request)
     {

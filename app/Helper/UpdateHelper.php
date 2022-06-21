@@ -15,9 +15,9 @@ class UpdateHelper
     /**
      * Get the current version from the package.json file and cache it for a day.
      *
-     * @return mixed
+     * @return string|null
      */
-    public static function currentVersion(): mixed
+    public static function currentVersion(): ?string
     {
         return Cache::remember('current-version', 86400, function () {
             try {
