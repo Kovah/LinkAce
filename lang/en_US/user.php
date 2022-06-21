@@ -13,4 +13,5 @@ return [
 
     'hello' => 'Hello :user!',
     'for_user' => 'for User',
+    'unknown_user' => 'unknown User',
 ];

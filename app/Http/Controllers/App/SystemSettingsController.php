@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\App;
 
+use App\Enums\ActivityLog;
 use App\Helper\UpdateHelper;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\SystemSettingsUpdateRequest;
@@ -90,6 +91,8 @@ class SystemSettingsController extends Controller
         );
 
         Cache::forget('systemsettings');
+
+        activity()->by(auth()->user())->log(ActivityLog::SYSTEM_CRON_TOKEN_REGENERATED);
 
         return response()->json([
             'new_token' => $newToken,

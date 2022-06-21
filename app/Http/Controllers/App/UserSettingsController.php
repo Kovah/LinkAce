@@ -4,6 +4,7 @@ namespace App\Http\Controllers\App;
 
 use App\Actions\Fortify\UpdateUserPassword;
 use App\Actions\Fortify\UpdateUserProfileInformation;
+use App\Enums\ActivityLog;
 use App\Helper\LinkAce;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\UserSettingsUpdateRequest;
@@ -117,6 +118,8 @@ class UserSettingsController extends Controller
 
         $request->user()->api_token = $new_token;
         $request->user()->save();
+
+        activity()->by(auth()->user())->log(ActivityLog::USER_API_TOKEN_GENERATED);
 
         return response()->json([
             'new_token' => $new_token,

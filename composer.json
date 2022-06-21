@@ -21,6 +21,7 @@
     "rap2hpoutre/laravel-log-viewer": "^2.2",
     "sentry/sentry-laravel": "^2.3",
     "shaarli/netscape-bookmark-parser": "^v3.2",
+    "spatie/laravel-activitylog": "^4.5",
     "spatie/laravel-backup": "^8.1.2",
     "symfony/http-client": "^6.0",
     "symfony/mailgun-mailer": "^6.0"

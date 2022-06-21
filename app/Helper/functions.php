@@ -4,8 +4,8 @@ use App\Helper\Sharing;
 use App\Helper\WaybackMachine;
 use App\Models\Link;
 use App\Models\Setting;
+use Carbon\CarbonInterface;
 use Illuminate\Http\Client\PendingRequest;
-use Illuminate\Support\Carbon;
 use Illuminate\Support\Collection;
 use Illuminate\Support\Facades\Cache;
 use Illuminate\Support\Facades\Http;
@@ -65,11 +65,11 @@ function systemsettings(string $key = '')
 /**
  * Output a correctly formatted date with the correct timezone
  *
- * @param Carbon $date
+ * @param CarbonInterface $date
  * @param bool   $use_relational
  * @return string
  */
-function formatDateTime(Carbon $date, bool $use_relational = false): string
+function formatDateTime(CarbonInterface $date, bool $use_relational = false): string
 {
     $timezone = config('app.timezone');
 
