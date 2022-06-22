@@ -56,7 +56,7 @@ class SettingsEntryTest extends TestCase
     public function testDarkmodeSettingsChange(): void
     {
         $settings = app(UserSettings::class);
-        $settings->darkmode_setting = 2;
+        $settings->darkmode_setting = 0;
         $settings->save();
 
         $historyEntry = Audit::where('auditable_type', SettingsAudit::class)->with('auditable')->latest()->first();
@@ -64,7 +64,7 @@ class SettingsEntryTest extends TestCase
         $output = (new SettingsEntry($historyEntry))->render();
 
         $this->assertStringContainsString(
-            'Changed Darkmode for User 1 from <code>Permanent</code> to <code>Automatically</code>',
+            'Changed Darkmode for User 1 from <code>Automatically</code> to <code>Disabled</code>',
             $output
         );
     }
@@ -104,7 +104,7 @@ class SettingsEntryTest extends TestCase
     public function testSharingSettingsChange(): void
     {
         $settings = app(UserSettings::class);
-        $settings->share_email = true;
+        $settings->share_email = false;
         $settings->save();
 
         $historyEntry = Audit::where('auditable_type', SettingsAudit::class)->with('auditable')->latest()->first();
@@ -112,7 +112,7 @@ class SettingsEntryTest extends TestCase
         $output = (new SettingsEntry($historyEntry))->render();
 
         $this->assertStringContainsString(
-            'Changed Link Sharing: Email from <code>No</code> to <code>Yes</code>',
+            'Changed Link Sharing: Email from <code>Yes</code> to <code>No</code>',
             $output
         );
     }

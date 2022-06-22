@@ -49,7 +49,7 @@ return [
      * additional prefix.
      */
     'cache' => [
-        'enabled' => env('SETTINGS_CACHE_ENABLED', true),
+        'enabled' => false,
         'store' => null,
         'prefix' => 'settings',
         'ttl' => null,

@@ -3,9 +3,8 @@
 namespace App\Http\Controllers\Setup;
 
 use App\Http\Controllers\Controller;
-use App\Settings\SettingsAudit;
+use App\Settings\SystemSettings;
 use Illuminate\Contracts\View\View;
-use Illuminate\Support\Facades\Cache;
 
 class MetaController extends Controller
 {
@@ -22,12 +21,13 @@ class MetaController extends Controller
     /**
      * Display a final screen after the setup was successful.
      *
+     * @param SystemSettings $settings
      * @return View
      */
-    public function complete(): View
+    public function complete(SystemSettings $settings): View
     {
-        SettingsAudit::create(['key' => 'system_setup_completed', 'value' => true]);
-        Cache::forget('systemsettings');
+        $settings->setup_completed = true;
+        $settings->save();
 
         return view('setup.complete');
     }

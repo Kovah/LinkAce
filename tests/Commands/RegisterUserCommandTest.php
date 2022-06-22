@@ -3,6 +3,7 @@
 namespace Tests\Commands;
 
 use App\Models\User;
+use App\Settings\SettingsAudit;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Tests\TestCase;
 
@@ -10,13 +11,10 @@ class RegisterUserCommandTest extends TestCase
 {
     use RefreshDatabase;
 
-    protected function setUp(): void
-    {
-        parent::setUp();
-    }
-
     public function testCommandWithInput(): void
     {
+        User::factory()->create(); // Create admin dummy user
+
         $this->artisan('registeruser', [
             'name' => 'Test',
             'email' => 'test@linkace.org',
@@ -25,7 +23,9 @@ class RegisterUserCommandTest extends TestCase
             ->expectsOutput('User Test registered.')
             ->assertExitCode(0);
 
-        $databaseUser = User::first();
+        $databaseUser = User::latest('id')->first();
+
+        //var_dump(User::all());
 
         $this->assertEquals('Test', $databaseUser->name);
         $this->assertEquals('test@linkace.org', $databaseUser->email);
@@ -33,6 +33,8 @@ class RegisterUserCommandTest extends TestCase
 
     public function testCommandWithoutInput(): void
     {
+        User::factory()->create(); // Create admin dummy user
+
         $this->artisan('registeruser')
             ->expectsQuestion('Please enter the user name', 'Test')
             ->expectsQuestion('Please enter the user email address', 'test@linkace.org')
@@ -40,7 +42,7 @@ class RegisterUserCommandTest extends TestCase
             ->expectsOutput('User Test registered.')
             ->assertExitCode(0);
 
-        $databaseUser = User::first();
+        $databaseUser = User::latest('id')->first();
 
         $this->assertEquals('Test', $databaseUser->name);
         $this->assertEquals('test@linkace.org', $databaseUser->email);

@@ -17,8 +17,6 @@ class MigrateExistingSettings extends SettingsMigration
         $this->migrateSystemSettings();
         $this->migrateGuestSettings();
         $this->migrateUserSettings();
-
-        Artisan::call('settings:clear-cache');
     }
 
     protected function migrateSystemSettings(): void
@@ -40,26 +38,26 @@ class MigrateExistingSettings extends SettingsMigration
         $this->migrator->add('guest.links_new_tab', (bool)$this->sysSettings->get('guest_links_new_tab', true));
         $this->migrator->add('guest.darkmode_setting', (int)$this->sysSettings->get('guest_darkmode_setting', 1));
 
-        $this->migrator->add('guest.share_email', (int)$this->sysSettings->get('guest_share_email', false));
-        $this->migrator->add('guest.share_buffer', (int)$this->sysSettings->get('guest_share_buffer', false));
-        $this->migrator->add('guest.share_evernote', (int)$this->sysSettings->get('guest_share_evernote', false));
-        $this->migrator->add('guest.share_facebook', (int)$this->sysSettings->get('guest_share_facebook', false));
-        $this->migrator->add('guest.share_flipboard', (int)$this->sysSettings->get('guest_share_flipboard', false));
-        $this->migrator->add('guest.share_hackernews', (int)$this->sysSettings->get('guest_share_hackernews', false));
-        $this->migrator->add('guest.share_linkedin', (int)$this->sysSettings->get('guest_share_linkedin', false));
-        $this->migrator->add('guest.share_mastodon', (int)$this->sysSettings->get('guest_share_mastodon', false));
-        $this->migrator->add('guest.share_pinterest', (int)$this->sysSettings->get('guest_share_pinterest', false));
-        $this->migrator->add('guest.share_pocket', (int)$this->sysSettings->get('guest_share_pocket', false));
-        $this->migrator->add('guest.share_reddit', (int)$this->sysSettings->get('guest_share_reddit', false));
-        $this->migrator->add('guest.share_skype', (int)$this->sysSettings->get('guest_share_skype', false));
-        $this->migrator->add('guest.share_sms', (int)$this->sysSettings->get('guest_share_sms', false));
-        $this->migrator->add('guest.share_telegram', (int)$this->sysSettings->get('guest_share_telegram', false));
-        $this->migrator->add('guest.share_trello', (int)$this->sysSettings->get('guest_share_trello', false));
-        $this->migrator->add('guest.share_tumblr', (int)$this->sysSettings->get('guest_share_tumblr', false));
-        $this->migrator->add('guest.share_twitter', (int)$this->sysSettings->get('guest_share_twitter', false));
-        $this->migrator->add('guest.share_wechat', (int)$this->sysSettings->get('guest_share_wechat', false));
-        $this->migrator->add('guest.share_whatsapp', (int)$this->sysSettings->get('guest_share_whatsapp', false));
-        $this->migrator->add('guest.share_xing', (int)$this->sysSettings->get('guest_share_xing', false));
+        $this->migrator->add('guest.share_email', (bool)$this->sysSettings->get('guest_share_email', false));
+        $this->migrator->add('guest.share_buffer', (bool)$this->sysSettings->get('guest_share_buffer', false));
+        $this->migrator->add('guest.share_evernote', (bool)$this->sysSettings->get('guest_share_evernote', false));
+        $this->migrator->add('guest.share_facebook', (bool)$this->sysSettings->get('guest_share_facebook', false));
+        $this->migrator->add('guest.share_flipboard', (bool)$this->sysSettings->get('guest_share_flipboard', false));
+        $this->migrator->add('guest.share_hackernews', (bool)$this->sysSettings->get('guest_share_hackernews', false));
+        $this->migrator->add('guest.share_linkedin', (bool)$this->sysSettings->get('guest_share_linkedin', false));
+        $this->migrator->add('guest.share_mastodon', (bool)$this->sysSettings->get('guest_share_mastodon', false));
+        $this->migrator->add('guest.share_pinterest', (bool)$this->sysSettings->get('guest_share_pinterest', false));
+        $this->migrator->add('guest.share_pocket', (bool)$this->sysSettings->get('guest_share_pocket', false));
+        $this->migrator->add('guest.share_reddit', (bool)$this->sysSettings->get('guest_share_reddit', false));
+        $this->migrator->add('guest.share_skype', (bool)$this->sysSettings->get('guest_share_skype', false));
+        $this->migrator->add('guest.share_sms', (bool)$this->sysSettings->get('guest_share_sms', false));
+        $this->migrator->add('guest.share_telegram', (bool)$this->sysSettings->get('guest_share_telegram', false));
+        $this->migrator->add('guest.share_trello', (bool)$this->sysSettings->get('guest_share_trello', false));
+        $this->migrator->add('guest.share_tumblr', (bool)$this->sysSettings->get('guest_share_tumblr', false));
+        $this->migrator->add('guest.share_twitter', (bool)$this->sysSettings->get('guest_share_twitter', false));
+        $this->migrator->add('guest.share_wechat', (bool)$this->sysSettings->get('guest_share_wechat', false));
+        $this->migrator->add('guest.share_whatsapp', (bool)$this->sysSettings->get('guest_share_whatsapp', false));
+        $this->migrator->add('guest.share_xing', (bool)$this->sysSettings->get('guest_share_xing', false));
     }
 
     protected function migrateUserSettings(): void
@@ -108,30 +106,30 @@ class MigrateExistingSettings extends SettingsMigration
         );
 
         $this->migrator->add('user-1.listitem_count', (int)$this->userSettings->get('listitem_count', 24));
-        $this->migrator->add('user-1.darkmode_setting', (int)$this->userSettings->get('darkmode_setting', 1));
+        $this->migrator->add('user-1.darkmode_setting', (int)$this->userSettings->get('darkmode_setting', 2));
         $this->migrator->add('user-1.link_display_mode', (int)$this->userSettings->get('link_display_mode', 1));
         $this->migrator->add('user-1.links_new_tab', (bool)$this->userSettings->get('links_new_tab', false));
-        $this->migrator->add('user-1.markdown_for_text', (bool)$this->userSettings->get('markdown_for_text', 1));
+        $this->migrator->add('user-1.markdown_for_text', (bool)$this->userSettings->get('markdown_for_text', true));
 
-        $this->migrator->add('user-1.share_email', (int)$this->userSettings->get('share_email', false));
-        $this->migrator->add('user-1.share_buffer', (int)$this->userSettings->get('share_buffer', false));
-        $this->migrator->add('user-1.share_evernote', (int)$this->userSettings->get('share_evernote', false));
-        $this->migrator->add('user-1.share_facebook', (int)$this->userSettings->get('share_facebook', false));
-        $this->migrator->add('user-1.share_flipboard', (int)$this->userSettings->get('share_flipboard', false));
-        $this->migrator->add('user-1.share_hackernews', (int)$this->userSettings->get('share_hackernews', false));
-        $this->migrator->add('user-1.share_linkedin', (int)$this->userSettings->get('share_linkedin', false));
-        $this->migrator->add('user-1.share_mastodon', (int)$this->userSettings->get('share_mastodon', false));
-        $this->migrator->add('user-1.share_pinterest', (int)$this->userSettings->get('share_pinterest', false));
-        $this->migrator->add('user-1.share_pocket', (int)$this->userSettings->get('share_pocket', false));
-        $this->migrator->add('user-1.share_reddit', (int)$this->userSettings->get('share_reddit', false));
-        $this->migrator->add('user-1.share_skype', (int)$this->userSettings->get('share_skype', false));
-        $this->migrator->add('user-1.share_sms', (int)$this->userSettings->get('share_sms', false));
-        $this->migrator->add('user-1.share_telegram', (int)$this->userSettings->get('share_telegram', false));
-        $this->migrator->add('user-1.share_trello', (int)$this->userSettings->get('share_trello', false));
-        $this->migrator->add('user-1.share_tumblr', (int)$this->userSettings->get('share_tumblr', false));
-        $this->migrator->add('user-1.share_twitter', (int)$this->userSettings->get('share_twitter', false));
-        $this->migrator->add('user-1.share_wechat', (int)$this->userSettings->get('share_wechat', false));
-        $this->migrator->add('user-1.share_whatsapp', (int)$this->userSettings->get('share_whatsapp', false));
-        $this->migrator->add('user-1.share_xing', (int)$this->userSettings->get('share_xing', false));
+        $this->migrator->add('user-1.share_email', (bool)$this->userSettings->get('share_email', true));
+        $this->migrator->add('user-1.share_buffer', (bool)$this->userSettings->get('share_buffer', true));
+        $this->migrator->add('user-1.share_evernote', (bool)$this->userSettings->get('share_evernote', true));
+        $this->migrator->add('user-1.share_facebook', (bool)$this->userSettings->get('share_facebook', true));
+        $this->migrator->add('user-1.share_flipboard', (bool)$this->userSettings->get('share_flipboard', true));
+        $this->migrator->add('user-1.share_hackernews', (bool)$this->userSettings->get('share_hackernews', true));
+        $this->migrator->add('user-1.share_linkedin', (bool)$this->userSettings->get('share_linkedin', true));
+        $this->migrator->add('user-1.share_mastodon', (bool)$this->userSettings->get('share_mastodon', true));
+        $this->migrator->add('user-1.share_pinterest', (bool)$this->userSettings->get('share_pinterest', true));
+        $this->migrator->add('user-1.share_pocket', (bool)$this->userSettings->get('share_pocket', true));
+        $this->migrator->add('user-1.share_reddit', (bool)$this->userSettings->get('share_reddit', true));
+        $this->migrator->add('user-1.share_skype', (bool)$this->userSettings->get('share_skype', true));
+        $this->migrator->add('user-1.share_sms', (bool)$this->userSettings->get('share_sms', true));
+        $this->migrator->add('user-1.share_telegram', (bool)$this->userSettings->get('share_telegram', true));
+        $this->migrator->add('user-1.share_trello', (bool)$this->userSettings->get('share_trello', true));
+        $this->migrator->add('user-1.share_tumblr', (bool)$this->userSettings->get('share_tumblr', true));
+        $this->migrator->add('user-1.share_twitter', (bool)$this->userSettings->get('share_twitter', true));
+        $this->migrator->add('user-1.share_wechat', (bool)$this->userSettings->get('share_wechat', true));
+        $this->migrator->add('user-1.share_whatsapp', (bool)$this->userSettings->get('share_whatsapp', true));
+        $this->migrator->add('user-1.share_xing', (bool)$this->userSettings->get('share_xing', true));
     }
 }

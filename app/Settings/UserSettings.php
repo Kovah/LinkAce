@@ -50,4 +50,31 @@ class UserSettings extends Settings
     {
         return 'user-' . auth()->id();
     }
+
+    /**
+     * Returns the default settings for users
+     *
+     * @return array{string: string|int|bool|null}
+     */
+    public static function defaults(): array
+    {
+        return [
+            'timezone' => 'UTC',
+            'date_format' => config('linkace.default.date_format'),
+            'time_format' => config('linkace.default.time_format'),
+            'locale' => config('app.fallback_locale'),
+            'links_private_default' => false,
+            'notes_private_default' => false,
+            'lists_private_default' => false,
+            'tags_private_default' => false,
+            'archive_backups_enabled' => true,
+            'archive_private_backups_enabled' => true,
+            'listitem_count' => 24,
+            'darkmode_setting' => 2,
+            'link_display_mode' => 1,
+            'links_new_tab' => false,
+            'markdown_for_text' => true,
+            'share_services' => true,
+        ];
+    }
 }

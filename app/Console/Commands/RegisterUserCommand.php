@@ -2,9 +2,10 @@
 
 namespace App\Console\Commands;
 
+use App\Actions\Fortify\CreateNewUser;
+use App\Actions\Settings\SetDefaultSettingsForUser;
 use App\Models\User;
 use Illuminate\Console\Command;
-use Illuminate\Support\Facades\Hash;
 
 class RegisterUserCommand extends Command
 {
@@ -32,11 +33,14 @@ class RegisterUserCommand extends Command
 
         $password = $this->secret('Please enter a password for ' . $name);
 
-        User::create([
+        $user = (new CreateNewUser)->create([
             'name' => $name,
             'email' => $email,
-            'password' => Hash::make($password),
+            'password' => $password,
+            'password_confirmation' => $password,
         ]);
+
+        (new SetDefaultSettingsForUser($user))->up();
 
         $this->info('User ' . $name . ' registered.');
     }

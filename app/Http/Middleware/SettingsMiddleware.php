@@ -2,6 +2,7 @@
 
 namespace App\Http\Middleware;
 
+use App\Settings\UserSettings;
 use Closure;
 use Illuminate\Http\Request;
 

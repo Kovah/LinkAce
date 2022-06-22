@@ -36,7 +36,7 @@ class DatabaseController extends Controller
      */
     public function configure(SetupDatabaseRequest $request): RedirectResponse
     {
-        $this->createTempDatabaseConnection($request->all());
+        $this->createTempDatabaseConnection($request->validated());
 
         if ($this->databaseHasData() && !$request->has('overwrite_data')) {
             flash(trans('setup.database.data_present'), 'danger');
@@ -69,7 +69,7 @@ class DatabaseController extends Controller
         $this->dbConfig['username'] = $credentials['db_user'];
         $this->dbConfig['password'] = $credentials['db_password'];
 
-        Config::set('database.connections.setup', $this->dbConfig);
+        Config::set('database.connections.mysql', $this->dbConfig);
     }
 
     /**
@@ -84,7 +84,7 @@ class DatabaseController extends Controller
     {
         try {
             Artisan::call('migrate:fresh', [
-                '--database' => 'setup', // Specify the correct connection
+                '--database' => 'mysql', // Specify the correct connection
                 '--force' => true, // Needed for production
                 '--no-interaction' => true,
             ]);
@@ -135,7 +135,7 @@ class DatabaseController extends Controller
     protected function databaseHasData(): bool
     {
         try {
-            $present_tables = DB::connection('setup')
+            $presentTables = DB::connection('mysql')
                 ->getDoctrineSchemaManager()
                 ->listTableNames();
         } catch (PDOException|\Doctrine\DBAL\Exception $e) {
@@ -143,6 +143,6 @@ class DatabaseController extends Controller
             return false;
         }
 
-        return count($present_tables) > 0;
+        return count($presentTables) > 0;
     }
 }
