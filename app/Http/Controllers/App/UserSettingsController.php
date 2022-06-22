@@ -7,12 +7,11 @@ use App\Actions\Fortify\UpdateUserProfileInformation;
 use App\Enums\ActivityLog;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\UserSettingsUpdateRequest;
-use App\Models\Setting;
+use App\Settings\UserSettings;
 use Illuminate\Contracts\View\View;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Cache;
 use Illuminate\Support\Str;
 use Illuminate\Validation\ValidationException;
 
@@ -52,19 +51,14 @@ class UserSettingsController extends Controller
      * @param UserSettingsUpdateRequest $request
      * @return RedirectResponse
      */
-    public function saveAppSettings(UserSettingsUpdateRequest $request): RedirectResponse
+    public function saveAppSettings(UserSettings $settings, UserSettingsUpdateRequest $request): RedirectResponse
     {
         $userId = $request->user()->id;
 
         // Save all user settings or update them
-        $settings = $request->except(['_token', 'share']);
-        foreach ($settings as $key => $value) {
-            Setting::updateOrCreate([
-                'user_id' => $userId,
-                'key' => $key,
-            ], [
-                'value' => $value,
-            ]);
+        $newSettings = $request->except(['_token', 'share']);
+        foreach ($newSettings as $key => $value) {
+            $settings->$key = $value;
         }
 
         // Enable / disable sharing services
@@ -72,17 +66,10 @@ class UserSettingsController extends Controller
         $userServices = $userServices['share'] ?? [];
 
         foreach (config('sharing.services') as $service => $details) {
-            $toggle = (int)array_key_exists($service, $userServices);
-
-            Setting::updateOrCreate([
-                'user_id' => $userId,
-                'key' => 'share_' . $service,
-            ], [
-                'value' => (string)$toggle,
-            ]);
+            $settings->{'share_' . $service} = array_key_exists($service, $userServices);
         }
 
-        Cache::forget('settings_keys');
+        $settings->save();
 
         flash(trans('settings.settings_saved'), 'success');
         return redirect()->back();

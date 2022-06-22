@@ -15,11 +15,11 @@
                 <select id="archive_backups_enabled" name="archive_backups_enabled"
                     class="form-select{{ $errors->has('archive_backups_enabled') ? ' is-invalid' : '' }}">
                     <option value="1"
-                        @if($user->settings()->get('archive_backups_enabled') === '1') selected @endif>
+                        @if(usersettings('archive_backups_enabled') === true) selected @endif>
                         @lang('linkace.yes')
                     </option>
                     <option value="0"
-                        @if($user->settings()->get('archive_backups_enabled') === '0') selected @endif>
+                        @if(usersettings('archive_backups_enabled') === false) selected @endif>
                         @lang('linkace.no')
                     </option>
                 </select>
@@ -42,11 +42,11 @@
                     name="archive_private_backups_enabled"
                     class="form-select{{ $errors->has('archive_private_backups_enabled') ? ' is-invalid' : '' }}">
                     <option value="1"
-                        @if($user->settings()->get('archive_private_backups_enabled') === '1') selected @endif>
+                        @if(usersettings('archive_private_backups_enabled') === true) selected @endif>
                         @lang('linkace.yes')
                     </option>
                     <option value="0"
-                        @if($user->settings()->get('archive_private_backups_enabled') === '0') selected @endif>
+                        @if(usersettings('archive_private_backups_enabled') === false) selected @endif>
                         @lang('linkace.no')
                     </option>
                 </select>

@@ -95,7 +95,7 @@ class Note extends Model
             return '';
         }
 
-        if (usersettings('markdown_for_text') !== '1') {
+        if (usersettings('markdown_for_text') === false) {
             return htmlentities($this->note);
         }
 

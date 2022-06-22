@@ -3,8 +3,9 @@
 namespace Tests\Controller\Guest;
 
 use App\Models\LinkList;
-use App\Models\Setting;
 use App\Models\User;
+use App\Settings\SettingsAudit;
+use App\Settings\SystemSettings;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Tests\TestCase;
 
@@ -16,9 +17,9 @@ class ListControllerTest extends TestCase
     {
         parent::setUp();
 
-        Setting::create([
-            'key' => 'system_guest_access',
-            'value' => '1',
+        SystemSettings::fake([
+            'guest_access_enabled' => true,
+            'setup_completed' => true,
         ]);
     }
 

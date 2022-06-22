@@ -3,10 +3,9 @@
 namespace App\Http\Controllers\Setup;
 
 use App\Http\Controllers\Controller;
-use App\Models\Setting;
+use App\Settings\SettingsAudit;
 use Illuminate\Contracts\View\View;
 use Illuminate\Support\Facades\Cache;
-use Illuminate\Support\Facades\File;
 
 class MetaController extends Controller
 {
@@ -27,7 +26,7 @@ class MetaController extends Controller
      */
     public function complete(): View
     {
-        Setting::create(['key' => 'system_setup_completed', 'value' => true]);
+        SettingsAudit::create(['key' => 'system_setup_completed', 'value' => true]);
         Cache::forget('systemsettings');
 
         return view('setup.complete');

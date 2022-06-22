@@ -2,9 +2,10 @@
 
 namespace Tests\Controller\Models;
 
-use App\Models\Setting;
 use App\Models\Tag;
 use App\Models\User;
+use App\Settings\SettingsAudit;
+use App\Settings\UserSettings;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Tests\TestCase;
 
@@ -85,10 +86,8 @@ class TagControllerTest extends TestCase
 
     public function testStoreRequestWithPrivateDefault(): void
     {
-        Setting::create([
-            'user_id' => 1,
-            'key' => 'tags_private_default',
-            'value' => '1',
+        UserSettings::fake([
+            'tags_private_default' => true,
         ]);
 
         $response = $this->post('tags', [

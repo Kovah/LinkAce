@@ -16,7 +16,7 @@ return [
         'system' => [
             'cron_token_regenerated' => 'System: Cron Token was re-generated',
         ],
-        'user' => [
+        'user_settings' => [
             'api_token_regenerated' => 'User: API Token was re-generated',
         ],
     ],

@@ -65,23 +65,4 @@ class User extends Authenticatable implements Auditable
     ];
 
     public array $auditModifiers = [];
-
-    /*
-     * ========================================================================
-     * RELATIONSHIPS
-     */
-
-    public function rawSettings(): HasMany
-    {
-        return $this->hasMany(Setting::class, 'user_id', 'id');
-    }
-
-    public function settings(): Collection
-    {
-        if ($this->rawSettings->isEmpty()) {
-            $this->load('rawSettings');
-        }
-
-        return $this->rawSettings->mapWithKeys(fn($item) => [$item['key'] => $item['value']]);
-    }
 }

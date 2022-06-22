@@ -1,6 +1,6 @@
 <div class="card mt-5">
     <div class="card-header">
-        @lang('settings.system_settings')
+        @lang('settings.settings')
     </div>
     <div class="card-body">
 
@@ -11,14 +11,14 @@
                 <div class="col-12 col-sm-8 col-md-6">
 
                     <div class="mb-4">
-                        <label class="form-label" for="system_page_title">
-                            @lang('settings.sys_page_title')
+                        <label class="form-label" for="page_title">
+                            @lang('settings.page_title')
                         </label>
-                        <input type="text" id="system_page_title" name="system_page_title" class="form-control"
-                            value="{{ old('system_page_title') ?: systemsettings('system_page_title') }}">
-                        @if ($errors->has('system_page_title'))
+                        <input type="text" id="page_title" name="page_title" class="form-control"
+                            value="{{ old('page_title') ?: systemsettings('page_title') }}">
+                        @if ($errors->has('page_title'))
                             <p class="invalid-feedback mt-1" role="alert">
-                                {{ $errors->first('system_page_title') }}
+                                {{ $errors->first('page_title') }}
                             </p>
                         @endif
                     </div>
@@ -27,24 +27,24 @@
                 <div class="col-12 col-sm-8 col-md-6">
 
                     <div class="mb-4">
-                        <label class="form-label" for="system_guest_access">
-                            @lang('settings.sys_guest_access')
+                        <label class="form-label" for="guest_access_enabled">
+                            @lang('settings.guest_access')
                         </label>
-                        <select id="system_guest_access" name="system_guest_access"
-                            class="simple-select {{ $errors->has('system_guest_access') ? ' is-invalid' : '' }}">
+                        <select id="guest_access_enabled" name="guest_access_enabled"
+                            class="simple-select {{ $errors->has('guest_access_enabled') ? ' is-invalid' : '' }}">
                             <option value="0"
-                                @if(systemsettings('system_guest_access') == 0) selected="selected" @endif>
+                                @if(systemsettings('guest_access_enabled')) selected="selected" @endif>
                                 @lang('linkace.no')
                             </option>
                             <option value="1"
-                                @if(systemsettings('system_guest_access') == 1) selected="selected" @endif>
+                                @if(systemsettings('guest_access_enabled')) selected="selected" @endif>
                                 @lang('linkace.yes')
                             </option>
                         </select>
-                        <p class="small text-muted mt-1">@lang('settings.sys_guest_access_help')</p>
-                        @if ($errors->has('system_guest_access'))
+                        <p class="small text-muted mt-1">@lang('settings.guest_access_enabled_help')</p>
+                        @if ($errors->has('guest_access_enabled'))
                             <p class="invalid-feedback" role="alert">
-                                {{ $errors->first('system_guest_access') }}
+                                {{ $errors->first('guest_access_enabled') }}
                             </p>
                         @endif
                     </div>
@@ -55,18 +55,18 @@
             <div class="row">
                 <div class="col-12 col-sm-8 col-md-6">
                     <div class="mb-4">
-                        <label class="form-label" for="system_custom_header_content">
-                            @lang('settings.sys_custom_header_content')
+                        <label class="form-label" for="custom_header_content">
+                            @lang('settings.custom_header_content')
                         </label>
 
-                        <textarea name="system_custom_header_content" id="system_custom_header_content" rows="4"
-                            class="form-control{{ $errors->has('system_custom_header_content') ? ' is-invalid' : '' }}"
-                        >{{ old('system_custom_header_content', systemsettings('system_custom_header_content')) }}</textarea>
-                        <p class="small text-muted mt-1">@lang('settings.sys_custom_header_content_help')</p>
+                        <textarea name="custom_header_content" id="custom_header_content" rows="4"
+                            class="form-control{{ $errors->has('custom_header_content') ? ' is-invalid' : '' }}"
+                        >{{ old('custom_header_content', systemsettings('custom_header_content')) }}</textarea>
+                        <p class="small text-muted mt-1">@lang('settings.custom_header_content_help')</p>
 
-                        @error('system_custom_header_content')
+                        @error('custom_header_content')
                         <p class="invalid-feedback" role="alert">
-                            {{ $errors->first('system_custom_header_content') }}
+                            {{ $errors->first('custom_header_content') }}
                         </p>
                         @enderror
                     </div>

@@ -10,8 +10,7 @@ class AuditControllerTest extends TestCase
 {
     use RefreshDatabase;
 
-    /** @var User */
-    private $user;
+    private User $user;
 
     protected function setUp(): void
     {

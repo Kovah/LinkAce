@@ -37,8 +37,6 @@ class HelperFunctionsTest extends TestCase
             'timezone' => 'Europe/Berlin',
         ]);
 
-        $this->user->load('rawSettings'); // Reload cached settings from other tests
-
         $settings = usersettings();
 
         $this->assertArrayHasKey('locale', $settings);
@@ -56,14 +54,14 @@ class HelperFunctionsTest extends TestCase
         $this->actingAs($this->user);
 
         $this->post('settings/system', [
-            'system_page_title' => 'New Title',
-            'system_guest_access' => '1',
+            'page_title' => 'New Title',
+            'guest_access' => '1',
         ]);
 
         $settings = systemsettings();
 
-        $this->assertArrayHasKey('system_page_title', $settings);
-        $this->assertEquals('New Title', $settings['system_page_title']);
+        $this->assertArrayHasKey('page_title', $settings);
+        $this->assertEquals('New Title', $settings['page_title']);
     }
 
     /**
@@ -79,8 +77,6 @@ class HelperFunctionsTest extends TestCase
             'date_format' => 'd.m.Y',
             'time_format' => 'H:i:s',
         ]);
-
-        $this->user->load('rawSettings'); // Reload cached settings from other tests
 
         $dateTime = now();
         $appFormatted = formatDateTime($dateTime);
@@ -101,8 +97,6 @@ class HelperFunctionsTest extends TestCase
             'timezone' => 'Europe/Berlin',
             'listitem_count' => '100',
         ]);
-
-        $this->user->load('rawSettings'); // Reload cached settings from other tests
 
         $limit = getPaginationLimit();
 

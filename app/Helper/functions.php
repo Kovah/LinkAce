@@ -3,7 +3,9 @@
 use App\Helper\Sharing;
 use App\Helper\WaybackMachine;
 use App\Models\Link;
-use App\Models\Setting;
+use App\Settings\GuestSettings;
+use App\Settings\SystemSettings;
+use App\Settings\UserSettings;
 use Carbon\CarbonInterface;
 use Illuminate\Http\Client\PendingRequest;
 use Illuminate\Support\Collection;
@@ -19,7 +21,7 @@ use Illuminate\Support\Facades\Log;
 function setupCompleted()
 {
     try {
-        return systemsettings('system_setup_completed');
+        return systemsettings('setup_completed');
     } catch (PDOException $e) {
         Log::error($e->getMessage());
         return false;
@@ -38,28 +40,41 @@ function usersettings(string $key = ''): mixed
         return null;
     }
 
-    if (!empty($key)) {
-        return auth()->user()->settings()->get($key);
+    if ($key === '') {
+        return app(UserSettings::class)->toArray();
     }
 
-    return auth()->user()->settings();
+    return app(UserSettings::class)->$key ?? null;
 }
 
 /**
  * Retrieve system settings
  *
  * @param string $key
- * @return Collection|null|string
+ * @return mixed
+ */
+function guestsettings(string $key = '')
+{
+    if ($key === '') {
+        return app(GuestSettings::class)->toArray();
+    }
+
+    return app(GuestSettings::class)->$key ?? null;
+}
+
+/**
+ * Retrieve system settings
+ *
+ * @param string $key
+ * @return mixed
  */
 function systemsettings(string $key = '')
 {
-    $settings = Cache::rememberForever('systemsettings', fn() => Setting::systemOnly()->get()->pluck('value', 'key'));
-
     if ($key === '') {
-        return $settings;
+        return app(SystemSettings::class)->toArray();
     }
 
-    return $settings[$key] ?? null;
+    return app(SystemSettings::class)->$key ?? null;
 }
 
 /**
@@ -80,11 +95,11 @@ function formatDateTime(CarbonInterface $date, bool $use_relational = false): st
     $format = config('linkace.default.date_format');
     $format .= ' ' . config('linkace.default.time_format');
 
-    $user_date_format = usersettings('date_format');
-    $user_time_format = usersettings('time_format');
+    $userDateFormat = usersettings('date_format');
+    $userTimeFormat = usersettings('time_format');
 
-    if ($user_date_format && $user_time_format) {
-        $format = $user_date_format . ' ' . $user_time_format;
+    if ($userDateFormat && $userTimeFormat) {
+        $format = $userDateFormat . ' ' . $userTimeFormat;
     }
 
     return $date->setTimezone($timezone)->format($format);
@@ -104,7 +119,7 @@ function getPaginationLimit(): mixed
     $default = config('linkace.default.pagination');
 
     if (request()->is('guest/*')) {
-        return systemsettings('guest_listitem_count') ?: $default;
+        return guestsettings('listitem_count') ?: $default;
     }
 
     return usersettings('listitem_count') ?: $default;
@@ -127,7 +142,7 @@ function getShareLinks(Link $link): string
 
         foreach ($services as $service => $details) {
             if (request()->is('guest/*')) {
-                if (systemsettings('guest_share_' . $service)) {
+                if (guestsettings('share_' . $service)) {
                     $links .= Sharing::getShareLink($service, $link);
                 }
             } elseif (usersettings('share_' . $service)) {
@@ -189,7 +204,7 @@ function linkTarget(): string
     $newTab = 'target="_blank" rel="noopener noreferrer"';
 
     if (request()->is('guest/*')) {
-        return systemsettings('guest_links_new_tab') ? $newTab : '';
+        return guestsettings('links_new_tab') ? $newTab : '';
     }
 
     return usersettings('links_new_tab') ? $newTab : '';

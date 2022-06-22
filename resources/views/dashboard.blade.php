@@ -9,7 +9,7 @@
             <form action="{{ route('links.store') }}" method="POST">
                 @csrf
 
-                <input type="hidden" name="is_private" value="{{ usersettings('private_default') ?: 0 }}">
+                <input type="hidden" name="is_private" value="{{ usersettings('links_private_default') ?: 0 }}">
                 <input type="hidden" name="title" value="">
                 <input type="hidden" name="description" value="">
                 <input type="hidden" name="lists" value="">

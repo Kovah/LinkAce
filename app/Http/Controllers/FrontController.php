@@ -16,7 +16,7 @@ class FrontController extends Controller
     public function __invoke()
     {
         if (!auth()->check()) {
-            if (systemsettings('system_guest_access')) {
+            if (systemsettings('guest_access_enabled')) {
                 return redirect()->route('guest.links.index');
             }
 

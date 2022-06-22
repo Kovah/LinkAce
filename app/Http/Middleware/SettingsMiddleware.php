@@ -20,9 +20,9 @@ class SettingsMiddleware
             return $next($request);
         }
 
-        // Set global configs based on the user settings
-        if ($user_timezone = usersettings('timezone')) {
-            config(['app.timezone' => $user_timezone]);
+         // Set global configs based on the user settings
+        if ($userTimezone = usersettings('timezone')) {
+            config(['app.timezone' => $userTimezone]);
         }
 
         if ($userLocale = usersettings('locale')) {

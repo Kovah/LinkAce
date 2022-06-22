@@ -4,8 +4,9 @@ namespace Tests\Controller\Models;
 
 use App\Models\Link;
 use App\Models\Note;
-use App\Models\Setting;
 use App\Models\User;
+use App\Settings\SettingsAudit;
+use App\Settings\UserSettings;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Tests\TestCase;
 
@@ -41,10 +42,8 @@ class NoteControllerTest extends TestCase
 
     public function testStoreRequestWithPrivateDefault(): void
     {
-        Setting::create([
-            'user_id' => 1,
-            'key' => 'notes_private_default',
-            'value' => '1',
+        UserSettings::fake([
+            'notes_private_default' => true,
         ]);
 
         $link = Link::factory()->create();
@@ -62,10 +61,8 @@ class NoteControllerTest extends TestCase
 
     public function testStoreRequestWithMarkdown(): void
     {
-        Setting::create([
-            'user_id' => 1,
-            'key' => 'markdown_for_text',
-            'value' => '1',
+        UserSettings::fake([
+            'markdown_for_text' => true,
         ]);
 
         $link = Link::factory()->create();

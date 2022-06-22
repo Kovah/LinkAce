@@ -18,7 +18,7 @@
                             class="simple-select {{ $errors->has('locale') ? ' is-invalid' : '' }}">
                             @foreach(config('app.available_locales') as $key => $locale)
                                 <option value="{{ $key }}"
-                                    @if($user->settings()->get('locale') === $key) selected @endif>
+                                    @if(usersettings('locale') === $key) selected @endif>
                                     {{ $locale }}
                                 </option>
                             @endforeach
@@ -41,7 +41,7 @@
                             class="simple-select {{ $errors->has('timezone') ? ' is-invalid' : '' }}">
                             @foreach(timezone_identifiers_list() as $key => $zone)
                                 <option value="{{ $zone }}"
-                                    @if($user->settings()->get('timezone') === $zone) selected @endif>
+                                    @if(usersettings('timezone') === $zone) selected @endif>
                                     {{ $zone }}
                                 </option>
                             @endforeach
@@ -67,7 +67,7 @@
                             class="form-select{{ $errors->has('date_format') ? ' is-invalid' : '' }}">
                             @foreach(config('linkace.formats.date') as $date_format)
                                 <option value="{{ $date_format }}"
-                                    @if($user->settings()->get('date_format') === $date_format) selected @endif>
+                                    @if(usersettings('date_format') === $date_format) selected @endif>
                                     {{ $date_format }} ({{ date($date_format) }})
                                 </option>
                             @endforeach
@@ -90,7 +90,7 @@
                             class="form-select{{ $errors->has('time_format') ? ' is-invalid' : '' }}">
                             @foreach(config('linkace.formats.time') as $time_format)
                                 <option value="{{ $time_format }}"
-                                    @if($user->settings()->get('time_format') === $time_format) selected @endif>
+                                    @if(usersettings('time_format') === $time_format) selected @endif>
                                     {{ $time_format }} ({{ date($time_format) }})
                                 </option>
                             @endforeach
@@ -116,7 +116,7 @@
                             class="form-select{{ $errors->has('listitem_count') ? ' is-invalid' : '' }}">
                             @foreach(config('linkace.listitem_count_values') as $item_count)
                                 <option value="{{ $item_count }}"
-                                    @if($user->settings()->get('listitem_count') == $item_count) selected @endif>
+                                    @if(usersettings('listitem_count') === $item_count) selected @endif>
                                     {{ $item_count }} @lang('linkace.entries')
                                 </option>
                             @endforeach
@@ -138,25 +138,25 @@
                         <select id="link_display_mode" name="link_display_mode"
                             class="form-select{{ $errors->has('link_display_mode') ? ' is-invalid' : '' }}">
                             <option value="{{ Link::DISPLAY_LIST_DETAILED }}"
-                                @if((int)$user->settings()->get('link_display_mode') === Link::DISPLAY_LIST_DETAILED)
+                                @if(usersettings('link_display_mode') === Link::DISPLAY_LIST_DETAILED)
                                 selected
                                 @endif>
                                 @lang('settings.display_mode_list_detailed')
                             </option>
                             <option value="{{ Link::DISPLAY_LIST_SIMPLE }}"
-                                @if((int)$user->settings()->get('link_display_mode') === Link::DISPLAY_LIST_SIMPLE)
+                                @if(usersettings('link_display_mode') === Link::DISPLAY_LIST_SIMPLE)
                                 selected
                                 @endif>
                                 @lang('settings.display_mode_list_simple')
                             </option>
                             <option value="{{ Link::DISPLAY_CARDS }}"
-                                @if((int)$user->settings()->get('link_display_mode') === Link::DISPLAY_CARDS)
+                                @if(usersettings('link_display_mode') === Link::DISPLAY_CARDS)
                                 selected
                                 @endif>
                                 @lang('settings.display_mode_cards')
                             </option>
                             <option value="{{ Link::DISPLAY_CARDS_DETAILED }}"
-                                @if((int)$user->settings()->get('link_display_mode') === Link::DISPLAY_CARDS_DETAILED)
+                                @if(usersettings('link_display_mode') === Link::DISPLAY_CARDS_DETAILED)
                                 selected
                                 @endif>
                                 @lang('settings.display_mode_cards_detailed')
@@ -181,10 +181,10 @@
                         </label>
                         <select id="links_new_tab" name="links_new_tab"
                             class="simple-select {{ $errors->has('links_new_tab') ? ' is-invalid' : '' }}">
-                            <option value="0" @if($user->settings()->get('links_new_tab') === '0') selected @endif>
+                            <option value="0" @if(usersettings('links_new_tab') === false) selected @endif>
                                 @lang('linkace.no')
                             </option>
-                            <option value="1" @if($user->settings()->get('links_new_tab') === '1') selected @endif>
+                            <option value="1" @if(usersettings('links_new_tab') === true) selected @endif>
                                 @lang('linkace.yes')
                             </option>
                         </select>
@@ -204,10 +204,10 @@
                         </label>
                         <select id="markdown_for_text" name="markdown_for_text"
                             class="simple-select {{ $errors->has('markdown_for_text') ? ' is-invalid' : '' }}">
-                            <option value="1" @if($user->settings()->get('markdown_for_text') === '1') selected @endif>
+                            <option value="1" @if(usersettings('markdown_for_text') === true) selected @endif>
                                 @lang('linkace.yes')
                             </option>
-                            <option value="0" @if($user->settings()->get('markdown_for_text') === '0') selected @endif>
+                            <option value="0" @if(usersettings('markdown_for_text') === false) selected @endif>
                                 @lang('linkace.no')
                             </option>
                         </select>

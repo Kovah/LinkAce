@@ -2,8 +2,11 @@
 
 namespace Tests\Components\History;
 
-use App\Models\Setting;
 use App\Models\User;
+use App\Settings\GuestSettings;
+use App\Settings\SettingsAudit;
+use App\Settings\SystemSettings;
+use App\Settings\UserSettings;
 use App\View\Components\History\SettingsEntry;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use OwenIt\Auditing\Models\Audit;
@@ -23,97 +26,104 @@ class SettingsEntryTest extends TestCase
 
     public function testStringSettingsChange(): void
     {
-        $setting = Setting::create(['key' => 'timezone', 'value' => 'Europe/Berlin']);
-        $setting->update(['value' => 'UTC']);
+        $settings = app(SystemSettings::class);
+        $settings->page_title = 'A new Page Title';
+        $settings->save();
 
-        $historyEntry = Audit::where('auditable_type', Setting::class)->with('auditable')->latest()->first();
+        $historyEntry = Audit::where('auditable_type', SettingsAudit::class)->with('auditable')->latest()->first();
 
         $output = (new SettingsEntry($historyEntry))->render();
 
         $this->assertStringContainsString(
-            'Changed Timezone from <code>Europe/Berlin</code> to <code>UTC</code>',
+            'Changed Page Title from <code></code> to <code>A new Page Title</code>',
             $output
         );
     }
 
     public function testBooleanSettingsChange(): void
     {
-        $setting = Setting::create(['key' => 'archive_backups_enabled', 'value' => true]);
-        $setting->update(['value' => false]);
+        $settings = app(UserSettings::class);
+        $settings->archive_backups_enabled = false;
+        $settings->save();
 
-        $historyEntry = Audit::where('auditable_type', Setting::class)->with('auditable')->latest()->first();
+        $historyEntry = Audit::where('auditable_type', SettingsAudit::class)->with('auditable')->latest()->first();
 
         $output = (new SettingsEntry($historyEntry))->render();
 
-        $this->assertStringContainsString('Changed Enable backups from <code>Yes</code> to <code>No</code>', $output);
+        $this->assertStringContainsString('Changed Enable backups for User 1 from <code>Yes</code> to <code>No</code>', $output);
     }
 
     public function testDarkmodeSettingsChange(): void
     {
-        $setting = Setting::create(['key' => 'darkmode_setting', 'value' => 1]);
-        $setting->update(['value' => 2]);
+        $settings = app(UserSettings::class);
+        $settings->darkmode_setting = 2;
+        $settings->save();
 
-        $historyEntry = Audit::where('auditable_type', Setting::class)->with('auditable')->latest()->first();
+        $historyEntry = Audit::where('auditable_type', SettingsAudit::class)->with('auditable')->latest()->first();
 
         $output = (new SettingsEntry($historyEntry))->render();
 
         $this->assertStringContainsString(
-            'Changed Darkmode from <code>Permanent</code> to <code>Automatically</code>',
+            'Changed Darkmode for User 1 from <code>Permanent</code> to <code>Automatically</code>',
             $output
         );
     }
 
     public function testDisplayModeSettingsChange(): void
     {
-        $setting = Setting::create(['key' => 'link_display_mode', 'value' => 1]);
-        $setting->update(['value' => 2]);
+        $settings = app(UserSettings::class);
+        $settings->link_display_mode = 2;
+        $settings->save();
 
-        $historyEntry = Audit::where('auditable_type', Setting::class)->with('auditable')->latest()->first();
+        $historyEntry = Audit::where('auditable_type', SettingsAudit::class)->with('auditable')->latest()->first();
 
         $output = (new SettingsEntry($historyEntry))->render();
 
         $this->assertStringContainsString(
-            'Changed Link Display Mode from <code>cards with less details</code> to <code>list with less details</code>',
+            'Changed Link Display Mode for User 1 from <code>cards with less details</code> to <code>list with less details</code>',
             $output
         );
     }
 
     public function testLocaleSettingsChange(): void
     {
-        $setting = Setting::create(['key' => 'locale', 'value' => 'en_US']);
-        $setting->update(['value' => 'de_DE']);
+        $settings = app(UserSettings::class);
+        $settings->locale = 'de_DE';
+        $settings->save();
 
-        $historyEntry = Audit::where('auditable_type', Setting::class)->with('auditable')->latest()->first();
+        $historyEntry = Audit::where('auditable_type', SettingsAudit::class)->with('auditable')->latest()->first();
 
         $output = (new SettingsEntry($historyEntry))->render();
 
         $this->assertStringContainsString(
-            'Changed Language from <code>English</code> to <code>Deutsch</code>',
+            'Changed Language for User 1 from <code>English</code> to <code>Deutsch</code>',
             $output
         );
     }
 
     public function testSharingSettingsChange(): void
     {
-        $setting = Setting::create(['key' => 'share_email', 'value' => true]);
-        $setting->update(['value' => false]);
+        $settings = app(UserSettings::class);
+        $settings->share_email = true;
+        $settings->save();
 
-        $historyEntry = Audit::where('auditable_type', Setting::class)->with('auditable')->latest()->first();
+        $historyEntry = Audit::where('auditable_type', SettingsAudit::class)->with('auditable')->latest()->first();
 
         $output = (new SettingsEntry($historyEntry))->render();
 
         $this->assertStringContainsString(
-            'Changed Link Sharing: Email from <code>Yes</code> to <code>No</code>',
+            'Changed Link Sharing: Email from <code>No</code> to <code>Yes</code>',
             $output
         );
     }
 
     public function testGuestSettingsChange(): void
     {
-        $setting = Setting::create(['key' => 'guest_listitem_count', 'value' => 24]);
-        $setting->update(['value' => 60]);
+        $settings = app(GuestSettings::class);
+        $settings->listitem_count = 60;
+        $settings->save();
 
-        $historyEntry = Audit::where('auditable_type', Setting::class)->with('auditable')->latest()->first();
+        $historyEntry = Audit::where('auditable_type', SettingsAudit::class)->with('auditable')->latest()->first();
 
         $output = (new SettingsEntry($historyEntry))->render();
 
@@ -125,10 +135,11 @@ class SettingsEntryTest extends TestCase
 
     public function testUserSettingsChange(): void
     {
-        $setting = Setting::create(['key' => 'locale', 'value' => 'en_US', 'user_id' => 1]);
-        $setting->update(['value' => 'de_DE']);
+        $settings = app(UserSettings::class);
+        $settings->locale = 'de_DE';
+        $settings->save();
 
-        $historyEntry = Audit::where('auditable_type', Setting::class)->with('auditable')->latest()->first();
+        $historyEntry = Audit::where('auditable_type', SettingsAudit::class)->with('auditable')->latest()->first();
 
         $output = (new SettingsEntry($historyEntry))->render();
 

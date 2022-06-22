@@ -3,8 +3,9 @@
 namespace Tests\Controller\Models;
 
 use App\Models\LinkList;
-use App\Models\Setting;
 use App\Models\User;
+use App\Settings\SettingsAudit;
+use App\Settings\UserSettings;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Tests\TestCase;
 
@@ -103,10 +104,8 @@ class ListControllerTest extends TestCase
 
     public function testStoreRequestWithPrivateDefault(): void
     {
-        Setting::create([
-            'user_id' => 1,
-            'key' => 'lists_private_default',
-            'value' => '1',
+        UserSettings::fake([
+            'lists_private_default' => true,
         ]);
 
         $response = $this->post('lists', [

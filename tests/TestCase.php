@@ -2,7 +2,7 @@
 
 namespace Tests;
 
-use App\Models\Setting;
+use App\Settings\SystemSettings;
 use Illuminate\Foundation\Testing\TestCase as BaseTestCase;
 
 abstract class TestCase extends BaseTestCase
@@ -13,11 +13,8 @@ abstract class TestCase extends BaseTestCase
     {
         parent::setUp();
 
-        Setting::withoutEvents(function () {
-            Setting::updateOrCreate(
-                ['key' => 'system_setup_completed'],
-                ['key' => 'system_setup_completed', 'value' => true]
-            );
-        });
+        SystemSettings::fake([
+            'setup_completed' => true
+        ]);
     }
 }

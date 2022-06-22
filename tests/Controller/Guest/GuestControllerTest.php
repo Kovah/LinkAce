@@ -2,7 +2,8 @@
 
 namespace Tests\Controller\Guest;
 
-use App\Models\Setting;
+use App\Settings\SettingsAudit;
+use App\Settings\SystemSettings;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Tests\TestCase;
 
@@ -12,9 +13,9 @@ class GuestControllerTest extends TestCase
 
     public function testGuestModeEnabled(): void
     {
-        Setting::create([
-            'key' => 'system_guest_access',
-            'value' => '1',
+        SystemSettings::fake([
+            'guest_access_enabled' => true,
+            'setup_completed' => true,
         ]);
 
         $response = $this->get('/');

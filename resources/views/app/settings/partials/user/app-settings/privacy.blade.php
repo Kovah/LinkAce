@@ -13,11 +13,11 @@
                 <select id="links_private_default" name="links_private_default"
                     class="form-select{{ $errors->has('links_private_default') ? ' is-invalid' : '' }}">
                     <option value="0"
-                        @if($user->settings()->get('links_private_default') === '0') selected @endif>
+                        @if(usersettings('links_private_default') === false) selected @endif>
                         @lang('linkace.no')
                     </option>
                     <option value="1"
-                        @if($user->settings()->get('links_private_default') === '1') selected @endif>
+                        @if(usersettings('links_private_default') === true) selected @endif>
                         @lang('linkace.yes')
                     </option>
                 </select>
@@ -39,11 +39,11 @@
                 <select id="notes_private_default" name="notes_private_default"
                     class="form-select{{ $errors->has('notes_private_default') ? ' is-invalid' : '' }}">
                     <option value="0"
-                        @if($user->settings()->get('notes_private_default') === '0') selected @endif>
+                        @if(usersettings('notes_private_default') === false) selected @endif>
                         @lang('linkace.no')
                     </option>
                     <option value="1"
-                        @if($user->settings()->get('notes_private_default') === '1') selected @endif>
+                        @if(usersettings('notes_private_default') === true) selected @endif>
                         @lang('linkace.yes')
                     </option>
                 </select>
@@ -68,11 +68,11 @@
                 <select id="lists_private_default" name="lists_private_default"
                     class="form-select{{ $errors->has('lists_private_default') ? ' is-invalid' : '' }}">
                     <option value="0"
-                        @if($user->settings()->get('lists_private_default') === '0') selected @endif>
+                        @if(usersettings('lists_private_default') === false) selected @endif>
                         @lang('linkace.no')
                     </option>
                     <option value="1"
-                        @if($user->settings()->get('lists_private_default') === '1') selected @endif>
+                        @if(usersettings('lists_private_default') === true) selected @endif>
                         @lang('linkace.yes')
                     </option>
                 </select>
@@ -94,11 +94,11 @@
                 <select id="tags_private_default" name="tags_private_default"
                     class="form-select{{ $errors->has('tags_private_default') ? ' is-invalid' : '' }}">
                     <option value="0"
-                        @if($user->settings()->get('tags_private_default') === '0') selected @endif>
+                        @if(usersettings('tags_private_default') === false) selected @endif>
                         @lang('linkace.no')
                     </option>
                     <option value="1"
-                        @if($user->settings()->get('tags_private_default') === '1') selected @endif>
+                        @if(usersettings('tags_private_default') === true) selected @endif>
                         @lang('linkace.yes')
                     </option>
                 </select>

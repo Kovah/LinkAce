@@ -2,7 +2,7 @@
 
 namespace App\View\Components\History;
 
-use App\Models\Setting;
+use App\Settings\SettingsAudit;
 use Illuminate\View\Component;
 use OwenIt\Auditing\Models\Audit;
 
@@ -10,7 +10,7 @@ class SettingsEntry extends Component
 {
     use ProcessesHistory;
 
-    private string $model = Setting::class;
+    private string $model = SettingsAudit::class;
     private string $translateBase = 'settings';
 
     public function __construct(private Audit $entry)
@@ -57,18 +57,21 @@ class SettingsEntry extends Component
      */
     protected function processFieldName(string $field)
     {
-        if (str_starts_with($field, 'guest_')) {
-            $field = str_replace('guest_', '', $field);
+        if ($this->entry->auditable->group === 'guest') {
             $prepend = trans('settings.guest_settings') . ': ';
         }
 
         if (str_starts_with($field, 'share_')) {
             $service = str_replace('share_', '', $field);
-            return trans('settings.sharing') . ': ' . trans('sharing.service.' . $service);
+            return ($prepend ?? '') . trans('settings.sharing') . ': ' . trans('sharing.service.' . $service);
         }
 
-        if ($this->entry->auditable->user_id !== null) {
-            $append = sprintf(' %s %s', trans('user.for_user'), $this->entry->auditable->user_id);
+        if (str_starts_with($this->entry->auditable->group, 'user-')) {
+            $append = sprintf(
+                ' %s %s',
+                trans('user.for_user'),
+                str_replace('user-', '', $this->entry->auditable->group)
+            );
         }
 
         return ($prepend ?? '') . trans('settings.' . $field) . ($append ?? '');
@@ -87,11 +90,11 @@ class SettingsEntry extends Component
         $oldValue = $changeData['old'] ?? null;
         $newValue = $changeData['new'] ?? null;
 
-        if (str_contains($field, 'guest_share_') || str_contains($field, 'share_')) {
+        if (str_contains($field, 'share_')) {
             $field = 'share_service';
         }
 
-        $model = app(Setting::class);
+        $model = app(SettingsAudit::class);
 
         if (isset($model->auditModifiers[$field])) {
             $modifier = app($model->auditModifiers[$field]);

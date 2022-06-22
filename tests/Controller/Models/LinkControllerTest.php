@@ -5,9 +5,10 @@ namespace Tests\Controller\Models;
 use App\Jobs\SaveLinkToWaybackmachine;
 use App\Models\Link;
 use App\Models\LinkList;
-use App\Models\Setting;
 use App\Models\Tag;
 use App\Models\User;
+use App\Settings\SettingsAudit;
+use App\Settings\UserSettings;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Support\Facades\Http;
 use Illuminate\Support\Facades\Queue;
@@ -98,10 +99,8 @@ class LinkControllerTest extends TestCase
 
     public function testStoreRequestWithPrivateDefault(): void
     {
-        Setting::create([
-            'user_id' => 1,
-            'key' => 'links_private_default',
-            'value' => '1',
+        UserSettings::fake([
+            'links_private_default' => true,
         ]);
 
         $response = $this->post('links', [
@@ -203,10 +202,8 @@ class LinkControllerTest extends TestCase
 
     public function testStoreRequestWithoutArchiveBackup(): void
     {
-        Setting::create([
-            'user_id' => 1,
-            'key' => 'archive_backups_enabled',
-            'value' => '0',
+        UserSettings::fake([
+            'archive_backups_enabled' => false,
         ]);
 
         $this->post('links', [
@@ -223,16 +220,9 @@ class LinkControllerTest extends TestCase
 
     public function testStoreRequestWithoutPrivateArchiveBackup(): void
     {
-        Setting::create([
-            'user_id' => 1,
-            'key' => 'archive_backups_enabled',
-            'value' => '1',
-        ]);
-
-        Setting::create([
-            'user_id' => 1,
-            'key' => 'archive_private_backups_enabled',
-            'value' => '0',
+        UserSettings::fake([
+            'archive_backups_enabled' => true,
+            'archive_private_backups_enabled' => false,
         ]);
 
         $this->post('links', [

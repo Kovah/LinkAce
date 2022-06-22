@@ -13,21 +13,21 @@
                 <div class="col-12 col-sm-8 col-md-6">
 
                     <div class="mb-4">
-                        <label class="form-label" for="guest_listitem_count">
+                        <label class="form-label" for="listitem_count">
                             @lang('settings.listitem_count')
                         </label>
-                        <select id="guest_listitem_count" name="guest_listitem_count"
-                            class="form-select{{ $errors->has('guest_listitem_count') ? ' is-invalid' : '' }}">
+                        <select id="listitem_count" name="listitem_count"
+                            class="form-select{{ $errors->has('listitem_count') ? ' is-invalid' : '' }}">
                             @foreach(config('linkace.listitem_count_values') as $item_count)
                                 <option value="{{ $item_count }}"
-                                    @if(systemsettings('guest_listitem_count') == $item_count) selected @endif>
+                                    @if(guestsettings('listitem_count') === $item_count) selected @endif>
                                     {{ $item_count }} @lang('linkace.entries')
                                 </option>
                             @endforeach
                         </select>
-                        @if ($errors->has('guest_listitem_count'))
+                        @if ($errors->has('listitem_count'))
                             <p class="invalid-feedback" role="alert">
-                                {{ $errors->first('guest_listitem_count') }}
+                                {{ $errors->first('listitem_count') }}
                             </p>
                         @endif
                     </div>
@@ -36,33 +36,33 @@
                 <div class="col-12 col-sm-8 col-md-6">
 
                     <div class="mb-4">
-                        <label class="form-label" for="guest_link_display_mode">
+                        <label class="form-label" for="link_display_mode">
                             @lang('settings.display_mode')
                         </label>
-                        <select id="guest_link_display_mode" name="guest_link_display_mode"
-                            class="form-select{{ $errors->has('guest_link_display_mode') ? ' is-invalid' : '' }}">
+                        <select id="link_display_mode" name="link_display_mode"
+                            class="form-select{{ $errors->has('link_display_mode') ? ' is-invalid' : '' }}">
                             <option value="{{ Link::DISPLAY_LIST_DETAILED }}"
-                                @if((int)systemsettings()->get('guest_link_display_mode') === Link::DISPLAY_LIST_DETAILED)
-                                selected
+                                @if(guestsettings('link_display_mode') === Link::DISPLAY_LIST_DETAILED)
+                                    selected
                                 @endif>
                                 @lang('settings.display_mode_list_detailed')
                             </option>
                             <option value="{{ Link::DISPLAY_LIST_SIMPLE }}"
-                                @if((int)systemsettings()->get('guest_link_display_mode') === Link::DISPLAY_LIST_SIMPLE)
-                                selected
+                                @if(guestsettings('link_display_mode') === Link::DISPLAY_LIST_SIMPLE)
+                                    selected
                                 @endif>
                                 @lang('settings.display_mode_list_simple')
                             </option>
                             <option value="{{ Link::DISPLAY_CARDS }}"
-                                @if((int)systemsettings()->get('guest_link_display_mode') === Link::DISPLAY_CARDS)
-                                selected
+                                @if(guestsettings('link_display_mode') === Link::DISPLAY_CARDS)
+                                    selected
                                 @endif>
                                 @lang('settings.display_mode_cards')
                             </option>
                         </select>
-                        @if ($errors->has('guest_link_display_mode'))
+                        @if ($errors->has('link_display_mode'))
                             <p class="invalid-feedback" role="alert">
-                                {{ $errors->first('guest_link_display_mode') }}
+                                {{ $errors->first('link_display_mode') }}
                             </p>
                         @endif
                     </div>
@@ -74,21 +74,21 @@
                 <div class="col-12 col-sm-8 col-md-6">
 
                     <div class="mb-4">
-                        <label class="form-label" for="guest_links_new_tab">
+                        <label class="form-label" for="links_new_tab">
                             @lang('settings.links_new_tab')
                         </label>
-                        <select id="guest_links_new_tab" name="guest_links_new_tab"
-                            class="simple-select {{ $errors->has('guest_links_new_tab') ? ' is-invalid' : '' }}">
-                            <option value="0" @if(systemsettings('guest_links_new_tab') === '0') selected @endif>
+                        <select id="links_new_tab" name="links_new_tab"
+                            class="simple-select {{ $errors->has('links_new_tab') ? ' is-invalid' : '' }}">
+                            <option value="0" @if(guestsettings('links_new_tab') === false) selected @endif>
                                 @lang('linkace.no')
                             </option>
-                            <option value="1" @if(systemsettings('guest_links_new_tab') === '1') selected @endif>
+                            <option value="1" @if(guestsettings('links_new_tab') === true) selected @endif>
                                 @lang('linkace.yes')
                             </option>
                         </select>
-                        @if ($errors->has('guest_links_new_tab'))
+                        @if ($errors->has('links_new_tab'))
                             <p class="invalid-feedback" role="alert">
-                                {{ $errors->first('guest_links_new_tab') }}
+                                {{ $errors->first('links_new_tab') }}
                             </p>
                         @endif
                     </div>

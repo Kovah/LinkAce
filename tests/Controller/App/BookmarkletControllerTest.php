@@ -29,8 +29,7 @@ class BookmarkletControllerTest extends TestCase
             'url' => 'https://example.com/test',
         ]);
 
-        $user = User::factory()->create();
-        $this->actingAs($user);
+        $this->actingAs(User::first());
 
         $response = $this->get('bookmarklet/add?u=https://example.com/test&t=Example%20Title');
 

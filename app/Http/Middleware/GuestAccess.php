@@ -21,8 +21,7 @@ class GuestAccess
             return redirect()->route('dashboard');
         }
 
-        // Check if guest access is enabled
-        if (systemsettings('system_guest_access') === '1') {
+        if (systemsettings('guest_access_enabled')) {
             return $next($request);
         }
 

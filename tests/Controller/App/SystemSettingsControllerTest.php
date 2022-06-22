@@ -10,8 +10,7 @@ class SystemSettingsControllerTest extends TestCase
 {
     use RefreshDatabase;
 
-    /** @var User */
-    private $user;
+    private User $user;
 
     protected function setUp(): void
     {
@@ -36,30 +35,16 @@ class SystemSettingsControllerTest extends TestCase
         $response->assertDontSee('Begin of custom header scripts');
 
         $response = $this->post('settings/system', [
-            'system_page_title' => 'New Title',
-            'system_guest_access' => '1',
-            'system_custom_header_content' => '<script>console.log(\'scripts work\')</script>',
+            'page_title' => 'New Title',
+            'guest_access' => '1',
+            'custom_header_content' => '<script>console.log(\'scripts work\')</script>',
         ]);
 
         $response->assertRedirect('settings/system');
 
-        $this->assertDatabaseHas('settings', [
-            'user_id' => null,
-            'key' => 'system_page_title',
-            'value' => 'New Title',
-        ]);
-
-        $this->assertDatabaseHas('settings', [
-            'user_id' => null,
-            'key' => 'system_guest_access',
-            'value' => '1',
-        ]);
-
-        $this->assertDatabaseHas('settings', [
-            'user_id' => null,
-            'key' => 'system_custom_header_content',
-            'value' => '<script>console.log(\'scripts work\')</script>',
-        ]);
+        $this->assertEquals('New Title', systemsettings('page_title'));
+        $this->assertEquals(true, systemsettings('guest_access'));
+        $this->assertEquals('<script>console.log(\'scripts work\')</script>', systemsettings('custom_header_content'));
 
         $response = $this->get('dashboard');
         $response->assertSee('<script>console.log(\'scripts work\')</script>', false);
@@ -73,5 +58,7 @@ class SystemSettingsControllerTest extends TestCase
             ->assertJsonStructure([
                 'new_token',
             ]);
+
+        $this->assertNotNull(systemsettings('cron_token'));
     }
 }

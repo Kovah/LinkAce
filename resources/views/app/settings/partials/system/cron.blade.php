@@ -26,7 +26,7 @@
         @if(systemsettings('cron_token'))
             <p>
                 @lang('settings.cron_token_url', [
-                    'route' => route('cron', ['token' => systemsettings('cron_token')?: ''])
+                    'route' => route('cron', ['token' => systemsettings('cron_token') ?: ''])
                 ])
             </p>
         @endif

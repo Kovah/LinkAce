@@ -6,11 +6,11 @@ use App\Enums\ActivityLog;
 use App\Helper\UpdateHelper;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\SystemSettingsUpdateRequest;
-use App\Models\Setting;
+use App\Settings\GuestSettings;
+use App\Settings\SystemSettings;
 use Illuminate\Contracts\View\View;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\RedirectResponse;
-use Illuminate\Support\Facades\Cache;
 use Illuminate\Support\Str;
 
 class SystemSettingsController extends Controller
@@ -35,39 +35,26 @@ class SystemSettingsController extends Controller
      */
     public function saveSystemSettings(SystemSettingsUpdateRequest $request): RedirectResponse
     {
+        $sysSettings = app(SystemSettings::class);
+        $guestSettings = app(GuestSettings::class);
+
         $settings = $request->except(['_token', 'guest_share']);
 
         foreach ($settings as $key => $value) {
-            Setting::updateOrCreate([
-                'key' => $key,
-                'user_id' => null,
-            ], [
-                'key' => $key,
-                'value' => $value,
-                'user_id' => null,
-            ]);
+            $sysSettings->$key = $value;
         }
 
-        // Enable / disable sharing services
-        $guestSharingSettings = $request->input('guest_share');
+        $sysSettings->save();
 
+        // Enable / disable sharing services for guests
+        $guestSharingSettings = $request->input('guest_share');
         if ($guestSharingSettings) {
             foreach (config('sharing.services') as $service => $details) {
-                $toggle = (int)array_key_exists($service, $guestSharingSettings);
-
-                Setting::updateOrCreate([
-                    'user_id' => null,
-                    'key' => 'guest_share_' . $service,
-                ], [
-                    'key' => 'guest_share_' . $service,
-                    'value' => (string)$toggle,
-                    'user_id' => null,
-                ]);
+                $guestSettings->{'share_' . $service} = array_key_exists($service, $guestSharingSettings);
             }
         }
 
-        Cache::forget('systemsettings');
-        Cache::forget('settings_keys');
+        $guestSettings->save();
 
         flash(trans('settings.settings_saved'));
         return redirect()->route('get-systemsettings');
@@ -78,19 +65,12 @@ class SystemSettingsController extends Controller
      *
      * @return JsonResponse
      */
-    public function generateCronToken(): JsonResponse
+    public function generateCronToken(SystemSettings $settings): JsonResponse
     {
         $newToken = Str::random(32);
 
-        Setting::updateOrCreate(
-            [
-                'key' => 'cron_token',
-                'user_id' => null,
-            ],
-            ['value' => $newToken]
-        );
-
-        Cache::forget('systemsettings');
+        $settings->cron_token = $newToken;
+        $settings->save();
 
         activity()->by(auth()->user())->log(ActivityLog::SYSTEM_CRON_TOKEN_REGENERATED);
 
