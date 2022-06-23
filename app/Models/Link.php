@@ -33,7 +33,7 @@ use OwenIt\Auditing\Contracts\Auditable;
  * @property string        $title
  * @property string|null   $description
  * @property string|null   $icon
- * @property boolean       $is_private
+ * @property int           $visibility
  * @property int           $status
  * @property boolean       $check_disabled
  * @property Carbon        $created_at
@@ -53,6 +53,7 @@ class Link extends Model implements Auditable
 {
     use AuditableTrait;
     use HasFactory;
+    use ScopesVisibility;
     use SoftDeletes;
 
     public $fillable = [
@@ -123,21 +124,6 @@ class Link extends Model implements Auditable
             $user_id = auth()->id();
         }
         return $query->where('user_id', $user_id);
-    }
-
-    public function scopePrivateOnly(Builder $query): Builder
-    {
-        return $query->where('visibility', ModelAttribute::VISIBILITY_PRIVATE);
-    }
-
-    public function scopeInternalOnly(Builder $query): Builder
-    {
-        return $query->where('visibility', ModelAttribute::VISIBILITY_INTERNAL);
-    }
-
-    public function scopePublicOnly(Builder $query): Builder
-    {
-        return $query->where('visibility', ModelAttribute::VISIBILITY_PUBLIC);
     }
 
     /*

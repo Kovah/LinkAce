@@ -88,24 +88,7 @@
                             @endif
                         </div>
 
-                        <div class="mb-4">
-                            <label class="form-label" for="is_private">@lang('linkace.is_private')</label>
-                            <select id="is_private" name="is_private"
-                                class="form-select{{ $errors->has('is_private') ? ' is-invalid' : '' }}">
-                                <option value="0" @if($link->is_private === false) selected @endif>
-                                    @lang('linkace.no')
-                                </option>
-                                <option value="1" @if($link->is_private === true) selected @endif>
-                                    @lang('linkace.yes')
-                                </option>
-                            </select>
-
-                            @if ($errors->has('is_private'))
-                                <p class="invalid-feedback" role="alert">
-                                    {{ $errors->first('is_private') }}
-                                </p>
-                            @endif
-                        </div>
+                        <x-forms.visibility-toggle class="mb-4" :existing-value="$link->visibility"/>
 
                     </div>
                 </div>

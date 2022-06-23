@@ -6,15 +6,9 @@ use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Http\Request;
 use Illuminate\Validation\Rule;
 
-/**
- * Class ListUpdateRequest
- *
- * @package App\Http\Requests\Models
- */
 class ListUpdateRequest extends FormRequest
 {
-    /** @var bool */
-    private $requireUniqueName = false;
+    private bool $requireUniqueName = false;
 
     /**
      * Determine if the user is authorized to make this request.
@@ -41,7 +35,7 @@ class ListUpdateRequest extends FormRequest
         $rules = [
             'name' => 'required|string',
             'description' => 'nullable|string',
-            'is_private' => 'sometimes|boolean',
+            'visibility' => 'sometimes|integer',
         ];
 
         if ($this->requireUniqueName) {

@@ -32,9 +32,9 @@ class ListStoreRequest extends FormRequest
                 'nullable',
                 'string',
             ],
-            'is_private' => [
+            'visibility' => [
                 'sometimes',
-                'boolean',
+                'integer',
             ],
         ];
     }

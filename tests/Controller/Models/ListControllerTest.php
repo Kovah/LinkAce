@@ -13,7 +13,7 @@ class ListControllerTest extends TestCase
 {
     use RefreshDatabase;
 
-    private $user;
+    private User $user;
 
     protected function setUp(): void
     {
@@ -76,7 +76,7 @@ class ListControllerTest extends TestCase
     {
         $response = $this->post('lists', [
             'name' => 'Test List',
-            'is_private' => '0',
+            'visibility' => 1,
         ]);
 
         $response->assertRedirect('lists/1');
@@ -91,7 +91,7 @@ class ListControllerTest extends TestCase
         $response = $this->post('lists', [
             'name' => 'Test List',
             'description' => 'My custom description',
-            'is_private' => '1',
+            'visibility' => 1,
         ]);
 
         $response->assertRedirect('lists/1');
@@ -102,29 +102,11 @@ class ListControllerTest extends TestCase
         $this->assertEquals('My custom description', $databaseList->description);
     }
 
-    public function testStoreRequestWithPrivateDefault(): void
-    {
-        UserSettings::fake([
-            'lists_private_default' => true,
-        ]);
-
-        $response = $this->post('lists', [
-            'name' => 'Test List',
-            'is_private' => usersettings('lists_private_default'),
-        ]);
-
-        $response->assertRedirect('lists/1');
-
-        $databaseList = LinkList::first();
-
-        $this->assertTrue($databaseList->is_private);
-    }
-
     public function testStoreRequestWithContinue(): void
     {
         $response = $this->post('lists', [
             'name' => 'Test List',
-            'is_private' => '1',
+            'visibility' => 1,
             'reload_view' => '1',
         ]);
 
@@ -139,7 +121,7 @@ class ListControllerTest extends TestCase
     {
         $response = $this->post('lists', [
             'name' => null,
-            'is_private' => '0',
+            'visibility' => 1,
         ]);
 
         $response->assertSessionHasErrors([
@@ -188,7 +170,7 @@ class ListControllerTest extends TestCase
         $response = $this->patch('lists/1', [
             'list_id' => $baseList->id,
             'name' => 'New Test List',
-            'is_private' => '0',
+            'visibility' => 1,
         ]);
 
         $response->assertRedirect('lists/1');
@@ -203,7 +185,7 @@ class ListControllerTest extends TestCase
         $response = $this->patch('lists/1', [
             'list_id' => '1',
             'name' => 'New Test List',
-            'is_private' => '0',
+            'visibility' => 1,
         ]);
 
         $response->assertNotFound();
@@ -223,7 +205,7 @@ class ListControllerTest extends TestCase
         $response = $this->patch('lists/2', [
             'list_id' => $baseList->id,
             'name' => 'Taken List Name',
-            'is_private' => '0',
+            'visibility' => 1,
         ]);
 
         $response->assertSessionHasErrors([
@@ -240,7 +222,7 @@ class ListControllerTest extends TestCase
         $response = $this->patch('lists/1', [
             'list_id' => $baseList->id,
             //'name' => 'New Test List',
-            'is_private' => '0',
+            'visibility' => 1,
         ]);
 
         $response->assertSessionHasErrors([

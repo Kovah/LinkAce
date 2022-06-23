@@ -2,7 +2,7 @@
 
 namespace App\Models;
 
-use App\Audits\Modifiers\BooleanModifier;
+use App\Audits\Modifiers\VisibilityModifier;
 use App\Scopes\OrderNameScope;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Collection;
@@ -24,7 +24,7 @@ use OwenIt\Auditing\Contracts\Auditable;
  * @property int                    $user_id
  * @property string                 $name
  * @property ?string                $description
- * @property int                    $is_private
+ * @property int                    $visibility
  * @property Carbon|null            $created_at
  * @property Carbon|null            $updated_at
  * @property string|null            $deleted_at
@@ -37,8 +37,9 @@ use OwenIt\Auditing\Contracts\Auditable;
 class LinkList extends Model implements Auditable
 {
     use AuditableTrait;
-    use SoftDeletes;
     use HasFactory;
+    use ScopesVisibility;
+    use SoftDeletes;
 
     public $table = 'lists';
 
@@ -46,12 +47,12 @@ class LinkList extends Model implements Auditable
         'user_id',
         'name',
         'description',
-        'is_private',
+        'visibility',
     ];
 
     protected $casts = [
         'user_id' => 'integer',
-        'is_private' => 'boolean',
+        'visibility' => 'integer',
     ];
 
     /**
@@ -70,7 +71,7 @@ class LinkList extends Model implements Auditable
      */
 
     public array $auditModifiers = [
-        'is_private' => BooleanModifier::class,
+        'visibility' => VisibilityModifier::class,
     ];
 
     /*
@@ -91,28 +92,6 @@ class LinkList extends Model implements Auditable
             $user_id = auth()->id();
         }
         return $query->where('user_id', $user_id);
-    }
-
-    /**
-     * Scope for selecting private lists only
-     *
-     * @param Builder $query
-     * @return Builder
-     */
-    public function scopePrivateOnly(Builder $query): Builder
-    {
-        return $query->where('is_private', true);
-    }
-
-    /**
-     * Scope for selecting public lists only
-     *
-     * @param Builder $query
-     * @return Builder
-     */
-    public function scopePublicOnly(Builder $query): Builder
-    {
-        return $query->where('is_private', false);
     }
 
     /*
