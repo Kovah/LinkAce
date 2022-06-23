@@ -2,6 +2,7 @@
 
 namespace App\Settings;
 
+use App\Enums\ModelAttribute;
 use Spatie\LaravelSettings\Settings;
 
 class UserSettings extends Settings
@@ -11,10 +12,10 @@ class UserSettings extends Settings
     public string $time_format;
     public string $locale;
 
-    public bool $links_private_default;
-    public bool $notes_private_default;
-    public bool $lists_private_default;
-    public bool $tags_private_default;
+    public int $links_default_visibility;
+    public int $notes_default_visibility;
+    public int $lists_default_visibility;
+    public int $tags_default_visibility;
 
     public bool $archive_backups_enabled;
     public bool $archive_private_backups_enabled;
@@ -63,10 +64,10 @@ class UserSettings extends Settings
             'date_format' => config('linkace.default.date_format'),
             'time_format' => config('linkace.default.time_format'),
             'locale' => config('app.fallback_locale'),
-            'links_private_default' => false,
-            'notes_private_default' => false,
-            'lists_private_default' => false,
-            'tags_private_default' => false,
+            'links_default_visibility' => ModelAttribute::VISIBILITY_PUBLIC,
+            'notes_default_visibility' => ModelAttribute::VISIBILITY_PUBLIC,
+            'lists_default_visibility' => ModelAttribute::VISIBILITY_PUBLIC,
+            'tags_default_visibility' => ModelAttribute::VISIBILITY_PUBLIC,
             'archive_backups_enabled' => true,
             'archive_private_backups_enabled' => true,
             'listitem_count' => 24,

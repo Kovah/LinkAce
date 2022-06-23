@@ -2,7 +2,7 @@
 
 namespace Database\Factories;
 
-use App\Models\Link;
+use App\Enums\ModelAttribute;
 use App\Models\User;
 use Exception;
 use Illuminate\Database\Eloquent\Factories\Factory;
@@ -24,7 +24,7 @@ class LinkFactory extends Factory
                 ? $this->faker->words(random_int(2, 5), true)
                 : $this->faker->domainName(),
             'description' => $this->faker->boolean(70) ? $this->faker->sentences(random_int(1, 3), true) : null,
-            'is_private' => $this->faker->boolean(10),
+            'visibility' => ModelAttribute::VISIBILITY_PUBLIC,
             'check_disabled' => false,
         ];
     }

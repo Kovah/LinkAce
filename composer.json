@@ -23,6 +23,7 @@
     "shaarli/netscape-bookmark-parser": "^v3.2",
     "spatie/laravel-activitylog": "^4.5",
     "spatie/laravel-backup": "^8.1.2",
+    "spatie/laravel-permission": "^5.5",
     "spatie/laravel-settings": "^2.4",
     "symfony/http-client": "^6.0",
     "symfony/mailgun-mailer": "^6.0"

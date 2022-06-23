@@ -4,6 +4,7 @@ namespace Tests;
 
 use App\Settings\SystemSettings;
 use Illuminate\Foundation\Testing\TestCase as BaseTestCase;
+use Illuminate\Support\Facades\Schema;
 
 abstract class TestCase extends BaseTestCase
 {
@@ -13,8 +14,10 @@ abstract class TestCase extends BaseTestCase
     {
         parent::setUp();
 
-        SystemSettings::fake([
-            'setup_completed' => true
-        ]);
+        if (Schema::hasTable('settings')) {
+            SystemSettings::fake([
+                'setup_completed' => true,
+            ]);
+        }
     }
 }

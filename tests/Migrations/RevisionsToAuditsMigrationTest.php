@@ -14,7 +14,7 @@ use Tests\TestCase;
 
 class RevisionsToAuditsMigrationTest extends TestCase
 {
-    use LazilyRefreshDatabase;
+    use RefreshDatabase;
 
     protected function afterRefreshingDatabase(): void
     {

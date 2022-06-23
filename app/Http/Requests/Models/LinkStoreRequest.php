@@ -44,9 +44,9 @@ class LinkStoreRequest extends FormRequest
             'tags' => [
                 'nullable',
             ],
-            'is_private' => [
+            'visibility' => [
                 'sometimes',
-                'boolean',
+                'integer',
             ],
             'check_disabled' => [
                 'sometimes',

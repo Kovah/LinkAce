@@ -39,7 +39,7 @@ class LinkUpdateRequest extends FormRequest
             'description' => 'nullable|string',
             'lists' => 'nullable',
             'tags' => 'nullable',
-            'is_private' => 'sometimes|boolean',
+            'visibility' => 'sometimes|integer',
             'check_disabled' => 'sometimes|boolean',
         ];
 

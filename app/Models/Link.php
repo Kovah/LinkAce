@@ -6,6 +6,8 @@ use App\Audits\Modifiers\BooleanModifier;
 use App\Audits\Modifiers\LinkStatusModifier;
 use App\Audits\Modifiers\ListRelationModifier;
 use App\Audits\Modifiers\TagRelationModifier;
+use App\Audits\Modifiers\VisibilityModifier;
+use App\Enums\ModelAttribute;
 use App\Jobs\SaveLinkToWaybackmachine;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Collection;
@@ -44,6 +46,7 @@ use OwenIt\Auditing\Contracts\Auditable;
  * @property BelongsTo     $user
  * @method static Builder|Link  byUser(int $user_id = null)
  * @method static Builder|Link  privateOnly()
+ * @method static Builder|Link  internalOnly()
  * @method static Builder|Link  publicOnly()
  */
 class Link extends Model implements Auditable
@@ -58,7 +61,7 @@ class Link extends Model implements Auditable
         'title',
         'description',
         'icon',
-        'is_private',
+        'visibility',
         'status',
         'check_disabled',
         'thumbnail',
@@ -66,7 +69,7 @@ class Link extends Model implements Auditable
 
     protected $casts = [
         'user_id' => 'integer',
-        'is_private' => 'boolean',
+        'visibility' => 'integer',
         'status' => 'integer',
         'check_disabled' => 'boolean',
     ];
@@ -94,7 +97,7 @@ class Link extends Model implements Auditable
     ];
 
     public array $auditModifiers = [
-        'is_private' => BooleanModifier::class,
+        'visibility' => VisibilityModifier::class,
         'check_disabled' => BooleanModifier::class,
         'status' => LinkStatusModifier::class,
         self::AUDIT_TAGS_NAME => TagRelationModifier::class,
@@ -107,7 +110,8 @@ class Link extends Model implements Auditable
      */
 
     /**
-     * Scope for the user relation
+     * Scope for the user relation. If a user is specified, it will be used for
+     * the scope. Otherwise, the currently authenticated user will be used.
      *
      * @param Builder  $query
      * @param int|null $user_id
@@ -121,26 +125,19 @@ class Link extends Model implements Auditable
         return $query->where('user_id', $user_id);
     }
 
-    /**
-     * Scope for the user relation
-     *
-     * @param Builder $query
-     * @return Builder
-     */
     public function scopePrivateOnly(Builder $query): Builder
     {
-        return $query->where('is_private', true);
+        return $query->where('visibility', ModelAttribute::VISIBILITY_PRIVATE);
     }
 
-    /**
-     * Scope for the user relation
-     *
-     * @param Builder $query
-     * @return Builder
-     */
+    public function scopeInternalOnly(Builder $query): Builder
+    {
+        return $query->where('visibility', ModelAttribute::VISIBILITY_INTERNAL);
+    }
+
     public function scopePublicOnly(Builder $query): Builder
     {
-        return $query->where('is_private', false);
+        return $query->where('visibility', ModelAttribute::VISIBILITY_PUBLIC);
     }
 
     /*

@@ -35,8 +35,7 @@ return [
 
     'continue_adding' => 'Continue Adding',
 
-    'private' => 'Private',
-    'is_private' => 'Is private',
+    'visibility' => 'Visibility',
 
     'history' => 'History',
     'history_added' => 'Added <code>:newvalue</code> to :fieldname.',

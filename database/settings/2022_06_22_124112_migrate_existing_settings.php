@@ -1,7 +1,7 @@
 <?php
 
+use App\Enums\ModelAttribute;
 use Illuminate\Support\Collection;
-use Illuminate\Support\Facades\Artisan;
 use Spatie\LaravelSettings\Migrations\SettingsMigration;
 
 class MigrateExistingSettings extends SettingsMigration
@@ -80,20 +80,24 @@ class MigrateExistingSettings extends SettingsMigration
         );
 
         $this->migrator->add(
-            'user-1.links_private_default',
-            (bool)$this->userSettings->get('links_private_default', false)
+            'user-1.links_default_visibility',
+            $this->userSettings->get('links_private_default', false)
+                ? ModelAttribute::VISIBILITY_PRIVATE : ModelAttribute::VISIBILITY_PUBLIC
         );
         $this->migrator->add(
-            'user-1.notes_private_default',
-            (bool)$this->userSettings->get('notes_private_default', false)
+            'user-1.notes_default_visibility',
+            $this->userSettings->get('notes_private_default', false)
+                ? ModelAttribute::VISIBILITY_PRIVATE : ModelAttribute::VISIBILITY_PUBLIC
         );
         $this->migrator->add(
-            'user-1.lists_private_default',
-            (bool)$this->userSettings->get('lists_private_default', false)
+            'user-1.lists_default_visibility',
+            $this->userSettings->get('lists_private_default', false)
+                ? ModelAttribute::VISIBILITY_PRIVATE : ModelAttribute::VISIBILITY_PUBLIC
         );
         $this->migrator->add(
-            'user-1.tags_private_default',
-            (bool)$this->userSettings->get('tags_private_default', false)
+            'user-1.tags_default_visibility',
+            $this->userSettings->get('tags_private_default', false)
+                ? ModelAttribute::VISIBILITY_PRIVATE : ModelAttribute::VISIBILITY_PUBLIC
         );
 
         $this->migrator->add(

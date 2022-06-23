@@ -23,10 +23,10 @@ class SetDefaultSettingsForUser extends SettingsMigration
         $this->migrator->add($group . '.time_format', $defaults['time_format']);
         $this->migrator->add($group . '.locale', $defaults['locale']);
 
-        $this->migrator->add($group . '.links_private_default', $defaults['links_private_default']);
-        $this->migrator->add($group . '.notes_private_default', $defaults['notes_private_default']);
-        $this->migrator->add($group . '.lists_private_default', $defaults['lists_private_default']);
-        $this->migrator->add($group . '.tags_private_default', $defaults['tags_private_default']);
+        $this->migrator->add($group . '.links_default_visibility', $defaults['links_default_visibility']);
+        $this->migrator->add($group . '.notes_default_visibility', $defaults['notes_default_visibility']);
+        $this->migrator->add($group . '.lists_default_visibility', $defaults['lists_default_visibility']);
+        $this->migrator->add($group . '.tags_default_visibility', $defaults['tags_default_visibility']);
 
         $this->migrator->add($group . '.archive_backups_enabled', $defaults['archive_backups_enabled']);
         $this->migrator->add($group . '.archive_private_backups_enabled', $defaults['archive_private_backups_enabled']);

@@ -14,6 +14,8 @@ return [
     'update' => 'Update Link',
     'delete' => 'Delete Link',
 
+    'public' => 'Public Link',
+    'internal' => 'Internal Link',
     'private' => 'Private Link',
 
     'history_deleted' => 'Link was deleted',

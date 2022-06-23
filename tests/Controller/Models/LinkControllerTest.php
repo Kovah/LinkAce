@@ -7,7 +7,6 @@ use App\Models\Link;
 use App\Models\LinkList;
 use App\Models\Tag;
 use App\Models\User;
-use App\Settings\SettingsAudit;
 use App\Settings\UserSettings;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Support\Facades\Http;
@@ -18,15 +17,12 @@ class LinkControllerTest extends TestCase
 {
     use RefreshDatabase;
 
-    /** @var User */
-    private $user;
-
     protected function setUp(): void
     {
         parent::setUp();
 
-        $this->user = User::factory()->create();
-        $this->actingAs($this->user);
+        $user = User::factory()->create();
+        $this->actingAs($user);
 
         $testHtml = '<!DOCTYPE html><head>' .
             '<title>Example Title</title>' .
@@ -34,7 +30,7 @@ class LinkControllerTest extends TestCase
             '</head></html>';
 
         Http::fake([
-            'example.com' => Http::response($testHtml, 200),
+            'example.com' => Http::response($testHtml),
         ]);
 
         Queue::fake();
@@ -83,7 +79,7 @@ class LinkControllerTest extends TestCase
             'description' => 'My custom description',
             'lists' => $list->name,
             'tags' => $tag->name,
-            'is_private' => '1',
+            'visibility' => 1,
         ]);
 
         $response->assertRedirect('links/1');
@@ -95,28 +91,6 @@ class LinkControllerTest extends TestCase
         $this->assertEquals('My custom description', $databaseLink->description);
         $this->assertEquals($list->name, $databaseLink->lists->first()->name);
         $this->assertEquals($tag->name, $databaseLink->tags->first()->name);
-    }
-
-    public function testStoreRequestWithPrivateDefault(): void
-    {
-        UserSettings::fake([
-            'links_private_default' => true,
-        ]);
-
-        $response = $this->post('links', [
-            'url' => 'https://example.com',
-            'title' => null,
-            'description' => null,
-            'lists' => null,
-            'tags' => null,
-            'is_private' => usersettings('links_private_default'),
-        ]);
-
-        $response->assertRedirect('links/1');
-
-        $databaseLink = Link::first();
-
-        $this->assertTrue($databaseLink->is_private);
     }
 
     public function testStoreRequestWithDuplicate(): void
@@ -131,7 +105,7 @@ class LinkControllerTest extends TestCase
             'description' => null,
             'lists' => null,
             'tags' => null,
-            'is_private' => '0',
+            'visibility' => 1,
         ]);
 
         $response->assertRedirect('links/2');
@@ -152,7 +126,7 @@ class LinkControllerTest extends TestCase
             'description' => null,
             'lists' => null,
             'tags' => null,
-            'is_private' => '0',
+            'visibility' => 1,
         ]);
 
         $response->assertRedirect('links/1');
@@ -166,7 +140,7 @@ class LinkControllerTest extends TestCase
 
     public function testStoreRequestWithHugeThumbnail(): void
     {
-        $img = 'https://assets.imgix.net/unsplash/unsplash006.jpg?w=640&h=400&usm=20&fit=crop&blend-mode=normal&blend-alpha=80&blend-x=30&blend-y=20&blend=https%3A%2F%2Fassets.imgix.net%2F~text%3Ftxt-color%3D9fb64d%26txt-font%3DAvenir%2BNext%2BHeavy%26txt-shad%3D20%26txt-size%3D32%26w%3D580%26txt%3Di%2Bthank%2Byou%2Bgod%2Bfor%2Bmost%2Bthis%2Bamazing%2Bday%3Afor%2Bthe%2Bleaping%2Bgreenly%2Bspirits%2Bof%2Btrees%2B-e.e.%2Bcummings';
+        $img = 'https://picsum.photos/1000/500';
 
         $testHtml = '<!DOCTYPE html><head>' .
             '<title>Example Title</title>' .
@@ -212,7 +186,7 @@ class LinkControllerTest extends TestCase
             'description' => null,
             'lists' => null,
             'tags' => null,
-            'is_private' => '0',
+            'visibility' => 1,
         ]);
 
         Queue::assertNotPushed(SaveLinkToWaybackmachine::class);
@@ -231,7 +205,7 @@ class LinkControllerTest extends TestCase
             'description' => null,
             'lists' => null,
             'tags' => null,
-            'is_private' => '1',
+            'visibility' => 1,
         ]);
 
         Queue::assertNotPushed(SaveLinkToWaybackmachine::class);
@@ -278,7 +252,7 @@ class LinkControllerTest extends TestCase
             'description' => 'New Description',
             'lists' => null,
             'tags' => null,
-            'is_private' => '0',
+            'visibility' => 1,
             'check_disabled' => '0',
         ]);
 
@@ -306,7 +280,7 @@ class LinkControllerTest extends TestCase
             'description' => 'New Description',
             'lists' => null,
             'tags' => null,
-            'is_private' => '0',
+            'visibility' => 1,
         ]);
 
         $response->assertNotFound();
@@ -324,7 +298,7 @@ class LinkControllerTest extends TestCase
             'description' => 'New Description',
             'lists' => null,
             'tags' => null,
-            'is_private' => '0',
+            'visibility' => 1,
         ]);
 
         $response->assertSessionHasErrors([
@@ -343,7 +317,7 @@ class LinkControllerTest extends TestCase
             'description' => 'New Description',
             'lists' => null,
             'tags' => null,
-            'is_private' => '0',
+            'visibility' => 1,
         ]);
 
         $response->assertSessionHasErrors([
