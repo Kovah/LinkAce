@@ -2,12 +2,12 @@
 
 namespace App\Models;
 
-use Illuminate\Support\Carbon;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\SoftDeletes;
+use Illuminate\Support\Carbon;
 use Illuminate\Support\Str;
 
 /**
@@ -18,30 +18,34 @@ use Illuminate\Support\Str;
  * @property int         $user_id
  * @property int         $link_id
  * @property string      $note
- * @property int         $is_private
+ * @property int         $visibility
  * @property Carbon|null $created_at
  * @property Carbon|null $updated_at
  * @property string|null $deleted_at
  * @property-read Link   $link
  * @property-read User   $user
- * @method static Builder|Link byUser($user_id = null)
+ * @method static Builder|Note byUser($user_id = null)
+ * @method static Builder|Note privateOnly()
+ * @method static Builder|Note internalOnly()
+ * @method static Builder|Note publicOnly()
  */
 class Note extends Model
 {
-    use SoftDeletes;
     use HasFactory;
+    use ScopesVisibility;
+    use SoftDeletes;
 
     public $fillable = [
         'user_id',
         'link_id',
         'note',
-        'is_private',
+        'visibility',
     ];
 
     protected $casts = [
         'user_id' => 'integer',
         'link_id' => 'integer',
-        'is_private' => 'boolean',
+        'visibility' => 'integer',
     ];
 
     /*

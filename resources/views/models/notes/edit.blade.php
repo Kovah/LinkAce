@@ -27,13 +27,9 @@
 
                 <div class="d-flex align-items-center">
 
-                    <div class="form-check ms-auto me-3">
-                        <input class="form-check-input" type="checkbox" id="is_private" name="is_private" value="1"
-                            @if($note->is_private) checked @endif>
-                        <label class="form-check-label" for="is_private">
-                            <small>@lang('note.private')</small>
-                        </label>
-                    </div>
+                    <x-forms.visibility-toggle :existing-value="$note->visibility"
+                        class="ms-auto me-3 d-flex align-items-center" input-classes="form-select-sm"
+                        label-classes="mb-0 me-2 small"/>
 
                     <button type="submit" class="btn btn-sm btn-primary">
                         <x-icon.save class="me-2"/> @lang('note.edit')

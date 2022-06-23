@@ -27,9 +27,9 @@ class NoteUpdateRequest extends FormRequest
             'note' => [
                 'required',
             ],
-            'is_private' => [
+            'visibility' => [
                 'sometimes',
-                'boolean',
+                'integer',
             ],
         ];
     }

@@ -4,6 +4,7 @@ namespace Tests\Migrations;
 
 use App\Models\Link;
 use App\Models\LinkList;
+use App\Models\Note;
 use App\Models\Tag;
 use App\Settings\SystemSettings;
 use Tests\TestCase;
@@ -192,6 +193,70 @@ class UserDataMigrationTest extends TestCase
         ]);
         $this->assertDatabaseHas('tags', [
             'name' => 'PublicTag',
+            'visibility' => 1, // is public
+        ]);
+    }
+
+    public function testNoteVisibilityMigration(): void
+    {
+        $this->migrateUpTo('2022_06_23_112431_migrate_user_data.php');
+
+        Note::unguard();
+        Note::create([
+            'user_id' => 1,
+            'link_id' => 1,
+            'note' => 'A private note',
+            'is_private' => true,
+        ]);
+
+        Note::create([
+            'user_id' => 1,
+            'link_id' => 1,
+            'note' => 'A public note',
+            'is_private' => false,
+        ]);
+
+        $this->artisan('migrate');
+
+        $this->assertDatabaseHas('notes', [
+            'note' => 'A private note',
+            'visibility' => 3, // is private
+        ]);
+        $this->assertDatabaseHas('notes', [
+            'note' => 'A public note',
+            'visibility' => 2, // is internal
+        ]);
+    }
+
+    public function testNoteVisibilityMigrationWithEnabledGuestMode(): void
+    {
+        $this->migrateUpTo('2022_06_23_112431_migrate_user_data.php');
+
+        SystemSettings::fake(['guest_access_enabled' => true]);
+
+        Note::unguard();
+        Note::create([
+            'user_id' => 1,
+            'link_id' => 1,
+            'note' => 'A private note',
+            'is_private' => true,
+        ]);
+
+        Note::create([
+            'user_id' => 1,
+            'link_id' => 1,
+            'note' => 'A public note',
+            'is_private' => false,
+        ]);
+
+        $this->artisan('migrate');
+
+        $this->assertDatabaseHas('notes', [
+            'note' => 'A private note',
+            'visibility' => 3, // is private
+        ]);
+        $this->assertDatabaseHas('notes', [
+            'note' => 'A public note',
             'visibility' => 1, // is public
         ]);
     }

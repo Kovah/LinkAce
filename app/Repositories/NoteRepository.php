@@ -26,8 +26,6 @@ class NoteRepository
      */
     public static function update(Note $note, array $data): Note
     {
-        $data['is_private'] ??= false;
-
         $note->update($data);
 
         return $note;

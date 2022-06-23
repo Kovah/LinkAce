@@ -8,7 +8,7 @@ use Illuminate\View\Component;
 
 class VisibilityToggle extends Component
 {
-    public function __construct(private ?int $existingValue = null)
+    public function __construct(private ?int $existingValue = null, public string $inputClasses = '', public string $labelClasses = '')
     {
     }
 

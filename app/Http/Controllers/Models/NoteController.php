@@ -28,7 +28,7 @@ class NoteController extends Controller
             abort(403);
         }
 
-        $data = $request->except(['_token']);
+        $data = $request->validated();
         NoteRepository::create($data);
 
         flash(trans('note.added_successfully'), 'success');

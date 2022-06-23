@@ -2,6 +2,7 @@
 
 use App\Enums\ModelAttribute;
 use App\Models\LinkList;
+use App\Models\Note;
 use App\Models\Tag;
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
@@ -18,6 +19,7 @@ class MigrateUserData extends Migration
         $this->migrateLinkVisibility();
         $this->migrateListVisibility();
         $this->migrateTagVisibility();
+        $this->migrateNoteVisibility();
     }
 
     protected function migrateLinkVisibility(): void
@@ -78,6 +80,26 @@ class MigrateUserData extends Migration
         });
 
         Schema::table('tags', function (Blueprint $table) {
+            $table->dropColumn(['is_private']);
+        });
+    }
+
+    protected function migrateNoteVisibility(): void
+    {
+        Schema::table('notes', function (Blueprint $table) {
+            $table->integer('visibility')->default(ModelAttribute::VISIBILITY_PRIVATE)->after('is_private');
+        });
+
+        Note::withTrashed()->get()->each(function ($note) {
+            $note->visibility = match ((bool)$note->is_private) {
+                true => ModelAttribute::VISIBILITY_PRIVATE,
+                false => $this->guestAccessEnabled
+                    ? ModelAttribute::VISIBILITY_PUBLIC : ModelAttribute::VISIBILITY_INTERNAL,
+            };
+            $note->saveQuietly();
+        });
+
+        Schema::table('notes', function (Blueprint $table) {
             $table->dropColumn(['is_private']);
         });
     }
