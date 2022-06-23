@@ -35,7 +35,10 @@ class TagUpdateRequest extends FormRequest
     {
         $rules = [
             'name' => 'required',
-            'is_private' => 'required|boolean',
+            'visibility' => [
+                'sometimes',
+                'integer',
+            ],
         ];
 
         if ($this->requireUniqueName) {

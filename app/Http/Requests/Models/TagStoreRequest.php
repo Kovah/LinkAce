@@ -29,9 +29,9 @@ class TagStoreRequest extends FormRequest
                 'required',
                 Rule::unique('tags')->where(fn($query) => $query->where('user_id', auth()->user()->id)),
             ],
-            'is_private' => [
+            'visibility' => [
                 'sometimes',
-                'boolean',
+                'integer',
             ],
         ];
     }

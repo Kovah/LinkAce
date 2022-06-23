@@ -13,10 +13,12 @@ return [
 
     'filter_tags' => 'Filter Tags...',
 
+    'public' => 'Public Tag',
+    'internal' => 'Internal Tag',
     'private' => 'Private Tag',
 
     'name' => 'Tag Name',
-    'is_private' => 'Private Status',
+    'visibility' => 'Visibility Status',
 
     'history_deleted' => 'Tag was deleted',
     'history_restored' => 'Tag was restored',

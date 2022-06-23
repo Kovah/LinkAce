@@ -65,7 +65,7 @@ class TagController extends Controller
      */
     public function store(TagStoreRequest $request): RedirectResponse
     {
-        $data = $request->except(['reload_view']);
+        $data = $request->validated();
 
         $tag = TagRepository::create($data);
 
@@ -125,7 +125,7 @@ class TagController extends Controller
      */
     public function update(TagUpdateRequest $request, Tag $tag): RedirectResponse
     {
-        $tag = TagRepository::update($tag, $request->input());
+        $tag = TagRepository::update($tag, $request->validated());
 
         flash(trans('tag.updated_successfully'), 'success');
         return redirect()->route('tags.show', [$tag->id]);

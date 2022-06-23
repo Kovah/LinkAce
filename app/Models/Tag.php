@@ -2,7 +2,7 @@
 
 namespace App\Models;
 
-use App\Audits\Modifiers\BooleanModifier;
+use App\Audits\Modifiers\VisibilityModifier;
 use App\Scopes\OrderNameScope;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Collection;
@@ -22,7 +22,7 @@ use OwenIt\Auditing\Contracts\Auditable;
  * @property int                    $id
  * @property int                    $user_id
  * @property string                 $name
- * @property int                    $is_private
+ * @property int                    $visibility
  * @property Carbon|null            $created_at
  * @property Carbon|null            $updated_at
  * @property string|null            $deleted_at
@@ -30,23 +30,25 @@ use OwenIt\Auditing\Contracts\Auditable;
  * @property-read User              $user
  * @method static Builder|Tag byUser(int $user_id = null)
  * @method static Builder|Tag publicOnly()
+ * @method static Builder|Tag internalOnly()
  * @method static Builder|Tag privateOnly()
  */
 class Tag extends Model implements Auditable
 {
     use AuditableTrait;
-    use SoftDeletes;
     use HasFactory;
+    use ScopesVisibility;
+    use SoftDeletes;
 
     public $fillable = [
         'user_id',
         'name',
-        'is_private',
+        'visibility',
     ];
 
     protected $casts = [
         'user_id' => 'integer',
-        'is_private' => 'boolean',
+        'visibility' => 'integer',
     ];
 
     /**
@@ -65,7 +67,7 @@ class Tag extends Model implements Auditable
      */
 
     public array $auditModifiers = [
-        'is_private' => BooleanModifier::class,
+        'visibility' => VisibilityModifier::class,
     ];
 
     /*
@@ -86,28 +88,6 @@ class Tag extends Model implements Auditable
             $user_id = auth()->id();
         }
         return $query->where('user_id', $user_id);
-    }
-
-    /**
-     * Scope for selecting private tags only
-     *
-     * @param Builder $query
-     * @return Builder
-     */
-    public function scopePrivateOnly(Builder $query): Builder
-    {
-        return $query->where('is_private', true);
-    }
-
-    /**
-     * Scope for selecting public tags only
-     *
-     * @param Builder $query
-     * @return Builder
-     */
-    public function scopePublicOnly(Builder $query): Builder
-    {
-        return $query->where('is_private', false);
     }
 
     /*

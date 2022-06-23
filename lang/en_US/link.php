@@ -27,7 +27,7 @@ return [
     'description' => 'Description',
     'revtags' => 'Tags',
     'revlists' => 'Lists',
-    'is_private' => 'Private Status',
+    'visibility' => 'Visibility Status',
 
     'status' => 'Status',
     'stati' => [

@@ -13,11 +13,13 @@ return [
 
     'filter_lists' => 'Filter Lists...',
 
+    'public' => 'Public List',
+    'internal' => 'Internal List',
     'private' => 'Private List',
 
     'name' => 'List Name',
     'description' => 'List Description',
-    'is_private' => 'Private Status',
+    'visibility' => 'Visibility Status',
 
     'history_deleted' => 'List was deleted',
     'history_restored' => 'List was restored',

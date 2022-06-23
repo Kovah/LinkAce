@@ -13,7 +13,7 @@ class TagControllerTest extends TestCase
 {
     use RefreshDatabase;
 
-    private $user;
+    private User $user;
 
     protected function setUp(): void
     {
@@ -74,7 +74,7 @@ class TagControllerTest extends TestCase
     {
         $response = $this->post('tags', [
             'name' => 'Test Tag',
-            'is_private' => '0',
+            'visibility' => 1,
         ]);
 
         $response->assertRedirect('tags/1');
@@ -84,29 +84,11 @@ class TagControllerTest extends TestCase
         $this->assertEquals('Test Tag', $databaseList->name);
     }
 
-    public function testStoreRequestWithPrivateDefault(): void
-    {
-        UserSettings::fake([
-            'tags_private_default' => true,
-        ]);
-
-        $response = $this->post('tags', [
-            'name' => 'Test Tag',
-            'is_private' => usersettings('tags_private_default'),
-        ]);
-
-        $response->assertRedirect('tags/1');
-
-        $databaseList = Tag::first();
-
-        $this->assertTrue($databaseList->is_private);
-    }
-
     public function testStoreRequestWithContinue(): void
     {
         $response = $this->post('tags', [
             'name' => 'Test Tag',
-            'is_private' => '1',
+            'visibility' => 1,
             'reload_view' => '1',
         ]);
 
@@ -121,7 +103,7 @@ class TagControllerTest extends TestCase
     {
         $response = $this->post('tags', [
             'name' => null,
-            'is_private' => '0',
+            'visibility' => 1,
         ]);
 
         $response->assertSessionHasErrors([
@@ -170,7 +152,7 @@ class TagControllerTest extends TestCase
         $response = $this->patch('tags/1', [
             'tag_id' => $baseTag->id,
             'name' => 'New Test Tag',
-            'is_private' => '0',
+            'visibility' => 1,
         ]);
 
         $response->assertRedirect('tags/1');
@@ -185,7 +167,7 @@ class TagControllerTest extends TestCase
         $response = $this->patch('tags/1', [
             'tag_id' => '1',
             'name' => 'New Test Tag',
-            'is_private' => '0',
+            'visibility' => 1,
         ]);
 
         $response->assertNotFound();
@@ -205,7 +187,7 @@ class TagControllerTest extends TestCase
         $response = $this->patch('tags/2', [
             'tag_id' => $baseTag->id,
             'name' => 'taken-tag-name',
-            'is_private' => '0',
+            'visibility' => 1,
         ]);
 
         $response->assertSessionHasErrors([
@@ -222,7 +204,7 @@ class TagControllerTest extends TestCase
         $response = $this->patch('tags/1', [
             'tag_id' => $baseTag->id,
             //'name' => 'New Test Tag',
-            'is_private' => '0',
+            'visibility' => 1,
         ]);
 
         $response->assertSessionHasErrors([
