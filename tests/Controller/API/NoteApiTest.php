@@ -36,13 +36,13 @@ class NoteApiTest extends ApiTestCase
         $response = $this->postJsonAuthorized('api/v1/notes', [
             'link_id' => $link->id,
             'note' => 'Quae vero auctorem tractata ab fiducia dicuntur.',
-            'is_private' => true,
+            'visibility' => 1,
         ]);
 
         $response->assertOk()
             ->assertJson([
                 'note' => 'Quae vero auctorem tractata ab fiducia dicuntur.',
-                'is_private' => true,
+                'visibility' => 1,
             ]);
 
         $databaseNote = Note::first();

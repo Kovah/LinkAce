@@ -11,7 +11,7 @@ trait SearchesLinks
     protected string|null $searchQuery;
     protected bool $searchTitle = false;
     protected bool $searchDescription = false;
-    protected bool $searchPrivateOnly = false;
+    protected ?int $searchVisibility = null;
     protected bool $searchBrokenOnly = false;
     protected string|null $searchLists = null;
     protected string|null $searchTags = null;
@@ -59,8 +59,8 @@ trait SearchesLinks
         }
 
         // Show private only if applicable
-        if ($this->searchPrivateOnly = (bool)$request->input('private_only', false)) {
-            $search->where('is_private', true);
+        if ($this->searchVisibility = $request->input('visibility')) {
+            $search->where('visibility', $this->searchVisibility);
         }
 
         // Show broken only if applicable

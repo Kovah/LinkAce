@@ -67,12 +67,12 @@ class TagApiTest extends ApiTestCase
     {
         $response = $this->postJsonAuthorized('api/v1/tags', [
             'name' => null,
-            'is_private' => 'hello',
+            'visibility' => 'hello',
         ]);
 
         $response->assertJsonValidationErrors([
             'name' => 'The name field is required.',
-            'is_private' => 'The is private field must be true or false.',
+            'visibility' => 'The Visibility must bei either 1 (public), 2 (internal) or 3 (private).',
         ]);
     }
 
@@ -120,12 +120,12 @@ class TagApiTest extends ApiTestCase
 
         $response = $this->patchJsonAuthorized('api/v1/tags/1', [
             'name' => null,
-            'is_private' => 'hello',
+            'visibility' => 'hello',
         ]);
 
         $response->assertJsonValidationErrors([
             'name' => 'The name field is required.',
-            'is_private' => 'The is private field must be true or false.',
+            'visibility' => 'The Visibility must bei either 1 (public), 2 (internal) or 3 (private).',
         ]);
     }
 

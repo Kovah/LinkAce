@@ -2,6 +2,7 @@
 
 namespace App\Http\Requests;
 
+use App\Rules\ModelVisibility;
 use Illuminate\Foundation\Http\FormRequest;
 
 class SearchRequest extends FormRequest
@@ -35,6 +36,11 @@ class SearchRequest extends FormRequest
             ],
             'broken_only' => [
                 'required_without_all:query,only_lists,only_tags',
+            ],
+            'visibility' => [
+                'sometimes',
+                'integer',
+                new ModelVisibility(),
             ],
         ];
     }

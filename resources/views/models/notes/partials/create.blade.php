@@ -24,7 +24,7 @@
             <div class="d-flex align-items-center">
 
                 <x-forms.visibility-toggle class="ms-auto me-3 d-flex align-items-center" input-classes="form-select-sm"
-                    label-classes="mb-0 me-2 small"/>
+                    label-classes="mb-0 me-2 small" visibility-setting="notes_default_visibility"/>
 
                 <button type="submit" class="btn btn-sm btn-primary">
                     <x-icon.save class="me-2"/> @lang('note.add')

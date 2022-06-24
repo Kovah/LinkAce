@@ -28,6 +28,7 @@
                 <div class="d-flex align-items-center">
 
                     <x-forms.visibility-toggle :existing-value="$note->visibility"
+                        visibility-setting="notes_default_visibility"
                         class="ms-auto me-3 d-flex align-items-center" input-classes="form-select-sm"
                         label-classes="mb-0 me-2 small"/>
 

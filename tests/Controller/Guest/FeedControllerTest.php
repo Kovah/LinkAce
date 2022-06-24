@@ -26,8 +26,8 @@ class FeedControllerTest extends TestCase
 
     public function testLinkFeed(): void
     {
-        $linkPublic = Link::factory()->create(['is_private' => false]);
-        $linkPrivate = Link::factory()->create(['is_private' => true]);
+        $linkPublic = Link::factory()->create(['visibility' => 1]);
+        $linkPrivate = Link::factory()->create(['visibility' => 3]);
 
         $response = $this->get('guest/links/feed');
 
@@ -38,8 +38,8 @@ class FeedControllerTest extends TestCase
 
     public function testListFeed(): void
     {
-        LinkList::factory()->create(['name' => 'public list', 'is_private' => false]);
-        LinkList::factory()->create(['name' => 'private list', 'is_private' => true]);
+        LinkList::factory()->create(['name' => 'public list', 'visibility' => 1]);
+        LinkList::factory()->create(['name' => 'private list', 'visibility' => 3]);
 
         $response = $this->get('guest/lists/feed');
 
@@ -50,9 +50,9 @@ class FeedControllerTest extends TestCase
 
     public function testListLinkFeed(): void
     {
-        $link = LinkList::factory()->create(['name' => 'test link', 'is_private' => false]);
-        $listLink = Link::factory()->create(['is_private' => false]);
-        $privateListLink = Link::factory()->create(['is_private' => true]);
+        $link = LinkList::factory()->create(['name' => 'test link', 'visibility' => 1]);
+        $listLink = Link::factory()->create(['visibility' => 1]);
+        $privateListLink = Link::factory()->create(['visibility' => 3]);
         $unrelatedLink = Link::factory()->create();
 
         $listLink->lists()->sync([$link->id]);
@@ -68,7 +68,7 @@ class FeedControllerTest extends TestCase
 
     public function testPrivateListLinkFeed(): void
     {
-        LinkList::factory()->create(['is_private' => true]);
+        LinkList::factory()->create(['visibility' => 3]);
 
         $response = $this->get('guest/lists/1/feed');
 
@@ -77,8 +77,8 @@ class FeedControllerTest extends TestCase
 
     public function testTagsFeed(): void
     {
-        Tag::factory()->create(['name' => 'public tag', 'is_private' => false]);
-        Tag::factory()->create(['name' => 'private tag', 'is_private' => true]);
+        Tag::factory()->create(['name' => 'public tag', 'visibility' => 1]);
+        Tag::factory()->create(['name' => 'private tag', 'visibility' => 3]);
 
         $response = $this->get('guest/tags/feed');
 
@@ -89,9 +89,9 @@ class FeedControllerTest extends TestCase
 
     public function testTagLinkFeed(): void
     {
-        $tag = Tag::factory()->create(['name' => 'test tag', 'is_private' => false]);
-        $tagLink = Link::factory()->create(['is_private' => false]);
-        $privateTagLink = Link::factory()->create(['is_private' => true]);
+        $tag = Tag::factory()->create(['name' => 'test tag', 'visibility' => 1]);
+        $tagLink = Link::factory()->create(['visibility' => 1]);
+        $privateTagLink = Link::factory()->create(['visibility' => 3]);
         $unrelatedLink = Link::factory()->create();
 
         $tagLink->tags()->sync([$tag->id]);
@@ -107,7 +107,7 @@ class FeedControllerTest extends TestCase
 
     public function testPrivateTagLinkFeed(): void
     {
-        Tag::factory()->create(['is_private' => true]);
+        Tag::factory()->create(['visibility' => 3]);
 
         $response = $this->get('guest/tags/1/feed');
 

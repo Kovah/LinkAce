@@ -29,11 +29,11 @@ class ListControllerTest extends TestCase
 
         LinkList::factory()->create([
             'name' => 'public list',
-            'is_private' => false,
+            'visibility' => 1,
         ]);
         LinkList::factory()->create([
             'name' => 'private list',
-            'is_private' => true,
+            'visibility' => 3,
         ]);
 
         $response = $this->get('guest/lists');
@@ -49,7 +49,7 @@ class ListControllerTest extends TestCase
 
         LinkList::factory()->create([
             'name' => 'test list name',
-            'is_private' => false,
+            'visibility' => 1,
         ]);
 
         $response = $this->get('guest/lists/1');
@@ -63,7 +63,7 @@ class ListControllerTest extends TestCase
 
         LinkList::factory()->create([
             'name' => 'test list name',
-            'is_private' => true,
+            'visibility' => 3,
         ]);
 
         $response = $this->get('guest/lists/1');

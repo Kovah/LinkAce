@@ -125,8 +125,8 @@ return [
     */
 
     'custom' => [
-        'attribute-name' => [
-            'rule-name' => 'custom-message',
+        'visibility' => [
+            'visibility' => 'The Visibility must bei either 1 (public), 2 (internal) or 3 (private).',
         ],
     ],
 

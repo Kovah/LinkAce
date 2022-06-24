@@ -2,6 +2,7 @@
 
 namespace App\Http\Requests\Models;
 
+use App\Rules\ModelVisibility;
 use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Validation\Rule;
 
@@ -31,7 +32,7 @@ class TagStoreRequest extends FormRequest
             ],
             'visibility' => [
                 'sometimes',
-                'integer',
+                new ModelVisibility(),
             ],
         ];
     }

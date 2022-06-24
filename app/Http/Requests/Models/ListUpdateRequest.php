@@ -2,6 +2,7 @@
 
 namespace App\Http\Requests\Models;
 
+use App\Rules\ModelVisibility;
 use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Http\Request;
 use Illuminate\Validation\Rule;
@@ -35,7 +36,10 @@ class ListUpdateRequest extends FormRequest
         $rules = [
             'name' => 'required|string',
             'description' => 'nullable|string',
-            'visibility' => 'sometimes|integer',
+            'visibility' => [
+                'sometimes',
+                new ModelVisibility(),
+            ],
         ];
 
         if ($this->requireUniqueName) {

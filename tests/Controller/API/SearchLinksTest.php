@@ -124,17 +124,17 @@ class SearchLinksTest extends ApiTestCase
         $link = Link::factory()->create([
             'user_id' => $this->user->id,
             'url' => 'https://test.com',
-            'is_private' => true,
+            'visibility' => 1,
         ]);
 
         // This link must not be present in the results
         $excludedLink = Link::factory()->create([
             'user_id' => $this->user->id,
             'url' => 'https://test.org',
-            'is_private' => false,
+            'visibility' => 3,
         ]);
 
-        $url = sprintf('api/v1/search/links?query=%s&private_only=1', 'test');
+        $url = sprintf('api/v1/search/links?query=%s&visibility=1', 'test');
         $response = $this->getJsonAuthorized($url);
 
         $response->assertOk()

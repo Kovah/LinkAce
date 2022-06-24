@@ -4,7 +4,6 @@ namespace Tests\Controller\Guest;
 
 use App\Models\Tag;
 use App\Models\User;
-use App\Settings\SettingsAudit;
 use App\Settings\SystemSettings;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Tests\TestCase;
@@ -29,12 +28,12 @@ class TagControllerTest extends TestCase
 
         Tag::factory()->create([
             'name' => 'public tag',
-            'is_private' => false
+            'visibility' => 1,
         ]);
 
         Tag::factory()->create([
             'name' => 'private tag',
-            'is_private' => true
+            'visibility' => 3,
         ]);
 
         $response = $this->get('guest/tags');
@@ -50,7 +49,7 @@ class TagControllerTest extends TestCase
 
         Tag::factory()->create([
             'name' => 'testTag',
-            'is_private' => false,
+            'visibility' => 1,
         ]);
 
         $response = $this->get('guest/tags/1');
@@ -63,7 +62,7 @@ class TagControllerTest extends TestCase
     {
         User::factory()->create();
 
-        Tag::factory()->create(['is_private' => true]);
+        Tag::factory()->create(['visibility' => 3]);
 
         $response = $this->get('guest/tags/1');
 

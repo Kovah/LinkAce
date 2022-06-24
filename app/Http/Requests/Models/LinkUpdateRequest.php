@@ -2,14 +2,14 @@
 
 namespace App\Http\Requests\Models;
 
+use App\Rules\ModelVisibility;
 use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Http\Request;
 use Illuminate\Validation\Rule;
 
 class LinkUpdateRequest extends FormRequest
 {
-    /** @var bool */
-    private $requireUniqueUrl;
+    private bool $requireUniqueUrl = false;
 
     /**
      * Determine if the user is authorized to make this request.
@@ -34,13 +34,28 @@ class LinkUpdateRequest extends FormRequest
     public function rules(): array
     {
         $rules = [
-            'url' => 'required|string',
-            'title' => 'nullable|string',
-            'description' => 'nullable|string',
+            'url' => [
+                'required',
+                'string',
+            ],
+            'title' => [
+                'nullable',
+                'string',
+            ],
+            'description' => [
+                'nullable',
+                'string',
+            ],
             'lists' => 'nullable',
             'tags' => 'nullable',
-            'visibility' => 'sometimes|integer',
-            'check_disabled' => 'sometimes|boolean',
+            'visibility' => [
+                'sometimes',
+                new ModelVisibility(),
+            ],
+            'check_disabled' => [
+                'sometimes',
+                'boolean',
+            ],
         ];
 
         if ($this->requireUniqueUrl) {

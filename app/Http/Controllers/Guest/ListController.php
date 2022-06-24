@@ -18,7 +18,7 @@ class ListController extends Controller
     public function index(Request $request): View
     {
         $lists = LinkList::publicOnly()
-            ->withCount('links')
+            ->withCount(['links' => fn ($query) => $query->publicOnly()])
             ->orderBy(
                 $request->input('orderBy', 'name'),
                 $request->input('orderDir', 'asc')

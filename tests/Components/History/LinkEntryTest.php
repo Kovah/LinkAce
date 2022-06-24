@@ -244,20 +244,20 @@ class LinkEntryTest extends TestCase
         );
     }
 
-    public function testIsPrivateChange(): void
+    public function testVisibilityChange(): void
     {
         $link = Link::factory()->create([
-            'is_private' => true,
+            'visibility' => 1,
         ]);
 
-        $link->update(['is_private' => false]);
+        $link->update(['visibility' => 2]);
 
         $historyEntry = $link->audits()->first();
 
         $output = (new LinkEntry($historyEntry))->render();
 
         $this->assertStringContainsString(
-            'Changed Private Status from <code>Yes</code> to <code>No</code>',
+            'Changed Visibility Status from <code>Public</code> to <code>Internal</code>',
             $output
         );
     }

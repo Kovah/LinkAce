@@ -2,6 +2,7 @@
 
 namespace App\Http\Requests\Models;
 
+use App\Rules\ModelVisibility;
 use Illuminate\Foundation\Http\FormRequest;
 
 class ListStoreRequest extends FormRequest
@@ -34,7 +35,7 @@ class ListStoreRequest extends FormRequest
             ],
             'visibility' => [
                 'sometimes',
-                'integer',
+                new ModelVisibility(),
             ],
         ];
     }

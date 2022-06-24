@@ -70,13 +70,13 @@ class ListApiTest extends ApiTestCase
         $response = $this->postJsonAuthorized('api/v1/lists', [
             'name' => null,
             'description' => ['bla'],
-            'is_private' => 'hello',
+            'visibility' => 'hello',
         ]);
 
         $response->assertJsonValidationErrors([
             'name' => 'The name field is required.',
             'description' => 'The description must be a string.',
-            'is_private' => 'The is private field must be true or false.',
+            'visibility' => 'The Visibility must bei either 1 (public), 2 (internal) or 3 (private).',
         ]);
     }
 
@@ -109,7 +109,7 @@ class ListApiTest extends ApiTestCase
         $response = $this->patchJsonAuthorized('api/v1/lists/1', [
             'name' => 'Updated List Title',
             'description' => 'Custom Description',
-            'is_private' => false,
+            'visibility' => 1,
         ]);
 
         $response->assertOk()
@@ -129,13 +129,13 @@ class ListApiTest extends ApiTestCase
         $response = $this->patchJsonAuthorized('api/v1/lists/1', [
             'name' => null,
             'description' => ['bla'],
-            'is_private' => 'hello',
+            'visibility' => 'hello',
         ]);
 
         $response->assertJsonValidationErrors([
             'name' => 'The name field is required.',
             'description' => 'The description must be a string.',
-            'is_private' => 'The is private field must be true or false.',
+            'visibility' => 'The Visibility must bei either 1 (public), 2 (internal) or 3 (private).',
         ]);
     }
 

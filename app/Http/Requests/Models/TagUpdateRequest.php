@@ -2,14 +2,14 @@
 
 namespace App\Http\Requests\Models;
 
+use App\Rules\ModelVisibility;
 use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Http\Request;
 use Illuminate\Validation\Rule;
 
 class TagUpdateRequest extends FormRequest
 {
-    /** @var bool */
-    private $requireUniqueName = false;
+    private bool $requireUniqueName = false;
 
     /**
      * Determine if the user is authorized to make this request.
@@ -37,7 +37,7 @@ class TagUpdateRequest extends FormRequest
             'name' => 'required',
             'visibility' => [
                 'sometimes',
-                'integer',
+                new ModelVisibility(),
             ],
         ];
 

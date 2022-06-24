@@ -162,13 +162,13 @@ class LinkApiTest extends ApiTestCase
             'url' => null,
             'lists' => 'no array',
             'tags' => 123,
-            'is_private' => 'hello',
+            'visibility' => 'hello',
             'check_disabled' => 'bla',
         ]);
 
         $response->assertJsonValidationErrors([
             'url' => 'The url field is required.',
-            'is_private' => 'The is private field must be true or false.',
+            'visibility' => 'The Visibility must bei either 1 (public), 2 (internal) or 3 (private).',
             'check_disabled' => 'The check disabled field must be true or false.',
         ]);
     }
@@ -247,13 +247,13 @@ class LinkApiTest extends ApiTestCase
             'url' => null,
             'lists' => 'no array',
             'tags' => 123,
-            'is_private' => 'hello',
+            'visibility' => 'hello',
             'check_disabled' => 'bla',
         ]);
 
         $response->assertJsonValidationErrors([
             'url' => 'The url field is required.',
-            'is_private' => 'The is private field must be true or false.',
+            'visibility' => 'The Visibility must bei either 1 (public), 2 (internal) or 3 (private).',
             'check_disabled' => 'The check disabled field must be true or false.',
         ]);
     }

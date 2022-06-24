@@ -14,8 +14,7 @@ class LinkCreateTest extends TestCase
     use DatabaseMigrations;
     use DatabaseTransactions;
 
-    /** @var User */
-    private $user;
+    private mixed $user;
 
     protected function setUp(): void
     {
@@ -43,7 +42,7 @@ class LinkCreateTest extends TestCase
             'url' => $url,
             'title' => null,
             'description' => null,
-            'is_private' => false,
+            'visibility' => 1,
         ];
 
         $link = LinkRepository::create($originalData);
@@ -55,7 +54,7 @@ class LinkCreateTest extends TestCase
             'description' => 'This an example description',
             'icon' => 'link',
             'thumbnail' => 'https://duckduckgo.com/assets/logo_social-media.png',
-            'is_private' => 0,
+            'visibility' => 1,
             'user_id' => 1,
             'status' => 1,
             'created_at' => $link->created_at,

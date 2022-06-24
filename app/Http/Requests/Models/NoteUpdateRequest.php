@@ -2,6 +2,7 @@
 
 namespace App\Http\Requests\Models;
 
+use App\Rules\ModelVisibility;
 use Illuminate\Foundation\Http\FormRequest;
 
 class NoteUpdateRequest extends FormRequest
@@ -29,7 +30,7 @@ class NoteUpdateRequest extends FormRequest
             ],
             'visibility' => [
                 'sometimes',
-                'integer',
+                new ModelVisibility(),
             ],
         ];
     }

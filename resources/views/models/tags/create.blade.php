@@ -29,7 +29,7 @@
                         </div>
                     </div>
                     <div class="col-12 col-sm-6 col-md-5">
-                        <x-forms.visibility-toggle class="mb-4"/>
+                        <x-forms.visibility-toggle class="mb-4" visibility-setting="tags_default_visibility"/>
                     </div>
                 </div>
 
