@@ -12,4 +12,8 @@
   <rule ref="PSR2">
     <exclude name="Generic.Files.LineLength"/>
   </rule>
+
+  <rule ref="Internal.NoCodeFound">
+    <severity>0</severity>
+  </rule>
 </ruleset>
