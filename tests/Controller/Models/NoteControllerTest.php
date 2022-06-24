@@ -31,32 +31,47 @@ class NoteControllerTest extends TestCase
 
         $response = $this->post('notes', [
             'link_id' => $link->id,
-            'note' => 'Lorem ipsum dolor',
-            'is_private' => '0',
+            'note' => 'Some public test note',
+            'visibility' => 1,
         ]);
 
         $response->assertRedirect('links/1');
 
-        $this->assertEquals('Lorem ipsum dolor', $link->notes()->first()->note);
+        $this->get('links/1')->assertSee('Some public test note');
     }
 
-    public function testStoreRequestWithPrivateDefault(): void
+    public function testInternalStoreRequest(): void
     {
-        UserSettings::fake([
-            'notes_private_default' => true,
-        ]);
-
         $link = Link::factory()->create();
 
         $response = $this->post('notes', [
             'link_id' => $link->id,
-            'note' => 'Lorem ipsum dolor',
-            'is_private' => usersettings('notes_private_default'),
+            'note' => 'Some internal test Note',
+            'visibility' => 2,
         ]);
 
         $response->assertRedirect('links/1');
 
-        $this->assertTrue($link->notes()->first()->is_private);
+        $this->get('links/1')
+            ->assertSee('Some internal test Note')
+            ->assertSee('Internal Note');
+    }
+
+    public function testPrivateStoreRequest(): void
+    {
+        $link = Link::factory()->create();
+
+        $response = $this->post('notes', [
+            'link_id' => $link->id,
+            'note' => 'Some private test Note',
+            'visibility' => 3,
+        ]);
+
+        $response->assertRedirect('links/1');
+
+        $this->get('links/1')
+            ->assertSee('Some private test Note')
+            ->assertSee('Private Note');
     }
 
     public function testStoreRequestWithMarkdown(): void
@@ -70,7 +85,7 @@ class NoteControllerTest extends TestCase
         $response = $this->post('notes', [
             'link_id' => $link->id,
             'note' => 'Lorem _ipsum dolor_',
-            'is_private' => '0',
+            'visibility' => 1,
         ]);
 
         $response->assertRedirect('links/1');
@@ -86,7 +101,7 @@ class NoteControllerTest extends TestCase
         $response = $this->post('notes', [
             'link_id' => $link->id,
             'note' => null,
-            'is_private' => '0',
+            'visibility' => 1,
         ]);
 
         $response->assertSessionHasErrors([
@@ -99,7 +114,7 @@ class NoteControllerTest extends TestCase
         $response = $this->post('notes', [
             'link_id' => '1',
             'note' => 'Lorem ipsum dolor',
-            'is_private' => '0',
+            'visibility' => 1,
         ]);
 
         $response->assertNotFound();
@@ -129,7 +144,7 @@ class NoteControllerTest extends TestCase
         $response = $this->patch('notes/1', [
             'link_id' => $baseNote->link_id,
             'note' => 'Lorem ipsum dolor est updated',
-            'is_private' => '0',
+            'visibility' => 1,
         ]);
 
         $response->assertRedirect('links/' . $baseNote->link_id);
@@ -144,7 +159,7 @@ class NoteControllerTest extends TestCase
         $response = $this->patch('notes/1', [
             'link_id' => '1',
             'note' => 'Lorem ipsum dolor est updated',
-            'is_private' => '0',
+            'visibility' => 1,
         ]);
 
         $response->assertNotFound();
@@ -157,7 +172,7 @@ class NoteControllerTest extends TestCase
         $response = $this->patch('notes/1', [
             'note_id' => $baseNote->id,
             //'note' => 'Lorem ipsum dolor est updated',
-            'is_private' => '0',
+            'visibility' => 1,
         ]);
 
         $response->assertSessionHasErrors([

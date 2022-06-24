@@ -17,11 +17,7 @@
             <div class="d-flex me-2 mw-100 order-2 order-md-1">
                 <div class="me-2 me-lg-3">
                     {!! $link->getIcon() !!}
-                    @if($link->is_private)
-                        <br>
-                        <x-icon.lock title="@lang('link.private')"/>
-                        <span class="visually-hidden">@lang('link.private')</span>
-                    @endif
+                    <x-models.visibility-badge :model="$link"/>
                 </div>
                 <div>
                     <div><a href="{{ $link->url }}" {!! linkTarget() !!}>{{ $link->title }}</a></div>

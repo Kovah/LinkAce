@@ -13,7 +13,7 @@
         </thead>
         <tbody>
         @foreach($lists as $list)
-            @include('models.lists.partials.single')
+            @include('models.lists.partials.single', ['list' => $list])
         @endforeach
         </tbody>
     </table>

@@ -48,6 +48,8 @@ class Note extends Model
         'visibility' => 'integer',
     ];
 
+    public string $langBase = 'note';
+
     /*
      * ========================================================================
      * SCOPES

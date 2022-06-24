@@ -123,6 +123,34 @@ class TagControllerTest extends TestCase
             ->assertSee($tag->name);
     }
 
+    public function testInternalDetailView(): void
+    {
+        $tag = Tag::factory()->create([
+            'user_id' => $this->user->id,
+            'visibility' => 2,
+        ]);
+
+        $response = $this->get('tags/1');
+
+        $response->assertOk()
+            ->assertSee('Internal Tag')
+            ->assertSee($tag->name);
+    }
+
+    public function testPrivateDetailView(): void
+    {
+        $tag = Tag::factory()->create([
+            'user_id' => $this->user->id,
+            'visibility' => 3,
+        ]);
+
+        $response = $this->get('tags/1');
+
+        $response->assertOk()
+            ->assertSee('Private Tag')
+            ->assertSee($tag->name);
+    }
+
     public function testEditView(): void
     {
         Tag::factory()->create([

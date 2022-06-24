@@ -2,12 +2,7 @@
     <div class="h-100 card">
         <div class="card-body">
             <div class="d-flex">
-                @if($list->is_private)
-                    <span>
-                        <x-icon.lock class="me-2" title="@lang('list.private')"/>
-                        <span class="visually-hidden">@lang('list.private')</span>
-                    </span>
-                @endif
+                <x-models.visibility-badge :model="$list" class="d-inline-block me-2"/>
                 <a href="{{ route('lists.show', [$list->id]) }}">{{ $list->name }}</a>
             </div>
             @if($list->description)

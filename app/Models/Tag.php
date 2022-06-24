@@ -51,6 +51,8 @@ class Tag extends Model implements Auditable
         'visibility' => 'integer',
     ];
 
+    public string $langBase = 'tag';
+
     /**
      * Add the OrderNameScope to the Tag model
      */

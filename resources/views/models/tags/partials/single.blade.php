@@ -1,11 +1,6 @@
 <tr>
     <td>
-        @if($tag->is_private)
-            <span>
-                <x-icon.lock class="me-1" title="@lang('tag.private')"/>
-                <span class="visually-hidden">@lang('tag.private')</span>
-            </span>
-        @endif
+        <x-models.visibility-badge :model="$tag" class="d-inline-block me-1 small"/>
         <a href="{{ route('tags.show', [$tag]) }}">
             {{ $tag->name }}
         </a>

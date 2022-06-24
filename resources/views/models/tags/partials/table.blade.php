@@ -13,7 +13,7 @@
         </thead>
         <tbody>
         @foreach($tags as $tag)
-            @include('models.tags.partials.single')
+            @include('models.tags.partials.single', ['tag' => $tag])
         @endforeach
         </tbody>
     </table>

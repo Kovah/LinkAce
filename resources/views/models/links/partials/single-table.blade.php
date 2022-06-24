@@ -4,12 +4,7 @@
             <a href="{{ route('links.show', [$link]) }}">
                 {{ $link->title }}
             </a>
-            @if($link->is_private)
-                <span>
-                <x-icon.lock class="me-1" title="@lang('link.private')"/>
-                <span class="visually-hidden">@lang('link.private')</span>
-            </span>
-            @endif
+            <x-models.visibility-badge :model="$link" class="d-inline-block"/>
         </div>
         @if($link->tags->count() > 0)
             <div class="mt-1">

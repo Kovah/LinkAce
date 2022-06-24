@@ -16,9 +16,7 @@
                         @endif
                         <div class="d-sm-inline-block mt-1 mb-2 mb-sm-0">
                             {!! $link->getIcon('me-1 me-sm-2') !!}
-                            @if($link->is_private)
-                                <x-icon.lock class="fw me-1 me-sm-2" title="@lang('link.private')"/>
-                            @endif
+                            <x-models.visibility-badge :model="$link" class="me-1 me-sm-2 d-inline-block"/>
                         </div>
                         <h3 class="d-inline-block mb-0">
                             <a href="{{ $link->url }}" {!! linkTarget() !!}

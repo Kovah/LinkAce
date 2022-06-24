@@ -141,6 +141,28 @@ class ListControllerTest extends TestCase
             ->assertSee($list->name);
     }
 
+    public function testInternalDetailView(): void
+    {
+        $list = LinkList::factory()->create(['visibility' => 2]);
+
+        $response = $this->get('lists/1');
+
+        $response->assertOk()
+            ->assertSee('Internal List')
+            ->assertSee($list->name);
+    }
+
+    public function testPrivateDetailView(): void
+    {
+        $list = LinkList::factory()->create(['visibility' => 3]);
+
+        $response = $this->get('lists/1');
+
+        $response->assertOk()
+            ->assertSee('Private List')
+            ->assertSee($list->name);
+    }
+
     public function testEditView(): void
     {
         LinkList::factory()->create([

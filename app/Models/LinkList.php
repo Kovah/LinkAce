@@ -56,6 +56,8 @@ class LinkList extends Model implements Auditable
         'visibility' => 'integer',
     ];
 
+    public string $langBase = 'list';
+
     /**
      * Add the OrderNameScope to the Tag model
      */

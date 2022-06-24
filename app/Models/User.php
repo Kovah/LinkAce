@@ -47,6 +47,8 @@ class User extends Authenticatable implements Auditable
         'api_token',
     ];
 
+    public string $langBase = 'user';
+
     /*
      * ========================================================================
      * AUDIT SETTINGS

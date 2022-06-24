@@ -75,6 +75,8 @@ class Link extends Model implements Auditable
         'check_disabled' => 'boolean',
     ];
 
+    public string $langBase = 'link';
+
     public const STATUS_OK = 1;
     public const STATUS_MOVED = 2;
     public const STATUS_BROKEN = 3;

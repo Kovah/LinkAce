@@ -5,12 +5,7 @@
     <div class="card">
         <header class="card-header d-flex align-items-center">
             <span class="me-3">
-                @if($tag->is_private)
-                    <span>
-                        <x-icon.lock class="me-1" title="@lang('tag.private')"/>
-                        <span class="visually-hidden">@lang('tag.private')</span>
-                    </span>
-                @endif
+                <x-models.visibility-badge :model="$tag" class="d-inline-block me-1"/>
                 @lang('tag.tag')
             </span>
             <div class="ms-auto">

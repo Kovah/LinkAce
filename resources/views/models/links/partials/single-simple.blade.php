@@ -2,12 +2,7 @@
     <div class="d-sm-flex align-items-center">
         <div class="me-3 one-line-sm">
             <a href="{{ $link->url }}" title="{{ $link->url }}" {!! linkTarget() !!}>
-                @if($link->is_private)
-                    <span>
-                        <x-icon.lock class="me-1" title="@lang('link.private')"/>
-                        <span class="visually-hidden">@lang('link.private')</span>
-                    </span>
-                @endif
+                <x-models.visibility-badge :model="$link" class="d-inline-block"/>
                 {!! $link->getIcon('me-1') !!}
                 {{ $link->shortTitle(100) }}
             </a>

@@ -232,6 +232,28 @@ class LinkControllerTest extends TestCase
             ->assertSee($link->url);
     }
 
+    public function testInternalDetailView(): void
+    {
+        $link = Link::factory()->create(['visibility' => 2]);
+
+        $response = $this->get('links/1');
+
+        $response->assertOk()
+            ->assertSee('Internal Link')
+            ->assertSee($link->url);
+    }
+
+    public function testPrivateDetailView(): void
+    {
+        $link = Link::factory()->create(['visibility' => 3]);
+
+        $response = $this->get('links/1');
+
+        $response->assertOk()
+            ->assertSee('Private Link')
+            ->assertSee($link->url);
+    }
+
     public function testEditView(): void
     {
         Link::factory()->create();
