@@ -11,6 +11,7 @@ use Illuminate\Support\Collection;
 use Laravel\Fortify\TwoFactorAuthenticatable;
 use OwenIt\Auditing\Auditable as AuditableTrait;
 use OwenIt\Auditing\Contracts\Auditable;
+use Spatie\Permission\Traits\HasRoles;
 
 /**
  * Class User
@@ -32,6 +33,7 @@ class User extends Authenticatable implements Auditable
     use AuditableTrait;
     use Notifiable;
     use HasFactory;
+    use HasRoles;
     use TwoFactorAuthenticatable;
 
     protected $fillable = [

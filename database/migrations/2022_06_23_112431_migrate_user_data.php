@@ -1,9 +1,11 @@
 <?php
 
 use App\Enums\ModelAttribute;
+use App\Enums\Role;
 use App\Models\LinkList;
 use App\Models\Note;
 use App\Models\Tag;
+use App\Models\User;
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
@@ -20,6 +22,8 @@ class MigrateUserData extends Migration
         $this->migrateListVisibility();
         $this->migrateTagVisibility();
         $this->migrateNoteVisibility();
+
+        $this->addUserRoles();
     }
 
     protected function migrateLinkVisibility(): void
@@ -102,5 +106,15 @@ class MigrateUserData extends Migration
         Schema::table('notes', function (Blueprint $table) {
             $table->dropColumn(['is_private']);
         });
+    }
+
+    protected function addUserRoles(): void
+    {
+        \Illuminate\Support\Facades\Artisan::call('db:seed', ['--class' => 'RolesAndPermissionsSeeder']);
+
+        $newAdmin = User::first();
+        if (!$newAdmin->hasRole(Role::ADMIN)) {
+            $newAdmin->assignRole(Role::ADMIN);
+        }
     }
 }
