@@ -1,5 +1,7 @@
 <?php
 
+use App\Http\Controllers\Admin\SystemSettingsController;
+use App\Http\Controllers\Admin\UserManagementController;
 use App\Http\Controllers\App\AuditController;
 use App\Http\Controllers\App\BookmarkletController;
 use App\Http\Controllers\App\DashboardController;
@@ -7,7 +9,6 @@ use App\Http\Controllers\App\ExportController;
 use App\Http\Controllers\App\FeedController;
 use App\Http\Controllers\App\ImportController;
 use App\Http\Controllers\App\SearchController;
-use App\Http\Controllers\App\SystemSettingsController;
 use App\Http\Controllers\App\TrashController;
 use App\Http\Controllers\App\UserSettingsController;
 use App\Http\Controllers\CronController;
@@ -117,13 +118,6 @@ Route::group(['middleware' => ['auth']], function () {
     Route::post('settings/generate-api-token', [UserSettingsController::class, 'generateApiToken'])
         ->name('generate-api-token');
 
-    Route::get('settings/system', [SystemSettingsController::class, 'getSystemSettings'])
-        ->name('get-systemsettings');
-    Route::post('settings/system', [SystemSettingsController::class, 'saveSystemSettings'])
-        ->name('save-settings-system');
-    Route::post('settings/generate-cron-token', [SystemSettingsController::class, 'generateCronToken'])
-        ->name('generate-cron-token');
-
     Route::post('fetch/tags', [FetchController::class, 'getTags'])
         ->name('fetch-tags');
     Route::post('fetch/lists', [FetchController::class, 'getLists'])
@@ -134,10 +128,19 @@ Route::group(['middleware' => ['auth']], function () {
         ->name('fetch-html-for-url');
     Route::get('fetch/update-check', [FetchController::class, 'checkForUpdates'])
         ->name('fetch-update-check');
+});
 
-    Route::get('system/logs', [LogViewerController::class, 'index'])
-        ->name('system-logs');
+Route::group(['middleware' => ['auth', 'role:admin']], function () {
+    Route::get('settings/system', [SystemSettingsController::class, 'index'])
+        ->name('get-systemsettings');
+    Route::post('settings/system', [SystemSettingsController::class, 'update'])
+        ->name('save-settings-system');
+    Route::post('settings/generate-cron-token', [SystemSettingsController::class, 'generateCronToken'])
+        ->name('generate-cron-token');
 
+    Route::get('system/users', [UserManagementController::class, 'index'])->name('user-management');
+
+    Route::get('system/logs', [LogViewerController::class, 'index'])->name('system-logs');
     Route::get('system/audit', AuditController::class)->name('system-audit');
 });
 

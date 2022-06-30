@@ -2,16 +2,16 @@
 
 @section('content')
 
-    @include('app.settings.partials.user.bookmarklet')
+    @include('app.settings.partials.bookmarklet')
 
-    @include('app.settings.partials.user.api')
+    @include('app.settings.partials.api')
 
-    @include('app.settings.partials.user.account-settings')
+    @include('app.settings.partials.account-settings')
 
-    @include('app.settings.partials.user.change-pw')
+    @include('app.settings.partials.change-pw')
 
-    @include('app.settings.partials.user.two-factor')
+    @include('app.settings.partials.two-factor')
 
-    @include('app.settings.partials.user.app-settings')
+    @include('app.settings.partials.app-settings')
 
 @endsection

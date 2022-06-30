@@ -97,9 +97,9 @@
                 <div class="col-12 col-sm-8 col-md-6"></div>
             </div>
 
-            @include('app.settings.partials.system.guest.dark-mode')
+            @include('admin.system-settings.partials.guest.dark-mode')
 
-            @include('app.settings.partials.system.guest.sharing')
+            @include('admin.system-settings.partials.guest.sharing')
 
             <button type="submit" class="btn btn-primary">
                 <x-icon.save class="me-2"/> @lang('settings.save_settings')

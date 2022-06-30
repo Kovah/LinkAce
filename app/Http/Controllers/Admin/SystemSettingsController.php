@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Http\Controllers\App;
+namespace App\Http\Controllers\Admin;
 
 use App\Enums\ActivityLog;
 use App\Helper\UpdateHelper;
@@ -20,9 +20,9 @@ class SystemSettingsController extends Controller
      *
      * @return View
      */
-    public function getSystemSettings(): View
+    public function index(): View
     {
-        return view('app.settings.system', [
+        return view('admin.system-settings.index', [
             'linkaceVersion' => UpdateHelper::currentVersion(),
         ]);
     }
@@ -33,7 +33,7 @@ class SystemSettingsController extends Controller
      * @param SystemSettingsUpdateRequest $request
      * @return RedirectResponse
      */
-    public function saveSystemSettings(SystemSettingsUpdateRequest $request): RedirectResponse
+    public function update(SystemSettingsUpdateRequest $request): RedirectResponse
     {
         $sysSettings = app(SystemSettings::class);
         $guestSettings = app(GuestSettings::class);

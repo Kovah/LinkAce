@@ -2,6 +2,7 @@
 
 namespace Tests\Helper;
 
+use App\Enums\Role;
 use App\Models\Link;
 use App\Models\User;
 use Illuminate\Foundation\Testing\RefreshDatabase;
@@ -51,6 +52,7 @@ class HelperFunctionsTest extends TestCase
      */
     public function testGetAllSystemSettings(): void
     {
+        $this->user->assignRole(Role::ADMIN);
         $this->actingAs($this->user);
 
         $this->post('settings/system', [

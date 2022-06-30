@@ -112,8 +112,12 @@ class MigrateUserData extends Migration
     {
         \Illuminate\Support\Facades\Artisan::call('db:seed', ['--class' => 'RolesAndPermissionsSeeder']);
 
+        Schema::table('users', function (Blueprint $table) {
+            $table->softDeletes();
+        });
+
         $newAdmin = User::first();
-        if (!$newAdmin->hasRole(Role::ADMIN)) {
+        if ($newAdmin !== null && !$newAdmin->hasRole(Role::ADMIN)) {
             $newAdmin->assignRole(Role::ADMIN);
         }
     }
