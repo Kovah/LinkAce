@@ -27,6 +27,10 @@ class UserEntry extends Component
             $this->changes[] = trans('user.history_restored', ['name' => $this->entry->getModified()['name']['new']]);
         } elseif ($this->entry->event === 'created') {
             $this->changes[] = trans('user.history_created', ['name' => $this->entry->getModified()['name']['new']]);
+        } elseif ($this->entry->event === 'blocked') {
+            $this->changes[] = trans('user.history_blocked', ['name' => $this->entry->auditable->name]);
+        } elseif ($this->entry->event === 'unblocked') {
+            $this->changes[] = trans('user.history_unblocked', ['name' => $this->entry->auditable->name]);
         } else {
             foreach ($this->entry->getModified() as $field => $change) {
                 $this->processChange($field, $change);

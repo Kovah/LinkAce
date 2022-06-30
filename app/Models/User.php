@@ -2,13 +2,12 @@
 
 namespace App\Models;
 
+use App\Audits\Modifiers\BlockedAtModifier;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
-use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 use Illuminate\Support\Carbon;
-use Illuminate\Support\Collection;
 use Laravel\Fortify\TwoFactorAuthenticatable;
 use OwenIt\Auditing\Auditable as AuditableTrait;
 use OwenIt\Auditing\Contracts\Auditable;
@@ -43,6 +42,7 @@ class User extends Authenticatable implements Auditable
         'email',
         'password',
         'api_token',
+        'blocked_at',
     ];
 
     protected $hidden = [
@@ -51,12 +51,19 @@ class User extends Authenticatable implements Auditable
         'api_token',
     ];
 
+    protected $casts = [
+        'blocked_at' => 'datetime',
+    ];
+
     public string $langBase = 'user';
 
     /*
      * ========================================================================
      * AUDIT SETTINGS
      */
+
+    public const AUDIT_BLOCK_EVENT = 'blocked';
+    public const AUDIT_UNBLOCK_EVENT = 'unblocked';
 
     protected array $auditEvents = [
         'created',
@@ -71,4 +78,14 @@ class User extends Authenticatable implements Auditable
     ];
 
     public array $auditModifiers = [];
+
+    /*
+     * ========================================================================
+     * METHODS
+     */
+
+    public function isBlocked(): bool
+    {
+        return $this->blocked_at !== null;
+    }
 }

@@ -45,4 +45,41 @@ class UserManagementControllerTest extends TestCase
         $response->assertOk()->assertSee('User Management')
             ->assertSee($this->user->name);
     }
+
+    public function testUserBlocking(): void
+    {
+        $otherUser = User::factory()->create();
+
+        $response = $this->patch('system/users/2/block');
+        $response->assertRedirect();
+
+        $this->assertTrue($otherUser->refresh()->isBlocked());
+
+        $this->actingAs($otherUser);
+
+        $response = $this->get('dashboard');
+        $response->assertForbidden();
+
+        $this->actingAs($this->user);
+
+        $response = $this->patch('system/users/2/unblock');
+        $response->assertRedirect();
+
+        $this->assertFalse($otherUser->refresh()->isBlocked());
+    }
+
+    public function testUserDeletion(): void
+    {
+        $otherUser = User::factory()->create();
+
+        $response = $this->delete('system/users/2/delete');
+        $response->assertRedirect();
+
+        $this->assertTrue($otherUser->refresh()->trashed());
+
+        $response = $this->patch('system/users/2/restore');
+        $response->assertRedirect();
+
+        $this->assertFalse($otherUser->refresh()->trashed());
+    }
 }

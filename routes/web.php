@@ -59,6 +59,9 @@ Route::prefix('bookmarklet')->group(function () {
 
 Route::get('cron/{token}', CronController::class)->name('cron');
 
+Route::post('system/users/accept-invite', [UserManagementController::class, 'acceptInvitation'])
+    ->name('user-management-accept-invite');
+
 Route::group(['middleware' => 'auth:api'], function () {
     Route::get('links/feed', [FeedController::class, 'links'])->name('links.feed');
     Route::get('lists/feed', [FeedController::class, 'lists'])->name('lists.feed');
@@ -139,6 +142,15 @@ Route::group(['middleware' => ['auth', 'role:admin']], function () {
         ->name('generate-cron-token');
 
     Route::get('system/users', [UserManagementController::class, 'index'])->name('user-management');
+    Route::post('system/users/invite', [UserManagementController::class, 'index'])->name('user-management-invite');
+    Route::patch('system/users/{user}/block', [UserManagementController::class, 'blockUser'])
+        ->name('user-management-block')->withTrashed();
+    Route::patch('system/users/{user}/unblock', [UserManagementController::class, 'unblockUser'])
+        ->name('user-management-unblock')->withTrashed();
+    Route::delete('system/users/{user}/delete', [UserManagementController::class, 'deleteUser'])
+        ->name('user-management-delete')->withTrashed();
+    Route::patch('system/users/{user}/restore', [UserManagementController::class, 'restoreUser'])
+        ->name('user-management-restore')->withTrashed();
 
     Route::get('system/logs', [LogViewerController::class, 'index'])->name('system-logs');
     Route::get('system/audit', AuditController::class)->name('system-audit');

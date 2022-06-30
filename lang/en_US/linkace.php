@@ -21,6 +21,9 @@ return [
     'added_at' => 'Added at',
     'updated_at' => 'Updated at',
     'last_update' => 'Last Update',
+    'blocked' => 'Blocked',
+    'blocked_at' => 'Blocked at',
+    'deleted' => 'Deleted',
     'deleted_at' => 'Deleted at',
 
     'add' => 'Add',
@@ -28,6 +31,10 @@ return [
     'edit' => 'Edit',
     'update' => 'Update',
     'delete' => 'Delete',
+    'restore' => 'Restore',
+    'block' => 'Block',
+    'unblock' => 'Unblock',
+    'unblocked' => 'Unblocked',
 
     'menu' => 'Menu',
     'entries' => 'Entries',

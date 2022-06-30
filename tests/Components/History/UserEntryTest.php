@@ -2,6 +2,7 @@
 
 namespace Tests\Components\History;
 
+use App\Enums\Role;
 use App\Models\User;
 use App\View\Components\History\UserEntry;
 use Illuminate\Foundation\Testing\RefreshDatabase;
@@ -39,5 +40,35 @@ class UserEntryTest extends TestCase
 
         $output = (new UserEntry($historyEntries[1]))->render();
         $this->assertStringContainsString('User <code>TestUser</code> was deleted', $output);
+
+        $user->restore();
+
+        $historyEntries = $user->audits()->latest()->get();
+
+        $output = (new UserEntry($historyEntries[2]))->render();
+        $this->assertStringContainsString('User <code>TestUser</code> was restored', $output);
+    }
+
+    public function testModelBlocking(): void
+    {
+        $admin = User::factory()->create();
+        $admin->assignRole(Role::ADMIN);
+        $this->actingAs($admin);
+
+        $user = User::factory()->create(['name' => 'TestUser']);
+
+        $this->patch('system/users/2/block');
+
+        $historyEntries = $user->audits()->latest()->get();
+
+        $output = (new UserEntry($historyEntries[1]))->render();
+        $this->assertStringContainsString('User <code>TestUser</code> was blocked', $output);
+
+        $this->patch('system/users/2/unblock');
+
+        $historyEntries = $user->audits()->latest()->get();
+
+        $output = (new UserEntry($historyEntries[2]))->render();
+        $this->assertStringContainsString('User <code>TestUser</code> was unblocked', $output);
     }
 }

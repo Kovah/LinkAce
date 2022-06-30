@@ -113,6 +113,7 @@ class MigrateUserData extends Migration
         \Illuminate\Support\Facades\Artisan::call('db:seed', ['--class' => 'RolesAndPermissionsSeeder']);
 
         Schema::table('users', function (Blueprint $table) {
+            $table->timestamp('blocked_at')->nullable()->after('api_token');
             $table->softDeletes();
         });
 
