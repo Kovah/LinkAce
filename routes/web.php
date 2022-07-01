@@ -22,6 +22,7 @@ use App\Http\Controllers\Models\LinkController;
 use App\Http\Controllers\Models\ListController;
 use App\Http\Controllers\Models\NoteController;
 use App\Http\Controllers\Models\TagController;
+use App\Http\Controllers\Models\UserController;
 use App\Http\Controllers\RegistrationController;
 use App\Http\Controllers\Setup\AccountController;
 use App\Http\Controllers\Setup\DatabaseController;
@@ -84,6 +85,8 @@ Route::group(['middleware' => ['auth']], function () {
     Route::resource('notes', NoteController::class)
         ->except(['index', 'show', 'create']);
 
+    Route::get('users/{user:name}', [UserController::class, 'show'])->name('users.show');
+
     Route::post('links/toggle-check/{link}', [LinkController::class, 'updateCheckToggle'])
         ->name('links.toggle-check');
     Route::post('links/mark-working/{link}', [LinkController::class, 'markWorking'])
@@ -144,23 +147,25 @@ Route::group(['middleware' => ['auth', 'role:admin']], function () {
     Route::post('settings/generate-cron-token', [SystemSettingsController::class, 'generateCronToken'])
         ->name('generate-cron-token');
 
-    Route::get('system/users', [UserManagementController::class, 'index'])->name('users');
-    Route::get('system/users/{user}', [UserManagementController::class, 'show'])->name('users.show');
-    Route::get('system/users/{user}/edit', [UserManagementController::class, 'edit'])->name('users.edit');
-    Route::patch('system/users/{user}', [UserManagementController::class, 'update'])->name('users.update');
-
+    Route::get('system/users', [UserManagementController::class, 'index'])->name('system.users');
+    Route::get('system/users/{user}', [UserManagementController::class, 'show'])
+        ->name('system.users.show')->withTrashed();
+    Route::get('system/users/{user}/edit', [UserManagementController::class, 'edit'])
+        ->name('system.users.edit')->withTrashed();
+    Route::patch('system/users/{user}', [UserManagementController::class, 'update'])
+        ->name('system.users.update')->withTrashed();
     Route::patch('system/users/{user}/block', [UserManagementController::class, 'blockUser'])
-        ->name('users-block')->withTrashed();
+        ->name('system.users.block')->withTrashed();
     Route::patch('system/users/{user}/unblock', [UserManagementController::class, 'unblockUser'])
-        ->name('users-unblock')->withTrashed();
+        ->name('system.users.unblock')->withTrashed();
     Route::delete('system/users/{user}/delete', [UserManagementController::class, 'deleteUser'])
-        ->name('users-delete')->withTrashed();
+        ->name('system.users.delete')->withTrashed();
     Route::patch('system/users/{user}/restore', [UserManagementController::class, 'restoreUser'])
-        ->name('users-restore')->withTrashed();
+        ->name('system.users.restore')->withTrashed();
 
-    Route::post('system/users/invite', [UserManagementController::class, 'inviteUser'])->name('users-invite');
+    Route::post('system/users/invite', [UserManagementController::class, 'inviteUser'])->name('system.users.invite');
     Route::delete('system/users/invite/{invitation}', [UserManagementController::class, 'deleteInvitation'])
-        ->name('users-invite-delete');
+        ->name('system.users.invite-delete');
 
     Route::get('system/logs', [LogViewerController::class, 'index'])->name('system-logs');
     Route::get('system/audit', AuditController::class)->name('system-audit');

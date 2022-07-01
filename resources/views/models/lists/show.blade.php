@@ -31,6 +31,8 @@
 
             <h2 class="mb-0">{{ $list->name }}</h2>
 
+            <div class="mt-2 small">@lang('linkace.added_by'): <x-models.author :model="$list"/></div>
+
             @if($list->description)
                 <div class="mt-2 mb-0">{!! $list->formatted_description !!}</div>
             @endif

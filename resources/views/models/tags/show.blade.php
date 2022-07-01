@@ -31,6 +31,10 @@
 
             <h2 class="mb-0">{{ $tag->name }}</h2>
 
+            <div class="mt-2 small">
+                @lang('linkace.added_by'): <x-models.author :model="$tag"/>
+            </div>
+
         </div>
     </div>
 

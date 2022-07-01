@@ -6,6 +6,7 @@
     <div class="note-meta small d-flex align-items-center">
         <div class="ms-auto me-2 text-muted text-xs">
             <x-models.visibility-badge :model="$note" class="d-inline-block"/>
+            <span class="mx-1">@lang('linkace.added_by'): <x-models.author :model="$note"/></span>
             {!! $note->addedAt() !!}
         </div>
         <div class="text-end">

@@ -135,7 +135,7 @@ class Link extends Model implements Auditable
 
     public function user(): BelongsTo
     {
-        return $this->belongsTo(User::class, 'user_id');
+        return $this->belongsTo(User::class, 'user_id')->withTrashed();
     }
 
     public function lists(): BelongsToMany

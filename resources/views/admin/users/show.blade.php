@@ -6,7 +6,7 @@
         <div class="card-header d-flex">
             <div class="me-2">@lang('user.user')</div>
             <div class="ms-auto">
-                <a href="{{ route('users.edit', ['user' => $user]) }}" class="btn btn-sm btn-primary">
+                <a href="{{ route('system.users.edit', ['user' => $user]) }}" class="btn btn-sm btn-primary">
                     @lang('user.edit')
                 </a>
             </div>
@@ -40,25 +40,25 @@
                     @lang('linkace.delete')
                 </button>
             @endif
-            <form action="{{ route('users-block', ['user' => $user]) }}"
+            <form action="{{ route('system.users.block', ['user' => $user]) }}"
                 id="block-user-{{ $user->id }}"
                 method="post" class="d-none" data-confirmation="@lang('user.block_confirmation')">
                 @csrf
                 @method('PATCH')
             </form>
-            <form action="{{ route('users-unblock', ['user' => $user]) }}"
+            <form action="{{ route('system.users.unblock', ['user' => $user]) }}"
                 id="unblock-user-{{ $user->id }}"
                 method="post" class="d-none" data-confirmation="@lang('user.unblock_confirmation')">
                 @csrf
                 @method('PATCH')
             </form>
-            <form action="{{ route('users-delete', ['user' => $user]) }}"
+            <form action="{{ route('system.users.delete', ['user' => $user]) }}"
                 id="delete-user-{{ $user->id }}"
                 method="post" class="d-none" data-confirmation="@lang('user.delete_confirmation')">
                 @csrf
                 @method('DELETE')
             </form>
-            <form action="{{ route('users-restore', ['user' => $user]) }}"
+            <form action="{{ route('system.users.restore', ['user' => $user]) }}"
                 id="restore-user-{{ $user->id }}"
                 method="post" class="d-none" data-confirmation="@lang('user.restore_confirmation')">
                 @csrf

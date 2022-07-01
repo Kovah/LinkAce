@@ -19,6 +19,7 @@ return [
 
     'added' => 'Added',
     'added_at' => 'Added at',
+    'added_by' => 'Added by',
     'created' => 'Created',
     'created_at' => 'Created at',
     'updated_at' => 'Updated at',

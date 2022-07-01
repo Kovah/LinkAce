@@ -27,7 +27,7 @@ class FetchController extends Controller
             return response()->json([]);
         }
 
-        $tags = Tag::byUser()
+        $tags = Tag::query()
             ->where('name', 'like', '%' . escapeSearchQuery($query) . '%')
             ->oldest('name')
             ->get();
@@ -57,7 +57,7 @@ class FetchController extends Controller
             return response()->json([]);
         }
 
-        $tags = LinkList::byUser()
+        $tags = LinkList::query()
             ->where('name', 'like', '%' . escapeSearchQuery($query) . '%')
             ->oldest('name')
             ->get();
@@ -88,7 +88,7 @@ class FetchController extends Controller
             return response()->json([]);
         }
 
-        $link = Link::byUser()
+        $link = Link::query()
             ->where('url', trim($query))
             ->where('id', '!=', $request->input('ignore_id', 0))
             ->first();

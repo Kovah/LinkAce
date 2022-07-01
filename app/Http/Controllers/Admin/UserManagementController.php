@@ -43,7 +43,7 @@ class UserManagementController extends Controller
     {
         $user->update($request->validated());
 
-        return redirect()->route('users.show', ['user' => $user]);
+        return redirect()->route('system.users.show', ['user' => $user]);
     }
 
     public function inviteUser(InviteUserRequest $request): RedirectResponse
@@ -97,7 +97,7 @@ class UserManagementController extends Controller
         $user->delete();
 
         flash()->warning(trans('user.delete_successful', ['username' => $user->name]));
-        return redirect()->back();
+        return redirect()->route('system.users');
     }
 
     public function restoreUser(User $user): RedirectResponse

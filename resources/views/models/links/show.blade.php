@@ -19,13 +19,14 @@
                             <x-models.visibility-badge :model="$link" class="me-1 me-sm-2 d-inline-block"/>
                         </div>
                         <h3 class="d-inline-block mb-0">
-                            <a href="{{ $link->url }}" {!! linkTarget() !!}
-                                >{{ $link->title }}</a>
+                            <a href="{{ $link->url }}" {!! linkTarget() !!}>{{ $link->title }}</a>
                         </h3>
                     </div>
 
                     <div class="text-muted small mt-1 mb-3">
                         <a href="{{ $link->url }}" {!! linkTarget() !!}>{{ $link->url }}</a>
+                        <br>
+                        @lang('linkace.added_by'): <x-models.author :model="$link"/>
                     </div>
 
                     @if($link->description)

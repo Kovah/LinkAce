@@ -17,7 +17,7 @@
                         @endif
                     </div>
                     <div class="mt-1 mt-md-0">
-                        <a href="{{ route('users.show', ['user' => $user]) }}"
+                        <a href="{{ route('system.users.show', ['user' => $user]) }}"
                             class="btn btn-sm btn-outline-primary">@lang('linkace.show')</a>
                     </div>
                 </div>

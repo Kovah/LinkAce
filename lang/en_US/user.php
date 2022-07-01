@@ -7,6 +7,7 @@ return [
     'name' => 'Username',
     'email' => 'Email',
     'blocked_at' => 'Blocked at',
+    'is_deleted' => 'User deleted',
 
     'edit' => 'Edit User',
 

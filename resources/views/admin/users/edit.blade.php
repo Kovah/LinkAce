@@ -9,7 +9,7 @@
                     @lang('user.edit')
                 </div>
                 <div class="card-body">
-                    <form method="POST" action="{{ route('users.update', ['user' => $user]) }}">
+                    <form method="POST" action="{{ route('system.users.update', ['user' => $user]) }}">
                         @csrf
                         @method('PATCH')
 

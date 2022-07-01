@@ -63,12 +63,12 @@ class UserInvitation extends Model implements Auditable
 
     public function inviter(): BelongsTo
     {
-        return $this->belongsTo(User::class, 'inviter_id');
+        return $this->belongsTo(User::class, 'inviter_id')->withTrashed();
     }
 
     public function createdUser(): BelongsTo
     {
-        return $this->belongsTo(User::class, 'created_user_id');
+        return $this->belongsTo(User::class, 'created_user_id')->withTrashed();
     }
 
     /*
