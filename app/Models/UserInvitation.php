@@ -5,6 +5,7 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Notifications\Notifiable;
+use Illuminate\Support\Facades\URL;
 use OwenIt\Auditing\Auditable as AuditableTrait;
 use OwenIt\Auditing\Contracts\Auditable;
 use OwenIt\Auditing\Redactors\RightRedactor;
@@ -25,6 +26,10 @@ class UserInvitation extends Model implements Auditable
 
     protected $hidden = [
         'token',
+    ];
+
+    protected $casts = [
+        'valid_until' => 'datetime',
     ];
 
     /*
@@ -64,5 +69,25 @@ class UserInvitation extends Model implements Auditable
     public function createdUser(): BelongsTo
     {
         return $this->belongsTo(User::class, 'created_user_id');
+    }
+
+    /*
+     * ========================================================================
+     * METHODS
+     */
+
+    public function inviteUrl(): string
+    {
+        return URL::temporarySignedRoute('auth.accept-invite', $this->valid_until, ['token' => $this->token]);
+    }
+
+    public function isValid(): bool
+    {
+        return $this->valid_until->gt(now()) && $this->created_user_id === null;
+    }
+
+    public function isCompleted(): bool
+    {
+        return $this->created_user_id !== null;
     }
 }

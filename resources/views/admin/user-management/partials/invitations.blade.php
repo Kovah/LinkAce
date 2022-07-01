@@ -31,11 +31,15 @@
             <div class="list-group list-group-flush">
                 @foreach($invitations as $invite)
                     <div class="list-group-item d-md-flex justify-content-between">
-                        <div>
-                            {{ $invite->email }} <br>
-                            <span class="text-muted">
-                                @lang('admin.user_management.invite_valid_until', ['datetime' => $invite->valid_until])
-                            </span>
+                        <div @class(['text-muted' => $invite->isCompleted()])>
+                            {{ $invite->email }}
+                            <div class="small text-muted">
+                                @if($invite->isCompleted())
+                                    @lang('admin.user_management.invite_accepted_by', ['user' => $invite->createdUser->name, 'id' => $invite->createdUser->id])
+                                @else
+                                    @lang('admin.user_management.invite_valid_until', ['datetime' => $invite->valid_until])
+                                @endif
+                            </div>
                         </div>
                         <div @class(['mt-1 mt-md-0'])>
                             <button type="submit" form="delete-invite-{{ $invite->id }}"

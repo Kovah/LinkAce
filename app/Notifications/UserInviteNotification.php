@@ -6,7 +6,6 @@ use App\Models\UserInvitation;
 use Illuminate\Bus\Queueable;
 use Illuminate\Notifications\Messages\MailMessage;
 use Illuminate\Notifications\Notification;
-use Illuminate\Support\Facades\URL;
 
 class UserInviteNotification extends Notification
 {
@@ -26,7 +25,7 @@ class UserInviteNotification extends Notification
         return (new MailMessage)
             ->subject(trans('admin.user_management.invite_notification_title'))
             ->line(trans('admin.user_management.invite_notification'))
-            ->action(trans('admin.user_management.invite_accept'), $this->inviteUrl($invitation))
+            ->action(trans('admin.user_management.invite_accept'), $invitation->inviteUrl())
             ->line(trans('admin.user_management.invite_valid_until_info', ['datetime' => $invitation->valid_until]));
     }
 
@@ -34,16 +33,7 @@ class UserInviteNotification extends Notification
     {
         return [
             'invitation' => $invitation,
-            'inviteUrl' => $this->inviteUrl($invitation),
+            'inviteUrl' => $invitation->inviteUrl(),
         ];
-    }
-
-    protected function inviteUrl(UserInvitation $invitation): string
-    {
-        return URL::temporarySignedRoute(
-            'user-management-accept-invite',
-            $invitation->valid_until,
-            ['token' => $invitation->token]
-        );
     }
 }

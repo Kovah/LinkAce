@@ -13,6 +13,9 @@ return [
     |
     */
 
+    'register' => 'Register',
+    'register_welcome' => 'Welcome to LinkAce! You have been invited to join this social bookmarking tool. Please select a user name and a password. After the successful registration, you will be redirected to the dashboard.',
+
     'failed' => 'These credentials do not match our records.',
     'throttle' => 'Too many login attempts. Please try again in :seconds seconds.',
 

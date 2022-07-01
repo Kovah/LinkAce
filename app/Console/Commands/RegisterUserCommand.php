@@ -33,14 +33,12 @@ class RegisterUserCommand extends Command
 
         $password = $this->secret('Please enter a password for ' . $name);
 
-        $user = (new CreateNewUser)->create([
+        (new CreateNewUser)->create([
             'name' => $name,
             'email' => $email,
             'password' => $password,
             'password_confirmation' => $password,
         ]);
-
-        (new SetDefaultSettingsForUser($user))->up();
 
         $this->info('User ' . $name . ' registered.');
     }

@@ -22,6 +22,7 @@ use App\Http\Controllers\Models\LinkController;
 use App\Http\Controllers\Models\ListController;
 use App\Http\Controllers\Models\NoteController;
 use App\Http\Controllers\Models\TagController;
+use App\Http\Controllers\RegistrationController;
 use App\Http\Controllers\Setup\AccountController;
 use App\Http\Controllers\Setup\DatabaseController;
 use App\Http\Controllers\Setup\MetaController;
@@ -59,8 +60,10 @@ Route::prefix('bookmarklet')->group(function () {
 
 Route::get('cron/{token}', CronController::class)->name('cron');
 
-Route::post('system/users/accept-invite', [UserManagementController::class, 'acceptInvitation'])
-    ->name('user-management-accept-invite');
+Route::get('auth/accept-invite', [RegistrationController::class, 'acceptInvitation'])
+    ->name('auth.accept-invite');
+Route::post('auth/register', [RegistrationController::class, 'register'])
+    ->name('auth.register');
 
 Route::group(['middleware' => 'auth:api'], function () {
     Route::get('links/feed', [FeedController::class, 'links'])->name('links.feed');
