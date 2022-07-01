@@ -144,18 +144,23 @@ Route::group(['middleware' => ['auth', 'role:admin']], function () {
     Route::post('settings/generate-cron-token', [SystemSettingsController::class, 'generateCronToken'])
         ->name('generate-cron-token');
 
-    Route::get('system/users', [UserManagementController::class, 'index'])->name('user-management');
-    Route::post('system/users/invite', [UserManagementController::class, 'inviteUser'])->name('user-management-invite');
-    Route::delete('system/users/invite/{invitation}', [UserManagementController::class, 'deleteInvitation'])
-        ->name('user-management-invite-delete');
+    Route::get('system/users', [UserManagementController::class, 'index'])->name('users');
+    Route::get('system/users/{user}', [UserManagementController::class, 'show'])->name('users.show');
+    Route::get('system/users/{user}/edit', [UserManagementController::class, 'edit'])->name('users.edit');
+    Route::patch('system/users/{user}', [UserManagementController::class, 'update'])->name('users.update');
+
     Route::patch('system/users/{user}/block', [UserManagementController::class, 'blockUser'])
-        ->name('user-management-block')->withTrashed();
+        ->name('users-block')->withTrashed();
     Route::patch('system/users/{user}/unblock', [UserManagementController::class, 'unblockUser'])
-        ->name('user-management-unblock')->withTrashed();
+        ->name('users-unblock')->withTrashed();
     Route::delete('system/users/{user}/delete', [UserManagementController::class, 'deleteUser'])
-        ->name('user-management-delete')->withTrashed();
+        ->name('users-delete')->withTrashed();
     Route::patch('system/users/{user}/restore', [UserManagementController::class, 'restoreUser'])
-        ->name('user-management-restore')->withTrashed();
+        ->name('users-restore')->withTrashed();
+
+    Route::post('system/users/invite', [UserManagementController::class, 'inviteUser'])->name('users-invite');
+    Route::delete('system/users/invite/{invitation}', [UserManagementController::class, 'deleteInvitation'])
+        ->name('users-invite-delete');
 
     Route::get('system/logs', [LogViewerController::class, 'index'])->name('system-logs');
     Route::get('system/audit', AuditController::class)->name('system-audit');

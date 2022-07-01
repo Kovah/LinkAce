@@ -7,7 +7,7 @@
         <div class="card-body">
             <p>@lang('admin.user_management.invite_help')</p>
 
-            <form action="{{ route('user-management-invite') }}" method="post">
+            <form action="{{ route('users-invite') }}" method="post">
                 @csrf
                 <div class="mb-3">
                     <label class="form-label" for="email">
@@ -46,7 +46,7 @@
                                 class="btn btn-sm btn-outline-danger">
                                 @lang('linkace.delete')
                             </button>
-                            <form action="{{ route('user-management-invite-delete', ['invitation' => $invite]) }}"
+                            <form action="{{ route('users-invite-delete', ['invitation' => $invite]) }}"
                                 id="delete-invite-{{ $invite->id }}"
                                 method="post" class="d-none" data-confirmation="@lang('user.restore_confirmation')">
                                 @csrf

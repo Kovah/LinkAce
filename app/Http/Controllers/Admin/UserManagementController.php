@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Admin;
 use App\Actions\Fortify\CreateUserInvitation;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Admin\InviteUserRequest;
+use App\Http\Requests\Admin\UpdateUserRequest;
 use App\Models\User;
 use App\Models\UserInvitation;
 use App\Notifications\UserInviteNotification;
@@ -18,10 +19,31 @@ class UserManagementController extends Controller
     {
         $users = User::withTrashed()->orderBy('name')->paginate(pageName: 'user_page');
         $invitations = UserInvitation::query()->latest()->paginate(pageName: 'invite_page');
-        return view('admin.user-management.index', [
+        return view('admin.users.index', [
             'users' => $users,
             'invitations' => $invitations,
         ]);
+    }
+
+    public function show(User $user)
+    {
+        return view('admin.users.show', [
+            'user' => $user,
+        ]);
+    }
+
+    public function edit(User $user)
+    {
+        return view('admin.users.edit', [
+            'user' => $user,
+        ]);
+    }
+
+    public function update(UpdateUserRequest $request, User $user)
+    {
+        $user->update($request->validated());
+
+        return redirect()->route('users.show', ['user' => $user]);
     }
 
     public function inviteUser(InviteUserRequest $request): RedirectResponse

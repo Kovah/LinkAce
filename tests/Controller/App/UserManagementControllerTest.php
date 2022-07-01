@@ -8,7 +8,6 @@ use App\Models\UserInvitation;
 use App\Notifications\UserInviteNotification;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Support\Carbon;
-use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Facades\Notification;
 use Tests\TestCase;
 
@@ -90,7 +89,6 @@ class UserManagementControllerTest extends TestCase
 
     public function testUserInvitation(): void
     {
-        Mail::fake();
         Notification::fake();
 
         $response = $this->post('system/users/invite', [
@@ -127,7 +125,6 @@ class UserManagementControllerTest extends TestCase
 
     public function testInviteDeletion(): void
     {
-        Mail::fake();
         Notification::fake();
 
         $this->post('system/users/invite', [
@@ -137,5 +134,24 @@ class UserManagementControllerTest extends TestCase
         $this->delete('system/users/invite/1');
 
         $this->assertDatabaseCount('user_invitations', 0);
+    }
+
+    public function testUserEditing(): void
+    {
+        $otherUser = User::factory()->create(['name' => 'MrTestUser']);
+
+        $response = $this->get('system/users/2');
+        $response->assertSee('MrTestUser');
+
+        $response = $this->get('system/users/2/edit');
+        $response->assertSee('Edit')->assertSee('MrTestUser');
+
+        $response = $this->patch('system/users/2', [
+            'name' => 'MrTestUser',
+            'email' => 'test-email@linkace.org',
+        ]);
+        $response->assertRedirect('system/users/2');
+
+        $this->assertEquals('test-email@linkace.org', $otherUser->refresh()->email);
     }
 }

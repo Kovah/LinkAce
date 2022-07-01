@@ -2,7 +2,6 @@
 
 namespace App\Models;
 
-use App\Audits\Modifiers\BlockedAtModifier;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Foundation\Auth\User as Authenticatable;
@@ -87,5 +86,10 @@ class User extends Authenticatable implements Auditable
     public function isBlocked(): bool
     {
         return $this->blocked_at !== null;
+    }
+
+    public function isCurrentlyLoggedIn(): bool
+    {
+        return $this->is(auth()->user());
     }
 }

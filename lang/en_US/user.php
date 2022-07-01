@@ -8,6 +8,8 @@ return [
     'email' => 'Email',
     'blocked_at' => 'Blocked at',
 
+    'edit' => 'Edit User',
+
     'block' => 'Block User',
     'block_confirmation' => 'Do you really want to block this User?',
     'block_warning' => 'Your user account is currently blocked. Please contact your administrator for help.',
