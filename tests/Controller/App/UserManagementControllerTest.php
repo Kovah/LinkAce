@@ -4,7 +4,12 @@ namespace Tests\Controller\App;
 
 use App\Enums\Role;
 use App\Models\User;
+use App\Models\UserInvitation;
+use App\Notifications\UserInviteNotification;
 use Illuminate\Foundation\Testing\RefreshDatabase;
+use Illuminate\Support\Carbon;
+use Illuminate\Support\Facades\Mail;
+use Illuminate\Support\Facades\Notification;
 use Tests\TestCase;
 
 class UserManagementControllerTest extends TestCase
@@ -81,5 +86,56 @@ class UserManagementControllerTest extends TestCase
         $response->assertRedirect();
 
         $this->assertFalse($otherUser->refresh()->trashed());
+    }
+
+    public function testUserInvitation(): void
+    {
+        Mail::fake();
+        Notification::fake();
+
+        $response = $this->post('system/users/invite', [
+            'email' => 'invite-email@linkace.org',
+        ]);
+
+        $response->assertRedirect();
+
+        $invitation = UserInvitation::first();
+        $this->assertNotNull($invitation);
+        $this->assertEquals('invite-email@linkace.org', $invitation->email);
+
+        Notification::assertSentTo($invitation, UserInviteNotification::class);
+
+        // Second invite to the same email fails as the email already exists and the invite is not expired yet
+        $response = $this->post('system/users/invite', [
+            'email' => 'invite-email@linkace.org',
+        ]);
+
+        $response->assertSessionHasErrors([
+            'email' => 'The email has already been taken.',
+        ]);
+
+        // Travelling 4 days into the future, the first invite expired, so we can invite the email again
+        Carbon::setTestNow(now()->addDays(4));
+
+        $response = $this->post('system/users/invite', [
+            'email' => 'invite-email@linkace.org',
+        ]);
+        $response->assertRedirect();
+
+        $this->assertDatabaseCount('user_invitations', 2);
+    }
+
+    public function testInviteDeletion(): void
+    {
+        Mail::fake();
+        Notification::fake();
+
+        $this->post('system/users/invite', [
+            'email' => 'invite-email@linkace.org',
+        ]);
+
+        $this->delete('system/users/invite/1');
+
+        $this->assertDatabaseCount('user_invitations', 0);
     }
 }

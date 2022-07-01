@@ -10,30 +10,15 @@ class LinkCheckNotification extends Notification
 {
     use Queueable;
 
-    /**
-     * Create a new notification instance.
-     *
-     * @return void
-     */
     public function __construct(public array $movedLinks, public array $brokenLinks)
     {
     }
 
-    /**
-     * Get the notification's delivery channels.
-     *
-     * @return array
-     */
     public function via(): array
     {
         return ['mail'];
     }
 
-    /**
-     * Get the mail representation of the notification.
-     *
-     * @return MailMessage
-     */
     public function toMail(): MailMessage
     {
         return (new MailMessage)
@@ -45,11 +30,6 @@ class LinkCheckNotification extends Notification
             ]);
     }
 
-    /**
-     * Get the array representation of the notification.
-     *
-     * @return array
-     */
     public function toArray(): array
     {
         return [

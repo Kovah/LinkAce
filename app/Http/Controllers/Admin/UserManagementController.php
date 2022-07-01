@@ -3,27 +3,56 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
+use App\Http\Requests\Admin\InviteUserRequest;
 use App\Models\User;
+use App\Models\UserInvitation;
+use App\Notifications\UserInviteNotification;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Support\Facades\Event;
+use Illuminate\Support\Str;
 use OwenIt\Auditing\Events\AuditCustom;
 
 class UserManagementController extends Controller
 {
     public function index()
     {
-        $users = User::withTrashed()->orderBy('name')->paginate();
-        return view('admin.user-management.index', ['users' => $users]);
+        $users = User::withTrashed()->orderBy('name')->paginate(pageName: 'user_page');
+        $invitations = UserInvitation::query()->latest()->paginate(pageName: 'invite_page');
+        return view('admin.user-management.index', [
+            'users' => $users,
+            'invitations' => $invitations,
+        ]);
     }
 
-    public function inviteUser()
+    public function inviteUser(InviteUserRequest $request): RedirectResponse
     {
-        //
+        $invitation = UserInvitation::create([
+            'token' => Str::random(32),
+            'email' => $request->input('email'),
+            'inviter_id' => $request->user()->id,
+            'valid_until' => now()->addDays(3),
+        ]);
+
+        $invitation->notify(new UserInviteNotification());
+
+        flash()->warning(trans('admin.user_management.invite_successful'));
+        return redirect()->back();
     }
 
     public function acceptInvitation()
     {
-        //
+        // @TODO
+        // check if request is valid, check if invitation with token was found
+        // present view with registration form and pre-filled email
+        // handle user registration
+    }
+
+    public function deleteInvitation(UserInvitation $invitation): RedirectResponse
+    {
+        $invitation->delete();
+
+        flash()->warning(trans('admin.user_management.invite_delete_successful', ['email' => $invitation->email]));
+        return redirect()->back();
     }
 
     public function blockUser(User $user): RedirectResponse

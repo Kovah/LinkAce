@@ -142,7 +142,9 @@ Route::group(['middleware' => ['auth', 'role:admin']], function () {
         ->name('generate-cron-token');
 
     Route::get('system/users', [UserManagementController::class, 'index'])->name('user-management');
-    Route::post('system/users/invite', [UserManagementController::class, 'index'])->name('user-management-invite');
+    Route::post('system/users/invite', [UserManagementController::class, 'inviteUser'])->name('user-management-invite');
+    Route::delete('system/users/invite/{invitation}', [UserManagementController::class, 'deleteInvitation'])
+        ->name('user-management-invite-delete');
     Route::patch('system/users/{user}/block', [UserManagementController::class, 'blockUser'])
         ->name('user-management-block')->withTrashed();
     Route::patch('system/users/{user}/unblock', [UserManagementController::class, 'unblockUser'])
