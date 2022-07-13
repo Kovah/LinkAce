@@ -3,6 +3,7 @@
 namespace App\Http\Requests\Models;
 
 use Illuminate\Foundation\Http\FormRequest;
+use Illuminate\Http\Request;
 
 class LinkToggleCheckRequest extends FormRequest
 {
@@ -11,9 +12,9 @@ class LinkToggleCheckRequest extends FormRequest
      *
      * @return bool
      */
-    public function authorize(): bool
+    public function authorize(Request $request): bool
     {
-        return true;
+        return $request->user()->can('update', $request->link);
     }
 
     /**

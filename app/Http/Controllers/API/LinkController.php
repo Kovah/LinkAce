@@ -13,6 +13,11 @@ use Illuminate\Http\Response;
 
 class LinkController extends Controller
 {
+    public function __construct()
+    {
+        $this->authorizeResource(Link::class, 'link');
+    }
+
     /**
      * Display a listing of the resource.
      *
@@ -21,7 +26,8 @@ class LinkController extends Controller
      */
     public function index(Request $request): JsonResponse
     {
-        $links = Link::byUser()
+        $links = Link::query()
+            ->visibleForUser()
             ->orderBy(
                 $request->input('order_by', 'created_at'),
                 $request->input('order_dir', 'DESC')

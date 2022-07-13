@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Models;
 
 use App\Http\Controllers\Controller;
+use App\Http\Requests\Models\LinkMarkWorkingRequest;
 use App\Http\Requests\Models\LinkStoreRequest;
 use App\Http\Requests\Models\LinkToggleCheckRequest;
 use App\Http\Requests\Models\LinkUpdateRequest;
@@ -15,6 +16,11 @@ use Illuminate\Http\Request;
 
 class LinkController extends Controller
 {
+    public function __construct()
+    {
+        $this->authorizeResource(Link::class, 'link');
+    }
+
     /**
      * Display a listing of the resource.
      *
@@ -29,7 +35,8 @@ class LinkController extends Controller
         session()->put('links.index.orderBy', $orderBy);
         session()->put('links.index.orderDir', $orderDir);
 
-        $links = Link::byUser()
+        $links = Link::query()
+            ->visibleForUser()
             ->with('tags')
             ->orderBy($orderBy, $orderDir)
             ->paginate(getPaginationLimit());
@@ -87,7 +94,7 @@ class LinkController extends Controller
         $isBookmarklet = session('bookmarklet.create');
 
         if ($request->input('reload_view')) {
-            session()->flash('reload_view', true);
+            session()->flash('reload_view');
             return redirect()->route($isBookmarklet ? 'bookmarklet-add' : 'links.create');
         }
 
@@ -172,20 +179,21 @@ class LinkController extends Controller
         $link->check_disabled = $request->input('toggle');
         $link->save();
 
-        return redirect()->route('links.show', [$link->id]);
+        return redirect()->route('links.show', ['link' => $link]);
     }
 
     /**
      * Mark the link as working manually.
      *
-     * @param Link $link
+     * @param LinkMarkWorkingRequest $request
+     * @param Link                   $link
      * @return RedirectResponse
      */
-    public function markWorking(Link $link): RedirectResponse
+    public function markWorking(LinkMarkWorkingRequest $request, Link $link): RedirectResponse
     {
         $link->status = Link::STATUS_OK;
         $link->save();
 
-        return redirect()->route('links.show', [$link->id]);
+        return redirect()->route('links.show', ['link' => $link]);
     }
 }

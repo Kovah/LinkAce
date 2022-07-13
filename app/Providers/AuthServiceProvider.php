@@ -2,6 +2,8 @@
 
 namespace App\Providers;
 
+use App\Models\Link;
+use App\Policies\LinkPolicy;
 use Illuminate\Foundation\Support\Providers\AuthServiceProvider as ServiceProvider;
 
 class AuthServiceProvider extends ServiceProvider
@@ -12,7 +14,7 @@ class AuthServiceProvider extends ServiceProvider
      * @var array
      */
     protected $policies = [
-        'App\Model' => 'App\Policies\ModelPolicy',
+        Link::class => LinkPolicy::class,
     ];
 
     /**
@@ -23,7 +25,5 @@ class AuthServiceProvider extends ServiceProvider
     public function boot(): void
     {
         $this->registerPolicies();
-
-        //
     }
 }

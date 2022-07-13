@@ -53,6 +53,7 @@ class Link extends Model implements Auditable
 {
     use AuditableTrait;
     use HasFactory;
+    use ScopesForUser;
     use ScopesVisibility;
     use SoftDeletes;
 
@@ -106,27 +107,6 @@ class Link extends Model implements Auditable
         self::AUDIT_TAGS_NAME => TagRelationModifier::class,
         self::AUDIT_LISTS_NAME => ListRelationModifier::class,
     ];
-
-    /*
-     * ========================================================================
-     * SCOPES
-     */
-
-    /**
-     * Scope for the user relation. If a user is specified, it will be used for
-     * the scope. Otherwise, the currently authenticated user will be used.
-     *
-     * @param Builder  $query
-     * @param int|null $user_id
-     * @return Builder
-     */
-    public function scopeByUser(Builder $query, int $user_id = null): Builder
-    {
-        if (is_null($user_id) && auth()->check()) {
-            $user_id = auth()->id();
-        }
-        return $query->where('user_id', $user_id);
-    }
 
     /*
      * ========================================================================

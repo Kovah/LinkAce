@@ -11,11 +11,13 @@ use App\Settings\UserSettings;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Support\Facades\Http;
 use Illuminate\Support\Facades\Queue;
+use Tests\Controller\Traits\PreparesTestLinks;
 use Tests\TestCase;
 
 class LinkControllerTest extends TestCase
 {
     use RefreshDatabase;
+    use PreparesTestLinks;
 
     protected function setUp(): void
     {
@@ -38,29 +40,26 @@ class LinkControllerTest extends TestCase
 
     public function testIndexView(): void
     {
-        $link = Link::factory()->create();
+        $this->createTestLinks();
 
         $response = $this->get('links');
 
         $response->assertOk()
-            ->assertSee($link->url);
+            ->assertSee('https://public-link.com')
+            ->assertSee('https://internal-link.com')
+            ->assertDontSee('https://private-link.com');
     }
 
     public function testCreateView(): void
     {
-        $response = $this->get('links/create');
-
-        $response->assertOk()
-            ->assertSee('Add Link');
+        $this->get('links/create')->assertOk()->assertSee('Add Link');
     }
 
     public function testMinimalStoreRequest(): void
     {
-        $response = $this->post('links', [
+        $this->post('links', [
             'url' => 'https://example.com',
-        ]);
-
-        $response->assertRedirect('links/1');
+        ])->assertRedirect('links/1');
 
         $databaseLink = Link::first();
 
@@ -73,16 +72,14 @@ class LinkControllerTest extends TestCase
         $tag = Tag::factory()->create();
         $list = LinkList::factory()->create();
 
-        $response = $this->post('links', [
+        $this->post('links', [
             'url' => 'https://example.com',
             'title' => 'My custom title',
             'description' => 'My custom description',
             'lists' => $list->name,
             'tags' => $tag->name,
             'visibility' => 1,
-        ]);
-
-        $response->assertRedirect('links/1');
+        ])->assertRedirect('links/1');
 
         $databaseLink = Link::first();
 
@@ -99,16 +96,14 @@ class LinkControllerTest extends TestCase
             'url' => 'https://example.com/',
         ]);
 
-        $response = $this->post('links', [
+        $this->post('links', [
             'url' => 'https://example.com',
             'title' => null,
             'description' => null,
             'lists' => null,
             'tags' => null,
             'visibility' => 1,
-        ]);
-
-        $response->assertRedirect('links/2');
+        ])->assertRedirect('links/2');
 
         $flashMessages = session('flash_notification', collect());
         $flashMessages->contains('message', trans('link.duplicates_found'));
@@ -120,16 +115,14 @@ class LinkControllerTest extends TestCase
             'example.com' => Http::response('', 500),
         ]);
 
-        $response = $this->post('links', [
+        $this->post('links', [
             'url' => 'example.com',
             'title' => null,
             'description' => null,
             'lists' => null,
             'tags' => null,
             'visibility' => 1,
-        ]);
-
-        $response->assertRedirect('links/1');
+        ])->assertRedirect('links/1');
 
         $databaseLink = Link::first();
 
@@ -149,11 +142,9 @@ class LinkControllerTest extends TestCase
 
         Http::fake(['huge-thumbnail.com' => Http::response($testHtml)]);
 
-        $response = $this->post('links', [
+        $this->post('links', [
             'url' => 'https://huge-thumbnail.com',
-        ]);
-
-        $response->assertRedirect('links/1');
+        ])->assertRedirect('links/1');
 
         $databaseLink = Link::first();
 
@@ -162,12 +153,10 @@ class LinkControllerTest extends TestCase
 
     public function testStoreRequestWithContinue(): void
     {
-        $response = $this->post('links', [
+        $this->post('links', [
             'url' => 'https://example.com',
             'reload_view' => '1',
-        ]);
-
-        $response->assertRedirect('links/create');
+        ])->assertRedirect('links/create');
 
         $databaseLink = Link::first();
 
@@ -213,89 +202,103 @@ class LinkControllerTest extends TestCase
 
     public function testValidationErrorForCreate(): void
     {
-        $response = $this->post('links', [
+        $this->post('links', [
             'url' => null,
-        ]);
-
-        $response->assertSessionHasErrors([
+        ])->assertSessionHasErrors([
             'url',
         ]);
     }
 
     public function testDetailView(): void
     {
-        $link = Link::factory()->create();
+        $this->createTestLinks();
 
-        $response = $this->get('links/1');
-
-        $response->assertOk()
-            ->assertSee($link->url);
+        $this->get('links/1')->assertOk()->assertSee('https://public-link.com');
+        $this->get('links/2')->assertOk()->assertSee('https://internal-link.com');
+        $this->get('links/3')->assertForbidden();
     }
 
     public function testInternalDetailView(): void
     {
-        $link = Link::factory()->create(['visibility' => 2]);
+        Link::factory()->create(['url' => 'https://public-link.com', 'visibility' => 2]);
 
-        $response = $this->get('links/1');
-
-        $response->assertOk()
+        $this->get('links/1')
+            ->assertOk()
             ->assertSee('Internal Link')
-            ->assertSee($link->url);
+            ->assertSee('https://public-link.com');
     }
 
     public function testPrivateDetailView(): void
     {
-        $link = Link::factory()->create(['visibility' => 3]);
+        Link::factory()->create(['url' => 'https://public-link.com', 'visibility' => 3]);
 
-        $response = $this->get('links/1');
-
-        $response->assertOk()
+        $this->get('links/1')
+            ->assertOk()
             ->assertSee('Private Link')
-            ->assertSee($link->url);
+            ->assertSee('https://public-link.com');
     }
 
     public function testEditView(): void
     {
-        Link::factory()->create();
+        $this->createTestLinks();
 
-        $response = $this->get('links/1/edit');
-
-        $response->assertOk()
-            ->assertSee('Edit Link');
+        $this->get('links/1')->assertOk()->assertSee('https://public-link.com');
+        $this->get('links/2')->assertOk()->assertSee('https://internal-link.com');
+        $this->get('links/3')->assertForbidden();
     }
 
     public function testUpdateResponse(): void
     {
-        $baseLink = Link::factory()->create();
+        $this->createTestLinks();
 
-        $response = $this->patch('links/1', [
-            'url' => 'https://new-example.com',
+        $this->patch('links/1', [
+            'url' => 'https://new-public-link.com',
             'title' => 'New Title',
             'description' => 'New Description',
             'lists' => null,
             'tags' => null,
             'visibility' => 1,
             'check_disabled' => '0',
-        ]);
+        ])->assertRedirect('links/1');
 
-        $response->assertRedirect('links/1');
+        // Check first link update
+        $link = Link::first();
 
-        $updatedLink = $baseLink->fresh();
+        $this->assertEquals('https://new-public-link.com', $link->url);
+        $this->assertEquals('New Title', $link->title);
+        $this->assertEquals('New Description', $link->description);
 
-        $this->assertEquals('https://new-example.com', $updatedLink->url);
-        $this->assertEquals('New Title', $updatedLink->title);
-        $this->assertEquals('New Description', $updatedLink->description);
+        $historyData = $link->audits()->first()->getModified();
 
-        $historyData = $updatedLink->audits()->first()->getModified();
+        $this->assertArrayHasKey('url', $historyData);
+        $this->assertEquals('https://public-link.com', $historyData['url']['old']);
+        $this->assertEquals($link->url, $historyData['url']['new']);
 
-        $this->assertTrue(array_key_exists('url', $historyData));
-        $this->assertEquals($baseLink->url, $historyData['url']['old']);
-        $this->assertEquals($updatedLink->url, $historyData['url']['new']);
+        // Check update for other links
+        $this->patch('links/2', [
+            'url' => 'https://internal-link.com',
+            'title' => 'New Title',
+            'description' => 'New Description',
+            'lists' => null,
+            'tags' => null,
+            'visibility' => 1,
+            'check_disabled' => '0',
+        ])->assertRedirect('links/2');
+
+        $this->patch('links/3', [
+            'url' => 'https://private-link.com',
+            'title' => 'New Title',
+            'description' => 'New Description',
+            'lists' => null,
+            'tags' => null,
+            'visibility' => 1,
+            'check_disabled' => '0',
+        ])->assertForbidden();
     }
 
     public function testMissingModelErrorForUpdate(): void
     {
-        $response = $this->patch('links/1', [
+        $this->patch('links/1', [
             'link_id' => '1',
             'url' => 'https://new-example.com',
             'title' => 'New Title',
@@ -303,9 +306,7 @@ class LinkControllerTest extends TestCase
             'lists' => null,
             'tags' => null,
             'visibility' => 1,
-        ]);
-
-        $response->assertNotFound();
+        ])->assertNotFound();
     }
 
     public function testUniquePropertyValidation(): void
@@ -313,7 +314,7 @@ class LinkControllerTest extends TestCase
         Link::factory()->create(['url' => 'https://old-example.com']);
         $baseLink = Link::factory()->create();
 
-        $response = $this->patch('links/2', [
+        $this->patch('links/2', [
             'link_id' => $baseLink->id,
             'url' => 'https://old-example.com',
             'title' => 'New Title',
@@ -321,9 +322,7 @@ class LinkControllerTest extends TestCase
             'lists' => null,
             'tags' => null,
             'visibility' => 1,
-        ]);
-
-        $response->assertSessionHasErrors([
+        ])->assertSessionHasErrors([
             'url',
         ]);
     }
@@ -332,7 +331,7 @@ class LinkControllerTest extends TestCase
     {
         $baseLink = Link::factory()->create();
 
-        $response = $this->patch('links/1', [
+        $this->patch('links/1', [
             'link_id' => $baseLink->id,
             //'url' => 'https://new-example.com',
             'title' => 'New Title',
@@ -340,71 +339,68 @@ class LinkControllerTest extends TestCase
             'lists' => null,
             'tags' => null,
             'visibility' => 1,
-        ]);
-
-        $response->assertSessionHasErrors([
+        ])->assertSessionHasErrors([
             'url',
         ]);
     }
 
     public function testDeleteResponse(): void
     {
-        Link::factory()->create();
+        $this->createTestLinks();
 
-        $response = $this->delete('links/1');
-
-        $response->assertRedirect();
+        $this->delete('links/1')->assertRedirect();
 
         $databaseLink = Link::withTrashed()->first();
-
         $this->assertNotNull($databaseLink->deleted_at);
+
+        $this->delete('links/2')->assertRedirect();
+        $this->delete('links/3')->assertForbidden();
     }
 
     public function testMissingModelErrorForDelete(): void
     {
-        $response = $this->delete('links/1');
-
-        $response->assertNotFound();
+        $this->delete('links/1')->assertNotFound();
     }
 
     public function testCheckToggleRequest(): void
     {
-        $link = Link::factory()->create();
+        $this->createTestLinks();
+        $link = Link::first();
 
-        $response = $this->post('links/toggle-check/1', [
+        $this->post('links/toggle-check/1', [
             'toggle' => '1',
-        ]);
+        ])->assertRedirect('links/1');
 
-        $response->assertRedirect('links/1');
+        $this->assertEquals(true, $link->refresh()->check_disabled);
 
-        $updatedLink = $link->fresh();
+        // Check other links
+        $this->post('links/toggle-check/2', [
+            'toggle' => '1',
+        ])->assertRedirect('links/2');
 
-        $this->assertEquals(true, $updatedLink->check_disabled);
+        $this->post('links/toggle-check/3', ['toggle' => '1'])->assertForbidden();
     }
 
     public function testInvalidCheckToggleRequest(): void
     {
         Link::factory()->create();
 
-        $response = $this->post('links/toggle-check/1', [
+        $this->post('links/toggle-check/1', [
             'toggle' => 'blabla',
-        ]);
-
-        $response->assertSessionHasErrors([
+        ])->assertSessionHasErrors([
             'toggle',
         ]);
     }
 
     public function testMarkWorkingRequest(): void
     {
-        $link = Link::factory()->create();
+        $this->createTestLinks();
+        $link = Link::first();
 
-        $response = $this->post('links/mark-working/1');
+        $this->post('links/mark-working/1')->assertRedirect('links/1');
+        $this->post('links/mark-working/2')->assertRedirect('links/2');
+        $this->post('links/mark-working/3')->assertForbidden();
 
-        $response->assertRedirect('links/1');
-
-        $updatedLink = $link->fresh();
-
-        $this->assertEquals(Link::STATUS_OK, $updatedLink->status);
+        $this->assertEquals(Link::STATUS_OK, $link->refresh()->status);
     }
 }

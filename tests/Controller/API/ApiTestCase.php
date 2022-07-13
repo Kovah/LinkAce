@@ -11,8 +11,7 @@ use Tests\TestCase;
 
 abstract class ApiTestCase extends TestCase
 {
-    /** @var User */
-    protected $user;
+    protected User $user;
 
     protected function setUp(): void
     {
@@ -40,7 +39,7 @@ abstract class ApiTestCase extends TestCase
      * @param array  $headers
      * @return TestResponse
      */
-    public function getJsonAuthorized($uri, array $headers = []): TestResponse
+    public function getJsonAuthorized(string $uri, array $headers = []): TestResponse
     {
         $headers['Authorization'] = 'Bearer ' . $this->user->api_token;
         return $this->getJson($uri, $headers);
@@ -54,7 +53,7 @@ abstract class ApiTestCase extends TestCase
      * @param array  $headers
      * @return TestResponse
      */
-    public function postJsonAuthorized($uri, array $data = [], array $headers = []): TestResponse
+    public function postJsonAuthorized(string $uri, array $data = [], array $headers = []): TestResponse
     {
         $headers['Authorization'] = 'Bearer ' . $this->user->api_token;
         return $this->postJson($uri, $data, $headers);
@@ -68,7 +67,7 @@ abstract class ApiTestCase extends TestCase
      * @param array  $headers
      * @return TestResponse
      */
-    public function patchJsonAuthorized($uri, array $data = [], array $headers = []): TestResponse
+    public function patchJsonAuthorized(string $uri, array $data = [], array $headers = []): TestResponse
     {
         $headers['Authorization'] = 'Bearer ' . $this->user->api_token;
         return $this->patchJson($uri, $data, $headers);
@@ -82,7 +81,7 @@ abstract class ApiTestCase extends TestCase
      * @param array  $headers
      * @return TestResponse
      */
-    public function deleteJsonAuthorized($uri, array $data = [], array $headers = []): TestResponse
+    public function deleteJsonAuthorized(string $uri, array $data = [], array $headers = []): TestResponse
     {
         $headers['Authorization'] = 'Bearer ' . $this->user->api_token;
         return $this->deleteJson($uri, $data, $headers);
