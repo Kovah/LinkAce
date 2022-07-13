@@ -12,6 +12,11 @@ use Illuminate\Http\Response;
 
 class NoteController extends Controller
 {
+    public function __construct()
+    {
+        $this->authorizeResource(Note::class, 'note');
+    }
+
     /**
      * Store a newly created resource in storage.
      *
@@ -34,7 +39,7 @@ class NoteController extends Controller
      */
     public function update(NoteUpdateRequest $request, Note $note): JsonResponse
     {
-        $updatedNote = NoteRepository::update($note, $request->all());
+        $updatedNote = NoteRepository::update($note, $request->validated());
 
         return response()->json($updatedNote);
     }

@@ -14,6 +14,11 @@ use Illuminate\Http\RedirectResponse;
 
 class NoteController extends Controller
 {
+    public function __construct()
+    {
+        $this->authorizeResource(Note::class, 'note');
+    }
+
     /**
      * Store a newly created resource in storage.
      *
@@ -24,16 +29,12 @@ class NoteController extends Controller
     {
         $link = Link::findOrFail($request->input('link_id'));
 
-        if ($link->user_id !== auth()->id()) {
-            abort(403);
-        }
-
         $data = $request->validated();
         NoteRepository::create($data);
 
         flash(trans('note.added_successfully'), 'success');
 
-        return redirect()->route('links.show', [$link->id]);
+        return redirect()->route('links.show', ['link' => $link]);
     }
 
     /**
@@ -44,10 +45,6 @@ class NoteController extends Controller
      */
     public function edit(Note $note): View
     {
-        if ($note->user_id !== auth()->id()) {
-            abort(403);
-        }
-
         return view('models.notes.edit', ['note' => $note]);
     }
 
@@ -64,7 +61,7 @@ class NoteController extends Controller
 
         flash(trans('note.updated_successfully'), 'success');
 
-        return redirect()->route('links.show', [$note->link->id]);
+        return redirect()->route('links.show', ['link' => $note->link]);
     }
 
     /**
@@ -86,6 +83,6 @@ class NoteController extends Controller
         }
 
         flash(trans('note.deleted_successfully'), 'warning');
-        return redirect()->route('links.show', [$link]);
+        return redirect()->route('links.show', ['link' => $link]);
     }
 }

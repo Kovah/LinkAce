@@ -5,6 +5,7 @@ namespace Tests\Controller\Traits;
 use App\Enums\ModelAttribute;
 use App\Models\Link;
 use App\Models\LinkList;
+use App\Models\Note;
 use App\Models\User;
 
 trait PreparesTestData
@@ -39,6 +40,26 @@ trait PreparesTestData
         LinkList::factory()->create([
             'name' => 'Private List',
             'user_id' => $otherUser->id,
+            'visibility' => ModelAttribute::VISIBILITY_PRIVATE,
+        ]);
+    }
+
+    public function createTestNotes(?Link $linkForNotes = null, ?User $otherUser = null): void
+    {
+        $linkForNotes ??= Link::factory()->create();
+        $otherUser ??= User::factory()->create();
+
+        Note::factory()->create(['note' => 'Public Note']);
+        Note::factory()->create([
+            'link_id' => $linkForNotes->id,
+            'user_id' => $otherUser->id,
+            'note' => 'Internal Note',
+            'visibility' => ModelAttribute::VISIBILITY_INTERNAL,
+        ]);
+        Note::factory()->create([
+            'link_id' => $linkForNotes->id,
+            'user_id' => $otherUser->id,
+            'note' => 'Private Note',
             'visibility' => ModelAttribute::VISIBILITY_PRIVATE,
         ]);
     }

@@ -294,8 +294,6 @@ class LinkApiTest extends ApiTestCase
 
     public function testDeleteRequestNotFound(): void
     {
-        $response = $this->deleteJsonAuthorized('api/v1/links/1');
-
-        $response->assertNotFound();
+        $this->deleteJsonAuthorized('api/v1/links/1')->assertNotFound();
     }
 }

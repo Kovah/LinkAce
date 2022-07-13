@@ -3,50 +3,57 @@
 namespace Tests\Controller\API;
 
 use App\Models\Link;
-use App\Models\Note;
 use Illuminate\Foundation\Testing\RefreshDatabase;
+use Tests\Controller\Traits\PreparesTestData;
 
 class LinkNotesTest extends ApiTestCase
 {
+    use PreparesTestData;
     use RefreshDatabase;
 
     public function testLinksRequest(): void
     {
-        $link = Link::factory()->create();
-        $note = Note::factory()->create([
-            'link_id' => $link->id,
-        ]);
+        $this->createTestLinks();
+        $this->createTestNotes(Link::find(2));
 
-        $response = $this->getJsonAuthorized('api/v1/links/1/notes');
-
-        $response->assertOk()
+        $this->getJsonAuthorized('api/v1/links/1/notes')
+            ->assertOk()
             ->assertJson([
                 'data' => [
-                    ['note' => $note->note],
+                    ['note' => 'Public Note'],
                 ],
             ]);
+
+        $this->getJsonAuthorized('api/v1/links/2/notes')
+            ->assertOk()
+            ->assertJson([
+                'data' => [
+                    ['note' => 'Internal Note'],
+                ],
+            ])
+            ->assertJsonMissing([
+                'data' => [
+                    ['note' => 'Private Note'],
+                ],
+            ]);
+
+        $this->getJsonAuthorized('api/v1/links/3/notes')
+            ->assertForbidden();
     }
 
     public function testLinksRequestWithoutLinks(): void
     {
         Link::factory()->create();
 
-        $response = $this->getJsonAuthorized('api/v1/links/1/notes');
-
-        $response->assertOk()
+        $this->getJsonAuthorized('api/v1/links/1/notes')
+            ->assertOk()
             ->assertJson([
                 'data' => [],
             ]);
-
-        $responseBody = json_decode($response->content());
-
-        $this->assertEmpty($responseBody->data);
     }
 
     public function testShowRequestNotFound(): void
     {
-        $response = $this->getJsonAuthorized('api/v1/links/1/notes');
-
-        $response->assertNotFound();
+        $this->getJsonAuthorized('api/v1/links/1/notes')->assertNotFound();
     }
 }
