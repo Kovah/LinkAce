@@ -19,14 +19,9 @@ class LinkController extends Controller
 {
     use ChecksOrdering;
 
-    protected array $allowedOrders = [
-        'created_at',
-        'url',
-        'title',
-    ];
-
     public function __construct()
     {
+        $this->allowedOrderBy = Link::$allowOrderBy;
         $this->authorizeResource(Link::class, 'link');
     }
 
@@ -94,7 +89,7 @@ class LinkController extends Controller
             foreach ($duplicates as $duplicateLink) {
                 $msg .= sprintf(
                     ' <a href="%s">%s</a>,',
-                    route('links.show', [$duplicateLink->id]),
+                    route('links.show', ['link' => $duplicateLink]),
                     $duplicateLink->shortUrl()
                 );
             }

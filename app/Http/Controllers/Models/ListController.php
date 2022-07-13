@@ -17,14 +17,9 @@ class ListController extends Controller
 {
     use ChecksOrdering;
 
-    protected array $allowedOrders = [
-        'created_at',
-        'name',
-        'links_count',
-    ];
-
     public function __construct()
     {
+        $this->allowedOrderBy = LinkList::$allowOrderBy;
         $this->authorizeResource(LinkList::class, 'list');
     }
 

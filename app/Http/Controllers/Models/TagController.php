@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Http\Controllers\Traits\ChecksOrdering;
 use App\Http\Requests\Models\TagStoreRequest;
 use App\Http\Requests\Models\TagUpdateRequest;
+use App\Models\Link;
 use App\Models\Tag;
 use App\Repositories\TagRepository;
 use Exception;
@@ -97,7 +98,7 @@ class TagController extends Controller
      */
     public function show(Request $request, Tag $tag): View
     {
-        $this->allowedOrderBy = Tag::$allowOrderBy;
+        $this->allowedOrderBy = Link::$allowOrderBy;
         $this->orderBy = $request->input('orderBy', 'created_at');
         $this->orderDir = $request->input('orderDir', 'desc');
 

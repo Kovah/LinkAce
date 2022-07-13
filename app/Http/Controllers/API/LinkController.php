@@ -16,20 +16,9 @@ class LinkController extends Controller
 {
     use ChecksOrdering;
 
-    protected array $allowedOrders = [
-        'url',
-        'title',
-        'description',
-        'visibility',
-        'status',
-        'check_disabled',
-        'created_at',
-        'updated_at',
-    ];
-
     public function __construct()
     {
-        $this->allowedOrders = Link::$allowOrderBy;
+        $this->allowedOrderBy = Link::$allowOrderBy;
         $this->authorizeResource(Link::class, 'link');
     }
 

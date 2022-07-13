@@ -28,6 +28,7 @@ class FetchController extends Controller
         }
 
         $tags = Tag::query()
+            ->visibleForUser()
             ->where('name', 'like', '%' . escapeSearchQuery($query) . '%')
             ->oldest('name')
             ->get();
@@ -58,6 +59,7 @@ class FetchController extends Controller
         }
 
         $tags = LinkList::query()
+            ->visibleForUser()
             ->where('name', 'like', '%' . escapeSearchQuery($query) . '%')
             ->oldest('name')
             ->get();
@@ -89,6 +91,7 @@ class FetchController extends Controller
         }
 
         $link = Link::query()
+            ->visibleForUser()
             ->where('url', trim($query))
             ->where('id', '!=', $request->input('ignore_id', 0))
             ->first();

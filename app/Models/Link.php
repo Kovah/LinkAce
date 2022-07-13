@@ -7,7 +7,6 @@ use App\Audits\Modifiers\LinkStatusModifier;
 use App\Audits\Modifiers\ListRelationModifier;
 use App\Audits\Modifiers\TagRelationModifier;
 use App\Audits\Modifiers\VisibilityModifier;
-use App\Enums\ModelAttribute;
 use App\Jobs\SaveLinkToWaybackmachine;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Collection;

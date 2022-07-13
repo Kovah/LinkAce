@@ -32,7 +32,7 @@ class LinkControllerTest extends TestCase
             '</head></html>';
 
         Http::fake([
-            'example.com' => Http::response($testHtml),
+            '*' => Http::response($testHtml),
         ]);
 
         Queue::fake();
@@ -107,6 +107,28 @@ class LinkControllerTest extends TestCase
 
         $flashMessages = session('flash_notification', collect());
         $flashMessages->contains('message', trans('link.duplicates_found'));
+    }
+
+    public function testStoreRequestWithExistingPrivateLink(): void
+    {
+        Link::factory()->create(['url' => 'https://existing-private-link.com', 'user_id' => 2, 'visibility' => 3]);
+
+        $this->post('links', [
+            'url' => 'https://existing-private-link.com',
+            'visibility' => 1,
+        ])->assertRedirect('links/2');
+
+        $this->assertDatabaseHas('links', [
+            'url' => 'https://existing-private-link.com',
+            'user_id' => 2,
+            'visibility' => 3,
+        ]);
+
+        $this->assertDatabaseHas('links', [
+            'url' => 'https://existing-private-link.com',
+            'user_id' => 1,
+            'visibility' => 1,
+        ]);
     }
 
     public function testStoreRequestWithBrokenUrl(): void
