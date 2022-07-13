@@ -23,7 +23,8 @@ class LinkCheckController extends Controller
             return response()->json(['linksFound' => false]);
         }
 
-        $linkCount = Link::byUser($request->user()->id)
+        $linkCount = Link::query()
+            ->visibleForUser()
             ->where('url', trim($searchedUrl))
             ->count();
 

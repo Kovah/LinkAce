@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\API;
 
 use App\Http\Controllers\Controller;
+use App\Http\Controllers\Traits\ChecksOrdering;
 use App\Http\Requests\Models\LinkStoreRequest;
 use App\Http\Requests\Models\LinkUpdateRequest;
 use App\Models\Link;
@@ -13,6 +14,19 @@ use Illuminate\Http\Response;
 
 class LinkController extends Controller
 {
+    use ChecksOrdering;
+
+    protected array $allowedOrders = [
+        'url',
+        'title',
+        'description',
+        'visibility',
+        'status',
+        'check_disabled',
+        'created_at',
+        'updated_at',
+    ];
+
     public function __construct()
     {
         $this->authorizeResource(Link::class, 'link');
@@ -26,12 +40,14 @@ class LinkController extends Controller
      */
     public function index(Request $request): JsonResponse
     {
+        $this->orderBy = $request->input('order_by', 'created_at');
+        $this->orderDir = $request->input('order_dir', 'desc');
+
+        $this->checkOrdering();
+
         $links = Link::query()
             ->visibleForUser()
-            ->orderBy(
-                $request->input('order_by', 'created_at'),
-                $request->input('order_dir', 'DESC')
-            )
+            ->orderBy($this->orderBy, $this->orderDir)
             ->paginate(getPaginationLimit());
 
         return response()->json($links);

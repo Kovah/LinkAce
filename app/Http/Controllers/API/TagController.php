@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\API;
 
 use App\Http\Controllers\Controller;
+use App\Http\Controllers\Traits\ChecksOrdering;
 use App\Http\Requests\Models\TagStoreRequest;
 use App\Http\Requests\Models\TagUpdateRequest;
 use App\Models\Tag;
@@ -13,6 +14,16 @@ use Illuminate\Http\Response;
 
 class TagController extends Controller
 {
+    use ChecksOrdering;
+
+    protected array $allowedOrders = [
+        'id',
+        'name',
+        'visibility',
+        'created_at',
+        'updated_at',
+    ];
+
     /**
      * Display a listing of the resource.
      *
@@ -21,11 +32,13 @@ class TagController extends Controller
      */
     public function index(Request $request): JsonResponse
     {
+        $this->orderBy = $request->input('order_by', 'created_at');
+        $this->orderDir = $request->input('order_dir', 'desc');
+
+        $this->checkOrdering();
+
         $tags = Tag::byUser()
-            ->orderBy(
-                $request->input('order_by', 'created_at'),
-                $request->input('order_dir', 'DESC')
-            )
+            ->orderBy($this->orderBy, $this->orderDir)
             ->paginate(getPaginationLimit());
 
         return response()->json($tags);

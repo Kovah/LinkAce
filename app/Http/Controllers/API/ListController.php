@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\API;
 
 use App\Http\Controllers\Controller;
+use App\Http\Controllers\Traits\ChecksOrdering;
 use App\Http\Requests\Models\ListStoreRequest;
 use App\Http\Requests\Models\ListUpdateRequest;
 use App\Models\LinkList;
@@ -13,6 +14,17 @@ use Illuminate\Http\Response;
 
 class ListController extends Controller
 {
+    use ChecksOrdering;
+
+    protected array $allowedOrders = [
+        'id',
+        'name',
+        'description',
+        'visibility',
+        'created_at',
+        'updated_at',
+    ];
+
     /**
      * Display a listing of the resource.
      *
@@ -21,11 +33,13 @@ class ListController extends Controller
      */
     public function index(Request $request): JsonResponse
     {
+        $this->orderBy = $request->input('order_by', 'created_at');
+        $this->orderDir = $request->input('order_dir', 'desc');
+
+        $this->checkOrdering();
+
         $lists = LinkList::byUser()
-            ->orderBy(
-                $request->input('order_by', 'created_at'),
-                $request->input('order_dir', 'DESC')
-            )
+            ->orderBy($this->orderBy, $this->orderDir)
             ->paginate(getPaginationLimit());
 
         return response()->json($lists);
