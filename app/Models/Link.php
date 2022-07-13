@@ -76,6 +76,18 @@ class Link extends Model implements Auditable
         'check_disabled' => 'boolean',
     ];
 
+    public static array $allowOrderBy = [
+        'id',
+        'url',
+        'title',
+        'description',
+        'visibility',
+        'status',
+        'check_disabled',
+        'created_at',
+        'updated_at',
+    ];
+
     public string $langBase = 'link';
 
     public const STATUS_OK = 1;

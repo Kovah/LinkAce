@@ -57,6 +57,15 @@ class LinkList extends Model implements Auditable
         'visibility' => 'integer',
     ];
 
+    public static array $allowOrderBy = [
+        'id',
+        'name',
+        'description',
+        'visibility',
+        'created_at',
+        'updated_at',
+    ];
+
     public string $langBase = 'list';
 
     /**

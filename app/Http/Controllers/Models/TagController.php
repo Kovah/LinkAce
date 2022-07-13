@@ -17,14 +17,9 @@ class TagController extends Controller
 {
     use ChecksOrdering;
 
-    protected array $allowedOrders = [
-        'created_at',
-        'name',
-        'links_count',
-    ];
-
     public function __construct()
     {
+        $this->allowedOrderBy = Tag::$allowOrderBy;
         $this->authorizeResource(Tag::class, 'tag');
     }
 
@@ -102,12 +97,14 @@ class TagController extends Controller
      */
     public function show(Request $request, Tag $tag): View
     {
-        // @TODO Check ordering for links
-        $links = $tag->links()->byUser()
-            ->orderBy(
-                $request->input('orderBy', 'created_at'),
-                $request->input('orderDir', 'desc')
-            )
+        $this->allowedOrderBy = Tag::$allowOrderBy;
+        $this->orderBy = $request->input('orderBy', 'created_at');
+        $this->orderDir = $request->input('orderDir', 'desc');
+
+        $this->checkOrdering();
+
+        $links = $tag->links()->visibleForUser()
+            ->orderBy($this->orderBy, $this->orderDir)
             ->paginate(getPaginationLimit());
 
         return view('models.tags.show', [
@@ -163,7 +160,6 @@ class TagController extends Controller
         }
 
         flash(trans('tag.deleted_successfully'), 'warning');
-
         return request()->has('redirect_back') ? redirect()->back() : redirect()->route('tags.index');
     }
 }

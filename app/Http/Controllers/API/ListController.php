@@ -6,7 +6,6 @@ use App\Http\Controllers\Controller;
 use App\Http\Controllers\Traits\ChecksOrdering;
 use App\Http\Requests\Models\ListStoreRequest;
 use App\Http\Requests\Models\ListUpdateRequest;
-use App\Models\Link;
 use App\Models\LinkList;
 use App\Repositories\ListRepository;
 use Illuminate\Http\JsonResponse;
@@ -17,17 +16,9 @@ class ListController extends Controller
 {
     use ChecksOrdering;
 
-    protected array $allowedOrders = [
-        'id',
-        'name',
-        'description',
-        'visibility',
-        'created_at',
-        'updated_at',
-    ];
-
     public function __construct()
     {
+        $this->allowedOrderBy = LinkList::$allowOrderBy;
         $this->authorizeResource(LinkList::class, 'list');
     }
 

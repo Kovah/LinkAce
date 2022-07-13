@@ -29,6 +29,7 @@ class LinkController extends Controller
 
     public function __construct()
     {
+        $this->allowedOrders = Link::$allowOrderBy;
         $this->authorizeResource(Link::class, 'link');
     }
 
