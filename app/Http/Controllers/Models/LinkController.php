@@ -105,8 +105,7 @@ class LinkController extends Controller
         $isBookmarklet = session('bookmarklet.create');
 
         if ($request->input('reload_view')) {
-            session()->flash('reload_view');
-            return redirect()->route($isBookmarklet ? 'bookmarklet-add' : 'links.create');
+            return redirect()->route($isBookmarklet ? 'bookmarklet-add' : 'links.create')->with('reload_view', true);
         }
 
         return $isBookmarklet

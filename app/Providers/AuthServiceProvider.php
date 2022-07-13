@@ -5,9 +5,11 @@ namespace App\Providers;
 use App\Models\Link;
 use App\Models\LinkList;
 use App\Models\Note;
+use App\Models\Tag;
 use App\Policies\LinkListPolicy;
 use App\Policies\LinkPolicy;
 use App\Policies\NotePolicy;
+use App\Policies\TagPolicy;
 use Illuminate\Foundation\Support\Providers\AuthServiceProvider as ServiceProvider;
 
 class AuthServiceProvider extends ServiceProvider
@@ -21,6 +23,7 @@ class AuthServiceProvider extends ServiceProvider
         Link::class => LinkPolicy::class,
         LinkList::class => LinkListPolicy::class,
         Note::class => NotePolicy::class,
+        Tag::class => TagPolicy::class,
     ];
 
     /**

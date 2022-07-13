@@ -23,6 +23,11 @@ class TagController extends Controller
         'links_count',
     ];
 
+    public function __construct()
+    {
+        $this->authorizeResource(Tag::class, 'tag');
+    }
+
     /**
      * Display a listing of the resource.
      *
@@ -39,7 +44,8 @@ class TagController extends Controller
         session()->put('tags.index.orderBy', $this->orderBy);
         session()->put('tags.index.orderDir', $this->orderDir);
 
-        $tags = Tag::byUser()
+        $tags = Tag::query()
+            ->visibleForUser()
             ->withCount('links')
             ->orderBy($this->orderBy, $this->orderDir);
 
@@ -76,18 +82,15 @@ class TagController extends Controller
      */
     public function store(TagStoreRequest $request): RedirectResponse
     {
-        $data = $request->validated();
-
-        $tag = TagRepository::create($data);
+        $tag = TagRepository::create($request->validated());
 
         flash(trans('tag.added_successfully'), 'success');
 
         if ($request->input('reload_view')) {
-            session()->flash('reload_view', true);
-            return redirect()->route('tags.create');
+            return redirect()->route('tags.create')->with('reload_view', true);
         }
 
-        return redirect()->route('tags.show', [$tag->id]);
+        return redirect()->route('tags.show', ['tag' => $tag]);
     }
 
     /**
@@ -99,6 +102,7 @@ class TagController extends Controller
      */
     public function show(Request $request, Tag $tag): View
     {
+        // @TODO Check ordering for links
         $links = $tag->links()->byUser()
             ->orderBy(
                 $request->input('orderBy', 'created_at'),
@@ -139,7 +143,7 @@ class TagController extends Controller
         $tag = TagRepository::update($tag, $request->validated());
 
         flash(trans('tag.updated_successfully'), 'success');
-        return redirect()->route('tags.show', [$tag->id]);
+        return redirect()->route('tags.show', ['tag' => $tag]);
     }
 
     /**

@@ -24,6 +24,11 @@ class TagController extends Controller
         'updated_at',
     ];
 
+    public function __construct()
+    {
+        $this->authorizeResource(Tag::class, 'tag');
+    }
+
     /**
      * Display a listing of the resource.
      *
@@ -37,7 +42,8 @@ class TagController extends Controller
 
         $this->checkOrdering();
 
-        $tags = Tag::byUser()
+        $tags = Tag::query()
+            ->visibleForUser()
             ->orderBy($this->orderBy, $this->orderDir)
             ->paginate(getPaginationLimit());
 

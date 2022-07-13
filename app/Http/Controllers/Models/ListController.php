@@ -88,8 +88,7 @@ class ListController extends Controller
         flash(trans('list.added_successfully'), 'success');
 
         if ($request->input('reload_view')) {
-            session()->flash('reload_view', true);
-            return redirect()->route('lists.create');
+            return redirect()->route('lists.create')->with('reload_view', true);
         }
 
         return redirect()->route('lists.show', [$list->id]);
