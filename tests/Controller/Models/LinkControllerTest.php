@@ -242,9 +242,9 @@ class LinkControllerTest extends TestCase
     {
         $this->createTestLinks();
 
-        $this->get('links/1')->assertOk()->assertSee('https://public-link.com');
-        $this->get('links/2')->assertOk()->assertSee('https://internal-link.com');
-        $this->get('links/3')->assertForbidden();
+        $this->get('links/1/edit')->assertOk()->assertSee('https://public-link.com');
+        $this->get('links/2/edit')->assertOk()->assertSee('https://internal-link.com');
+        $this->get('links/3/edit')->assertForbidden();
     }
 
     public function testUpdateResponse(): void

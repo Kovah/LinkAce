@@ -13,7 +13,7 @@ class SearchControllerTest extends TestCase
 {
     use RefreshDatabase;
 
-    private $user;
+    private User $user;
 
     protected function setUp(): void
     {
@@ -27,21 +27,33 @@ class SearchControllerTest extends TestCase
 
     public function testValidSearchResponse(): void
     {
-        $response = $this->get('search');
-
-        $response->assertOk()
+        $this->get('search')
+            ->assertOk()
             ->assertSee('Search');
     }
 
     public function testValidSearchResult(): void
     {
-        $response = $this->post('search', [
+        $this->post('search', [
             'query' => 'example',
-        ]);
-
-        $response->assertOk()
+        ])
+            ->assertOk()
             ->assertSee('https://example.com')
             ->assertDontSee('https://test.com');
+    }
+
+    public function testValidSearchWithOrdering(): void
+    {
+        $response = $this->post('search', [
+            'query' => 'example',
+            'order_by' => 'title:asc',
+        ]);
+
+        $body = $response->content();
+        $posLink1 = strpos($body, 'https://empty-test.com');
+        $posLink2 = strpos($body, 'https://example.com');
+
+        $this->assertTrue($posLink1 < $posLink2);
     }
 
     public function testValidUrlSearchResult(): void
