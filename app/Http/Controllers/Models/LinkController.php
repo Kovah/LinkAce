@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Models;
 
 use App\Http\Controllers\Controller;
+use App\Http\Controllers\Traits\ChecksOrdering;
 use App\Http\Requests\Models\LinkMarkWorkingRequest;
 use App\Http\Requests\Models\LinkStoreRequest;
 use App\Http\Requests\Models\LinkToggleCheckRequest;
@@ -16,6 +17,14 @@ use Illuminate\Http\Request;
 
 class LinkController extends Controller
 {
+    use ChecksOrdering;
+
+    protected array $allowedOrders = [
+        'created_at',
+        'url',
+        'title',
+    ];
+
     public function __construct()
     {
         $this->authorizeResource(Link::class, 'link');
@@ -29,23 +38,25 @@ class LinkController extends Controller
      */
     public function index(Request $request): View
     {
-        $orderBy = $request->input('orderBy', session()->get('links.index.orderBy', 'created_at'));
-        $orderDir = $request->input('orderDir', session()->get('links.index.orderDir', 'desc'));
+        $this->orderBy = $request->input('orderBy', session()->get('links.index.orderBy', 'created_at'));
+        $this->orderDir = $request->input('orderDir', session()->get('links.index.orderDir', 'desc'));
 
-        session()->put('links.index.orderBy', $orderBy);
-        session()->put('links.index.orderDir', $orderDir);
+        $this->checkOrdering();
+
+        session()->put('links.index.orderBy', $this->orderBy);
+        session()->put('links.index.orderDir', $this->orderDir);
 
         $links = Link::query()
             ->visibleForUser()
             ->with('tags')
-            ->orderBy($orderBy, $orderDir)
+            ->orderBy($this->orderBy, $this->orderDir)
             ->paginate(getPaginationLimit());
 
         return view('models.links.index', [
             'links' => $links,
             'route' => $request->getBaseUrl(),
-            'orderBy' => $orderBy,
-            'orderDir' => $orderDir,
+            'orderBy' => $this->orderBy,
+            'orderDir' => $this->orderDir,
         ]);
     }
 

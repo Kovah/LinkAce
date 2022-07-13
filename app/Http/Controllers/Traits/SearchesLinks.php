@@ -88,8 +88,10 @@ trait SearchesLinks
             });
         }
 
-        // Order the results if applicable
-        if ($this->searchOrderBy = $request->input('order_by', $this->orderByOptions[0])) {
+        // Order the results if applicable and only allow predefined ordering
+        if ($this->searchOrderBy = $request->input('order_by')) {
+            $this->searchOrderBy = in_array($this->searchOrderBy, $this->orderByOptions)
+                ? $this->searchOrderBy : $this->orderByOptions[0];
             $search->orderBy(...explode(':', $this->searchOrderBy));
         }
 

@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Models;
 
 use App\Http\Controllers\Controller;
+use App\Http\Controllers\Traits\ChecksOrdering;
 use App\Http\Requests\Models\ListStoreRequest;
 use App\Http\Requests\Models\ListUpdateRequest;
 use App\Models\LinkList;
@@ -14,6 +15,14 @@ use Illuminate\Http\Request;
 
 class ListController extends Controller
 {
+    use ChecksOrdering;
+
+    protected array $allowedOrders = [
+        'created_at',
+        'name',
+        'links_count',
+    ];
+
     /**
      * Display a listing of the resource.
      *
@@ -22,15 +31,17 @@ class ListController extends Controller
      */
     public function index(Request $request): View
     {
-        $orderBy = $request->input('orderBy', session()->get('lists.index.orderBy', 'name'));
-        $orderDir = $request->input('orderDir', session()->get('lists.index.orderDir', 'asc'));
+        $this->orderBy = $request->input('orderBy', session()->get('lists.index.orderBy', 'name'));
+        $this->orderDir = $request->input('orderDir', session()->get('lists.index.orderDir', 'asc'));
 
-        session()->put('lists.index.orderBy', $orderBy);
-        session()->put('lists.index.orderDir', $orderDir);
+        $this->checkOrdering();
+
+        session()->put('lists.index.orderBy', $this->orderBy);
+        session()->put('lists.index.orderDir', $this->orderDir);
 
         $lists = LinkList::byUser()
             ->withCount('links')
-            ->orderBy($orderBy, $orderDir);
+            ->orderBy($this->orderBy, $this->orderDir);
 
         if ($request->input('filter')) {
             $lists = $lists->where('name', 'like', '%' . $request->input('filter') . '%');
@@ -41,8 +52,8 @@ class ListController extends Controller
         return view('models.lists.index', [
             'lists' => $lists,
             'route' => $request->getBaseUrl(),
-            'orderBy' => $orderBy,
-            'orderDir' => $orderDir,
+            'orderBy' => $this->orderBy,
+            'orderDir' => $this->orderDir,
         ]);
     }
 
