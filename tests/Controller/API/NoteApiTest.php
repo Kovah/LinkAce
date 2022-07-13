@@ -55,15 +55,13 @@ class NoteApiTest extends ApiTestCase
             'note' => null,
         ]);
 
-        $response->assertJsonValidationErrors([
-            'link_id' => 'The link id field is required.',
-            'note' => 'The note field is required.',
-        ]);
+        $response->assertForbidden(); // A valid link cannot be determined, thus it's unauthorized
     }
 
     public function testUpdateRequest(): void
     {
         $this->createTestLinks();
+        Note::factory()->create(['link_id' => 1]);
         Note::factory()->create(['link_id' => 2]); // Note for internal link of other user
         Note::factory()->create(['link_id' => 3]); // Note for private link of other user
 
