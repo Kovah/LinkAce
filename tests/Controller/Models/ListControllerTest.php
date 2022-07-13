@@ -4,14 +4,14 @@ namespace Tests\Controller\Models;
 
 use App\Models\LinkList;
 use App\Models\User;
-use App\Settings\SettingsAudit;
-use App\Settings\UserSettings;
 use Illuminate\Foundation\Testing\RefreshDatabase;
+use Tests\Controller\Traits\PreparesTestData;
 use Tests\TestCase;
 
 class ListControllerTest extends TestCase
 {
     use RefreshDatabase;
+    use PreparesTestData;
 
     private User $user;
 
@@ -26,15 +26,13 @@ class ListControllerTest extends TestCase
 
     public function testIndexView(): void
     {
-        LinkList::factory()->create([
-            'name' => 'Test List',
-            'user_id' => $this->user->id,
-        ]);
+        $this->createTestLists();
 
-        $response = $this->get('lists');
-
-        $response->assertOk()
-            ->assertSee('Test List');
+        $this->get('lists')
+            ->assertOk()
+            ->assertSee('Public List')
+            ->assertSee('Internal List')
+            ->assertDontSee('Private List');
     }
 
     public function testIndexViewWithValidFilterResult(): void
@@ -44,9 +42,8 @@ class ListControllerTest extends TestCase
             'user_id' => $this->user->id,
         ]);
 
-        $response = $this->get('lists?filter=Test');
-
-        $response->assertOk()
+        $this->get('lists?filter=Test')
+            ->assertOk()
             ->assertSee('Test List')
             ->assertDontSee('No Tags found');
     }
@@ -58,17 +55,15 @@ class ListControllerTest extends TestCase
             'user_id' => $this->user->id,
         ]);
 
-        $response = $this->get('lists?filter=asdfasdfasdf');
-
-        $response->assertOk()
+        $this->get('lists?filter=asdfasdfasdf')
+            ->assertOk()
             ->assertSee('No Lists found');
     }
 
     public function testCreateView(): void
     {
-        $response = $this->get('lists/create');
-
-        $response->assertOk()
+        $this->get('lists/create')
+            ->assertOk()
             ->assertSee('Add List');
     }
 
@@ -119,37 +114,21 @@ class ListControllerTest extends TestCase
 
     public function testValidationErrorForCreate(): void
     {
-        $response = $this->post('lists', [
+        $this->post('lists', [
             'name' => null,
             'visibility' => 1,
-        ]);
-
-        $response->assertSessionHasErrors([
+        ])->assertSessionHasErrors([
             'name',
         ]);
     }
 
     public function testDetailView(): void
     {
-        $list = LinkList::factory()->create([
-            'user_id' => $this->user->id,
-        ]);
+        $this->createTestLists();
 
-        $response = $this->get('lists/1');
-
-        $response->assertOk()
-            ->assertSee($list->name);
-    }
-
-    public function testInternalDetailView(): void
-    {
-        $list = LinkList::factory()->create(['visibility' => 2]);
-
-        $response = $this->get('lists/1');
-
-        $response->assertOk()
-            ->assertSee('Internal List')
-            ->assertSee($list->name);
+        $this->get('lists/1')->assertOk()->assertSee('Public List')->assertSee('Public List');
+        $this->get('lists/2')->assertOk()->assertSee('Internal List')->assertSee('Internal List');
+        $this->get('lists/3')->assertForbidden();
     }
 
     public function testPrivateDetailView(): void
@@ -165,52 +144,52 @@ class ListControllerTest extends TestCase
 
     public function testEditView(): void
     {
-        LinkList::factory()->create([
-            'user_id' => $this->user->id,
-        ]);
+        $this->createTestLists();
 
-        $response = $this->get('lists/1/edit');
-
-        $response->assertOk()
-            ->assertSee('Edit List')
-            ->assertSee('Update List');
+        $this->get('lists/1/edit')->assertOk()->assertSee('Public List')->assertSee('Edit List');
+        $this->get('lists/2/edit')->assertOk()->assertSee('Internal List')->assertSee('Edit List');
+        $this->get('lists/3/edit')->assertForbidden();
     }
 
     public function testInvalidEditRequest(): void
     {
-        $response = $this->get('lists/1/edit');
-
-        $response->assertNotFound();
+        $this->get('lists/1/edit')->assertNotFound();
     }
 
     public function testUpdateResponse(): void
     {
-        $baseList = LinkList::factory()->create([
-            'user_id' => $this->user->id,
-        ]);
+        $this->createTestLists();
+        $list = LinkList::find(1);
 
-        $response = $this->patch('lists/1', [
-            'list_id' => $baseList->id,
+        $this->patch('lists/1', [
+            'list_id' => 1,
+            'name' => 'New Public List',
+            'visibility' => 1,
+        ])->assertRedirect('lists/1');
+
+        $this->assertEquals('New Public List', $list->refresh()->name);
+
+        // Test other lists
+        $this->patch('lists/2', [
+            'list_id' => 2,
+            'name' => 'New Internal List',
+            'visibility' => 1,
+        ])->assertRedirect('lists/2');
+
+        $this->patch('lists/3', [
+            'list_id' => $list->id,
             'name' => 'New Test List',
             'visibility' => 1,
-        ]);
-
-        $response->assertRedirect('lists/1');
-
-        $updatedLink = $baseList->fresh();
-
-        $this->assertEquals('New Test List', $updatedLink->name);
+        ])->assertForbidden();
     }
 
     public function testMissingModelErrorForUpdate(): void
     {
-        $response = $this->patch('lists/1', [
+        $this->patch('lists/1', [
             'list_id' => '1',
             'name' => 'New Test List',
             'visibility' => 1,
-        ]);
-
-        $response->assertNotFound();
+        ])->assertNotFound();
     }
 
     public function testUniquePropertyValidation(): void
@@ -224,15 +203,11 @@ class ListControllerTest extends TestCase
             'user_id' => $this->user->id,
         ]);
 
-        $response = $this->patch('lists/2', [
+        $this->patch('lists/2', [
             'list_id' => $baseList->id,
             'name' => 'Taken List Name',
             'visibility' => 1,
-        ]);
-
-        $response->assertSessionHasErrors([
-            'name',
-        ]);
+        ])->assertSessionHasErrors(['name']);
     }
 
     public function testValidationErrorForUpdate(): void
@@ -241,37 +216,28 @@ class ListControllerTest extends TestCase
             'user_id' => $this->user->id,
         ]);
 
-        $response = $this->patch('lists/1', [
+        $this->patch('lists/1', [
             'list_id' => $baseList->id,
             //'name' => 'New Test List',
             'visibility' => 1,
-        ]);
-
-        $response->assertSessionHasErrors([
-            'name',
-        ]);
+        ])->assertSessionHasErrors(['name']);
     }
 
     public function testDeleteResponse(): void
     {
-        LinkList::factory()->create([
-            'user_id' => $this->user->id,
-        ]);
+        $this->createTestLists();
 
-        $response = $this->deleteJson('lists/1');
+        $this->assertEquals(3, LinkList::count());
 
-        $response->assertRedirect();
+        $this->deleteJson('lists/1')->assertRedirect();
+        $this->deleteJson('lists/2')->assertRedirect();
+        $this->deleteJson('lists/3')->assertForbidden();
 
-        $databaseList = LinkList::withTrashed()->first();
-
-        $this->assertNotNull($databaseList->deleted_at);
-        $this->assertNotNull($databaseList->deleted_at);
+        $this->assertEquals(1, LinkList::count());
     }
 
     public function testMissingModelErrorForDelete(): void
     {
-        $response = $this->delete('lists/1');
-
-        $response->assertNotFound();
+        $this->delete('lists/1')->assertNotFound();
     }
 }

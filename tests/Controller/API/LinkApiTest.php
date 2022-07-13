@@ -8,12 +8,12 @@ use App\Models\Tag;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Support\Facades\Http;
 use Illuminate\Support\Facades\Queue;
-use Tests\Controller\Traits\PreparesTestLinks;
+use Tests\Controller\Traits\PreparesTestData;
 
 class LinkApiTest extends ApiTestCase
 {
     use RefreshDatabase;
-    use PreparesTestLinks;
+    use PreparesTestData;
 
     protected function setUp(): void
     {

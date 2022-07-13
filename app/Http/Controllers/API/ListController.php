@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Http\Controllers\Traits\ChecksOrdering;
 use App\Http\Requests\Models\ListStoreRequest;
 use App\Http\Requests\Models\ListUpdateRequest;
+use App\Models\Link;
 use App\Models\LinkList;
 use App\Repositories\ListRepository;
 use Illuminate\Http\JsonResponse;
@@ -25,6 +26,11 @@ class ListController extends Controller
         'updated_at',
     ];
 
+    public function __construct()
+    {
+        $this->authorizeResource(LinkList::class, 'list');
+    }
+
     /**
      * Display a listing of the resource.
      *
@@ -38,7 +44,8 @@ class ListController extends Controller
 
         $this->checkOrdering();
 
-        $lists = LinkList::byUser()
+        $lists = LinkList::query()
+            ->visibleForUser()
             ->orderBy($this->orderBy, $this->orderDir)
             ->paginate(getPaginationLimit());
 

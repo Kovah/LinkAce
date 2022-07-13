@@ -4,28 +4,32 @@ namespace Tests\Controller\API;
 
 use App\Models\LinkList;
 use Illuminate\Foundation\Testing\RefreshDatabase;
+use Tests\Controller\Traits\PreparesTestData;
 
 class ListApiTest extends ApiTestCase
 {
     use RefreshDatabase;
+    use PreparesTestData;
 
     public function testUnauthorizedRequest(): void
     {
-        $response = $this->getJson('api/v1/lists');
-
-        $response->assertUnauthorized();
+        $this->getJson('api/v1/lists')->assertUnauthorized();
     }
 
     public function testIndexRequest(): void
     {
-        $list = LinkList::factory()->create();
+        $this->createTestLists();
 
-        $response = $this->getJsonAuthorized('api/v1/lists');
-
-        $response->assertOk()
+        $this->getJsonAuthorized('api/v1/lists')
+            ->assertOk()
             ->assertJson([
                 'data' => [
-                    ['name' => $list->name],
+                    ['name' => 'Internal List'],
+                    ['name' => 'Public List'],
+                ],
+            ])->assertJsonMissing([
+                'data' => [
+                    ['name' => 'Private List'],
                 ],
             ]);
     }
@@ -82,57 +86,70 @@ class ListApiTest extends ApiTestCase
 
     public function testShowRequest(): void
     {
-        $list = LinkList::factory()->create();
-
-        $response = $this->getJsonAuthorized('api/v1/lists/1');
+        $this->createTestLists();
 
         $expectedLinkApiUrl = 'http://localhost/api/v1/lists/1/links';
 
+        $response = $this->getJsonAuthorized('api/v1/lists/1');
         $response->assertOk()
             ->assertJson([
-                'name' => $list->name,
+                'name' => 'Public List',
                 'links' => $expectedLinkApiUrl,
             ]);
+
+        $this->getJsonAuthorized('api/v1/lists/2')->assertJson(['name' => 'Internal List']);
+        $this->getJsonAuthorized('api/v1/lists/3')->assertForbidden();
     }
 
     public function testShowRequestNotFound(): void
     {
-        $response = $this->getJsonAuthorized('api/v1/lists/1');
-
-        $response->assertNotFound();
+        $this->getJsonAuthorized('api/v1/lists/1')->assertNotFound();
     }
 
     public function testUpdateRequest(): void
     {
-        LinkList::factory()->create();
+        $this->createTestLists();
 
-        $response = $this->patchJsonAuthorized('api/v1/lists/1', [
-            'name' => 'Updated List Title',
+        $this->patchJsonAuthorized('api/v1/lists/1', [
+            'name' => 'Updated Public List',
             'description' => 'Custom Description',
             'visibility' => 1,
-        ]);
-
-        $response->assertOk()
+        ])
+            ->assertOk()
             ->assertJson([
-                'name' => 'Updated List Title',
+                'name' => 'Updated Public List',
             ]);
 
-        $databaseList = LinkList::first();
+        $databaseList = LinkList::find(1);
+        $this->assertEquals('Updated Public List', $databaseList->name);
 
-        $this->assertEquals('Updated List Title', $databaseList->name);
+        // Test other lists
+        $this->patchJsonAuthorized('api/v1/lists/2', [
+            'name' => 'Updated Internal List',
+            'description' => 'Custom Description',
+            'visibility' => 1,
+        ])
+            ->assertOk()
+            ->assertJson([
+                'name' => 'Updated Internal List',
+            ]);
+
+        $this->patchJsonAuthorized('api/v1/lists/3', [
+            'name' => 'Updated Internal List',
+            'description' => 'Custom Description',
+            'visibility' => 1,
+        ])->assertForbidden();
     }
 
     public function testInvalidUpdateRequest(): void
     {
         LinkList::factory()->create();
 
-        $response = $this->patchJsonAuthorized('api/v1/lists/1', [
+        $this->patchJsonAuthorized('api/v1/lists/1', [
             'name' => null,
             'description' => ['bla'],
             'visibility' => 'hello',
-        ]);
-
-        $response->assertJsonValidationErrors([
+        ])->assertJsonValidationErrors([
             'name' => 'The name field is required.',
             'description' => 'The description must be a string.',
             'visibility' => 'The Visibility must bei either 1 (public), 2 (internal) or 3 (private).',
@@ -141,30 +158,28 @@ class ListApiTest extends ApiTestCase
 
     public function testUpdateRequestNotFound(): void
     {
-        $response = $this->patchJsonAuthorized('api/v1/lists/1', [
+        $this->patchJsonAuthorized('api/v1/lists/1', [
             'name' => 'Updated List Title',
             'description' => 'Custom Description',
             'is_private' => false,
-        ]);
-
-        $response->assertNotFound();
+        ])->assertNotFound();
     }
 
     public function testDeleteRequest(): void
     {
-        LinkList::factory()->create();
+        $this->createTestLists();
 
-        $response = $this->deleteJsonAuthorized('api/v1/lists/1');
+        $this->assertEquals(3, LinkList::count());
 
-        $response->assertStatus(200);
+        $this->deleteJsonAuthorized('api/v1/lists/1')->assertStatus(200);
+        $this->deleteJsonAuthorized('api/v1/lists/2')->assertStatus(200);
+        $this->deleteJsonAuthorized('api/v1/lists/3')->assertForbidden();
 
-        $this->assertEquals(0, LinkList::count());
+        $this->assertEquals(1, LinkList::count());
     }
 
     public function testDeleteRequestNotFound(): void
     {
-        $response = $this->deleteJsonAuthorized('api/v1/lists/1');
-
-        $response->assertNotFound();
+        $this->deleteJsonAuthorized('api/v1/lists/1')->assertNotFound();
     }
 }

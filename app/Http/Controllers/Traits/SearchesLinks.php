@@ -17,7 +17,7 @@ trait SearchesLinks
     protected string|null $searchTags = null;
     protected bool $emptyLists = false;
     protected bool $emptyTags = false;
-    protected string $searchOrderBy;
+    protected string|null $searchOrderBy = null;
 
     public array $orderByOptions = [
         'title:asc',

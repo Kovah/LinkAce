@@ -23,6 +23,11 @@ class ListController extends Controller
         'links_count',
     ];
 
+    public function __construct()
+    {
+        $this->authorizeResource(LinkList::class, 'list');
+    }
+
     /**
      * Display a listing of the resource.
      *
@@ -39,7 +44,8 @@ class ListController extends Controller
         session()->put('lists.index.orderBy', $this->orderBy);
         session()->put('lists.index.orderDir', $this->orderDir);
 
-        $lists = LinkList::byUser()
+        $lists = LinkList::query()
+            ->visibleForUser()
             ->withCount('links')
             ->orderBy($this->orderBy, $this->orderDir);
 

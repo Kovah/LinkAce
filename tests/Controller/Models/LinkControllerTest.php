@@ -11,13 +11,13 @@ use App\Settings\UserSettings;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Support\Facades\Http;
 use Illuminate\Support\Facades\Queue;
-use Tests\Controller\Traits\PreparesTestLinks;
+use Tests\Controller\Traits\PreparesTestData;
 use Tests\TestCase;
 
 class LinkControllerTest extends TestCase
 {
     use RefreshDatabase;
-    use PreparesTestLinks;
+    use PreparesTestData;
 
     protected function setUp(): void
     {
