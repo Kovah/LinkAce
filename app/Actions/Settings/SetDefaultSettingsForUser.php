@@ -23,6 +23,8 @@ class SetDefaultSettingsForUser extends SettingsMigration
         $this->migrator->add($group . '.time_format', $defaults['time_format']);
         $this->migrator->add($group . '.locale', $defaults['locale']);
 
+        $this->migrator->add($group . '.profile_is_public', $defaults['profile_is_public']);
+
         $this->migrator->add($group . '.links_default_visibility', $defaults['links_default_visibility']);
         $this->migrator->add($group . '.notes_default_visibility', $defaults['notes_default_visibility']);
         $this->migrator->add($group . '.lists_default_visibility', $defaults['lists_default_visibility']);

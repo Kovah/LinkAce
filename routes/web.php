@@ -18,6 +18,7 @@ use App\Http\Controllers\Guest\FeedController as GuestFeedController;
 use App\Http\Controllers\Guest\LinkController as GuestLinkController;
 use App\Http\Controllers\Guest\ListController as GuestListController;
 use App\Http\Controllers\Guest\TagController as GuestTagController;
+use App\Http\Controllers\Guest\UserController as GuestUserController;
 use App\Http\Controllers\Models\LinkController;
 use App\Http\Controllers\Models\ListController;
 use App\Http\Controllers\Models\NoteController;
@@ -179,6 +180,8 @@ Route::prefix('guest')->middleware(['guestaccess'])->group(function () {
     Route::get('lists/{list}/feed', [GuestFeedController::class, 'listLinks'])->name('guest.lists.links.feed');
     Route::get('tags/feed', [GuestFeedController::class, 'tags'])->name('guest.tags.feed');
     Route::get('tags/{tag}/feed', [GuestFeedController::class, 'tagLinks'])->name('guest.tags.links.feed');
+
+    Route::get('users/{user:name}', [GuestUserController::class, 'show'])->name('guest.users.show');
 
     Route::resource('links', GuestLinkController::class)
         ->only(['index'])

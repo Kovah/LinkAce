@@ -18,7 +18,9 @@ return [
     'markdown_for_text' => 'Enable Markdown for descriptions and notes',
 
     'privacy' => 'Privacy',
-    'default_visibility_help' => 'Choose the default visibility for Links, Lists, Notes and Tags when adding new entries.',
+    'profile_privacy' => 'The following settings apply to your user profile which is visible to guests.',
+    'profile_is_public' => 'Profile is public',
+    'default_visibility_help' => 'The following settings define the default visibility for Links, Lists, Notes and Tags when adding new ones.',
     'links_default_visibility' => 'Default Links visibility',
     'notes_default_visibility' => 'Default Notes visibility',
     'lists_default_visibility' => 'Default Lists visibility',

@@ -80,6 +80,11 @@ class MigrateExistingSettings extends SettingsMigration
         );
 
         $this->migrator->add(
+            'user-1.profile_is_public',
+            (bool)$this->sysSettings->get('system_guest_access', false)
+        );
+
+        $this->migrator->add(
             'user-1.links_default_visibility',
             $this->userSettings->get('links_private_default', false)
                 ? ModelAttribute::VISIBILITY_PRIVATE : ModelAttribute::VISIBILITY_PUBLIC

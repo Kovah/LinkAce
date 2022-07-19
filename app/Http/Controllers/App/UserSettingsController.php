@@ -53,8 +53,6 @@ class UserSettingsController extends Controller
      */
     public function saveAppSettings(UserSettings $settings, UserSettingsUpdateRequest $request): RedirectResponse
     {
-        $userId = $request->user()->id;
-
         // Save all user settings or update them
         $newSettings = $request->except(['_token', 'share']);
         foreach ($newSettings as $key => $value) {

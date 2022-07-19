@@ -12,6 +12,8 @@ class UserSettings extends Settings
     public string $time_format;
     public string $locale;
 
+    public bool $profile_is_public;
+
     public int $links_default_visibility;
     public int $notes_default_visibility;
     public int $lists_default_visibility;
@@ -47,16 +49,23 @@ class UserSettings extends Settings
     public bool $share_whatsapp;
     public bool $share_xing;
 
+    private static int $user_id = 0;
+
     public static function group(): string
     {
-        return 'user-' . auth()->id();
+        return 'user-' . self::getUserId();
     }
 
-    /**
-     * Returns the default settings for users
-     *
-     * @return array{string: string|int|bool|null}
-     */
+    public static function setUserId(int $user_id): void
+    {
+        self::$user_id = $user_id;
+    }
+
+    protected static function getUserId(): int
+    {
+        return self::$user_id ?: auth()->id();
+    }
+
     public static function defaults(): array
     {
         return [
@@ -64,6 +73,7 @@ class UserSettings extends Settings
             'date_format' => config('linkace.default.date_format'),
             'time_format' => config('linkace.default.time_format'),
             'locale' => config('app.fallback_locale'),
+            'profile_is_public' => false,
             'links_default_visibility' => ModelAttribute::VISIBILITY_PUBLIC,
             'notes_default_visibility' => ModelAttribute::VISIBILITY_PUBLIC,
             'lists_default_visibility' => ModelAttribute::VISIBILITY_PUBLIC,

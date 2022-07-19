@@ -14,6 +14,33 @@ $settings = [
         @lang('settings.privacy')
     </h5>
 
+    <p>@lang('settings.profile_privacy')</p>
+
+    <div class="row mb-4">
+        <div class="col-12 col-sm-8 col-md-6">
+            <label class="form-label" for="profile_is_public">
+                @lang('settings.profile_is_public')
+            </label>
+            <select id="profile_is_public" name="profile_is_public"
+                class="form-select{{ $errors->has('profile_is_public') ? ' is-invalid' : '' }}">
+                <option value="1"
+                    @if(usersettings('profile_is_public') === true) selected @endif>
+                    @lang('linkace.yes')
+                </option>
+                <option value="0"
+                    @if(usersettings('profile_is_public') === false) selected @endif>
+                    @lang('linkace.no')
+                </option>
+            </select>
+            @if ($errors->has('profile_is_public'))
+                <p class="invalid-feedback" role="alert">
+                    {{ $errors->first('profile_is_public') }}
+                </p>
+            @endif
+        </div>
+    </div>
+
+
     <p>@lang('settings.default_visibility_help')</p>
 
     <div class="row">

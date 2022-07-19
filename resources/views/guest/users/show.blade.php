@@ -21,8 +21,7 @@
 
                 <ul class="list-group list-group-flush">
                     @forelse($links as $link)
-                        <a href="{{ route('links.show', [$link->id]) }}"
-                            class="list-group-item list-group-item-action one-line">
+                        <a href="{{ $link->url }}" class="list-group-item list-group-item-action one-line">
                             {!! $link->getIcon('me-1') !!}
                             {{ $link->title }}
                         </a>
@@ -69,7 +68,7 @@
 
                 <div class="card-body">
                     @forelse($lists as $list)
-                        <a href="{{ route('lists.show', ['list' => $list]) }}" class="btn btn-light btn-sm m-1">
+                        <a href="{{ route('guest.lists.show', ['list' => $list]) }}" class="btn btn-light btn-sm m-1">
                             {{ $list->name }}
                         </a>
                     @empty
@@ -87,7 +86,7 @@
 
                 <div class="card-body">
                     @forelse($tags as $tag)
-                        <a href="{{ route('tags.show', ['tag' => $tag]) }}" class="btn btn-light btn-sm m-1">
+                        <a href="{{ route('guest.tags.show', ['tag' => $tag]) }}" class="btn btn-light btn-sm m-1">
                             {{ $tag->name }}
                         </a>
                     @empty

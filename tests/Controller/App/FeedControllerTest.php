@@ -14,7 +14,7 @@ class FeedControllerTest extends TestCase
 {
     use RefreshDatabase;
 
-    private $user;
+    private User $user;
 
     protected function setUp(): void
     {
@@ -82,7 +82,7 @@ class FeedControllerTest extends TestCase
         $tagLink = Link::factory()->create();
         $unrelatedLink = Link::factory()->create();
 
-        $tagLink->tags()->sync(['tag' => $tag]);
+        $tagLink->tags()->sync([$tag->id]);
 
         $response = $this->getAuthorized('tags/1/feed');
 

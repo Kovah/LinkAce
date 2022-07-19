@@ -30,13 +30,18 @@ function setupCompleted()
 /**
  * Shorthand for the current user settings
  *
- * @param string $key
+ * @param string   $key
+ * @param int|null $userId
  * @return mixed
  */
-function usersettings(string $key = ''): mixed
+function usersettings(string $key = '', ?int $userId = null): mixed
 {
-    if (!auth()->user()) {
+    if (is_null($userId) && !auth()->user()) {
         return null;
+    }
+
+    if (!is_null($userId)) {
+        app(UserSettings::class)::setUserId($userId);
     }
 
     if ($key === '') {
