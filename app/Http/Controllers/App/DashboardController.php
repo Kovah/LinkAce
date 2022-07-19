@@ -26,12 +26,14 @@ class DashboardController extends Controller
 
         $recentTags = Tag::query()
             ->visibleForUser()
+            ->with('user:id,name')
             ->latest()
             ->limit(25)
             ->get();
 
         $recentLists = LinkList::query()
             ->visibleForUser()
+            ->with('user:id,name')
             ->latest()
             ->limit(15)
             ->get();
