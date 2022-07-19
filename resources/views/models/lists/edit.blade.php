@@ -8,7 +8,7 @@
         </header>
         <div class="card-body">
 
-            <form action="{{ route('lists.update', [$list->id]) }}" method="POST">
+            <form action="{{ route('lists.update', ['list' => $list]) }}" method="POST">
                 @method('PATCH')
                 @csrf
 
@@ -71,7 +71,7 @@
         </div>
     </div>
 
-    <form action="{{ route('lists.destroy', [$list->id]) }}" method="post" id="deleteList">
+    <form action="{{ route('lists.destroy', ['list' => $list]) }}" method="post" id="deleteList">
         @csrf
         @method('DELETE')
     </form>

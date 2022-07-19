@@ -3,7 +3,9 @@
         <div class="card-body">
             <div class="d-flex">
                 <x-models.visibility-badge :model="$list" class="d-inline-block me-2"/>
-                <a href="{{ route('lists.show', [$list->id]) }}">{{ $list->name }}</a>
+                <a href="{{ route('lists.show', ['list' => $list]) }}">
+                    <x-models.name-with-user :model="$list"/>
+                </a>
             </div>
             @if($list->description)
                 <div class="small mt-2">{{ $list->description }}</div>
@@ -19,7 +21,7 @@
                 @endif
             </div>
             <div class="btn-group ms-auto me-2">
-                <a href="{{ route('lists.edit', [$list->id]) }}" class="btn btn-sm btn-link">
+                <a href="{{ route('lists.edit', ['list' => $list]) }}" class="btn btn-sm btn-link">
                     <x-icon.edit/>
                     <span class="visually-hidden">@lang('list.edit')</span>
                 </a>
@@ -31,7 +33,7 @@
             </div>
 
             <form id="list-delete-{{ $list->id }}" method="POST" style="display: none;"
-                action="{{ route('lists.destroy', [$list->id]) }}">
+                action="{{ route('lists.destroy', ['list' => $list]) }}">
                 @method('DELETE')
                 @csrf
                 <input type="hidden" name="redirect_back" value="1">

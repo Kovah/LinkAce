@@ -82,7 +82,7 @@ class FeedControllerTest extends TestCase
         $tagLink = Link::factory()->create();
         $unrelatedLink = Link::factory()->create();
 
-        $tagLink->tags()->sync([$tag->id]);
+        $tagLink->tags()->sync(['tag' => $tag]);
 
         $response = $this->getAuthorized('tags/1/feed');
 

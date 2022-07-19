@@ -38,7 +38,7 @@
                 @if($link->tags->count() > 0)
                     @foreach($link->tags as $tag)
                         @if(!$tag->is_private)
-                            <a href="{{ route('guest.tags.show', [$tag->id]) }}"
+                            <a href="{{ route('guest.tags.show', ['tag' => $tag]) }}"
                                 class="btn btn-xs btn-light">
                                 {{ $tag->name }}
                             </a>

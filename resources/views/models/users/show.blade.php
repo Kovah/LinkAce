@@ -75,7 +75,7 @@
 
                 <div class="card-body">
                     @forelse($lists as $list)
-                        <a href="{{ route('lists.show', [$list->id]) }}" class="btn btn-light btn-sm">
+                        <a href="{{ route('lists.show', ['list' => $list]) }}" class="btn btn-light btn-sm">
                             {{ $list->name }}
                         </a>
                     @empty
@@ -96,7 +96,7 @@
 
                 <div class="card-body">
                     @forelse($tags as $tag)
-                        <a href="{{ route('tags.show', [$tag->id]) }}" class="btn btn-light btn-sm">
+                        <a href="{{ route('tags.show', ['tag' => $tag]) }}" class="btn btn-light btn-sm">
                             {{ $tag->name }}
                         </a>
                     @empty

@@ -86,7 +86,7 @@ class ListController extends Controller
             return redirect()->route('lists.create')->with('reload_view', true);
         }
 
-        return redirect()->route('lists.show', [$list->id]);
+        return redirect()->route('lists.show', ['list' => $list]);
     }
 
     /**
@@ -138,7 +138,7 @@ class ListController extends Controller
         $list = ListRepository::update($list, $request->validated());
 
         flash(trans('list.updated_successfully'), 'success');
-        return redirect()->route('lists.show', [$list->id]);
+        return redirect()->route('lists.show', ['list' => $list]);
     }
 
     /**

@@ -9,8 +9,8 @@
         @if($link->tags->count() > 0)
             <div class="mt-1">
                 @foreach($link->tags as $tag)
-                    <a href="{{ route('tags.show', [$tag]) }}" class="btn btn-xs btn-light">
-                        {{ $tag->name }}
+                    <a href="{{ route('tags.show', ['tag' => $tag]) }}" class="btn btn-xs btn-light">
+                        <x-models.name-with-user :model="$tag"/>
                     </a>
                 @endforeach
             </div>

@@ -39,6 +39,7 @@ class SearchRequest extends FormRequest
             ],
             'visibility' => [
                 'sometimes',
+                'nullable',
                 'integer',
                 new ModelVisibility(),
             ],

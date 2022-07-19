@@ -1,7 +1,9 @@
 <div class="col-12 col-sm-6 col-md-4 mb-4">
     <div class="h-100 card">
         <div class="card-body">
-            <a href="{{ route('guest.lists.show', [$list]) }}">{{ $list->name }}</a>
+            <a href="{{ route('guest.lists.show', ['list' => $list]) }}">
+                <x-models.name-with-user :model="$list"/>
+            </a>
             @if($list->description)
                 <div class="small mt-2">{{ $list->description }}</div>
             @endif

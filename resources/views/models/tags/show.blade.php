@@ -9,7 +9,7 @@
                 @lang('tag.tag')
             </span>
             <div class="ms-auto">
-                <a href="{{ route('tags.edit', [$tag->id]) }}" class="btn btn-sm btn-primary"
+                <a href="{{ route('tags.edit', ['tag' => $tag]) }}" class="btn btn-sm btn-primary"
                     aria-label="@lang('tag.edit')">
                     <x-icon.edit class="me-2"/>
                     @lang('linkace.edit')
@@ -21,7 +21,7 @@
                 </a>
             </div>
             <form id="tag-delete-{{ $tag->id }}" method="POST" style="display: none;"
-                action="{{ route('tags.destroy', [$tag->id]) }}">
+                action="{{ route('tags.destroy', ['tag' => $tag]) }}">
                 @method('DELETE')
                 @csrf
                 <input type="hidden" name="tag_id" value="{{ $tag->id }}">

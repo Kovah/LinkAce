@@ -8,7 +8,7 @@
         </header>
         <div class="card-body">
 
-            <form action="{{ route('tags.update', [$tag->id]) }}" method="POST">
+            <form action="{{ route('tags.update', ['tag' => $tag]) }}" method="POST">
                 @method('PATCH')
                 @csrf
 
@@ -57,7 +57,7 @@
         </div>
     </div>
 
-    <form action="{{ route('tags.destroy', [$tag->id]) }}" method="post" id="deleteTag">
+    <form action="{{ route('tags.destroy', ['tag' => $tag]) }}" method="post" id="deleteTag">
         @csrf
         @method('DELETE')
     </form>

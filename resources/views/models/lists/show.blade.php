@@ -9,7 +9,7 @@
                 @lang('list.list')
             </span>
             <div class="ms-auto">
-                <a href="{{ route('lists.edit', [$list->id]) }}" class="btn btn-sm btn-primary"
+                <a href="{{ route('lists.edit', ['list' => $list]) }}" class="btn btn-sm btn-primary"
                     aria-label="@lang('list.edit')">
                     <x-icon.edit class="me-2"/>
                     @lang('linkace.edit')
@@ -21,7 +21,7 @@
                 </a>
             </div>
             <form id="list-delete-{{ $list->id }}" method="POST" style="display: none;"
-                action="{{ route('lists.destroy', [$list->id]) }}">
+                action="{{ route('lists.destroy', ['list' => $list]) }}">
                 @method('DELETE')
                 @csrf
                 <input type="hidden" name="list_id" value="{{ $list->id }}">

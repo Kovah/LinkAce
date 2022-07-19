@@ -64,7 +64,7 @@ class ListController extends Controller
      */
     public function show(LinkList $list): JsonResponse
     {
-        $list->setAttribute('links', route('api.lists.links', [$list->id], true));
+        $list->setAttribute('links', route('api.lists.links', ['list' => $list], true));
 
         return response()->json($list);
     }

@@ -27,7 +27,7 @@
                         <label>@lang('tag.tags'):</label>
                         @foreach($link->tags as $tag)
                             @if(!$tag->is_private)
-                                <a href="{{ route('guest.tags.show', [$tag->id]) }}"
+                                <a href="{{ route('guest.tags.show', ['tag' => $tag]) }}"
                                     class="badge badge-primary">
                                     {{ $tag->name }}
                                 </a>

@@ -1,8 +1,8 @@
 <tr>
     <td>
         <x-models.visibility-badge :model="$tag" class="d-inline-block me-1 small"/>
-        <a href="{{ route('tags.show', [$tag]) }}">
-            {{ $tag->name }}
+        <a href="{{ route('tags.show', ['tag' => $tag]) }}">
+            <x-models.name-with-user :model="$tag"/>
         </a>
     </td>
     <td>

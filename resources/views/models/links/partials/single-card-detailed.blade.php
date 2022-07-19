@@ -31,7 +31,7 @@
         <div class="px-3">
             @if($link->tags->count() > 0)
                 @foreach($link->tags as $tag)
-                    <a href="{{ route('tags.show', [$tag]) }}" class="btn btn-light btn-xs">
+                    <a href="{{ route('tags.show', ['tag' => $tag]) }}" class="btn btn-light btn-xs">
                         {{ $tag->name }}
                     </a>
                 @endforeach
