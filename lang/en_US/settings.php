@@ -74,13 +74,6 @@ return [
     'two_factor_recovery_codes_view' => 'View Recovery Codes',
     'two_factor_regenerate_recovery_codes' => 'Generate new Recovery Codes',
 
-    'api_token' => 'API Token',
-    'api_token_generate' => 'Generate Token',
-    'api_token_generate_confirm' => 'Do you really want to generate a new token?',
-    'api_token_help' => 'The API token can be used to access LinkAce from other application or scripts.',
-    'api_token_generate_info' => 'Caution: If you already have an API token, generating a new one will break all existing integrations!',
-    'api_token_generate_failure' => 'A new API token could not be generated. Please check your browser console and application logs for more information.',
-
     'page_title' => 'Page Title',
     'guest_access' => 'Enable Guest Access',
     'guest_access_help' => 'If enabled, guest will be able to see all links that are not private.',

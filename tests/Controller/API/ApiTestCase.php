@@ -2,6 +2,7 @@
 
 namespace Tests\Controller\API;
 
+use App\Enums\ApiToken;
 use App\Models\User;
 use Illuminate\Support\Facades\Http;
 use Illuminate\Support\Facades\Notification;
@@ -12,12 +13,14 @@ use Tests\TestCase;
 abstract class ApiTestCase extends TestCase
 {
     protected User $user;
+    protected string $accessToken;
 
     protected function setUp(): void
     {
         parent::setUp();
 
         $this->user = User::first() ?: User::factory()->create();
+        $this->accessToken = $this->user->createToken('api-test', [ApiToken::ABILITY_USER_ACCESS])->plainTextToken;
 
         Queue::fake();
         Notification::fake();
@@ -41,7 +44,7 @@ abstract class ApiTestCase extends TestCase
      */
     public function getJsonAuthorized(string $uri, array $headers = []): TestResponse
     {
-        $headers['Authorization'] = 'Bearer ' . $this->user->api_token;
+        $headers['Authorization'] = 'Bearer ' . $this->accessToken;
         return $this->getJson($uri, $headers);
     }
 
@@ -55,7 +58,7 @@ abstract class ApiTestCase extends TestCase
      */
     public function postJsonAuthorized(string $uri, array $data = [], array $headers = []): TestResponse
     {
-        $headers['Authorization'] = 'Bearer ' . $this->user->api_token;
+        $headers['Authorization'] = 'Bearer ' . $this->accessToken;
         return $this->postJson($uri, $data, $headers);
     }
 
@@ -69,7 +72,7 @@ abstract class ApiTestCase extends TestCase
      */
     public function patchJsonAuthorized(string $uri, array $data = [], array $headers = []): TestResponse
     {
-        $headers['Authorization'] = 'Bearer ' . $this->user->api_token;
+        $headers['Authorization'] = 'Bearer ' . $this->accessToken;
         return $this->patchJson($uri, $data, $headers);
     }
 
@@ -83,7 +86,7 @@ abstract class ApiTestCase extends TestCase
      */
     public function deleteJsonAuthorized(string $uri, array $data = [], array $headers = []): TestResponse
     {
-        $headers['Authorization'] = 'Bearer ' . $this->user->api_token;
+        $headers['Authorization'] = 'Bearer ' . $this->accessToken;
         return $this->deleteJson($uri, $data, $headers);
     }
 }

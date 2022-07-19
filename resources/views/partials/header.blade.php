@@ -24,7 +24,6 @@
             'existingLinks' => route('fetch-existing-links'),
             'htmlForUrl' => route('fetch-html-for-url'),
             'updateCheck' => route('fetch-update-check'),
-            'generateApiToken' => route('generate-api-token'),
             'generateCronToken' => route('generate-cron-token'),
         ]
     ]

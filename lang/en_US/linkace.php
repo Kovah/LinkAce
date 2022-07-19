@@ -24,6 +24,8 @@ return [
     'created_at' => 'Created at',
     'updated_at' => 'Updated at',
     'last_update' => 'Last Update',
+    'last_used' => 'Last used',
+    'never_used' => 'Never used',
     'blocked' => 'Blocked',
     'blocked_at' => 'Blocked at',
     'deleted' => 'Deleted',

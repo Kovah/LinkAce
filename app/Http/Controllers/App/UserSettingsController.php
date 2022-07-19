@@ -87,24 +87,4 @@ class UserSettingsController extends Controller
         flash(trans('settings.password_updated'), 'success');
         return redirect()->back();
     }
-
-    /**
-     * Generate a new API token for the current user.
-     *
-     * @param Request $request
-     * @return JsonResponse
-     */
-    public function generateApiToken(Request $request): JsonResponse
-    {
-        $new_token = Str::random(32);
-
-        $request->user()->api_token = $new_token;
-        $request->user()->save();
-
-        activity()->by(auth()->user())->log(ActivityLog::USER_API_TOKEN_GENERATED);
-
-        return response()->json([
-            'new_token' => $new_token,
-        ]);
-    }
 }

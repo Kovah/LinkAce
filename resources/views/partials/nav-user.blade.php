@@ -13,6 +13,9 @@
             <a href="{{ route('get-usersettings') }}" class="dropdown-item">
                 @lang('settings.settings')
             </a>
+            <a href="{{ route('api-tokens.index') }}" class="dropdown-item">
+                @lang('auth.api_tokens')
+            </a>
             <a href="#" class="dropdown-item cursor-pointer text-danger"
                 onclick="event.preventDefault();document.getElementById('logout-form').submit();">
                 @lang('linkace.logout')

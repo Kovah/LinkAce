@@ -66,10 +66,9 @@
                 </button>
             </div>
             <form id="link-delete-{{ $link->id }}" method="POST" style="display: none;"
-                action="{{ route('links.destroy', [$link->id]) }}">
+                action="{{ route('links.destroy', ['link' => $link]) }}">
                 @method('DELETE')
                 @csrf
-                <input type="hidden" name="link_id" value="{{ $link->id }}">
             </form>
 
             <div class="mb-3">

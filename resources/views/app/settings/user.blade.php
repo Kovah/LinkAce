@@ -4,8 +4,6 @@
 
     @include('app.settings.partials.bookmarklet')
 
-    @include('app.settings.partials.api')
-
     @include('app.settings.partials.account-settings')
 
     @include('app.settings.partials.change-pw')

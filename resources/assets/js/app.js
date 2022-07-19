@@ -7,7 +7,6 @@ import BookmarkTimer from './components/BookmarkTimer';
 import TagsSelect from './components/TagsSelect';
 import SimpleSelect from './components/SimpleSelect';
 import ShareToggleAll from './components/ShareToggleAll';
-import GenerateApiToken from './components/GenerateApiToken';
 import GenerateCronToken from './components/GenerateCronToken';
 import UpdateCheck from './components/UpdateCheck';
 import Import from './components/Import';
@@ -21,7 +20,6 @@ function registerViews () {
   register('.tag-select', TagsSelect);
   register('.simple-select', SimpleSelect);
   register('.share-toggle', ShareToggleAll);
-  register('.api-token', GenerateApiToken);
   register('.cron-token', GenerateCronToken);
   register('.update-check', UpdateCheck);
   register('.import-form', Import);

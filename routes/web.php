@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\Admin\SystemSettingsController;
 use App\Http\Controllers\Admin\UserManagementController;
+use App\Http\Controllers\App\ApiTokenController;
 use App\Http\Controllers\App\AuditController;
 use App\Http\Controllers\App\BookmarkletController;
 use App\Http\Controllers\App\DashboardController;
@@ -125,8 +126,9 @@ Route::group(['middleware' => ['auth']], function () {
         ->name('save-settings-app');
     Route::post('settings/change-password', [UserSettingsController::class, 'changeUserPassword'])
         ->name('change-user-password');
-    Route::post('settings/generate-api-token', [UserSettingsController::class, 'generateApiToken'])
-        ->name('generate-api-token');
+
+    Route::resource('settings/api-tokens', ApiTokenController::class)
+        ->only(['index', 'store', 'destroy']);
 
     Route::post('fetch/tags', [FetchController::class, 'getTags'])
         ->name('fetch-tags');

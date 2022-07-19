@@ -33,17 +33,17 @@ class LinkPolicy
 
     public function delete(User $user, Link $link): bool
     {
-        return $this->userCanAccessLink($user, $link);
+        return $link->user->is($user);
     }
 
     public function restore(User $user, Link $link): bool
     {
-        return $this->userCanAccessLink($user, $link);
+        return $link->user->is($user);
     }
 
     public function forceDelete(User $user, Link $link): bool
     {
-        return $this->userCanAccessLink($user, $link);
+        return $link->user->is($user);
     }
 
     // Link must be either owned by user, or be not private
