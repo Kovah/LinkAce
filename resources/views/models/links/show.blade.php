@@ -120,7 +120,7 @@
                 <div class="card-body py-2">
                     @if(!$link->lists->isEmpty())
                         @foreach($link->lists as $list)
-                            <a href="{{ route('lists.show', ['list' => $list]) }}" class="btn btn-sm btn-light">
+                            <a href="{{ route('lists.show', ['list' => $list]) }}" class="btn btn-sm btn-light m-1">
                                 <x-models.name-with-user :model="$list"/>
                             </a>
                         @endforeach
@@ -138,7 +138,7 @@
                 <div class="card-body py-2">
                     @if(!$link->tags->isEmpty())
                         @foreach($link->tags as $tag)
-                            <a href="{{ route('tags.show', ['tag' => $tag]) }}" class="btn btn-sm btn-light">
+                            <a href="{{ route('tags.show', ['tag' => $tag]) }}" class="btn btn-sm btn-light m-1">
                                 <x-models.name-with-user :model="$tag"/>
                             </a>
                         @endforeach
