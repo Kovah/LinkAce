@@ -60,7 +60,8 @@
                     <div class="mb-4">
                         <label class="form-label" for="lists">@lang('list.lists')</label>
                         <input name="lists" id="lists" type="text" placeholder="@lang('placeholder.list_select')"
-                            class="tag-select" value="{{ old('lists', $bookmark_lists ?? null) }}"
+                            class="tag-select"
+                            data-value="{{ Link::oldTaxonomyOutputWithoutLink('lists', $bookmark_lists ?? []) }}"
                             data-allow-creation="1" data-tag-type="lists">
 
                         @if ($errors->has('lists'))
@@ -73,7 +74,8 @@
                     <div class="mb-4">
                         <label class="form-label" for="tags">@lang('tag.tags')</label>
                         <input name="tags" id="tags" type="text" placeholder="@lang('placeholder.tags_select')"
-                            class="tag-select" value="{{ old('tags', $bookmark_tags ?? null) }}"
+                            class="tag-select"
+                            data-value="{{ Link::oldTaxonomyOutputWithoutLink('tags', $bookmark_tags ?? []) }}"
                             data-allow-creation="1" data-tag-type="tags">
 
                         @if ($errors->has('tags'))

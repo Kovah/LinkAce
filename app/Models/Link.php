@@ -17,7 +17,6 @@ use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\Relations\MorphMany;
 use Illuminate\Database\Eloquent\SoftDeletes;
-use Illuminate\Support\Arr;
 use Illuminate\Support\Carbon;
 use Illuminate\Support\Str;
 use OwenIt\Auditing\Auditable as AuditableTrait;
@@ -53,6 +52,7 @@ class Link extends Model implements Auditable
 {
     use AuditableTrait;
     use HasFactory;
+    use ProvidesTaxonomyOutput;
     use ScopesForUser;
     use ScopesVisibility;
     use SoftDeletes;
@@ -196,15 +196,6 @@ class Link extends Model implements Auditable
     {
         $urlDetails = parse_url($this->url);
         return $urlDetails['host'] ?? $this->shortUrl(20);
-    }
-
-    public function taxonomyForInput(Collection $items): ?string
-    {
-        if ($items->isEmpty()) {
-            return null;
-        }
-
-        return $items->implode('name', ',');
     }
 
     public function getIcon(string $additionalClasses = ''): string

@@ -2,7 +2,6 @@
 
 namespace App\Http\Requests\Models;
 
-use App\Enums\ModelAttribute;
 use App\Rules\ModelVisibility;
 use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Validation\Rule;
@@ -48,7 +47,7 @@ class LinkStoreRequest extends FormRequest
             ],
             'visibility' => [
                 'sometimes',
-                new ModelVisibility()
+                new ModelVisibility(),
             ],
             'check_disabled' => [
                 'sometimes',

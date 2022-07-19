@@ -5,17 +5,12 @@ namespace App\Http\Controllers\App;
 use App\Http\Controllers\Controller;
 use App\Models\Link;
 use Illuminate\Contracts\View\View;
-use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
+use Illuminate\Support\Arr;
 
 class BookmarkletController extends Controller
 {
-    /**
-     * Show the link creation form based on the information provided by the Bookmarklet.
-     *
-     * @param Request $request
-     * @return RedirectResponse|View
-     */
+    // Show the link creation form based on the information provided by the Bookmarklet.
     public function getLinkAddForm(Request $request)
     {
         $newUrl = $request->input('u');
@@ -44,28 +39,34 @@ class BookmarkletController extends Controller
             'bookmark_url' => $newUrl,
             'bookmark_title' => $newTitle,
             'bookmark_description' => $newDescription,
-            'bookmark_tags' => $newTags,
-            'bookmark_lists' => $newLists,
+            'bookmark_tags' => $this->prepareTaxonomyEntries($newTags),
+            'bookmark_lists' => $this->prepareTaxonomyEntries($newLists),
         ]);
     }
 
-    /**
-     * Display the confirmation screen after adding a new link.
-     *
-     * @return View
-     */
+    // Display the confirmation screen after adding a new link.
     public function getCompleteView(): View
     {
         return view('app.bookmarklet.complete');
     }
 
-    /**
-     * Return a special version of the login form made for the Bookmarklet.
-     *
-     * @return View
-     */
+    // Return a special version of the login form made for the Bookmarklet.
     public function getLoginForm(): View
     {
         return view('app.bookmarklet.login');
+    }
+
+    protected function prepareTaxonomyEntries(?string $items): array
+    {
+        if ($items) {
+            $items = array_map(function ($item) {
+                return [
+                    'id' => $item,
+                    'name' => $item,
+                ];
+            }, explode(',', $items));
+        }
+
+        return Arr::wrap($items);
     }
 }

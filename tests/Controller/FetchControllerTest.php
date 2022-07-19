@@ -35,8 +35,8 @@ class FetchControllerTest extends TestCase
         $response
             ->assertOk()
             ->assertJson([
-                ['text' => 'test*Tag'],
-                ['text' => 'testTag'],
+                ['name' => 'test*Tag'],
+                ['name' => 'testTag'],
             ])
             ->assertJsonMissing(['text' => 'blablaTag']);
     }
@@ -54,8 +54,8 @@ class FetchControllerTest extends TestCase
         $response
             ->assertOk()
             ->assertJson([
-                ['text' => 'test*List'],
-                ['text' => 'testList'],
+                ['name' => 'test*List'],
+                ['name' => 'testList'],
             ])
             ->assertJsonMissing(['text' => 'blablaList']);
     }

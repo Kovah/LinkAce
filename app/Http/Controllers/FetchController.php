@@ -9,7 +9,6 @@ use App\Models\Tag;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
-use Illuminate\Support\Facades\Http;
 
 class FetchController extends Controller
 {
@@ -30,16 +29,9 @@ class FetchController extends Controller
         $tags = Tag::query()
             ->visibleForUser()
             ->where('name', 'like', '%' . escapeSearchQuery($query) . '%')
+            ->with('user:id,name')
             ->oldest('name')
             ->get();
-
-        if (!$tags->isEmpty()) {
-            // Properly format the results to be used by Selectize
-            $tags = $tags->map(fn(Tag $item) => [
-                'value' => $item->name,
-                'text' => $item->name,
-            ]);
-        }
 
         return response()->json($tags);
     }
@@ -61,16 +53,9 @@ class FetchController extends Controller
         $tags = LinkList::query()
             ->visibleForUser()
             ->where('name', 'like', '%' . escapeSearchQuery($query) . '%')
+            ->with('user:id,name')
             ->oldest('name')
             ->get();
-
-        if (!$tags->isEmpty()) {
-            // Properly format the results to be used by Selectize
-            $tags = $tags->map(fn(LinkList $item) => [
-                'value' => $item->name,
-                'text' => $item->name,
-            ]);
-        }
 
         return response()->json($tags);
     }

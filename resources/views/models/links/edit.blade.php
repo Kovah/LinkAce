@@ -65,10 +65,10 @@
                         <div class="mb-4">
                             <label class="form-label" for="lists">@lang('list.lists')</label>
                             <input name="lists" id="lists" type="text" placeholder="@lang('placeholder.list_select')"
-                                class="tag-select" data-value="{{ old('lists', $link->taxonomyForInput($link->lists)) }}"
+                                class="tag-select" data-value="{{ $link->oldTaxonomyOutput('lists') }}"
                                 data-allow-creation="true" data-tag-type="lists">
 
-                            @if ($errors->has('url'))
+                            @if ($errors->has('lists'))
                                 <p class="invalid-feedback" role="alert">
                                     {{ $errors->first('lists') }}
                                 </p>
@@ -78,10 +78,10 @@
                         <div class="mb-4">
                             <label class="form-label" for="tags">@lang('tag.tags')</label>
                             <input name="tags" id="tags" type="text" placeholder="@lang('placeholder.tags_select')"
-                                class="tag-select" data-value="{{ old('tags', $link->taxonomyForInput($link->tags)) }}"
+                                class="tag-select" data-value="{{ $link->oldTaxonomyOutput('tags') }}"
                                 data-allow-creation="true" data-tag-type="tags">
 
-                            @if ($errors->has('url'))
+                            @if ($errors->has('tags'))
                                 <p class="invalid-feedback" role="alert">
                                     {{ $errors->first('tags') }}
                                 </p>

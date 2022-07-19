@@ -17,6 +17,7 @@ export default class TagsSelect {
     this.$el = $el;
     this.type = this.$el.dataset.tagType;
     this.select = null;
+    const selectObject = this;
 
     this.$suggestions = $el.parentElement.querySelector('.tag-suggestions');
     this.$suggestionsContent = $el.parentElement.querySelector('.tag-suggestions-content');
@@ -26,16 +27,37 @@ export default class TagsSelect {
       delimiter: ',',
       persist: false,
       create: this.selectAllowsCreation(),
-      onItemAdd:function(){
+      valueField: 'id',
+      labelField: 'name',
+      searchField: 'name',
+      onItemAdd: function () {
         this.setTextboxValue('');
         this.refreshOptions();
       },
       load: (query, callback) => {
         this.handleTagLoading(query, callback);
+      },
+      render: {
+        option: function (item, escape) {
+          return selectObject.renderItem(item, escape);
+        },
+        item: function (item, escape) {
+          return selectObject.renderItem(item, escape);
+        }
       }
     };
 
+    if (typeof this.$el.dataset.value !== 'undefined' && this.$el.dataset.value !== '') {
+      this.config['options'] = JSON.parse(this.$el.dataset.value);
+      this.config['items'] = this.config['options'].map((item) => item.id);
+    }
+
     this.select = new TomSelect(this.$el, this.config);
+  }
+
+  renderItem (item, escape) {
+    const userInfo = typeof item.user !== 'undefined' ? `<span class="text-muted">${escape(item.user.name)}&sol;</span>` : '';
+    return `<div class="item">${userInfo}${escape(item.name)}</div>`;
   }
 
   selectAllowsCreation () {
