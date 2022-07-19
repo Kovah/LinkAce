@@ -24,17 +24,7 @@ class CreateNewUser implements CreatesNewUsers
      */
     public function create(array $input): User
     {
-        Validator::make($input, [
-            'name' => ['required', 'string', 'max:255', 'alpha_dash', 'unique:users'],
-            'email' => [
-                'required',
-                'string',
-                'email',
-                'max:255',
-                Rule::unique(User::class),
-            ],
-            'password' => $this->passwordRules(),
-        ])->validate();
+        Validator::make($input, self::rules())->validate();
 
         $user = User::create([
             'name' => $input['name'],
@@ -46,5 +36,26 @@ class CreateNewUser implements CreatesNewUsers
         (new SetDefaultSettingsForUser($user))->up();
 
         return $user;
+    }
+
+    public static function rules(): array
+    {
+        return [
+            'name' => [
+                'required',
+                'string',
+                'max:20',
+                'alpha_dash',
+                Rule::unique(User::class),
+            ],
+            'email' => [
+                'required',
+                'string',
+                'email',
+                'max:255',
+                Rule::unique(User::class),
+            ],
+            'password' => self::passwordRules(),
+        ];
     }
 }

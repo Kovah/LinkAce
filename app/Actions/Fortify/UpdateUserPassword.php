@@ -22,7 +22,7 @@ class UpdateUserPassword implements UpdatesUserPasswords
     {
         Validator::make($input, [
             'current_password' => ['required', 'string'],
-            'password' => $this->passwordRules(),
+            'password' => self::passwordRules(),
         ])->after(function ($validator) use ($user, $input) {
             if (!Hash::check($input['current_password'], $user->password)) {
                 $validator->errors()->add('current_password', trans('settings.old_password_invalid'));

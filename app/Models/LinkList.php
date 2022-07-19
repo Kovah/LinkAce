@@ -113,46 +113,16 @@ class LinkList extends Model implements Auditable
      * METHODS
      */
 
-    /**
-     * Get the formatted description of the list
-     *
-     * @return string
-     */
     public function getFormattedDescriptionAttribute(): string
     {
         if ($this->description === null) {
             return '';
         }
 
-        if (usersettings('markdown_for_text') !== '1') {
+        if (usersettings('markdown_for_text') === false) {
             return htmlentities($this->description);
         }
 
         return Str::markdown($this->description, ['html_input' => 'escape']);
-    }
-
-    /**
-     * Get a collection of all lists for the current user, ordered by name
-     *
-     * @return Builder[]|Collection
-     */
-    public static function getAllForCurrentUser(): Collection|array
-    {
-        return self::byUser(auth()->id())
-            ->oldest('name')
-            ->get();
-    }
-
-    /**
-     * Check if the list name has changed
-     *
-     * @param int|string $listId
-     * @param string     $newName
-     * @return bool
-     */
-    public static function nameHasChanged(int|string $listId, string $newName): bool
-    {
-        $oldName = self::find($listId)->name ?? null;
-        return $oldName !== $newName;
     }
 }

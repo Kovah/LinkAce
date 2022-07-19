@@ -17,6 +17,7 @@ use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\Relations\MorphMany;
 use Illuminate\Database\Eloquent\SoftDeletes;
+use Illuminate\Support\Arr;
 use Illuminate\Support\Carbon;
 use Illuminate\Support\Str;
 use OwenIt\Auditing\Auditable as AuditableTrait;
@@ -160,7 +161,7 @@ class Link extends Model implements Auditable
             return '';
         }
 
-        if (usersettings('markdown_for_text') !== '1') {
+        if (usersettings('markdown_for_text') === false) {
             return htmlentities($this->description);
         }
 
@@ -197,26 +198,13 @@ class Link extends Model implements Auditable
         return $urlDetails['host'] ?? $this->shortUrl(20);
     }
 
-    public function tagsForInput(): ?string
+    public function taxonomyForInput(Collection $items): ?string
     {
-        $tags = $this->tags;
-
-        if ($tags->isEmpty()) {
+        if ($items->isEmpty()) {
             return null;
         }
 
-        return $tags->implode('name', ',');
-    }
-
-    public function listsForInput(): ?string
-    {
-        $lists = $this->lists;
-
-        if ($lists->isEmpty()) {
-            return null;
-        }
-
-        return $lists->implode('name', ',');
+        return $items->implode('name', ',');
     }
 
     public function getIcon(string $additionalClasses = ''): string

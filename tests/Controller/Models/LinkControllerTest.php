@@ -19,6 +19,8 @@ class LinkControllerTest extends TestCase
     use RefreshDatabase;
     use PreparesTestData;
 
+    private $basicTestHtml;
+
     protected function setUp(): void
     {
         parent::setUp();
@@ -26,13 +28,14 @@ class LinkControllerTest extends TestCase
         $user = User::factory()->create();
         $this->actingAs($user);
 
-        $testHtml = '<!DOCTYPE html><head>' .
+        $this->basicTestHtml = '<!DOCTYPE html><head>' .
             '<title>Example Title</title>' .
             '<meta name="description" content="This an example description">' .
             '</head></html>';
 
+        Http::preventStrayRequests();
         Http::fake([
-            '*' => Http::response($testHtml),
+            'example.com' => Http::response($this->basicTestHtml),
         ]);
 
         Queue::fake();
@@ -111,21 +114,21 @@ class LinkControllerTest extends TestCase
 
     public function testStoreRequestWithExistingPrivateLink(): void
     {
-        Link::factory()->create(['url' => 'https://existing-private-link.com', 'user_id' => 2, 'visibility' => 3]);
+        Link::factory()->create(['url' => 'https://example.com', 'user_id' => 2, 'visibility' => 3]);
 
         $this->post('links', [
-            'url' => 'https://existing-private-link.com',
+            'url' => 'https://example.com',
             'visibility' => 1,
         ])->assertRedirect('links/2');
 
         $this->assertDatabaseHas('links', [
-            'url' => 'https://existing-private-link.com',
+            'url' => 'https://example.com',
             'user_id' => 2,
             'visibility' => 3,
         ]);
 
         $this->assertDatabaseHas('links', [
-            'url' => 'https://existing-private-link.com',
+            'url' => 'https://example.com',
             'user_id' => 1,
             'visibility' => 1,
         ]);

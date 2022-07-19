@@ -65,7 +65,7 @@
                         <div class="mb-4">
                             <label class="form-label" for="lists">@lang('list.lists')</label>
                             <input name="lists" id="lists" type="text" placeholder="@lang('placeholder.list_select')"
-                                class="tag-select" value="{{ old('lists', $link->listsForInput()) }}"
+                                class="tag-select" data-value="{{ old('lists', $link->taxonomyForInput($link->lists)) }}"
                                 data-allow-creation="true" data-tag-type="lists">
 
                             @if ($errors->has('url'))
@@ -78,7 +78,7 @@
                         <div class="mb-4">
                             <label class="form-label" for="tags">@lang('tag.tags')</label>
                             <input name="tags" id="tags" type="text" placeholder="@lang('placeholder.tags_select')"
-                                class="tag-select" value="{{ old('tags', $link->tagsForInput()) }}"
+                                class="tag-select" data-value="{{ old('tags', $link->taxonomyForInput($link->tags)) }}"
                                 data-allow-creation="true" data-tag-type="tags">
 
                             @if ($errors->has('url'))

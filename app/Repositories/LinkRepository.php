@@ -135,9 +135,7 @@ class LinkRepository
     {
         $oldTags = $link->tags->pluck('id');
 
-        if (!is_array($tags)) {
-            $tags = explode(',', $tags);
-        }
+        $tags = is_array($tags) ? $tags : explode(',', $tags);
 
         $newTags = self::processTaxonomy(Tag::class, $tags);
 
@@ -163,9 +161,7 @@ class LinkRepository
     {
         $oldLists = $link->lists->pluck('id');
 
-        if (!is_array($lists)) {
-            $lists = explode(',', $lists);
-        }
+        $lists = is_array($lists) ? $lists : explode(',', $lists);
 
         $newLists = self::processTaxonomy(LinkList::class, $lists);
 
@@ -199,8 +195,8 @@ class LinkRepository
         $newEntries = collect();
 
         foreach ($entries as $entry) {
-            if (is_int($entry)) {
-                $newEntry = Tag::find($entry);
+            if ((int)$entry > 0) {
+                $newEntry = $model::find($entry);
             } else {
                 $newEntry = $model::firstOrCreate([
                     'user_id' => auth()->id(),

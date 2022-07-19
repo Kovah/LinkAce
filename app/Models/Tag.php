@@ -96,22 +96,4 @@ class Tag extends Model implements Auditable
     {
         return $this->belongsToMany(Link::class, 'link_tags', 'tag_id', 'link_id');
     }
-
-    /*
-     * ========================================================================
-     * METHODS
-     */
-
-    /**
-     * Check if the tag name has changed
-     *
-     * @param int|string $tagId
-     * @param string     $newName
-     * @return bool
-     */
-    public static function nameHasChanged(int|string $tagId, string $newName): bool
-    {
-        $oldName = self::find($tagId)->name ?? null;
-        return $oldName !== $newName;
-    }
 }
