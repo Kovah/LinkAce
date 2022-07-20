@@ -286,10 +286,10 @@ class LinkApiTest extends ApiTestCase
         $this->assertEquals(3, Link::count());
 
         $this->deleteJsonAuthorized('api/v1/links/1')->assertOk();
-        $this->deleteJsonAuthorized('api/v1/links/2')->assertOk();
+        $this->deleteJsonAuthorized('api/v1/links/2')->assertForbidden();
         $this->deleteJsonAuthorized('api/v1/links/3')->assertForbidden();
 
-        $this->assertEquals(1, Link::count());
+        $this->assertEquals(2, Link::count());
     }
 
     public function testDeleteRequestNotFound(): void

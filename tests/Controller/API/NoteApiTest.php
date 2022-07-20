@@ -119,10 +119,10 @@ class NoteApiTest extends ApiTestCase
         $this->assertEquals(3, Note::count());
 
         $this->deleteJsonAuthorized('api/v1/notes/1')->assertOk();
-        $this->deleteJsonAuthorized('api/v1/notes/2')->assertOk();
+        $this->deleteJsonAuthorized('api/v1/notes/2')->assertForbidden();
         $this->deleteJsonAuthorized('api/v1/notes/3')->assertForbidden();
 
-        $this->assertEquals(1, Note::count());
+        $this->assertEquals(2, Note::count());
     }
 
     public function testDeleteRequestNotFound(): void

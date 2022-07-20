@@ -378,7 +378,7 @@ class LinkControllerTest extends TestCase
         $databaseLink = Link::withTrashed()->first();
         $this->assertNotNull($databaseLink->deleted_at);
 
-        $this->delete('links/2')->assertRedirect();
+        $this->delete('links/2')->assertForbidden();
         $this->delete('links/3')->assertForbidden();
     }
 

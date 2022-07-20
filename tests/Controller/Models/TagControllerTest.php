@@ -225,10 +225,10 @@ class TagControllerTest extends TestCase
         $this->assertEquals(3, Tag::count());
 
         $this->delete('tags/1')->assertRedirect();
-        $this->delete('tags/2')->assertRedirect();
+        $this->delete('tags/2')->assertForbidden();
         $this->delete('tags/3')->assertForbidden();
 
-        $this->assertEquals(1, Tag::count());
+        $this->assertEquals(2, Tag::count());
     }
 
     public function testMissingModelErrorForDelete(): void

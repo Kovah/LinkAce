@@ -2,6 +2,7 @@
 
 namespace Tests\Controller\App;
 
+use App\Enums\ApiToken;
 use App\Models\Link;
 use App\Models\LinkList;
 use App\Models\Tag;
@@ -36,8 +37,7 @@ class FeedControllerTest extends TestCase
 
         $response = $this->getAuthorized('links/feed');
 
-        $response->assertOk()
-            ->assertSee($link->url);
+        $response->assertOk()->assertSee($link->url);
     }
 
     public function testListsFeed(): void
@@ -46,8 +46,7 @@ class FeedControllerTest extends TestCase
 
         $response = $this->getAuthorized('lists/feed');
 
-        $response->assertOk()
-            ->assertSee($list->name);
+        $response->assertOk()->assertSee($list->name);
     }
 
     public function testListLinkFeed(): void
@@ -72,8 +71,7 @@ class FeedControllerTest extends TestCase
 
         $response = $this->getAuthorized('tags/feed');
 
-        $response->assertOk()
-            ->assertSee($tag->name);
+        $response->assertOk()->assertSee($tag->name);
     }
 
     public function testTagLinkFeed(): void
@@ -101,7 +99,8 @@ class FeedControllerTest extends TestCase
      */
     public function getAuthorized(string $uri, array $headers = []): TestResponse
     {
-        $headers['Authorization'] = 'Bearer ' . $this->user->api_token;
+        $token = $this->user->createToken('test', [ApiToken::ABILITY_USER_ACCESS])->plainTextToken;
+        $headers['Authorization'] = 'Bearer ' . $token;
         return $this->get($uri, $headers);
     }
 }

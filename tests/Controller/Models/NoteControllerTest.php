@@ -188,10 +188,10 @@ class NoteControllerTest extends TestCase
         $this->assertEquals(3, Note::count());
 
         $this->deleteJson('notes/1')->assertRedirect('links/1');
-        $this->deleteJson('notes/2')->assertRedirect('links/1');
+        $this->deleteJson('notes/2')->assertForbidden();
         $this->deleteJson('notes/3')->assertForbidden();
 
-        $this->assertEquals(1, Note::count());
+        $this->assertEquals(2, Note::count());
     }
 
     public function testMissingModelErrorForDelete(): void

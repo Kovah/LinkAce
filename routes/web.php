@@ -68,7 +68,7 @@ Route::get('auth/accept-invite', [RegistrationController::class, 'acceptInvitati
 Route::post('auth/register', [RegistrationController::class, 'register'])
     ->name('auth.register');
 
-Route::group(['middleware' => 'auth:api'], function () {
+Route::group(['middleware' => 'auth:sanctum'], function () {
     Route::get('links/feed', [FeedController::class, 'links'])->name('links.feed');
     Route::get('lists/feed', [FeedController::class, 'lists'])->name('lists.feed');
     Route::get('lists/{list}/feed', [FeedController::class, 'listLinks'])->name('lists.links.feed');

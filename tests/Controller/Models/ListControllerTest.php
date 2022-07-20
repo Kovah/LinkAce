@@ -230,10 +230,10 @@ class ListControllerTest extends TestCase
         $this->assertEquals(3, LinkList::count());
 
         $this->deleteJson('lists/1')->assertRedirect();
-        $this->deleteJson('lists/2')->assertRedirect();
+        $this->deleteJson('lists/2')->assertForbidden();
         $this->deleteJson('lists/3')->assertForbidden();
 
-        $this->assertEquals(1, LinkList::count());
+        $this->assertEquals(2, LinkList::count());
     }
 
     public function testMissingModelErrorForDelete(): void

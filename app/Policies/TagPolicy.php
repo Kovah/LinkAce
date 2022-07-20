@@ -33,17 +33,17 @@ class TagPolicy
 
     public function delete(User $user, Tag $tag): bool
     {
-        return $this->userCanAccessTag($user, $tag);
+        return $tag->user->is($user);
     }
 
     public function restore(User $user, Tag $tag): bool
     {
-        return $this->userCanAccessTag($user, $tag);
+        return $tag->user->is($user);
     }
 
     public function forceDelete(User $user, Tag $tag): bool
     {
-        return $this->userCanAccessTag($user, $tag);
+        return $tag->user->is($user);
     }
 
     // Link must be either owned by user, or be not private

@@ -33,17 +33,17 @@ class NotePolicy
 
     public function delete(User $user, Note $note): bool
     {
-        return $this->userCanAccessNote($user, $note);
+        return $note->user->is($user);
     }
 
     public function restore(User $user, Note $note): bool
     {
-        return $this->userCanAccessNote($user, $note);
+        return $note->user->is($user);
     }
 
     public function forceDelete(User $user, Note $note): bool
     {
-        return $this->userCanAccessNote($user, $note);
+        return $note->user->is($user);
     }
 
     // Link must be either owned by user, or be not private

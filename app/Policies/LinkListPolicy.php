@@ -33,17 +33,17 @@ class LinkListPolicy
 
     public function delete(User $user, LinkList $list): bool
     {
-        return $this->userCanAccessList($user, $list);
+        return $list->user->is($user);
     }
 
     public function restore(User $user, LinkList $list): bool
     {
-        return $this->userCanAccessList($user, $list);
+        return $list->user->is($user);
     }
 
     public function forceDelete(User $user, LinkList $list): bool
     {
-        return $this->userCanAccessList($user, $list);
+        return $list->user->is($user);
     }
 
     // Link must be either owned by user, or be not private

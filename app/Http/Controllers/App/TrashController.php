@@ -22,21 +22,10 @@ class TrashController extends Controller
      */
     public function index(): View
     {
-        $links = Link::onlyTrashed()
-            ->byUser()
-            ->get();
-
-        $lists = LinkList::onlyTrashed()
-            ->byUser()
-            ->get();
-
-        $tags = Tag::onlyTrashed()
-            ->byUser()
-            ->get();
-
-        $notes = Note::onlyTrashed()
-            ->byUser()
-            ->get();
+        $links = Link::onlyTrashed()->byUser()->get();
+        $lists = LinkList::onlyTrashed()->byUser()->get();
+        $tags = Tag::onlyTrashed()->byUser()->get();
+        $notes = Note::onlyTrashed()->byUser()->get();
 
         return view('app.trash.index', [
             'links' => $links,

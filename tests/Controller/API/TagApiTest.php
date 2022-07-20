@@ -166,10 +166,10 @@ class TagApiTest extends ApiTestCase
         $this->assertEquals(3, Tag::count());
 
         $this->deleteJsonAuthorized('api/v1/tags/1')->assertOk();
-        $this->deleteJsonAuthorized('api/v1/tags/2')->assertOk();
+        $this->deleteJsonAuthorized('api/v1/tags/2')->assertForbidden();
         $this->deleteJsonAuthorized('api/v1/tags/3')->assertForbidden();
 
-        $this->assertEquals(1, Tag::count());
+        $this->assertEquals(2, Tag::count());
     }
 
     public function testDeleteRequestNotFound(): void

@@ -22,24 +22,16 @@ class TrashRepository
 
         switch ($model) {
             case 'links':
-                $entries = Link::onlyTrashed()
-                    ->byUser()
-                    ->get();
+                $entries = Link::onlyTrashed()->byUser()->get();
                 break;
             case 'lists':
-                $entries = LinkList::onlyTrashed()
-                    ->byUser()
-                    ->get();
+                $entries = LinkList::onlyTrashed()->byUser()->get();
                 break;
             case 'tags':
-                $entries = Tag::onlyTrashed()
-                    ->byUser()
-                    ->get();
+                $entries = Tag::onlyTrashed()->byUser()->get();
                 break;
             case 'notes':
-                $entries = Note::onlyTrashed()
-                    ->byUser()
-                    ->get();
+                $entries = Note::onlyTrashed()->byUser()->get();
                 break;
         }
 
@@ -60,10 +52,10 @@ class TrashRepository
     public static function restore(string $model, int $id): bool
     {
         $entry = match ($model) {
-            'link' => Link::withTrashed()->findOrFail($id),
-            'list' => LinkList::withTrashed()->findOrFail($id),
-            'tag' => Tag::withTrashed()->findOrFail($id),
-            'note' => Note::withTrashed()->findOrFail($id),
+            'link' => Link::withTrashed()->byUser()->findOrFail($id),
+            'list' => LinkList::withTrashed()->byUser()->findOrFail($id),
+            'tag' => Tag::withTrashed()->byUser()->findOrFail($id),
+            'note' => Note::withTrashed()->byUser()->findOrFail($id),
             default => null,
         };
 
