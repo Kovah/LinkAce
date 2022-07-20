@@ -153,12 +153,6 @@ class CheckLinksCommand extends Command
         }
     }
 
-    /**
-     * Set the Link status to either moved or broken depending on the given
-     * status code.
-     *
-     * @param Link $link
-     */
     protected function processMovedLink(Link $link): void
     {
         $link->status = Link::STATUS_MOVED;
@@ -168,12 +162,6 @@ class CheckLinksCommand extends Command
         $this->movedLinks[] = $link;
     }
 
-    /**
-     * Set the Link status to either moved or broken depending on the given
-     * status code.
-     *
-     * @param Link $link
-     */
     protected function processBrokenLink(Link $link): void
     {
         $link->status = Link::STATUS_BROKEN;
@@ -183,13 +171,9 @@ class CheckLinksCommand extends Command
         $this->brokenLinks[] = $link;
     }
 
-    /**
-     * If the Link has not the "ok" status, set it to ok.
-     *
-     * @param Link $link
-     */
     protected function processWorkingLink(Link $link): void
     {
+        // If the Link has not the "ok" status yet, set it to ok
         if ($link->status !== Link::STATUS_OK) {
             $link->status = Link::STATUS_OK;
             $link->save();
@@ -198,9 +182,6 @@ class CheckLinksCommand extends Command
         $this->info('› Link looks okay.');
     }
 
-    /**
-     * Send notification to the main user if not running from the console.
-     */
     protected function sendNotification(): void
     {
         if (empty($this->movedLinks) && empty($this->brokenLinks)) {
@@ -208,6 +189,7 @@ class CheckLinksCommand extends Command
             return;
         }
 
+        // @TODO The user should be defined elsewhere, maybe in the config
         Notification::send(
             User::find(1),
             new LinkCheckNotification($this->movedLinks, $this->brokenLinks)

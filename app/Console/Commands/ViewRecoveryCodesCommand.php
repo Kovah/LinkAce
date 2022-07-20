@@ -9,7 +9,6 @@ class ViewRecoveryCodesCommand extends Command
     use AsksForUser;
 
     protected $signature = '2fa:view-recovery-codes';
-
     protected $description = 'View the recovery codes for a user, in case the user has no access to LinkAce anymore.';
 
     public function handle(): void

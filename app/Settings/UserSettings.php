@@ -61,6 +61,7 @@ class UserSettings extends Settings
         self::$user_id = $user_id;
     }
 
+    // By default, settings are scoped to the currently authenticated user
     protected static function getUserId(): int
     {
         return self::$user_id ?: auth()->id();

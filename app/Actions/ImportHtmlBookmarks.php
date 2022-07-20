@@ -15,14 +15,6 @@ class ImportHtmlBookmarks
     protected int $imported = 0;
     protected int $skipped = 0;
 
-    /**
-     * Import all links from a given bookmarks file.
-     *
-     * @param string $data
-     * @param string $userId
-     * @param bool   $generateMeta
-     * @return bool
-     */
     public function run(string $data, string $userId, bool $generateMeta = true): bool
     {
         $parser = new NetscapeBookmarkParser(logDir: storage_path('logs'));
@@ -31,12 +23,6 @@ class ImportHtmlBookmarks
             $links = $parser->parseString($data);
         } catch (\Exception $e) {
             Log::error($e->getMessage());
-            return false;
-        }
-
-        if (empty($links)) {
-            // This will never be reached at the moment because the bookmark parser is not capable of handling
-            // empty bookmarks exports. See https://github.com/shaarli/netscape-bookmark-parser/issues/50
             return false;
         }
 
@@ -60,7 +46,7 @@ class ImportHtmlBookmarks
                 'url' => $link['uri'],
                 'title' => $title,
                 'description' => $description,
-                'icon' => LinkIconMapper::mapLink($link['uri']),
+                'icon' => LinkIconMapper::getIconForUrl($link['uri']),
                 'is_private' => $link['pub']
             ]);
             $newLink->created_at = Carbon::createFromTimestamp($link['time']);

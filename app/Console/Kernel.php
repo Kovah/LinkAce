@@ -3,34 +3,25 @@
 namespace App\Console;
 
 use App\Console\Commands\CheckLinksCommand;
-use App\Console\Commands\CleanupLinkHistoriesCommand;
 use App\Console\Commands\ImportCommand;
 use App\Console\Commands\RegisterUserCommand;
 use App\Console\Commands\ResetPasswordCommand;
 use App\Console\Commands\UpdateLinkThumbnails;
+use App\Console\Commands\ViewRecoveryCodesCommand;
 use Illuminate\Console\Scheduling\Schedule;
 use Illuminate\Foundation\Console\Kernel as ConsoleKernel;
 
 class Kernel extends ConsoleKernel
 {
-    /**
-     * The Artisan commands provided by your application.
-     *
-     * @var array
-     */
     protected $commands = [
-        RegisterUserCommand::class,
         CheckLinksCommand::class,
-        ResetPasswordCommand::class,
         ImportCommand::class,
+        RegisterUserCommand::class,
+        ResetPasswordCommand::class,
         UpdateLinkThumbnails::class,
+        ViewRecoveryCodesCommand::class,
     ];
 
-    /**
-     * Define the application's command schedule.
-     *
-     * @param Schedule $schedule
-     */
     protected function schedule(Schedule $schedule): void
     {
         $schedule->command('links:check')->hourly();
@@ -44,9 +35,6 @@ class Kernel extends ConsoleKernel
         }
     }
 
-    /**
-     * Register the commands for the application.
-     */
     protected function commands(): void
     {
         $this->load(__DIR__ . '/Commands');

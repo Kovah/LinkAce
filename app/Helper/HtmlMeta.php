@@ -3,7 +3,6 @@
 namespace App\Helper;
 
 use Illuminate\Support\Facades\Log;
-use JetBrains\PhpStorm\ArrayShape;
 use Kovah\HtmlMeta\Exceptions\InvalidUrlException;
 use Kovah\HtmlMeta\Exceptions\UnreachableUrlException;
 
@@ -52,11 +51,7 @@ class HtmlMeta
         return $this->buildLinkMeta();
     }
 
-    /**
-     * Build a response array containing the link meta including a success flag.
-     *
-     * @return array
-     */
+    // Build a response array containing the link meta including a success flag.
     protected function buildLinkMeta(): array
     {
         $this->meta['description'] ??= $this->meta['og:description']
@@ -71,9 +66,7 @@ class HtmlMeta
         ];
     }
 
-    /**
-     * The fallback is used in case of errors while trying to get the link meta.
-     */
+    // The fallback is used in case of errors while trying to get the link meta.
     protected function buildFallback(): void
     {
         $this->fallback = [
@@ -85,8 +78,8 @@ class HtmlMeta
     }
 
     /**
-     * Try to get the thumbnail from the meta tags and handle specific cases where we know how to get a proper image
-     * from the website.
+     * Try to get the thumbnail from the meta tags and handle specific cases
+     * where we know how to get a proper image from the website.
      *
      * @return string|null
      */

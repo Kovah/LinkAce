@@ -10,7 +10,6 @@ class ResetPasswordCommand extends Command
     use AsksForUser;
 
     protected $signature = 'reset-password';
-
     protected $description = 'Reset the password for a given user without the need of configuring email sending.';
 
     public function handle(): void

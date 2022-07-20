@@ -104,30 +104,4 @@ class HelperFunctionsTest extends TestCase
 
         $this->assertEquals('100', $limit);
     }
-
-    /**
-     * Test the saveToArchive() helper function with a valid URL.
-     * Should return true.
-     */
-    public function testValidWaybackLink(): void
-    {
-        $expected = 'https://web.archive.org/web/*/' . $this->link->url;
-
-        $link = waybackLink($this->link);
-
-        $this->assertEquals($expected, $link);
-    }
-
-    /**
-     * Test the saveToArchive() helper function with an invalid URL.
-     * Will return false.
-     */
-    public function testInvalidWaybackLink(): void
-    {
-        $url = 'not an URL';
-
-        $link = waybackLink($url);
-
-        $this->assertNull($link);
-    }
 }

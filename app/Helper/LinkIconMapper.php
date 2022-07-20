@@ -90,13 +90,7 @@ class LinkIconMapper
         'youtube\.com' => 'brand.youtube',
     ];
 
-    /**
-     * Check if the given url matches an icon
-     *
-     * @param string $url
-     * @return string
-     */
-    public static function mapLink(string $url): string
+    public static function getIconForUrl(string $url): string
     {
         foreach (self::$iconMap as $pattern => $icon) {
             if (preg_match('/' . $pattern . '/i', $url)) {

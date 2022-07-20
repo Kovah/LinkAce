@@ -15,9 +15,9 @@ use Illuminate\Support\Facades\Log;
 /**
  * Check if the setup was completed.
  *
- * @return bool
+ * @return bool|null
  */
-function setupCompleted()
+function setupCompleted(): ?bool
 {
     try {
         return systemsettings('setup_completed');
@@ -28,7 +28,7 @@ function setupCompleted()
 }
 
 /**
- * Shorthand for the current user settings
+ * Shorthand for the current user settings.
  *
  * @param string   $key
  * @param int|null $userId
@@ -52,12 +52,12 @@ function usersettings(string $key = '', ?int $userId = null): mixed
 }
 
 /**
- * Retrieve system settings
+ * Retrieve guest settings.
  *
  * @param string $key
  * @return mixed
  */
-function guestsettings(string $key = '')
+function guestsettings(string $key = ''): mixed
 {
     if ($key === '') {
         return app(GuestSettings::class)->toArray();
@@ -67,12 +67,12 @@ function guestsettings(string $key = '')
 }
 
 /**
- * Retrieve system settings
+ * Retrieve system settings.
  *
  * @param string $key
  * @return mixed
  */
-function systemsettings(string $key = '')
+function systemsettings(string $key = ''): mixed
 {
     if ($key === '') {
         return app(SystemSettings::class)->toArray();
@@ -82,7 +82,7 @@ function systemsettings(string $key = '')
 }
 
 /**
- * Output a correctly formatted date with the correct timezone
+ * Output a correctly formatted date with the correct timezone.
  *
  * @param CarbonInterface $date
  * @param bool            $use_relational
@@ -110,7 +110,7 @@ function formatDateTime(CarbonInterface $date, bool $use_relational = false): st
 }
 
 /**
- * Get the correct pagination limit
+ * Get the correct pagination limit.
  *
  * @return mixed
  */
@@ -130,7 +130,7 @@ function getPaginationLimit(): mixed
 }
 
 /**
- * Generate all share links for a link, but for enabled services only
+ * Generate all share links for a link, but for enabled services only.
  *
  * @param Link $link
  * @return string
@@ -159,7 +159,14 @@ function getShareLinks(Link $link): string
 }
 
 /**
- * Build sorting links for a table column
+ * Build sorting links for a table column.
+ *
+ * @param string $label
+ * @param string $route
+ * @param string $type
+ * @param string $orderBy
+ * @param string $orderDir
+ * @return string
  */
 function tableSorter(string $label, string $route, string $type, string $orderBy, string $orderDir): string
 {
@@ -186,20 +193,8 @@ function tableSorter(string $label, string $route, string $type, string $orderBy
 }
 
 /**
- * Get the Wayback Machine link for a URL
- *
- * @param string|Link $link
- * @return null|string
- */
-function waybackLink(string|Link $link): ?string
-{
-    $link = $link->url ?? $link;
-
-    return WaybackMachine::getArchiveLink($link);
-}
-
-/**
- * Return proper link attributes based on the links_new_tab user setting
+ * Return proper link target attributes based on the links_new_tab user setting.
+ * noopener and noreferrer are added for security reasons.
  *
  * @return string
  */
@@ -230,7 +225,7 @@ function escapeSearchQuery(string $query): string
 }
 
 /**
- * Set up an HTTP request with a random user agent
+ * Set up an HTTP request with a random user agent.
  *
  * @param int $timeout
  * @return PendingRequest

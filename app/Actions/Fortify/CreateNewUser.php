@@ -15,13 +15,6 @@ class CreateNewUser implements CreatesNewUsers
 {
     use PasswordValidationRules;
 
-    /**
-     * Validate and create a newly registered user.
-     *
-     * @param array $input
-     * @return User
-     * @throws ValidationException
-     */
     public function create(array $input): User
     {
         Validator::make($input, self::rules())->validate();
@@ -30,7 +23,6 @@ class CreateNewUser implements CreatesNewUsers
             'name' => $input['name'],
             'email' => $input['email'],
             'password' => Hash::make($input['password']),
-            'api_token' => Str::random(32),
         ]);
 
         (new SetDefaultSettingsForUser($user))->up();

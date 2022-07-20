@@ -17,11 +17,6 @@ class Sharing
         '#E-SHARETEXT#',
     ];
 
-    /**
-     * @param string $service
-     * @param Link   $link
-     * @return string
-     */
     public static function getShareLink(string $service, Link $link): string
     {
         $serviceDetails = config('sharing.services.' . $service);
@@ -39,12 +34,6 @@ class Sharing
         ]);
     }
 
-    /**
-     * Prepare all needed raw or encoded values for the share link
-     *
-     * @param Link $link
-     * @return array
-     */
     protected static function generateLinkData(Link $link): array
     {
         $subject = $link->title ?: trans(config('sharing.defaults.subject'));
@@ -54,21 +43,16 @@ class Sharing
 
         return [
             $link->url, // URL
-            self::encode($link->url), // endoced URL
+            self::encode($link->url), // encoded URL
             $subject, // subject
             self::encode($subject), // encoded subject
-            $shareText, // sharetext
-            self::encode($shareText), // encoded sharetext
+            $shareText, // share text
+            self::encode($shareText), // encoded share text
         ];
     }
 
-    /**
-     * Encode a string with the basic rawurlencode function
-     * "Hello this is text!" becomes Hello%20this%20is%20text%21%
-     *
-     * @param string $string
-     * @return string
-     */
+    // Encode a string with the basic rawurlencode function
+    // "Hello this is text!" becomes Hello%20this%20is%20text%21%
     protected static function encode(string $string): string
     {
         return rawurlencode($string);

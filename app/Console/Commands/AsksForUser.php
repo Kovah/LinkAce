@@ -6,7 +6,7 @@ use App\Models\User;
 
 trait AsksForUser
 {
-    protected User|null $user;
+    protected ?User $user;
 
     protected function askForUser(): void
     {

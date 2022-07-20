@@ -72,7 +72,8 @@
             </form>
 
             <div class="mb-3">
-                <a href="{{ waybackLink($link) }}" class="btn btn-sm w-100 btn-outline-info" target="_blank">
+                <a href="{{ \App\Helper\WaybackMachine::getArchiveLink($link->url) }}"
+                    class="btn btn-sm w-100 btn-outline-info" target="_blank">
                     @lang('link.wayback')
                 </a>
             </div>

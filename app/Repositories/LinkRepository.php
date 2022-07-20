@@ -32,7 +32,7 @@ class LinkRepository
         $data['title'] ??= $linkMeta['title'];
         $data['description'] ??= $linkMeta['description'];
         $data['user_id'] = auth()->user()->id;
-        $data['icon'] = LinkIconMapper::mapLink($data['url']);
+        $data['icon'] = LinkIconMapper::getIconForUrl($data['url']);
         $data['thumbnail'] = $linkMeta['thumbnail'];
 
         // If the meta helper was not successful, disable future checks and set the status to broken
@@ -59,7 +59,7 @@ class LinkRepository
      */
     public static function update(Link $link, array $data): Link
     {
-        $data['icon'] = LinkIconMapper::mapLink($data['url'] ?? $link->url);
+        $data['icon'] = LinkIconMapper::getIconForUrl($data['url'] ?? $link->url);
 
         $link->update($data);
 

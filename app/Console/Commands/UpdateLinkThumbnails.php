@@ -9,7 +9,6 @@ use Illuminate\Console\Command;
 class UpdateLinkThumbnails extends Command
 {
     protected $signature = 'links:update-thumbnails';
-
     protected $description = 'Updates the thumbnails for all existing links, done in batches.';
 
     public function handle(): void
