@@ -22,7 +22,6 @@ use Spatie\Permission\Traits\HasRoles;
  * @property string      $email
  * @property string      $password
  * @property string|null $remember_token
- * @property string|null $api_token
  * @property string|null $two_factor_recovery_codes
  * @property string|null $two_factor_secret
  * @property Carbon|null $created_at
@@ -42,14 +41,12 @@ class User extends Authenticatable implements Auditable
         'name',
         'email',
         'password',
-        'api_token',
         'blocked_at',
     ];
 
     protected $hidden = [
         'password',
         'remember_token',
-        'api_token',
     ];
 
     protected $casts = [

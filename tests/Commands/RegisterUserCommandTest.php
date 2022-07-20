@@ -3,7 +3,6 @@
 namespace Tests\Commands;
 
 use App\Models\User;
-use App\Settings\SettingsAudit;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Tests\TestCase;
 
@@ -25,8 +24,6 @@ class RegisterUserCommandTest extends TestCase
 
         $databaseUser = User::latest('id')->first();
 
-        //var_dump(User::all());
-
         $this->assertEquals('Test', $databaseUser->name);
         $this->assertEquals('test@linkace.org', $databaseUser->email);
     }
@@ -36,7 +33,7 @@ class RegisterUserCommandTest extends TestCase
         User::factory()->create(); // Create admin dummy user
 
         $this->artisan('registeruser')
-            ->expectsQuestion('Please enter the user name', 'Test')
+            ->expectsQuestion('Please enter the user name containing only alpha-numeric characters, dashes or underscores', 'Test')
             ->expectsQuestion('Please enter the user email address', 'test@linkace.org')
             ->expectsQuestion('Please enter a password for Test', 'testpassword')
             ->expectsOutput('User Test registered.')
@@ -50,13 +47,20 @@ class RegisterUserCommandTest extends TestCase
 
     public function testCommandWithDuplicateUser(): void
     {
-        User::factory()->create(['email' => 'test@linkace.org']);
+        User::factory()->create(['name' => 'Test', 'email' => 'test@linkace.org']);
 
         $this->artisan('registeruser', [
             'name' => 'Test',
             'email' => 'test@linkace.org',
         ])
-            ->expectsOutput('An user with the email address "test@linkace.org" already exists!')
-            ->assertExitCode(0);
+            ->expectsQuestion('Please enter a password for Test', 'testpassword')
+            ->expectsOutput('The name has already been taken.')
+            ->expectsOutput('The email has already been taken.')
+            ->expectsQuestion('Please enter the user name containing only alpha-numeric characters, dashes or underscores', 'Test2')
+            ->expectsQuestion('Please enter the user email address', 'test2@linkace.org')
+            ->expectsQuestion('Please enter a password for Test2', 'testpassword')
+            ->expectsOutput('User Test2 registered.')
+            ->assertExitCode(0)
+        ;
     }
 }

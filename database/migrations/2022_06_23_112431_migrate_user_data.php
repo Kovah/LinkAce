@@ -1,5 +1,6 @@
 <?php
 
+use App\Enums\ApiToken;
 use App\Enums\ModelAttribute;
 use App\Enums\Role;
 use App\Models\LinkList;
@@ -8,11 +9,12 @@ use App\Models\Tag;
 use App\Models\User;
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
+use Illuminate\Support\Facades\Artisan;
 use Illuminate\Support\Facades\Schema;
 
 class MigrateUserData extends Migration
 {
-    private bool $guestAccessEnabled;
+    private bool $guestAccessEnabled = false;
 
     public function up()
     {
@@ -24,6 +26,7 @@ class MigrateUserData extends Migration
         $this->migrateNoteVisibility();
 
         $this->addUserRoles();
+        $this->migrateApiTokens();
     }
 
     protected function migrateLinkVisibility(): void
@@ -54,7 +57,7 @@ class MigrateUserData extends Migration
             $table->integer('visibility')->default(ModelAttribute::VISIBILITY_PRIVATE)->after('is_private');
         });
 
-        LinkList::withTrashed()->get()->each(function ($list) {
+        LinkList::withTrashed()->get()->each(function (LinkList $list) {
             $list->visibility = match ((bool)$list->is_private) {
                 true => ModelAttribute::VISIBILITY_PRIVATE,
                 false => $this->guestAccessEnabled
@@ -74,7 +77,7 @@ class MigrateUserData extends Migration
             $table->integer('visibility')->default(ModelAttribute::VISIBILITY_PRIVATE)->after('is_private');
         });
 
-        Tag::withTrashed()->get()->each(function ($tag) {
+        Tag::withTrashed()->get()->each(function (Tag $tag) {
             $tag->visibility = match ((bool)$tag->is_private) {
                 true => ModelAttribute::VISIBILITY_PRIVATE,
                 false => $this->guestAccessEnabled
@@ -94,7 +97,7 @@ class MigrateUserData extends Migration
             $table->integer('visibility')->default(ModelAttribute::VISIBILITY_PRIVATE)->after('is_private');
         });
 
-        Note::withTrashed()->get()->each(function ($note) {
+        Note::withTrashed()->get()->each(function (Note $note) {
             $note->visibility = match ((bool)$note->is_private) {
                 true => ModelAttribute::VISIBILITY_PRIVATE,
                 false => $this->guestAccessEnabled
@@ -110,7 +113,7 @@ class MigrateUserData extends Migration
 
     protected function addUserRoles(): void
     {
-        \Illuminate\Support\Facades\Artisan::call('db:seed', ['--class' => 'RolesAndPermissionsSeeder']);
+        Artisan::call('db:seed', ['--class' => 'RolesAndPermissionsSeeder']);
 
         Schema::table('users', function (Blueprint $table) {
             $table->timestamp('blocked_at')->nullable()->after('api_token');
@@ -121,5 +124,20 @@ class MigrateUserData extends Migration
         if ($newAdmin !== null && !$newAdmin->hasRole(Role::ADMIN)) {
             $newAdmin->assignRole(Role::ADMIN);
         }
+    }
+
+    public function migrateApiTokens(): void
+    {
+        User::all()->each(function (User $user) {
+            $user->tokens()->create([
+                'name' => 'MigratedApiToken',
+                'token' => hash('sha256', $user->api_token),
+                'abilities' => [ApiToken::ABILITY_USER_ACCESS],
+            ]);
+        });
+
+        Schema::table('users', function (Blueprint $table) {
+            $table->dropColumn('api_token');
+        });
     }
 }
