@@ -11,7 +11,7 @@ class RegisterRequest extends FormRequest
 {
     use PasswordValidationRules;
 
-    public function rules(Request $request): array
+    public function rules(): array
     {
         return array_merge(['token' => ['required']], CreateNewUser::rules());
     }

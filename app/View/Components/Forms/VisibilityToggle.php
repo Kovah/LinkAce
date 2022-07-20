@@ -27,14 +27,11 @@ class VisibilityToggle extends Component
             'internal' => $internal,
             'private' => $private,
             'publicSelected' => old('visibility', $this->existingValue) === $public
-                || (old('visibility',
-                        $this->existingValue) === null && usersettings($this->visibilitySetting) === $public),
+                || (old('visibility', $this->existingValue) === null && usersettings($this->visibilitySetting) === $public),
             'internalSelected' => old('visibility', $this->existingValue) === $internal
-                || (old('visibility',
-                        $this->existingValue) === null && usersettings($this->visibilitySetting) === $internal),
+                || (old('visibility', $this->existingValue) === null && usersettings($this->visibilitySetting) === $internal),
             'privateSelected' => old('visibility', $this->existingValue) === $private
-                || (old('visibility',
-                        $this->existingValue) === null && usersettings($this->visibilitySetting) === $private),
+                || (old('visibility', $this->existingValue) === null && usersettings($this->visibilitySetting) === $private),
         ]);
     }
 }

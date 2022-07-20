@@ -8,10 +8,6 @@ use Illuminate\Support\Facades\Log;
 
 class TagRepository
 {
-    /**
-     * @param array $data
-     * @return Tag
-     */
     public static function create(array $data): Tag
     {
         $data['user_id'] = auth()->user()->id;
@@ -20,11 +16,6 @@ class TagRepository
         return Tag::create($data);
     }
 
-    /**
-     * @param Tag   $tag
-     * @param array $data
-     * @return Tag
-     */
     public static function update(Tag $tag, array $data): Tag
     {
         $data['name'] = str_replace(',', '', $data['name']);
@@ -34,10 +25,6 @@ class TagRepository
         return $tag;
     }
 
-    /**
-     * @param Tag $tag
-     * @return bool
-     */
     public static function delete(Tag $tag): bool
     {
         try {

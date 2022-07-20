@@ -11,12 +11,6 @@ class LinkUpdateRequest extends FormRequest
 {
     private bool $requireUniqueUrl = false;
 
-    /**
-     * Determine if the user is authorized to make this request.
-     *
-     * @param Request $request
-     * @return bool
-     */
     public function authorize(Request $request): bool
     {
         if ($request->input('url') !== null) {
@@ -26,11 +20,6 @@ class LinkUpdateRequest extends FormRequest
         return true;
     }
 
-    /**
-     * Get the validation rules that apply to the request.
-     *
-     * @return array
-     */
     public function rules(): array
     {
         $rules = [

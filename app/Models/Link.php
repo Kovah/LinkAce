@@ -181,12 +181,6 @@ class Link extends Model implements Auditable
         return preg_replace('/http(s)?:\/\//', '', Str::limit(trim($this->url, '/'), $maxLength));
     }
 
-    /**
-     * Get the title shortened to max 50 characters
-     *
-     * @param int $maxLength
-     * @return string
-     */
     public function shortTitle(int $maxLength = 50): string
     {
         return Str::limit($this->title, $maxLength);
@@ -231,11 +225,6 @@ class Link extends Model implements Auditable
         ]);
     }
 
-    /**
-     * Output a relative time inside a span with real time information
-     *
-     * @return string
-     */
     public function addedAt(): string
     {
         $output = '<time-ago class="cursor-help"';

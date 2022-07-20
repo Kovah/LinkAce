@@ -7,16 +7,8 @@ use Illuminate\Http\Request;
 
 class GuestAccess
 {
-    /**
-     * Handle an incoming request.
-     *
-     * @param Request $request
-     * @param Closure $next
-     * @return mixed
-     */
     public function handle(Request $request, Closure $next): mixed
     {
-        // Check for logged-in users
         if (auth()->check()) {
             return redirect()->route('dashboard');
         }

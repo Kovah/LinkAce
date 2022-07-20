@@ -71,11 +71,6 @@ class Note extends Model
      * METHODS
      */
 
-    /**
-     * Get the formatted note content of the note
-     *
-     * @return string
-     */
     public function getFormattedNoteAttribute(): string
     {
         if ($this->note === null) {
@@ -89,11 +84,6 @@ class Note extends Model
         return Str::markdown($this->note, ['html_input' => 'escape']);
     }
 
-    /**
-     * Output a relative time inside a span with real time information
-     *
-     * @return string
-     */
     public function addedAt(): string
     {
         $output = '<time-ago class="cursor-help"';

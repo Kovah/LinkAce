@@ -181,7 +181,7 @@ class LinkRepository
     /**
      * Tags or lists are passed as comma-delimited strings or integers.
      * If integers are passed we assume that the tags or lists are referenced
-     * by their ID. n that case we try to retrieve the tag or list by the
+     * by their ID. In that case we try to retrieve the tag or list by the
      * provided ID.
      * If tags or lists are passed as strings, we create them and pass the new
      * entity to the taxonomy list.

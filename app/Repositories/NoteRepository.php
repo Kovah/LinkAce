@@ -8,10 +8,6 @@ use Illuminate\Support\Facades\Log;
 
 class NoteRepository
 {
-    /**
-     * @param array $data
-     * @return Note
-     */
     public static function create(array $data): Note
     {
         $data['user_id'] = auth()->user()->id;
@@ -19,11 +15,6 @@ class NoteRepository
         return Note::create($data);
     }
 
-    /**
-     * @param Note  $note
-     * @param array $data
-     * @return Note
-     */
     public static function update(Note $note, array $data): Note
     {
         $note->update($data);
@@ -31,10 +22,6 @@ class NoteRepository
         return $note;
     }
 
-    /**
-     * @param Note $note
-     * @return bool
-     */
     public static function delete(Note $note): bool
     {
         try {

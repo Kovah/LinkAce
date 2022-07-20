@@ -137,8 +137,10 @@ class LinkController extends Controller
         return redirect()->route('links.show', ['link' => $link]);
     }
 
-    public function markWorking(MarkLinkWorkingRequest $request, Link $link): RedirectResponse
+    public function markWorking(Link $link): RedirectResponse
     {
+        $this->authorize('update', $link);
+
         $link->status = Link::STATUS_OK;
         $link->save();
 
