@@ -10,7 +10,6 @@ use App\Models\Link;
 use App\Repositories\LinkRepository;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
-use Illuminate\Http\Response;
 
 class LinkController extends Controller
 {
@@ -22,12 +21,6 @@ class LinkController extends Controller
         $this->authorizeResource(Link::class, 'link');
     }
 
-    /**
-     * Display a listing of the resource.
-     *
-     * @param Request $request
-     * @return JsonResponse
-     */
     public function index(Request $request): JsonResponse
     {
         $this->orderBy = $request->input('order_by', 'created_at');
@@ -43,12 +36,6 @@ class LinkController extends Controller
         return response()->json($links);
     }
 
-    /**
-     * Store a newly created resource in storage.
-     *
-     * @param LinkStoreRequest $request
-     * @return JsonResponse
-     */
     public function store(LinkStoreRequest $request): JsonResponse
     {
         $link = LinkRepository::create($request->all());
@@ -56,12 +43,6 @@ class LinkController extends Controller
         return response()->json($link);
     }
 
-    /**
-     * Display the specified resource.
-     *
-     * @param Link $link
-     * @return JsonResponse
-     */
     public function show(Link $link): JsonResponse
     {
         $link->load(['lists', 'tags']);
@@ -69,13 +50,6 @@ class LinkController extends Controller
         return response()->json($link);
     }
 
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param LinkUpdateRequest $request
-     * @param Link              $link
-     * @return JsonResponse
-     */
     public function update(LinkUpdateRequest $request, Link $link): JsonResponse
     {
         $updatedLink = LinkRepository::update($link, $request->all());
@@ -83,20 +57,14 @@ class LinkController extends Controller
         return response()->json($updatedLink);
     }
 
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @param Link $link
-     * @return JsonResponse
-     */
     public function destroy(Link $link): JsonResponse
     {
         $deletionSuccessful = LinkRepository::delete($link);
 
         if ($deletionSuccessful) {
-            return response()->json(null, Response::HTTP_OK);
+            return response()->json();
         }
 
-        return response()->json(null, Response::HTTP_INTERNAL_SERVER_ERROR);
+        return response()->json(status: 500);
     }
 }

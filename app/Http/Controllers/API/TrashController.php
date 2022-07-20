@@ -12,7 +12,6 @@ use App\Models\Tag;
 use App\Repositories\TrashRepository;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
-use Illuminate\Http\Response;
 
 class TrashController extends Controller
 {
@@ -52,17 +51,11 @@ class TrashController extends Controller
         return response()->json($notes);
     }
 
-    /**
-     * Permanently delete entries for a model from the trash.
-     *
-     * @param TrashClearRequest $request
-     * @return JsonResponse
-     */
     public function clear(TrashClearRequest $request): JsonResponse
     {
         TrashRepository::delete($request->input('model'));
 
-        return response()->json(null, Response::HTTP_OK);
+        return response()->json();
     }
 
     /**
@@ -75,6 +68,6 @@ class TrashController extends Controller
     {
         TrashRepository::restore($request->input('model'), $request->input('id'));
 
-        return response()->json(null, Response::HTTP_OK);
+        return response()->json();
     }
 }

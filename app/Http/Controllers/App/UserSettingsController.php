@@ -17,11 +17,6 @@ use Illuminate\Validation\ValidationException;
 
 class UserSettingsController extends Controller
 {
-    /**
-     * Display the user settings forms.
-     *
-     * @return View
-     */
     public function getUserSettings(): View
     {
         return view('app.settings.user', [
@@ -30,13 +25,6 @@ class UserSettingsController extends Controller
         ]);
     }
 
-    /**
-     * Handles changes of the user account itself.
-     *
-     * @param Request $request
-     * @return RedirectResponse
-     * @throws ValidationException
-     */
     public function saveAccountSettings(Request $request): RedirectResponse
     {
         (new UpdateUserProfileInformation())->update($request->user(), $request->input());
@@ -45,12 +33,6 @@ class UserSettingsController extends Controller
         return redirect()->back();
     }
 
-    /**
-     * Handle changes of general application settings like share services.
-     *
-     * @param UserSettingsUpdateRequest $request
-     * @return RedirectResponse
-     */
     public function saveAppSettings(UserSettings $settings, UserSettingsUpdateRequest $request): RedirectResponse
     {
         // Save all user settings or update them
@@ -73,13 +55,6 @@ class UserSettingsController extends Controller
         return redirect()->back();
     }
 
-    /**
-     * Handles the user password change.
-     *
-     * @param Request $request
-     * @return RedirectResponse
-     * @throws ValidationException
-     */
     public function changeUserPassword(Request $request): RedirectResponse
     {
         (new UpdateUserPassword())->update($request->user(), $request->input());

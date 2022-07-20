@@ -9,12 +9,6 @@ use Illuminate\Http\Request;
 
 class TagController extends Controller
 {
-    /**
-     * Display an overview of all lists.
-     *
-     * @param Request $request
-     * @return View
-     */
     public function index(Request $request): View
     {
         $tags = Tag::publicOnly()
@@ -33,13 +27,6 @@ class TagController extends Controller
         ]);
     }
 
-    /**
-     * Display the specified resource.
-     *
-     * @param Request $request
-     * @param int     $tagID
-     * @return View
-     */
     public function show(Request $request, int $tagID): View
     {
         $tag = Tag::publicOnly()->findOrFail($tagID);

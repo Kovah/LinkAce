@@ -15,11 +15,6 @@ use Illuminate\Http\RedirectResponse;
 
 class TrashController extends Controller
 {
-    /**
-     * Display the trash overview with all deleted entries for links, tags, etc.
-     *
-     * @return View
-     */
     public function index(): View
     {
         $links = Link::onlyTrashed()->byUser()->get();
@@ -35,12 +30,6 @@ class TrashController extends Controller
         ]);
     }
 
-    /**
-     * Permanently delete entries for a model from the trash.
-     *
-     * @param TrashClearRequest $request
-     * @return RedirectResponse
-     */
     public function clearTrash(TrashClearRequest $request): RedirectResponse
     {
         TrashRepository::delete($request->input('model'));
@@ -49,12 +38,6 @@ class TrashController extends Controller
         return redirect()->route('get-trash');
     }
 
-    /**
-     * Restore an entry from the trash.
-     *
-     * @param TrashRestoreRequest $request
-     * @return RedirectResponse
-     */
     public function restoreEntry(TrashRestoreRequest $request): RedirectResponse
     {
         TrashRepository::restore($request->input('model'), $request->input('id'));

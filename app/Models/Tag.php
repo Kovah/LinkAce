@@ -63,13 +63,11 @@ class Tag extends Model implements Auditable
 
     public string $langBase = 'tag';
 
-    /**
-     * Add the OrderNameScope to the Tag model
-     */
     protected static function boot()
     {
         parent::boot();
 
+        // Add the OrderNameScope to the Tag model
         static::addGlobalScope(new OrderNameScope());
     }
 

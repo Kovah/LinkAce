@@ -12,12 +12,6 @@ use Illuminate\Http\Response;
 
 class FetchController extends Controller
 {
-    /**
-     * Returns all tags that match a given query, preformatted for Selectize.
-     *
-     * @param Request $request
-     * @return JsonResponse
-     */
     public function getTags(Request $request): JsonResponse
     {
         $query = $request->input('query');
@@ -36,12 +30,6 @@ class FetchController extends Controller
         return response()->json($tags);
     }
 
-    /**
-     * Returns all lists that match a given query, preformatted for Selectize.
-     *
-     * @param Request $request
-     * @return JsonResponse
-     */
     public function getLists(Request $request): JsonResponse
     {
         $query = $request->input('query', false);
@@ -87,12 +75,6 @@ class FetchController extends Controller
         ]);
     }
 
-    /**
-     * Simple endpoint for the system settings page which runs an update check
-     * and returns the result to the frontend.
-     *
-     * @return JsonResponse
-     */
     public static function checkForUpdates(): JsonResponse
     {
         $updateCheck = UpdateHelper::checkForUpdates(true);

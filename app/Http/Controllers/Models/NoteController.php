@@ -19,12 +19,6 @@ class NoteController extends Controller
         $this->authorizeResource(Note::class, 'note');
     }
 
-    /**
-     * Store a newly created resource in storage.
-     *
-     * @param NoteStoreRequest $request
-     * @return RedirectResponse
-     */
     public function store(NoteStoreRequest $request): RedirectResponse
     {
         $link = Link::findOrFail($request->input('link_id'));
@@ -37,24 +31,11 @@ class NoteController extends Controller
         return redirect()->route('links.show', ['link' => $link]);
     }
 
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param Note $note
-     * @return View
-     */
     public function edit(Note $note): View
     {
         return view('models.notes.edit', ['note' => $note]);
     }
 
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param NoteUpdateRequest $request
-     * @param Note              $note
-     * @return RedirectResponse
-     */
     public function update(NoteUpdateRequest $request, Note $note): RedirectResponse
     {
         $note = NoteRepository::update($note, $request->except(['_token']));
@@ -64,13 +45,6 @@ class NoteController extends Controller
         return redirect()->route('links.show', ['link' => $note->link]);
     }
 
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @param Note $note
-     * @return RedirectResponse
-     * @throws Exception
-     */
     public function destroy(Note $note): RedirectResponse
     {
         $link = $note->link;

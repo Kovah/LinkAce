@@ -8,7 +8,6 @@ use App\Http\Requests\Models\ListStoreRequest;
 use App\Http\Requests\Models\ListUpdateRequest;
 use App\Models\LinkList;
 use App\Repositories\ListRepository;
-use Exception;
 use Illuminate\Contracts\View\View;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
@@ -23,12 +22,6 @@ class ListController extends Controller
         $this->authorizeResource(LinkList::class, 'list');
     }
 
-    /**
-     * Display a listing of the resource.
-     *
-     * @param Request $request
-     * @return View
-     */
     public function index(Request $request): View
     {
         $this->orderBy = $request->input('orderBy', session()->get('lists.index.orderBy', 'name'));
@@ -58,22 +51,11 @@ class ListController extends Controller
         ]);
     }
 
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @return View
-     */
     public function create(): View
     {
         return view('models.lists.create');
     }
 
-    /**
-     * Store a newly created resource in storage.
-     *
-     * @param ListStoreRequest $request
-     * @return RedirectResponse
-     */
     public function store(ListStoreRequest $request): RedirectResponse
     {
         $data = $request->validated();
@@ -89,13 +71,6 @@ class ListController extends Controller
         return redirect()->route('lists.show', ['list' => $list]);
     }
 
-    /**
-     * Display the specified resource.
-     *
-     * @param Request  $request
-     * @param LinkList $list
-     * @return View
-     */
     public function show(Request $request, LinkList $list): View
     {
         $links = $list->links()
@@ -115,24 +90,11 @@ class ListController extends Controller
         ]);
     }
 
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param LinkList $list
-     * @return View
-     */
     public function edit(LinkList $list): View
     {
         return view('models.lists.edit', ['list' => $list]);
     }
 
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param ListUpdateRequest $request
-     * @param LinkList          $list
-     * @return RedirectResponse
-     */
     public function update(ListUpdateRequest $request, LinkList $list): RedirectResponse
     {
         $list = ListRepository::update($list, $request->validated());
@@ -141,13 +103,6 @@ class ListController extends Controller
         return redirect()->route('lists.show', ['list' => $list]);
     }
 
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @param LinkList $list
-     * @return RedirectResponse
-     * @throws Exception
-     */
     public function destroy(LinkList $list): RedirectResponse
     {
         $deletionSuccessful = ListRepository::delete($list);

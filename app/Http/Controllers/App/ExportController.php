@@ -14,11 +14,6 @@ use Symfony\Component\HttpFoundation\StreamedResponse;
 
 class ExportController extends Controller
 {
-    /**
-     * Get the initial screen to start the export.
-     *
-     * @return View
-     */
     public function getExport(): View
     {
         return view('app.export.export');

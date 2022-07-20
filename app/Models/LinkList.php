@@ -68,13 +68,11 @@ class LinkList extends Model implements Auditable
 
     public string $langBase = 'list';
 
-    /**
-     * Add the OrderNameScope to the Tag model
-     */
     protected static function boot(): void
     {
         parent::boot();
 
+        // Add the OrderNameScope to the Tag model
         static::addGlobalScope(new OrderNameScope());
     }
 

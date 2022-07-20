@@ -15,11 +15,6 @@ use Illuminate\Support\Str;
 
 class SystemSettingsController extends Controller
 {
-    /**
-     * Display the system settings forms.
-     *
-     * @return View
-     */
     public function index(): View
     {
         return view('admin.system-settings.index', [
@@ -27,12 +22,6 @@ class SystemSettingsController extends Controller
         ]);
     }
 
-    /**
-     * Save the updated system settings to the database.
-     *
-     * @param SystemSettingsUpdateRequest $request
-     * @return RedirectResponse
-     */
     public function update(SystemSettingsUpdateRequest $request): RedirectResponse
     {
         $sysSettings = app(SystemSettings::class);
@@ -60,11 +49,6 @@ class SystemSettingsController extends Controller
         return redirect()->route('get-systemsettings');
     }
 
-    /**
-     * Generate a new API token for the current user.
-     *
-     * @return JsonResponse
-     */
     public function generateCronToken(SystemSettings $settings): JsonResponse
     {
         $newToken = Str::random(32);

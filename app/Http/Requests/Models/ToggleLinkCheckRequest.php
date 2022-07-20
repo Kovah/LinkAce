@@ -5,7 +5,7 @@ namespace App\Http\Requests\Models;
 use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Http\Request;
 
-class LinkToggleCheckRequest extends FormRequest
+class ToggleLinkCheckRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.

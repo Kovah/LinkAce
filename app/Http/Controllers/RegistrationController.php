@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Actions\Fortify\CreateNewUser;
 use App\Http\Requests\Auth\RegisterRequest;
 use App\Models\UserInvitation;
+use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
@@ -32,7 +33,7 @@ class RegistrationController extends Controller
         ]);
     }
 
-    public function register(RegisterRequest $request)
+    public function register(RegisterRequest $request): RedirectResponse
     {
         $invitation = UserInvitation::where('token', $request->input('token'))->first();
 

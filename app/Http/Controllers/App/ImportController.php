@@ -11,11 +11,6 @@ use Illuminate\Http\JsonResponse;
 
 class ImportController extends Controller
 {
-    /**
-     * Display the initial screen to start the import.
-     *
-     * @return View
-     */
     public function getImport(): View
     {
         return view('app.import.import');

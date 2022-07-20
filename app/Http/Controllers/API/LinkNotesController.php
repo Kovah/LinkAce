@@ -9,16 +9,10 @@ use Illuminate\Http\Request;
 
 class LinkNotesController extends Controller
 {
-    /**
-     * Get the notes for a specific link.
-     *
-     * @param Link $link
-     * @return JsonResponse
-     */
     public function __invoke(Request $request, Link $link): JsonResponse
     {
         if ($request->user()->cannot('view', $link)) {
-            return response()->json([], 403);
+            return response()->json(status: 403);
         }
 
         $notes = $link->notes()->visibleForUser()->paginate(getPaginationLimit());

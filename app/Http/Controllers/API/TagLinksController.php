@@ -9,16 +9,10 @@ use Illuminate\Http\Request;
 
 class TagLinksController extends Controller
 {
-    /**
-     * Get the links for a specific tag.
-     *
-     * @param Tag $tag
-     * @return JsonResponse
-     */
     public function __invoke(Request $request, Tag $tag): JsonResponse
     {
         if ($request->user()->cannot('view', $tag)) {
-            return response()->json([], 403);
+            return response()->json(status: 403);
         }
 
         $links = $tag->links()->visibleForUser()->paginate(getPaginationLimit());

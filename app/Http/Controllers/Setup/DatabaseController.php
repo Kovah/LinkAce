@@ -18,22 +18,11 @@ class DatabaseController extends Controller
 {
     protected array $dbConfig;
 
-    /**
-     * Display the form for configuration of the database.
-     *
-     * @return View
-     */
     public function index(): View
     {
         return view('setup.database');
     }
 
-    /**
-     * Handle the test and configuration of a new database connection.
-     *
-     * @param SetupDatabaseRequest $request
-     * @return RedirectResponse
-     */
     public function configure(SetupDatabaseRequest $request): RedirectResponse
     {
         $this->createTempDatabaseConnection($request->validated());
@@ -54,11 +43,6 @@ class DatabaseController extends Controller
         return redirect()->route('setup.account');
     }
 
-    /**
-     * Accepts new credentials for a database and sets them accordingly.
-     *
-     * @param array $credentials
-     */
     protected function createTempDatabaseConnection(array $credentials): void
     {
         $this->dbConfig = config('database.connections.mysql');

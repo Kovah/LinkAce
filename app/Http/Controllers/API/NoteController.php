@@ -17,12 +17,6 @@ class NoteController extends Controller
         $this->authorizeResource(Note::class, 'note');
     }
 
-    /**
-     * Store a newly created resource in storage.
-     *
-     * @param NoteStoreRequest $request
-     * @return JsonResponse
-     */
     public function store(NoteStoreRequest $request): JsonResponse
     {
         $note = NoteRepository::create($request->all());
@@ -30,13 +24,6 @@ class NoteController extends Controller
         return response()->json($note);
     }
 
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param NoteUpdateRequest $request
-     * @param Note              $note
-     * @return JsonResponse
-     */
     public function update(NoteUpdateRequest $request, Note $note): JsonResponse
     {
         $updatedNote = NoteRepository::update($note, $request->validated());
@@ -44,20 +31,14 @@ class NoteController extends Controller
         return response()->json($updatedNote);
     }
 
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @param Note $note
-     * @return JsonResponse
-     */
     public function destroy(Note $note): JsonResponse
     {
         $deletionSuccessful = NoteRepository::delete($note);
 
         if ($deletionSuccessful) {
-            return response()->json(null, Response::HTTP_OK);
+            return response()->json();
         }
 
-        return response()->json(null, Response::HTTP_INTERNAL_SERVER_ERROR);
+        return response()->json(status: Response::HTTP_INTERNAL_SERVER_ERROR);
     }
 }

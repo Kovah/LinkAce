@@ -9,12 +9,6 @@ use Illuminate\Http\Request;
 
 class LinkCheckController extends Controller
 {
-    /**
-     * Search for a link based on a given url.
-     *
-     * @param Request $request
-     * @return JsonResponse
-     */
     public function __invoke(Request $request): JsonResponse
     {
         $searchedUrl = $request->input('url', false);

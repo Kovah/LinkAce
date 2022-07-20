@@ -9,12 +9,6 @@ use Illuminate\Http\Request;
 
 class ListController extends Controller
 {
-    /**
-     * Display an overview of all lists.
-     *
-     * @param Request $request
-     * @return View
-     */
     public function index(Request $request): View
     {
         $lists = LinkList::publicOnly()
@@ -32,13 +26,6 @@ class ListController extends Controller
         ]);
     }
 
-    /**
-     * Display the specified resource.
-     *
-     * @param Request $request
-     * @param int     $listID
-     * @return View
-     */
     public function show(Request $request, int $listID): View
     {
         $list = LinkList::publicOnly()->findOrFail($listID);

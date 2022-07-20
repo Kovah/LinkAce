@@ -9,12 +9,6 @@ use Illuminate\Http\Request;
 
 class LinkController extends Controller
 {
-    /**
-     * Display an overview of all links.
-     *
-     * @param Request $request
-     * @return View
-     */
     public function index(Request $request): View
     {
         $links = Link::publicOnly()

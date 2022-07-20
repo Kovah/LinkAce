@@ -4,9 +4,9 @@ namespace App\Http\Controllers\Models;
 
 use App\Http\Controllers\Controller;
 use App\Http\Controllers\Traits\ChecksOrdering;
-use App\Http\Requests\Models\LinkMarkWorkingRequest;
+use App\Http\Requests\Models\MarkLinkWorkingRequest;
 use App\Http\Requests\Models\LinkStoreRequest;
-use App\Http\Requests\Models\LinkToggleCheckRequest;
+use App\Http\Requests\Models\ToggleLinkCheckRequest;
 use App\Http\Requests\Models\LinkUpdateRequest;
 use App\Models\Link;
 use App\Repositories\LinkRepository;
@@ -25,12 +25,6 @@ class LinkController extends Controller
         $this->authorizeResource(Link::class, 'link');
     }
 
-    /**
-     * Display a listing of the resource.
-     *
-     * @param Request $request
-     * @return View
-     */
     public function index(Request $request): View
     {
         $this->orderBy = $request->input('orderBy', session()->get('links.index.orderBy', 'created_at'));
@@ -55,11 +49,6 @@ class LinkController extends Controller
         ]);
     }
 
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @return View
-     */
     public function create(): View
     {
         // Reset the bookmarklet session identifier to prevent issues on regular pages
@@ -70,12 +59,6 @@ class LinkController extends Controller
         ]);
     }
 
-    /**
-     * Store a newly created resource in storage.
-     *
-     * @param LinkStoreRequest $request
-     * @return RedirectResponse
-     */
     public function store(LinkStoreRequest $request): RedirectResponse
     {
         $link = LinkRepository::create($request->all(), true);
@@ -108,12 +91,6 @@ class LinkController extends Controller
             : redirect()->route('links.show', [$link->id]);
     }
 
-    /**
-     * Display the specified resource.
-     *
-     * @param Link $link
-     * @return View
-     */
     public function show(Link $link): View
     {
         return view('models.links.show', [
@@ -122,12 +99,6 @@ class LinkController extends Controller
         ]);
     }
 
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param Link $link
-     * @return View
-     */
     public function edit(Link $link): View
     {
         return view('models.links.edit', [
@@ -136,13 +107,6 @@ class LinkController extends Controller
         ]);
     }
 
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param LinkUpdateRequest $request
-     * @param Link              $link
-     * @return RedirectResponse
-     */
     public function update(LinkUpdateRequest $request, Link $link): RedirectResponse
     {
         $link = LinkRepository::update($link, $request->input());
@@ -151,13 +115,6 @@ class LinkController extends Controller
         return redirect()->route('links.show', [$link->id]);
     }
 
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @param Link $link
-     * @return RedirectResponse
-     * @throws Exception
-     */
     public function destroy(Link $link): RedirectResponse
     {
         $deletionSuccessful = LinkRepository::delete($link);
@@ -172,14 +129,7 @@ class LinkController extends Controller
         return request()->has('redirect_back') ? redirect()->back() : redirect()->route('links.index');
     }
 
-    /**
-     * Toggles the setting of a link to be either checked or not.
-     *
-     * @param LinkToggleCheckRequest $request
-     * @param Link                   $link
-     * @return RedirectResponse
-     */
-    public function updateCheckToggle(LinkToggleCheckRequest $request, Link $link): RedirectResponse
+    public function updateCheckToggle(ToggleLinkCheckRequest $request, Link $link): RedirectResponse
     {
         $link->check_disabled = $request->input('toggle');
         $link->save();
@@ -187,14 +137,7 @@ class LinkController extends Controller
         return redirect()->route('links.show', ['link' => $link]);
     }
 
-    /**
-     * Mark the link as working manually.
-     *
-     * @param LinkMarkWorkingRequest $request
-     * @param Link                   $link
-     * @return RedirectResponse
-     */
-    public function markWorking(LinkMarkWorkingRequest $request, Link $link): RedirectResponse
+    public function markWorking(MarkLinkWorkingRequest $request, Link $link): RedirectResponse
     {
         $link->status = Link::STATUS_OK;
         $link->save();

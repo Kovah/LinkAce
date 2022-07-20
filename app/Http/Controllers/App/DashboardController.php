@@ -11,11 +11,6 @@ use Illuminate\Contracts\View\View;
 
 class DashboardController extends Controller
 {
-    /**
-     * Display the dashboard including all widgets.
-     *
-     * @return View
-     */
     public function index(): View
     {
         $recentLinks = Link::query()
