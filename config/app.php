@@ -93,6 +93,7 @@ return [
         'fr_FR' => 'Français',
         'hu_HU' => 'Magyar',
         'no_NO' => 'Norsk',
+        'vi_VN' => 'Tiếng Việt',
         'zh_CN' => '简体中文',
     ],
 
