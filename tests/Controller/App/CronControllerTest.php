@@ -4,6 +4,7 @@ namespace Tests\Controller\App;
 
 use App\Models\Setting;
 use Illuminate\Foundation\Testing\RefreshDatabase;
+use Illuminate\Support\Facades\Artisan;
 use Illuminate\Support\Str;
 use Tests\TestCase;
 
@@ -13,6 +14,8 @@ class CronControllerTest extends TestCase
 
     public function testValidCronTokenResponse(): void
     {
+        Artisan::spy()->shouldReceive('call')->with('schedule:run')->once();
+
         $cronToken = Str::random(32);
 
         Setting::create([
