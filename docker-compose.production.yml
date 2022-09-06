@@ -23,9 +23,9 @@ services:
       - db
     volumes:
       - ./.env:/app/.env
+      - ./backups:/app/storage/app/backups
       - linkace_app:/app
       - linkace_logs:/app/storage/logs
-      - ./backups:/app/storage/app/backups
 
   # --- nginx
   nginx:
@@ -54,5 +54,4 @@ volumes:
   linkace_app:
   linkace_logs:
   db:
-    external: true
     driver: local

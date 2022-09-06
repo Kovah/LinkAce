@@ -11,7 +11,7 @@ printf "\n${CG}==============================\n"
 printf " LinkAce Docker Update Script \n"
 printf "==============================\n\n"
 
-printf "${CW}This script assumes you are using the standard Docker setup for Linkace. Only use this script if you did NOT modify any Docker-related files.\n${CR}Please make a backup of your database before you continue!\n"
+printf "${CW}This script assumes you are using the standard Docker setup for Linkace. Only use this script if you did NOT modify any Docker-related files.\n${CR}PLEASE MAKE A BACKUP OF YOUR DATABASE BEFORE YOU CONTINUE!\n"
 
 # Confirm that the user wants to update now
 printf "\n${CR}Do you want to upgrade LinkAce now? [y/n]${CW} "
@@ -26,7 +26,13 @@ command -v docker-compose >/dev/null 2>&1 || {
 }
 
 printf "\n> Deleting the application container volume...\n"
-docker-compose down
+docker-compose stop
+if grep -q "linkace/linkace:simple" docker-compose.yml; then
+  docker container rm linkace_app_1
+else
+  docker container rm linkace_app_1
+  docker container rm linkace_nginx_1
+fi
 
 printf "\n> Deleting the application container volume...\n"
 docker volume rm linkace_linkace_app
