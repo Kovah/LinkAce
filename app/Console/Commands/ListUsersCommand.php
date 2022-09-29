@@ -15,7 +15,7 @@ class ListUsersCommand extends Command
     {
         $this->info('Searching for all registered users...');
 
-        $users = User::query()->get(['id', 'name', 'email']);
+        $users = User::query()->notSystem()->get(['id', 'name', 'email']);
 
         if ($users->isEmpty()) {
             $this->info('No users found.');
