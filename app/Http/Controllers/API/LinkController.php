@@ -7,7 +7,7 @@ use App\Http\Controllers\Controller;
 use App\Http\Controllers\Traits\ChecksOrdering;
 use App\Http\Requests\Models\LinkStoreRequest;
 use App\Http\Requests\Models\LinkUpdateRequest;
-use App\Models\Link;
+use App\Models\Api\ApiLink;
 use App\Repositories\LinkRepository;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
@@ -18,8 +18,8 @@ class LinkController extends Controller
 
     public function __construct()
     {
-        $this->allowedOrderBy = Link::$allowOrderBy;
-        $this->authorizeResource(Link::class . 'Api', 'link');
+        $this->allowedOrderBy = ApiLink::$allowOrderBy;
+        $this->authorizeResource(ApiLink::class, 'link');
     }
 
     public function index(Request $request): JsonResponse
@@ -29,7 +29,7 @@ class LinkController extends Controller
 
         $this->checkOrdering();
 
-        $links = Link::query()
+        $links = ApiLink::query()
             ->visibleForUser(privateSystemAccess: $request->user()->tokenCan(ApiToken::ABILITY_SYSTEM_ACCESS_PRIVATE))
             ->orderBy($this->orderBy, $this->orderDir)
             ->paginate(getPaginationLimit());
@@ -44,21 +44,28 @@ class LinkController extends Controller
         return response()->json($link);
     }
 
-    public function show(Link $link): JsonResponse
+    public function show(Request $request, ApiLink $link): JsonResponse
     {
-        $link->load(['lists', 'tags']);
+        $link->load([
+            'lists' => function ($query) use ($request) {
+                $query->visibleForUser(privateSystemAccess: $request->user()->tokenCan(ApiToken::ABILITY_SYSTEM_ACCESS_PRIVATE));
+            },
+            'tags' => function ($query) use ($request) {
+                $query->visibleForUser(privateSystemAccess: $request->user()->tokenCan(ApiToken::ABILITY_SYSTEM_ACCESS_PRIVATE));
+            },
+        ]);
 
         return response()->json($link);
     }
 
-    public function update(LinkUpdateRequest $request, Link $link): JsonResponse
+    public function update(LinkUpdateRequest $request, ApiLink $link): JsonResponse
     {
         $updatedLink = LinkRepository::update($link, $request->all());
 
         return response()->json($updatedLink);
     }
 
-    public function destroy(Link $link): JsonResponse
+    public function destroy(ApiLink $link): JsonResponse
     {
         $deletionSuccessful = LinkRepository::delete($link);
 

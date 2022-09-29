@@ -4,13 +4,12 @@ namespace App\Http\Controllers\Models;
 
 use App\Http\Controllers\Controller;
 use App\Http\Controllers\Traits\ChecksOrdering;
-use App\Http\Requests\Models\MarkLinkWorkingRequest;
 use App\Http\Requests\Models\LinkStoreRequest;
-use App\Http\Requests\Models\ToggleLinkCheckRequest;
 use App\Http\Requests\Models\LinkUpdateRequest;
+use App\Http\Requests\Models\MarkLinkWorkingRequest;
+use App\Http\Requests\Models\ToggleLinkCheckRequest;
 use App\Models\Link;
 use App\Repositories\LinkRepository;
-use Exception;
 use Illuminate\Contracts\View\View;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
@@ -93,6 +92,14 @@ class LinkController extends Controller
 
     public function show(Link $link): View
     {
+        $link->load([
+            'lists' => function ($query) {
+                $query->visibleForUser();
+            },
+            'tags' => function ($query) {
+                $query->visibleForUser();
+            },
+        ]);
         return view('models.links.show', [
             'link' => $link,
             'history' => $link->audits()->latest()->get(),
