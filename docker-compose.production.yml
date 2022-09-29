@@ -25,8 +25,7 @@ services:
       - ./.env:/app/.env
       - linkace_app:/app
       - linkace_logs:/app/storage/logs
-      # Remove the hash of the following line if you want to use local backups
-      #- ./backups:/app/storage/app/backups
+      - ./backups:/app/storage/app/backups
 
   # --- nginx
   nginx:
@@ -55,4 +54,5 @@ volumes:
   linkace_app:
   linkace_logs:
   db:
+    external: true
     driver: local

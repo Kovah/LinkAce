@@ -51,7 +51,7 @@ trait SearchesLinks
                     $search->orWhere('title', 'like', $query);
                 }
 
-                // Also search for the title if applicable
+                // Also search for the description if applicable
                 if ($this->searchDescription = (bool)$request->input('search_description', false)) {
                     $search->orWhere('description', 'like', $query);
                 }

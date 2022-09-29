@@ -4,7 +4,7 @@ return [
 
     'backup' => [
 
-        'enabled' => env('BACKUP_ENABLED', false),
+        'enabled' => env('BACKUP_ENABLED', true),
 
         /*
          * The name of this application. You can use this name to monitor
@@ -270,7 +270,7 @@ return [
              * After cleaning up the backups remove the oldest backup until
              * this amount of megabytes has been reached.
              */
-            'delete_oldest_backups_when_using_more_megabytes_than' => env('BACKUP_MAX_SIZE', 500),
+            'delete_oldest_backups_when_using_more_megabytes_than' => env('BACKUP_MAX_SIZE', 265),
         ],
     ],
 

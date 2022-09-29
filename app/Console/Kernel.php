@@ -4,6 +4,7 @@ namespace App\Console;
 
 use App\Console\Commands\CheckLinksCommand;
 use App\Console\Commands\ImportCommand;
+use App\Console\Commands\ListUsersCommand;
 use App\Console\Commands\RegisterUserCommand;
 use App\Console\Commands\ResetPasswordCommand;
 use App\Console\Commands\UpdateLinkThumbnails;
@@ -19,6 +20,7 @@ class Kernel extends ConsoleKernel
         RegisterUserCommand::class,
         ResetPasswordCommand::class,
         UpdateLinkThumbnails::class,
+        ListUsersCommand::class,
         ViewRecoveryCodesCommand::class,
     ];
 

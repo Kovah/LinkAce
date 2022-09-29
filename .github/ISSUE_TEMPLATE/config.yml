@@ -1,0 +1,7 @@
+contact_links:
+  - name: Feature Requests
+    url: https://github.com/Kovah/LinkAce/discussions/categories/ideas-feature-requests
+    about: Do you have an idea how to improve LinkAce? Feel free to post it to the discussion forum that allows voting for other users.
+  - name: Help & Support
+    url: https://github.com/Kovah/LinkAce/discussions/categories/support
+    about: Need help with installation or usage of LinkAce? Please use the discussion forum.

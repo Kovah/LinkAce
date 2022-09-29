@@ -4,9 +4,7 @@
   <img src="https://www.linkace.org/images/linkace-social.jpg" title="Linkace">
 </p>
 
-&nbsp;
-
-<p align="center"><b>Your self-hosted bookmark archive. Free and open source.</b></p>
+<p align="center"><b>Your self-hosted bookmark archive.</b></p>
 
 <p align="center">
   <a href="https://twitter.com/LinkAceApp"><img src="https://img.shields.io/twitter/url?label=%40LinkAceApp&style=social&url=https%3A%2F%2Ftwitter.com%2FLinkAceApp" alt="Follow LinkAce on Twitter"></a>
@@ -20,8 +18,8 @@
 ### Contents
 
 * [About LinkAce](#about-linkace)
-* [Support](#bulb-support-for-linkace)
 * [Setup](#gear-setup)
+* [Support](#bulb-support-for-linkace)
 * [Contribution](#construction-contribution)
 
 
@@ -62,27 +60,32 @@ More screenshots of the app and further details about the features can be found 
 &nbsp;
 
 
-### :bulb: Support for LinkAce
-
-I built LinkAce to solve my own problem, and I now offer my solution and code without charging any money. I spent a lot of my free time building this application, so I won't offer any *free* personal support, customization or installation help. If you need help please visit the [community discussions](https://github.com/Kovah/LinkAce/discussions) and post your issue there.
-
-You can get personal and dedicated support by **becoming a [Patreon](https://www.patreon.com/Kovah)** or **[Github Sponsor](https://github.com/sponsors/Kovah)**. :star:
-
-#### Documentation and Community
-
-Details about all features and advanced configuration can be found in the [**project documentation**](https://www.linkace.org/docs/).  
-Additionally, you may visit the [community discussions](https://github.com/Kovah/LinkAce/discussions) to share your ideas, talk with other users or find help for specific problems.
-
-
-&nbsp;
-
-
 ### :gear: Setup
 
 LinkAce provides multiple ways of installing it on your server. The complete documentation for all installation methods can be found [**in the wiki**](https://www.linkace.org/docs/v1/setup/).
 
 * [Setup with Docker](https://www.linkace.org/docs/v1/setup/setup-with-docker/) (_recommended_)
 * [Setup without Docker](https://www.linkace.org/docs/v1/setup/setup-without-docker/)
+
+
+&nbsp;
+
+
+### :bulb: Support for LinkAce
+
+I built LinkAce to solve my own problem, and I now offer my solution and code without charging any money. I spent a lot of my free time building this application, so I won't offer any *free* personal support, customization or installation help. If you need help please visit the [community discussions](https://github.com/Kovah/LinkAce/discussions) and post your issue there.
+
+You can get personal and dedicated support by **becoming a supporter on [Open Collective](https://opencollective.com/linkace), [Patreon](https://www.patreon.com/Kovah) or [Github](https://github.com/sponsors/Kovah)**. :star:
+
+#### Our Supporters on Open Collective
+
+<a href="https://opencollective.com/linkace"><img src="https://opencollective.com/linkace/individuals.svg?width=890"></a>
+
+
+### Documentation and Community
+
+Details about all features and advanced configuration can be found in the [**project documentation**](https://www.linkace.org/docs/).  
+Additionally, you may visit the [community discussions](https://github.com/Kovah/LinkAce/discussions) to share your ideas, talk with other users or find help for specific problems.
 
 
 &nbsp;
