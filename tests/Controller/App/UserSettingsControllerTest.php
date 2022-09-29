@@ -42,7 +42,7 @@ class UserSettingsControllerTest extends TestCase
 
         $response->assertRedirect('/');
 
-        $updatedUser = User::first();
+        $updatedUser = User::notSystem()->first();
 
         $this->assertEquals('New Name', $updatedUser->name);
         $this->assertEquals('test@linkace.org', $updatedUser->email);

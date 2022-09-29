@@ -2,6 +2,7 @@
 
 namespace Tests\Controller\API;
 
+use App\Enums\ApiToken;
 use App\Models\Link;
 use App\Models\LinkList;
 use App\Models\Tag;
@@ -50,6 +51,51 @@ class LinkApiTest extends ApiTestCase
             ])
             ->assertJsonMissing([
                 'data' => [
+                    ['url' => 'https://private-link.com'],
+                ],
+            ]);
+    }
+
+    public function testForbiddenIndexRequestFromSystem(): void
+    {
+        $this->createTestLinks();
+        $this->createSystemToken();
+
+        $this->getJsonAuthorized('api/v1/links', useSystemToken: true)
+            ->assertForbidden();
+    }
+
+    public function testIndexRequestFromSystem(): void
+    {
+        $this->createTestLinks();
+        $this->createSystemToken([ApiToken::ABILITY_LINKS_READ]);
+
+        $this->getJsonAuthorized('api/v1/links', useSystemToken: true)
+            ->assertOk()
+            ->assertJson([
+                'data' => [
+                    ['url' => 'https://public-link.com'],
+                    ['url' => 'https://internal-link.com'],
+                ],
+            ])
+            ->assertJsonMissing([
+                'data' => [
+                    ['url' => 'https://private-link.com'],
+                ],
+            ]);
+    }
+
+    public function testIndexRequestFromSystemWithPrivate(): void
+    {
+        $this->createTestLinks();
+        $this->createSystemToken([ApiToken::ABILITY_LINKS_READ, ApiToken::ABILITY_SYSTEM_ACCESS_PRIVATE]);
+
+        $this->getJsonAuthorized('api/v1/links', useSystemToken: true)
+            ->assertOk()
+            ->assertJson([
+                'data' => [
+                    ['url' => 'https://public-link.com'],
+                    ['url' => 'https://internal-link.com'],
                     ['url' => 'https://private-link.com'],
                 ],
             ]);

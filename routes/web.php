@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\Admin\ApiTokenController as AdminApiTokenController;
 use App\Http\Controllers\Admin\SystemSettingsController;
 use App\Http\Controllers\Admin\UserManagementController;
 use App\Http\Controllers\App\ApiTokenController;
@@ -169,6 +170,15 @@ Route::group(['middleware' => ['auth', 'role:admin']], function () {
     Route::post('system/users/invite', [UserManagementController::class, 'inviteUser'])->name('system.users.invite');
     Route::delete('system/users/invite/{invitation}', [UserManagementController::class, 'deleteInvitation'])
         ->name('system.users.invite-delete');
+
+    Route::resource('system/api-tokens', AdminApiTokenController::class)
+        ->names([
+            'index' => 'system.api-tokens.index',
+            'show' => 'system.api-tokens.show',
+            'store' => 'system.api-tokens.store',
+            'destroy' => 'system.api-tokens.destroy',
+        ])
+        ->only(['index', 'show', 'store', 'destroy']);
 
     Route::get('system/logs', [LogViewerController::class, 'index'])->name('system-logs');
     Route::get('system/audit', AuditController::class)->name('system-audit');

@@ -13,6 +13,8 @@ class LinkCheckController extends Controller
     {
         $searchedUrl = $request->input('url', false);
 
+        $this->authorize('viewAny', Link::class);
+
         if (!$searchedUrl) {
             return response()->json(['linksFound' => false]);
         }

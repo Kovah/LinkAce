@@ -10,7 +10,10 @@ use App\Models\User;
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Artisan;
+use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Schema;
+use Illuminate\Support\Str;
 
 class MigrateUserData extends Migration
 {
@@ -27,6 +30,7 @@ class MigrateUserData extends Migration
 
         $this->addUserRoles();
         $this->migrateApiTokens();
+        $this->createSystemUser();
     }
 
     protected function migrateLinkVisibility(): void
@@ -139,5 +143,18 @@ class MigrateUserData extends Migration
         Schema::table('users', function (Blueprint $table) {
             $table->dropColumn('api_token');
         });
+    }
+
+    public function createSystemUser(): void
+    {
+        User::forceCreate([
+            'id' => '0',
+            'name' => 'System',
+            'email' => 'system@localhost',
+            'password' => Hash::make(Str::random(128)),
+            'two_factor_secret' => encrypt(Str::random(128)),
+        ]);
+
+        DB::table('users')->where('email', 'system@localhost')->update(['id' => 0]);
     }
 }

@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\API;
 
+use App\Enums\ApiToken;
 use App\Http\Controllers\Controller;
 use App\Http\Controllers\Traits\ChecksOrdering;
 use App\Http\Requests\Models\LinkStoreRequest;
@@ -18,7 +19,7 @@ class LinkController extends Controller
     public function __construct()
     {
         $this->allowedOrderBy = Link::$allowOrderBy;
-        $this->authorizeResource(Link::class, 'link');
+        $this->authorizeResource(Link::class . 'Api', 'link');
     }
 
     public function index(Request $request): JsonResponse
@@ -29,7 +30,7 @@ class LinkController extends Controller
         $this->checkOrdering();
 
         $links = Link::query()
-            ->visibleForUser()
+            ->visibleForUser(privateSystemAccess: $request->user()->tokenCan(ApiToken::ABILITY_SYSTEM_ACCESS_PRIVATE))
             ->orderBy($this->orderBy, $this->orderDir)
             ->paginate(getPaginationLimit());
 

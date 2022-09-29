@@ -18,7 +18,7 @@ class ListController extends Controller
     public function __construct()
     {
         $this->allowedOrderBy = LinkList::$allowOrderBy;
-        $this->authorizeResource(LinkList::class, 'list');
+        $this->authorizeResource(LinkList::class . 'Api', 'list');
     }
 
     public function index(Request $request): JsonResponse

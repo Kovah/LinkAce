@@ -18,7 +18,7 @@ class TagController extends Controller
     public function __construct()
     {
         $this->allowedOrderBy = Tag::$allowOrderBy;
-        $this->authorizeResource(Tag::class, 'tag');
+        $this->authorizeResource(Tag::class . 'Api', 'tag');
     }
 
     public function index(Request $request): JsonResponse

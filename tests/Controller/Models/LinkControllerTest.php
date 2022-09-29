@@ -19,8 +19,6 @@ class LinkControllerTest extends TestCase
     use RefreshDatabase;
     use PreparesTestData;
 
-    private $basicTestHtml;
-
     protected function setUp(): void
     {
         parent::setUp();
@@ -28,14 +26,14 @@ class LinkControllerTest extends TestCase
         $user = User::factory()->create();
         $this->actingAs($user);
 
-        $this->basicTestHtml = '<!DOCTYPE html><head>' .
+        $basicTestHtml = '<!DOCTYPE html><head>' .
             '<title>Example Title</title>' .
             '<meta name="description" content="This an example description">' .
             '</head></html>';
 
         Http::preventStrayRequests();
         Http::fake([
-            'example.com' => Http::response($this->basicTestHtml),
+            'example.com' => Http::response($basicTestHtml),
         ]);
 
         Queue::fake();

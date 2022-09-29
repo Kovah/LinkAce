@@ -24,7 +24,7 @@ class ExampleSeedingTest extends TestCase
 
     public function testSeedingResults(): void
     {
-        $this->assertEquals(1, User::count());
+        $this->assertEquals(2, User::count());
         $this->assertEquals(10, LinkList::count());
         $this->assertEquals(30, Tag::count());
         $this->assertEquals(50, Link::count());

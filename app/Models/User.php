@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Foundation\Auth\User as Authenticatable;
@@ -79,8 +80,23 @@ class User extends Authenticatable implements Auditable
 
     /*
      * ========================================================================
+     * SCOPES
+     */
+
+    public function scopeNotSystem(Builder $query): Builder
+    {
+        return $query->whereNot('id', 0);
+    }
+
+    /*
+     * ========================================================================
      * METHODS
      */
+
+    public static function getSystemUser(): User
+    {
+        return self::whereId(0)->first();
+    }
 
     public function isBlocked(): bool
     {
@@ -90,5 +106,10 @@ class User extends Authenticatable implements Auditable
     public function isCurrentlyLoggedIn(): bool
     {
         return $this->is(auth()->user());
+    }
+
+    public function isSystemUser(): bool
+    {
+        return $this->id === 0;
     }
 }

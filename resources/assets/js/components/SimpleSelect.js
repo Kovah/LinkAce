@@ -8,9 +8,14 @@ TomSelect.define('input_autogrow', TomSelect_input_autogrow);
 export default class SimpleSelect {
 
   constructor ($el) {
-    new TomSelect($el, {
+    let options = {
       plugins: ['caret_position', 'input_autogrow'],
       create: false
-    });
+    };
+    if (typeof $el.dataset.selectConfig !== 'undefined') {
+      const additionalOptions = JSON.parse($el.dataset.selectConfig);
+      options = {...options, ...additionalOptions};
+    }
+    new TomSelect($el, options);
   }
 }

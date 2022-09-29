@@ -40,6 +40,7 @@ return [
     'block' => 'Block',
     'unblock' => 'Unblock',
     'unblocked' => 'Unblocked',
+    'details' => 'Details',
 
     'menu' => 'Menu',
     'entries' => 'Entries',

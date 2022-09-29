@@ -18,7 +18,7 @@ class LinkFactory extends Factory
     public function definition(): array
     {
         return [
-            'user_id' => User::first()->id ?? User::factory(),
+            'user_id' => User::notSystem()->first()->id ?? User::factory(),
             'url' => $this->faker->url(),
             'title' => $this->faker->boolean(70)
                 ? $this->faker->words(random_int(2, 5), true)

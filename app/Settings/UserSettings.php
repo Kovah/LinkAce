@@ -49,22 +49,22 @@ class UserSettings extends Settings
     public bool $share_whatsapp;
     public bool $share_xing;
 
-    private static int $user_id = 0;
+    private static int $userId = 0;
 
     public static function group(): string
     {
         return 'user-' . self::getUserId();
     }
 
-    public static function setUserId(int $user_id): void
+    public static function setUserId(int $userId): void
     {
-        self::$user_id = $user_id;
+        self::$userId = $userId;
     }
 
     // By default, settings are scoped to the currently authenticated user
     protected static function getUserId(): int
     {
-        return self::$user_id ?: auth()->id();
+        return self::$userId ?: auth()->id();
     }
 
     public static function defaults(): array

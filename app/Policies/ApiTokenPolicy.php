@@ -2,6 +2,7 @@
 
 namespace App\Policies;
 
+use App\Enums\Role;
 use App\Models\User;
 use Illuminate\Auth\Access\HandlesAuthorization;
 use Laravel\Sanctum\PersonalAccessToken;
@@ -32,7 +33,7 @@ class ApiTokenPolicy
 
     public function delete(User $user, PersonalAccessToken $personalAccessToken): bool
     {
-        return $personalAccessToken->tokenable->is($user);
+        return $personalAccessToken->tokenable->is($user) || $user->hasRole(Role::ADMIN);
     }
 
     public function restore(User $user, PersonalAccessToken $personalAccessToken): bool

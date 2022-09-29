@@ -6,6 +6,10 @@ use App\Models\Link;
 use App\Models\LinkList;
 use App\Models\Note;
 use App\Models\Tag;
+use App\Policies\Api\LinkApiPolicy;
+use App\Policies\Api\LinkListApiPolicy;
+use App\Policies\Api\NoteApiPolicy;
+use App\Policies\Api\TagApiPolicy;
 use App\Policies\ApiTokenPolicy;
 use App\Policies\LinkListPolicy;
 use App\Policies\LinkPolicy;
@@ -27,6 +31,10 @@ class AuthServiceProvider extends ServiceProvider
         Note::class => NotePolicy::class,
         Tag::class => TagPolicy::class,
         PersonalAccessToken::class => ApiTokenPolicy::class,
+        Link::class . 'Api' => LinkApiPolicy::class,
+        LinkList::class . 'Api' => LinkListApiPolicy::class,
+        Note::class . 'Api' => NoteApiPolicy::class,
+        Tag::class . 'Api' => TagApiPolicy::class,
     ];
 
     /**

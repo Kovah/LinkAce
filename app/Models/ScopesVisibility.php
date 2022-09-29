@@ -7,10 +7,14 @@ use Illuminate\Database\Eloquent\Builder;
 
 trait ScopesVisibility
 {
-    public function scopeVisibleForUser(Builder $query, int $userId = null): Builder
+    public function scopeVisibleForUser(Builder $query, int $userId = null, bool $privateSystemAccess = false): Builder
     {
         if (is_null($userId) && auth()->check()) {
             $userId = auth()->id();
+        }
+
+        if ($userId === 0) {
+            return $privateSystemAccess ? $query : $query->whereNot('visibility', ModelAttribute::VISIBILITY_PRIVATE);
         }
 
         // Entity must be either public or internal, or have a private status together with the matching user id

@@ -128,6 +128,9 @@ return [
         'visibility' => [
             'visibility' => 'The Visibility must bei either 1 (public), 2 (internal) or 3 (private).',
         ],
+        'api_token_ability' => [
+            'api_token_ability' => 'The API token must at least have one ability from the predefined token abilities.',
+        ],
     ],
 
     /*

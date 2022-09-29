@@ -35,6 +35,9 @@
                 <a href="{{ route('system.users') }}" class="dropdown-item">
                     @lang('admin.user_management.title')
                 </a>
+                <a href="{{ route('system.api-tokens.index') }}" class="dropdown-item">
+                    @lang('auth.api_tokens_system')
+                </a>
                 <a href="{{ route('system-audit') }}" class="dropdown-item">
                     @lang('audit.log')
                 </a>

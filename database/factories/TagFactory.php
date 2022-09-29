@@ -18,7 +18,7 @@ class TagFactory extends Factory
     public function definition(): array
     {
         return [
-            'user_id' => User::first()->id ?? User::factory(),
+            'user_id' => User::notSystem()->first()->id ?? User::factory(),
             'name' => $this->faker->words(random_int(2, 3), true),
             'visibility' => ModelAttribute::VISIBILITY_PUBLIC,
         ];

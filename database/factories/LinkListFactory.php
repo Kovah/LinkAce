@@ -18,7 +18,7 @@ class LinkListFactory extends Factory
     public function definition(): array
     {
         return [
-            'user_id' => User::first()->id ?? User::factory(),
+            'user_id' => User::notSystem()->first()->id ?? User::factory(),
             'name' => ucwords($this->faker->words(random_int(2, 5), true)),
             'description' => random_int(0, 1) ? $this->faker->sentences(random_int(1, 2), true) : null,
             'visibility' => ModelAttribute::VISIBILITY_PUBLIC,

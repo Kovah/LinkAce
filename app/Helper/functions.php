@@ -122,6 +122,10 @@ function getPaginationLimit(): mixed
 
     $default = config('linkace.default.pagination');
 
+    if (auth()->id() === 0) {
+        return $default;
+    }
+
     if (request()->is('guest/*')) {
         return guestsettings('listitem_count') ?: $default;
     }

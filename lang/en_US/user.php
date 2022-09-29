@@ -25,6 +25,8 @@ return [
     'restore_confirmation' => 'Do you really want to restore this User?',
     'restore_successful' => 'The user :username was restored successfully.',
 
+    'system_user_locked' => 'The system user cannot login like a regular user. Please login with your personal account.',
+
     'action_not_allowed_on_user' => 'This action cannot be performed on the selected user.',
 
     'history_deleted' => 'User <code>:name</code> was deleted',

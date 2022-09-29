@@ -19,7 +19,7 @@ class NoteFactory extends Factory
     public function definition(): array
     {
         return [
-            'user_id' => User::first()->id ?? User::factory(),
+            'user_id' => User::notSystem()->first()->id ?? User::factory(),
             'link_id' => Link::first()->id ?? Link::factory(),
             'note' => $this->faker->sentences(random_int(1, 5), true),
             'visibility' => ModelAttribute::VISIBILITY_PUBLIC,

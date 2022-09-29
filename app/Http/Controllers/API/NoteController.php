@@ -14,7 +14,7 @@ class NoteController extends Controller
 {
     public function __construct()
     {
-        $this->authorizeResource(Note::class, 'note');
+        $this->authorizeResource(Note::class . 'Api', 'note');
     }
 
     public function store(NoteStoreRequest $request): JsonResponse

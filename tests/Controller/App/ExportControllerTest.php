@@ -19,7 +19,7 @@ class ExportControllerTest extends TestCase
 
         $this->seed('ExampleSeeder');
 
-        $this->user = User::first();
+        $this->user = User::notSystem()->first();
         $this->actingAs($this->user);
     }
 
