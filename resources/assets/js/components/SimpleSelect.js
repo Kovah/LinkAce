@@ -10,7 +10,8 @@ export default class SimpleSelect {
   constructor ($el) {
     new TomSelect($el, {
       plugins: ['caret_position', 'input_autogrow'],
-      create: false
+      create: false,
+      maxOptions: null,
     });
   }
 }
