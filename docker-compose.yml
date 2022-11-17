@@ -5,7 +5,6 @@ services:
 
   # --- MariaDB
   db:
-    container_name: "linkacev1-db"
     image: mariadb:10.6
     command: mysqld --character-set-server=utf8mb4 --collation-server=utf8mb4_bin
     environment:
@@ -16,10 +15,9 @@ services:
     ports:
       - "127.0.0.1:3306:3306"
     volumes:
-      - linkacev1-db:/var/lib/mysql
+      - linkace-db:/var/lib/mysql
 
   pg-db:
-    container_name: "linkacev1-pg-db"
     image: postgres:13
     environment:
       - POSTGRES_PASSWORD=${DB_PASSWORD}
@@ -28,11 +26,10 @@ services:
     ports:
       - "127.0.0.1:5432:5432"
     volumes:
-      - linkacev1-pg-db:/var/lib/postgresql/data
+      - linkace-pg-db:/var/lib/postgresql/data
 
   # --- PHP
   php:
-    container_name: "linkacev1-php"
     build:
       context: .
       dockerfile: ./resources/docker/dockerfiles/development.Dockerfile
@@ -44,7 +41,6 @@ services:
 
   # --- nginx
   nginx:
-    container_name: "linkacev1-nginx"
     image: bitnami/nginx:1.19
     ports:
       - "80:8080"
@@ -56,7 +52,6 @@ services:
 
   # --- Redis
   redis:
-    container_name: "linkacev1-redis"
     image: bitnami/redis:6.0
     environment:
       - REDIS_PASSWORD=${REDIS_PASSWORD}
@@ -64,7 +59,7 @@ services:
       - "127.0.0.1:6379:6379"
 
 volumes:
-  linkacev1-db:
+  linkace-db:
     driver: local
-  linkacev1-pg-db:
+  linkace-pg-db:
     driver: local
