@@ -26,6 +26,7 @@ export default class TagsSelect {
       delimiter: ',',
       persist: false,
       create: this.selectAllowsCreation(),
+      maxOptions: null,
       onItemAdd:function(){
         this.setTextboxValue('');
         this.refreshOptions();
