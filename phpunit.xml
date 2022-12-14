@@ -1,20 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <phpunit xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-         backupGlobals="false"
-         backupStaticAttributes="false"
+         xsi:noNamespaceSchemaLocation="./vendor/phpunit/phpunit/phpunit.xsd"
          bootstrap="vendor/autoload.php"
          colors="true"
-         convertErrorsToExceptions="true"
-         convertNoticesToExceptions="true"
-         convertWarningsToExceptions="true"
-         processIsolation="false"
-         stopOnFailure="false"
-         xsi:noNamespaceSchemaLocation="https://schema.phpunit.de/9.3/phpunit.xsd">
-  <coverage processUncoveredFiles="true">
-    <include>
-      <directory suffix=".php">./app</directory>
-    </include>
-  </coverage>
+>
   <testsuites>
     <testsuite name="Commands">
       <directory suffix="Test.php">./tests/Commands</directory>
@@ -35,24 +24,26 @@
       <directory suffix="Test.php">./tests/Models</directory>
     </testsuite>
   </testsuites>
+
   <extensions>
     <extension class="Tests\Bootstrap"/>
   </extensions>
+
+  <coverage processUncoveredFiles="true">
+    <include>
+      <directory suffix=".php">./app</directory>
+    </include>
+  </coverage>
+
   <php>
-    <server name="APP_ENV" value="testing"/>
-    <server name="APP_KEY" value="base64:cQiwS51aa/3oti4KXHtj8mZLNyiDTA7BCAB5GIMvg5w="/>
-    <server name="APP_DEMO" value="false"/>
-    <server name="DB_CONNECTION" value="testing"/>
-    <server name="BCRYPT_ROUNDS" value="4"/>
-    <server name="CACHE_DRIVER" value="array"/>
-    <server name="MAIL_DRIVER" value="array"/>
-    <server name="QUEUE_CONNECTION" value="sync"/>
-    <server name="SESSION_DRIVER" value="array"/>
-    <server name="LOG_CHANNEL" value="stderr"/>
-    <server name="APP_CONFIG_CACHE" value="bootstrap/cache/config.phpunit.php"/>
-    <server name="APP_SERVICES_CACHE" value="bootstrap/cache/services.phpunit.php"/>
-    <server name="APP_PACKAGES_CACHE" value="bootstrap/cache/packages.phpunit.php"/>
-    <server name="APP_ROUTES_CACHE" value="bootstrap/cache/routes.phpunit.php"/>
-    <server name="APP_EVENTS_CACHE" value="bootstrap/cache/events.phpunit.php"/>
+    <env name="APP_ENV" value="testing"/>
+    <env name="APP_KEY" value="base64:cQiwS51aa/3oti4KXHtj8mZLNyiDTA7BCAB5GIMvg5w="/>
+    <env name="BCRYPT_ROUNDS" value="4"/>
+    <env name="CACHE_DRIVER" value="array"/>
+    <env name="DB_CONNECTION" value="testing"/>
+    <env name="MAIL_MAILER" value="array"/>
+    <env name="QUEUE_CONNECTION" value="sync"/>
+    <env name="SESSION_DRIVER" value="array"/>
+    <env name="TELESCOPE_ENABLED" value="false"/>
   </php>
 </phpunit>

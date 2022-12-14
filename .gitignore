@@ -3,7 +3,7 @@
 /public/hot
 /public/storage
 /public/mix-manifest.json
-/resources/lang/vendor
+/lang/vendor
 /storage/*.key
 /tests/Controller/logs
 /vendor
