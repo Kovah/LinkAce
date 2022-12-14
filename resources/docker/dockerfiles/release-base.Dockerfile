@@ -1,4 +1,4 @@
-FROM php:8.1-fpm-alpine
+FROM php:8.2-fpm-alpine
 
 # Install package and PHP dependencies
 RUN apk add --no-cache mariadb-client postgresql postgresql-dev zip libzip-dev; \

@@ -22,7 +22,7 @@ RUN composer install -n --prefer-dist --no-dev
 
 # ================================
 # Compile all assets
-FROM node:16 AS npm_builder
+FROM node:18 AS npm_builder
 WORKDIR /srv
 
 COPY ./resources/assets ./resources/assets
@@ -33,7 +33,7 @@ RUN npm run production
 
 # ================================
 # Prepare the final image
-FROM linkace/base-image:php-8.1-alpine
+FROM linkace/base-image:php-8.2-alpine
 WORKDIR /app
 
 # Copy the app into the container
