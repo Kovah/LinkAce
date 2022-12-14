@@ -1,0 +1,106 @@
+<?php
+return [
+    'settings' => 'Impostazioni',
+    'user_settings' => 'Impostazioni Utente',
+    'account_settings' => 'Impostazioni Account',
+    'app_settings' => 'Impostazioni Applicazione',
+    'system_settings' => 'Impostazioni Di Sistema',
+    'guest_settings' => 'Impostazioni Guest',
+
+    'language' => 'Lingua',
+    'timezone' => 'Fuso Orario',
+    'date_format' => 'Formato Data',
+    'time_format' => 'Formato Orario',
+    'listitem_count' => 'Numero di Elementi nelle Liste',
+
+    'links_new_tab' => 'Apri i link esterni in nuove schede',
+
+    'markdown_for_text' => 'Abilita Markdown per descrizioni e note',
+
+    'privacy' => 'Privacy',
+    'links_private_default' => 'Link privati per impostazione predefinita',
+    'links_private_default_help' => 'Abilitando questa impostazione tutti i nuovi link saranno privati per impostazione predefinita',
+    'notes_private_default' => 'Note private per impostazione predefinita',
+    'notes_private_default_help' => 'Abilitando questa impostazione tutte le nuove note saranno private per impostazione predefinita',
+    'tags_private_default' => 'Tag privati per impostazione predefinita',
+    'tags_private_default_help' => 'Abilitando questa impostazione tutti i nuovi tag saranno privati per impostazione predefinita',
+    'lists_private_default' => 'Liste private per impostazione predefinita',
+    'lists_private_default_help' => 'Abilitando questa impostazione tutte le nuove liste saranno private per impostazione predefinita',
+
+    'archive_backups' => 'Backup della Wayback Machine',
+    'archive_backups_help' => 'Se abilitato, LinkAce chiederà alla <a href="https://archive.org/">Wayback Machine</a> di eseguire il backup dei link. La Wayback Machine è gestita dall\'Internet Archive, un\'organizzazione senza scopo di lucro. Si prega di considerare <a href="https://archive.org/donate/">una donazione all\'Internet Archive</a>.',
+    'archive_backups_enabled' => 'Abilita backup',
+    'archive_backups_enabled_help' => 'Se abilitato, i link non privati saranno salvati dall\'Internet Archive.',
+    'archive_private_backups_enabled' => 'Abilita il backup dei collegamenti privati',
+    'archive_private_backups_enabled_help' => 'Se abilitata, verranno salvati anche i link privati. I backup devono essere abilitati.',
+
+    'display_mode' => 'Mostra link come',
+    'display_mode_list_detailed' => 'lista con più dettagli',
+    'display_mode_list_simple' => 'lista con meno dettagli',
+    'display_mode_cards' => 'schede con meno dettagli',
+    'display_mode_cards_detailed' => 'schede con più dettagli',
+
+    'sharing' => 'Condivisione Link',
+    'sharing_help' => 'Abilita tutti i servizi che vuoi visualizzare per i link, per poterli condividere semplicemente con un clic.',
+    'sharing_toggle' => 'Attiva/disattiva tutto',
+
+    'darkmode' => 'Modalità Dark',
+    'darkmode_help' => 'Puoi scegliere l\'attivazione permanente o automatica in base alle impostazioni del tuo dispositivo. (<small>maggiori info<a href="https://caniuse.com/#search=prefers-color-scheme">qui</a> se il tuo browser supporta il rilevamento automatico</small>)',
+    'darkmode_disabled' => 'Disabilitata',
+    'darkmode_auto' => 'Automaticamente',
+    'darkmode_permanent' => 'Permanente',
+
+    'save_settings' => 'Salva Impostazioni',
+    'settings_saved' => 'Impostazioni aggiornate correttamente!',
+
+    'bookmarklet' => 'Bookmarklet',
+    'bookmarklet_button' => 'Trascina nei Bookmark o fai clic con il tasto destro del mouse e salvalo come Bookmark',
+    'bookmarklet_help' => 'Aggiungi questo Bookmarklet al tuo browser per aggiungere rapidamente i link dai siti che visiti senza dover aprire LinkAce manualmente.',
+
+    'change_password' => 'Cambia Password',
+    'old_password' => 'Vecchia Password',
+    'new_password' => 'Nuova Password',
+    'new_password2' => 'Ripeti la nuova password',
+    'password_updated' => 'La password è stata cambiata correttamente!',
+    'old_password_invalid' => 'La vecchia password non è valida!',
+
+    'two_factor_auth' => 'Autenticazione a due fattori',
+    'two_factor_enable' => 'Abilita autenticazione a due fattori',
+    'two_factor_disable' => 'Disabilita autenticazione a due fattori',
+    'two_factor_setup_app' => 'L\'autenticazione a due fattori è abilitata. Ora configura il tuo dispositivo di autenticazione scansionando il seguente codice QR.',
+    'two_factor_setup_url' => 'Il codice QR non funziona? Puoi anche usare direttamente questo URL.',
+    'two_factor_recovery_codes' => 'Memorizza questi codici di recupero in un gestore di password sicuro. Possono essere utilizzati per recuperare l\'accesso al tuo account se il tuo dispositivo di autenticazione a due fattori viene perso.',
+    'two_factor_recovery_codes_view' => 'Visualizza Codici Di Recupero',
+    'two_factor_regenerate_recovery_codes' => 'Genera nuovi codici di recupero',
+
+    'api_token' => 'Token API',
+    'api_token_generate' => 'Genera Token',
+    'api_token_generate_confirm' => 'Vuoi davvero generare un nuovo token?',
+    'api_token_help' => 'Il token API può essere utilizzato per accedere a LinkAce da altre applicazioni o script.',
+    'api_token_generate_info' => 'Attenzione: Se hai già un token API, rigenerarlo invaliderà tutte le integrazioni esistenti!',
+    'api_token_generate_failure' => 'Non è stato possibile generare un nuovo token API. Si prega di controllare la console del browser e i log delle applicazioni per ulteriori informazioni.',
+
+    'sys_page_title' => 'Titolo della Pagina',
+    'sys_guest_access' => 'Abilita Accesso Guest',
+    'sys_guest_access_help' => 'Se abilitato, il Guest sarà in grado di vedere tutti i link che non sono privati.',
+    'sys_custom_header_content' => 'Contenuto Header Personalizzato',
+    'sys_custom_header_content_help' => 'Il contenuto inserito verrà integrato prima del tag &lt;/head&gt; su tutti i siti LinkAce. Utile per integrare gli script di analisi o personalizzazione. Attenzione: i contenuti integrati non sono filtrati e potrebbero rendere il sito non accessibile!',
+
+    'cron_token' => 'Token Cron',
+    'cron_token_generate' => 'Genera Token',
+    'cron_token_generate_confirm' => 'Vuoi davvero generare un nuovo token?',
+    'cron_token_help' => 'Il token cron è necessario per eseguire il servizio cron che controlla i collegamenti morti o l\'esecuzione dei backup.',
+    'cron_token_url' => 'Utilizza quest\'URL per il servizio cron: <span class="cron-token-url">:route</span>',
+    'cron_token_generate_info' => 'Attenzione: Se hai già un token Cron, rigenerarlo invaliderà i processi cron già configurati!',
+    'cron_token_generate_failure' => 'Non è stato possibile generare un nuovo token cron. Si prega di controllare la console del browser e i log delle applicazioni per ulteriori informazioni.',
+    'cron_token_auth_failure' => 'Il token cron fornito non è valido',
+    'cron_execute_successful' => 'Cron eseguito con successo',
+
+    'update_check' => 'Controllo Aggiornamenti',
+    'update_check_running' => 'Ricerca aggiornamenti...',
+    'update_check_version_found' => 'Aggiornamento trovato. La versione #VERSION# è disponibile.',
+    'update_check_success' => 'Nessun aggiornamento disponibile.',
+    'update_check_failed' => 'Impossibile controllare gli aggiornamenti.',
+
+    'guest_settings_info' => 'Le seguenti impostazioni si applicheranno agli utenti Guest che visitano il sito, se l\'accesso Guest è abilitato.',
+];
