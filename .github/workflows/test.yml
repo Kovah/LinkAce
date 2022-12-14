@@ -6,7 +6,7 @@ on:
 jobs:
 
   test-js:
-    name: Test asset generation process on Node 16 LTS
+    name: Test asset generation process on Node 18 LTS
     runs-on: ubuntu-latest
 
     steps:
