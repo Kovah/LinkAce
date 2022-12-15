@@ -12,20 +12,23 @@ use Shaarli\NetscapeBookmarkParser\NetscapeBookmarkParser;
 
 class ImportHtmlBookmarks
 {
-    protected $imported = 0;
-    protected $skipped = 0;
+    protected int $imported = 0;
+    protected int $skipped = 0;
 
     /**
      * Import all links from a given bookmarks file.
      *
      * @param string $data
      * @param string $userId
-     * @param bool   $generateMeta
+     * @param bool $generateMeta
      * @return bool
      */
     public function run(string $data, string $userId, bool $generateMeta = true): bool
     {
-        $parser = new NetscapeBookmarkParser(true, [], '0', storage_path('logs'));
+        $parser = new NetscapeBookmarkParser(
+            defaultPub: usersettings('links_private_default'),
+            logDir: storage_path('logs')
+        );
 
         try {
             $links = $parser->parseString($data);
@@ -55,6 +58,7 @@ class ImportHtmlBookmarks
                 $description = $link['note'];
             }
 
+            Log::debug($link['uri'] .': '. $link['pub']);
             $newLink = new Link([
                 'user_id' => $userId,
                 'url' => $link['uri'],

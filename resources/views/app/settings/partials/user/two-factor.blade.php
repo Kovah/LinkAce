@@ -31,7 +31,9 @@
                     <p class="mt-5 mb-4">@lang('settings.two_factor_setup_app')</p>
 
                     <div class="mb-4">
-                        {!! $user->twoFactorQrCodeSvg() !!}
+                        <div class="d-inline-block border border-5 border-white">
+                            {!! $user->twoFactorQrCodeSvg() !!}
+                        </div>
                     </div>
 
                     <details>

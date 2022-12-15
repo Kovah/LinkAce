@@ -17,7 +17,6 @@ class UpdateLinkThumbnails extends Command
         $this->confirm('This command updates the thumbnail for all links with the status "ok". This can take a long time, depending on the amount of links you have saved. Do you want to proceed?');
 
         $totalCount = Link::where('status', Link::STATUS_OK)->count();
-        $processedLinks = 0;
 
         if ($totalCount === 0) {
             $this->warn('No links with status "ok" found. Aborting');
@@ -26,14 +25,11 @@ class UpdateLinkThumbnails extends Command
         $this->comment("Started processing of $totalCount links...");
 
         Link::where('status', Link::STATUS_OK)->latest()
-            ->chunk(100, function ($links) use ($processedLinks, $totalCount) {
-                foreach ($links as $link) {
+            ->chunk(100, function ($links) {
+                $this->withProgressBar($links, function ($link) {
                     $this->updateThumbnailForLink($link);
                     sleep(1); // Rate limiting of outgoing traffic
-                }
-
-                $processedLinks += count($links);
-                $this->comment("Processed $processedLinks of $totalCount links.");
+                });
             });
 
         $this->info('Finished processing all links.');

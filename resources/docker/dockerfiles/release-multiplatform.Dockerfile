@@ -10,11 +10,12 @@ COPY ./app /app/app
 COPY ./bootstrap /app/bootstrap
 COPY ./config /app/config
 COPY ./database /app/database
-COPY ./resources /app
+COPY ./lang /app/lang
+COPY ./resources /app/resources
 COPY ./routes /app/routes
 COPY ./tests /app/tests
 
-COPY ["./artisan", "./composer.json", "./composer.lock", "./README.md", "./LICENSE.md", "/app/"]
+COPY ["./artisan", "./composer.json", "./composer.lock", "/app/"]
 COPY ./.env.example /app/.env
 
 # Install dependencies using Composer
@@ -22,7 +23,7 @@ RUN composer install -n --prefer-dist --no-dev
 
 # ================================
 # Compile all assets
-FROM node:16 AS npm_builder
+FROM node:18 AS npm_builder
 WORKDIR /srv
 
 COPY ./resources/assets ./resources/assets
@@ -33,7 +34,7 @@ RUN npm run production
 
 # ================================
 # Prepare the final image
-FROM linkace/base-image:php-8.1-alpine
+FROM linkace/base-image:php-8.2-alpine
 WORKDIR /app
 
 # Copy the app into the container
@@ -42,12 +43,13 @@ COPY ./bootstrap /app/bootstrap
 COPY ./config /app/config
 COPY ./database /app/database
 COPY ./public /app/public
+COPY ./lang /app/lang
 COPY ./resources /app/resources
 COPY ./routes /app/routes
 COPY ./storage /app/storage
 COPY ./tests /app/tests
 
-COPY ["./artisan", "./composer.json", "./composer.lock", "./README.md", "./LICENSE.md", "./package.json", "./server.php", "/app/"]
+COPY ["./artisan", "./composer.json", "./composer.lock", "./README.md", "./LICENSE.md", "./package.json", "/app/"]
 COPY ./.env.example /app/.env
 
 # Copy the PHP and nginx config files
@@ -63,7 +65,9 @@ RUN mv vendor/spatie/laravel-backup/resources/lang/de vendor/spatie/laravel-back
   mv vendor/spatie/laravel-backup/resources/lang/en vendor/spatie/laravel-backup/resources/lang/en_US; \
   mv vendor/spatie/laravel-backup/resources/lang/es vendor/spatie/laravel-backup/resources/lang/es_ES; \
   mv vendor/spatie/laravel-backup/resources/lang/fr vendor/spatie/laravel-backup/resources/lang/fr_FR; \
+  mv vendor/spatie/laravel-backup/resources/lang/it vendor/spatie/laravel-backup/resources/lang/it_IT; \
   mv vendor/spatie/laravel-backup/resources/lang/no vendor/spatie/laravel-backup/resources/lang/no_NO; \
+  mv vendor/spatie/laravel-backup/resources/lang/pl vendor/spatie/laravel-backup/resources/lang/pl_PL; \
   mv vendor/spatie/laravel-backup/resources/lang/zh-CN vendor/spatie/laravel-backup/resources/lang/zh_CN
 
 # Copy files from the theme build
