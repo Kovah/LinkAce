@@ -10,7 +10,8 @@ export default class SimpleSelect {
   constructor ($el) {
     let options = {
       plugins: ['caret_position', 'input_autogrow'],
-      create: false
+      create: false,
+      maxOptions: null,
     };
     if (typeof $el.dataset.selectConfig !== 'undefined') {
       const additionalOptions = JSON.parse($el.dataset.selectConfig);

@@ -17,7 +17,10 @@ class ImportHtmlBookmarks
 
     public function run(string $data, string $userId, bool $generateMeta = true): bool
     {
-        $parser = new NetscapeBookmarkParser(logDir: storage_path('logs'));
+        $parser = new NetscapeBookmarkParser(
+            defaultPub: usersettings('links_private_default'),
+            logDir: storage_path('logs')
+        );
 
         try {
             $links = $parser->parseString($data);

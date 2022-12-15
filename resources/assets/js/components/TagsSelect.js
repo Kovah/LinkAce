@@ -30,6 +30,7 @@ export default class TagsSelect {
       valueField: 'id',
       labelField: 'name',
       searchField: 'name',
+      maxOptions: null,
       onItemAdd: function () {
         this.setTextboxValue('');
         this.refreshOptions();
