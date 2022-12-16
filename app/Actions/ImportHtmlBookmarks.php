@@ -58,7 +58,6 @@ class ImportHtmlBookmarks
                 $description = $link['note'];
             }
 
-            Log::debug($link['uri'] .': '. $link['pub']);
             $newLink = new Link([
                 'user_id' => $userId,
                 'url' => $link['uri'],
