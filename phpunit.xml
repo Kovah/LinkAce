@@ -38,6 +38,7 @@
   <php>
     <env name="APP_ENV" value="testing"/>
     <env name="APP_KEY" value="base64:cQiwS51aa/3oti4KXHtj8mZLNyiDTA7BCAB5GIMvg5w="/>
+    <env name="APP_DEMO" value="false"/>
     <env name="BCRYPT_ROUNDS" value="4"/>
     <env name="CACHE_DRIVER" value="array"/>
     <env name="DB_CONNECTION" value="testing"/>
