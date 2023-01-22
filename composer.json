@@ -4,7 +4,7 @@
   "license": "GPL-3.0-or-later",
   "type": "project",
   "require": {
-    "php": "^8.0 | ^8.1",
+    "php": "^8.0 | ^8.1 | ^8.2",
     "ext-pdo": "*",
     "composer/semver": "^1.5",
     "doctrine/dbal": "^3.3.5",
