@@ -3,6 +3,7 @@
 namespace App\Console;
 
 use App\Console\Commands\CheckLinksCommand;
+use App\Console\Commands\CompleteSetupCommand;
 use App\Console\Commands\ImportCommand;
 use App\Console\Commands\ListUsersCommand;
 use App\Console\Commands\RegisterUserCommand;
@@ -16,6 +17,7 @@ class Kernel extends ConsoleKernel
 {
     protected $commands = [
         CheckLinksCommand::class,
+        CompleteSetupCommand::class,
         ImportCommand::class,
         RegisterUserCommand::class,
         ResetPasswordCommand::class,

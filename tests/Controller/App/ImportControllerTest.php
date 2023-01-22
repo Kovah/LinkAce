@@ -2,11 +2,13 @@
 
 namespace Tests\Controller\App;
 
-use App\Models\Link;
+use App\Enums\ModelAttribute;
 use App\Models\User;
+use App\Settings\UserSettings;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Http\UploadedFile;
 use Illuminate\Support\Facades\Http;
+use Illuminate\Testing\TestResponse;
 use Tests\TestCase;
 
 class ImportControllerTest extends TestCase
@@ -30,34 +32,56 @@ class ImportControllerTest extends TestCase
 
     public function testValidImportActionResponse(): void
     {
-        $testHtml = '<!DOCTYPE html><head>' .
-            '<title>Example Title</title>' .
-            '<meta name="description" content="This an example description">' .
-            '</head></html>';
-
-        Http::fake([
-            '*' => Http::response($testHtml),
-        ]);
-
-        $exampleData = file_get_contents(__DIR__ . '/data/import_example.html');
-        $file = UploadedFile::fake()->createWithContent('import_example.html', $exampleData);
-
-        $response = $this->post('import', [
-            'import-file' => $file,
-        ], [
-            'Accept' => 'application/json',
-        ]);
+        $response = $this->importBookmarks();
 
         $response->assertOk()
             ->assertJson([
                 'success' => true,
             ]);
 
-        $linkCount = Link::count();
-        $this->assertEquals(5, $linkCount);
+        $this->assertDatabaseCount('links', 5);
+        $this->assertDatabaseCount('tags', 18);
+    }
 
-        // Test correct tag creation with and without white space
-        $this->assertDatabaseHas('tags', ['name' => 'color-wheel']);
-        $this->assertDatabaseHas('tags', ['name' => 'design systems']);
+    public function testImportWithPrivateDefaults(): void
+    {
+        $settings = app(UserSettings::class);
+        $settings->links_default_visibility = ModelAttribute::VISIBILITY_PRIVATE;
+        $settings->tags_default_visibility = ModelAttribute::VISIBILITY_PRIVATE;
+        $settings->save();
+
+        $response = $this->importBookmarks();
+
+        $response->assertOk()
+            ->assertJson([
+                'success' => true,
+            ]);
+
+        $this->assertDatabaseCount('links', 5);
+
+        $this->assertDatabaseHas('links', [
+            'url' => 'https://loader.io/',
+            'visibility' => ModelAttribute::VISIBILITY_PRIVATE,
+        ]);
+
+        $this->assertDatabaseHas('tags', [
+            'name' => 'article',
+            'visibility' => ModelAttribute::VISIBILITY_PRIVATE,
+        ]);
+    }
+
+    protected function importBookmarks(): TestResponse
+    {
+        $testHtml = '<!DOCTYPE html><head><title>DuckDuckGo</title></head></html>';
+        Http::fake(['*' => Http::response($testHtml)]);
+
+        $exampleData = file_get_contents(__DIR__ . '/data/import_example.html');
+        $file = UploadedFile::fake()->createWithContent('import_example.html', $exampleData);
+
+        return $this->post('import', [
+            'import-file' => $file,
+        ], [
+            'Accept' => 'application/json',
+        ]);
     }
 }
