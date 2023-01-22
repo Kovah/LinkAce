@@ -58,7 +58,6 @@ class ImportHtmlBookmarks
                 $description = $link['note'];
             }
 
-            Log::debug($link['uri'] .': '. $link['pub']);
             $newLink = new Link([
                 'user_id' => $userId,
                 'url' => $link['uri'],
@@ -80,6 +79,7 @@ class ImportHtmlBookmarks
                     $newTag = Tag::firstOrCreate([
                         'user_id' => $userId,
                         'name' => $tag,
+                        'is_private' => usersettings('tags_private_default') === '1',
                     ]);
                     $newTags[] = $newTag->id;
                 }

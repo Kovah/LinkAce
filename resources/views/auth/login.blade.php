@@ -1,4 +1,4 @@
-@extends('layouts.app')
+@extends('layouts.auth')
 
 @section('content')
 
@@ -7,6 +7,7 @@
             @if(env('APP_DEMO', false))
                 <div class="alert alert-info small">@lang('linkace.demo_login_hint')</div>
             @endif
+            @include('partials.alerts')
             @include('auth.login-form')
         </div>
     </div>

@@ -1,9 +1,13 @@
-@extends('layouts.app')
+@extends('layouts.auth')
 
 @section('content')
 
     <div class="row justify-content-center">
         <div class="col-12 col-md-8">
+
+            @if($errors->has('email') || session()->has('status'))
+                <div class="alert alert-info">@lang('passwords.sent')</div>
+            @endif
 
             <div class="card">
                 <div class="card-header">
@@ -25,15 +29,10 @@
                             <label class="form-label" for="email">@lang('linkace.email')</label>
                             <div class="control">
                                 <input name="email" id="email"
-                                    class="form-control{{ $errors->has('email') ? ' is-invalid' : '' }}"
+                                    class="form-control"
                                     type="email" placeholder="@lang('placeholder.email')" value="{{ old('email') }}"
                                     required autofocus>
                             </div>
-                            @if ($errors->has('email'))
-                                <p class="invalid-feedback" role="alert">
-                                    {{ $errors->first('email') }}
-                                </p>
-                            @endif
                         </div>
 
                         <button type="submit" class="btn btn-primary">
