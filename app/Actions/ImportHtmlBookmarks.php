@@ -79,6 +79,7 @@ class ImportHtmlBookmarks
                     $newTag = Tag::firstOrCreate([
                         'user_id' => $userId,
                         'name' => $tag,
+                        'is_private' => usersettings('tags_private_default') === '1',
                     ]);
                     $newTags[] = $newTag->id;
                 }
