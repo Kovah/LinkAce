@@ -2,33 +2,11 @@
 
 namespace App\Console;
 
-use App\Console\Commands\CheckLinksCommand;
-use App\Console\Commands\CleanupLinkHistoriesCommand;
-use App\Console\Commands\ImportCommand;
-use App\Console\Commands\ListUsersCommand;
-use App\Console\Commands\RegisterUserCommand;
-use App\Console\Commands\ResetPasswordCommand;
-use App\Console\Commands\UpdateLinkThumbnails;
 use Illuminate\Console\Scheduling\Schedule;
 use Illuminate\Foundation\Console\Kernel as ConsoleKernel;
 
 class Kernel extends ConsoleKernel
 {
-    /**
-     * The Artisan commands provided by your application.
-     *
-     * @var array
-     */
-    protected $commands = [
-        RegisterUserCommand::class,
-        CheckLinksCommand::class,
-        ResetPasswordCommand::class,
-        CleanupLinkHistoriesCommand::class,
-        ImportCommand::class,
-        UpdateLinkThumbnails::class,
-        ListUsersCommand::class,
-    ];
-
     /**
      * Define the application's command schedule.
      *
