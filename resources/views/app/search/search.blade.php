@@ -132,9 +132,11 @@
         <div class="card-table mt-4">
 
             @if($results->isEmpty())
-                <div class="alert alert-info m-3">
-                    @lang('search.no_results')
-                </div>
+                @if($query_settings['performed_search'])
+                    <div class="alert alert-info m-3">
+                        @lang('search.no_results')
+                    </div>
+                @endif
             @else
                 @include('app.search.partials.table', ['results' => $results])
             @endif
