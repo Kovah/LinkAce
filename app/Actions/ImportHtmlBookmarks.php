@@ -25,10 +25,7 @@ class ImportHtmlBookmarks
      */
     public function run(string $data, string $userId, bool $generateMeta = true): bool
     {
-        $parser = new NetscapeBookmarkParser(
-            defaultPub: usersettings('links_private_default'),
-            logDir: storage_path('logs')
-        );
+        $parser = new NetscapeBookmarkParser(logger: Log::getLogger());
 
         try {
             $links = $parser->parseString($data);
@@ -44,38 +41,36 @@ class ImportHtmlBookmarks
         }
 
         foreach ($links as $link) {
-            if (Link::whereUrl($link['uri'])->first()) {
+            if (Link::whereUrl($link['url'])->first()) {
                 $this->skipped++;
                 continue;
             }
 
             if ($generateMeta) {
-                $linkMeta = (new HtmlMeta)->getFromUrl($link['uri']);
-                $title = $link['title'] ?: $linkMeta['title'];
-                $description = $link['note'] ?: $linkMeta['description'];
+                $linkMeta = (new HtmlMeta)->getFromUrl($link['url']);
+                $title = $link['name'] ?: $linkMeta['title'];
+                $description = $link['description'] ?: $linkMeta['description'];
             } else {
-                $title = $link['title'];
-                $description = $link['note'];
+                $title = $link['name'];
+                $description = $link['description'];
             }
 
             $newLink = new Link([
                 'user_id' => $userId,
-                'url' => $link['uri'],
+                'url' => $link['url'],
                 'title' => $title,
                 'description' => $description,
-                'icon' => LinkIconMapper::mapLink($link['uri']),
-                'is_private' => $link['pub']
+                'icon' => LinkIconMapper::mapLink($link['url']),
+                'is_private' => usersettings('tags_private_default') === '1' ? true : $link['public'],
             ]);
-            $newLink->created_at = Carbon::createFromTimestamp($link['time']);
+            $newLink->created_at = Carbon::createFromTimestamp($link['dateCreated']);
             $newLink->updated_at = Carbon::now();
             $newLink->timestamps = false;
             $newLink->save();
 
             if (!empty($link['tags'])) {
-                $tags = explode(' ', $link['tags']);
-
                 $newTags = [];
-                foreach ($tags as $tag) {
+                foreach ($link['tags'] as $tag) {
                     $newTag = Tag::firstOrCreate([
                         'user_id' => $userId,
                         'name' => $tag,
