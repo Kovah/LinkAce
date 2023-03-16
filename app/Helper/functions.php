@@ -209,3 +209,13 @@ function escapeSearchQuery(string $query): string
         $query
     );
 }
+
+/**
+ * Get a list of all routes that are accessible by guests.
+ *
+ * @return string[]
+ */
+function guestRoutes(): array
+{
+    return ['guest/*', 'login', 'forgot-password', 'reset-password/*', 'two-factor-challenge', 'email/verify'];
+}

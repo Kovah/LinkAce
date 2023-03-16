@@ -139,13 +139,27 @@ return [
     'guest_access' => env('GUEST_ACCESS', false),
 
     /**
-     * |--------------------------------------------------------------------------
-     * | Setup Completed Flag
-     * |--------------------------------------------------------------------------
+     * -------------------------------------------------------------------------
+     * Setup Completed Flag
+     * -------------------------------------------------------------------------
+     *
      * @deprecated v1.10.0 Setting is no longer actively used and remains for proper migration to a database setting.
      */
 
     'setup_completed' => env('SETUP_COMPLETED', false),
+
+    /*
+    |--------------------------------------------------------------------------
+    | Trusted Proxies
+    |--------------------------------------------------------------------------
+    |
+    | Specify which proxies should be trusted by default. As it's unknown which
+    | proxy ist used in front of LinkAce, all are allowed by default.
+    | Also see App\Http\Middleware\TrustProxies
+    |
+    */
+
+    'trusted_proxies' => explode(',', env('TRUSTED_PROXIES', '*')),
 
     /*
     |--------------------------------------------------------------------------
