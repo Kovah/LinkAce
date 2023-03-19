@@ -159,7 +159,7 @@ return [
     |
     */
 
-    'trusted_proxies' => explode(',', env('TRUSTED_PROXIES', '*')),
+    'trusted_proxies' => env('TRUSTED_PROXIES', '*'),
 
     /*
     |--------------------------------------------------------------------------
