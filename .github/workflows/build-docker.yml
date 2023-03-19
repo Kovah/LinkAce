@@ -41,7 +41,7 @@ jobs:
           DOCKER_IMAGE_GITUHB=ghcr.io/kovah/linkace
           VERSION=${GITHUB_REF#refs/tags/}
           TAGS="${DOCKER_IMAGE}:${VERSION},${DOCKER_IMAGE}:latest,${DOCKER_IMAGE_GITUHB}:${VERSION},${DOCKER_IMAGE_GITUHB}:latest"
-          echo ::set-output name=tags::${TAGS}
+          echo "tags=${TAGS}" >> $GITHUB_OUTPUT
 
       - name: Build and push advanced image
         uses: docker/build-push-action@v2
@@ -59,7 +59,7 @@ jobs:
           DOCKER_IMAGE_GITHUB=ghcr.io/kovah/linkace
           VERSION=${GITHUB_REF#refs/tags/}
           TAGS="${DOCKER_IMAGE}:${VERSION}-php-nginx,${DOCKER_IMAGE}:php-nginx,${DOCKER_IMAGE}:${VERSION}-simple,${DOCKER_IMAGE}:simple,${DOCKER_IMAGE_GITHUB}:${VERSION}-php-nginx,${DOCKER_IMAGE_GITHUB}:php-nginx,${DOCKER_IMAGE_GITHUB}:${VERSION}-simple,${DOCKER_IMAGE_GITHUB}:simple"
-          echo ::set-output name=tags::${TAGS}
+          echo "tags=${TAGS}" >> $GITHUB_OUTPUT
 
       - name: Build and push simple image
         uses: docker/build-push-action@v2
