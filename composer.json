@@ -7,7 +7,6 @@
     "php": "^8.0.2 | ^8.1 | ^8.2",
     "composer/semver": "^3.3.2",
     "doctrine/dbal": "^3.6.1",
-    "fideloper/proxy": "^4.4",
     "guzzlehttp/guzzle": "^7.0.1",
     "kovah/laravel-html-meta": "^2.0",
     "laracasts/flash": "^3.1",
