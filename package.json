@@ -1,6 +1,6 @@
 {
   "name": "linkace",
-  "version": "1.11.3",
+  "version": "1.11.4",
   "description": "A small, selfhosted bookmark manager with advanced features, built with Laravel and Docker",
   "homepage": "https://github.com/Kovah/LinkAce",
   "repository": {
