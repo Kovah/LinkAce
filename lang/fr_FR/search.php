@@ -22,6 +22,7 @@ return [
     'order_by.created_at:desc' => 'Date de Création descendante',
     'order_by.number_links:asc' => 'Nombre de Liens ascendants',
     'order_by.number_links:desc' => 'Nombre de Liens descendants',
+    'order_by.random' => 'Aléatoire',
 
     'no_results' => 'Aucun résultat trouvé.',
 

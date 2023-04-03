@@ -31,11 +31,14 @@ class LinkController extends Controller
 
         $links = Link::byUser()
             ->with('tags')
-            ->orderBy($orderBy, $orderDir)
-            ->paginate(getPaginationLimit());
+            ->orderBy($orderBy, $orderDir);
+
+        if ($orderBy == 'random') {
+            $links->inRandomOrder();
+        }
 
         return view('models.links.index', [
-            'links' => $links,
+            'links' => $links->paginate(getPaginationLimit()),
             'route' => $request->getBaseUrl(),
             'orderBy' => $orderBy,
             'orderDir' => $orderDir,
