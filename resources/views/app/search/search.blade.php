@@ -121,6 +121,10 @@
                                     @lang('search.order_by.' . $order_by)
                                 </option>
                             @endforeach
+                            <option value="random"
+                                @if($query_settings['order_by'] == 'random') selected @endif>
+                                @lang('search.order_by.random')
+                            </option>
                         </select>
                     </div>
 

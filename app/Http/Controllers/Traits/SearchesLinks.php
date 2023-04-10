@@ -91,7 +91,11 @@ trait SearchesLinks
 
         // Order the results if applicable
         if ($this->searchOrderBy = $request->input('order_by', $this->orderByOptions[0])) {
-            $search->orderBy(...explode(':', $this->searchOrderBy));
+            if ($this->searchOrderBy == 'random') {
+                $search->inRandomOrder();
+            } else {
+                $search->orderBy(...explode(':', $this->searchOrderBy));
+            }
         }
 
         // Return the query builder itself
