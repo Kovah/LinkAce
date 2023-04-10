@@ -45,7 +45,7 @@ return [
     'sharing_toggle' => 'Activer/désactiver tout',
 
     'darkmode' => 'Mode sombre',
-    'darkmode_help' => 'Vous pouvez choisir d\'activer définitivement ou automatiquement en fonction des paramètres de votre appareil. (<small>Cocher <a href="https://caniuse.com/#search=prefers-color-scheme">ici</a> si votre navigateur prend en charge la détection automatique</small>)',
+    'darkmode_help' => 'Vous pouvez choisir d\'activer définitivement ou automatiquement en fonction des paramètres de votre appareil. (<small>Vérifiez <a href="https://caniuse.com/#search=prefers-color-scheme">ici</a> si votre navigateur prend en charge la détection automatique</small>)',
     'darkmode_disabled' => 'Désactivé',
     'darkmode_auto' => 'Automatiquement',
     'darkmode_permanent' => 'Permanent',

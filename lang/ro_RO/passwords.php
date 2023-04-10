@@ -13,10 +13,10 @@ return [
     |
     */
 
-    'password' => 'Le password devono essere di almeno 6 caratteri e devono coincidere.',
-    'reset' => 'La password è stata reimpostata!',
-    'sent' => 'Se esiste un account con il tuo indirizzo e-mail, verrà inviata una e-mail con un link per reimpostare la password.',
-    'token' => 'Questo token per la reimpostazione della password non è valido.',
-    'user' => "Non esiste un utente associato a questo indirizzo e-mail.",
+    'password' => 'Parolele trebuie să aibă cel puțin șase caractere și să coincidă.',
+    'reset' => 'Parola a fost resetată!',
+    'sent' => 'Dacă există un cont cu adresa ta de poștă electronică, ți-am trimis un mesaj cu legătura de resetare a parolei.',
+    'token' => 'Acest token de resetare a parolei este invalid.',
+    'user' => "Nu putem găsi un utilizator cu această adresă de poștă electronică.",
 
 ];

@@ -124,7 +124,7 @@
                     @lang('list.recent_lists')
                 </div>
 
-                <div class="card-body">
+                <div class="card-body btn-cloud">
                     @forelse($recent_lists as $list)
                         <a href="{{ route('lists.show', [$list->id]) }}" class="btn btn-light btn-sm">
                             {{ $list->name }}
@@ -145,7 +145,7 @@
                     @lang('tag.recent_tags')
                 </div>
 
-                <div class="card-body">
+                <div class="card-body btn-cloud">
                     @forelse($recent_tags as $tag)
                         <a href="{{ route('tags.show', [$tag->id]) }}" class="btn btn-light btn-sm">
                             {{ $tag->name }}

@@ -25,7 +25,7 @@ class ImportHtmlBookmarks
      */
     public function run(string $data, string $userId, bool $generateMeta = true): bool
     {
-        $parser = new NetscapeBookmarkParser(logger: Log::getLogger());
+        $parser = new NetscapeBookmarkParser(logger: Log::channel('import'));
 
         try {
             $links = $parser->parseString($data);
@@ -55,13 +55,14 @@ class ImportHtmlBookmarks
                 $description = $link['description'];
             }
 
+            $isPublic = $link['public'] ?? true;
             $newLink = new Link([
                 'user_id' => $userId,
                 'url' => $link['url'],
                 'title' => $title,
                 'description' => $description,
                 'icon' => LinkIconMapper::mapLink($link['url']),
-                'is_private' => usersettings('tags_private_default') === '1' ? true : $link['public'],
+                'is_private' => usersettings('tags_private_default') === '1' ? true : $isPublic,
             ]);
             $newLink->created_at = Carbon::createFromTimestamp($link['dateCreated']);
             $newLink->updated_at = Carbon::now();

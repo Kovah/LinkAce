@@ -15,7 +15,7 @@ return [
 
     'password' => 'A jelszónak legalább hat karakterből kell állnia, és meg kell egyeznie a megerősítéssel.',
     'reset' => 'A jelszava visszaállításra került!',
-    'sent' => 'Elküldtük e-mailben a jelszó-visszaállítási hivatkozást!',
+    'sent' => 'Ha létezik fiók az Ön e-mail címével, e-mailben elküldtük a jelszó-visszaállítási linket.',
     'token' => 'Ez a jelszó-visszaállítási jogkivonat érvénytelen.',
     'user' => "Nem találtunk felhasználót ezzel az e-mail-címmel.",
 

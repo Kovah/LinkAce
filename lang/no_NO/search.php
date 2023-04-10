@@ -14,14 +14,15 @@ return [
     'empty_lists' => 'uten lister',
 
     'order_by' => 'Sorter etter',
-    'order_by.title:asc' => 'Tittel stigende',
-    'order_by.title:desc' => 'Tittel synkende',
-    'order_by.url:asc' => 'Nettadresse stigende',
-    'order_by.url:desc' => 'Nettadresse synkende',
-    'order_by.created_at:asc' => 'Opprettet dato stigende',
-    'order_by.created_at:desc' => 'Opprettet dato synkende',
-    'order_by.number_links:asc' => 'Antall lenker stigende',
-    'order_by.number_links:desc' => 'Antall lenker synkende',
+    'order_by.title:asc' => 'Tittel A-Å',
+    'order_by.title:desc' => 'Tittel Å-A',
+    'order_by.url:asc' => 'Nettadresse A-Z',
+    'order_by.url:desc' => 'Nettadresse Z-A',
+    'order_by.created_at:asc' => 'Eldste',
+    'order_by.created_at:desc' => 'Nyeste',
+    'order_by.number_links:asc' => 'Færrest lenker',
+    'order_by.number_links:desc' => 'Fleste lenker',
+    'order_by.random' => 'Tilfeldig',
 
     'no_results' => 'Ingen resultater.',
 

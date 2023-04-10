@@ -1,0 +1,106 @@
+<?php
+return [
+    'settings' => 'Setări',
+    'user_settings' => 'Setări ale utilizatorului',
+    'account_settings' => 'Setări ale contului',
+    'app_settings' => 'Setări ale aplicației',
+    'system_settings' => 'Setări ale sistemului',
+    'guest_settings' => 'Setări pentru invitați',
+
+    'language' => 'Limbă',
+    'timezone' => 'Fus orar',
+    'date_format' => 'Format de dată',
+    'time_format' => 'Format orar',
+    'listitem_count' => 'Numărul de elemente din liste',
+
+    'links_new_tab' => 'Deschidere legături externe în file noi',
+
+    'markdown_for_text' => 'Activează Markdown pentru descrieri și note',
+
+    'privacy' => 'Confidențialitate',
+    'links_private_default' => 'Legături private în mod implicit',
+    'links_private_default_help' => 'Activarea acestei opțiuni va face ca toate legăturile noi să devină private în mod implicit',
+    'notes_private_default' => 'Observații private în mod implicit',
+    'notes_private_default_help' => 'Activarea acestei opțiuni va face ca toate observațiile noi să devină private în mod implicit',
+    'tags_private_default' => 'Etichete private în mod implicit',
+    'tags_private_default_help' => 'Activarea acestei opțiuni va face ca toate etichetele noi să devină private în mod implicit',
+    'lists_private_default' => 'Liste private în mod implicit',
+    'lists_private_default_help' => 'Activarea acestei opțiuni va face ca toate listele noi să devină private în mod implicit',
+
+    'archive_backups' => 'Copii de rezervă Wayback Machine',
+    'archive_backups_help' => 'Dacă opțiunea este activată, LinkAce va transmite serviciului <a href="https://archive.org/">Wayback Machine</a> să creeze copii de rezervă pentru legăturile tale. Serviciul Wayback Machine este administrat de Internet Archive, o organizație non-profit. Te îndemnăm să <a href="https://archive.org/donate/">donezi către Internet Archive</a>.',
+    'archive_backups_enabled' => 'Activare copii de rezervă',
+    'archive_backups_enabled_help' => 'Dacă opțiunea este activată, legăturile neprivate vor fi salvate de Internet Archive.',
+    'archive_private_backups_enabled' => 'Activare copii de rezervă pentru legături private',
+    'archive_private_backups_enabled_help' => 'Dacă opțiunea este activată, legăturile private vor fi, de asemenea, salvate. Copiile de rezervă trebuie să fie activate.',
+
+    'display_mode' => 'Afișare legături ca',
+    'display_mode_list_detailed' => 'listă cu multe detalii',
+    'display_mode_list_simple' => 'listă cu mai puține detalii',
+    'display_mode_cards' => 'cartonașe cu mai puține detalii',
+    'display_mode_cards_detailed' => 'cartonașe cu multe detalii',
+
+    'sharing' => 'Distribuire legătură',
+    'sharing_help' => 'Activează toate serviciile care dorești să fie afișate pentru legături, pentru a le putea distribui cu ușurință printr-un singur clic.',
+    'sharing_toggle' => 'Comutare toate pornit/oprit',
+
+    'darkmode' => 'Mod întunecat',
+    'darkmode_help' => 'Poți alege să se pornească permanent sau automat în funcție de setările dispozitivului tău. (<small>Vezi <a href="https://caniuse.com/#search=prefers-color-scheme">aici</a> dacă navigatorul tău este compatibil cu detectarea automată</small>)',
+    'darkmode_disabled' => 'Dezactivat',
+    'darkmode_auto' => 'Automat',
+    'darkmode_permanent' => 'Permanent',
+
+    'save_settings' => 'Salvare setări',
+    'settings_saved' => 'Setările au fost actualizate!',
+
+    'bookmarklet' => 'Marcaj-script',
+    'bookmarklet_button' => 'Trage acest script în marcajele tale sau dă clic dreapta și salvează-l ca marcaj',
+    'bookmarklet_help' => 'Adaugă acest marcaj-script în navigatorul tău pentru a adăuga rapid legături de pe paginile pe care le vizitezi, fără a fi nevoie să deschizi manual aplicația LinkAce.',
+
+    'change_password' => 'Modificare parolă',
+    'old_password' => 'Parolă veche',
+    'new_password' => 'Parolă nouă',
+    'new_password2' => 'Repetă noua parolă',
+    'password_updated' => 'Parola a fost modificată!',
+    'old_password_invalid' => 'Parola veche nu este validă!',
+
+    'two_factor_auth' => 'Autentificare în doi factori',
+    'two_factor_enable' => 'Activează autentificarea în doi factori',
+    'two_factor_disable' => 'Dezactivează autentificarea în doi factori',
+    'two_factor_setup_app' => 'Autentificarea în doi pași este activată. Configurează-ți acum dispozitivul de autentificare prin scanarea următorului cod QR.',
+    'two_factor_setup_url' => 'Codul QR nu funcționează? Mai ai posibilitatea de a utiliza direct acest URL.',
+    'two_factor_recovery_codes' => 'Stochează aceste coduri de recuperare într-un manager de parole securizat. Acestea pot fi utilizate pentru a-ți recupera accesul la cont în cazul în care ți-ai pierdut dispozitivul de autentificare în doi factori.',
+    'two_factor_recovery_codes_view' => 'Vizualizare coduri de recuperare',
+    'two_factor_regenerate_recovery_codes' => 'Generare coduri de recuperare noi',
+
+    'api_token' => 'Token API',
+    'api_token_generate' => 'Generare token',
+    'api_token_generate_confirm' => 'Sigur dorești să generezi un token nou?',
+    'api_token_help' => 'Tokenul API poate fi utilizat pentru a accesa LinkAce din alte aplicații sau scripturi.',
+    'api_token_generate_info' => 'Atenție: dacă ai deja un token API, generarea unuia nou va întrerupe toate integrările existente!',
+    'api_token_generate_failure' => 'Un nou token API nu a putut fi generat. Examinează consola navigatorului și jurnalele aplicației cu privire la mai multe informații.',
+
+    'sys_page_title' => 'Titlul paginii',
+    'sys_guest_access' => 'Activează accesul pentru invitați',
+    'sys_guest_access_help' => 'Dacă opțiunea este activată, invitații vor putea să vadă toate legăturile care nu sunt private.',
+    'sys_custom_header_content' => 'Conținut personalizat de antet',
+    'sys_custom_header_content_help' => 'Conținutul introdus aici va fi plasat înaintea etichetei &lt;/head&gt; pe toate paginile LinkAce. Această opțiune este utilă pentru a plasa scripturi de analiză sau personalizare. Atenție: conținutul nu este marcat cu secvențe escape și poate întrerupe paginile!',
+
+    'cron_token' => 'Token Cron',
+    'cron_token_generate' => 'Generare token',
+    'cron_token_generate_confirm' => 'Sigur dorești să generezi un token nou?',
+    'cron_token_help' => 'Tokenul cron este necesar pentru a executa serviciul cron care verifică dacă există legături nefuncționale sau copii de rezervă în desfășurare.',
+    'cron_token_url' => 'Direcționează-ți serviciul cron către următorul URL: <span class="cron-token-url">:route</span>',
+    'cron_token_generate_info' => 'Atenție: dacă ai deja un token cron, generarea unuia nou va întrerupe serviciul cron existent!',
+    'cron_token_generate_failure' => 'Un nou token cron nu a putut fi generat. Examinează consola navigatorului și jurnalele aplicației cu privire la mai multe informații.',
+    'cron_token_auth_failure' => 'Tokenul cron furnizat este invalid',
+    'cron_execute_successful' => 'Serviciul cron a fost executat',
+
+    'update_check' => 'Căutare actualizare',
+    'update_check_running' => 'Se caută actualizări...',
+    'update_check_version_found' => 'Actualizare găsită. Este disponibilă versiunea #VERSION#.',
+    'update_check_success' => 'Nu s-a găsit nicio actualizare.',
+    'update_check_failed' => 'Nu s-au putut căuta actualizări.',
+
+    'guest_settings_info' => 'Următoarele setări se vor aplica invitaților care îți vizitează pagina, dacă accesul pentru invitați este activat.',
+];

@@ -14,14 +14,15 @@ return [
     'empty_lists' => 'sense Llistes',
 
     'order_by' => 'Ordenar per',
-    'order_by.title:asc' => 'Títol ascendent',
-    'order_by.title:desc' => 'Títol descendent',
-    'order_by.url:asc' => 'URL ascendent',
-    'order_by.url:desc' => 'URL descendent',
-    'order_by.created_at:asc' => 'Data de creació ascendent',
-    'order_by.created_at:desc' => 'Data de creació descendent',
-    'order_by.number_links:asc' => 'Nombre d\'enllaços ascendent',
-    'order_by.number_links:desc' => 'Nombre d\'enllaços descendent',
+    'order_by.title:asc' => 'Títol A-Z',
+    'order_by.title:desc' => 'Títol Z-A',
+    'order_by.url:asc' => 'URL A-Z',
+    'order_by.url:desc' => 'URL Z-A',
+    'order_by.created_at:asc' => 'Més antigues',
+    'order_by.created_at:desc' => 'Més recents',
+    'order_by.number_links:asc' => 'Menys enllaços',
+    'order_by.number_links:desc' => 'La majoria d\'enllaços',
+    'order_by.random' => 'Aleatori',
 
     'no_results' => 'No s\'han trobat resultats.',
 

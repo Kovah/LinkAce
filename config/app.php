@@ -95,6 +95,7 @@ return [
         'it_IT' => 'Italiano',
         'no_NO' => 'Norsk',
         'pl_PL' => 'Polski',
+        'ro_RO' => 'Română',
         'vi_VN' => 'Tiếng Việt',
         'zh_CN' => '简体中文',
     ],
