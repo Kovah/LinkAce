@@ -15,11 +15,11 @@ return [
 
     'order_by' => 'Sortieren nach',
     'order_by.title:asc' => 'Titel A-Z',
-    'order_by.title:desc' => 'Titel Z-A',
+    'order_by.title:desc' => 'Title Z-A',
     'order_by.url:asc' => 'URL A-Z',
     'order_by.url:desc' => 'URL Z-A',
     'order_by.created_at:asc' => 'Älteste',
-    'order_by.created_at:desc' => 'Neuste',
+    'order_by.created_at:desc' => 'Neueste',
     'order_by.number_links:asc' => 'Wenigste Links',
     'order_by.number_links:desc' => 'Meiste Links',
     'order_by.random' => 'Zufällig',

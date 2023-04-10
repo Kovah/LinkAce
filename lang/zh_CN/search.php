@@ -14,14 +14,15 @@ return [
     'empty_lists' => '没有列表',
 
     'order_by' => '排序方式',
-    'order_by.title:asc' => '按标题升序排序',
-    'order_by.title:desc' => '按标题降序排序',
-    'order_by.url:asc' => '按网址升序排序',
-    'order_by.url:desc' => '按网址降序排序',
-    'order_by.created_at:asc' => '按创建日期升序排序',
-    'order_by.created_at:desc' => '按创建日期降序排序',
-    'order_by.number_links:asc' => '链接数，升序',
-    'order_by.number_links:desc' => '链接数，降序',
+    'order_by.title:asc' => '标题A-Z',
+    'order_by.title:desc' => '标题Z-A',
+    'order_by.url:asc' => 'URL A-Z',
+    'order_by.url:desc' => 'URL Z-A',
+    'order_by.created_at:asc' => '最早创建',
+    'order_by.created_at:desc' => '最新的',
+    'order_by.number_links:asc' => '最少链接',
+    'order_by.number_links:desc' => '最多链接',
+    'order_by.random' => '随机',
 
     'no_results' => '未找到任何结果。',
 
