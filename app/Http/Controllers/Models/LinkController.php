@@ -30,11 +30,12 @@ class LinkController extends Controller
         session()->put('links.index.orderDir', $orderDir);
 
         $links = Link::byUser()
-            ->with('tags')
-            ->orderBy($orderBy, $orderDir);
+            ->with('tags');
 
         if ($orderBy == 'random') {
             $links->inRandomOrder();
+        } else {
+            $links->orderBy($orderBy, $orderDir);
         }
 
         return view('models.links.index', [
