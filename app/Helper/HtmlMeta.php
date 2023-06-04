@@ -83,7 +83,7 @@ class HtmlMeta
         $this->fallback = [
             'success' => false,
             'title' => parse_url($this->url, PHP_URL_HOST) ?? $this->url,
-            'description' => false,
+            'description' => null,
             'thumbnail' => null,
         ];
     }

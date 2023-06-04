@@ -198,6 +198,11 @@ class LinkRepository
     {
         $newEntries = collect();
 
+        $privateSetting = match ($model) {
+            Tag::class => usersettings('tags_private_default') === '1',
+            LinkList::class => usersettings('lists_private_default') === '1',
+        };
+
         foreach ($entries as $entry) {
             if (is_int($entry)) {
                 $newEntry = Tag::find($entry);
@@ -205,6 +210,10 @@ class LinkRepository
                 $newEntry = $model::firstOrCreate([
                     'user_id' => auth()->id(),
                     'name' => trim($entry),
+                ], [
+                    'user_id' => auth()->id(),
+                    'name' => trim($entry),
+                    'is_private' => $privateSetting,
                 ]);
             }
 

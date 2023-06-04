@@ -18,15 +18,18 @@ class LinkController extends Controller
     public function index(Request $request): View
     {
         $links = Link::publicOnly()
-            ->with('tags')
-            ->orderBy(
-                $request->input('orderBy', 'created_at'),
-                $request->input('orderDir', 'desc')
-            )
-            ->paginate(getPaginationLimit());
+            ->with('tags');
+
+        $orderBy = $request->input('orderBy', 'created_at');
+        $orderDir = $request->input('orderDir', 'desc');
+        if ($orderBy === 'random') {
+            $links->inRandomOrder();
+        } else {
+            $links->orderBy($orderBy, $orderDir);
+        }
 
         return view('guest.links.index', [
-            'links' => $links,
+            'links' => $links->paginate(getPaginationLimit()),
             'route' => $request->getBaseUrl(),
             'orderBy' => $request->input('orderBy', 'created_at'),
             'orderDir' => $request->input('orderDir', 'desc'),
