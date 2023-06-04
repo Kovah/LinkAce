@@ -104,20 +104,46 @@ class LinkControllerTest extends TestCase
             'value' => '1',
         ]);
 
+        Setting::create([
+            'user_id' => 1,
+            'key' => 'tags_private_default',
+            'value' => '1',
+        ]);
+
+        Setting::create([
+            'user_id' => 1,
+            'key' => 'lists_private_default',
+            'value' => '1',
+        ]);
+
         $response = $this->post('links', [
             'url' => 'https://example.com',
             'title' => null,
             'description' => null,
-            'lists' => null,
-            'tags' => null,
+            'lists' => 'myList',
+            'tags' => 'new-tag',
             'is_private' => usersettings('links_private_default'),
         ]);
 
         $response->assertRedirect('links/1');
 
-        $databaseLink = Link::first();
+        $this->assertDatabaseHas('links', [
+            'id' => 1,
+            'url' => 'https://example.com',
+            'is_private' => 1,
+        ]);
 
-        $this->assertTrue($databaseLink->is_private);
+        $this->assertDatabaseHas('lists', [
+            'id' => 1,
+            'name' => 'myList',
+            'is_private' => 1,
+        ]);
+
+        $this->assertDatabaseHas('tags', [
+            'id' => 1,
+            'name' => 'new-tag',
+            'is_private' => 1,
+        ]);
     }
 
     public function testStoreRequestWithDuplicate(): void
