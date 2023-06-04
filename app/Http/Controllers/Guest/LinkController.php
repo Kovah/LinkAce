@@ -22,7 +22,7 @@ class LinkController extends Controller
 
         $orderBy = $request->input('orderBy', 'created_at');
         $orderDir = $request->input('orderDir', 'desc');
-        if ($orderBy == 'random') {
+        if ($orderBy === 'random') {
             $links->inRandomOrder();
         } else {
             $links->orderBy($orderBy, $orderDir);

@@ -32,7 +32,7 @@ class LinkController extends Controller
         $links = Link::byUser()
             ->with('tags');
 
-        if ($orderBy == 'random') {
+        if ($orderBy === 'random') {
             $links->inRandomOrder();
         } else {
             $links->orderBy($orderBy, $orderDir);
