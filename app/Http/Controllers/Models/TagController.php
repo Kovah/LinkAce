@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Models;
 
 use App\Http\Controllers\Controller;
+use App\Http\Controllers\Traits\HandlesQueryOrder;
 use App\Http\Requests\Models\TagStoreRequest;
 use App\Http\Requests\Models\TagUpdateRequest;
 use App\Models\Tag;
@@ -14,6 +15,8 @@ use Illuminate\Http\Request;
 
 class TagController extends Controller
 {
+    use HandlesQueryOrder;
+
     /**
      * Display a listing of the resource.
      *
@@ -23,7 +26,7 @@ class TagController extends Controller
     public function index(Request $request): View
     {
         $orderBy = $request->input('orderBy', session()->get('tags.index.orderBy', 'name'));
-        $orderDir = $request->input('orderDir', session()->get('tags.index.orderDir', 'asc'));
+        $orderDir = $this->getOrderDirection($request, session()->get('tags.index.orderDir', 'asc'));
 
         session()->put('tags.index.orderBy', $orderBy);
         session()->put('tags.index.orderDir', $orderDir);
@@ -91,7 +94,7 @@ class TagController extends Controller
         $links = $tag->links()->byUser()
             ->orderBy(
                 $request->input('orderBy', 'created_at'),
-                $request->input('orderDir', 'desc')
+                $this->getOrderDirection($request),
             )
             ->paginate(getPaginationLimit());
 
@@ -100,7 +103,7 @@ class TagController extends Controller
             'tagLinks' => $links,
             'route' => $request->getBaseUrl(),
             'orderBy' => $request->input('orderBy', 'created_at'),
-            'orderDir' => $request->input('orderDir', 'desc'),
+            'orderDir' => $this->getOrderDirection($request),
         ]);
     }
 

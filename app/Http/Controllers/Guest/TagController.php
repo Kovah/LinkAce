@@ -3,12 +3,15 @@
 namespace App\Http\Controllers\Guest;
 
 use App\Http\Controllers\Controller;
+use App\Http\Controllers\Traits\HandlesQueryOrder;
 use App\Models\Tag;
 use Illuminate\Contracts\View\View;
 use Illuminate\Http\Request;
 
 class TagController extends Controller
 {
+    use HandlesQueryOrder;
+
     /**
      * Display an overview of all lists.
      *
@@ -21,7 +24,7 @@ class TagController extends Controller
             ->withCount('links')
             ->orderBy(
                 $request->input('orderBy', 'name'),
-                $request->input('orderDir', 'asc')
+                $this->getOrderDirection($request, 'asc')
             )
             ->paginate(getPaginationLimit());
 
@@ -29,7 +32,7 @@ class TagController extends Controller
             'tags' => $tags,
             'route' => $request->getBaseUrl(),
             'orderBy' => $request->input('orderBy', 'name'),
-            'orderDir' => $request->input('orderDir', 'asc'),
+            'orderDir' => $this->getOrderDirection($request, 'asc'),
         ]);
     }
 

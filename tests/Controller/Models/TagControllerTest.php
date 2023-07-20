@@ -26,13 +26,37 @@ class TagControllerTest extends TestCase
     public function testIndexView(): void
     {
         Tag::factory()->create([
-            'name' => 'Test Tag',
+            'name' => 'a-tag',
+            'user_id' => $this->user->id,
+            'created_at' => now()->subDay(),
+        ]);
+        Tag::factory()->create([
+            'name' => 'new-tag',
             'user_id' => $this->user->id,
         ]);
 
-        $response = $this->get('tags');
+        $this->get('tags')
+            ->assertOk()
+            ->assertSeeInOrder([
+                'a-tag',
+                'new-tag',
+            ]);
 
-        $response->assertOk()->assertSee('Test Tag');
+        $this->flushSession();
+        $this->get('tags?orderBy=created_at&orderDir=desc')
+            ->assertOk()
+            ->assertSeeInOrder([
+                'new-tag',
+                'a-tag',
+            ]);
+
+        $this->flushSession();
+        $this->get('tags?orderBy=created_at&orderDir=wrong-desc')
+            ->assertOk()
+            ->assertSeeInOrder([
+                'a-tag',
+                'new-tag',
+            ]);
     }
 
     public function testIndexViewWithValidFilterResult(): void

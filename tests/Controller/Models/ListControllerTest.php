@@ -26,14 +26,34 @@ class ListControllerTest extends TestCase
     public function testIndexView(): void
     {
         LinkList::factory()->create([
-            'name' => 'Test List',
+            'name' => 'A Test List',
             'user_id' => $this->user->id,
+            'created_at' => now()->subDay(),
         ]);
+        LinkList::factory()->create(['name' => 'Super New List', 'user_id' => $this->user->id]);
 
-        $response = $this->get('lists');
+        $this->get('lists')
+            ->assertOk()
+            ->assertSeeInOrder([
+                'A Test List',
+                'Super New List',
+            ]);
 
-        $response->assertOk()
-            ->assertSee('Test List');
+        $this->flushSession();
+        $this->get('lists?orderBy=created_at&orderDir=desc')
+            ->assertOk()
+            ->assertSeeInOrder([
+                'Super New List',
+                'A Test List',
+            ]);
+
+        $this->flushSession();
+        $this->get('lists?orderBy=created_at&orderDir=wrong-desc')
+            ->assertOk()
+            ->assertSeeInOrder([
+                'A Test List',
+                'Super New List',
+            ]);
     }
 
     public function testIndexViewWithValidFilterResult(): void

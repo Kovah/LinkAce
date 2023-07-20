@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Models;
 
 use App\Http\Controllers\Controller;
+use App\Http\Controllers\Traits\HandlesQueryOrder;
 use App\Http\Requests\Models\LinkStoreRequest;
 use App\Http\Requests\Models\LinkToggleCheckRequest;
 use App\Http\Requests\Models\LinkUpdateRequest;
@@ -15,6 +16,8 @@ use Illuminate\Http\Request;
 
 class LinkController extends Controller
 {
+    use HandlesQueryOrder;
+
     /**
      * Display a listing of the resource.
      *
@@ -24,13 +27,12 @@ class LinkController extends Controller
     public function index(Request $request): View
     {
         $orderBy = $request->input('orderBy', session()->get('links.index.orderBy', 'created_at'));
-        $orderDir = $request->input('orderDir', session()->get('links.index.orderDir', 'desc'));
+        $orderDir = $this->getOrderDirection($request, session()->get('links.index.orderDir', 'desc'));
 
         session()->put('links.index.orderBy', $orderBy);
         session()->put('links.index.orderDir', $orderDir);
 
-        $links = Link::byUser()
-            ->with('tags');
+        $links = Link::byUser()->with('tags');
 
         if ($orderBy === 'random') {
             $links->inRandomOrder();
