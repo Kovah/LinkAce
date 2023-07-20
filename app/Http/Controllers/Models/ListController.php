@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Models;
 
 use App\Http\Controllers\Controller;
+use App\Http\Controllers\Traits\HandlesQueryOrder;
 use App\Http\Requests\Models\ListStoreRequest;
 use App\Http\Requests\Models\ListUpdateRequest;
 use App\Models\LinkList;
@@ -14,6 +15,8 @@ use Illuminate\Http\Request;
 
 class ListController extends Controller
 {
+    use HandlesQueryOrder;
+
     /**
      * Display a listing of the resource.
      *
@@ -23,7 +26,7 @@ class ListController extends Controller
     public function index(Request $request): View
     {
         $orderBy = $request->input('orderBy', session()->get('lists.index.orderBy', 'name'));
-        $orderDir = $request->input('orderDir', session()->get('lists.index.orderDir', 'asc'));
+        $orderDir = $this->getOrderDirection($request, session()->get('lists.index.orderDir', 'asc'));
 
         session()->put('lists.index.orderBy', $orderBy);
         session()->put('lists.index.orderDir', $orderDir);

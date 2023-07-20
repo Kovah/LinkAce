@@ -41,12 +41,31 @@ class LinkControllerTest extends TestCase
 
     public function testIndexView(): void
     {
-        $link = Link::factory()->create();
+        Link::factory()->create(['url' => 'https://linkace.example.com/test', 'created_at' => now()->subDay()]);
+        Link::factory()->create(['url' => 'https://the-new-linkace.com']);
 
-        $response = $this->get('links');
+        $this->get('links')
+            ->assertOk()
+            ->assertSeeInOrder([
+                'https://the-new-linkace.com',
+                'https://linkace.example.com/test',
+            ]);
 
-        $response->assertOk()
-            ->assertSee($link->url);
+        $this->flushSession();
+        $this->get('links?orderBy=created_at&orderDir=asc')
+            ->assertOk()
+            ->assertSeeInOrder([
+                'https://linkace.example.com/test',
+                'https://the-new-linkace.com',
+            ]);
+
+        $this->flushSession();
+        $this->get('links?orderBy=created_at&orderDir=wrong-asc')
+            ->assertOk()
+            ->assertSeeInOrder([
+                'https://the-new-linkace.com',
+                'https://linkace.example.com/test',
+            ]);
     }
 
     public function testCreateView(): void

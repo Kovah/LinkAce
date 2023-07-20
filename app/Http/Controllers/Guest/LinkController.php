@@ -3,12 +3,15 @@
 namespace App\Http\Controllers\Guest;
 
 use App\Http\Controllers\Controller;
+use App\Http\Controllers\Traits\HandlesQueryOrder;
 use App\Models\Link;
 use Illuminate\Contracts\View\View;
 use Illuminate\Http\Request;
 
 class LinkController extends Controller
 {
+    use HandlesQueryOrder;
+
     /**
      * Display an overview of all links.
      *
@@ -21,7 +24,7 @@ class LinkController extends Controller
             ->with('tags');
 
         $orderBy = $request->input('orderBy', 'created_at');
-        $orderDir = $request->input('orderDir', 'desc');
+        $orderDir = $this->getOrderDirection($request);
         if ($orderBy === 'random') {
             $links->inRandomOrder();
         } else {
