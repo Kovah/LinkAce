@@ -18,10 +18,10 @@ return [
     'order_by.title:desc' => 'Titolo Z-A',
     'order_by.url:asc' => 'URL A-Z',
     'order_by.url:desc' => 'URL Z-A',
-    'order_by.created_at:asc' => 'La più vecchia',
+    'order_by.created_at:asc' => 'Meno Recenti',
     'order_by.created_at:desc' => 'Più Recenti',
-    'order_by.number_links:asc' => 'Meno Link',
-    'order_by.number_links:desc' => 'Più Collegamenti',
+    'order_by.number_links:asc' => 'Minor numero di Link',
+    'order_by.number_links:desc' => 'Maggior numero di Link',
     'order_by.random' => 'Casuale',
 
     'no_results' => 'Nessun risultato trovato.',
