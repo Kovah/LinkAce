@@ -7,7 +7,7 @@
             </a>
         </div>
         <div class="mt-2 mt-sm-0 ms-auto flex-shrink-0">
-            <small class="text-muted">{!! $link->domainOfURL() !!}</small>
+            <small class="text-pale">{!! $link->domainOfURL() !!}</small>
         </div>
     </div>
 </li>

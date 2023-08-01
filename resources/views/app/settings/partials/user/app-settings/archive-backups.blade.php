@@ -23,7 +23,7 @@
                         @lang('linkace.no')
                     </option>
                 </select>
-                <p class="text-muted small mt-1">@lang('settings.archive_backups_enabled_help')</p>
+                <p class="text-pale small mt-1">@lang('settings.archive_backups_enabled_help')</p>
                 @if ($errors->has('archive_backups_enabled'))
                     <p class="invalid-feedback" role="alert">
                         {{ $errors->first('archive_backups_enabled') }}
@@ -50,7 +50,7 @@
                         @lang('linkace.no')
                     </option>
                 </select>
-                <p class="text-muted small mt-1">@lang('settings.archive_private_backups_enabled_help')</p>
+                <p class="text-pale small mt-1">@lang('settings.archive_private_backups_enabled_help')</p>
                 @if ($errors->has('archive_private_backups_enabled'))
                     <p class="invalid-feedback" role="alert">
                         {{ $errors->first('archive_private_backups_enabled') }}

@@ -9,7 +9,7 @@
                 <div>
                     <a href="{{ $link->url }}" {!! linkTarget() !!}>{{ $link->title }}</a>
                     <br>
-                    <small class="text-muted">{{ $link->shortUrl() }}</small>
+                    <small class="text-pale">{{ $link->shortUrl() }}</small>
                 </div>
             </div>
             <div class="ms-auto text-end">
@@ -45,12 +45,12 @@
                         @endif
                     @endforeach
                 @else
-                    <span class="small text-muted">@lang('tag.no_tags')</span>
+                    <span class="small text-pale">@lang('tag.no_tags')</span>
                 @endif
 
             </div>
             <div class="col-12 col-sm-6 d-sm-flex align-items-sm-center justify-content-sm-end flex-wrap">
-                <div class="text-xs text-muted mt-3 mt-sm-0">
+                <div class="text-xs text-pale mt-3 mt-sm-0">
                     @lang('linkace.added') {!! $link->addedAt() !!}
                 </div>
             </div>

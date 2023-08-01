@@ -37,7 +37,7 @@
                     </div>
 
                     <details>
-                        <summary class="text-muted small">@lang('settings.two_factor_setup_url')</summary>
+                        <summary class="text-pale small">@lang('settings.two_factor_setup_url')</summary>
                         <code>{{ $user->twoFactorQrCodeUrl() }}</code>
                     </details>
 

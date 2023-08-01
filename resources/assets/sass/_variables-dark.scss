@@ -21,7 +21,7 @@ $teal: #20c997;
 $cyan: #5bc0de;
 
 $primary: $blue;
-$secondary: $gray-500;
+$secondary: $gray-400;
 $success: $green;
 $info: $cyan;
 $warning: $yellow;
@@ -71,8 +71,7 @@ $color-contrast-light: $black;
 // Body
 $body-bg: $darkmode-bg-darker;
 $body-color: $gray-300;
-$body-color-pale: $gray-400;
-$body-color-muted: $gray-600;
+$body-color-pale: $gray-500;
 
 
 // Components
@@ -90,6 +89,7 @@ $headings-color: $white;
 
 // Tables
 $table-color: $white;
+$table-bg: $darkmode-bg;
 $table-accent-bg: rgba($white, .05);
 $table-hover-bg: $gray-900;
 
@@ -97,6 +97,7 @@ $table-border-color: $darkmode-bg-dark;
 
 $table-dark-border-color: $table-border-color;
 $table-dark-color: $white;
+
 
 
 // Forms
@@ -140,7 +141,7 @@ $pagination-hover-border-color: $darkmode-bg;
 $pagination-active-bg: $gray-800;
 $pagination-active-border-color: $darkmode-bg;
 
-$pagination-disabled-color: $body-color-muted;
+$pagination-disabled-color: $body-color-pale;
 $pagination-disabled-bg: transparent;
 $pagination-disabled-border-color: $pagination-border-color;
 
@@ -162,6 +163,7 @@ $list-group-color: $body-color;
 $list-group-border-color: $darkmode-bg-darker;
 
 $list-group-hover-bg: $darkmode-bg-dark;
+$list-group-hover-bg: $darkmode-bg-dark;
 $list-group-active-color: $white;
 $list-group-active-bg: $list-group-hover-bg;
 $list-group-active-border-color: $list-group-border-color;
@@ -169,6 +171,7 @@ $list-group-active-border-color: $list-group-border-color;
 $list-group-disabled-color: $gray-700;
 
 $list-group-action-color: $white;
+$list-group-action-hover-color: $white;
 $list-group-action-active-color: $white;
 $list-group-action-active-bg: $darkmode-bg-dark;
 

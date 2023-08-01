@@ -60,6 +60,6 @@
     </div>
 </div>
 
-<div class="text-center text-muted mt-3 small">
+<div class="text-center text-pale mt-3 small">
     {!! trans('linkace.forgot_password_link', ['reset_url' => route('password.request')]) !!}
 </div>

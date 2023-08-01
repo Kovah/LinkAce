@@ -21,7 +21,7 @@
                         @lang('linkace.yes')
                     </option>
                 </select>
-                <p class="text-muted small mt-1">@lang('settings.links_private_default_help')</p>
+                <p class="text-pale small mt-1">@lang('settings.links_private_default_help')</p>
                 @if ($errors->has('links_private_default'))
                     <p class="invalid-feedback" role="alert">
                         {{ $errors->first('links_private_default') }}
@@ -47,7 +47,7 @@
                         @lang('linkace.yes')
                     </option>
                 </select>
-                <p class="text-muted small mt-1">@lang('settings.notes_private_default_help')</p>
+                <p class="text-pale small mt-1">@lang('settings.notes_private_default_help')</p>
                 @if ($errors->has('notes_private_default'))
                     <p class="invalid-feedback" role="alert">
                         {{ $errors->first('notes_private_default') }}
@@ -76,7 +76,7 @@
                         @lang('linkace.yes')
                     </option>
                 </select>
-                <p class="text-muted small mt-1">@lang('settings.lists_private_default_help')</p>
+                <p class="text-pale small mt-1">@lang('settings.lists_private_default_help')</p>
                 @if ($errors->has('lists_private_default'))
                     <p class="invalid-feedback" role="alert">
                         {{ $errors->first('lists_private_default') }}
@@ -102,7 +102,7 @@
                         @lang('linkace.yes')
                     </option>
                 </select>
-                <p class="text-muted small mt-1">@lang('settings.tags_private_default_help')</p>
+                <p class="text-pale small mt-1">@lang('settings.tags_private_default_help')</p>
                 @if ($errors->has('tags_private_default'))
                     <p class="invalid-feedback" role="alert">
                         {{ $errors->first('tags_private_default') }}

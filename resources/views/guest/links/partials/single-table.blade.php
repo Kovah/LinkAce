@@ -7,7 +7,7 @@
             {{ $link->url }}
         </a>
     </td>
-    <td class="text-muted">
+    <td class="text-pale">
         <small>
             {!! $link->addedAt() !!}
         </small>

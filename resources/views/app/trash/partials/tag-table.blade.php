@@ -14,7 +14,7 @@
                 <td>
                     {{ $tag->name }}
                 </td>
-                <td class="text-muted">
+                <td class="text-pale">
                     <small>{{ formatDateTime($tag->created_at) }}</small>
                 </td>
                 <td class="text-end">
