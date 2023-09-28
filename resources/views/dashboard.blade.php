@@ -124,7 +124,7 @@
                     @lang('list.recent_lists')
                 </div>
 
-                <div class="card-body">
+                <div class="card-body btn-cloud">
                     @forelse($recent_lists as $list)
                         <a href="{{ route('lists.show', ['list' => $list]) }}" class="btn btn-light btn-sm m-1">
                             <x-models.name-with-user :model="$list"/>
@@ -145,7 +145,7 @@
                     @lang('tag.recent_tags')
                 </div>
 
-                <div class="card-body">
+                <div class="card-body btn-cloud">
                     @forelse($recent_tags as $tag)
                         <a href="{{ route('tags.show', ['tag' => $tag]) }}" class="btn btn-light btn-sm m-1">
                             <x-models.name-with-user :model="$tag"/>

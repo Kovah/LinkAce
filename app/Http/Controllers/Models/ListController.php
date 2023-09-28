@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Models;
 
 use App\Http\Controllers\Controller;
 use App\Http\Controllers\Traits\ChecksOrdering;
+use App\Http\Controllers\Traits\HandlesQueryOrder;
 use App\Http\Requests\Models\ListStoreRequest;
 use App\Http\Requests\Models\ListUpdateRequest;
 use App\Models\LinkList;
@@ -15,6 +16,7 @@ use Illuminate\Http\Request;
 class ListController extends Controller
 {
     use ChecksOrdering;
+    use HandlesQueryOrder;
 
     public function __construct()
     {
@@ -24,13 +26,12 @@ class ListController extends Controller
 
     public function index(Request $request): View
     {
-        $this->orderBy = $request->input('orderBy', session()->get('lists.index.orderBy', 'name'));
-        $this->orderDir = $request->input('orderDir', session()->get('lists.index.orderDir', 'asc'));
-
+        $orderBy = $request->input('orderBy', session()->get('lists.index.orderBy', 'name'));
+        $orderDir = $this->getOrderDirection($request, session()->get('lists.index.orderDir', 'asc'));
         $this->checkOrdering();
 
-        session()->put('lists.index.orderBy', $this->orderBy);
-        session()->put('lists.index.orderDir', $this->orderDir);
+        session()->put('lists.index.orderBy', $orderBy);
+        session()->put('lists.index.orderDir', $orderDir);
 
         $lists = LinkList::query()
             ->visibleForUser()

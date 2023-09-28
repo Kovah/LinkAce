@@ -15,7 +15,7 @@ return [
     'delete_warning' => 'Les entrées définitivement supprimées ne peuvent pas être restaurées !',
     'delete_no_entries' => 'Aucune entrée à supprimer.',
 
-    'delete_success.links' => 'Supprimer définitivement tous les liens.',
+    'delete_success.links' => 'Tous les liens ont été définitivement supprimés.',
     'delete_success.lists' => 'Supprimer définitivement toutes les listes.',
     'delete_success.tags' => 'Supprimer définitivement toutes les étiquettes.',
     'delete_success.notes' => 'Supprimer définitivement toutes les notes.',

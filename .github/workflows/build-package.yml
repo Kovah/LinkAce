@@ -29,13 +29,13 @@ jobs:
           npm run production
 
       - name: Upload built assets
-        uses: actions/upload-artifact@v2
+        uses: actions/upload-artifact@v3
         with:
           name: assets
           path: public/assets/dist
 
       - name: Upload mix manifest
-        uses: actions/upload-artifact@v2
+        uses: actions/upload-artifact@v3
         with:
           name: mix-manifest
           path: public/mix-manifest.json
@@ -47,12 +47,12 @@ jobs:
     steps:
       - uses: actions/checkout@v2
 
-      - uses: actions/download-artifact@v2
+      - uses: actions/download-artifact@v3
         with:
           name: assets
           path: public/assets/dist
 
-      - uses: actions/download-artifact@v2
+      - uses: actions/download-artifact@v3
         with:
           name: mix-manifest
           path: public
@@ -65,7 +65,7 @@ jobs:
       - id: composer-cache
         run: echo "::set-output name=dir::$(composer config cache-files-dir)"
 
-      - uses: actions/cache@v1
+      - uses: actions/cache@v3
         with:
           path: ${{ steps.composer-cache.outputs.dir }}
           key: ${{ runner.os }}-composer-${{ hashFiles('**/composer.lock') }}
@@ -91,7 +91,7 @@ jobs:
           filename: linkace.zip
           exclusions: '*.git*'
 
-      - uses: actions/upload-artifact@v2
+      - uses: actions/upload-artifact@v3
         with:
           name: linkace-package
           path: linkace.zip
@@ -112,7 +112,7 @@ jobs:
         with:
           args: zip -qq linkace-package-docker-simple.zip docker-compose.yml .env LICENSE.md README.md
 
-      - uses: actions/upload-artifact@v2
+      - uses: actions/upload-artifact@v3
         with:
           name: linkace-package-docker-simple
           path: linkace-package-docker-simple.zip
@@ -124,7 +124,7 @@ jobs:
         with:
           args: zip -qq linkace-package-docker-advanced.zip docker-compose.yml .env nginx.conf nginx-ssl.conf LICENSE.md README.md
 
-      - uses: actions/upload-artifact@v2
+      - uses: actions/upload-artifact@v3
         with:
           name: linkace-package-docker-advanced
           path: linkace-package-docker-advanced.zip

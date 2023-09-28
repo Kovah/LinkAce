@@ -15,7 +15,7 @@ return [
 
     'password' => 'Les contrasenyes han de tenir com a mínim sis caràcters i han de coincidir amb la confirmació.',
     'reset' => 'La contrasenya s\'ha restablert!',
-    'sent' => 'T\'hem enviat un correu electrònic amb un enllaç per a reiniciar la teva contrasenya!',
+    'sent' => 'Si existeix un compte amb la vostra adreça de correu electrònic, hem enviat per correu electrònic l\'enllaç de restabliment de la contrasenya.',
     'token' => 'Aquest codi de recuperació de contrasenya és invàlid.',
     'user' => "No hi ha cap usuari amb aquest correu.",
 

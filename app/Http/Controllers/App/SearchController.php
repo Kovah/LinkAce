@@ -27,6 +27,7 @@ class SearchController extends Controller
                 'only_lists' => '',
                 'only_tags' => '',
                 'order_by' => $this->orderByOptions[0],
+                'performed_search' => false,
             ]);
     }
 
@@ -49,6 +50,7 @@ class SearchController extends Controller
                 'empty_tags' => $this->emptyTags,
                 'empty_lists' => $this->emptyLists,
                 'order_by' => $this->searchOrderBy,
+                'performed_search' => true,
             ]);
     }
 }

@@ -15,7 +15,7 @@ return [
 
     'password' => 'Passord må være minst seks tegn og stemme med bekreftelsen.',
     'reset' => 'Ditt passord har blitt tilbakestilt!',
-    'sent' => 'Vi har sendt deg en lenke for tilbakestilling av passordet ditt!',
+    'sent' => 'Hvis en konto med din e-postadresse finnes, har vi sendt en lenke for tilbakestilling av passordet ditt.',
     'token' => 'Denne resettingen av passordet er ugyldig.',
     'user' => "Vi finner ikke en bruker med denne e-postadressen.",
 

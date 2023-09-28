@@ -14,14 +14,15 @@ return [
     'empty_lists' => 'senza Liste',
 
     'order_by' => 'Ordina per',
-    'order_by.title:asc' => 'Titolo ascendente',
-    'order_by.title:desc' => 'Titolo discendente',
-    'order_by.url:asc' => 'URL ascendente',
-    'order_by.url:desc' => 'URL discendente',
-    'order_by.created_at:asc' => 'Data creazione ascendente',
-    'order_by.created_at:desc' => 'Data creazione discendente',
-    'order_by.number_links:asc' => 'Numero di link ascendente',
-    'order_by.number_links:desc' => 'Numero di link discendente',
+    'order_by.title:asc' => 'Titolo A-Z',
+    'order_by.title:desc' => 'Titolo Z-A',
+    'order_by.url:asc' => 'URL A-Z',
+    'order_by.url:desc' => 'URL Z-A',
+    'order_by.created_at:asc' => 'Meno Recenti',
+    'order_by.created_at:desc' => 'Più Recenti',
+    'order_by.number_links:asc' => 'Minor numero di Link',
+    'order_by.number_links:desc' => 'Maggior numero di Link',
+    'order_by.random' => 'Casuale',
 
     'no_results' => 'Nessun risultato trovato.',
 

@@ -151,6 +151,11 @@ $card-cap-bg: $darkmode-bg;
 $card-bg: $darkmode-bg;
 
 
+// Inputs
+$input-group-addon-bg: $input-bg !default;
+$input-group-addon-border-color: $input-border-color !default;
+
+
 // List group
 $list-group-bg: $darkmode-bg;
 $list-group-color: $body-color;
@@ -167,10 +172,11 @@ $list-group-action-color: $white;
 $list-group-action-active-color: $white;
 $list-group-action-active-bg: $darkmode-bg-dark;
 
+
 // Alerts
-$alert-bg-level: +8;
-$alert-border-level: +7;
-$alert-color-level: -8;
+$alert-bg-scale: 70%;
+$alert-border-scale: 50%;
+$alert-color-scale: -60%;
 
 // Code
 $code-background-color: $darkmode-bg;

@@ -261,3 +261,13 @@ function bookmarkletUrl(): string
 
     return str_replace('##URL##', route('bookmarklet-add'), $bmCode);
 }
+
+/**
+ * Get a list of all routes that are accessible by guests.
+ *
+ * @return string[]
+ */
+function guestRoutes(): array
+{
+    return ['guest/*', 'login', 'forgot-password', 'reset-password/*', 'two-factor-challenge', 'email/verify'];
+}

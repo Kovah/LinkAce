@@ -138,6 +138,10 @@ use App\Enums\ModelAttribute;
                                     @lang('search.order_by.' . $order_by)
                                 </option>
                             @endforeach
+                            <option value="random"
+                                @if($query_settings['order_by'] == 'random') selected @endif>
+                                @lang('search.order_by.random')
+                            </option>
                         </select>
                     </div>
 
@@ -149,9 +153,11 @@ use App\Enums\ModelAttribute;
         <div class="card-table mt-4">
 
             @if($results->isEmpty())
-                <div class="alert alert-info m-3">
-                    @lang('search.no_results')
-                </div>
+                @if($query_settings['performed_search'])
+                    <div class="alert alert-info m-3">
+                        @lang('search.no_results')
+                    </div>
+                @endif
             @else
                 @include('app.search.partials.table', ['results' => $results])
             @endif

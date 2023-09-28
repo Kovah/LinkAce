@@ -15,7 +15,7 @@ return [
 
     'password' => 'Le password devono essere di almeno 6 caratteri e devono coincidere.',
     'reset' => 'La password è stata reimpostata!',
-    'sent' => 'Abbiamo inviato una e-mail al tuo link per reimpostare la password!',
+    'sent' => 'Se esiste un account con il tuo indirizzo e-mail, verrà inviata una e-mail con un link per reimpostare la password.',
     'token' => 'Questo token per la reimpostazione della password non è valido.',
     'user' => "Non esiste un utente associato a questo indirizzo e-mail.",
 

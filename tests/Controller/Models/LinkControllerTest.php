@@ -49,6 +49,22 @@ class LinkControllerTest extends TestCase
             ->assertSee('https://public-link.com')
             ->assertSee('https://internal-link.com')
             ->assertDontSee('https://private-link.com');
+
+        $this->flushSession();
+        $this->get('links?orderBy=created_at&orderDir=asc')
+            ->assertOk()
+            ->assertSeeInOrder([
+                'https://linkace.example.com/test',
+                'https://the-new-linkace.com',
+            ]);
+
+        $this->flushSession();
+        $this->get('links?orderBy=created_at&orderDir=wrong-asc')
+            ->assertOk()
+            ->assertSeeInOrder([
+                'https://the-new-linkace.com',
+                'https://linkace.example.com/test',
+            ]);
     }
 
     public function testCreateView(): void

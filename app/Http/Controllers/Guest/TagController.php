@@ -3,19 +3,22 @@
 namespace App\Http\Controllers\Guest;
 
 use App\Http\Controllers\Controller;
+use App\Http\Controllers\Traits\HandlesQueryOrder;
 use App\Models\Tag;
 use Illuminate\Contracts\View\View;
 use Illuminate\Http\Request;
 
 class TagController extends Controller
 {
+    use HandlesQueryOrder;
+
     public function index(Request $request): View
     {
         $tags = Tag::publicOnly()
             ->withCount(['links' => fn ($query) => $query->publicOnly()])
             ->orderBy(
                 $request->input('orderBy', 'name'),
-                $request->input('orderDir', 'asc')
+                $this->getOrderDirection($request, 'asc')
             )
             ->paginate(getPaginationLimit());
 
@@ -23,7 +26,7 @@ class TagController extends Controller
             'tags' => $tags,
             'route' => $request->getBaseUrl(),
             'orderBy' => $request->input('orderBy', 'name'),
-            'orderDir' => $request->input('orderDir', 'asc'),
+            'orderDir' => $this->getOrderDirection($request, 'asc'),
         ]);
     }
 

@@ -1,6 +1,6 @@
 {
   "name": "linkace",
-  "version": "1.11.1",
+  "version": "1.12.2",
   "description": "A small, selfhosted bookmark manager with advanced features, built with Laravel and Docker",
   "homepage": "https://github.com/Kovah/LinkAce",
   "repository": {
@@ -16,10 +16,10 @@
     "laravel-mix": "^6.0.31",
     "postcss": "^8.4.5",
     "sass": "^1.46.0",
-    "sass-loader": "^12.4.0"
+    "sass-loader": "^13.2.0"
   },
   "dependencies": {
-    "bootstrap": "^5.1.3",
+    "bootstrap": "^5.2.3",
     "tom-select": "^2.0.0"
   },
   "scripts": {

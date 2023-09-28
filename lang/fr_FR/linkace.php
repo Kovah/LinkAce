@@ -30,7 +30,7 @@ return [
     'delete' => 'Supprimer',
 
     'menu' => 'Menu',
-    'entries' => 'Éntrées',
+    'entries' => 'Entrées',
     'feed' => 'Feed',
 
     'continue_adding' => 'Continuer l\'Ajout',

@@ -97,6 +97,7 @@ return [
         'it_IT' => 'Italiano',
         'no_NO' => 'Norsk',
         'pl_PL' => 'Polski',
+        'ro_RO' => 'Română',
         'vi_VN' => 'Tiếng Việt',
         'zh_CN' => '简体中文',
     ],
@@ -139,6 +140,19 @@ return [
     */
 
     'guest_access' => (bool)env('GUEST_ACCESS', false),
+
+    /*
+    |--------------------------------------------------------------------------
+    | Trusted Proxies
+    |--------------------------------------------------------------------------
+    |
+    | Specify which proxies should be trusted by default. As it's unknown which
+    | proxy ist used in front of LinkAce, all are allowed by default.
+    | Also see App\Http\Middleware\TrustProxies
+    |
+    */
+
+    'trusted_proxies' => env('TRUSTED_PROXIES', '*'),
 
     /*
     |--------------------------------------------------------------------------

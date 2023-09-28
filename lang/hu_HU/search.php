@@ -14,14 +14,15 @@ return [
     'empty_lists' => 'lista nélkül',
 
     'order_by' => 'Rendezés:',
-    'order_by.title:asc' => 'Növekvő sorrendben a cím szerint',
-    'order_by.title:desc' => 'Csökkenő sorrendben a cím szerint',
-    'order_by.url:asc' => 'Növekvő sorrendben az URL szerint',
-    'order_by.url:desc' => 'Csökkenő sorrendben az URL szerint',
-    'order_by.created_at:asc' => 'Növekvő sorrendben a létrehozás dátuma szerint',
-    'order_by.created_at:desc' => 'Csökkenő sorrendben a létrehozás dátuma szerint',
-    'order_by.number_links:asc' => 'Növekvő sorrendben a hivatkozások száma szerint',
-    'order_by.number_links:desc' => 'Csökkenő sorrendben a hivatkozások száma szerint',
+    'order_by.title:asc' => 'Cím A-Z',
+    'order_by.title:desc' => 'Cím Z-A',
+    'order_by.url:asc' => 'URL A-Z',
+    'order_by.url:desc' => 'URL Z-A',
+    'order_by.created_at:asc' => 'Legrégebbi',
+    'order_by.created_at:desc' => 'Legújabb',
+    'order_by.number_links:asc' => 'A legkevesebb link',
+    'order_by.number_links:desc' => 'A legtöbb link',
+    'order_by.random' => 'Véletlen',
 
     'no_results' => 'Nincs találat.',
 

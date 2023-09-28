@@ -3,26 +3,29 @@
 namespace App\Http\Controllers\Guest;
 
 use App\Http\Controllers\Controller;
+use App\Http\Controllers\Traits\HandlesQueryOrder;
 use App\Models\LinkList;
 use Illuminate\Contracts\View\View;
 use Illuminate\Http\Request;
 
 class ListController extends Controller
 {
+    use HandlesQueryOrder;
+
     public function index(Request $request): View
     {
         $lists = LinkList::publicOnly()
             ->withCount(['links' => fn ($query) => $query->publicOnly()])
             ->orderBy(
                 $request->input('orderBy', 'name'),
-                $request->input('orderDir', 'asc')
+                $this->getOrderDirection($request, 'asc')
             )
             ->paginate(getPaginationLimit());
 
         return view('guest.lists.index', [
             'lists' => $lists,
             'orderBy' => $request->input('orderBy', 'name'),
-            'orderDir' => $request->input('orderDir', 'asc'),
+            'orderDir' => $this->getOrderDirection($request, 'asc'),
         ]);
     }
 
@@ -34,7 +37,7 @@ class ListController extends Controller
             ->publicOnly()
             ->orderBy(
                 $request->input('orderBy', 'title'),
-                $request->input('orderDir', 'asc')
+                $this->getOrderDirection($request, 'asc')
             )->paginate(getPaginationLimit());
 
         return view('guest.lists.show', [
@@ -42,7 +45,7 @@ class ListController extends Controller
             'listLinks' => $links,
             'route' => $request->getBaseUrl(),
             'orderBy' => $request->input('orderBy', 'title'),
-            'orderDir' => $request->input('orderDir', 'asc'),
+            'orderDir' => $this->getOrderDirection($request, 'asc'),
         ]);
     }
 }

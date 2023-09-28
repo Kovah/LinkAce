@@ -87,14 +87,14 @@ $color-contrast-light: $white;
 
 
 // Options
+$enable-dark-mode: false;
 $enable-caret: false;
 
 
 // Body
-$body-bg: $white;
 $body-color: $black;
-$body-color-pale: $gray-600;
-$body-color-muted: $gray;
+$body-bg: $white;
+$body-secondary-color: $gray-600;
 
 
 // Links
@@ -106,6 +106,7 @@ $link-hover-decoration: none;
 
 
 // Components
+$border-width: 1px;
 $border-radius-xs: .2rem;
 
 $line-height-sm: 1.5;
@@ -115,13 +116,11 @@ $link-thumbnail-placeholder-color: $gray-200;
 
 // Typography
 $font-family-sans-serif: "IBM Plex Sans", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, "Noto Sans", sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji";
-
+$font-weight-normal: 400;
 $font-size-base: 1rem;
 $font-size-xs: $font-size-base * .75;
 
-$font-weight-normal: 400;
-
-$text-muted: $body-color-muted;
+$text-muted: $body-secondary-color;
 
 
 // Tables
@@ -130,6 +129,7 @@ $table-dark-color: $white;
 
 
 // Buttons + Forms
+$input-color: $body-color;
 $input-border-color: $gray-300;
 $input-btn-focus-width: .15rem;
 $input-btn-padding-y-xs: .15rem;
@@ -138,6 +138,8 @@ $input-btn-font-size-xs: $font-size-xs;
 $input-btn-line-height-xs: $line-height-sm;
 
 $input-placeholder-color: $text-muted;
+
+$input-btn-border-width: $border-width;
 
 
 // Buttons

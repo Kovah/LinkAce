@@ -29,6 +29,22 @@ class TagControllerTest extends TestCase
         $this->createTestTags();
 
         $this->get('tags')->assertOk()->assertSee('Public Tag')->assertSee('Internal Tag')->assertDontSee('Private Tag');
+
+        $this->flushSession();
+        $this->get('tags?orderBy=created_at&orderDir=desc')
+            ->assertOk()
+            ->assertSeeInOrder([
+                'new-tag',
+                'a-tag',
+            ]);
+
+        $this->flushSession();
+        $this->get('tags?orderBy=created_at&orderDir=wrong-desc')
+            ->assertOk()
+            ->assertSeeInOrder([
+                'a-tag',
+                'new-tag',
+            ]);
     }
 
     public function testIndexViewWithValidFilterResult(): void

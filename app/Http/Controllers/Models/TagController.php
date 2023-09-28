@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Models;
 
 use App\Http\Controllers\Controller;
 use App\Http\Controllers\Traits\ChecksOrdering;
+use App\Http\Controllers\Traits\HandlesQueryOrder;
 use App\Http\Requests\Models\TagStoreRequest;
 use App\Http\Requests\Models\TagUpdateRequest;
 use App\Models\Link;
@@ -26,8 +27,8 @@ class TagController extends Controller
 
     public function index(Request $request): View
     {
-        $this->orderBy = $request->input('orderBy', session()->get('tags.index.orderBy', 'name'));
-        $this->orderDir = $request->input('orderDir', session()->get('tags.index.orderDir', 'asc'));
+        $orderBy = $request->input('orderBy', session()->get('tags.index.orderBy', 'name'));
+        $orderDir = $this->getOrderDirection($request, session()->get('tags.index.orderDir', 'asc'));
 
         $this->checkOrdering();
 
@@ -76,7 +77,7 @@ class TagController extends Controller
     {
         $this->allowedOrderBy = Link::$allowOrderBy;
         $this->orderBy = $request->input('orderBy', 'created_at');
-        $this->orderDir = $request->input('orderDir', 'desc');
+        $this->orderDir = $this->getOrderDirection($request);
 
         $this->checkOrdering();
 
@@ -90,7 +91,7 @@ class TagController extends Controller
             'tagLinks' => $links,
             'route' => $request->getBaseUrl(),
             'orderBy' => $request->input('orderBy', 'created_at'),
-            'orderDir' => $request->input('orderDir', 'desc'),
+            'orderDir' => $this->getOrderDirection($request),
         ]);
     }
 

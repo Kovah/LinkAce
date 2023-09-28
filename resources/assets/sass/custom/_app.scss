@@ -108,7 +108,7 @@ a.badge {
 }
 
 .text-pale {
-  color: $body-color-pale;
+  color: $body-secondary-color;
 }
 
 .btn-xs {
@@ -176,6 +176,10 @@ code {
 
 #loader {
   display: none !important;
+}
+
+.btn-cloud .btn {
+  margin: 2px;
 }
 
 .link-thumbnail {

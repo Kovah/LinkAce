@@ -4,9 +4,9 @@ namespace App\Http\Controllers\Models;
 
 use App\Http\Controllers\Controller;
 use App\Http\Controllers\Traits\ChecksOrdering;
+use App\Http\Controllers\Traits\HandlesQueryOrder;
 use App\Http\Requests\Models\LinkStoreRequest;
 use App\Http\Requests\Models\LinkUpdateRequest;
-use App\Http\Requests\Models\MarkLinkWorkingRequest;
 use App\Http\Requests\Models\ToggleLinkCheckRequest;
 use App\Models\Link;
 use App\Repositories\LinkRepository;
@@ -17,6 +17,7 @@ use Illuminate\Http\Request;
 class LinkController extends Controller
 {
     use ChecksOrdering;
+    use HandlesQueryOrder;
 
     public function __construct()
     {
@@ -26,8 +27,8 @@ class LinkController extends Controller
 
     public function index(Request $request): View
     {
-        $this->orderBy = $request->input('orderBy', session()->get('links.index.orderBy', 'created_at'));
-        $this->orderDir = $request->input('orderDir', session()->get('links.index.orderDir', 'desc'));
+        $orderBy = $request->input('orderBy', session()->get('links.index.orderBy', 'created_at'));
+        $orderDir = $this->getOrderDirection($request, session()->get('links.index.orderDir', 'desc'));
 
         $this->checkOrdering();
 
@@ -36,12 +37,16 @@ class LinkController extends Controller
 
         $links = Link::query()
             ->visibleForUser()
-            ->with('tags')
-            ->orderBy($this->orderBy, $this->orderDir)
-            ->paginate(getPaginationLimit());
+            ->with('tags');
+
+        if ($orderBy === 'random') {
+            $links->inRandomOrder();
+        } else {
+            $links->orderBy($orderBy, $orderDir);
+        }
 
         return view('models.links.index', [
-            'links' => $links,
+            'links' => $links->paginate(getPaginationLimit()),
             'route' => $request->getBaseUrl(),
             'orderBy' => $this->orderBy,
             'orderDir' => $this->orderDir,

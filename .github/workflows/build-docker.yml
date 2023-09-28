@@ -26,6 +26,22 @@ jobs:
           username: ${{ secrets.DOCKER_HUB_USERNAME }}
           password: ${{ secrets.DOCKER_HUB_TOKEN }}
 
+      - name: Login to DockerHub
+        uses: docker/login-action@v2
+        with:
+          registry: ghcr.io
+          username: ${{ github.actor }}
+          password: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Prepare tags
+        id: prep
+        run: |
+          DOCKER_IMAGE=linkace/linkace
+          DOCKER_IMAGE_GITUHB=ghcr.io/kovah/linkace
+          VERSION=${GITHUB_REF#refs/tags/}
+          TAGS="${DOCKER_IMAGE}:${VERSION},${DOCKER_IMAGE}:latest,${DOCKER_IMAGE_GITUHB}:${VERSION},${DOCKER_IMAGE_GITUHB}:latest"
+          echo "tags=${TAGS}" >> $GITHUB_OUTPUT
+
       - name: Build and push advanced image
         uses: docker/build-push-action@v5
         with:
@@ -42,7 +58,7 @@ jobs:
           DOCKER_IMAGE_GITHUB=ghcr.io/kovah/linkace
           VERSION=${GITHUB_REF#refs/tags/}
           TAGS="${DOCKER_IMAGE}:${VERSION}-php-nginx,${DOCKER_IMAGE}:php-nginx,${DOCKER_IMAGE}:${VERSION}-simple,${DOCKER_IMAGE}:simple,${DOCKER_IMAGE_GITHUB}:${VERSION}-php-nginx,${DOCKER_IMAGE_GITHUB}:php-nginx,${DOCKER_IMAGE_GITHUB}:${VERSION}-simple,${DOCKER_IMAGE_GITHUB}:simple"
-          echo ::set-output name=tags::${TAGS}
+          echo "tags=${TAGS}" >> $GITHUB_OUTPUT
 
       - name: Build and push simple image
         uses: docker/build-push-action@v5

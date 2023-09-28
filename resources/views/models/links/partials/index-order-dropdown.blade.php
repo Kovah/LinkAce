@@ -28,4 +28,8 @@
         href="{{ route($baseRoute, ['orderBy' => 'title', 'orderDir' => 'desc']) }}">
         @lang('search.order_by.title:desc')
     </a>
+    <a class="dropdown-item small"
+        href="{{ route($baseRoute, ['orderBy' => 'random']) }}">
+        @lang('search.order_by.random')
+    </a>
 </div>

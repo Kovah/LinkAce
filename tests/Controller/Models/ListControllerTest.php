@@ -33,6 +33,22 @@ class ListControllerTest extends TestCase
             ->assertSee('Public List')
             ->assertSee('Internal List')
             ->assertDontSee('Private List');
+
+        $this->flushSession();
+        $this->get('lists?orderBy=created_at&orderDir=desc')
+            ->assertOk()
+            ->assertSeeInOrder([
+                'Super New List',
+                'A Test List',
+            ]);
+
+        $this->flushSession();
+        $this->get('lists?orderBy=created_at&orderDir=wrong-desc')
+            ->assertOk()
+            ->assertSeeInOrder([
+                'A Test List',
+                'Super New List',
+            ]);
     }
 
     public function testIndexViewWithValidFilterResult(): void

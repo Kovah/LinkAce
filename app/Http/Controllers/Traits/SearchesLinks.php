@@ -90,8 +90,12 @@ trait SearchesLinks
 
         // Order the results if applicable and only allow predefined ordering
         if ($this->searchOrderBy = $request->input('order_by')) {
-            $this->searchOrderBy = in_array($this->searchOrderBy, $this->orderByOptions)
-                ? $this->searchOrderBy : $this->orderByOptions[0];
+            if ($this->searchOrderBy === 'random') {
+                $search->inRandomOrder();
+            } else {
+                $this->searchOrderBy = in_array($this->searchOrderBy, $this->orderByOptions)
+                    ? $this->searchOrderBy : $this->orderByOptions[0];
+            }
             $search->orderBy(...explode(':', $this->searchOrderBy));
         }
 
