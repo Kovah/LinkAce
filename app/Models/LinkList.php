@@ -64,6 +64,7 @@ class LinkList extends Model implements Auditable
         'visibility',
         'created_at',
         'updated_at',
+        'random',
     ];
 
     public string $langBase = 'list';

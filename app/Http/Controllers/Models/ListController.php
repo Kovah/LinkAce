@@ -4,7 +4,6 @@ namespace App\Http\Controllers\Models;
 
 use App\Http\Controllers\Controller;
 use App\Http\Controllers\Traits\ChecksOrdering;
-use App\Http\Controllers\Traits\HandlesQueryOrder;
 use App\Http\Requests\Models\ListStoreRequest;
 use App\Http\Requests\Models\ListUpdateRequest;
 use App\Models\LinkList;
@@ -16,7 +15,6 @@ use Illuminate\Http\Request;
 class ListController extends Controller
 {
     use ChecksOrdering;
-    use HandlesQueryOrder;
 
     public function __construct()
     {
@@ -26,12 +24,12 @@ class ListController extends Controller
 
     public function index(Request $request): View
     {
-        $orderBy = $request->input('orderBy', session()->get('lists.index.orderBy', 'name'));
-        $orderDir = $this->getOrderDirection($request, session()->get('lists.index.orderDir', 'asc'));
+        $this->orderBy = $request->input('orderBy', session()->get('lists.index.orderBy', 'name'));
+        $this->orderDir = $request->input('orderDir', session()->get('lists.index.orderDir', 'asc'));
         $this->checkOrdering();
 
-        session()->put('lists.index.orderBy', $orderBy);
-        session()->put('lists.index.orderDir', $orderDir);
+        session()->put('lists.index.orderBy', $this->orderBy);
+        session()->put('lists.index.orderDir', $this->orderDir);
 
         $lists = LinkList::query()
             ->visibleForUser()
@@ -74,20 +72,22 @@ class ListController extends Controller
 
     public function show(Request $request, LinkList $list): View
     {
+        $this->orderBy = $request->input('orderBy', 'created_at');
+        $this->orderDir = $request->input('orderBy', 'desc');
+        $this->checkOrdering();
+
         $links = $list->links()
             ->byUser()
-            ->orderBy(
-                $request->input('orderBy', 'created_at'),
-                $request->input('orderDir', 'desc')
-            )->paginate(getPaginationLimit());
+            ->orderBy($this->orderBy, $this->orderDir)
+            ->paginate(getPaginationLimit());
 
         return view('models.lists.show', [
             'list' => $list,
             'history' => $list->audits()->latest()->get(),
             'listLinks' => $links,
             'route' => $request->getBaseUrl(),
-            'orderBy' => $request->input('orderBy', 'created_at'),
-            'orderDir' => $request->input('orderDir', 'desc'),
+            'orderBy' => $this->orderBy,
+            'orderDir' => $this->orderDir,
         ]);
     }
 

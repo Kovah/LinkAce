@@ -47,7 +47,7 @@ class ImportHtmlBookmarks
                 'url' => $link['url'],
                 'title' => $title,
                 'description' => $description,
-                'icon' => LinkIconMapper::getIconForUrl($link['uri']),
+                'icon' => LinkIconMapper::getIconForUrl($link['url']),
                 'is_private' => usersettings('tags_private_default') === '1' ? true : $isPublic,
             ]);
             $newLink->created_at = Carbon::createFromTimestamp($link['dateCreated']);

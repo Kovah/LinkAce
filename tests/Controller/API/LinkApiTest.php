@@ -46,8 +46,8 @@ class LinkApiTest extends ApiTestCase
             ->assertOk()
             ->assertJson([
                 'data' => [
-                    ['url' => 'https://public-link.com'],
                     ['url' => 'https://internal-link.com'],
+                    ['url' => 'https://public-link.com'],
                 ],
             ])
             ->assertJsonMissing([
@@ -75,8 +75,8 @@ class LinkApiTest extends ApiTestCase
             ->assertOk()
             ->assertJson([
                 'data' => [
-                    ['url' => 'https://public-link.com'],
                     ['url' => 'https://internal-link.com'],
+                    ['url' => 'https://public-link.com'],
                 ],
             ])
             ->assertJsonMissing([
@@ -95,9 +95,9 @@ class LinkApiTest extends ApiTestCase
             ->assertOk()
             ->assertJson([
                 'data' => [
-                    ['url' => 'https://public-link.com'],
-                    ['url' => 'https://internal-link.com'],
                     ['url' => 'https://private-link.com'],
+                    ['url' => 'https://internal-link.com'],
+                    ['url' => 'https://public-link.com'],
                 ],
             ]);
     }

@@ -17,7 +17,6 @@ use Illuminate\Http\Request;
 class LinkController extends Controller
 {
     use ChecksOrdering;
-    use HandlesQueryOrder;
 
     public function __construct()
     {
@@ -27,9 +26,8 @@ class LinkController extends Controller
 
     public function index(Request $request): View
     {
-        $orderBy = $request->input('orderBy', session()->get('links.index.orderBy', 'created_at'));
-        $orderDir = $this->getOrderDirection($request, session()->get('links.index.orderDir', 'desc'));
-
+        $this->orderBy = $request->input('orderBy', session()->get('links.index.orderBy', 'created_at'));
+        $this->orderDir = $request->input('orderDir', session()->get('links.index.orderDir', 'desc'));
         $this->checkOrdering();
 
         session()->put('links.index.orderBy', $this->orderBy);
@@ -39,10 +37,10 @@ class LinkController extends Controller
             ->visibleForUser()
             ->with('tags');
 
-        if ($orderBy === 'random') {
+        if ($this->orderBy === 'random') {
             $links->inRandomOrder();
         } else {
-            $links->orderBy($orderBy, $orderDir);
+            $links->orderBy($this->orderBy, $this->orderDir);
         }
 
         return view('models.links.index', [

@@ -38,16 +38,16 @@ class ListControllerTest extends TestCase
         $this->get('lists?orderBy=created_at&orderDir=desc')
             ->assertOk()
             ->assertSeeInOrder([
-                'Super New List',
-                'A Test List',
+                'Internal List',
+                'Public List',
             ]);
 
         $this->flushSession();
         $this->get('lists?orderBy=created_at&orderDir=wrong-desc')
             ->assertOk()
             ->assertSeeInOrder([
-                'A Test List',
-                'Super New List',
+                'Public List',
+                'Internal List',
             ]);
     }
 

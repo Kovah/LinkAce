@@ -27,9 +27,8 @@ class TagController extends Controller
 
     public function index(Request $request): View
     {
-        $orderBy = $request->input('orderBy', session()->get('tags.index.orderBy', 'name'));
-        $orderDir = $this->getOrderDirection($request, session()->get('tags.index.orderDir', 'asc'));
-
+        $this->orderBy = $request->input('orderBy', session()->get('tags.index.orderBy', 'name'));
+        $this->orderDir = $request->input('orderDir', session()->get('tags.index.orderDir', 'asc'));
         $this->checkOrdering();
 
         session()->put('tags.index.orderBy', $this->orderBy);
@@ -77,11 +76,11 @@ class TagController extends Controller
     {
         $this->allowedOrderBy = Link::$allowOrderBy;
         $this->orderBy = $request->input('orderBy', 'created_at');
-        $this->orderDir = $this->getOrderDirection($request);
-
+        $this->orderDir = $request->input('orderBy', 'desc');
         $this->checkOrdering();
 
-        $links = $tag->links()->visibleForUser()
+        $links = $tag->links()
+            ->visibleForUser()
             ->orderBy($this->orderBy, $this->orderDir)
             ->paginate(getPaginationLimit());
 
@@ -90,8 +89,8 @@ class TagController extends Controller
             'history' => $tag->audits()->latest()->get(),
             'tagLinks' => $links,
             'route' => $request->getBaseUrl(),
-            'orderBy' => $request->input('orderBy', 'created_at'),
-            'orderDir' => $this->getOrderDirection($request),
+            'orderBy' => $this->orderBy,
+            'orderDir' => $this->orderDir,
         ]);
     }
 

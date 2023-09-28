@@ -7,6 +7,7 @@ use App\Audits\Modifiers\LinkStatusModifier;
 use App\Audits\Modifiers\ListRelationModifier;
 use App\Audits\Modifiers\TagRelationModifier;
 use App\Audits\Modifiers\VisibilityModifier;
+use App\Enums\ModelAttribute;
 use App\Jobs\SaveLinkToWaybackmachine;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Collection;
@@ -86,6 +87,7 @@ class Link extends Model implements Auditable
         'check_disabled',
         'created_at',
         'updated_at',
+        'random',
     ];
 
     public string $langBase = 'link';
@@ -244,11 +246,13 @@ class Link extends Model implements Auditable
      */
     public function initiateInternetArchiveBackup(): void
     {
-        if (usersettings('archive_backups_enabled') === '0') {
+        if (usersettings('archive_backups_enabled') === false) {
             return;
         }
 
-        if ($this->is_private && usersettings('archive_private_backups_enabled') === '0') {
+        if ($this->visibility === ModelAttribute::VISIBILITY_PRIVATE
+            && usersettings('archive_private_backups_enabled') === false
+        ) {
             return;
         }
 

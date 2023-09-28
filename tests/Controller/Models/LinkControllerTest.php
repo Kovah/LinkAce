@@ -51,19 +51,19 @@ class LinkControllerTest extends TestCase
             ->assertDontSee('https://private-link.com');
 
         $this->flushSession();
-        $this->get('links?orderBy=created_at&orderDir=asc')
+        $this->get('links?orderBy=created_at&orderDir=desc')
             ->assertOk()
             ->assertSeeInOrder([
-                'https://linkace.example.com/test',
-                'https://the-new-linkace.com',
+                'https://internal-link.com',
+                'https://public-link.com',
             ]);
 
         $this->flushSession();
         $this->get('links?orderBy=created_at&orderDir=wrong-asc')
             ->assertOk()
             ->assertSeeInOrder([
-                'https://the-new-linkace.com',
-                'https://linkace.example.com/test',
+                'https://public-link.com',
+                'https://internal-link.com',
             ]);
     }
 
@@ -233,7 +233,7 @@ class LinkControllerTest extends TestCase
             'description' => null,
             'lists' => null,
             'tags' => null,
-            'visibility' => 1,
+            'visibility' => 3,
         ]);
 
         Queue::assertNotPushed(SaveLinkToWaybackmachine::class);
