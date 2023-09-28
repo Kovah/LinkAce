@@ -2,23 +2,28 @@
 
 namespace App\Policies\Api;
 
-use App\Enums\ModelAttribute;
-use App\Models\LinkList;
+use App\Enums\ApiToken;
+use App\Models\Api\ApiLinkList;
 use App\Models\User;
 use Illuminate\Auth\Access\HandlesAuthorization;
 
 class LinkListApiPolicy
 {
     use HandlesAuthorization;
+    use AuthorizesUserApiActions;
+
+    protected string $readAbility = ApiToken::ABILITY_LISTS_READ;
+    protected string $updateAbility = ApiToken::ABILITY_LISTS_UPDATE;
+    protected string $deleteAbility = ApiToken::ABILITY_LISTS_DELETE;
 
     public function viewAny(User $user): bool
     {
         return true;
     }
 
-    public function view(User $user, LinkList $list): bool
+    public function view(User $user, ApiLinkList $list): bool
     {
-        return $this->userCanAccessList($user, $list);
+        return $this->userCanAccessModel($user, $list);
     }
 
     public function create(User $user): bool
@@ -26,32 +31,23 @@ class LinkListApiPolicy
         return true;
     }
 
-    public function update(User $user, LinkList $list): bool
+    public function update(User $user, ApiLinkList $list): bool
     {
-        return $this->userCanAccessList($user, $list);
+        return $this->userCanUpdateModel($user, $list);
     }
 
-    public function delete(User $user, LinkList $list): bool
+    public function delete(User $user, ApiLinkList $list): bool
     {
         return $list->user->is($user);
     }
 
-    public function restore(User $user, LinkList $list): bool
+    public function restore(User $user, ApiLinkList $list): bool
     {
         return $list->user->is($user);
     }
 
-    public function forceDelete(User $user, LinkList $list): bool
+    public function forceDelete(User $user, ApiLinkList $list): bool
     {
         return $list->user->is($user);
-    }
-
-    // Link must be either owned by user, or be not private
-    protected function userCanAccessList(User $user, LinkList $list): bool
-    {
-        if ($list->user_id === $user->id) {
-            return true;
-        }
-        return $list->visibility !== ModelAttribute::VISIBILITY_PRIVATE;
     }
 }

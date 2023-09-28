@@ -2,7 +2,7 @@
 
 namespace App\Policies\Api;
 
-use App\Enums\ModelAttribute;
+use App\Enums\ApiToken;
 use App\Models\Note;
 use App\Models\User;
 use Illuminate\Auth\Access\HandlesAuthorization;
@@ -10,6 +10,11 @@ use Illuminate\Auth\Access\HandlesAuthorization;
 class NoteApiPolicy
 {
     use HandlesAuthorization;
+    use AuthorizesUserApiActions;
+
+    protected string $readAbility = ApiToken::ABILITY_NOTES_READ;
+    protected string $updateAbility = ApiToken::ABILITY_NOTES_UPDATE;
+    protected string $deleteAbility = ApiToken::ABILITY_NOTES_DELETE;
 
     public function viewAny(User $user): bool
     {
@@ -44,14 +49,5 @@ class NoteApiPolicy
     public function forceDelete(User $user, Note $note): bool
     {
         return $note->user->is($user);
-    }
-
-    // Link must be either owned by user, or be not private
-    protected function userCanAccessNote(User $user, Note $note): bool
-    {
-        if ($note->user_id === $user->id) {
-            return true;
-        }
-        return $note->visibility !== ModelAttribute::VISIBILITY_PRIVATE;
     }
 }

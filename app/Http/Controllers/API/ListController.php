@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Http\Controllers\Traits\ChecksOrdering;
 use App\Http\Requests\Models\ListStoreRequest;
 use App\Http\Requests\Models\ListUpdateRequest;
+use App\Models\Api\ApiLinkList;
 use App\Models\LinkList;
 use App\Repositories\ListRepository;
 use Illuminate\Http\JsonResponse;
@@ -17,8 +18,8 @@ class ListController extends Controller
 
     public function __construct()
     {
-        $this->allowedOrderBy = LinkList::$allowOrderBy;
-        $this->authorizeResource(LinkList::class . 'Api', 'list');
+        $this->allowedOrderBy = ApiLinkList::$allowOrderBy;
+        $this->authorizeResource(ApiLinkList::class, 'list');
     }
 
     public function index(Request $request): JsonResponse

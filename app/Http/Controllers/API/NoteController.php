@@ -5,6 +5,7 @@ namespace App\Http\Controllers\API;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Models\NoteStoreRequest;
 use App\Http\Requests\Models\NoteUpdateRequest;
+use App\Models\Api\ApiNote;
 use App\Models\Note;
 use App\Repositories\NoteRepository;
 use Illuminate\Http\JsonResponse;
@@ -14,7 +15,7 @@ class NoteController extends Controller
 {
     public function __construct()
     {
-        $this->authorizeResource(Note::class . 'Api', 'note');
+        $this->authorizeResource(ApiNote::class, 'note');
     }
 
     public function store(NoteStoreRequest $request): JsonResponse

@@ -3,6 +3,9 @@
 namespace App\Providers;
 
 use App\Models\Api\ApiLink;
+use App\Models\Api\ApiLinkList;
+use App\Models\Api\ApiNote;
+use App\Models\Api\ApiTag;
 use App\Models\Link;
 use App\Models\LinkList;
 use App\Models\Note;
@@ -33,9 +36,9 @@ class AuthServiceProvider extends ServiceProvider
         Tag::class => TagPolicy::class,
         PersonalAccessToken::class => ApiTokenPolicy::class,
         ApiLink::class => ApiLinkPolicy::class,
-        LinkList::class . 'Api' => LinkListApiPolicy::class,
-        Note::class . 'Api' => NoteApiPolicy::class,
-        Tag::class . 'Api' => TagApiPolicy::class,
+        ApiLinkList::class => LinkListApiPolicy::class,
+        ApiNote::class => NoteApiPolicy::class,
+        ApiTag::class => TagApiPolicy::class,
     ];
 
     /**

@@ -6,5 +6,5 @@ use App\Models\Link;
 
 class ApiLink extends Link
 {
-    protected $table = 'links';
+    public $table = 'links';
 }

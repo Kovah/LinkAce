@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Http\Controllers\Traits\ChecksOrdering;
 use App\Http\Requests\Models\TagStoreRequest;
 use App\Http\Requests\Models\TagUpdateRequest;
+use App\Models\Api\ApiTag;
 use App\Models\Tag;
 use App\Repositories\TagRepository;
 use Illuminate\Http\JsonResponse;
@@ -17,8 +18,8 @@ class TagController extends Controller
 
     public function __construct()
     {
-        $this->allowedOrderBy = Tag::$allowOrderBy;
-        $this->authorizeResource(Tag::class . 'Api', 'tag');
+        $this->allowedOrderBy = ApiTag::$allowOrderBy;
+        $this->authorizeResource(ApiTag::class, 'tag');
     }
 
     public function index(Request $request): JsonResponse
