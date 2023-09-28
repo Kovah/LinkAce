@@ -140,12 +140,10 @@ class TagApiTest extends ApiTestCase
     {
         Tag::factory()->create();
 
-        $response = $this->patchJsonAuthorized('api/v1/tags/1', [
+        $this->patchJsonAuthorized('api/v1/tags/1', [
             'name' => null,
             'visibility' => 'hello',
-        ]);
-
-        $response->assertJsonValidationErrors([
+        ])->assertJsonValidationErrors([
             'name' => 'The name field is required.',
             'visibility' => 'The Visibility must bei either 1 (public), 2 (internal) or 3 (private).',
         ]);

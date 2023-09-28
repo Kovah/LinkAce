@@ -50,12 +50,10 @@ class NoteApiTest extends ApiTestCase
 
     public function testInvalidCreateRequest(): void
     {
-        $response = $this->postJsonAuthorized('api/v1/notes', [
+        $this->postJsonAuthorized('api/v1/notes', [
             'link_id' => null,
             'note' => null,
-        ]);
-
-        $response->assertForbidden(); // A valid link cannot be determined, thus it's unauthorized
+        ])->assertForbidden(); // A valid link cannot be determined, thus it's unauthorized
     }
 
     public function testUpdateRequest(): void

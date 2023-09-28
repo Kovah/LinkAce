@@ -36,11 +36,10 @@ class ListApiTest extends ApiTestCase
 
     public function testMinimalCreateRequest(): void
     {
-        $response = $this->postJsonAuthorized('api/v1/lists', [
+        $this->postJsonAuthorized('api/v1/lists', [
             'name' => 'Test List',
-        ]);
-
-        $response->assertOk()
+        ])
+            ->assertOk()
             ->assertJson([
                 'name' => 'Test List',
             ]);
@@ -52,14 +51,13 @@ class ListApiTest extends ApiTestCase
 
     public function testFullCreateRequest(): void
     {
-        $response = $this->postJsonAuthorized('api/v1/lists', [
+        $this->postJsonAuthorized('api/v1/lists', [
             'name' => 'Test List',
             'description' => 'There could be a description here',
             'is_private' => false,
             'check_disabled' => false,
-        ]);
-
-        $response->assertOk()
+        ])
+            ->assertOk()
             ->assertJson([
                 'name' => 'Test List',
             ]);
@@ -71,13 +69,11 @@ class ListApiTest extends ApiTestCase
 
     public function testInvalidCreateRequest(): void
     {
-        $response = $this->postJsonAuthorized('api/v1/lists', [
+        $this->postJsonAuthorized('api/v1/lists', [
             'name' => null,
             'description' => ['bla'],
             'visibility' => 'hello',
-        ]);
-
-        $response->assertJsonValidationErrors([
+        ])->assertJsonValidationErrors([
             'name' => 'The name field is required.',
             'description' => 'The description must be a string.',
             'visibility' => 'The Visibility must bei either 1 (public), 2 (internal) or 3 (private).',
@@ -90,8 +86,8 @@ class ListApiTest extends ApiTestCase
 
         $expectedLinkApiUrl = 'http://localhost/api/v1/lists/1/links';
 
-        $response = $this->getJsonAuthorized('api/v1/lists/1');
-        $response->assertOk()
+        $this->getJsonAuthorized('api/v1/lists/1')
+            ->assertOk()
             ->assertJson([
                 'name' => 'Public List',
                 'links' => $expectedLinkApiUrl,

@@ -56,9 +56,8 @@ class ListLinksTest extends ApiTestCase
     {
         LinkList::factory()->create();
 
-        $response = $this->getJsonAuthorized('api/v1/lists/1/links');
-
-        $response->assertOk()
+        $this->getJsonAuthorized('api/v1/lists/1/links')
+            ->assertOk()
             ->assertJson([
                 'data' => [],
             ]);

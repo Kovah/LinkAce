@@ -11,9 +11,8 @@ class LinkCheckApiTest extends ApiTestCase
 
     public function testUnauthorizedRequest(): void
     {
-        $response = $this->getJson('api/v1/links/check');
-
-        $response->assertUnauthorized();
+        $this->getJson('api/v1/links/check')
+            ->assertUnauthorized();
     }
 
     public function testSuccessfulLinkCheck(): void
@@ -22,9 +21,8 @@ class LinkCheckApiTest extends ApiTestCase
             'url' => 'https://example.com',
         ]);
 
-        $response = $this->getJsonAuthorized('api/v1/links/check?url=https://example.com');
-
-        $response->assertOk()
+        $this->getJsonAuthorized('api/v1/links/check?url=https://example.com')
+            ->assertOk()
             ->assertJson([
                 'linksFound' => true,
             ]);
@@ -36,9 +34,8 @@ class LinkCheckApiTest extends ApiTestCase
             'url' => 'https://test.com',
         ]);
 
-        $response = $this->getJsonAuthorized('api/v1/links/check?url=https://example.com');
-
-        $response->assertOk()
+        $this->getJsonAuthorized('api/v1/links/check?url=https://example.com')
+            ->assertOk()
             ->assertJson([
                 'linksFound' => false,
             ]);
@@ -46,9 +43,8 @@ class LinkCheckApiTest extends ApiTestCase
 
     public function testCheckWithoutQuery(): void
     {
-        $response = $this->getJsonAuthorized('api/v1/links/check');
-
-        $response->assertOk()
+        $this->getJsonAuthorized('api/v1/links/check')
+            ->assertOk()
             ->assertJson([
                 'linksFound' => false,
             ]);
