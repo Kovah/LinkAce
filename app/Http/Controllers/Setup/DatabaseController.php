@@ -25,7 +25,9 @@ class DatabaseController extends Controller
      */
     public function index(): View
     {
-        return view('setup.database');
+        return view('setup.database', [
+            'pageTitle' => trans('setup.database_configure'),
+        ]);
     }
 
     /**

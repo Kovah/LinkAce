@@ -17,7 +17,9 @@ class MetaController extends Controller
      */
     public function welcome(): View
     {
-        return view('setup.welcome');
+        return view('setup.welcome', [
+            'pageTitle' => trans('setup.setup'),
+        ]);
     }
 
     /**
@@ -30,6 +32,8 @@ class MetaController extends Controller
         Setting::create(['key' => 'system_setup_completed', 'value' => true]);
         Cache::forget('systemsettings');
 
-        return view('setup.complete');
+        return view('setup.complete', [
+            'pageTitle' => trans('setup.complete'),
+        ]);
     }
 }

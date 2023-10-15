@@ -11,6 +11,7 @@ return [
     'intro.step2' => 'Setup up a database and check if the connection is successful.',
     'intro.step3' => 'Create your user account.',
 
+    'setup_requirements' => 'Setup Requirements',
     'check_requirements' => 'Check Requirements',
     'requirements.php_version' => 'PHP version >= 7.4.0',
     'requirements.extension_bcmath' => 'PHP Extension: BCMath',

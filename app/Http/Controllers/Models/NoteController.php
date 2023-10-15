@@ -48,7 +48,10 @@ class NoteController extends Controller
             abort(403);
         }
 
-        return view('models.notes.edit', ['note' => $note]);
+        return view('models.notes.edit', [
+            'pageTitle' => trans('note.edit'),
+            'note' => $note,
+        ]);
     }
 
     /**

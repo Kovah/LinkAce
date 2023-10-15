@@ -18,7 +18,9 @@ class ImportController extends Controller
      */
     public function getImport(): View
     {
-        return view('app.import.import');
+        return view('app.import.import', [
+            'pageTitle' => trans('import.import'),
+        ]);
     }
 
     /**

@@ -18,6 +18,7 @@ class RequirementsController extends Controller
         [$success, $results] = $this->checkRequirements();
 
         return view('setup.requirements', [
+            'pageTitle' => trans('setup.setup_requirements'),
             'success' => $success,
             'results' => $results,
         ]);

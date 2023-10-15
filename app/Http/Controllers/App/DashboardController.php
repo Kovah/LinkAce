@@ -58,6 +58,7 @@ class DashboardController extends Controller
         ];
 
         return view('dashboard', [
+            'pageTitle' => trans('linkace.dashboard'),
             'recent_links' => $recentLinks,
             'recent_tags' => $recentTags,
             'recent_lists' => $recentLists,
