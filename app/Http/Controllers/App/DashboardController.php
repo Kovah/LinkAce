@@ -44,7 +44,7 @@ class DashboardController extends Controller
             ->count();
 
         $totalNotes = Note::byUser()
-            ->count();            
+            ->count();
 
         $totalTags = Tag::byUser()
             ->count();
