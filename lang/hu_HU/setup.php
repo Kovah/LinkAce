@@ -18,7 +18,7 @@ return [
     'requirements.extension_json' => 'PHP-bővítmény: JSON',
     'requirements.extension_mbstring' => 'PHP-bővítmény: Mbstring',
     'requirements.extension_openssl' => 'PHP-bővítmény: OpenSSL',
-    'requirements.extension_pdo_mysql' => 'PHP-bővítmény: PDO',
+    'requirements.extension_pdo_mysql' => 'PHP-bővítmény: PDO MySQL',
     'requirements.extension_tokenizer' => 'PHP-bővítmény: Tokenizer',
     'requirements.extension_xml' => 'PHP-bővítmény: XML',
     'requirements.env_writable' => '.env-fájl jelen van és írható',

@@ -18,7 +18,7 @@ return [
     'requirements.extension_json' => 'Rozszerzenie PHP: JSON',
     'requirements.extension_mbstring' => 'Rozszerzenie PHP: Mbstring',
     'requirements.extension_openssl' => 'Rozszerzenie PHP: OpenSSL',
-    'requirements.extension_pdo_mysql' => 'Rozszerzenie PHP: PDO',
+    'requirements.extension_pdo_mysql' => 'Rozszerzenie PHP: PDO MySQL',
     'requirements.extension_tokenizer' => 'Rozszerzenie PHP: Tokenizer',
     'requirements.extension_xml' => 'Rozszerzenie PHP: XML',
     'requirements.env_writable' => 'Plik .env jest obecny i zapisywalny',
