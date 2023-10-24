@@ -5,7 +5,7 @@ services:
 
   # --- MariaDB
   db:
-    image: mariadb:10.6
+    image: mariadb:10.11
     command: mysqld --character-set-server=utf8mb4 --collation-server=utf8mb4_bin
     environment:
       - MYSQL_ROOT_PASSWORD=${DB_PASSWORD}
@@ -41,7 +41,7 @@ services:
 
   # --- nginx
   nginx:
-    image: bitnami/nginx:1.19
+    image: bitnami/nginx:1.25
     ports:
       - "80:8080"
     depends_on:
@@ -52,7 +52,7 @@ services:
 
   # --- Redis
   redis:
-    image: bitnami/redis:6.0
+    image: bitnami/redis:6.2
     environment:
       - REDIS_PASSWORD=${REDIS_PASSWORD}
     ports:

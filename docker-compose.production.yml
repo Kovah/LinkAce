@@ -4,7 +4,7 @@ services:
 
   # --- MariaDB
   db:
-    image: mariadb:10.7
+    image: mariadb:10.11
     restart: unless-stopped
     command: mysqld --character-set-server=utf8mb4 --collation-server=utf8mb4_bin
     environment:
@@ -29,7 +29,7 @@ services:
 
   # --- nginx
   nginx:
-    image: bitnami/nginx:1.21
+    image: bitnami/nginx:1.25
     restart: unless-stopped
     ports:
       - "0.0.0.0:80:8080"
