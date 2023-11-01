@@ -41,6 +41,7 @@ It provides a long-term archive to store links to websites, media files or anyth
 * Automated backups of saved sites via the [Internet Archive](https://web.archive.org/).
 * Organize bookmarks with the help of lists and tags.
 * A full REST API offers access to all features of LinkAce from other apps and services.
+* LinkAce is also [available on Zapier](https://zapier.com/apps/linkace/integrations) and integrates with over 2500+ applications.
 * LinkAce ships with a light and dark theme, that can be toggled or changes automatically.
 * A bookmarklet to quickly save links from any browser.
 * Links can be private or public, so friends or internet strangers may see your collection.
@@ -49,8 +50,6 @@ It provides a long-term archive to store links to websites, media files or anyth
 * An advanced search including different filters and ordering.
 * Import and export of bookmarks from HTML.
 * Support for complete database and application backups to any AWS S3 storage.
-
-More features are already planned. Take a look at the [project board](https://github.com/Kovah/LinkAce/projects/3) for more information.
 
 More screenshots of the app and further details about the features can be found on the [LinkAce Website](https://www.linkace.org/).
 
