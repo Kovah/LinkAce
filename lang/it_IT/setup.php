@@ -18,7 +18,7 @@ return [
     'requirements.extension_json' => 'Estensione PHP: JSON',
     'requirements.extension_mbstring' => 'Estensione PHP: Mbstring',
     'requirements.extension_openssl' => 'Estensione PHP: OpenSSL',
-    'requirements.extension_pdo_mysql' => 'Estensione PHP: PDO',
+    'requirements.extension_pdo_mysql' => 'Estensione PHP: PDO MySQL',
     'requirements.extension_tokenizer' => 'Estensione PHP: Tokenizer',
     'requirements.extension_xml' => 'Estensione PHP: XML',
     'requirements.env_writable' => 'Il file .env esiste ed è modificabile',

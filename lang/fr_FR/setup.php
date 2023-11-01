@@ -18,7 +18,7 @@ return [
     'requirements.extension_json' => 'Module PHP : JSON',
     'requirements.extension_mbstring' => 'Module PHP : Mbstring',
     'requirements.extension_openssl' => 'Module PHP : OpenSSL',
-    'requirements.extension_pdo_mysql' => 'Module PHP : PDO',
+    'requirements.extension_pdo_mysql' => 'Module PHP : PDO MySQL',
     'requirements.extension_tokenizer' => 'Module PHP : Tokenizer',
     'requirements.extension_xml' => 'Module PHP : XML',
     'requirements.env_writable' => 'Le fichier .env est présent et accessible en écriture',

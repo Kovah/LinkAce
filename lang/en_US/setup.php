@@ -18,7 +18,7 @@ return [
     'requirements.extension_json' => 'PHP Extension: JSON',
     'requirements.extension_mbstring' => 'PHP Extension: Mbstring',
     'requirements.extension_openssl' => 'PHP Extension: OpenSSL',
-    'requirements.extension_pdo_mysql' => 'PHP Extension: PDO',
+    'requirements.extension_pdo_mysql' => 'PHP Extension: PDO MySQL',
     'requirements.extension_tokenizer' => 'PHP Extension: Tokenizer',
     'requirements.extension_xml' => 'PHP Extension: XML',
     'requirements.env_writable' => '.env file is present and writable',
