@@ -76,9 +76,7 @@ export default class TagsSelect {
 
     this.$suggestionsContent.innerHTML = '';
 
-    tags.forEach(newTag => {
-      newTag = newTag.trim();
-
+    tags.slice(0, 20).forEach(newTag => {
       const $tag = document.createElement('span');
       $tag.classList.add('btn', 'btn-outline-secondary', 'btn-xs');
       $tag.innerText = newTag;
