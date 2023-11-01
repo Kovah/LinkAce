@@ -8,6 +8,8 @@
 
     @include('app.settings.partials.system.general-settings')
 
-    @include('app.settings.partials.system.guest-settings')
+    @if(systemsettings('system_guest_access'))
+        @include('app.settings.partials.system.guest-settings')
+    @endif
 
 @endsection
