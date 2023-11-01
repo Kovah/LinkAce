@@ -29,6 +29,7 @@ class TagController extends Controller
             ->paginate(getPaginationLimit());
 
         return view('guest.tags.index', [
+            'pageTitle' => trans('tag.tags'),
             'tags' => $tags,
             'route' => $request->getBaseUrl(),
             'orderBy' => $request->input('orderBy', 'name'),
@@ -55,6 +56,7 @@ class TagController extends Controller
             )->paginate(getPaginationLimit());
 
         return view('guest.tags.show', [
+            'pageTitle' => trans('tag.tag') . ': ' . $tag->name,
             'tag' => $tag,
             'tagLinks' => $links,
             'route' => $request->getBaseUrl(),

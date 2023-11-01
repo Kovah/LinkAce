@@ -2,7 +2,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 
-<title>{{ systemsettings('system_page_title') ?: config('app.name', 'LinkAce') }}</title>
+<title>@isset($pageTitle){{$pageTitle}} - @endisset{{ systemsettings('system_page_title') ?: config('app.name', 'LinkAce') }}</title>
 
 @stack('html-header')
 @include('partials.favicon')

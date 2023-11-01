@@ -32,6 +32,7 @@ class LinkController extends Controller
         }
 
         return view('guest.links.index', [
+            'pageTitle' => trans('link.links'),
             'links' => $links->paginate(getPaginationLimit()),
             'route' => $request->getBaseUrl(),
             'orderBy' => $request->input('orderBy', 'created_at'),

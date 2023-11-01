@@ -22,6 +22,7 @@ class SystemSettingsController extends Controller
     public function getSystemSettings(): View
     {
         return view('app.settings.system', [
+            'pageTitle' => trans('settings.system_settings'),
             'linkaceVersion' => UpdateHelper::currentVersion(),
         ]);
     }

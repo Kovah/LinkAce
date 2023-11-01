@@ -39,6 +39,7 @@ class TrashController extends Controller
             ->get();
 
         return view('app.trash.index', [
+            'pageTitle' => trans('trash.trash'),
             'links' => $links,
             'lists' => $lists,
             'tags' => $tags,
