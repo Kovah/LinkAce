@@ -4,7 +4,7 @@
         {!! $note->formatted_note !!}
     </div>
     <div class="note-meta small d-flex align-items-center">
-        <div class="ms-auto me-2 text-muted text-xs">
+        <div class="ms-auto me-2 text-pale text-xs">
             @if($note->is_private)
                 <span>
                     <x-icon.lock class="me-1" title="@lang('note.private')"/>

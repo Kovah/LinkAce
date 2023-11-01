@@ -129,8 +129,8 @@ Route::group(['middleware' => ['auth']], function () {
         ->name('fetch-lists');
     Route::post('fetch/existing-links', [FetchController::class, 'searchExistingUrls'])
         ->name('fetch-existing-links');
-    Route::post('fetch/html-for-url', [FetchController::class, 'htmlForUrl'])
-        ->name('fetch-html-for-url');
+    Route::post('fetch/keywords-for-url', [FetchController::class, 'htmlKeywordsFromUrl'])
+        ->name('fetch-keywords-for-url');
     Route::get('fetch/update-check', [FetchController::class, 'checkForUpdates'])
         ->name('fetch-update-check');
 

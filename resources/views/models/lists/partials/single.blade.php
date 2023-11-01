@@ -16,7 +16,7 @@
         </div>
 
         <div class="d-flex align-items-center">
-            <div class="text-xs text-muted me-3 ps-3">
+            <div class="text-xs text-pale me-3 ps-3">
                 @if($list->links_count > 0)
                     {{ trans_choice('list.number_links', $list->links_count, ['number' => $list->links_count]) }}
                 @else

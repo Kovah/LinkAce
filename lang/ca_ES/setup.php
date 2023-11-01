@@ -18,7 +18,7 @@ return [
     'requirements.extension_json' => 'Extensió PHP: JSON',
     'requirements.extension_mbstring' => 'Extensió PHP: Mbstring',
     'requirements.extension_openssl' => 'Extensió PHP: OpenSSL',
-    'requirements.extension_pdo_mysql' => 'Extensió PHP: PDO',
+    'requirements.extension_pdo_mysql' => 'Extensió PHP: PDO MySQL',
     'requirements.extension_tokenizer' => 'Extensió PHP: Tokenizer',
     'requirements.extension_xml' => 'Extensió PHP: XML',
     'requirements.env_writable' => 'L\'arxiu .env està present i té permisos d\'escriptura',

@@ -27,6 +27,7 @@ class UserSettingsController extends Controller
         $bookmarkletCode = LinkAce::generateBookmarkletCode();
 
         return view('app.settings.user', [
+            'pageTitle' => trans('settings.user_settings'),
             'user' => auth()->user(),
             'bookmarklet_code' => $bookmarkletCode,
         ]);

@@ -42,6 +42,7 @@ class ListController extends Controller
         $lists = $lists->paginate(getPaginationLimit());
 
         return view('models.lists.index', [
+            'pageTitle' => trans('list.lists'),
             'lists' => $lists,
             'route' => $request->getBaseUrl(),
             'orderBy' => $orderBy,
@@ -56,7 +57,9 @@ class ListController extends Controller
      */
     public function create(): View
     {
-        return view('models.lists.create');
+        return view('models.lists.create', [
+            'pageTitle' => trans('list.add'),
+        ]);
     }
 
     /**
@@ -98,6 +101,7 @@ class ListController extends Controller
             )->paginate(getPaginationLimit());
 
         return view('models.lists.show', [
+            'pageTitle' => trans('list.list') . ': ' . $list->name,
             'list' => $list,
             'listLinks' => $links,
             'route' => $request->getBaseUrl(),
@@ -114,7 +118,10 @@ class ListController extends Controller
      */
     public function edit(LinkList $list): View
     {
-        return view('models.lists.edit', ['list' => $list]);
+        return view('models.lists.edit', [
+            'pageTitle' => trans('list.edit') . ': ' . $list->name,
+            'list' => $list,
+        ]);
     }
 
     /**

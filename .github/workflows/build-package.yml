@@ -114,7 +114,7 @@ jobs:
 
       - uses: actions/upload-artifact@v3
         with:
-          name: linkace-package-docker-simple
+          name: linkace-docker-simple
           path: linkace-package-docker-simple.zip
 
       - name: Rename files
@@ -126,6 +126,6 @@ jobs:
 
       - uses: actions/upload-artifact@v3
         with:
-          name: linkace-package-docker-advanced
+          name: linkace-docker-advanced
           path: linkace-package-docker-advanced.zip
 

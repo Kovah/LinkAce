@@ -94,7 +94,7 @@ $enable-caret: false;
 // Body
 $body-color: $black;
 $body-bg: $white;
-$body-secondary-color: $gray-600;
+$body-color-pale: $gray-500;
 
 
 // Links
@@ -120,8 +120,6 @@ $font-weight-normal: 400;
 $font-size-base: 1rem;
 $font-size-xs: $font-size-base * .75;
 
-$text-muted: $body-secondary-color;
-
 
 // Tables
 $table-dark-bg: $gray-900;
@@ -137,7 +135,7 @@ $input-btn-padding-x-xs: .3rem;
 $input-btn-font-size-xs: $font-size-xs;
 $input-btn-line-height-xs: $line-height-sm;
 
-$input-placeholder-color: $text-muted;
+$input-placeholder-color: $body-color-pale;
 
 $input-btn-border-width: $border-width;
 

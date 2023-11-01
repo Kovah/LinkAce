@@ -27,7 +27,7 @@
 
             @includeWhen($links->isNotempty(), 'app.trash.partials.link-table', ['links' => $links])
             @if($links->isEmpty())
-                <small class="text-muted">@lang('trash.delete_no_entries')</small>
+                <small class="text-pale">@lang('trash.delete_no_entries')</small>
             @endif
 
         </div>
@@ -52,7 +52,7 @@
 
             @includeWhen($lists->isNotEmpty(), 'app.trash.partials.list-table', ['lists' => $lists])
             @if($lists->isEmpty())
-                <small class="text-muted">@lang('trash.delete_no_entries')</small>
+                <small class="text-pale">@lang('trash.delete_no_entries')</small>
             @endif
 
         </div>
@@ -77,7 +77,7 @@
 
             @includeWhen($tags->isNotEmpty(), 'app.trash.partials.tag-table', ['tags' => $tags])
             @if($tags->isEmpty())
-                <small class="text-muted">@lang('trash.delete_no_entries')</small>
+                <small class="text-pale">@lang('trash.delete_no_entries')</small>
             @endif
 
         </div>
@@ -103,7 +103,7 @@
             @includeWhen($notes->isNotEmpty(), 'app.trash.partials.note-table', ['notes' => $notes])
 
             @if($notes->isEmpty())
-                <small class="text-muted">@lang('trash.delete_no_entries')</small>
+                <small class="text-pale">@lang('trash.delete_no_entries')</small>
             @endif
 
         </div>

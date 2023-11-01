@@ -12,7 +12,7 @@ class ImportCommand extends Command
     use AsksForUser;
 
     protected $signature = 'links:import
-                        {filepath : Bookmarks file to import}
+                        {filepath : Bookmarks file to import, use absolute paths if stored outside of LinkAce}
                         {--skip-meta-generation : Whether the automatic generation of titles should be skipped.}
                         {--skip-check : Whether the links checking should be skipped afterwards}';
 
@@ -32,7 +32,8 @@ class ImportCommand extends Command
         $this->askForUser();
 
         $this->info('Reading file "' . $this->argument('filepath') . '"...');
-        $data = File::get(storage_path($this->argument('filepath')));
+        $filepath = $this->argument('filepath');
+        $data = File::get(str_starts_with($filepath, '/') ? $filepath : storage_path($filepath));
 
         if (empty($data)) {
             $this->warn('The provided file is empty or could not be read!');

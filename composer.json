@@ -16,6 +16,7 @@
     "league/flysystem-aws-s3-v3": "^3.0",
     "league/flysystem-ftp": "^3.0",
     "league/flysystem-sftp-v3": "^3.0",
+    "masterminds/html5": "^2.8",
     "predis/predis": "^v2.1",
     "rap2hpoutre/laravel-log-viewer": "^v2.2.0",
     "sentry/sentry-laravel": "^3.3.0",

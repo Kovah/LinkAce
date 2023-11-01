@@ -10,6 +10,7 @@ use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
 use Illuminate\Support\Facades\Http;
+use Masterminds\HTML5;
 
 class FetchController extends Controller
 {
@@ -121,9 +122,9 @@ class FetchController extends Controller
      * implementation.
      *
      * @param Request $request
-     * @return Response
+     * @return JsonResponse
      */
-    public function htmlForUrl(Request $request): Response
+    public function htmlKeywordsFromUrl(Request $request)
     {
         $request->validate([
             'url' => ['url'],
@@ -138,9 +139,20 @@ class FetchController extends Controller
         $response = $newRequest->get($url);
 
         if ($response->successful()) {
-            return response($response->body());
+            $html5 = new HTML5();
+            $dom = $html5->loadHTML($response->body());
+            $keywords = [];
+            /** @var \DOMElement $metaTag */
+            foreach ($dom->getElementsByTagName('meta') as $metaTag) {
+                if (strtolower($metaTag->getAttribute('name')) === 'keywords') {
+                    $keywords = explode(',', $metaTag->getAttributeNode('content')?->value);
+                    $keywords = array_map(fn($keyword) => trim(e($keyword)), $keywords);
+                    array_push($keywords, ...$keywords);
+                }
+            }
+            return response()->json(['keywords' => $keywords]);
         }
 
-        return response(null);
+        return response()->json(['keywords' => null]);
     }
 }

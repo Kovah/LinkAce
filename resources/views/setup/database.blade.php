@@ -110,7 +110,7 @@
                             @endif
                         </button>
 
-                        <p class="small text-muted mt-3 mb-0">@lang('setup.database.complete_hint')</p>
+                        <p class="small text-pale mt-3 mb-0">@lang('setup.database.complete_hint')</p>
 
                     </form>
 

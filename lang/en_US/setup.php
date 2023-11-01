@@ -11,6 +11,7 @@ return [
     'intro.step2' => 'Setup up a database and check if the connection is successful.',
     'intro.step3' => 'Create your user account.',
 
+    'setup_requirements' => 'Setup Requirements',
     'check_requirements' => 'Check Requirements',
     'requirements.php_version' => 'PHP version >= 7.4.0',
     'requirements.extension_bcmath' => 'PHP Extension: BCMath',
@@ -18,7 +19,7 @@ return [
     'requirements.extension_json' => 'PHP Extension: JSON',
     'requirements.extension_mbstring' => 'PHP Extension: Mbstring',
     'requirements.extension_openssl' => 'PHP Extension: OpenSSL',
-    'requirements.extension_pdo_mysql' => 'PHP Extension: PDO',
+    'requirements.extension_pdo_mysql' => 'PHP Extension: PDO MySQL',
     'requirements.extension_tokenizer' => 'PHP Extension: Tokenizer',
     'requirements.extension_xml' => 'PHP Extension: XML',
     'requirements.env_writable' => '.env file is present and writable',

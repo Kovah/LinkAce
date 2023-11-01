@@ -2,7 +2,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 
-<title>{{ systemsettings('system_page_title') ?: config('app.name', 'LinkAce') }}</title>
+<title>@isset($pageTitle){{$pageTitle}} - @endisset{{ systemsettings('system_page_title') ?: config('app.name', 'LinkAce') }}</title>
 
 @stack('html-header')
 @include('partials.favicon')
@@ -22,7 +22,7 @@
             'searchLists' => route('fetch-lists'),
             'searchTags' => route('fetch-tags'),
             'existingLinks' => route('fetch-existing-links'),
-            'htmlForUrl' => route('fetch-html-for-url'),
+            'keywordsForUrl' => route('fetch-keywords-for-url'),
             'updateCheck' => route('fetch-update-check'),
             'generateApiToken' => route('generate-api-token'),
             'generateCronToken' => route('generate-cron-token'),

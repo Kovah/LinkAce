@@ -37,15 +37,28 @@ class DashboardController extends Controller
             ->where('status', '>', 1)
             ->count();
 
+        $totalLinks = Link::byUser()
+            ->count();
+
+        $totalLists = LinkList::byUser()
+            ->count();
+
+        $totalNotes = Note::byUser()
+            ->count();
+
+        $totalTags = Tag::byUser()
+            ->count();
+
         $stats = [
-            'total_links' => Link::count(),
-            'total_lists' => LinkList::count(),
-            'total_tags' => Tag::count(),
-            'total_notes' => Note::count(),
+            'total_links' => $totalLinks,
+            'total_lists' => $totalLists,
+            'total_tags' => $totalTags,
+            'total_notes' => $totalNotes,
             'total_broken_links' => $brokenLinks,
         ];
 
         return view('dashboard', [
+            'pageTitle' => trans('linkace.dashboard'),
             'recent_links' => $recentLinks,
             'recent_tags' => $recentTags,
             'recent_lists' => $recentLists,

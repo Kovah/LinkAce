@@ -25,6 +25,7 @@ return [
     'order_by.random' => 'Zufällig',
 
     'no_results' => 'Keine Ergebnisse gefunden.',
+    'results_for' => 'Ergebnisse für',
 
     'validation_query_missing' => 'Es muss entweder eine Suchanfrage eingeben oder eine Liste oder ein Tag ausgewählt werden, oder die Suche nach kaputten Links muss aktiviert sein.',
 ];
