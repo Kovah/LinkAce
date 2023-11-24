@@ -20,7 +20,7 @@
   },
   "dependencies": {
     "bootstrap": "^5.2.3",
-    "tom-select": "^2.0.0"
+    "tom-select": "^2.3.1"
   },
   "scripts": {
     "dev": "npm run development",
