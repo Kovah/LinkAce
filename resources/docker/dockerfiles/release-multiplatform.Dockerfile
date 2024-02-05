@@ -32,7 +32,7 @@ RUN mv vendor/spatie/laravel-backup/resources/lang/de vendor/spatie/laravel-back
 
 # ================================
 # Compile all assets
-FROM node:18 AS npm_builder
+FROM node:20 AS npm_builder
 WORKDIR /srv
 
 COPY ./resources/assets ./resources/assets
@@ -43,7 +43,7 @@ RUN npm run production
 
 # ================================
 # Prepare the final image
-FROM linkace/base-image:php-8.2-alpine
+FROM linkace/base-image:php-8.3-alpine
 WORKDIR /app
 
 # Copy the app into the container
