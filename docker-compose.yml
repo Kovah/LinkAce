@@ -5,8 +5,8 @@ services:
 
   # --- MariaDB
   db:
-    image: mariadb:10.6
-    command: mysqld --character-set-server=utf8mb4 --collation-server=utf8mb4_bin
+    image: mariadb:11.2
+    command: mariadbd --character-set-server=utf8mb4 --collation-server=utf8mb4_bin
     environment:
       - MYSQL_ROOT_PASSWORD=${DB_PASSWORD}
       - MYSQL_USER=${DB_USERNAME}
@@ -18,7 +18,7 @@ services:
       - linkace-db:/var/lib/mysql
 
   pg-db:
-    image: postgres:13
+    image: postgres:14
     environment:
       - POSTGRES_PASSWORD=${DB_PASSWORD}
       - POSTGRES_USER=${DB_USERNAME}
@@ -41,7 +41,7 @@ services:
 
   # --- nginx
   nginx:
-    image: bitnami/nginx:1.19
+    image: bitnami/nginx:1.25
     ports:
       - "80:8080"
     depends_on:
@@ -52,7 +52,7 @@ services:
 
   # --- Redis
   redis:
-    image: bitnami/redis:6.0
+    image: bitnami/redis:7.2
     environment:
       - REDIS_PASSWORD=${REDIS_PASSWORD}
     ports:

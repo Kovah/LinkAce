@@ -12,10 +12,10 @@ jobs:
     steps:
       - uses: actions/checkout@v2
 
-      - name: Use Node.js 18 LTS
+      - name: Use Node.js
         uses: actions/setup-node@v3
         with:
-          node-version: 18
+          node-version: 20
 
       - name: Try to build the assets
         run: |
@@ -42,7 +42,7 @@ jobs:
     strategy:
       matrix:
         operating-system: [ ubuntu-latest ]
-        php-versions: [ '8.0', '8.1', '8.2' ]
+        php-versions: [ '8.1', '8.2', '8.3' ]
 
     steps:
       - uses: actions/checkout@v2

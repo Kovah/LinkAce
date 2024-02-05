@@ -52,7 +52,7 @@ class TagController extends Controller
             ->publicOnly()
             ->orderBy(
                 $request->input('orderBy', 'title'),
-                $request->input('orderDir', 'asc')
+                $this->getOrderDirection($request, 'asc')
             )->paginate(getPaginationLimit());
 
         return view('guest.tags.show', [

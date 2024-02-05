@@ -67,7 +67,7 @@
                             {{ $link->title }}
                         </a>
                     @empty
-                        <li class="list-group-item text-danger">
+                        <li class="list-group-item text-pale">
                             @lang('linkace.no_results_found', ['model' => trans('link.links')])
                         </li>
                     @endforelse
@@ -130,7 +130,7 @@
                             {{ $list->name }}
                         </a>
                     @empty
-                        <div class="text-danger">
+                        <div class="text-pale">
                             @lang('linkace.no_results_found', ['model' => trans('list.lists')])
                         </div>
                     @endforelse
@@ -151,7 +151,7 @@
                             {{ $tag->name }}
                         </a>
                     @empty
-                        <div class="text-danger">
+                        <div class="text-pale">
                             @lang('linkace.no_results_found', ['model' => trans('tag.tags')])
                         </div>
                     @endforelse

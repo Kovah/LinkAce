@@ -97,7 +97,7 @@ class ListController extends Controller
             ->byUser()
             ->orderBy(
                 $request->input('orderBy', 'created_at'),
-                $request->input('orderDir', 'desc')
+                $this->getOrderDirection($request)
             )->paginate(getPaginationLimit());
 
         return view('models.lists.show', [
