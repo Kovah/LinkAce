@@ -11,6 +11,7 @@ return [
     'intro.step2' => 'Configurează o bază de date și verifică dacă se realizează conexiunea la aceasta.',
     'intro.step3' => 'Creează-ți contul de utilizator.',
 
+    'setup_requirements' => 'Cerințe de configurare',
     'check_requirements' => 'Verificare cerințe',
     'requirements.php_version' => 'Versiune PHP >= 7.4.0',
     'requirements.extension_bcmath' => 'Extensie PHP: BCMath',
