@@ -2,8 +2,10 @@
 
 # ================================
 # PHP Dependency Setup
-FROM composer AS builder
+FROM linkace/base-image:php-8.3-alpine AS builder
 WORKDIR /app
+
+COPY --from=composer:latest /usr/bin/composer /usr/local/bin/composer
 
 # Make needed parts of the app available in the container
 COPY ./app /app/app
@@ -28,7 +30,9 @@ RUN mv vendor/spatie/laravel-backup/resources/lang/de vendor/spatie/laravel-back
   mv vendor/spatie/laravel-backup/resources/lang/it vendor/spatie/laravel-backup/resources/lang/it_IT; \
   mv vendor/spatie/laravel-backup/resources/lang/no vendor/spatie/laravel-backup/resources/lang/no_NO; \
   mv vendor/spatie/laravel-backup/resources/lang/pl vendor/spatie/laravel-backup/resources/lang/pl_PL; \
-  mv vendor/spatie/laravel-backup/resources/lang/zh-CN vendor/spatie/laravel-backup/resources/lang/zh_CN
+  mv vendor/spatie/laravel-backup/resources/lang/ro vendor/spatie/laravel-backup/resources/lang/zh_CN; \
+  mv vendor/spatie/laravel-backup/resources/lang/ru vendor/spatie/laravel-backup/resources/lang/ro_RO; \
+  mv vendor/spatie/laravel-backup/resources/lang/zh-CN vendor/spatie/laravel-backup/resources/lang/ru_RU
 
 # ================================
 # Compile all assets
