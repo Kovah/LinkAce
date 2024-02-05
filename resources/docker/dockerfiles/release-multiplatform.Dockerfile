@@ -5,7 +5,9 @@
 FROM linkace/base-image:php-8.3-alpine AS builder
 WORKDIR /app
 
+# Pull composer and install required packages
 COPY --from=composer:latest /usr/bin/composer /usr/local/bin/composer
+RUN apk add --no-cache git
 
 # Make needed parts of the app available in the container
 COPY ./app /app/app
