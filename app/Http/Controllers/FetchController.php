@@ -8,8 +8,6 @@ use App\Models\LinkList;
 use App\Models\Tag;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
-use Illuminate\Http\Response;
-use Illuminate\Support\Facades\Http;
 use Masterminds\HTML5;
 
 class FetchController extends Controller

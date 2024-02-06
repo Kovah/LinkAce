@@ -5,7 +5,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class AddUserInvitations extends Migration
+return new class extends Migration
 {
     public function up()
     {
@@ -25,4 +25,4 @@ class AddUserInvitations extends Migration
     {
         Schema::dropIfExists('user_invitations');
     }
-}
+};

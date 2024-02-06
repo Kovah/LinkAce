@@ -8,7 +8,7 @@ use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Schema;
 use OwenIt\Auditing\Models\Audit;
 
-class CreateAuditsTable extends Migration
+return new class extends Migration
 {
     public function up(): void
     {
@@ -124,4 +124,4 @@ class CreateAuditsTable extends Migration
 
         return [$old, $new];
     }
-}
+};

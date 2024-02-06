@@ -15,7 +15,7 @@ use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Schema;
 use Illuminate\Support\Str;
 
-class MigrateUserData extends Migration
+return new class extends Migration
 {
     private bool $guestAccessEnabled = false;
 
@@ -157,4 +157,4 @@ class MigrateUserData extends Migration
 
         DB::table('users')->where('email', 'system@localhost')->update(['id' => 0]);
     }
-}
+};
