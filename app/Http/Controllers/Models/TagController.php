@@ -46,6 +46,7 @@ class TagController extends Controller
         $tags = $tags->paginate(getPaginationLimit());
 
         return view('models.tags.index', [
+            'pageTitle' => trans('tag.tags'),
             'tags' => $tags,
             'route' => $request->getBaseUrl(),
             'orderBy' => $this->orderBy,
@@ -56,7 +57,9 @@ class TagController extends Controller
 
     public function create(): View
     {
-        return view('models.tags.create');
+        return view('models.tags.create', [
+            'pageTitle' => trans('tag.add'),
+        ]);
     }
 
     public function store(TagStoreRequest $request): RedirectResponse
@@ -85,6 +88,7 @@ class TagController extends Controller
             ->paginate(getPaginationLimit());
 
         return view('models.tags.show', [
+            'pageTitle' => trans('tag.tag') . ': ' . $tag->name,
             'tag' => $tag,
             'history' => $tag->audits()->latest()->get(),
             'tagLinks' => $links,
@@ -96,7 +100,10 @@ class TagController extends Controller
 
     public function edit(Tag $tag): View
     {
-        return view('models.tags.edit', ['tag' => $tag]);
+        return view('models.tags.edit', [
+            'pageTitle' => trans('tag.edit') . ': ' . $tag->name,
+            'tag' => $tag,
+        ]);
     }
 
     public function update(TagUpdateRequest $request, Tag $tag): RedirectResponse

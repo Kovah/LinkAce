@@ -16,7 +16,9 @@ class ExportController extends Controller
 {
     public function getExport(): View
     {
-        return view('app.export.export');
+        return view('app.export.export', [
+            'pageTitle' => trans('export.export'),
+        ]);
     }
 
     /**

@@ -41,7 +41,7 @@
                                 @lang('linkace.yes')
                             </option>
                         </select>
-                        <p class="small text-muted mt-1">@lang('settings.guest_access_enabled_help')</p>
+                        <p class="small text-pale mt-1">@lang('settings.guest_access_enabled_help')</p>
                         @if ($errors->has('guest_access_enabled'))
                             <p class="invalid-feedback" role="alert">
                                 {{ $errors->first('guest_access_enabled') }}
@@ -62,7 +62,7 @@
                         <textarea name="custom_header_content" id="custom_header_content" rows="4"
                             class="form-control{{ $errors->has('custom_header_content') ? ' is-invalid' : '' }}"
                         >{{ old('custom_header_content', systemsettings('custom_header_content')) }}</textarea>
-                        <p class="small text-muted mt-1">@lang('settings.custom_header_content_help')</p>
+                        <p class="small text-pale mt-1">@lang('settings.custom_header_content_help')</p>
 
                         @error('custom_header_content')
                         <p class="invalid-feedback" role="alert">

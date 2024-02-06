@@ -25,6 +25,7 @@ return [
     'order_by.random' => 'Random',
 
     'no_results' => 'No results found.',
+    'results_for' => 'Search results for',
 
     'validation_query_missing' => 'You must either enter a search query, or select a list, a tag or enable searching for broken links.',
 ];

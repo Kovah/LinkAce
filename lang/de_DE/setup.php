@@ -11,6 +11,7 @@ return [
     'intro.step2' => 'Richten Sie eine Datenbank ein und prüfen Sie, ob die Verbindung erfolgreich ist.',
     'intro.step3' => 'Erstellen Sie Ihr Benutzerkonto.',
 
+    'setup_requirements' => 'Setup-Anforderungen',
     'check_requirements' => 'Anforderungen prüfen',
     'requirements.php_version' => 'PHP-Version >= 7.4.0',
     'requirements.extension_bcmath' => 'PHP Extension: BCMath',
@@ -18,7 +19,7 @@ return [
     'requirements.extension_json' => 'PHP Extension: JSON',
     'requirements.extension_mbstring' => 'PHP Extension: Mbstring',
     'requirements.extension_openssl' => 'PHP Extension: OpenSSL',
-    'requirements.extension_pdo_mysql' => 'PHP Extension: PDO',
+    'requirements.extension_pdo_mysql' => 'PHP Extension: PDO MySQL',
     'requirements.extension_tokenizer' => 'PHP Extension: Tokenizer',
     'requirements.extension_xml' => 'PHP Extension: XML',
     'requirements.env_writable' => '.env Datei ist vorhanden und beschreibbar',

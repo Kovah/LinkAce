@@ -21,7 +21,7 @@
             {{ $link->shortUrl() }}
         </a>
     </td>
-    <td class="text-muted">
+    <td class="text-pale">
         <small>{!! $link->addedAt() !!}</small>
     </td>
     @if(!isset($hide_edit))

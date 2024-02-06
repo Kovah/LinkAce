@@ -33,3 +33,7 @@
   white-space: normal;
   max-width: 100%;
 }
+
+.table > :not(caption) > * > * {
+  box-shadow: none !important;
+}

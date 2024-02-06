@@ -75,7 +75,7 @@ body:not(.bookmarklet) {
     }
 
     label {
-      color: $text-muted;
+      color: $body-color-pale;
       cursor: pointer;
     }
 
@@ -108,7 +108,7 @@ a.badge {
 }
 
 .text-pale {
-  color: $body-secondary-color;
+  color: $body-color-pale !important;
 }
 
 .btn-xs {

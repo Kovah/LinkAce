@@ -23,7 +23,7 @@
                         </h3>
                     </div>
 
-                    <div class="text-muted small mt-1 mb-3">
+                    <div class="text-pale small mt-1 mb-3">
                         <a href="{{ $link->url }}" {!! linkTarget() !!}>{{ $link->url }}</a>
                         <br>
                         @lang('linkace.added_by'): <x-models.author :model="$link"/>
@@ -125,7 +125,7 @@
                             </a>
                         @endforeach
                     @else
-                        <div class="text-muted small">@lang('list.no_lists')</div>
+                        <div class="text-pale small">@lang('list.no_lists')</div>
                     @endif
                 </div>
             </div>
@@ -143,7 +143,7 @@
                             </a>
                         @endforeach
                     @else
-                        <div class="text-muted small">@lang('tag.no_tags')</div>
+                        <div class="text-pale small">@lang('tag.no_tags')</div>
                     @endif
                 </div>
             </div>
@@ -167,7 +167,7 @@
     <div class="link-history mt-5">
         <h3 class="h6 mb-2">@lang('link.history')</h3>
 
-        <div class="history small text-muted">
+        <div class="history small text-pale">
             @foreach($history as $entry)
                 @if($loop->index === 5 && $loop->count >= 10)
                     <a data-bs-toggle="collapse" href="#link-history" role="button" class="d-inline-block mb-1"

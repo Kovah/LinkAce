@@ -8,7 +8,7 @@
             </a>
         </div>
         <div class="mt-2 mt-sm-0 ms-auto flex-shrink-0 d-flex align-items-center">
-            <small class="text-muted me-3">{!! $link->domainOfURL() !!}</small>
+            <small class="text-pale me-3">{!! $link->domainOfURL() !!}</small>
             @auth()
                 <a href="{{ route('links.show', [$link]) }}" title="@lang('link.show')">
                     <x-icon.info class="fw"/>

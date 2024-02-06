@@ -19,7 +19,9 @@ class AccountController extends Controller
 
     public function index(): View
     {
-        return view('setup.account');
+        return view('setup.account', [
+            'pageTitle' => trans('setup.account_setup'),
+        ]);
     }
 
     protected function register(Request $request): RedirectResponse

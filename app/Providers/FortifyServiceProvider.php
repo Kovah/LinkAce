@@ -33,14 +33,14 @@ class FortifyServiceProvider extends ServiceProvider
         Fortify::updateUserPasswordsUsing(UpdateUserPassword::class);
         Fortify::resetUserPasswordsUsing(ResetUserPassword::class);
 
-        Fortify::loginView(fn() => view('auth.login'));
+        Fortify::loginView(fn() => view('auth.login', ['pageTitle' => trans('linkace.login')]));
 
-        Fortify::requestPasswordResetLinkView(fn() => view('auth.passwords.email'));
+        Fortify::requestPasswordResetLinkView(fn() => view('auth.passwords.email', ['pageTitle' => trans('linkace.login')]));
 
-        Fortify::resetPasswordView(fn() => view('auth.passwords.reset'));
+        Fortify::resetPasswordView(fn() => view('auth.passwords.reset', ['pageTitle' => trans('linkace.login')]));
 
-        Fortify::confirmPasswordView(fn() => view('auth.confirm-password'));
+        Fortify::confirmPasswordView(fn() => view('auth.confirm-password', ['pageTitle' => trans('linkace.login')]));
 
-        Fortify::twoFactorChallengeView(fn() => view('auth.two-factor-challenge'));
+        Fortify::twoFactorChallengeView(fn() => view('auth.two-factor-challenge', ['pageTitle' => trans('linkace.login')]));
     }
 }

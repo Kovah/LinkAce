@@ -29,6 +29,7 @@ class ListController extends Controller
             ->paginate(getPaginationLimit());
 
         return view('guest.lists.index', [
+            'pageTitle' => trans('list.lists'),
             'lists' => $lists,
             'orderBy' => $this->orderBy,
             'orderDir' => $this->orderDir,
@@ -49,6 +50,7 @@ class ListController extends Controller
             ->paginate(getPaginationLimit());
 
         return view('guest.lists.show', [
+            'pageTitle' => trans('list.list') . ': ' . $list->name,
             'list' => $list,
             'listLinks' => $links,
             'route' => $request->getBaseUrl(),

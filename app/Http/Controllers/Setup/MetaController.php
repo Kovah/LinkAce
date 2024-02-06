@@ -10,7 +10,9 @@ class MetaController extends Controller
 {
     public function welcome(): View
     {
-        return view('setup.welcome');
+        return view('setup.welcome', [
+            'pageTitle' => trans('setup.setup'),
+        ]);
     }
 
     public function complete(SystemSettings $settings): View
@@ -18,6 +20,8 @@ class MetaController extends Controller
         $settings->setup_completed = true;
         $settings->save();
 
-        return view('setup.complete');
+        return view('setup.complete', [
+            'pageTitle' => trans('setup.complete'),
+        ]);
     }
 }

@@ -4,9 +4,9 @@ services:
 
   # --- MariaDB
   db:
-    image: mariadb:10.7
+    image: mariadb:11.2
     restart: unless-stopped
-    command: mysqld --character-set-server=utf8mb4 --collation-server=utf8mb4_bin
+    command: mariadbd --character-set-server=utf8mb4 --collation-server=utf8mb4_bin
     environment:
       - MYSQL_ROOT_PASSWORD=${DB_PASSWORD}
       - MYSQL_USER=${DB_USERNAME}

@@ -13,6 +13,7 @@ class RequirementsController extends Controller
         [$success, $results] = $this->checkRequirements();
 
         return view('setup.requirements', [
+            'pageTitle' => trans('setup.setup_requirements'),
             'success' => $success,
             'results' => $results,
         ]);
@@ -21,7 +22,7 @@ class RequirementsController extends Controller
     protected function checkRequirements(): array
     {
         $results = [
-            'php_version' => PHP_VERSION_ID >= 80002,
+            'php_version' => PHP_VERSION_ID >= 80110,
             'extension_bcmath' => extension_loaded('bcmath'),
             'extension_ctype' => extension_loaded('ctype'),
             'extension_json' => extension_loaded('json'),

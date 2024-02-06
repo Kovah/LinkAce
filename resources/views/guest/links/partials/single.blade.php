@@ -39,7 +39,7 @@
                 </div>
 
             </div>
-            <div class="col-xs-12 col-sm-6 text-md-right text-muted">
+            <div class="col-xs-12 col-sm-6 text-md-right text-pale">
 
                 <div>
                     <small>

@@ -20,6 +20,7 @@ class UserSettingsController extends Controller
     public function getUserSettings(): View
     {
         return view('app.settings.user', [
+            'pageTitle' => trans('settings.user_settings'),
             'user' => auth()->user(),
             'bookmarklet_code' => bookmarkletUrl(),
         ]);

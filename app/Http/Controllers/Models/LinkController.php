@@ -44,6 +44,7 @@ class LinkController extends Controller
         }
 
         return view('models.links.index', [
+            'pageTitle' => trans('link.links'),
             'links' => $links->paginate(getPaginationLimit()),
             'route' => $request->getBaseUrl(),
             'orderBy' => $this->orderBy,
@@ -57,6 +58,7 @@ class LinkController extends Controller
         session()->forget('bookmarklet.create');
 
         return view('models.links.create', [
+            'pageTitle' => trans('link.add'),
             'existing_link' => null,
         ]);
     }
@@ -104,6 +106,7 @@ class LinkController extends Controller
             },
         ]);
         return view('models.links.show', [
+            'pageTitle' => trans('link.link') . ': ' . $link->shortTitle(),
             'link' => $link,
             'history' => $link->audits()->latest()->get(),
         ]);
@@ -112,6 +115,7 @@ class LinkController extends Controller
     public function edit(Link $link): View
     {
         return view('models.links.edit', [
+            'pageTitle' => trans('link.edit') . ': ' . $link->shortTitle(),
             'link' => $link,
             'existing_link' => null,
         ]);

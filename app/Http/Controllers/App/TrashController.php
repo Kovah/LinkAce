@@ -23,6 +23,7 @@ class TrashController extends Controller
         $notes = Note::onlyTrashed()->byUser()->get();
 
         return view('app.trash.index', [
+            'pageTitle' => trans('trash.trash'),
             'links' => $links,
             'lists' => $lists,
             'tags' => $tags,

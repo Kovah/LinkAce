@@ -20,7 +20,7 @@
                 <td>
                     {{ $note->note }}
                 </td>
-                <td class="text-muted">
+                <td class="text-pale">
                     <small>{{ formatDateTime($note->created_at) }}</small>
                 </td>
                 <td class="text-end">

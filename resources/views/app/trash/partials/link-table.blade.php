@@ -14,7 +14,7 @@
                 <td>
                     {{ $link->url }}
                 </td>
-                <td class="text-muted">
+                <td class="text-pale">
                     <small>{{ formatDateTime($link->created_at) }}</small>
                 </td>
                 <td class="text-end">

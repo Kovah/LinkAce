@@ -13,7 +13,9 @@ class SearchController extends Controller
 
     public function getSearch(): View
     {
-        return view('app.search.search')
+        return view('app.search.search', [
+            'pageTitle' => trans('search.search'),
+        ])
             ->with('results', collect([]))
             ->with('order_by_options', $this->orderByOptions)
             ->with('query_settings', [
@@ -36,7 +38,9 @@ class SearchController extends Controller
         $search = $this->buildDatabaseQuery($request);
         $results = $search->paginate(getPaginationLimit());
 
-        return view('app.search.search')
+        return view('app.search.search', [
+            'pageTitle' => trans('search.results_for') . ' ' . $this->searchQuery,
+        ])
             ->with('results', $results)
             ->with('order_by_options', $this->orderByOptions)
             ->with('query_settings', [

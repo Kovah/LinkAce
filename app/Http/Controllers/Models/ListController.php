@@ -43,6 +43,7 @@ class ListController extends Controller
         $lists = $lists->paginate(getPaginationLimit());
 
         return view('models.lists.index', [
+            'pageTitle' => trans('list.lists'),
             'lists' => $lists,
             'route' => $request->getBaseUrl(),
             'orderBy' => $this->orderBy,
@@ -52,7 +53,9 @@ class ListController extends Controller
 
     public function create(): View
     {
-        return view('models.lists.create');
+        return view('models.lists.create', [
+            'pageTitle' => trans('list.add'),
+        ]);
     }
 
     public function store(ListStoreRequest $request): RedirectResponse
@@ -82,6 +85,7 @@ class ListController extends Controller
             ->paginate(getPaginationLimit());
 
         return view('models.lists.show', [
+            'pageTitle' => trans('list.list') . ': ' . $list->name,
             'list' => $list,
             'history' => $list->audits()->latest()->get(),
             'listLinks' => $links,
@@ -93,7 +97,10 @@ class ListController extends Controller
 
     public function edit(LinkList $list): View
     {
-        return view('models.lists.edit', ['list' => $list]);
+        return view('models.lists.edit', [
+            'pageTitle' => trans('list.edit') . ': ' . $list->name,
+            'list' => $list,
+        ]);
     }
 
     public function update(ListUpdateRequest $request, LinkList $list): RedirectResponse

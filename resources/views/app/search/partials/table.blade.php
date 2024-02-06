@@ -29,7 +29,7 @@
                         {{ $link->shortUrl() }}
                     </a>
                 </td>
-                <td class="text-muted small">{!! $link->addedAt() !!}</td>
+                <td class="text-pale small">{!! $link->addedAt() !!}</td>
             </tr>
         @endforeach
         </tbody>

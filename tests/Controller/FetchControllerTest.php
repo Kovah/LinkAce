@@ -82,46 +82,49 @@ class FetchControllerTest extends TestCase
         $response->assertOk()->assertJson(['linkFound' => false]);
     }
 
-    public function testGetHtmlForUrl(): void
+    public function testGetHtmlKeywordsForUrl(): void
     {
         $testHtml = '<!DOCTYPE html><head>' .
             '<title>Example Title</title>' .
             '<meta name="description" content="This an example description">' .
+            '<meta name="keywords" content="html, css, javascript">' .
             '</head></html>';
 
         Http::fake([
             'example.com' => Http::response($testHtml, 200),
         ]);
 
-        $response = $this->post('fetch/html-for-url', [
+        $response = $this->post('fetch/keywords-for-url', [
             'url' => 'https://example.com',
         ]);
 
         $response->assertOk();
 
-        $responseHtml = $response->content();
-        $this->assertEquals($testHtml, $responseHtml);
+        $keywords = $response->json('keywords');
+        $this->assertEquals('html', $keywords[0]);
+        $this->assertEquals('css', $keywords[1]);
+        $this->assertEquals('javascript', $keywords[2]);
     }
 
-    public function testGetHtmlForInvalidUrl(): void
+    public function testGetKeywordsForInvalidUrl(): void
     {
-        $response = $this->post('fetch/html-for-url', [
+        $response = $this->post('fetch/keywords-for-url', [
             'url' => 'not a url',
         ]);
 
         $response->assertSessionHasErrors('url');
     }
 
-    public function testGetHtmlForUrlWithFailure(): void
+    public function testGetKeywordsForUrlWithFailure(): void
     {
         Http::fake([
             'example.com' => Http::response('', 500),
         ]);
 
-        $response = $this->post('fetch/html-for-url', [
+        $response = $this->post('fetch/keywords-for-url', [
             'url' => 'https://example.com',
         ]);
 
-        $response->assertOk()->assertSee('');
+        $response->assertOk()->assertJson(['keywords' => null]);
     }
 }

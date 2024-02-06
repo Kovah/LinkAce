@@ -11,6 +11,7 @@ return [
     'intro.step2' => 'Configurează o bază de date și verifică dacă se realizează conexiunea la aceasta.',
     'intro.step3' => 'Creează-ți contul de utilizator.',
 
+    'setup_requirements' => 'Cerințe de configurare',
     'check_requirements' => 'Verificare cerințe',
     'requirements.php_version' => 'Versiune PHP >= 7.4.0',
     'requirements.extension_bcmath' => 'Extensie PHP: BCMath',
@@ -18,7 +19,7 @@ return [
     'requirements.extension_json' => 'Extensie PHP: JSON',
     'requirements.extension_mbstring' => 'Extensie PHP: Mbstring',
     'requirements.extension_openssl' => 'Extensie PHP: OpenSSL',
-    'requirements.extension_pdo_mysql' => 'Extensie PHP: PDO',
+    'requirements.extension_pdo_mysql' => 'Extensie PHP: PDO MySQL',
     'requirements.extension_tokenizer' => 'Extensie PHP: Tokenizer',
     'requirements.extension_xml' => 'Extensie PHP: XML',
     'requirements.env_writable' => 'Fișierul .env există și este inscripționabil',

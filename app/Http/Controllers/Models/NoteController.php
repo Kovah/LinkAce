@@ -33,7 +33,10 @@ class NoteController extends Controller
 
     public function edit(Note $note): View
     {
-        return view('models.notes.edit', ['note' => $note]);
+        return view('models.notes.edit', [
+            'pageTitle' => trans('note.edit'),
+            'note' => $note,
+        ]);
     }
 
     public function update(NoteUpdateRequest $request, Note $note): RedirectResponse

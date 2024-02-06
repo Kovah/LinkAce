@@ -23,7 +23,7 @@
                 <div>
                     <a href="{{ $link->url }}" {!! linkTarget() !!}>{{ $link->shortTitle() }}</a>
                     <br>
-                    <small class="text-muted">{{ $link->shortUrl() }}</small>
+                    <small class="text-pale">{{ $link->shortUrl() }}</small>
                 </div>
             </div>
         </div>
@@ -36,12 +36,12 @@
                     </a>
                 @endforeach
             @else
-                <span class="small text-muted">@lang('tag.no_tags')</span>
+                <span class="small text-pale">@lang('tag.no_tags')</span>
             @endif
         </div>
 
         <div class="d-flex align-items-center my-1">
-            <div class="text-muted text-xs me-3 ps-3">
+            <div class="text-pale text-xs me-3 ps-3">
                 @lang('linkace.added') {!! $link->addedAt() !!}
             </div>
 

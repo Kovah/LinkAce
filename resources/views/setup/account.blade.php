@@ -62,7 +62,7 @@
                                     {{ $errors->first('password') }}
                                 </p>
                             @else
-                                <p class="form-text text-muted small">
+                                <p class="form-text text-pale small">
                                     @lang('setup.account_setup.password_requirements')
                                 </p>
                             @endif

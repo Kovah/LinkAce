@@ -10,12 +10,12 @@
                         {{ $link->shortTitle() }}
                     </a>
                     <br>
-                    <small class="text-muted">{{ $link->shortUrl() }}</small>
+                    <small class="text-pale">{{ $link->shortUrl() }}</small>
                 </div>
             </div>
         </div>
 
-        <div class="px-3 py-2 text-xs text-muted text-end">
+        <div class="px-3 py-2 text-xs text-pale text-end">
             @lang('linkace.added') {!! $link->addedAt() !!}
         </div>
     </div>
