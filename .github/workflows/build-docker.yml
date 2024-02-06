@@ -1,5 +1,5 @@
 ---
-name: Build regular LinkAce Docker image
+name: Build the LinkAce Docker image
 
 on:
   push:
@@ -39,10 +39,10 @@ jobs:
           DOCKER_IMAGE=linkace/linkace
           DOCKER_IMAGE_GITUHB=ghcr.io/kovah/linkace
           VERSION=${GITHUB_REF#refs/tags/}
-          TAGS="${DOCKER_IMAGE}:${VERSION},${DOCKER_IMAGE}:latest,${DOCKER_IMAGE_GITUHB}:${VERSION},${DOCKER_IMAGE_GITUHB}:latest"
+          TAGS="${DOCKER_IMAGE}:${VERSION},${DOCKER_IMAGE_GITUHB}:${VERSION}"
           echo "tags=${TAGS}" >> $GITHUB_OUTPUT
 
-      - name: Build and push advanced image
+      - name: Build and push Docker image
         uses: docker/build-push-action@v5
         with:
           context: .
@@ -50,21 +50,3 @@ jobs:
           platforms: linux/amd64,linux/arm64,linux/arm/v7
           push: true
           tags: ${{ steps.prep.outputs.tags }}
-
-      - name: Prepare simple build tags
-        id: prep-simple
-        run: |
-          DOCKER_IMAGE=linkace/linkace
-          DOCKER_IMAGE_GITHUB=ghcr.io/kovah/linkace
-          VERSION=${GITHUB_REF#refs/tags/}
-          TAGS="${DOCKER_IMAGE}:${VERSION}-php-nginx,${DOCKER_IMAGE}:php-nginx,${DOCKER_IMAGE}:${VERSION}-simple,${DOCKER_IMAGE}:simple,${DOCKER_IMAGE_GITHUB}:${VERSION}-php-nginx,${DOCKER_IMAGE_GITHUB}:php-nginx,${DOCKER_IMAGE_GITHUB}:${VERSION}-simple,${DOCKER_IMAGE_GITHUB}:simple"
-          echo "tags=${TAGS}" >> $GITHUB_OUTPUT
-
-      - name: Build and push simple image
-        uses: docker/build-push-action@v5
-        with:
-          context: .
-          file: ./resources/docker/dockerfiles/release-multiplatform-simple.Dockerfile
-          platforms: linux/amd64,linux/arm64,linux/arm/v7
-          push: true
-          tags: ${{ steps.prep-simple.outputs.tags }}

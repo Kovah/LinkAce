@@ -3,6 +3,7 @@ _ide_*
 /.git
 /.idea
 /.tmp
+/database/*.sqlite
 /storage/app/backups/*
 /storage/debugbar/*
 /storage/framework/cache/*

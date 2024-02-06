@@ -2,7 +2,7 @@
 
 # ================================
 # PHP Dependency Setup
-FROM linkace/base-image:php-8.3-alpine AS builder
+FROM linkace/base-image:php-8.3-caddy AS builder
 WORKDIR /app
 
 # Pull composer and install required packages
@@ -49,38 +49,45 @@ RUN npm run production
 
 # ================================
 # Prepare the final image
-FROM linkace/base-image:php-8.3-alpine
+FROM linkace/base-image:php-8.3-caddy
 WORKDIR /app
+USER www-data
 
 # Copy the app into the container
-COPY ./app /app/app
-COPY ./bootstrap /app/bootstrap
-COPY ./config /app/config
-COPY ./database /app/database
-COPY ./public /app/public
-COPY ./lang /app/lang
-COPY ./resources /app/resources
-COPY ./routes /app/routes
-COPY ./storage /app/storage
-COPY ./tests /app/tests
+COPY --chown=www-data:www-data ./app /app/app
+COPY --chown=www-data:www-data ./bootstrap /app/bootstrap
+COPY --chown=www-data:www-data ./config /app/config
+COPY --chown=www-data:www-data ./database /app/database
+COPY --chown=www-data:www-data ./public /app/public
+COPY --chown=www-data:www-data ./lang /app/lang
+COPY --chown=www-data:www-data ./resources /app/resources
+COPY --chown=www-data:www-data ./routes /app/routes
+COPY --chown=www-data:www-data ./storage /app/storage
 
-COPY ["./artisan", "./composer.json", "./composer.lock", "./README.md", "./LICENSE.md", "./package.json", "/app/"]
-COPY ./.env.example /app/.env
-
-# Copy the PHP and nginx config files
-COPY ./resources/docker/php/php.ini /usr/local/etc/php/php.ini
+COPY --chown=www-data:www-data ["./artisan", "./composer.json", "./composer.lock", "./README.md", "./LICENSE.md", "./package.json", "/app/"]
+COPY --chown=www-data:www-data ./.env.example /app/.env
 
 # Copy files from the composer build
-COPY --from=builder /app/vendor /app/vendor
-COPY --from=builder /app/bootstrap/cache /app/bootstrap/cache
+COPY --from=builder --chown=www-data:www-data /app/vendor /app/vendor
+COPY --from=builder --chown=www-data:www-data /app/bootstrap/cache /app/bootstrap/cache
 
 # Publish package resources
 RUN php artisan vendor:publish --provider="Spatie\Backup\BackupServiceProvider"
 
 # Copy files from the theme build
-COPY --from=npm_builder /srv/public/assets/dist/js /app/public/assets/dist/js
-COPY --from=npm_builder /srv/public/assets/dist/css /app/public/assets/dist/css
-COPY --from=npm_builder /srv/public/mix-manifest.json /app/public/mix-manifest.json
+COPY --from=npm_builder --chown=www-data:www-data /srv/public/assets/dist/js /app/public/assets/dist/js
+COPY --from=npm_builder --chown=www-data:www-data /srv/public/assets/dist/css /app/public/assets/dist/css
+COPY --from=npm_builder --chown=www-data:www-data /srv/public/mix-manifest.json /app/public/mix-manifest.json
 
-# Set correct permissions for the storage directory
-RUN chmod -R 0777 /app/storage
+# Create a SQLite database file ready to be used
+RUN touch ./database/database.sqlite
+
+# Configure Supervisor for PHP + Caddy
+ENV CADDY_PHP_HOST=localhost
+COPY ./resources/docker/php/php.ini /usr/local/etc/php/conf.d/app.ini
+COPY ./resources/docker/supervisord.ini /etc/supervisor.d/supervisord.ini
+COPY ./resources/docker/Caddyfile /etc/caddy/Caddyfile
+
+USER root
+EXPOSE 80 443
+CMD ["/usr/bin/supervisord", "-c", "/etc/supervisor.d/supervisord.ini"]

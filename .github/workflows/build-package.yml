@@ -6,17 +6,11 @@ on:
       - main
 
 jobs:
-
-  build-js:
-    name: Build assets for the package
+  build-package:
+    name: Build final dist package
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v2
-
-      - name: Reconfigure Git to use HTTP authentication
-        run: >
-          git config --global url."https://github.com/".insteadOf
-          ssh://git@github.com/
 
       - name: Use Node.js
         uses: actions/setup-node@v2
@@ -27,35 +21,6 @@ jobs:
         run: |
           npm ci
           npm run production
-
-      - name: Upload built assets
-        uses: actions/upload-artifact@v3
-        with:
-          name: assets
-          path: public/assets/dist
-
-      - name: Upload mix manifest
-        uses: actions/upload-artifact@v3
-        with:
-          name: mix-manifest
-          path: public/mix-manifest.json
-
-  build-package:
-    name: Build final dist package
-    runs-on: ubuntu-latest
-    needs: build-js
-    steps:
-      - uses: actions/checkout@v2
-
-      - uses: actions/download-artifact@v3
-        with:
-          name: assets
-          path: public/assets/dist
-
-      - uses: actions/download-artifact@v3
-        with:
-          name: mix-manifest
-          path: public
 
       - uses: shivammathur/setup-php@v2
         with:
@@ -86,15 +51,12 @@ jobs:
       - name: Remove .env file
         run: rm .env
 
-      - uses: thedoctor0/zip-release@master
-        with:
-          filename: linkace.zip
-          exclusions: '*.git*'
-
       - uses: actions/upload-artifact@v3
         with:
           name: linkace-package
-          path: linkace.zip
+          path: |
+            .
+            !.git
 
   build-package-docker:
     name: Build final dist package for Docker setup
@@ -106,26 +68,13 @@ jobs:
         run: |
           mv .env.docker.production .env
           chmod 0666 .env
-          mv docker-compose.production-simple.yml docker-compose.yml
+          mv docker-compose.production.yml docker-compose.yml
 
-      - uses: montudor/action-zip@v1
+      - uses: actions/upload-artifact@v4
         with:
-          args: zip -qq linkace-package-docker-simple.zip docker-compose.yml .env LICENSE.md README.md
-
-      - uses: actions/upload-artifact@v3
-        with:
-          name: linkace-docker-simple
-          path: linkace-package-docker-simple.zip
-
-      - name: Rename files
-        run: mv docker-compose.production.yml docker-compose.yml
-
-      - uses: montudor/action-zip@v1
-        with:
-          args: zip -qq linkace-package-docker-advanced.zip docker-compose.yml .env nginx.conf nginx-ssl.conf LICENSE.md README.md
-
-      - uses: actions/upload-artifact@v3
-        with:
-          name: linkace-docker-advanced
-          path: linkace-package-docker-advanced.zip
-
+          name: linkace-docker
+          path: |
+            docker-compose.yml
+            .env
+            LICENSE.md
+            README.md

@@ -117,7 +117,7 @@ return new class extends Migration
 
     protected function addUserRoles(): void
     {
-        Artisan::call('db:seed', ['--class' => 'RolesAndPermissionsSeeder']);
+        Artisan::call('db:seed', ['--class' => 'RolesAndPermissionsSeeder', '--force' => true]);
 
         Schema::table('users', function (Blueprint $table) {
             $table->timestamp('blocked_at')->nullable()->after('api_token');

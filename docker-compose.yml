@@ -39,16 +39,16 @@ services:
       - .:/app:delegated
       - ./resources/docker/php/php-dev.ini:/usr/local/etc/php/conf.d/php.ini:ro
 
-  # --- nginx
-  nginx:
-    image: bitnami/nginx:1.25
+  # --- Caddy
+  caddy:
+    image: caddy:2
     ports:
-      - "80:8080"
+      - "80:80"
     depends_on:
       - php
     volumes:
       - .:/app:delegated
-      - ./resources/docker/nginx/dev.conf:/opt/bitnami/nginx/conf/server_blocks/linkace.conf:ro
+      - ./resources/docker/Caddyfile:/etc/caddy/Caddyfile:ro
 
   # --- Redis
   redis:
