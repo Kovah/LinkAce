@@ -5,7 +5,6 @@ namespace Tests\Migrations;
 use App\Models\Link;
 use App\Models\User;
 use CreateAuditsTable;
-use Illuminate\Foundation\Testing\LazilyRefreshDatabase;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Schema;
