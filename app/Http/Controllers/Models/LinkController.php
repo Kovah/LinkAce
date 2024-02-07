@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Models;
 
 use App\Http\Controllers\Controller;
 use App\Http\Controllers\Traits\ChecksOrdering;
+use App\Http\Controllers\Traits\ConfiguresListDisplay;
 use App\Http\Controllers\Traits\HandlesQueryOrder;
 use App\Http\Requests\Models\LinkStoreRequest;
 use App\Http\Requests\Models\LinkUpdateRequest;
@@ -17,6 +18,7 @@ use Illuminate\Http\Request;
 class LinkController extends Controller
 {
     use ChecksOrdering;
+    use ConfiguresListDisplay;
 
     public function __construct()
     {
@@ -26,6 +28,8 @@ class LinkController extends Controller
 
     public function index(Request $request): View
     {
+        $this->saveNewListDisplay();
+
         $this->orderBy = $request->input('orderBy', session()->get('links.index.orderBy', 'created_at'));
         $this->orderDir = $request->input('orderDir', session()->get('links.index.orderDir', 'desc'));
         $this->checkOrdering();

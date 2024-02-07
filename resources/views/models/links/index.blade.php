@@ -7,7 +7,10 @@
             @lang('link.links')
         </h3>
 
-        <div class="btn-group ms-auto">
+        <div class="ms-auto">
+            @include('models.links.partials.list-toggles')
+        </div>
+        <div class="btn-group ms-3">
             <a href="{{ route('links.create') }}" class="btn btn-sm btn-primary"
                 aria-label="@lang('link.add')">
                 <x-icon.plus class="me-2"/>
@@ -21,11 +24,9 @@
         @if($links->isNotEmpty())
 
             <div class="link-wrapper">
-                @if((int)usersettings('link_display_mode') === Link::DISPLAY_CARDS)
+                @if(usersettings('link_display_mode') === Link::DISPLAY_CARDS)
                     @include('models.links.partials.list-cards')
-                @elseif((int)usersettings('link_display_mode') === Link::DISPLAY_CARDS_DETAILED)
-                    @include('models.links.partials.list-cards-detailed')
-                @elseif((int)usersettings('link_display_mode') === Link::DISPLAY_LIST_SIMPLE)
+                @elseif(usersettings('link_display_mode') === Link::DISPLAY_LIST_SIMPLE)
                     @include('models.links.partials.list-simple')
                 @else
                     @include('models.links.partials.list-detailed')

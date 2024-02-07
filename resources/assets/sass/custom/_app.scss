@@ -252,3 +252,17 @@ code {
     background-size: cover !important;
   }
 }
+
+.link-display-toggles {
+  @include media-breakpoint-up('sm') {
+    font-size: 1.2rem;
+  }
+
+  a:not(.active) {
+    opacity: 70%;
+    transition: opacity ease 200ms;
+  }
+  a:hover, a:focus {
+    opacity: 100%;
+  }
+}
