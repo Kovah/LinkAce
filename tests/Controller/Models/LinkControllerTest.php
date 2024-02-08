@@ -451,13 +451,13 @@ class LinkControllerTest extends TestCase
         $userSettings->link_display_mode = Link::DISPLAY_LIST_DETAILED;
         $userSettings->save();
 
-        $this->get('links')->assertSee('link-list-detailed');
+        $this->get('links')->assertSee('link-detailed');
 
-        $this->get('links?link-display=1')->assertSee('link-list-cards');
+        $this->get('links?link-display=1')->assertSee('link-card');
         $userSettings = app(UserSettings::class);
         $this->assertSame($userSettings->link_display_mode, Link::DISPLAY_CARDS);
 
-        $this->get('links?link-display=2')->assertSee('link-list-simple');
+        $this->get('links?link-display=2')->assertSee('link-simple');
         $userSettings = app(UserSettings::class);
         $this->assertSame($userSettings->link_display_mode, Link::DISPLAY_LIST_SIMPLE);
     }

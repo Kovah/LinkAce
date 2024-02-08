@@ -1,104 +1,75 @@
-<div class="link-list-detailed card mb-4">
-
-    <div class="card-body">
-        <div class="d-flex align-items-top flex-wrap flex-md-nowrap">
-
-            <div class="link-thumbnail-list-holder order-0 me-2 me-lg-3 mb-2 mb-md-0">
-                <a href="{{ $link->url }}" {!! linkTarget() !!} class="link-thumbnail link-thumbnail-list"
-                    @if($link->thumbnail)
-                    style="background-image: url('{{ $link->thumbnail }}');"
-                    @endif>
-                    @if(!$link->thumbnail)
-                        <span class="link-thumbnail-placeholder"><x-icon.linkace-icon/></span>
-                    @endif
-                </a>
+@php
+    $shareLinks = getShareLinks($link);
+@endphp
+<div class="link-detailed list-group-item py-3">
+    <div class="d-flex w-100">
+        <div class="me-2 me-lg-3">
+            {!! $link->getIcon() !!}
+            <x-models.visibility-badge :model="$link"/>
+        </div>
+        <div class="min-w-0">
+            <a href="{{ $link->url }}" {!! linkTarget() !!} class="two-lines">{{ $link->title }}</a>
+            <div class="mt-1 small text-pale w-100 one-line">
+                {{ $link->url }}
             </div>
-
-            <div class="d-flex me-2 mw-100 order-2 order-md-1">
-                <div class="me-2 me-lg-3">
-                    {!! $link->getIcon() !!}
-                    <x-models.visibility-badge :model="$link"/>
-                </div>
-                <div>
-                    <div><a href="{{ $link->url }}" {!! linkTarget() !!}>{{ $link->title }}</a></div>
-                    <div><small class="text-pale">{{ $link->shortUrl(75) }}</small></div>
-                    @if($link->description)
-                        <div><small>{{ Str::limit($link->description, 200) }}</small></div>
-                    @endif
-                </div>
-            </div>
-            @if(getShareLinks($link) !== '')
-                <div class="ms-auto text-end order-1 order-md-2">
-                    <button type="button" class="btn btn-xs btn-md-sm btn-outline-secondary" title="@lang('sharing.share_link')"
-                        data-bs-toggle="collapse" data-bs-target="#sharing-{{ $link->id }}"
-                        aria-expanded="false" aria-controls="sharing-{{ $link->id }}">
-                        <x-icon.share class="fw"/>
-                        <span class="visually-hidden">@lang('sharing.share_link')</span>
-                    </button>
-                </div>
+            @if($link->description)
+                <div class="small mt-1 two-lines">{{ $link->description }}</div>
             @endif
         </div>
     </div>
 
-    @if(getShareLinks($link) !== '')
+    <div class="row mt-2">
+        <div class="col-12 col-sm-6">
+            <div class="d-none d-sm-inline-block me-3 me-lg-4">&nbsp;</div>
+            @if($link->tags->count() > 0)
+                @foreach($link->tags as $tag)
+                    <a href="{{ route('tags.show', ['tag' => $tag]) }}" class="btn btn-light btn-xs">
+                        {{ $tag->name }}
+                    </a>
+                @endforeach
+            @endif
+        </div>
+        <div class="col-12 col-sm-6 mt-2 mt-sm-0 d-flex align-items-center justify-content-end flex-wrap">
+
+            <div class="text-xs text-pale">
+                @lang('linkace.added') {!! $link->addedAt() !!}
+            </div>
+
+            <div class="btn-group ms-2">
+                <button type="button" class="btn btn-xs btn-outline-secondary" title="@lang('sharing.share_link')"
+                    data-bs-toggle="collapse" data-bs-target="#sharing-{{ $link->id }}"
+                    aria-expanded="false" aria-controls="sharing-{{ $link->id }}">
+                    <x-icon.share class="fw"/>
+                    <span class="visually-hidden">@lang('sharing.share_link')</span>
+                </button>
+                <a href="{{ route('links.show', [$link]) }}" class="btn btn-xs btn-outline-secondary"
+                    title="@lang('link.show')">
+                    @lang('linkace.show')
+                </a>
+                <a href="{{ route('links.edit', [$link]) }}" class="btn btn-xs btn-outline-secondary"
+                    title="@lang('link.edit')">
+                    @lang('linkace.edit')
+                </a>
+                <button type="submit" form="link-delete-{{ $link->id }}" title="@lang('link.delete')"
+                    class="btn btn-xs btn-outline-secondary">
+                    @lang('linkace.delete')
+                </button>
+            </div>
+
+        </div>
+    </div>
+    @if($shareLinks !== '')
         <div class="collapse" id="sharing-{{ $link->id }}">
-            <div class="card-body py-0">
-                <div class="share-links">
-                    {!! getShareLinks($link) !!}
-                </div>
+            <div class="share-links justify-content-end mt-1">
+                {!! $shareLinks !!}
             </div>
         </div>
     @endif
 
-    <div class="card-body py-2">
-
-        <div class="row">
-            <div class="col-12 col-sm-6">
-
-                @if($link->tags->count() > 0)
-                    @foreach($link->tags as $tag)
-                        <a href="{{ route('tags.show', ['tag' => $tag]) }}" class="btn btn-light btn-xs">
-                            {{ $tag->name }}
-                        </a>
-                    @endforeach
-                @else
-                    <span class="small text-pale">@lang('tag.no_tags')</span>
-                @endif
-
-            </div>
-            <div class="col-12 col-sm-6 d-sm-flex align-items-sm-center justify-content-sm-end flex-wrap">
-
-                <div class="text-xs text-pale mt-3 mt-sm-0">
-                    @lang('linkace.added') {!! $link->addedAt() !!}
-                </div>
-
-                <div class="btn-group mt-1 ms-md-2">
-                    <a href="{{ route('links.show', [$link]) }}" class="btn btn-xs btn-light"
-                        title="@lang('link.show')">
-                        <x-icon.info class="fw"/> @lang('link.show')
-                    </a>
-
-                    <a href="{{ route('links.edit', [$link]) }}" class="btn btn-xs btn-light"
-                        title="@lang('link.edit')">
-                        <x-icon.edit class="fw"/> @lang('link.edit')
-                    </a>
-
-                    <button type="submit" form="link-delete-{{ $link->id }}" title="@lang('link.delete')"
-                        class="btn btn-xs btn-light">
-                        <x-icon.trash class="fw"/> @lang('link.delete')
-                    </button>
-                </div>
-
-            </div>
-        </div>
-
-        <form id="link-delete-{{ $link->id }}" method="POST" style="display: none;"
-            action="{{ route('links.destroy', [$link->id]) }}">
-            @method('DELETE')
-            @csrf
-            <input type="hidden" name="link_id" value="{{ $link->id }}">
-        </form>
-
-    </div>
-
+    <form id="link-delete-{{ $link->id }}" method="POST" style="display: none;"
+        action="{{ route('links.destroy', [$link->id]) }}">
+        @method('DELETE')
+        @csrf
+        <input type="hidden" name="link_id" value="{{ $link->id }}">
+    </form>
 </div>

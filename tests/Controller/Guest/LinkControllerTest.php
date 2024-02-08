@@ -50,12 +50,12 @@ class LinkControllerTest extends TestCase
         $this->startSession();
         Link::factory()->create(['title' => 'Public Link', 'visibility' => 1]);
 
-        $this->get('guest/links')->assertSee('link-list-detailed');
+        $this->get('guest/links')->assertSee('link-detailed');
 
-        $this->get('guest/links?link-display=1')->assertSee('link-list-cards');
+        $this->get('guest/links?link-display=1')->assertSee('link-card');
         $this->assertSame(session('link_display_mode'), Link::DISPLAY_CARDS);
 
-        $this->get('guest/links?link-display=2')->assertSee('link-list-simple');
+        $this->get('guest/links?link-display=2')->assertSee('link-simple');
         $this->assertSame(session('link_display_mode'), Link::DISPLAY_LIST_SIMPLE);
     }
 }

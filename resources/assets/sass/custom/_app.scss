@@ -88,11 +88,7 @@ body:not(.bookmarklet) {
 .share-links {
   display: flex;
   flex-wrap: wrap;
-
-  .share-link {
-    flex: 0 0 auto;
-    margin: map_get($spacers, 1);
-  }
+  gap: map_get($spacers, 1);
 }
 
 a.badge {
@@ -223,6 +219,7 @@ code {
   position: relative;
   width: 100%;
   padding-top: 56.25%;
+  overflow: hidden;
 
   .link-thumbnail-list-detailed {
     position: absolute;

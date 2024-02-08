@@ -1,4 +1,8 @@
 // Helper styles
+.min-w-0 {
+  min-width: 0;
+}
+
 .cursor-help {
   cursor: help;
 }
@@ -19,4 +23,13 @@
     white-space: nowrap;
     text-overflow: ellipsis;
   }
+}
+
+.two-lines {
+  display: -webkit-box;
+  overflow: hidden;
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: 2;
+  line-clamp: 2;
+  text-overflow: ellipsis;
 }

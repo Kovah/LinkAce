@@ -6,7 +6,7 @@ use App\Models\Link;
 
 class Sharing
 {
-    public static string $linkClasses = 'share-link btn btn-light';
+    public static string $linkClasses = 'share-link btn btn-sm btn-light';
 
     public static array $placeholders = [
         '#URL#',

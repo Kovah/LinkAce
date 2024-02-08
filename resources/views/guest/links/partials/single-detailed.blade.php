@@ -1,61 +1,54 @@
-<div class="link-list-detailed card mb-4">
-
-    <div class="card-body">
-        <div class="d-flex align-items-top flex-wrap">
-            <div class="me-2 mw-100 d-flex">
-                <div class="me-2">
-                    {!! $link->getIcon() !!}
-                </div>
-                <div>
-                    <a href="{{ $link->url }}" {!! linkTarget() !!}>{{ $link->title }}</a>
-                    <br>
-                    <small class="text-pale">{{ $link->shortUrl() }}</small>
-                </div>
+@php
+    $shareLinks = getShareLinks($link);
+@endphp
+<div class="link-detailed list-group-item py-3">
+    <div class="d-flex w-100">
+        <div class="me-2 me-lg-3">
+            {!! $link->getIcon() !!}
+        </div>
+        <div class="min-w-0">
+            <a href="{{ $link->url }}" {!! linkTarget() !!} class="two-lines">{{ $link->title }}</a>
+            <div class="mt-1 small text-pale w-100 one-line">
+                {{ $link->url }}
             </div>
-            <div class="ms-auto text-end">
-                <button type="button" class="btn btn-xs btn-outline-secondary" title="@lang('sharing.share_link')"
-                    data-bs-toggle="collapse" data-bs-target="#sharing-{{ $link->id }}"
-                    aria-expanded="false" aria-controls="sharing-{{ $link->id }}">
-                    <x-icon.share class="fw"/>
-                </button>
-            </div>
+            @if($link->description)
+                <div class="small mt-1 two-lines">{{ $link->description }}</div>
+            @endif
         </div>
     </div>
 
-    <div class="collapse" id="sharing-{{ $link->id }}">
-        <div class="card-body py-0">
-            <div class="share-links">
-                {!! getShareLinks($link) !!}
+    <div class="row mt-2">
+        <div class="col-12 col-sm-6">
+            <div class="d-none d-sm-inline-block me-3 me-lg-4">&nbsp;</div>
+            @if($link->tags->count() > 0)
+                @foreach($link->tags as $tag)
+                    @if(!$tag->is_private)
+                        <a href="{{ route('guest.tags.show', ['tag' => $tag]) }}"
+                            class="btn btn-xs btn-light">
+                            {{ $tag->name }}
+                        </a>
+                    @endif
+                @endforeach
+            @endif
+
+        </div>
+        <div class="col-12 col-sm-6 mt-2 mt-sm-0 d-flex align-items-center justify-content-end flex-wrap">
+            <div class="text-xs text-pale mt-3 mt-sm-0 me-3">
+                @lang('linkace.added') {!! $link->addedAt() !!}
             </div>
+            <button type="button" class="btn btn-xs btn-md-sm btn-link" title="@lang('sharing.share_link')"
+                data-bs-toggle="collapse" data-bs-target="#sharing-{{ $link->id }}"
+                aria-expanded="false" aria-controls="sharing-{{ $link->id }}">
+                <x-icon.share class="fw"/>
+                <span class="visually-hidden">@lang('sharing.share_link')</span>
+            </button>
         </div>
     </div>
-
-    <div class="card-body py-2">
-
-        <div class="row">
-            <div class="col-12 col-sm-6">
-
-                @if($link->tags->count() > 0)
-                    @foreach($link->tags as $tag)
-                        @if(!$tag->is_private)
-                            <a href="{{ route('guest.tags.show', ['tag' => $tag]) }}"
-                                class="btn btn-xs btn-light">
-                                {{ $tag->name }}
-                            </a>
-                        @endif
-                    @endforeach
-                @else
-                    <span class="small text-pale">@lang('tag.no_tags')</span>
-                @endif
-
-            </div>
-            <div class="col-12 col-sm-6 d-sm-flex align-items-sm-center justify-content-sm-end flex-wrap">
-                <div class="text-xs text-pale mt-3 mt-sm-0">
-                    @lang('linkace.added') {!! $link->addedAt() !!}
-                </div>
+    @if($shareLinks !== '')
+        <div class="collapse" id="sharing-{{ $link->id }}">
+            <div class="share-links justify-content-end mt-1">
+                {!! $shareLinks !!}
             </div>
         </div>
-
-    </div>
-
+    @endif
 </div>
