@@ -11,13 +11,13 @@
 
             <select id="darkmode_setting" name="darkmode_setting"
                 class="form-select{{ $errors->has('darkmode_setting') ? ' is-invalid' : '' }}">
-                <option value="0" @selected(guestsettings('darkmode_setting') === 0)>
+                <option value="0" @selected(usersettings('darkmode_setting') === 0)>
                     @lang('settings.darkmode_disabled')
                 </option>
-                <option value="1" @selected(guestsettings('darkmode_setting') === 1)>
+                <option value="1" @selected(usersettings('darkmode_setting') === 1)>
                     @lang('settings.darkmode_permanent')
                 </option>
-                <option value="2" @selected(guestsettings('darkmode_setting') === 2)>
+                <option value="2" @selected(usersettings('darkmode_setting') === 3)>
                     @lang('settings.darkmode_auto')
                 </option>
             </select>

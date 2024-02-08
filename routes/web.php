@@ -148,6 +148,8 @@ Route::group(['middleware' => ['auth', 'role:admin']], function () {
         ->name('get-systemsettings');
     Route::post('settings/system', [SystemSettingsController::class, 'update'])
         ->name('save-settings-system');
+    Route::post('settings/system/guest', [SystemSettingsController::class, 'updateGuest'])
+        ->name('save-settings-guest');
     Route::post('settings/generate-cron-token', [SystemSettingsController::class, 'generateCronToken'])
         ->name('generate-cron-token');
 

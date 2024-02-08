@@ -11,8 +11,7 @@
         @foreach(config('sharing.services') as $key => $details)
             <div class="sharing-checkbox">
                 <input type="checkbox" id="guest_share-{{ $key }}" name="guest_share[{{ $key }}]" value="1"
-                    class="sharing-checkbox-input"
-                    @if(old('guest_share.' . $key) ?: guestsettings('share_' . $key)) checked @endif>
+                    class="sharing-checkbox-input" @checked(old('guest_share.' . $key) ?: guestsettings('share_' . $key))>
                 <label for="guest_share-{{ $key }}" title="@lang('sharing.service.' . $key)">
                     <x-dynamic-component :component="$details['icon']" class="fw" />
                 </label>

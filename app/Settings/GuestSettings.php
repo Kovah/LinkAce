@@ -7,7 +7,6 @@ use Spatie\LaravelSettings\Settings;
 class GuestSettings extends Settings
 {
     public int $listitem_count;
-    public int $link_display_mode;
     public bool $links_new_tab;
     public int $darkmode_setting;
 

@@ -32,16 +32,9 @@
                         </label>
                         <select id="guest_access_enabled" name="guest_access_enabled"
                             class="simple-select {{ $errors->has('guest_access_enabled') ? ' is-invalid' : '' }}">
-                            <option value="0"
-                                @if(systemsettings('guest_access_enabled')) selected="selected" @endif>
-                                @lang('linkace.no')
-                            </option>
-                            <option value="1"
-                                @if(systemsettings('guest_access_enabled')) selected="selected" @endif>
-                                @lang('linkace.yes')
-                            </option>
+                            <x-forms.yes-no-options :setting="systemsettings('guest_access_enabled')"/>
                         </select>
-                        <p class="small text-pale mt-1">@lang('settings.guest_access_enabled_help')</p>
+                        <p class="small text-pale mt-1">@lang('settings.guest_access_help')</p>
                         @if ($errors->has('guest_access_enabled'))
                             <p class="invalid-feedback" role="alert">
                                 {{ $errors->first('guest_access_enabled') }}

@@ -40,8 +40,7 @@
                         <select id="timezone" name="timezone"
                             class="simple-select {{ $errors->has('timezone') ? ' is-invalid' : '' }}">
                             @foreach(timezone_identifiers_list() as $key => $zone)
-                                <option value="{{ $zone }}"
-                                    @if(usersettings('timezone') === $zone) selected @endif>
+                                <option value="{{ $zone }}" @selected(usersettings('timezone') === $zone)>
                                     {{ $zone }}
                                 </option>
                             @endforeach
@@ -66,8 +65,7 @@
                         <select id="date_format" name="date_format"
                             class="form-select{{ $errors->has('date_format') ? ' is-invalid' : '' }}">
                             @foreach(config('linkace.formats.date') as $date_format)
-                                <option value="{{ $date_format }}"
-                                    @if(usersettings('date_format') === $date_format) selected @endif>
+                                <option value="{{ $date_format }}" @selected(usersettings('date_format') === $date_format)>
                                     {{ $date_format }} ({{ date($date_format) }})
                                 </option>
                             @endforeach
@@ -89,8 +87,7 @@
                         <select id="time_format" name="time_format"
                             class="form-select{{ $errors->has('time_format') ? ' is-invalid' : '' }}">
                             @foreach(config('linkace.formats.time') as $time_format)
-                                <option value="{{ $time_format }}"
-                                    @if(usersettings('time_format') === $time_format) selected @endif>
+                                <option value="{{ $time_format }}" @selected(usersettings('time_format') === $time_format)>
                                     {{ $time_format }} ({{ date($time_format) }})
                                 </option>
                             @endforeach
@@ -115,8 +112,7 @@
                         <select id="listitem_count" name="listitem_count"
                             class="form-select{{ $errors->has('listitem_count') ? ' is-invalid' : '' }}">
                             @foreach(config('linkace.listitem_count_values') as $item_count)
-                                <option value="{{ $item_count }}"
-                                    @if(usersettings('listitem_count') === $item_count) selected @endif>
+                                <option value="{{ $item_count }}" @selected(usersettings('listitem_count') === $item_count)>
                                     {{ $item_count }} @lang('linkace.entries')
                                 </option>
                             @endforeach
@@ -140,12 +136,7 @@
                         </label>
                         <select id="links_new_tab" name="links_new_tab"
                             class="simple-select {{ $errors->has('links_new_tab') ? ' is-invalid' : '' }}">
-                            <option value="0" @if(usersettings('links_new_tab') === false) selected @endif>
-                                @lang('linkace.no')
-                            </option>
-                            <option value="1" @if(usersettings('links_new_tab') === true) selected @endif>
-                                @lang('linkace.yes')
-                            </option>
+                            <x-forms.yes-no-options :setting="usersettings('links_new_tab')"/>
                         </select>
                         @if ($errors->has('links_new_tab'))
                             <p class="invalid-feedback" role="alert">
@@ -163,12 +154,7 @@
                         </label>
                         <select id="markdown_for_text" name="markdown_for_text"
                             class="simple-select {{ $errors->has('markdown_for_text') ? ' is-invalid' : '' }}">
-                            <option value="1" @if(usersettings('markdown_for_text') === true) selected @endif>
-                                @lang('linkace.yes')
-                            </option>
-                            <option value="0" @if(usersettings('markdown_for_text') === false) selected @endif>
-                                @lang('linkace.no')
-                            </option>
+                            <x-forms.yes-no-options :setting="usersettings('markdown_for_text')"/>
                         </select>
                         @if ($errors->has('markdown_for_text'))
                             <p class="invalid-feedback" role="alert">

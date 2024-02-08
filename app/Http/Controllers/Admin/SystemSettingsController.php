@@ -25,7 +25,6 @@ class SystemSettingsController extends Controller
     public function update(SystemSettingsUpdateRequest $request): RedirectResponse
     {
         $sysSettings = app(SystemSettings::class);
-        $guestSettings = app(GuestSettings::class);
 
         $settings = $request->except(['_token', 'guest_share']);
 
@@ -34,6 +33,20 @@ class SystemSettingsController extends Controller
         }
 
         $sysSettings->save();
+
+        flash(trans('settings.settings_saved'));
+        return redirect()->route('get-systemsettings');
+    }
+
+    public function updateGuest(SystemSettingsUpdateRequest $request): RedirectResponse
+    {
+        $guestSettings = app(GuestSettings::class);
+
+        $settings = $request->except(['_token', 'guest_share']);
+
+        foreach ($settings as $key => $value) {
+            $guestSettings->$key = $value;
+        }
 
         // Enable / disable sharing services for guests
         $guestSharingSettings = $request->input('guest_share');

@@ -1,0 +1,50 @@
+<div class="mb-3 my-5">
+    <h5>
+        @lang('settings.archive_backups')
+    </h5>
+
+    <p class="my-3 small">@lang('settings.archive_backups_help')</p>
+
+    <div class="row">
+        <div class="col-12 col-sm-8 col-md-6">
+
+            <div class="mb-4">
+                <label class="form-label" for="archive_backups_enabled">
+                    @lang('settings.archive_backups_enabled')
+                </label>
+                <select id="archive_backups_enabled" name="archive_backups_enabled"
+                    class="form-select{{ $errors->has('archive_backups_enabled') ? ' is-invalid' : '' }}">
+                    <x-forms.yes-no-options :setting="usersettings('archive_backups_enabled')"/>
+                </select>
+                <p class="text-pale small mt-1">@lang('settings.archive_backups_enabled_help')</p>
+                @if ($errors->has('archive_backups_enabled'))
+                    <p class="invalid-feedback" role="alert">
+                        {{ $errors->first('archive_backups_enabled') }}
+                    </p>
+                @endif
+            </div>
+
+        </div>
+        <div class="col-12 col-sm-8 col-md-6">
+
+            <div class="mb-4">
+                <label class="form-label" for="archive_private_backups_enabled">
+                    @lang('settings.archive_private_backups_enabled')
+                </label>
+                <select id="archive_private_backups_enabled"
+                    name="archive_private_backups_enabled"
+                    class="form-select{{ $errors->has('archive_private_backups_enabled') ? ' is-invalid' : '' }}">
+                    <x-forms.yes-no-options :setting="usersettings('archive_private_backups_enabled')"/>
+                </select>
+                <p class="text-pale small mt-1">@lang('settings.archive_private_backups_enabled_help')</p>
+                @if ($errors->has('archive_private_backups_enabled'))
+                    <p class="invalid-feedback" role="alert">
+                        {{ $errors->first('archive_private_backups_enabled') }}
+                    </p>
+                @endif
+            </div>
+
+        </div>
+    </div>
+
+</div>

@@ -125,6 +125,8 @@ class MigrateExistingSettings extends SettingsMigration
         $this->migrator->add($id . '.darkmode_setting', (int)$this->userSettings->get('darkmode_setting', 2));
         $this->migrator->add($id . '.link_display_mode', match ((int)$this->userSettings->get('link_display_mode', 1)) {
             0 => \App\Models\Link::DISPLAY_LIST_DETAILED,
+            1 => 1,
+            2 => 2,
             3 => \App\Models\Link::DISPLAY_CARDS,
         });
         $this->migrator->add($id . '.links_new_tab', (bool)$this->userSettings->get('links_new_tab', false));
