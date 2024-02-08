@@ -442,4 +442,23 @@ class LinkControllerTest extends TestCase
 
         $this->assertEquals(Link::STATUS_OK, $link->refresh()->status);
     }
+
+    public function testLinkDisplayToggle(): void
+    {
+        $this->createTestLinks();
+
+        $userSettings = app(UserSettings::class);
+        $userSettings->link_display_mode = Link::DISPLAY_LIST_DETAILED;
+        $userSettings->save();
+
+        $this->get('links')->assertSee('link-list-detailed');
+
+        $this->get('links?link-display=1')->assertSee('link-list-cards');
+        $userSettings = app(UserSettings::class);
+        $this->assertSame($userSettings->link_display_mode, Link::DISPLAY_CARDS);
+
+        $this->get('links?link-display=2')->assertSee('link-list-simple');
+        $userSettings = app(UserSettings::class);
+        $this->assertSame($userSettings->link_display_mode, Link::DISPLAY_LIST_SIMPLE);
+    }
 }

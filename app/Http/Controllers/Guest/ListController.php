@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Guest;
 
 use App\Http\Controllers\Controller;
 use App\Http\Controllers\Traits\ChecksOrdering;
+use App\Http\Controllers\Traits\ConfiguresLinkDisplay;
 use App\Models\LinkList;
 use Illuminate\Contracts\View\View;
 use Illuminate\Http\Request;
@@ -11,6 +12,7 @@ use Illuminate\Http\Request;
 class ListController extends Controller
 {
     use ChecksOrdering;
+    use ConfiguresLinkDisplay;
 
     public function __construct()
     {
@@ -38,6 +40,8 @@ class ListController extends Controller
 
     public function show(Request $request, int $listID): View
     {
+        $this->updateLinkDisplayForGuest();
+
         $list = LinkList::publicOnly()->findOrFail($listID);
 
         $this->orderBy = $request->input('orderBy', 'created_at');
@@ -52,7 +56,7 @@ class ListController extends Controller
         return view('guest.lists.show', [
             'pageTitle' => trans('list.list') . ': ' . $list->name,
             'list' => $list,
-            'listLinks' => $links,
+            'links' => $links,
             'route' => $request->getBaseUrl(),
             'orderBy' => $this->orderBy,
             'orderDir' => $this->orderDir,

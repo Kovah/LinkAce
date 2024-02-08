@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Guest;
 
 use App\Http\Controllers\Controller;
 use App\Http\Controllers\Traits\ChecksOrdering;
+use App\Http\Controllers\Traits\ConfiguresLinkDisplay;
 use App\Http\Controllers\Traits\HandlesQueryOrder;
 use App\Models\Tag;
 use Illuminate\Contracts\View\View;
@@ -12,6 +13,7 @@ use Illuminate\Http\Request;
 class TagController extends Controller
 {
     use ChecksOrdering;
+    use ConfiguresLinkDisplay;
 
     public function __construct()
     {
@@ -40,6 +42,8 @@ class TagController extends Controller
 
     public function show(Request $request, int $tagID): View
     {
+        $this->updateLinkDisplayForGuest();
+
         $this->orderBy = $request->input('orderBy', 'created_at');
         $this->orderDir = $request->input('orderBy', 'desc');
         $this->checkOrdering();
@@ -54,7 +58,7 @@ class TagController extends Controller
         return view('guest.tags.show', [
             'pageTitle' => trans('tag.tag') . ': ' . $tag->name,
             'tag' => $tag,
-            'tagLinks' => $links,
+            'links' => $links,
             'route' => $request->getBaseUrl(),
             'orderBy' => $this->orderBy,
             'orderDir' => $this->orderDir,

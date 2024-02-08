@@ -34,7 +34,6 @@ class MigrateExistingSettings extends SettingsMigration
     protected function migrateGuestSettings()
     {
         $this->migrator->add('guest.listitem_count', (int)$this->sysSettings->get('guest_listitem_count', 24));
-        $this->migrator->add('guest.link_display_mode', (int)$this->sysSettings->get('guest_link_display_mode', 1));
         $this->migrator->add('guest.links_new_tab', (bool)$this->sysSettings->get('guest_links_new_tab', true));
         $this->migrator->add('guest.darkmode_setting', (int)$this->sysSettings->get('guest_darkmode_setting', 1));
 
@@ -124,7 +123,10 @@ class MigrateExistingSettings extends SettingsMigration
 
         $this->migrator->add($id . '.listitem_count', (int)$this->userSettings->get('listitem_count', 24));
         $this->migrator->add($id . '.darkmode_setting', (int)$this->userSettings->get('darkmode_setting', 2));
-        $this->migrator->add($id . '.link_display_mode', (int)$this->userSettings->get('link_display_mode', 1));
+        $this->migrator->add($id . '.link_display_mode', match ((int)$this->userSettings->get('link_display_mode', 1)) {
+            0 => \App\Models\Link::DISPLAY_LIST_DETAILED,
+            3 => \App\Models\Link::DISPLAY_CARDS,
+        });
         $this->migrator->add($id . '.links_new_tab', (bool)$this->userSettings->get('links_new_tab', false));
         $this->migrator->add($id . '.markdown_for_text', (bool)$this->userSettings->get('markdown_for_text', true));
 

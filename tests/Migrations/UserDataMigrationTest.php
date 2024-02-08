@@ -8,6 +8,8 @@ use App\Models\Note;
 use App\Models\Tag;
 use App\Models\User;
 use App\Settings\SystemSettings;
+use App\Settings\UserSettings;
+use Database\Seeders\RolesAndPermissionsSeeder;
 use Illuminate\Support\Facades\DB;
 use Laravel\Sanctum\Sanctum;
 use Laravel\Sanctum\SanctumServiceProvider;

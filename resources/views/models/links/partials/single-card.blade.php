@@ -1,4 +1,4 @@
-<div class="col-12 col-md-6 col-lg-4">
+<div class="link-list-cards col-12 col-md-6 col-lg-4">
     <div class="h-100 card">
         <div class="card-body h-100 border-bottom-0">
             <div class="d-flex">

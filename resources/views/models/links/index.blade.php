@@ -6,17 +6,14 @@
         <h3 class="mb-0">
             @lang('link.links')
         </h3>
-
-        <div class="ms-auto">
-            @include('models.links.partials.list-toggles')
-        </div>
+        <x-models.link-display-toggles class="ms-auto"/>
         <div class="btn-group ms-3">
             <a href="{{ route('links.create') }}" class="btn btn-sm btn-primary"
                 aria-label="@lang('link.add')">
                 <x-icon.plus class="me-2"/>
                 @lang('linkace.add')
             </a>
-            @include('models.links.partials.index-order-dropdown', ['baseRoute' => 'links.index'])
+            <x-models.link-order-dropdown :without-wrapper="true"/>
         </div>
     </header>
 

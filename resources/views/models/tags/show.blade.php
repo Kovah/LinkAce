@@ -38,13 +38,34 @@
         </div>
     </div>
 
-    <div class="card my-3">
-        <div class="card-table">
-            @include('models.links.partials.table', ['links' => $tagLinks])
-        </div>
-    </div>
+    <section class="my-4">
+        @if($links->isNotEmpty())
+            <div class="d-flex align-items-center mb-4">
+                <x-models.link-display-toggles class="ms-auto"/>
+                <x-models.link-order-dropdown class="ms-3"/>
+            </div>
+            <div class="link-wrapper">
+                @if(usersettings('link_display_mode') === Link::DISPLAY_CARDS)
+                    @include('models.links.partials.list-cards')
+                @elseif(usersettings('link_display_mode') === Link::DISPLAY_LIST_SIMPLE)
+                    @include('models.links.partials.list-simple')
+                @else
+                    @include('models.links.partials.list-detailed')
+                @endif
+            </div>
 
-    {!! $tagLinks->onEachSide(1)->withQueryString()->links() !!}
+        @else
+
+            <div class="alert alert-info">
+                @lang('linkace.no_results_found', ['model' => trans('link.links')])
+            </div>
+
+        @endif
+    </section>
+
+    @if($links->isNotEmpty())
+        {!! $links->onEachSide(1)->withQueryString()->links() !!}
+    @endif
 
     <div class="list-history mt-5">
         <h3 class="h6 mb-2">@lang('linkace.history')</h3>

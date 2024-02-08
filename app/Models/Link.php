@@ -97,9 +97,8 @@ class Link extends Model implements Auditable
     public const STATUS_BROKEN = 3;
 
     public const DISPLAY_CARDS = 1;
-    public const DISPLAY_CARDS_DETAILED = 3;
     public const DISPLAY_LIST_SIMPLE = 2;
-    public const DISPLAY_LIST_DETAILED = 0;
+    public const DISPLAY_LIST_DETAILED = 3;
 
     /*
      * ========================================================================

@@ -39,4 +39,23 @@ class LinkControllerTest extends TestCase
             ->assertDontSee('Private Link')
             ->assertDontSee('privateTag');
     }
+
+    public function testLinkDisplayToggle(): void
+    {
+        SystemSettings::fake([
+            'guest_access_enabled' => true,
+            'setup_completed' => true,
+        ]);
+
+        $this->startSession();
+        Link::factory()->create(['title' => 'Public Link', 'visibility' => 1]);
+
+        $this->get('guest/links')->assertSee('link-list-detailed');
+
+        $this->get('guest/links?link-display=1')->assertSee('link-list-cards');
+        $this->assertSame(session('link_display_mode'), Link::DISPLAY_CARDS);
+
+        $this->get('guest/links?link-display=2')->assertSee('link-list-simple');
+        $this->assertSame(session('link_display_mode'), Link::DISPLAY_LIST_SIMPLE);
+    }
 }

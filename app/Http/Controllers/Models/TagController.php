@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Models;
 
 use App\Http\Controllers\Controller;
 use App\Http\Controllers\Traits\ChecksOrdering;
+use App\Http\Controllers\Traits\ConfiguresLinkDisplay;
 use App\Http\Controllers\Traits\HandlesQueryOrder;
 use App\Http\Requests\Models\TagStoreRequest;
 use App\Http\Requests\Models\TagUpdateRequest;
@@ -18,6 +19,7 @@ use Illuminate\Http\Request;
 class TagController extends Controller
 {
     use ChecksOrdering;
+    use ConfiguresLinkDisplay;
 
     public function __construct()
     {
@@ -77,6 +79,8 @@ class TagController extends Controller
 
     public function show(Request $request, Tag $tag): View
     {
+        $this->updateLinkDisplayForUser();
+
         $this->allowedOrderBy = Link::$allowOrderBy;
         $this->orderBy = $request->input('orderBy', 'created_at');
         $this->orderDir = $request->input('orderBy', 'desc');
@@ -91,7 +95,7 @@ class TagController extends Controller
             'pageTitle' => trans('tag.tag') . ': ' . $tag->name,
             'tag' => $tag,
             'history' => $tag->audits()->latest()->get(),
-            'tagLinks' => $links,
+            'links' => $links,
             'route' => $request->getBaseUrl(),
             'orderBy' => $this->orderBy,
             'orderDir' => $this->orderDir,

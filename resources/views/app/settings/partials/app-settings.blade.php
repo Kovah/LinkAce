@@ -129,47 +129,6 @@
                     </div>
 
                 </div>
-                <div class="col-12 col-sm-8 col-md-6">
-
-                    <div class="mb-4">
-                        <label class="form-label" for="link_display_mode">
-                            @lang('settings.display_mode')
-                        </label>
-                        <select id="link_display_mode" name="link_display_mode"
-                            class="form-select{{ $errors->has('link_display_mode') ? ' is-invalid' : '' }}">
-                            <option value="{{ Link::DISPLAY_LIST_DETAILED }}"
-                                @if(usersettings('link_display_mode') === Link::DISPLAY_LIST_DETAILED)
-                                selected
-                                @endif>
-                                @lang('settings.display_mode_list_detailed')
-                            </option>
-                            <option value="{{ Link::DISPLAY_LIST_SIMPLE }}"
-                                @if(usersettings('link_display_mode') === Link::DISPLAY_LIST_SIMPLE)
-                                selected
-                                @endif>
-                                @lang('settings.display_mode_list_simple')
-                            </option>
-                            <option value="{{ Link::DISPLAY_CARDS }}"
-                                @if(usersettings('link_display_mode') === Link::DISPLAY_CARDS)
-                                selected
-                                @endif>
-                                @lang('settings.display_mode_cards')
-                            </option>
-                            <option value="{{ Link::DISPLAY_CARDS_DETAILED }}"
-                                @if(usersettings('link_display_mode') === Link::DISPLAY_CARDS_DETAILED)
-                                selected
-                                @endif>
-                                @lang('settings.display_mode_cards_detailed')
-                            </option>
-                        </select>
-                        @if ($errors->has('link_display_mode'))
-                            <p class="invalid-feedback" role="alert">
-                                {{ $errors->first('link_display_mode') }}
-                            </p>
-                        @endif
-                    </div>
-
-                </div>
             </div>
 
             <div class="row">
@@ -221,13 +180,13 @@
                 </div>
             </div>
 
-            @include('app.settings.partials.app-settings.archive-backups')
+            @include('app.settings.partials.settings.archive-backups')
 
-            @include('app.settings.partials.app-settings.privacy')
+            @include('app.settings.partials.settings.privacy')
 
-            @include('app.settings.partials.app-settings.dark-mode')
+            @include('app.settings.partials.settings.dark-mode')
 
-            @include('app.settings.partials.app-settings.sharing')
+            @include('app.settings.partials.settings.sharing')
 
             <button type="submit" class="btn btn-primary">
                 <x-icon.save class="me-2"/> @lang('settings.save_settings')

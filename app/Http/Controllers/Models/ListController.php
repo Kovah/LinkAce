@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Models;
 
 use App\Http\Controllers\Controller;
 use App\Http\Controllers\Traits\ChecksOrdering;
+use App\Http\Controllers\Traits\ConfiguresLinkDisplay;
 use App\Http\Requests\Models\ListStoreRequest;
 use App\Http\Requests\Models\ListUpdateRequest;
 use App\Models\LinkList;
@@ -15,6 +16,7 @@ use Illuminate\Http\Request;
 class ListController extends Controller
 {
     use ChecksOrdering;
+    use ConfiguresLinkDisplay;
 
     public function __construct()
     {
@@ -75,6 +77,8 @@ class ListController extends Controller
 
     public function show(Request $request, LinkList $list): View
     {
+        $this->updateLinkDisplayForUser();
+
         $this->orderBy = $request->input('orderBy', 'created_at');
         $this->orderDir = $request->input('orderBy', 'desc');
         $this->checkOrdering();
@@ -88,7 +92,7 @@ class ListController extends Controller
             'pageTitle' => trans('list.list') . ': ' . $list->name,
             'list' => $list,
             'history' => $list->audits()->latest()->get(),
-            'listLinks' => $links,
+            'links' => $links,
             'route' => $request->getBaseUrl(),
             'orderBy' => $this->orderBy,
             'orderDir' => $this->orderDir,

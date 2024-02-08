@@ -1,4 +1,4 @@
-<li class="list-group-item">
+<li class="link-list-simple list-group-item">
     <div class="d-sm-flex align-items-center">
         <div class="me-3 one-line-sm">
             <a href="{{ $link->url }}" title="{{ $link->url }}" {!! linkTarget() !!}>
