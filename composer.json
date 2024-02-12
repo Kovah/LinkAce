@@ -22,9 +22,9 @@
     "sentry/sentry-laravel": "^4.2",
     "shaarli/netscape-bookmark-parser": "dev-master",
     "spatie/laravel-backup": "^8.1.5",
-    "symfony/http-client": "^6.0",
-    "symfony/mailgun-mailer": "^6.0",
-    "symfony/postmark-mailer": "^6.0",
+    "symfony/http-client": "^7.0",
+    "symfony/mailgun-mailer": "^7.0",
+    "symfony/postmark-mailer": "^7.0",
     "venturecraft/revisionable": "^1.40"
   },
   "require-dev": {
@@ -35,7 +35,7 @@
     "laravel/tinker": "^2.2",
     "mockery/mockery": "^1.5",
     "nunomaduro/collision": "^v7.10.0",
-    "phpunit/phpunit": "^10.5",
+    "phpunit/phpunit": "^11.0",
     "roave/security-advisories": "dev-latest",
     "squizlabs/php_codesniffer": "^3.5"
   },
