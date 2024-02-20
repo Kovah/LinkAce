@@ -29,7 +29,6 @@
             <div class="history mb-4">
                 @forelse($settings_history as $entry)
                     <x-history.settings-entry :entry="$entry"/>
-
                 @empty
                     <div class="text-muted">@lang('audit.no_logs_found')</div>
                 @endforelse

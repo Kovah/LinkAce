@@ -1,10 +1,10 @@
 <?php
 
 use App\Http\Controllers\Admin\ApiTokenController as AdminApiTokenController;
+use App\Http\Controllers\Admin\AuditController;
 use App\Http\Controllers\Admin\SystemSettingsController;
 use App\Http\Controllers\Admin\UserManagementController;
 use App\Http\Controllers\App\ApiTokenController;
-use App\Http\Controllers\App\AuditController;
 use App\Http\Controllers\App\BookmarkletController;
 use App\Http\Controllers\App\DashboardController;
 use App\Http\Controllers\App\ExportController;

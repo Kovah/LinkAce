@@ -6,9 +6,12 @@ use App\Audits\Modifiers\BooleanModifier;
 use App\Audits\Modifiers\DarkmodeSettingModifier;
 use App\Audits\Modifiers\DisplayModeSettingModifier;
 use App\Audits\Modifiers\LocaleSettingModifier;
+use App\Audits\Modifiers\RedactedModifier;
+use App\Audits\Modifiers\VisibilityModifier;
 use Illuminate\Database\Eloquent\Model;
 use OwenIt\Auditing\Auditable as AuditableTrait;
 use OwenIt\Auditing\Contracts\Auditable;
+use OwenIt\Auditing\Redactors\LeftRedactor;
 
 /**
  * Class AuditModel
@@ -38,20 +41,24 @@ class SettingsAudit extends Model implements Auditable
     ];
 
     public array $auditModifiers = [
+        // User & guest settings
         'archive_backups_enabled' => BooleanModifier::class,
         'archive_private_backups_enabled' => BooleanModifier::class,
         'darkmode_setting' => DarkmodeSettingModifier::class,
         'link_display_mode' => DisplayModeSettingModifier::class,
         'links_new_tab' => BooleanModifier::class,
-        'links_private_default' => BooleanModifier::class,
-        'lists_private_default' => BooleanModifier::class,
+        'links_default_visibility' => VisibilityModifier::class,
+        'lists_default_visibility' => VisibilityModifier::class,
+        'tags_default_visibility' => VisibilityModifier::class,
+        'notes_default_visibility' => VisibilityModifier::class,
         'locale' => LocaleSettingModifier::class,
         'markdown_for_text' => BooleanModifier::class,
-        'notes_private_default' => BooleanModifier::class,
-        'private_default' => BooleanModifier::class,
+        'profile_is_public' => BooleanModifier::class,
         'share_service' => BooleanModifier::class,
-        'system_guest_access' => BooleanModifier::class,
-        'tags_private_default' => BooleanModifier::class,
+
+        // System settings
+        'guest_access_enabled' => BooleanModifier::class,
+        'cron_token' => RedactedModifier::class,
     ];
 
     /**
