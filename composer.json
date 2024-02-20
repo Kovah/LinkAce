@@ -22,9 +22,9 @@
     "sentry/sentry-laravel": "^4.2",
     "shaarli/netscape-bookmark-parser": "dev-master",
     "spatie/laravel-backup": "^8.1.5",
-    "symfony/http-client": "^6.0",
-    "symfony/mailgun-mailer": "^6.0",
-    "symfony/postmark-mailer": "^6.0",
+    "symfony/http-client": "^7.0",
+    "symfony/mailgun-mailer": "^7.0",
+    "symfony/postmark-mailer": "^7.0",
     "venturecraft/revisionable": "^1.40"
   },
   "require-dev": {
