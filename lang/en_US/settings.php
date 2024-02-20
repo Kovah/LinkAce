@@ -35,10 +35,9 @@ return [
 
     'link_display_mode' => 'Link Display Mode',
     'display_mode' => 'Display links as',
-    'display_mode_list_detailed' => 'list with many details',
-    'display_mode_list_simple' => 'list with less details',
-    'display_mode_cards' => 'cards with less details',
-    'display_mode_cards_detailed' => 'cards with many details',
+    'display_mode_list_simple' => 'Display Links as simple List',
+    'display_mode_list_detailed' => 'Display Links as detailed List',
+    'display_mode_cards' => 'Display Links as Cards',
 
     'sharing' => 'Link Sharing',
     'guest_sharing' => 'Guest Link Sharing',
