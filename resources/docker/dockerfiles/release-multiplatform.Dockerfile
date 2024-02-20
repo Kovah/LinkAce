@@ -83,6 +83,7 @@ COPY --from=npm_builder --chown=www-data:www-data /srv/public/mix-manifest.json 
 RUN touch ./database/database.sqlite
 
 # Configure Supervisor for PHP + Caddy
+ENV PORT=80
 ENV CADDY_PHP_HOST=localhost
 COPY ./resources/docker/php/php.ini /usr/local/etc/php/conf.d/app.ini
 COPY ./resources/docker/supervisord.ini /etc/supervisor.d/supervisord.ini

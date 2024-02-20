@@ -4,7 +4,7 @@
     }
 }
 
-:80 {
+:{$PORT:80} {
     root * /app/public
     encode zstd gzip
     php_fastcgi {$CADDY_PHP_HOST:php}:9000
