@@ -59,7 +59,7 @@
                     <x-icon.edit class="me-2"/>
                     <span class="d-none d-sm-inline">@lang('linkace.edit')</span>
                 </a>
-                <button type="submit" form="link-delete-{{ $link->id }}" aria-label="@lang('link.delete')"
+                <button type="submit" form="link-delete-{{ $link->id }}" aria-label="@choice('link.delete', 1)"
                     class="btn btn-sm btn-outline-danger cursor-pointer">
                     <x-icon.trash class="me-2"/>
                     <span class="d-none d-sm-inline">@lang('linkace.delete')</span>

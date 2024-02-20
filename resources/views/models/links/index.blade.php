@@ -17,7 +17,7 @@
         </div>
     </header>
 
-    <section class="my-4">
+    <section class="mb-4">
         @if($links->isNotEmpty())
 
             <div class="link-wrapper">

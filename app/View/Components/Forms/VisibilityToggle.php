@@ -12,7 +12,8 @@ class VisibilityToggle extends Component
         private ?int $existingValue = null,
         private string $visibilitySetting = 'links_default_visibility',
         public string $inputClasses = '',
-        public string $labelClasses = ''
+        public string $labelClasses = '',
+        public bool $unchangedOption = false
     ) {
     }
 

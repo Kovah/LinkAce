@@ -15,7 +15,7 @@
                     @lang('linkace.edit')
                 </a>
                 <a onclick="event.preventDefault();document.getElementById('list-delete-{{ $list->id }}').submit();"
-                    class="btn btn-sm btn-outline-danger" aria-label="@lang('list.delete')">
+                    class="btn btn-sm btn-outline-danger" aria-label="@choice('list.delete', 1)">
                     <x-icon.trash class="me-2"/>
                     @lang('linkace.delete')
                 </a>

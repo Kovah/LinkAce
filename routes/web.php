@@ -21,6 +21,7 @@ use App\Http\Controllers\Guest\LinkController as GuestLinkController;
 use App\Http\Controllers\Guest\ListController as GuestListController;
 use App\Http\Controllers\Guest\TagController as GuestTagController;
 use App\Http\Controllers\Guest\UserController as GuestUserController;
+use App\Http\Controllers\Models\BulkEditController;
 use App\Http\Controllers\Models\LinkController;
 use App\Http\Controllers\Models\ListController;
 use App\Http\Controllers\Models\NoteController;
@@ -87,6 +88,17 @@ Route::group(['middleware' => ['auth']], function () {
     Route::resource('tags', TagController::class);
     Route::resource('notes', NoteController::class)
         ->except(['index', 'show', 'create']);
+
+    Route::post('bulk-edit', [BulkEditController::class, 'form'])
+        ->name('bulk-edit.form');
+    Route::post('bulk-edit/update-links', [BulkEditController::class, 'updateLinks'])
+        ->name('bulk-edit.update-links');
+    Route::post('bulk-edit/update-lists', [BulkEditController::class, 'updateLists'])
+        ->name('bulk-edit.update-lists');
+    Route::post('bulk-edit/update-tags', [BulkEditController::class, 'updateTags'])
+        ->name('bulk-edit.update-tags');
+    Route::post('bulk-edit/delete', [BulkEditController::class, 'delete'])
+        ->name('bulk-edit.delete');
 
     Route::get('users/{user:name}', [UserController::class, 'show'])->name('users.show');
 

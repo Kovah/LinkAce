@@ -3,6 +3,7 @@
 namespace App\Settings;
 
 use App\Enums\ModelAttribute;
+use App\Models\Link;
 use Spatie\LaravelSettings\Settings;
 
 class UserSettings extends Settings
@@ -83,7 +84,7 @@ class UserSettings extends Settings
             'archive_private_backups_enabled' => true,
             'listitem_count' => 24,
             'darkmode_setting' => 2,
-            'link_display_mode' => 1,
+            'link_display_mode' => Link::DISPLAY_LIST_DETAILED,
             'links_new_tab' => false,
             'markdown_for_text' => true,
             'share_services' => true,

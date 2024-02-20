@@ -50,6 +50,8 @@ return [
     'continue_adding' => 'Continue Adding',
 
     'visibility' => 'Visibility',
+    'change_visibility' => 'Change Visibility',
+    'dont_change_visibility' => 'Do not change Visibility',
 
     'history' => 'History',
     'history_added' => 'Added <code>:newvalue</code> to :fieldname.',

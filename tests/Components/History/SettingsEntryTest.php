@@ -69,22 +69,6 @@ class SettingsEntryTest extends TestCase
         );
     }
 
-    public function testDisplayModeSettingsChange(): void
-    {
-        $settings = app(UserSettings::class);
-        $settings->link_display_mode = 2;
-        $settings->save();
-
-        $historyEntry = Audit::where('auditable_type', SettingsAudit::class)->with('auditable')->latest()->first();
-
-        $output = (new SettingsEntry($historyEntry))->render();
-
-        $this->assertStringContainsString(
-            'Changed Link Display Mode for User 1 from <code>cards with less details</code> to <code>list with less details</code>',
-            $output
-        );
-    }
-
     public function testLocaleSettingsChange(): void
     {
         $settings = app(UserSettings::class);

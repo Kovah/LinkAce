@@ -35,27 +35,26 @@
                 @lang('linkace.added') {!! $link->addedAt() !!}
             </div>
 
-            <div class="btn-group ms-2">
-                <button type="button" class="btn btn-xs btn-outline-secondary" title="@lang('sharing.share_link')"
+            <div class="btn-group ms-2 me-1">
+                <button type="button" class="btn btn-xs btn-link" title="@lang('sharing.share_link')"
                     data-bs-toggle="collapse" data-bs-target="#sharing-{{ $link->id }}"
                     aria-expanded="false" aria-controls="sharing-{{ $link->id }}">
                     <x-icon.share class="fw"/>
                     <span class="visually-hidden">@lang('sharing.share_link')</span>
                 </button>
-                <a href="{{ route('links.show', [$link]) }}" class="btn btn-xs btn-outline-secondary"
-                    title="@lang('link.show')">
+                <a href="{{ route('links.show', [$link]) }}" class="btn btn-xs btn-link" title="@lang('link.show')">
                     @lang('linkace.show')
                 </a>
-                <a href="{{ route('links.edit', [$link]) }}" class="btn btn-xs btn-outline-secondary"
-                    title="@lang('link.edit')">
+                <a href="{{ route('links.edit', [$link]) }}" class="btn btn-xs btn-link" title="@lang('link.edit')">
                     @lang('linkace.edit')
                 </a>
-                <button type="submit" form="link-delete-{{ $link->id }}" title="@lang('link.delete')"
-                    class="btn btn-xs btn-outline-secondary">
+                <button type="submit" form="link-delete-{{ $link->id }}" title="@choice('link.delete', 1)"
+                    class="btn btn-xs btn-link">
                     @lang('linkace.delete')
                 </button>
             </div>
-
+            <input type="checkbox" aria-label="Add link to bulk edit" class="bulk-edit-model form-check"
+                data-id="{{ $link->id }}">
         </div>
     </div>
     @if($shareLinks !== '')

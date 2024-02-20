@@ -4,6 +4,7 @@
 <li class="link-simple list-group-item">
     <div class="d-sm-flex align-items-center">
         <div class="me-4 one-line-sm">
+            {!! $link->getIcon('me-1') !!}
             <a href="{{ $link->url }}" title="{{ $link->url }}" {!! linkTarget() !!}>
                 {{ $link->title }}
             </a>
@@ -14,12 +15,14 @@
                 <x-icon.info class="fw"/>
                 <span class="visually-hidden">@lang('link.details')</span>
             </a>
-            <button type="button" class="btn btn-xs btn-link" title="@lang('sharing.share_link')"
+            <button type="button" class="btn btn-xs btn-link me-1" title="@lang('sharing.share_link')"
                 data-bs-toggle="collapse" data-bs-target="#sharing-{{ $link->id }}"
                 aria-expanded="false" aria-controls="sharing-{{ $link->id }}">
                 <x-icon.share class="fw"/>
                 <span class="visually-hidden">@lang('sharing.share_link')</span>
             </button>
+            <input type="checkbox" aria-label="Add link to bulk edit" class="bulk-edit-model form-check"
+                data-id="{{ $link->id }}">
         </div>
     </div>
     @if($shareLinks !== '')

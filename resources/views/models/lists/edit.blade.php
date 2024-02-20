@@ -56,7 +56,7 @@
                     <div class="d-sm-inline-block mb-3 mb-sm-0 me-auto">
                         <button type="button" class="btn btn-sm btn-outline-danger"
                             onclick="window.deleteList.submit()">
-                            <x-icon.trash class="me-2"/> @lang('list.delete')
+                            <x-icon.trash class="me-2"/> @choice('list.delete', 1)
                         </button>
                     </div>
 

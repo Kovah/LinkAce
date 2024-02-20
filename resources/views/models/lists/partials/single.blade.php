@@ -20,17 +20,16 @@
                     @lang('link.no_links')
                 @endif
             </div>
-            <div class="btn-group ms-auto me-2">
-                <a href="{{ route('lists.edit', ['list' => $list]) }}" class="btn btn-sm btn-link">
-                    <x-icon.edit/>
-                    <span class="visually-hidden">@lang('list.edit')</span>
+            <div class="btn-group ms-auto me-1">
+                <a href="{{ route('lists.edit', ['list' => $list]) }}" class="btn btn-xs btn-link">
+                    @lang('linkace.edit')
                 </a>
-                <button type="submit" form="list-delete-{{ $list->id }}" title="@lang('list.delete')"
-                    class="btn btn-sm btn-link">
-                    <x-icon.trash/>
-                    <span class="visually-hidden">@lang('list.delete')</span>
+                <button type="submit" form="list-delete-{{ $list->id }}" class="btn btn-xs btn-link">
+                    @lang('linkace.delete')
                 </button>
             </div>
+            <input type="checkbox" aria-label="Add link to bulk edit" class="bulk-edit-model form-check me-2"
+                data-id="{{ $list->id }}">
 
             <form id="list-delete-{{ $list->id }}" method="POST" style="display: none;"
                 action="{{ route('lists.destroy', ['list' => $list]) }}">
