@@ -6,7 +6,7 @@ use App\Helper\HtmlMeta;
 use App\Helper\LinkIconMapper;
 use App\Models\Link;
 use App\Models\Tag;
-use Carbon\Carbon;
+use Illuminate\Support\Carbon;
 use Illuminate\Support\Facades\Log;
 use Shaarli\NetscapeBookmarkParser\NetscapeBookmarkParser;
 
@@ -20,7 +20,7 @@ class ImportHtmlBookmarks
      *
      * @param string $data
      * @param string $userId
-     * @param bool $generateMeta
+     * @param bool   $generateMeta
      * @return bool
      */
     public function run(string $data, string $userId, bool $generateMeta = true): bool
@@ -64,7 +64,9 @@ class ImportHtmlBookmarks
                 'icon' => LinkIconMapper::mapLink($link['url']),
                 'is_private' => usersettings('tags_private_default') === '1' ? true : $isPublic,
             ]);
-            $newLink->created_at = Carbon::createFromTimestamp($link['dateCreated']);
+            $newLink->created_at = $link['dateCreated']
+                ? Carbon::createFromTimestamp($link['dateCreated'])
+                : Carbon::now();
             $newLink->updated_at = Carbon::now();
             $newLink->timestamps = false;
             $newLink->save();

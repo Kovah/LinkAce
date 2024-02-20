@@ -11,7 +11,7 @@ jobs:
     name: Build assets for the package
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v2
+      - uses: actions/checkout@v4
 
       - name: Reconfigure Git to use HTTP authentication
         run: >
@@ -19,7 +19,7 @@ jobs:
           ssh://git@github.com/
 
       - name: Use Node.js
-        uses: actions/setup-node@v2
+        uses: actions/setup-node@v4
         with:
           node-version: 20
 
@@ -29,13 +29,13 @@ jobs:
           npm run production
 
       - name: Upload built assets
-        uses: actions/upload-artifact@v3
+        uses: actions/upload-artifact@v4
         with:
           name: assets
           path: public/assets/dist
 
       - name: Upload mix manifest
-        uses: actions/upload-artifact@v3
+        uses: actions/upload-artifact@v4
         with:
           name: mix-manifest
           path: public/mix-manifest.json
@@ -45,14 +45,14 @@ jobs:
     runs-on: ubuntu-latest
     needs: build-js
     steps:
-      - uses: actions/checkout@v2
+      - uses: actions/checkout@v4
 
-      - uses: actions/download-artifact@v3
+      - uses: actions/download-artifact@v4
         with:
           name: assets
           path: public/assets/dist
 
-      - uses: actions/download-artifact@v3
+      - uses: actions/download-artifact@v4
         with:
           name: mix-manifest
           path: public
@@ -65,7 +65,7 @@ jobs:
       - id: composer-cache
         run: echo "::set-output name=dir::$(composer config cache-files-dir)"
 
-      - uses: actions/cache@v3
+      - uses: actions/cache@v4
         with:
           path: ${{ steps.composer-cache.outputs.dir }}
           key: ${{ runner.os }}-composer-${{ hashFiles('**/composer.lock') }}
@@ -91,7 +91,7 @@ jobs:
           filename: linkace.zip
           exclusions: '*.git*'
 
-      - uses: actions/upload-artifact@v3
+      - uses: actions/upload-artifact@v4
         with:
           name: linkace-package
           path: linkace.zip
@@ -100,7 +100,7 @@ jobs:
     name: Build final dist package for Docker setup
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v2
+      - uses: actions/checkout@v4
 
       - name: Rename files
         run: |
@@ -112,7 +112,7 @@ jobs:
         with:
           args: zip -qq linkace-package-docker-simple.zip docker-compose.yml .env LICENSE.md README.md
 
-      - uses: actions/upload-artifact@v3
+      - uses: actions/upload-artifact@v4
         with:
           name: linkace-docker-simple
           path: linkace-package-docker-simple.zip
@@ -124,7 +124,7 @@ jobs:
         with:
           args: zip -qq linkace-package-docker-advanced.zip docker-compose.yml .env nginx.conf nginx-ssl.conf LICENSE.md README.md
 
-      - uses: actions/upload-artifact@v3
+      - uses: actions/upload-artifact@v4
         with:
           name: linkace-docker-advanced
           path: linkace-package-docker-advanced.zip
