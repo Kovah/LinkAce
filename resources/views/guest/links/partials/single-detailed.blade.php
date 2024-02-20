@@ -24,7 +24,7 @@
                 @foreach($link->tags as $tag)
                     @if(!$tag->is_private)
                         <a href="{{ route('guest.tags.show', ['tag' => $tag]) }}"
-                            class="btn btn-xs btn-light">
+                            class="btn btn-xs btn-light text-condensed">
                             {{ $tag->name }}
                         </a>
                     @endif
@@ -33,7 +33,7 @@
 
         </div>
         <div class="col-12 col-sm-6 mt-2 mt-sm-0 d-flex align-items-center justify-content-end flex-wrap">
-            <div class="text-xs text-pale mt-3 mt-sm-0 me-3">
+            <div class="text-xs text-pale mt-3 mt-sm-0 me-3 text-condensed">
                 @lang('linkace.added') {!! $link->addedAt() !!}
             </div>
             <button type="button" class="btn btn-xs btn-md-sm btn-link" title="@lang('sharing.share_link')"

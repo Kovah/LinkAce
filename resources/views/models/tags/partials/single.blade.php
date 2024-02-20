@@ -11,11 +11,11 @@
     <td class="py-1">
         <div class="mt-1 d-flex align-items-center justify-content-end">
             <div class="btn-group me-1">
-                <a href="{{ route('tags.edit', [$tag]) }}" class="btn btn-xs btn-link">
+                <a href="{{ route('tags.edit', [$tag]) }}" class="btn btn-xs btn-link text-condensed">
                     @lang('linkace.edit')
                 </a>
                 <button type="submit" form="tag-delete-{{ $tag->id }}" title="@choice('tag.delete', 1)"
-                    class="btn btn-xs btn-link">
+                    class="btn btn-xs btn-link text-condensed">
                     @lang('linkace.delete')
                 </button>
             </div>

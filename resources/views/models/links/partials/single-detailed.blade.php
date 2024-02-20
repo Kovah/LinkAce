@@ -23,7 +23,7 @@
             <div class="d-none d-sm-inline-block me-3 me-lg-4">&nbsp;</div>
             @if($link->tags->count() > 0)
                 @foreach($link->tags as $tag)
-                    <a href="{{ route('tags.show', ['tag' => $tag]) }}" class="btn btn-light btn-xs">
+                    <a href="{{ route('tags.show', ['tag' => $tag]) }}" class="btn btn-light btn-xs text-condensed">
                         {{ $tag->name }}
                     </a>
                 @endforeach
@@ -31,7 +31,7 @@
         </div>
         <div class="col-12 col-sm-6 mt-2 mt-sm-0 d-flex align-items-center justify-content-end flex-wrap">
 
-            <div class="text-xs text-pale">
+            <div class="text-xs text-pale text-condensed">
                 @lang('linkace.added') {!! $link->addedAt() !!}
             </div>
 
@@ -42,14 +42,14 @@
                     <x-icon.share class="fw"/>
                     <span class="visually-hidden">@lang('sharing.share_link')</span>
                 </button>
-                <a href="{{ route('links.show', [$link]) }}" class="btn btn-xs btn-link" title="@lang('link.show')">
+                <a href="{{ route('links.show', [$link]) }}" class="btn btn-xs btn-link text-condensed" title="@lang('link.show')">
                     @lang('linkace.show')
                 </a>
-                <a href="{{ route('links.edit', [$link]) }}" class="btn btn-xs btn-link" title="@lang('link.edit')">
+                <a href="{{ route('links.edit', [$link]) }}" class="btn btn-xs btn-link text-condensed" title="@lang('link.edit')">
                     @lang('linkace.edit')
                 </a>
                 <button type="submit" form="link-delete-{{ $link->id }}" title="@choice('link.delete', 1)"
-                    class="btn btn-xs btn-link">
+                    class="btn btn-xs btn-link text-condensed">
                     @lang('linkace.delete')
                 </button>
             </div>

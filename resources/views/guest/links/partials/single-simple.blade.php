@@ -9,7 +9,7 @@
             </a>
         </div>
         <div class="mt-2 mt-sm-0 ms-auto flex-shrink-0">
-            <small class="text-pale me-3">{!! $link->domainOfURL() !!}</small>
+            <small class="text-pale me-2 text-condensed">{!! $link->domainOfURL() !!}</small>
             <button type="button" class="btn btn-xs btn-outline-secondary" title="@lang('sharing.share_link')"
                 data-bs-toggle="collapse" data-bs-target="#sharing-{{ $link->id }}"
                 aria-expanded="false" aria-controls="sharing-{{ $link->id }}">

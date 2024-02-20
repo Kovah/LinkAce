@@ -26,7 +26,7 @@
         @if($link->tags->count() > 0)
             <div class="px-3">
                 @foreach($link->tags as $tag)
-                    <a href="{{ route('guest.tags.show', [$tag]) }}" class="btn btn-light btn-xs">
+                    <a href="{{ route('guest.tags.show', [$tag]) }}" class="btn btn-light btn-xs text-condensed">
                         {{ $tag->name }}
                     </a>
                 @endforeach
@@ -34,7 +34,7 @@
         @endif
 
         <div class="d-flex align-items-center my-1">
-            <div class="text-pale text-xs me-3 ps-3">
+            <div class="text-pale text-xs me-3 ps-3 text-condensed">
                 @lang('linkace.added') {!! $link->addedAt() !!}
             </div>
             <div class="btn-group ms-auto me-2">

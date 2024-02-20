@@ -10,7 +10,7 @@
             </a>
         </div>
         <div class="mt-2 mt-sm-0 ms-auto flex-shrink-0 d-flex align-items-center">
-            <small class="text-pale me-3">{!! $link->domainOfURL() !!}</small>
+            <small class="text-pale me-2 text-condensed">{!! $link->domainOfURL() !!}</small>
             <a href="{{ route('links.show', [$link]) }}" title="@lang('link.show')" class="me-1">
                 <x-icon.info class="fw"/>
                 <span class="visually-hidden">@lang('link.details')</span>

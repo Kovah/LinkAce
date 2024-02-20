@@ -13,7 +13,7 @@
         </div>
 
         <div class="d-flex align-items-center">
-            <div class="text-xs text-pale me-3 ps-3">
+            <div class="text-xs text-pale me-3 ps-3 text-condensed">
                 @if($list->links_count > 0)
                     {{ trans_choice('list.number_links', $list->links_count, ['number' => $list->links_count]) }}
                 @else
@@ -21,10 +21,10 @@
                 @endif
             </div>
             <div class="btn-group ms-auto me-1">
-                <a href="{{ route('lists.edit', ['list' => $list]) }}" class="btn btn-xs btn-link">
+                <a href="{{ route('lists.edit', ['list' => $list]) }}" class="btn btn-xs btn-link text-condensed">
                     @lang('linkace.edit')
                 </a>
-                <button type="submit" form="list-delete-{{ $list->id }}" class="btn btn-xs btn-link">
+                <button type="submit" form="list-delete-{{ $list->id }}" class="btn btn-xs btn-link text-condensed">
                     @lang('linkace.delete')
                 </button>
             </div>
