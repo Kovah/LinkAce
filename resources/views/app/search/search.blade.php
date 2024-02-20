@@ -15,8 +15,8 @@ use App\Enums\ModelAttribute;
                 @csrf
 
                 <div class="mb-4">
+                    <label for="query" class="visually-hidden">@lang('search.query')</label>
                     <div class="input-group">
-                        <label for="query" class="visually-hidden">@lang('search.query')</label>
                         <input type="text" name="query" id="query" autofocus
                             class="form-control form-control-lg{{ $errors->has('query') ? ' is-invalid' : '' }}"
                             placeholder="@lang('search.query')"

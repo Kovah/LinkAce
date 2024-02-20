@@ -14,7 +14,6 @@ export default class BulkEdit {
   }
 
   init () {
-    console.log('bulk edit init for ' + this.$models.length + ' models'); //@DEBUG
     this.$models.forEach($model => {
       $model.addEventListener('change', this.toggleBulkEdit.bind(this));
     });

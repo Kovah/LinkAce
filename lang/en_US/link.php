@@ -51,6 +51,7 @@ return [
     'status_mark_working' => 'Mark as working',
 
     'bulk_title' => 'You want to edit :count Link.|You want to edit :count Links.',
+    'bulk_edit_add' => 'Add Link to bulk edit',
     'bulk_edit_success' => 'Successfully updated :success Links out of :selected selected ones.',
     'bulk_delete_success' => 'Successfully moved :success Links out of :selected selected ones to the trash.',
 

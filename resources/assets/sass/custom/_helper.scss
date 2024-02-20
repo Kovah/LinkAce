@@ -11,6 +11,14 @@
   cursor: pointer;
 }
 
+.short-text {
+  display: inline-block;
+  max-width: 20ch;
+  overflow-x: hidden;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+}
+
 .one-line {
   overflow-x: hidden;
   white-space: nowrap;

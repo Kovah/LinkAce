@@ -170,16 +170,15 @@ class Link extends Model implements Auditable
     }
 
     /**
-     * Get the URL shortened to max 50 characters and with https:// removed.
+     * Get the URL with https:// removed.
      * Other protocols like magnet://, ftp:// and so on will be kept to make
      * those protocols more obvious for the user.
      *
-     * @param int $maxLength
      * @return string
      */
-    public function shortUrl(int $maxLength = 50): string
+    public function shortUrl(): string
     {
-        return preg_replace('/http(s)?:\/\//', '', Str::limit(trim($this->url, '/'), $maxLength));
+        return preg_replace('/http(s)?:\/\//', '', trim($this->url, '/'));
     }
 
     public function shortTitle(int $maxLength = 50): string
@@ -190,7 +189,7 @@ class Link extends Model implements Auditable
     public function domainOfURL(): string
     {
         $urlDetails = parse_url($this->url);
-        return $urlDetails['host'] ?? $this->shortUrl(20);
+        return $urlDetails['host'] ?? $this->shortUrl();
     }
 
     public function getIcon(string $additionalClasses = ''): string

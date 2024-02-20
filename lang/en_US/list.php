@@ -31,6 +31,7 @@ return [
     'no_lists' => 'No Lists',
 
     'bulk_title' => 'You want to edit :count List.|You want to edit :count Lists.',
+    'bulk_edit_add' => 'Add List to bulk edit',
     'bulk_edit_success' => 'Successfully updated :success Lists out of :selected selected ones.',
     'bulk_delete_success' => 'Successfully moved :success Lists out of :selected selected ones to the trash.',
     'bulk_mode_append' => 'Append new Lists to existing ones',

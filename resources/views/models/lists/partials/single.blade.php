@@ -28,7 +28,7 @@
                     @lang('linkace.delete')
                 </button>
             </div>
-            <input type="checkbox" aria-label="Add link to bulk edit" class="bulk-edit-model form-check me-2"
+            <input type="checkbox" aria-label="@lang('list.bulk_edit_add')" class="bulk-edit-model form-check me-2"
                 data-id="{{ $list->id }}">
 
             <form id="list-delete-{{ $list->id }}" method="POST" style="display: none;"

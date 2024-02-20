@@ -30,6 +30,7 @@ return [
     'no_tags' => 'No Tags',
 
     'bulk_title' => 'You want to edit :count Tag.|You want to edit :count Tags.',
+    'bulk_edit_add' => 'Add Tag to bulk edit',
     'bulk_edit_success' => 'Successfully updated :success Tags out of :selected selected ones.',
     'bulk_delete_success' => 'Successfully moved :success Tags out of :selected selected ones to the trash.',
     'bulk_mode_append' => 'Append new Tags to existing ones',

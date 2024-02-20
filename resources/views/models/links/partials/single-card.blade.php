@@ -14,7 +14,7 @@
                     </span>
                 @endif
             </a>
-            <input type="checkbox" aria-label="Add link to bulk edit" class="bulk-edit-model form-check"
+            <input type="checkbox" aria-label="@lang('link.bulk_edit_add')" class="bulk-edit-model form-check"
                 data-id="{{ $link->id }}">
         </div>
 

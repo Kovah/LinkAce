@@ -21,7 +21,7 @@
                 <x-icon.share class="fw"/>
                 <span class="visually-hidden">@lang('sharing.share_link')</span>
             </button>
-            <input type="checkbox" aria-label="Add link to bulk edit" class="bulk-edit-model form-check"
+            <input type="checkbox" aria-label="@lang('link.bulk_edit_add')" class="bulk-edit-model form-check"
                 data-id="{{ $link->id }}">
         </div>
     </div>
