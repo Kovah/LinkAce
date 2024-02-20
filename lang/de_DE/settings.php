@@ -38,7 +38,7 @@ return [
     'display_mode_list_detailed' => 'Liste mit vielen Details',
     'display_mode_list_simple' => 'Liste mit wenigen Details',
     'display_mode_cards' => 'Karten mit weniger Details',
-    'display_mode_cards_detailed' => 'Liste mit vielen Details',
+    'display_mode_cards_detailed' => 'Karten mit vielen Details',
 
     'sharing' => 'Link Sharing',
     'sharing_help' => 'Aktivieren Sie alle Dienste, die Sie für Links anzeigen möchten, um sie mit einem Klick einfach teilen zu können.',
