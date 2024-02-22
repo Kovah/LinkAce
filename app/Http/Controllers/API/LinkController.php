@@ -2,41 +2,41 @@
 
 namespace App\Http\Controllers\API;
 
+use App\Enums\ApiToken;
 use App\Http\Controllers\Controller;
+use App\Http\Controllers\Traits\ChecksOrdering;
 use App\Http\Requests\Models\LinkStoreRequest;
 use App\Http\Requests\Models\LinkUpdateRequest;
-use App\Models\Link;
+use App\Models\Api\ApiLink;
 use App\Repositories\LinkRepository;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
-use Illuminate\Http\Response;
 
 class LinkController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     *
-     * @param Request $request
-     * @return JsonResponse
-     */
+    use ChecksOrdering;
+
+    public function __construct()
+    {
+        $this->allowedOrderBy = ApiLink::$allowOrderBy;
+        $this->authorizeResource(ApiLink::class, 'link');
+    }
+
     public function index(Request $request): JsonResponse
     {
-        $links = Link::byUser()
-            ->orderBy(
-                $request->input('order_by', 'created_at'),
-                $request->input('order_dir', 'DESC')
-            )
+        $this->orderBy = $request->input('order_by', 'created_at');
+        $this->orderDir = $request->input('order_dir', 'desc');
+
+        $this->checkOrdering();
+
+        $links = ApiLink::query()
+            ->visibleForUser(privateSystemAccess: $request->user()->tokenCan(ApiToken::ABILITY_SYSTEM_ACCESS_PRIVATE))
+            ->orderBy($this->orderBy, $this->orderDir)
             ->paginate(getPaginationLimit());
 
         return response()->json($links);
     }
 
-    /**
-     * Store a newly created resource in storage.
-     *
-     * @param LinkStoreRequest $request
-     * @return JsonResponse
-     */
     public function store(LinkStoreRequest $request): JsonResponse
     {
         $link = LinkRepository::create($request->all());
@@ -44,47 +44,35 @@ class LinkController extends Controller
         return response()->json($link);
     }
 
-    /**
-     * Display the specified resource.
-     *
-     * @param Link $link
-     * @return JsonResponse
-     */
-    public function show(Link $link): JsonResponse
+    public function show(Request $request, ApiLink $link): JsonResponse
     {
-        $link->load(['lists', 'tags']);
+        $link->load([
+            'lists' => function ($query) use ($request) {
+                $query->visibleForUser(privateSystemAccess: $request->user()->tokenCan(ApiToken::ABILITY_SYSTEM_ACCESS_PRIVATE));
+            },
+            'tags' => function ($query) use ($request) {
+                $query->visibleForUser(privateSystemAccess: $request->user()->tokenCan(ApiToken::ABILITY_SYSTEM_ACCESS_PRIVATE));
+            },
+        ]);
 
         return response()->json($link);
     }
 
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param LinkUpdateRequest $request
-     * @param Link              $link
-     * @return JsonResponse
-     */
-    public function update(LinkUpdateRequest $request, Link $link): JsonResponse
+    public function update(LinkUpdateRequest $request, ApiLink $link): JsonResponse
     {
         $updatedLink = LinkRepository::update($link, $request->all());
 
         return response()->json($updatedLink);
     }
 
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @param Link $link
-     * @return JsonResponse
-     */
-    public function destroy(Link $link): JsonResponse
+    public function destroy(ApiLink $link): JsonResponse
     {
         $deletionSuccessful = LinkRepository::delete($link);
 
         if ($deletionSuccessful) {
-            return response()->json(null, Response::HTTP_OK);
+            return response()->json();
         }
 
-        return response()->json(null, Response::HTTP_INTERNAL_SERVER_ERROR);
+        return response()->json(status: 500);
     }
 }

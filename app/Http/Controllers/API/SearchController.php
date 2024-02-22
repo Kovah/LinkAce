@@ -54,7 +54,7 @@ class SearchController extends Controller
 
         $tags = Tag::byUser($request->user()->id)
             ->where('name', 'like', '%' . $query . '%')
-            ->orderBy('name')
+            ->oldest('name')
             ->pluck('name', 'id');
 
         return response()->json($tags);
@@ -78,7 +78,7 @@ class SearchController extends Controller
 
         $tags = LinkList::byUser($request->user()->id)
             ->where('name', 'like', '%' . $query . '%')
-            ->orderBy('name')
+            ->oldest('name')
             ->pluck('name', 'id');
 
         return response()->json($tags);

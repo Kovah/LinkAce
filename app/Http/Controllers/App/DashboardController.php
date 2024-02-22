@@ -11,29 +11,30 @@ use Illuminate\Contracts\View\View;
 
 class DashboardController extends Controller
 {
-    /**
-     * Display the dashboard including all widgets.
-     *
-     * @return View
-     */
     public function index(): View
     {
-        $recentLinks = Link::byUser()
+        $recentLinks = Link::query()
+            ->visibleForUser()
             ->latest()
             ->limit(5)
             ->get();
 
-        $recentTags = Tag::byUser()
+        $recentTags = Tag::query()
+            ->visibleForUser()
+            ->with('user:id,name')
             ->latest()
             ->limit(25)
             ->get();
 
-        $recentLists = LinkList::byUser()
+        $recentLists = LinkList::query()
+            ->visibleForUser()
+            ->with('user:id,name')
             ->latest()
             ->limit(15)
             ->get();
 
-        $brokenLinks = Link::byUser()
+        $brokenLinks = Link::query()
+            ->visibleForUser()
             ->where('status', '>', 1)
             ->count();
 

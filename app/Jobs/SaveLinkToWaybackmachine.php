@@ -14,24 +14,10 @@ class SaveLinkToWaybackmachine implements ShouldQueue
 {
     use Dispatchable, InteractsWithQueue, Queueable, SerializesModels;
 
-    /** @var Link */
-    protected $link;
-
-    /**
-     * Create a new job instance.
-     *
-     * @param Link $link
-     */
-    public function __construct(Link $link)
+    public function __construct(protected Link $link)
     {
-        $this->link = $link;
     }
 
-    /**
-     * Notify the Wayback Machine about the link
-     *
-     * @return void
-     */
     public function handle(): void
     {
         WaybackMachine::saveToArchive($this->link->url);

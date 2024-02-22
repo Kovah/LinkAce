@@ -2,7 +2,8 @@
 
 namespace Tests\Controller\App;
 
-use App\Models\Setting;
+use App\Settings\SettingsAudit;
+use App\Settings\SystemSettings;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Support\Facades\Artisan;
 use Illuminate\Support\Str;
@@ -14,13 +15,13 @@ class CronControllerTest extends TestCase
 
     public function testValidCronTokenResponse(): void
     {
-        Artisan::spy()->shouldReceive('call')->with('schedule:run')->once();
+        Artisan::shouldReceive('call')->with('schedule:run');
 
         $cronToken = Str::random(32);
 
-        Setting::create([
-            'key' => 'cron_token',
-            'value' => $cronToken,
+        SystemSettings::fake([
+            'cron_token' => $cronToken,
+            'setup_completed' => true,
         ]);
 
         $response = $this->get('cron/' . $cronToken);
@@ -34,9 +35,9 @@ class CronControllerTest extends TestCase
         $cronToken = Str::random(32);
         $invalidCronToken = Str::random(32);
 
-        Setting::create([
-            'key' => 'cron_token',
-            'value' => $cronToken,
+        SystemSettings::fake([
+            'cron_token' => $cronToken,
+            'setup_completed' => true,
         ]);
 
         $response = $this->get('cron/' . $invalidCronToken);

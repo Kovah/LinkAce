@@ -16,7 +16,7 @@ class ListCreateTest extends TestCase
     /** @var User */
     private $user;
 
-    public function setUp(): void
+    protected function setUp(): void
     {
         parent::setUp();
 

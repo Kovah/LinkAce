@@ -2,8 +2,11 @@
 
 namespace App\Providers;
 
+use App\Models\Api\ApiLink;
+use App\Models\Link;
 use Illuminate\Foundation\Support\Providers\RouteServiceProvider as ServiceProvider;
 use Illuminate\Support\Facades\Route;
+use Laravel\Sanctum\PersonalAccessToken;
 
 class RouteServiceProvider extends ServiceProvider
 {
@@ -25,7 +28,11 @@ class RouteServiceProvider extends ServiceProvider
      */
     public function boot(): void
     {
-        //
+        Route::model('api_token', PersonalAccessToken::class);
+
+        Route::bind('link', function ($value, \Illuminate\Routing\Route $route) {
+            return in_array('api', $route->middleware()) ? ApiLink::where('id', $value)->firstOrFail() : Link::where('id', $value)->firstOrFail();
+        });
 
         parent::boot();
     }

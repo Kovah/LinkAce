@@ -21,27 +21,18 @@ services:
     restart: unless-stopped
     depends_on:
       - db
+    ports:
+      - "0.0.0.0:80:80"
+      # Remove the hash of the following line if you want to use HTTPS for this container
+      #- "0.0.0.0:443:443"
     volumes:
       - ./.env:/app/.env
       - ./backups:/app/storage/app/backups
       - linkace_app:/app
       - linkace_logs:/app/storage/logs
-
-  # --- nginx
-  nginx:
-    image: bitnami/nginx:1.24
-    restart: unless-stopped
-    ports:
-      - "0.0.0.0:80:8080"
-      #- "0.0.0.0:443:8443"
-    depends_on:
-      - app
-    volumes:
-      - linkace_app:/app
-      # Replace `nginx.conf` with `nginx-ssl.conf` and remove the hash from the following line
-      # if you want to use HTTPS for this container
-      - ./nginx.conf:/opt/bitnami/nginx/conf/server_blocks/linkace.conf:ro
-      #- /path/to/your/ssl/certificates:/certs:ro
+      # Remove the hash of the following line if you want to use HTTPS for this container
+      #- ./Caddyfile:/etc/caddy/Caddyfile:ro
+      #- ./caddy-data:/data/caddy
 
   # --- Redis
   redis:

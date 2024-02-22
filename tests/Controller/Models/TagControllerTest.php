@@ -2,17 +2,18 @@
 
 namespace Tests\Controller\Models;
 
-use App\Models\Setting;
 use App\Models\Tag;
 use App\Models\User;
 use Illuminate\Foundation\Testing\RefreshDatabase;
+use Tests\Controller\Traits\PreparesTestData;
 use Tests\TestCase;
 
 class TagControllerTest extends TestCase
 {
+    use PreparesTestData;
     use RefreshDatabase;
 
-    private $user;
+    private User $user;
 
     protected function setUp(): void
     {
@@ -25,37 +26,28 @@ class TagControllerTest extends TestCase
 
     public function testIndexView(): void
     {
-        Tag::factory()->create([
-            'name' => 'a-tag',
-            'user_id' => $this->user->id,
-            'created_at' => now()->subDay(),
-        ]);
-        Tag::factory()->create([
-            'name' => 'new-tag',
-            'user_id' => $this->user->id,
-        ]);
+        $this->createTestTags();
 
         $this->get('tags')
             ->assertOk()
-            ->assertSeeInOrder([
-                'a-tag',
-                'new-tag',
-            ]);
+            ->assertSee('Public Tag')
+            ->assertSee('Internal Tag')
+            ->assertDontSee('Private Tag');
 
         $this->flushSession();
         $this->get('tags?orderBy=created_at&orderDir=desc')
             ->assertOk()
             ->assertSeeInOrder([
-                'new-tag',
-                'a-tag',
+                'Internal Tag',
+                'Public Tag',
             ]);
 
         $this->flushSession();
         $this->get('tags?orderBy=created_at&orderDir=wrong-desc')
             ->assertOk()
             ->assertSeeInOrder([
-                'a-tag',
-                'new-tag',
+                'Public Tag',
+                'Internal Tag',
             ]);
     }
 
@@ -66,9 +58,8 @@ class TagControllerTest extends TestCase
             'user_id' => $this->user->id,
         ]);
 
-        $response = $this->get('tags?filter=Test');
-
-        $response->assertOk()
+        $this->get('tags?filter=Test')
+            ->assertOk()
             ->assertSee('Test Tag')
             ->assertDontSee('No Tags found');
     }
@@ -80,62 +71,35 @@ class TagControllerTest extends TestCase
             'user_id' => $this->user->id,
         ]);
 
-        $response = $this->get('tags?filter=asdfasdfasdf');
-
-        $response->assertOk()
+        $this->get('tags?filter=asdfasdfasdf')
+            ->assertOk()
             ->assertSee('No Tags found');
     }
 
     public function testCreateView(): void
     {
-        $response = $this->get('tags/create');
-
-        $response->assertOk()->assertSee('Add Tag');
+        $this->get('tags/create')->assertOk()->assertSee('Add Tag');
     }
 
     public function testMinimalStoreRequest(): void
     {
-        $response = $this->post('tags', [
+        $this->post('tags', [
             'name' => 'Test Tag',
-            'is_private' => '0',
-        ]);
-
-        $response->assertRedirect('tags/1');
+            'visibility' => 1,
+        ])->assertRedirect('tags/1');
 
         $databaseList = Tag::first();
 
         $this->assertEquals('Test Tag', $databaseList->name);
     }
 
-    public function testStoreRequestWithPrivateDefault(): void
-    {
-        Setting::create([
-            'user_id' => 1,
-            'key' => 'tags_private_default',
-            'value' => '1',
-        ]);
-
-        $response = $this->post('tags', [
-            'name' => 'Test Tag',
-            'is_private' => usersettings('tags_private_default'),
-        ]);
-
-        $response->assertRedirect('tags/1');
-
-        $databaseList = Tag::first();
-
-        $this->assertTrue($databaseList->is_private);
-    }
-
     public function testStoreRequestWithContinue(): void
     {
-        $response = $this->post('tags', [
+        $this->post('tags', [
             'name' => 'Test Tag',
-            'is_private' => '1',
+            'visibility' => 1,
             'reload_view' => '1',
-        ]);
-
-        $response->assertRedirect('tags/create');
+        ])->assertRedirect('tags/create');
 
         $databaseList = Tag::first();
 
@@ -146,74 +110,97 @@ class TagControllerTest extends TestCase
     {
         $response = $this->post('tags', [
             'name' => null,
-            'is_private' => '0',
-        ]);
-
-        $response->assertSessionHasErrors([
+            'visibility' => 1,
+        ])->assertSessionHasErrors([
             'name',
         ]);
     }
 
     public function testDetailView(): void
     {
+        $this->createTestTags();
+
+        $this->get('tags/1')->assertOk()->assertSee('Public Tag');
+        $this->get('tags/2')->assertOk()->assertSee('Internal Tag');
+        $this->get('tags/3')->assertForbidden();
+    }
+
+    public function testInternalDetailView(): void
+    {
         $tag = Tag::factory()->create([
             'user_id' => $this->user->id,
+            'visibility' => 2,
         ]);
 
         $response = $this->get('tags/1');
 
         $response->assertOk()
+            ->assertSee('Internal Tag')
+            ->assertSee($tag->name);
+    }
+
+    public function testPrivateDetailView(): void
+    {
+        $tag = Tag::factory()->create([
+            'user_id' => $this->user->id,
+            'visibility' => 3,
+        ]);
+
+        $response = $this->get('tags/1');
+
+        $response->assertOk()
+            ->assertSee('Private Tag')
             ->assertSee($tag->name);
     }
 
     public function testEditView(): void
     {
-        Tag::factory()->create([
-            'user_id' => $this->user->id,
-        ]);
+        $this->createTestTags();
 
-        $response = $this->get('tags/1/edit');
-
-        $response->assertOk()
-            ->assertSee('Edit Tag')
-            ->assertSee('Update Tag');
+        $this->get('tags/1/edit')->assertOk()->assertSee('Public Tag');
+        $this->get('tags/2/edit')->assertOk()->assertSee('Internal Tag');
+        $this->get('tags/3/edit')->assertForbidden();
     }
 
     public function testInvalidEditRequest(): void
     {
-        $response = $this->get('tags/1/edit');
-
-        $response->assertNotFound();
+        $this->get('tags/1/edit')->assertNotFound();
     }
 
     public function testUpdateResponse(): void
     {
-        $baseTag = Tag::factory()->create([
-            'user_id' => $this->user->id,
-        ]);
+        $this->createTestTags();
 
-        $response = $this->patch('tags/1', [
-            'tag_id' => $baseTag->id,
-            'name' => 'New Test Tag',
-            'is_private' => '0',
-        ]);
+        $this->patch('tags/1', [
+            'tag_id' => 1,
+            'name' => 'New Public Tag',
+            'visibility' => 1,
+        ])->assertRedirect('tags/1');
 
-        $response->assertRedirect('tags/1');
+        $updatedTag = Tag::find(1);
+        $this->assertEquals('New Public Tag', $updatedTag->name);
 
-        $updatedLink = $baseTag->fresh();
+        // Test other tags
+        $this->patch('tags/2', [
+            'tag_id' => 2,
+            'name' => 'New Internal Tag',
+            'visibility' => 1,
+        ])->assertRedirect('tags/2');
 
-        $this->assertEquals('New Test Tag', $updatedLink->name);
+        $this->patch('tags/3', [
+            'tag_id' => 3,
+            'name' => 'New Private Tag',
+            'visibility' => 1,
+        ])->assertForbidden();
     }
 
     public function testMissingModelErrorForUpdate(): void
     {
-        $response = $this->patch('tags/1', [
+        $this->patch('tags/1', [
             'tag_id' => '1',
             'name' => 'New Test Tag',
-            'is_private' => '0',
-        ]);
-
-        $response->assertNotFound();
+            'visibility' => 1,
+        ])->assertNotFound();
     }
 
     public function testUniquePropertyValidation(): void
@@ -230,12 +217,10 @@ class TagControllerTest extends TestCase
         $response = $this->patch('tags/2', [
             'tag_id' => $baseTag->id,
             'name' => 'taken-tag-name',
-            'is_private' => '0',
+            'visibility' => 1,
         ]);
 
-        $response->assertSessionHasErrors([
-            'name',
-        ]);
+        $response->assertSessionHasErrors(['name']);
     }
 
     public function testValidationErrorForUpdate(): void
@@ -247,34 +232,27 @@ class TagControllerTest extends TestCase
         $response = $this->patch('tags/1', [
             'tag_id' => $baseTag->id,
             //'name' => 'New Test Tag',
-            'is_private' => '0',
+            'visibility' => 1,
         ]);
 
-        $response->assertSessionHasErrors([
-            'name',
-        ]);
+        $response->assertSessionHasErrors(['name']);
     }
 
     public function testDeleteResponse(): void
     {
-        Tag::factory()->create([
-            'user_id' => $this->user->id,
-        ]);
+        $this->createTestTags();
 
-        $response = $this->delete('tags/1');
+        $this->assertEquals(3, Tag::count());
 
-        $response->assertRedirect();
+        $this->delete('tags/1')->assertRedirect();
+        $this->delete('tags/2')->assertForbidden();
+        $this->delete('tags/3')->assertForbidden();
 
-        $databaseTag = Tag::withTrashed()->first();
-
-        $this->assertNotNull($databaseTag->deleted_at);
-        $this->assertNotNull($databaseTag->deleted_at);
+        $this->assertEquals(2, Tag::count());
     }
 
     public function testMissingModelErrorForDelete(): void
     {
-        $response = $this->delete('tags/1');
-
-        $response->assertNotFound();
+        $this->delete('tags/1')->assertNotFound();
     }
 }

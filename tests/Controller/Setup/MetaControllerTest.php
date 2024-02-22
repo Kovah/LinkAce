@@ -2,9 +2,9 @@
 
 namespace Tests\Controller\Setup;
 
-use App\Models\Setting;
+use App\Settings\SettingsAudit;
+use App\Settings\SystemSettings;
 use Illuminate\Foundation\Testing\RefreshDatabase;
-use Illuminate\Support\Facades\Cache;
 use Tests\TestCase;
 
 class MetaControllerTest extends TestCase
@@ -13,7 +13,9 @@ class MetaControllerTest extends TestCase
 
     public function testSetupCheckRedirect(): void
     {
-        Setting::where('key', 'system_setup_completed')->delete();
+        SystemSettings::fake([
+            'setup_completed' => false,
+        ]);
 
         $response = $this->get('/');
 
@@ -36,7 +38,9 @@ class MetaControllerTest extends TestCase
 
     public function testSetupWelcomeView(): void
     {
-        Setting::where('key', 'system_setup_completed')->delete();
+        SystemSettings::fake([
+            'setup_completed' => false,
+        ]);
 
         $response = $this->get('setup/start');
 

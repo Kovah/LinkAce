@@ -10,22 +10,21 @@
         <h3 class="mb-0 me-3">
             @lang('link.links')
         </h3>
-        <a href="{{ route('guest.links.feed') }}" class="ms-auto btn btn-sm btn-outline-secondary">
+        <x-models.link-display-toggles class="ms-auto"/>
+        <a href="{{ route('guest.links.feed') }}" class="ms-3 btn btn-sm btn-outline-secondary">
             <x-icon.feed class="fw"/>
             <span class="visually-hidden">@lang('linkace.add')</span>
         </a>
-        <div class="dropdown ms-1">
-            @include('models.links.partials.index-order-dropdown', ['baseRoute' => 'guest.links.index'])
-        </div>
+        <x-models.link-order-dropdown class="ms-1"/>
     </header>
 
     <section class="my-4">
         @if($links->isNotEmpty())
 
             <div class="link-wrapper">
-                @if((int)systemsettings('guest_link_display_mode') === Link::DISPLAY_CARDS)
+                @if(session('link_display_mode') === Link::DISPLAY_CARDS)
                     @include('guest.links.partials.list-cards')
-                @elseif((int)systemsettings('guest_link_display_mode') === Link::DISPLAY_LIST_SIMPLE)
+                @elseif(session('link_display_mode') === Link::DISPLAY_LIST_SIMPLE)
                     @include('guest.links.partials.list-simple')
                 @else
                     @include('guest.links.partials.list-detailed')

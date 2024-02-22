@@ -2,6 +2,7 @@
 
 namespace App\Actions;
 
+use App\Enums\ModelAttribute;
 use App\Helper\HtmlMeta;
 use App\Helper\LinkIconMapper;
 use App\Models\Link;
@@ -14,15 +15,8 @@ class ImportHtmlBookmarks
 {
     protected int $imported = 0;
     protected int $skipped = 0;
+    protected ?Tag $importTag = null;
 
-    /**
-     * Import all links from a given bookmarks file.
-     *
-     * @param string $data
-     * @param string $userId
-     * @param bool   $generateMeta
-     * @return bool
-     */
     public function run(string $data, string $userId, bool $generateMeta = true): bool
     {
         $parser = new NetscapeBookmarkParser(logger: Log::channel('import'));
@@ -34,11 +28,11 @@ class ImportHtmlBookmarks
             return false;
         }
 
-        if (empty($links)) {
-            // This will never be reached at the moment because the bookmark parser is not capable of handling
-            // empty bookmarks exports. See https://github.com/shaarli/netscape-bookmark-parser/issues/50
-            return false;
-        }
+        $this->importTag = Tag::firstOrCreate([
+            'user_id' => $userId,
+            'name' => 'import-' . now()->format('YmdHis'),
+            'visibility' => ModelAttribute::VISIBILITY_PRIVATE,
+        ]);
 
         foreach ($links as $link) {
             if (Link::whereUrl($link['url'])->first()) {
@@ -55,14 +49,18 @@ class ImportHtmlBookmarks
                 $description = $link['description'];
             }
 
-            $isPublic = $link['public'] ?? true;
+            if (isset($link['public'])) {
+                $visibility = $link['public'] ? ModelAttribute::VISIBILITY_PUBLIC : ModelAttribute::VISIBILITY_PRIVATE;
+            } else {
+                $visibility = usersettings('links_default_visibility');
+            }
             $newLink = new Link([
                 'user_id' => $userId,
                 'url' => $link['url'],
                 'title' => $title,
                 'description' => $description,
-                'icon' => LinkIconMapper::mapLink($link['url']),
-                'is_private' => usersettings('tags_private_default') === '1' ? true : $isPublic,
+                'icon' => LinkIconMapper::getIconForUrl($link['url']),
+                'visibility' => $visibility,
             ]);
             $newLink->created_at = $link['dateCreated']
                 ? Carbon::createFromTimestamp($link['dateCreated'])
@@ -71,19 +69,18 @@ class ImportHtmlBookmarks
             $newLink->timestamps = false;
             $newLink->save();
 
+            $newTags = [$this->importTag->id];
             if (!empty($link['tags'])) {
-                $newTags = [];
                 foreach ($link['tags'] as $tag) {
                     $newTag = Tag::firstOrCreate([
                         'user_id' => $userId,
                         'name' => $tag,
-                        'is_private' => usersettings('tags_private_default') === '1',
+                        'visibility' => usersettings('tags_default_visibility'),
                     ]);
                     $newTags[] = $newTag->id;
                 }
-
-                $newLink->tags()->sync($newTags);
             }
+            $newLink->tags()->sync($newTags);
 
             $this->imported++;
         }
@@ -99,5 +96,10 @@ class ImportHtmlBookmarks
     public function getSkippedCount(): int
     {
         return $this->skipped;
+    }
+
+    public function getImportTag(): ?Tag
+    {
+        return $this->importTag;
     }
 }

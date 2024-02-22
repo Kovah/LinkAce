@@ -65,10 +65,10 @@
                         <div class="mb-4">
                             <label class="form-label" for="lists">@lang('list.lists')</label>
                             <input name="lists" id="lists" type="text" placeholder="@lang('placeholder.list_select')"
-                                class="tag-select" value="{{ old('lists', $link->listsForInput()) }}"
+                                class="tag-select" data-value="{{ $link->oldTaxonomyOutput('lists') }}"
                                 data-allow-creation="true" data-tag-type="lists">
 
-                            @if ($errors->has('url'))
+                            @if ($errors->has('lists'))
                                 <p class="invalid-feedback" role="alert">
                                     {{ $errors->first('lists') }}
                                 </p>
@@ -78,34 +78,17 @@
                         <div class="mb-4">
                             <label class="form-label" for="tags">@lang('tag.tags')</label>
                             <input name="tags" id="tags" type="text" placeholder="@lang('placeholder.tags_select')"
-                                class="tag-select" value="{{ old('tags', $link->tagsForInput()) }}"
+                                class="tag-select" data-value="{{ $link->oldTaxonomyOutput('tags') }}"
                                 data-allow-creation="true" data-tag-type="tags">
 
-                            @if ($errors->has('url'))
+                            @if ($errors->has('tags'))
                                 <p class="invalid-feedback" role="alert">
                                     {{ $errors->first('tags') }}
                                 </p>
                             @endif
                         </div>
 
-                        <div class="mb-4">
-                            <label class="form-label" for="is_private">@lang('linkace.is_private')</label>
-                            <select id="is_private" name="is_private"
-                                class="form-select{{ $errors->has('is_private') ? ' is-invalid' : '' }}">
-                                <option value="0" @if($link->is_private === false) selected @endif>
-                                    @lang('linkace.no')
-                                </option>
-                                <option value="1" @if($link->is_private === true) selected @endif>
-                                    @lang('linkace.yes')
-                                </option>
-                            </select>
-
-                            @if ($errors->has('is_private'))
-                                <p class="invalid-feedback" role="alert">
-                                    {{ $errors->first('is_private') }}
-                                </p>
-                            @endif
-                        </div>
+                        <x-forms.visibility-toggle class="mb-4" :existing-value="$link->visibility"/>
 
                     </div>
                 </div>
@@ -115,7 +98,7 @@
                     <div class="d-sm-inline-block mb-3 mb-sm-0 me-auto">
                         <button type="button" class="btn btn-sm btn-outline-danger"
                             onclick="window.deleteLink.submit()">
-                            <x-icon.trash class="me-2"/> @lang('link.delete')
+                            <x-icon.trash class="me-2"/> @choice('link.delete', 1)
                         </button>
                     </div>
 

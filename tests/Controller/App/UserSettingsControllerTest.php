@@ -11,10 +11,9 @@ class UserSettingsControllerTest extends TestCase
 {
     use RefreshDatabase;
 
-    /** @var User */
-    private $user;
+    private User $user;
 
-    public function setUp(): void
+    protected function setUp(): void
     {
         parent::setUp();
 
@@ -43,7 +42,7 @@ class UserSettingsControllerTest extends TestCase
 
         $response->assertRedirect('/');
 
-        $updatedUser = User::first();
+        $updatedUser = User::notSystem()->first();
 
         $this->assertEquals('New Name', $updatedUser->name);
         $this->assertEquals('test@linkace.org', $updatedUser->email);
@@ -60,26 +59,24 @@ class UserSettingsControllerTest extends TestCase
             'tags_private_default' => '1',
             'date_format' => 'Y-m-d',
             'time_format' => 'H:i',
-            'listitem_count' => '25',
+            'listitem_count' => '24',
             'link_display_mode' => '1',
             'darkmode_setting' => '0',
         ]);
 
         $response->assertRedirect('/');
 
-        $this->user->load('rawSettings'); // Reload cached settings from other tests
-
         $this->assertEquals('en_US', usersettings('locale'));
         $this->assertEquals('Europe/Berlin', usersettings('timezone'));
-        $this->assertEquals('1', usersettings('links_private_default'));
-        $this->assertEquals('1', usersettings('notes_private_default'));
-        $this->assertEquals('1', usersettings('lists_private_default'));
-        $this->assertEquals('1', usersettings('tags_private_default'));
+        $this->assertEquals(true, usersettings('links_private_default'));
+        $this->assertEquals(true, usersettings('notes_private_default'));
+        $this->assertEquals(true, usersettings('lists_private_default'));
+        $this->assertEquals(true, usersettings('tags_private_default'));
         $this->assertEquals('Y-m-d', usersettings('date_format'));
         $this->assertEquals('H:i', usersettings('time_format'));
-        $this->assertEquals('25', usersettings('listitem_count'));
-        $this->assertEquals('1', usersettings('link_display_mode'));
-        $this->assertEquals('0', usersettings('darkmode_setting'));
+        $this->assertEquals(24, usersettings('listitem_count'));
+        $this->assertEquals(1, usersettings('link_display_mode'));
+        $this->assertEquals(0, usersettings('darkmode_setting'));
     }
 
     public function testValidUpdatePasswordResponse(): void

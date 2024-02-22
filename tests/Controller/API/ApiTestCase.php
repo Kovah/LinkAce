@@ -2,6 +2,7 @@
 
 namespace Tests\Controller\API;
 
+use App\Enums\ApiToken;
 use App\Models\User;
 use Illuminate\Support\Facades\Http;
 use Illuminate\Support\Facades\Notification;
@@ -11,14 +12,17 @@ use Tests\TestCase;
 
 abstract class ApiTestCase extends TestCase
 {
-    /** @var User */
-    protected $user;
+    protected User $user;
+    protected string $accessToken;
+    protected ?User $systemUser = null;
+    protected ?string $systemAccessToken = null;
 
     protected function setUp(): void
     {
         parent::setUp();
 
-        $this->user = User::first() ?: User::factory()->create();
+        $this->user = User::notSystem()->first() ?: User::factory()->create();
+        $this->accessToken = $this->user->createToken('api-test', [ApiToken::ABILITY_USER_ACCESS])->plainTextToken;
 
         Queue::fake();
         Notification::fake();
@@ -29,8 +33,15 @@ abstract class ApiTestCase extends TestCase
             '</head></html>';
 
         Http::fake([
-            'example.com' => Http::response($testHtml, 200),
+            'example.com' => Http::response($testHtml),
         ]);
+    }
+
+    protected function createSystemToken(array $abilities = []): void
+    {
+        $this->systemUser = User::getSystemUser();
+        $abilities[] = ApiToken::ABILITY_SYSTEM_ACCESS;
+        $this->systemAccessToken = $this->systemUser->createToken('api-test', $abilities)->plainTextToken;
     }
 
     /**
@@ -38,11 +49,12 @@ abstract class ApiTestCase extends TestCase
      *
      * @param string $uri
      * @param array  $headers
+     * @param bool   $useSystemToken
      * @return TestResponse
      */
-    public function getJsonAuthorized($uri, array $headers = []): TestResponse
+    public function getJsonAuthorized(string $uri, array $headers = [], bool $useSystemToken = false): TestResponse
     {
-        $headers['Authorization'] = 'Bearer ' . $this->user->api_token;
+        $headers['Authorization'] = 'Bearer ' . ($useSystemToken ? $this->systemAccessToken : $this->accessToken);
         return $this->getJson($uri, $headers);
     }
 
@@ -52,11 +64,16 @@ abstract class ApiTestCase extends TestCase
      * @param string $uri
      * @param array  $data
      * @param array  $headers
+     * @param bool   $useSystemToken
      * @return TestResponse
      */
-    public function postJsonAuthorized($uri, array $data = [], array $headers = []): TestResponse
-    {
-        $headers['Authorization'] = 'Bearer ' . $this->user->api_token;
+    public function postJsonAuthorized(
+        string $uri,
+        array $data = [],
+        array $headers = [],
+        bool $useSystemToken = false
+    ): TestResponse {
+        $headers['Authorization'] = 'Bearer ' . ($useSystemToken ? $this->systemAccessToken : $this->accessToken);
         return $this->postJson($uri, $data, $headers);
     }
 
@@ -66,11 +83,16 @@ abstract class ApiTestCase extends TestCase
      * @param string $uri
      * @param array  $data
      * @param array  $headers
+     * @param bool   $useSystemToken
      * @return TestResponse
      */
-    public function patchJsonAuthorized($uri, array $data = [], array $headers = []): TestResponse
-    {
-        $headers['Authorization'] = 'Bearer ' . $this->user->api_token;
+    public function patchJsonAuthorized(
+        string $uri,
+        array $data = [],
+        array $headers = [],
+        bool $useSystemToken = false
+    ): TestResponse {
+        $headers['Authorization'] = 'Bearer ' . ($useSystemToken ? $this->systemAccessToken : $this->accessToken);
         return $this->patchJson($uri, $data, $headers);
     }
 
@@ -80,11 +102,16 @@ abstract class ApiTestCase extends TestCase
      * @param string $uri
      * @param array  $data
      * @param array  $headers
+     * @param bool   $useSystemToken
      * @return TestResponse
      */
-    public function deleteJsonAuthorized($uri, array $data = [], array $headers = []): TestResponse
-    {
-        $headers['Authorization'] = 'Bearer ' . $this->user->api_token;
+    public function deleteJsonAuthorized(
+        string $uri,
+        array $data = [],
+        array $headers = [],
+        bool $useSystemToken = false
+    ): TestResponse {
+        $headers['Authorization'] = 'Bearer ' . ($useSystemToken ? $this->systemAccessToken : $this->accessToken);
         return $this->deleteJson($uri, $data, $headers);
     }
 }

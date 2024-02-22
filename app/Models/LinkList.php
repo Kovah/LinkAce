@@ -2,8 +2,8 @@
 
 namespace App\Models;
 
+use App\Audits\Modifiers\VisibilityModifier;
 use App\Scopes\OrderNameScope;
-use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
@@ -11,7 +11,10 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 use Illuminate\Database\Eloquent\SoftDeletes;
+use Illuminate\Support\Carbon;
 use Illuminate\Support\Str;
+use OwenIt\Auditing\Auditable as AuditableTrait;
+use OwenIt\Auditing\Contracts\Auditable;
 
 /**
  * Class LinkList
@@ -21,20 +24,24 @@ use Illuminate\Support\Str;
  * @property int                    $user_id
  * @property string                 $name
  * @property ?string                $description
- * @property int                    $is_private
+ * @property int                    $visibility
  * @property Carbon|null            $created_at
  * @property Carbon|null            $updated_at
  * @property string|null            $deleted_at
  * @property-read Collection|Link[] $links
  * @property-read User              $user
- * @method static Builder|Tag byUser($user_id = null)
- * @method static Builder|Tag privateOnly()
- * @method static Builder|Tag publicOnly()
+ * @method static Builder|LinkList byUser(int $user_id = null)
+ * @method static Builder|LinkList privateOnly()
+ * @method static Builder|LinkList internalOnly()
+ * @method static Builder|LinkList publicOnly()
  */
-class LinkList extends Model
+class LinkList extends Model implements Auditable
 {
-    use SoftDeletes;
+    use AuditableTrait;
     use HasFactory;
+    use ScopesForUser;
+    use ScopesVisibility;
+    use SoftDeletes;
 
     public $table = 'lists';
 
@@ -42,97 +49,46 @@ class LinkList extends Model
         'user_id',
         'name',
         'description',
-        'is_private',
+        'visibility',
     ];
 
     protected $casts = [
         'user_id' => 'integer',
-        'is_private' => 'boolean',
+        'visibility' => 'integer',
     ];
 
-    /**
-     * Get a collection of all lists for the current user, ordered by name
-     *
-     * @return Builder[]|Collection
-     */
-    public static function getAllForCurrentUser()
-    {
-        return self::byUser()
-            ->orderBy('name')
-            ->get();
-    }
+    public static array $allowOrderBy = [
+        'id',
+        'name',
+        'description',
+        'visibility',
+        'created_at',
+        'updated_at',
+        'random',
+    ];
 
-    /*
-     | ========================================================================
-     | SCOPES
-     */
+    public string $langBase = 'list';
 
-    /**
-     * @param string|int $listId
-     * @param string     $newName
-     * @return bool
-     */
-    public static function nameHasChanged($listId, string $newName): bool
-    {
-        $oldName = self::find($listId)->name ?? null;
-        return $oldName !== $newName;
-    }
-
-    /**
-     * Add the OrderNameScope to the Tag model
-     */
     protected static function boot(): void
     {
         parent::boot();
 
+        // Add the OrderNameScope to the Tag model
         static::addGlobalScope(new OrderNameScope());
     }
 
-    /**
-     * Scope for the user relation
-     *
-     * @param Builder  $query
-     * @param int|null $user_id
-     * @return Builder
+    /*
+     * ========================================================================
+     * AUDIT SETTINGS
      */
-    public function scopeByUser(Builder $query, int $user_id = null): Builder
-    {
-        if (is_null($user_id) && auth()->check()) {
-            $user_id = auth()->id();
-        }
-        return $query->where('user_id', $user_id);
-    }
+
+    public array $auditModifiers = [
+        'visibility' => VisibilityModifier::class,
+    ];
 
     /*
-     | ========================================================================
-     | RELATIONSHIPS
-     */
-
-    /**
-     * Scope for selecting private lists only
-     *
-     * @param Builder $query
-     * @return Builder
-     */
-    public function scopePrivateOnly(Builder $query): Builder
-    {
-        return $query->where('is_private', true);
-    }
-
-    /**
-     * Scope for selecting public lists only
-     *
-     * @param Builder $query
-     * @return Builder
-     */
-    public function scopePublicOnly(Builder $query): Builder
-    {
-        return $query->where('is_private', false);
-    }
-
-    /*
-     | ========================================================================
-     | METHODS
+     * ========================================================================
+     * RELATIONSHIPS
      */
 
     /**
@@ -140,7 +96,7 @@ class LinkList extends Model
      */
     public function user(): BelongsTo
     {
-        return $this->belongsTo('App\Models\User', 'user_id');
+        return $this->belongsTo(User::class, 'user_id')->withTrashed();
     }
 
     /**
@@ -148,21 +104,21 @@ class LinkList extends Model
      */
     public function links(): BelongsToMany
     {
-        return $this->belongsToMany('App\Models\Link', 'link_lists', 'list_id', 'link_id');
+        return $this->belongsToMany(Link::class, 'link_lists', 'list_id', 'link_id');
     }
 
-    /**
-     * Get the formatted description of the list
-     *
-     * @return string
+    /*
+     * ========================================================================
+     * METHODS
      */
+
     public function getFormattedDescriptionAttribute(): string
     {
         if ($this->description === null) {
             return '';
         }
 
-        if (usersettings('markdown_for_text') !== '1') {
+        if (usersettings('markdown_for_text') === false) {
             return htmlentities($this->description);
         }
 

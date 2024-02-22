@@ -2,7 +2,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 
-<title>@isset($pageTitle){{$pageTitle}} - @endisset{{ systemsettings('system_page_title') ?: config('app.name', 'LinkAce') }}</title>
+<title>@isset($pageTitle){{$pageTitle}} - @endisset{{ systemsettings('page_title') ?: config('app.name', 'LinkAce') }}</title>
 
 @stack('html-header')
 @include('partials.favicon')
@@ -24,14 +24,13 @@
             'existingLinks' => route('fetch-existing-links'),
             'keywordsForUrl' => route('fetch-keywords-for-url'),
             'updateCheck' => route('fetch-update-check'),
-            'generateApiToken' => route('generate-api-token'),
             'generateCronToken' => route('generate-cron-token'),
         ]
     ]
 ]) }}">
 
-@if(systemsettings('system_custom_header_content') && config('app.demo') === false)
+@if(systemsettings('custom_header_content') && config('app.demo') === false)
     <!-- Begin of custom header scripts -->
-    {!! systemsettings('system_custom_header_content') !!}
+    {!! systemsettings('custom_header_content') !!}
     <!-- End of custom header scripts -->
 @endif

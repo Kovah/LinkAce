@@ -20,8 +20,16 @@ return [
 
     'added' => 'Added',
     'added_at' => 'Added at',
+    'added_by' => 'Added by',
+    'created' => 'Created',
+    'created_at' => 'Created at',
     'updated_at' => 'Updated at',
     'last_update' => 'Last Update',
+    'last_used' => 'Last used',
+    'never_used' => 'Never used',
+    'blocked' => 'Blocked',
+    'blocked_at' => 'Blocked at',
+    'deleted' => 'Deleted',
     'deleted_at' => 'Deleted at',
 
     'add' => 'Add',
@@ -29,6 +37,11 @@ return [
     'edit' => 'Edit',
     'update' => 'Update',
     'delete' => 'Delete',
+    'restore' => 'Restore',
+    'block' => 'Block',
+    'unblock' => 'Unblock',
+    'unblocked' => 'Unblocked',
+    'details' => 'Details',
 
     'menu' => 'Menu',
     'entries' => 'Entries',
@@ -36,8 +49,14 @@ return [
 
     'continue_adding' => 'Continue Adding',
 
-    'private' => 'Private',
-    'is_private' => 'Is private',
+    'visibility' => 'Visibility',
+    'change_visibility' => 'Change Visibility',
+    'dont_change_visibility' => 'Do not change Visibility',
+
+    'history' => 'History',
+    'history_added' => 'Added <code>:newvalue</code> to :fieldname.',
+    'history_changed' => 'Changed :fieldname from <code>:oldvalue</code> to <code>:newvalue</code>',
+    'history_removed' => 'Removed <code>:oldvalue</code> from :fieldname.',
 
     'yes' => 'Yes',
     'no' => 'No',

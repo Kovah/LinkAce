@@ -2,6 +2,7 @@
 
 namespace Tests\Helper;
 
+use App\Enums\Role;
 use App\Models\Link;
 use App\Models\User;
 use Illuminate\Foundation\Testing\RefreshDatabase;
@@ -12,13 +13,11 @@ class HelperFunctionsTest extends TestCase
 {
     use RefreshDatabase;
 
-    /** @var User */
-    private $user;
+    private User $user;
 
-    /** @var Link */
-    private $link;
+    private Link $link;
 
-    public function setUp(): void
+    protected function setUp(): void
     {
         parent::setUp();
 
@@ -39,8 +38,6 @@ class HelperFunctionsTest extends TestCase
             'timezone' => 'Europe/Berlin',
         ]);
 
-        $this->user->load('rawSettings'); // Reload cached settings from other tests
-
         $settings = usersettings();
 
         $this->assertArrayHasKey('locale', $settings);
@@ -55,17 +52,18 @@ class HelperFunctionsTest extends TestCase
      */
     public function testGetAllSystemSettings(): void
     {
+        $this->user->assignRole(Role::ADMIN);
         $this->actingAs($this->user);
 
         $this->post('settings/system', [
-            'system_page_title' => 'New Title',
-            'system_guest_access' => '1',
+            'page_title' => 'New Title',
+            'guest_access' => '1',
         ]);
 
         $settings = systemsettings();
 
-        $this->assertArrayHasKey('system_page_title', $settings);
-        $this->assertEquals('New Title', $settings['system_page_title']);
+        $this->assertArrayHasKey('page_title', $settings);
+        $this->assertEquals('New Title', $settings['page_title']);
     }
 
     /**
@@ -81,8 +79,6 @@ class HelperFunctionsTest extends TestCase
             'date_format' => 'd.m.Y',
             'time_format' => 'H:i:s',
         ]);
-
-        $this->user->load('rawSettings'); // Reload cached settings from other tests
 
         $dateTime = now();
         $appFormatted = formatDateTime($dateTime);
@@ -104,36 +100,8 @@ class HelperFunctionsTest extends TestCase
             'listitem_count' => '100',
         ]);
 
-        $this->user->load('rawSettings'); // Reload cached settings from other tests
-
         $limit = getPaginationLimit();
 
         $this->assertEquals('100', $limit);
-    }
-
-    /**
-     * Test the saveToArchive() helper function with a valid URL.
-     * Should return true.
-     */
-    public function testValidWaybackLink(): void
-    {
-        $expected = 'https://web.archive.org/web/*/' . $this->link->url;
-
-        $link = waybackLink($this->link);
-
-        $this->assertEquals($expected, $link);
-    }
-
-    /**
-     * Test the saveToArchive() helper function with an invalid URL.
-     * Will return false.
-     */
-    public function testInvalidWaybackLink(): void
-    {
-        $url = 'not an URL';
-
-        $link = waybackLink($url);
-
-        $this->assertNull($link);
     }
 }

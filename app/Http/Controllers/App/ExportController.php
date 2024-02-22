@@ -14,11 +14,6 @@ use Symfony\Component\HttpFoundation\StreamedResponse;
 
 class ExportController extends Controller
 {
-    /**
-     * Get the initial screen to start the export.
-     *
-     * @return View
-     */
     public function getExport(): View
     {
         return view('app.export.export', [
@@ -37,7 +32,7 @@ class ExportController extends Controller
      */
     public function doHtmlExport(): StreamedResponse
     {
-        $links = Link::orderBy('title')->with('tags')->get();
+        $links = Link::oldest('title')->with('tags')->get();
 
         $fileContent = view()->make('app.export.html-export', ['links' => $links])->render();
         $fileName = config('app.name') . '_export.html';
@@ -56,7 +51,7 @@ class ExportController extends Controller
      */
     public function doCsvExport()
     {
-        $links = Link::orderBy('title')->get();
+        $links = Link::oldest('title')->get();
 
         $rows = $links->map(function (Link $link) {
             $link->tags = $link->tags()->get()->pluck('name')->join(',');

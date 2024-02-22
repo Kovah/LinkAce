@@ -20,7 +20,7 @@ class SetupCheckMiddleware
      * @param Closure $next
      * @return mixed
      */
-    public function handle(Request $request, Closure $next)
+    public function handle(Request $request, Closure $next): mixed
     {
         if (config('app.key') === self::GENERIC_APP_KEY) {
             $envContent = File::get(base_path('.env'));

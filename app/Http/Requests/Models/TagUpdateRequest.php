@@ -2,21 +2,15 @@
 
 namespace App\Http\Requests\Models;
 
+use App\Rules\ModelVisibility;
 use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Http\Request;
 use Illuminate\Validation\Rule;
 
 class TagUpdateRequest extends FormRequest
 {
-    /** @var bool */
-    private $requireUniqueName = false;
+    private bool $requireUniqueName = false;
 
-    /**
-     * Determine if the user is authorized to make this request.
-     *
-     * @param Request $request
-     * @return bool
-     */
     public function authorize(Request $request): bool
     {
         if ($request->input('name') !== null) {
@@ -26,24 +20,20 @@ class TagUpdateRequest extends FormRequest
         return true;
     }
 
-    /**
-     * Get the validation rules that apply to the request.
-     *
-     * @return array
-     */
     public function rules(): array
     {
         $rules = [
             'name' => 'required',
-            'is_private' => 'required|boolean',
+            'visibility' => [
+                'sometimes',
+                new ModelVisibility(),
+            ],
         ];
 
         if ($this->requireUniqueName) {
             $rules['name'] = [
                 'required',
-                Rule::unique('tags')->where(function ($query) {
-                    return $query->where('user_id', auth()->id());
-                }),
+                Rule::unique('tags')->where(fn($query) => $query->where('user_id', auth()->id())),
             ];
         }
 

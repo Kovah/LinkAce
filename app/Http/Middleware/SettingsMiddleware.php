@@ -2,6 +2,7 @@
 
 namespace App\Http\Middleware;
 
+use App\Settings\UserSettings;
 use Closure;
 use Illuminate\Http\Request;
 
@@ -14,15 +15,15 @@ class SettingsMiddleware
      * @param Closure $next
      * @return mixed
      */
-    public function handle(Request $request, Closure $next)
+    public function handle(Request $request, Closure $next): mixed
     {
         if (!setupCompleted()) {
             return $next($request);
         }
 
-        // Set global configs based on the user settings
-        if ($user_timezone = usersettings('timezone')) {
-            config(['app.timezone' => $user_timezone]);
+         // Set global configs based on the user settings
+        if ($userTimezone = usersettings('timezone')) {
+            config(['app.timezone' => $userTimezone]);
         }
 
         if ($userLocale = usersettings('locale')) {

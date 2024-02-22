@@ -8,10 +8,6 @@ use Illuminate\Support\Facades\Log;
 
 class ListRepository
 {
-    /**
-     * @param array $data
-     * @return LinkList
-     */
     public static function create(array $data): LinkList
     {
         $data['user_id'] = auth()->user()->id;
@@ -20,11 +16,6 @@ class ListRepository
         return LinkList::create($data);
     }
 
-    /**
-     * @param LinkList $list
-     * @param array    $data
-     * @return LinkList
-     */
     public static function update(LinkList $list, array $data): LinkList
     {
         $data['name'] = str_replace(',', '', $data['name']);
@@ -34,10 +25,6 @@ class ListRepository
         return $list;
     }
 
-    /**
-     * @param LinkList $list
-     * @return bool
-     */
     public static function delete(LinkList $list): bool
     {
         try {

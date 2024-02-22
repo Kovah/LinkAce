@@ -1,5 +1,3 @@
-import { debounce } from '../lib/helper';
-
 export default class UpdateCheck {
 
   constructor ($el) {

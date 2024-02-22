@@ -9,8 +9,7 @@ class ViewRecoveryCodesCommand extends Command
     use AsksForUser;
 
     protected $signature = '2fa:view-recovery-codes';
-
-    protected $description = 'View the recovery codes for a given user, in case the user has no access to the dashboard anymore.';
+    protected $description = 'View the recovery codes for a user, in case the user has no access to LinkAce anymore.';
 
     public function handle(): void
     {
@@ -29,7 +28,7 @@ class ViewRecoveryCodesCommand extends Command
 
         $this->info('Recovery Codes for user ' . $this->user->name . ':');
 
-        $recoveryCodes = json_decode(decrypt($this->user->two_factor_recovery_codes), true);
+        $recoveryCodes = json_decode(decrypt($this->user->two_factor_recovery_codes));
         foreach ($recoveryCodes as $code) {
             $this->line($code);
         }

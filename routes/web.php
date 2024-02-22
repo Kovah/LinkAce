@@ -1,12 +1,16 @@
 <?php
 
+use App\Http\Controllers\Admin\ApiTokenController as AdminApiTokenController;
+use App\Http\Controllers\Admin\AuditController;
+use App\Http\Controllers\Admin\SystemSettingsController;
+use App\Http\Controllers\Admin\UserManagementController;
+use App\Http\Controllers\App\ApiTokenController;
 use App\Http\Controllers\App\BookmarkletController;
 use App\Http\Controllers\App\DashboardController;
 use App\Http\Controllers\App\ExportController;
 use App\Http\Controllers\App\FeedController;
 use App\Http\Controllers\App\ImportController;
 use App\Http\Controllers\App\SearchController;
-use App\Http\Controllers\App\SystemSettingsController;
 use App\Http\Controllers\App\TrashController;
 use App\Http\Controllers\App\UserSettingsController;
 use App\Http\Controllers\CronController;
@@ -16,10 +20,14 @@ use App\Http\Controllers\Guest\FeedController as GuestFeedController;
 use App\Http\Controllers\Guest\LinkController as GuestLinkController;
 use App\Http\Controllers\Guest\ListController as GuestListController;
 use App\Http\Controllers\Guest\TagController as GuestTagController;
+use App\Http\Controllers\Guest\UserController as GuestUserController;
+use App\Http\Controllers\Models\BulkEditController;
 use App\Http\Controllers\Models\LinkController;
 use App\Http\Controllers\Models\ListController;
 use App\Http\Controllers\Models\NoteController;
 use App\Http\Controllers\Models\TagController;
+use App\Http\Controllers\Models\UserController;
+use App\Http\Controllers\RegistrationController;
 use App\Http\Controllers\Setup\AccountController;
 use App\Http\Controllers\Setup\DatabaseController;
 use App\Http\Controllers\Setup\MetaController;
@@ -57,7 +65,12 @@ Route::prefix('bookmarklet')->group(function () {
 
 Route::get('cron/{token}', CronController::class)->name('cron');
 
-Route::group(['middleware' => 'auth:api'], function () {
+Route::get('auth/accept-invite', [RegistrationController::class, 'acceptInvitation'])
+    ->name('auth.accept-invite');
+Route::post('auth/register', [RegistrationController::class, 'register'])
+    ->name('auth.register');
+
+Route::group(['middleware' => 'auth:sanctum'], function () {
     Route::get('links/feed', [FeedController::class, 'links'])->name('links.feed');
     Route::get('lists/feed', [FeedController::class, 'lists'])->name('lists.feed');
     Route::get('lists/{list}/feed', [FeedController::class, 'listLinks'])->name('lists.links.feed');
@@ -75,6 +88,19 @@ Route::group(['middleware' => ['auth']], function () {
     Route::resource('tags', TagController::class);
     Route::resource('notes', NoteController::class)
         ->except(['index', 'show', 'create']);
+
+    Route::post('bulk-edit', [BulkEditController::class, 'form'])
+        ->name('bulk-edit.form');
+    Route::post('bulk-edit/update-links', [BulkEditController::class, 'updateLinks'])
+        ->name('bulk-edit.update-links');
+    Route::post('bulk-edit/update-lists', [BulkEditController::class, 'updateLists'])
+        ->name('bulk-edit.update-lists');
+    Route::post('bulk-edit/update-tags', [BulkEditController::class, 'updateTags'])
+        ->name('bulk-edit.update-tags');
+    Route::post('bulk-edit/delete', [BulkEditController::class, 'delete'])
+        ->name('bulk-edit.delete');
+
+    Route::get('users/{user:name}', [UserController::class, 'show'])->name('users.show');
 
     Route::post('links/toggle-check/{link}', [LinkController::class, 'updateCheckToggle'])
         ->name('links.toggle-check');
@@ -113,15 +139,9 @@ Route::group(['middleware' => ['auth']], function () {
         ->name('save-settings-app');
     Route::post('settings/change-password', [UserSettingsController::class, 'changeUserPassword'])
         ->name('change-user-password');
-    Route::post('settings/generate-api-token', [UserSettingsController::class, 'generateApiToken'])
-        ->name('generate-api-token');
 
-    Route::get('settings/system', [SystemSettingsController::class, 'getSystemSettings'])
-        ->name('get-systemsettings');
-    Route::post('settings/system', [SystemSettingsController::class, 'saveSystemSettings'])
-        ->name('save-settings-system');
-    Route::post('settings/generate-cron-token', [SystemSettingsController::class, 'generateCronToken'])
-        ->name('generate-cron-token');
+    Route::resource('settings/api-tokens', ApiTokenController::class)
+        ->only(['index', 'store', 'destroy']);
 
     Route::post('fetch/tags', [FetchController::class, 'getTags'])
         ->name('fetch-tags');
@@ -133,9 +153,49 @@ Route::group(['middleware' => ['auth']], function () {
         ->name('fetch-keywords-for-url');
     Route::get('fetch/update-check', [FetchController::class, 'checkForUpdates'])
         ->name('fetch-update-check');
+});
 
-    Route::get('system/logs', [LogViewerController::class, 'index'])
-        ->name('system-logs');
+Route::group(['middleware' => ['auth', 'role:admin']], function () {
+    Route::get('settings/system', [SystemSettingsController::class, 'index'])
+        ->name('get-systemsettings');
+    Route::post('settings/system', [SystemSettingsController::class, 'update'])
+        ->name('save-settings-system');
+    Route::post('settings/system/guest', [SystemSettingsController::class, 'updateGuest'])
+        ->name('save-settings-guest');
+    Route::post('settings/generate-cron-token', [SystemSettingsController::class, 'generateCronToken'])
+        ->name('generate-cron-token');
+
+    Route::get('system/users', [UserManagementController::class, 'index'])->name('system.users');
+    Route::get('system/users/{user}', [UserManagementController::class, 'show'])
+        ->name('system.users.show')->withTrashed();
+    Route::get('system/users/{user}/edit', [UserManagementController::class, 'edit'])
+        ->name('system.users.edit')->withTrashed();
+    Route::patch('system/users/{user}', [UserManagementController::class, 'update'])
+        ->name('system.users.update')->withTrashed();
+    Route::patch('system/users/{user}/block', [UserManagementController::class, 'blockUser'])
+        ->name('system.users.block')->withTrashed();
+    Route::patch('system/users/{user}/unblock', [UserManagementController::class, 'unblockUser'])
+        ->name('system.users.unblock')->withTrashed();
+    Route::delete('system/users/{user}/delete', [UserManagementController::class, 'deleteUser'])
+        ->name('system.users.delete')->withTrashed();
+    Route::patch('system/users/{user}/restore', [UserManagementController::class, 'restoreUser'])
+        ->name('system.users.restore')->withTrashed();
+
+    Route::post('system/users/invite', [UserManagementController::class, 'inviteUser'])->name('system.users.invite');
+    Route::delete('system/users/invite/{invitation}', [UserManagementController::class, 'deleteInvitation'])
+        ->name('system.users.invite-delete');
+
+    Route::resource('system/api-tokens', AdminApiTokenController::class)
+        ->names([
+            'index' => 'system.api-tokens.index',
+            'show' => 'system.api-tokens.show',
+            'store' => 'system.api-tokens.store',
+            'destroy' => 'system.api-tokens.destroy',
+        ])
+        ->only(['index', 'show', 'store', 'destroy']);
+
+    Route::get('system/logs', [LogViewerController::class, 'index'])->name('system-logs');
+    Route::get('system/audit', AuditController::class)->name('system-audit');
 });
 
 // Guest access routes
@@ -146,6 +206,8 @@ Route::prefix('guest')->middleware(['guestaccess'])->group(function () {
     Route::get('lists/{list}/feed', [GuestFeedController::class, 'listLinks'])->name('guest.lists.links.feed');
     Route::get('tags/feed', [GuestFeedController::class, 'tags'])->name('guest.tags.feed');
     Route::get('tags/{tag}/feed', [GuestFeedController::class, 'tagLinks'])->name('guest.tags.links.feed');
+
+    Route::get('users/{user:name}', [GuestUserController::class, 'show'])->name('guest.users.show');
 
     Route::resource('links', GuestLinkController::class)
         ->only(['index'])

@@ -35,10 +35,21 @@
 
     @if($lists->isNotEmpty())
 
-        <div class="row mt-3">
-            @foreach($lists as $list)
-                @include('models.lists.partials.single')
-            @endforeach
+        <div class="bulk-edit" data-type="lists">
+            <form class="bulk-edit-form visually-hidden text-end" action="{{ route('bulk-edit.form') }}" method="POST">
+                @csrf()
+                <input type="hidden" name="type">
+                <input type="hidden" name="models">
+                <div class="btn-group mt-1">
+                    <button type="button" class="bulk-edit-submit btn btn-outline-primary btn-xs">Edit</button>
+                    <button type="button" class="bulk-edit-select-all btn btn-outline-primary btn-xs">Select all</button>
+                </div>
+            </form>
+            <div class="row mt-3">
+                @foreach($lists as $list)
+                    @include('models.lists.partials.single')
+                @endforeach
+            </div>
         </div>
 
     @else

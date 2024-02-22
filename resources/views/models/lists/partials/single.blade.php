@@ -2,13 +2,10 @@
     <div class="h-100 card">
         <div class="card-body">
             <div class="d-flex">
-                @if($list->is_private)
-                    <span>
-                        <x-icon.lock class="me-2" title="@lang('list.private')"/>
-                        <span class="visually-hidden">@lang('list.private')</span>
-                    </span>
-                @endif
-                <a href="{{ route('lists.show', [$list->id]) }}">{{ $list->name }}</a>
+                <x-models.visibility-badge :model="$list" class="d-inline-block me-2"/>
+                <a href="{{ route('lists.show', ['list' => $list]) }}">
+                    <x-models.name-with-user :model="$list"/>
+                </a>
             </div>
             @if($list->description)
                 <div class="small mt-2">{{ $list->description }}</div>
@@ -16,27 +13,26 @@
         </div>
 
         <div class="d-flex align-items-center">
-            <div class="text-xs text-pale me-3 ps-3">
+            <div class="text-xs text-pale me-3 ps-3 text-condensed">
                 @if($list->links_count > 0)
                     {{ trans_choice('list.number_links', $list->links_count, ['number' => $list->links_count]) }}
                 @else
                     @lang('link.no_links')
                 @endif
             </div>
-            <div class="btn-group ms-auto me-2">
-                <a href="{{ route('lists.edit', [$list->id]) }}" class="btn btn-sm btn-link">
-                    <x-icon.edit/>
-                    <span class="visually-hidden">@lang('list.edit')</span>
+            <div class="btn-group ms-auto me-1">
+                <a href="{{ route('lists.edit', ['list' => $list]) }}" class="btn btn-xs btn-link text-condensed">
+                    @lang('linkace.edit')
                 </a>
-                <button type="submit" form="list-delete-{{ $list->id }}" title="@lang('list.delete')"
-                    class="btn btn-sm btn-link">
-                    <x-icon.trash/>
-                    <span class="visually-hidden">@lang('list.delete')</span>
+                <button type="submit" form="list-delete-{{ $list->id }}" class="btn btn-xs btn-link text-condensed">
+                    @lang('linkace.delete')
                 </button>
             </div>
+            <input type="checkbox" aria-label="@lang('list.bulk_edit_add')" class="bulk-edit-model form-check me-2"
+                data-id="{{ $list->id }}">
 
             <form id="list-delete-{{ $list->id }}" method="POST" style="display: none;"
-                action="{{ route('lists.destroy', [$list->id]) }}">
+                action="{{ route('lists.destroy', ['list' => $list]) }}">
                 @method('DELETE')
                 @csrf
                 <input type="hidden" name="redirect_back" value="1">

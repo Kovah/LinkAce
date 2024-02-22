@@ -3,37 +3,40 @@
 namespace App\Http\Controllers\Models;
 
 use App\Http\Controllers\Controller;
-use App\Http\Controllers\Traits\HandlesQueryOrder;
+use App\Http\Controllers\Traits\ChecksOrdering;
+use App\Http\Controllers\Traits\ConfiguresLinkDisplay;
 use App\Http\Requests\Models\ListStoreRequest;
 use App\Http\Requests\Models\ListUpdateRequest;
 use App\Models\LinkList;
 use App\Repositories\ListRepository;
-use Exception;
 use Illuminate\Contracts\View\View;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 
 class ListController extends Controller
 {
-    use HandlesQueryOrder;
+    use ChecksOrdering;
+    use ConfiguresLinkDisplay;
 
-    /**
-     * Display a listing of the resource.
-     *
-     * @param Request $request
-     * @return View
-     */
+    public function __construct()
+    {
+        $this->allowedOrderBy = LinkList::$allowOrderBy;
+        $this->authorizeResource(LinkList::class, 'list');
+    }
+
     public function index(Request $request): View
     {
-        $orderBy = $request->input('orderBy', session()->get('lists.index.orderBy', 'name'));
-        $orderDir = $this->getOrderDirection($request, session()->get('lists.index.orderDir', 'asc'));
+        $this->orderBy = $request->input('orderBy', session()->get('lists.index.orderBy', 'name'));
+        $this->orderDir = $request->input('orderDir', session()->get('lists.index.orderDir', 'asc'));
+        $this->checkOrdering();
 
-        session()->put('lists.index.orderBy', $orderBy);
-        session()->put('lists.index.orderDir', $orderDir);
+        session()->put('lists.index.orderBy', $this->orderBy);
+        session()->put('lists.index.orderDir', $this->orderDir);
 
-        $lists = LinkList::byUser()
+        $lists = LinkList::query()
+            ->visibleForUser()
             ->withCount('links')
-            ->orderBy($orderBy, $orderDir);
+            ->orderBy($this->orderBy, $this->orderDir);
 
         if ($request->input('filter')) {
             $lists = $lists->where('name', 'like', '%' . $request->input('filter') . '%');
@@ -45,16 +48,11 @@ class ListController extends Controller
             'pageTitle' => trans('list.lists'),
             'lists' => $lists,
             'route' => $request->getBaseUrl(),
-            'orderBy' => $orderBy,
-            'orderDir' => $orderDir,
+            'orderBy' => $this->orderBy,
+            'orderDir' => $this->orderDir,
         ]);
     }
 
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @return View
-     */
     public function create(): View
     {
         return view('models.lists.create', [
@@ -62,60 +60,45 @@ class ListController extends Controller
         ]);
     }
 
-    /**
-     * Store a newly created resource in storage.
-     *
-     * @param ListStoreRequest $request
-     * @return RedirectResponse
-     */
     public function store(ListStoreRequest $request): RedirectResponse
     {
-        $data = $request->except(['reload_view']);
+        $data = $request->validated();
 
         $list = ListRepository::create($data);
 
         flash(trans('list.added_successfully'), 'success');
 
         if ($request->input('reload_view')) {
-            session()->flash('reload_view', true);
-            return redirect()->route('lists.create');
+            return redirect()->route('lists.create')->with('reload_view', true);
         }
 
-        return redirect()->route('lists.show', [$list->id]);
+        return redirect()->route('lists.show', ['list' => $list]);
     }
 
-    /**
-     * Display the specified resource.
-     *
-     * @param Request  $request
-     * @param LinkList $list
-     * @return View
-     */
     public function show(Request $request, LinkList $list): View
     {
+        $this->updateLinkDisplayForUser();
+
+        $this->orderBy = $request->input('orderBy', 'created_at');
+        $this->orderDir = $request->input('orderBy', 'desc');
+        $this->checkOrdering();
+
         $links = $list->links()
             ->byUser()
-            ->orderBy(
-                $request->input('orderBy', 'created_at'),
-                $this->getOrderDirection($request)
-            )->paginate(getPaginationLimit());
+            ->orderBy($this->orderBy, $this->orderDir)
+            ->paginate(getPaginationLimit());
 
         return view('models.lists.show', [
             'pageTitle' => trans('list.list') . ': ' . $list->name,
             'list' => $list,
-            'listLinks' => $links,
+            'history' => $list->audits()->latest()->get(),
+            'links' => $links,
             'route' => $request->getBaseUrl(),
-            'orderBy' => $request->input('orderBy', 'created_at'),
-            'orderDir' => $request->input('orderDir', 'desc'),
+            'orderBy' => $this->orderBy,
+            'orderDir' => $this->orderDir,
         ]);
     }
 
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param LinkList $list
-     * @return View
-     */
     public function edit(LinkList $list): View
     {
         return view('models.lists.edit', [
@@ -124,28 +107,14 @@ class ListController extends Controller
         ]);
     }
 
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param ListUpdateRequest $request
-     * @param LinkList          $list
-     * @return RedirectResponse
-     */
     public function update(ListUpdateRequest $request, LinkList $list): RedirectResponse
     {
-        $list = ListRepository::update($list, $request->all());
+        $list = ListRepository::update($list, $request->validated());
 
         flash(trans('list.updated_successfully'), 'success');
-        return redirect()->route('lists.show', [$list->id]);
+        return redirect()->route('lists.show', ['list' => $list]);
     }
 
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @param LinkList $list
-     * @return RedirectResponse
-     * @throws Exception
-     */
     public function destroy(LinkList $list): RedirectResponse
     {
         $deletionSuccessful = ListRepository::delete($list);

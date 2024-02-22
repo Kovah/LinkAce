@@ -9,12 +9,12 @@ use Illuminate\Console\Command;
 class UpdateLinkThumbnails extends Command
 {
     protected $signature = 'links:update-thumbnails';
-
     protected $description = 'Updates the thumbnails for all existing links, done in batches.';
 
     public function handle(): void
     {
-        $this->confirm('This command updates the thumbnail for all links with the status "ok". This can take a long time, depending on the amount of links you have saved. Do you want to proceed?');
+        $this->confirm('This command updates the thumbnail for all links with the status "ok". ' .
+            'This can take a long time, depending on the amount of links you have saved. Do you want to proceed?');
 
         $totalCount = Link::where('status', Link::STATUS_OK)->count();
 

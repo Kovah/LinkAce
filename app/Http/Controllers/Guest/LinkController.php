@@ -3,40 +3,44 @@
 namespace App\Http\Controllers\Guest;
 
 use App\Http\Controllers\Controller;
-use App\Http\Controllers\Traits\HandlesQueryOrder;
+use App\Http\Controllers\Traits\ChecksOrdering;
+use App\Http\Controllers\Traits\ConfiguresLinkDisplay;
 use App\Models\Link;
 use Illuminate\Contracts\View\View;
 use Illuminate\Http\Request;
 
 class LinkController extends Controller
 {
-    use HandlesQueryOrder;
+    use ChecksOrdering;
+    use ConfiguresLinkDisplay;
 
-    /**
-     * Display an overview of all links.
-     *
-     * @param Request $request
-     * @return View
-     */
+    public function __construct()
+    {
+        $this->allowedOrderBy = Link::$allowOrderBy;
+    }
+
     public function index(Request $request): View
     {
-        $links = Link::publicOnly()
-            ->with('tags');
+        $this->updateLinkDisplayForGuest();
 
-        $orderBy = $request->input('orderBy', 'created_at');
-        $orderDir = $this->getOrderDirection($request);
-        if ($orderBy === 'random') {
+        $links = Link::publicOnly()->with(['tags' => fn ($query) => $query->publicOnly()]);
+
+        $this->orderBy = $request->input('orderBy', 'created_at');
+        $this->orderDir = $request->input('orderBy', 'desc');
+        $this->checkOrdering();
+
+        if ($this->orderBy === 'random') {
             $links->inRandomOrder();
         } else {
-            $links->orderBy($orderBy, $orderDir);
+            $links->orderBy($this->orderBy, $this->orderDir);
         }
 
         return view('guest.links.index', [
             'pageTitle' => trans('link.links'),
             'links' => $links->paginate(getPaginationLimit()),
             'route' => $request->getBaseUrl(),
-            'orderBy' => $request->input('orderBy', 'created_at'),
-            'orderDir' => $request->input('orderDir', 'desc'),
+            'orderBy' => $this->orderBy,
+            'orderDir' => $this->orderDir,
         ]);
     }
 }

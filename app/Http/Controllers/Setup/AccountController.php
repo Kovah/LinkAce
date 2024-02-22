@@ -17,11 +17,6 @@ class AccountController extends Controller
         return route('setup.complete');
     }
 
-    /**
-     * Display the registration form for the first user account.
-     *
-     * @return View
-     */
     public function index(): View
     {
         return view('setup.account', [
@@ -29,13 +24,6 @@ class AccountController extends Controller
         ]);
     }
 
-    /**
-     * Validate and create the new user, then login him, and redirect him to the dashboard
-     *
-     * @param Request $request
-     * @return RedirectResponse
-     * @throws ValidationException
-     */
     protected function register(Request $request): RedirectResponse
     {
         $user = (new CreateNewUser())->create($request->input());

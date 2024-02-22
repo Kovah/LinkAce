@@ -2,52 +2,124 @@
 
 namespace Tests\Controller\API;
 
-use App\Jobs\SaveLinkToWaybackmachine;
+use App\Enums\ApiToken;
+use App\Enums\ModelAttribute;
 use App\Models\Link;
 use App\Models\LinkList;
 use App\Models\Tag;
 use Illuminate\Foundation\Testing\RefreshDatabase;
+use Illuminate\Support\Facades\Http;
 use Illuminate\Support\Facades\Queue;
+use Tests\Controller\Traits\PreparesTestData;
 
 class LinkApiTest extends ApiTestCase
 {
     use RefreshDatabase;
+    use PreparesTestData;
+
+    protected function setUp(): void
+    {
+        parent::setUp();
+
+        $testHtml = '<!DOCTYPE html><head>' .
+            '<title>Example Title</title>' .
+            '<meta name="description" content="This an example description">' .
+            '</head></html>';
+
+        Http::fake([
+            'example.com' => Http::response($testHtml),
+        ]);
+
+        Queue::fake();
+    }
 
     public function testUnauthorizedRequest(): void
     {
-        $response = $this->getJson('api/v1/links');
-
-        $response->assertUnauthorized();
+        $this->getJson('api/v1/links')->assertUnauthorized();
     }
 
     public function testIndexRequest(): void
     {
-        $link = Link::factory()->create();
+        $this->createTestLinks();
 
-        $response = $this->getJsonAuthorized('api/v1/links');
-
-        $response->assertOk()
+        $this->getJsonAuthorized('api/v1/links')
+            ->assertOk()
             ->assertJson([
                 'data' => [
-                    ['url' => $link->url],
+                    ['url' => 'https://internal-link.com'],
+                    ['url' => 'https://public-link.com'],
+                ],
+            ])
+            ->assertJsonMissing([
+                'data' => [
+                    ['url' => 'https://private-link.com'],
+                ],
+            ]);
+    }
+
+    public function testForbiddenIndexRequestFromSystem(): void
+    {
+        $this->createTestLinks();
+        $this->createSystemToken();
+
+        $this->getJsonAuthorized('api/v1/links', useSystemToken: true)
+            ->assertForbidden();
+    }
+
+    public function testIndexRequestFromSystem(): void
+    {
+        $this->createTestLinks();
+        $this->createSystemToken([ApiToken::ABILITY_LINKS_READ]);
+
+        $this->getJsonAuthorized('api/v1/links', useSystemToken: true)
+            ->assertOk()
+            ->assertJson([
+                'data' => [
+                    ['url' => 'https://internal-link.com'],
+                    ['url' => 'https://public-link.com'],
+                ],
+            ])
+            ->assertJsonMissing([
+                'data' => [
+                    ['url' => 'https://private-link.com'],
+                ],
+            ]);
+    }
+
+    public function testIndexRequestFromSystemWithPrivate(): void
+    {
+        $this->createTestLinks();
+        $this->createSystemToken([ApiToken::ABILITY_LINKS_READ, ApiToken::ABILITY_SYSTEM_ACCESS_PRIVATE]);
+
+        $this->getJsonAuthorized('api/v1/links', useSystemToken: true)
+            ->assertOk()
+            ->assertJson([
+                'data' => [
+                    ['url' => 'https://private-link.com'],
+                    ['url' => 'https://internal-link.com'],
+                    ['url' => 'https://public-link.com'],
                 ],
             ]);
     }
 
     public function testMinimalCreateRequest(): void
     {
-        $response = $this->postJsonAuthorized('api/v1/links', [
-            'url' => 'http://example.com',
-        ]);
-
-        $response->assertOk()
+        $this->postJsonAuthorized('api/v1/links', [
+            'url' => 'https://example.com',
+        ])
+            ->assertOk()
             ->assertJson([
-                'url' => 'http://example.com',
+                'url' => 'https://example.com',
+                'description' => 'This an example description',
             ]);
+    }
 
-        $databaseLink = Link::first();
-
-        $this->assertEquals('http://example.com', $databaseLink->url);
+    public function testCreateRequestBySystem(): void
+    {
+        $this->createSystemToken();
+        $this->postJsonAuthorized('api/v1/links', [
+            'url' => 'https://example.com',
+        ], useSystemToken: true)->assertForbidden();
     }
 
     public function testFullCreateRequest(): void
@@ -56,19 +128,18 @@ class LinkApiTest extends ApiTestCase
         $tag = Tag::factory()->create(['name' => 'a test 1']);
         $tag2 = Tag::factory()->create(['name' => 'tag #2']);
 
-        $response = $this->postJsonAuthorized('api/v1/links', [
-            'url' => 'http://example.com',
+        $this->postJsonAuthorized('api/v1/links', [
+            'url' => 'https://example.com',
             'title' => 'Search the Web',
             'description' => 'There could be a description here',
             'lists' => [$list->id],
             'tags' => [$tag->id, $tag2->id],
             'is_private' => false,
             'check_disabled' => false,
-        ]);
-
-        $response->assertOk()
+        ])
+            ->assertOk()
             ->assertJson([
-                'url' => 'http://example.com',
+                'url' => 'https://example.com',
                 'lists' => [
                     ['name' => 'Test List 1'],
                 ],
@@ -77,22 +148,17 @@ class LinkApiTest extends ApiTestCase
                     ['name' => 'tag #2'],
                 ],
             ]);
-
-        $databaseLink = Link::first();
-
-        $this->assertEquals('http://example.com', $databaseLink->url);
     }
 
     public function testCreateRequestWithTagsAsString(): void
     {
-        $response = $this->postJsonAuthorized('api/v1/links', [
-            'url' => 'http://example.com',
+        $this->postJsonAuthorized('api/v1/links', [
+            'url' => 'https://example.com',
             'tags' => 'tag 1, tag 2',
-        ]);
-
-        $response->assertOk()
+        ])
+            ->assertOk()
             ->assertJson([
-                'url' => 'http://example.com',
+                'url' => 'https://example.com',
                 'tags' => [
                     ['name' => 'tag 1'],
                     ['name' => 'tag 2'],
@@ -100,7 +166,7 @@ class LinkApiTest extends ApiTestCase
             ]);
 
         $databaseLink = Link::first();
-        $this->assertEquals('http://example.com', $databaseLink->url);
+        $this->assertEquals('https://example.com', $databaseLink->url);
 
         $databaseTag = Tag::first();
         $this->assertEquals('tag 1', $databaseTag->name);
@@ -108,14 +174,13 @@ class LinkApiTest extends ApiTestCase
 
     public function testCreateRequestWithTagsAsArray(): void
     {
-        $response = $this->postJsonAuthorized('api/v1/links', [
-            'url' => 'http://example.com',
+        $this->postJsonAuthorized('api/v1/links', [
+            'url' => 'https://example.com',
             'tags' => ['tag 1', 'tag 2'],
-        ]);
-
-        $response->assertOk()
+        ])
+            ->assertOk()
             ->assertJson([
-                'url' => 'http://example.com',
+                'url' => 'https://example.com',
                 'tags' => [
                     ['name' => 'tag 1'],
                     ['name' => 'tag 2'],
@@ -123,7 +188,7 @@ class LinkApiTest extends ApiTestCase
             ]);
 
         $databaseLink = Link::first();
-        $this->assertEquals('http://example.com', $databaseLink->url);
+        $this->assertEquals('https://example.com', $databaseLink->url);
 
         $databaseTag = Tag::first();
         $this->assertEquals('tag 1', $databaseTag->name);
@@ -131,14 +196,13 @@ class LinkApiTest extends ApiTestCase
 
     public function testCreateRequestWithUnicodeTags(): void
     {
-        $response = $this->postJsonAuthorized('api/v1/links', [
-            'url' => 'http://example.com',
+        $this->postJsonAuthorized('api/v1/links', [
+            'url' => 'https://example.com',
             'tags' => 'Games 👾, Захватывающе, उत्तेजित करनेवाला',
-        ]);
-
-        $response->assertOk()
+        ])
+            ->assertOk()
             ->assertJson([
-                'url' => 'http://example.com',
+                'url' => 'https://example.com',
                 'tags' => [
                     ['name' => 'Games 👾'],
                     ['name' => 'Захватывающе'],
@@ -158,136 +222,241 @@ class LinkApiTest extends ApiTestCase
 
     public function testInvalidCreateRequest(): void
     {
-        $response = $this->postJsonAuthorized('api/v1/links', [
+        $this->postJsonAuthorized('api/v1/links', [
             'url' => null,
             'lists' => 'no array',
             'tags' => 123,
-            'is_private' => 'hello',
+            'visibility' => 'hello',
             'check_disabled' => 'bla',
-        ]);
-
-        $response->assertJsonValidationErrors([
+        ])->assertJsonValidationErrors([
             'url' => 'The url field is required.',
-            'is_private' => 'The is private field must be true or false.',
+            'visibility' => 'The Visibility must bei either 1 (public), 2 (internal) or 3 (private).',
             'check_disabled' => 'The check disabled field must be true or false.',
         ]);
     }
 
     public function testShowRequest(): void
     {
-        $link = Link::factory()->create();
+        $this->createTestLinks();
 
-        $response = $this->getJsonAuthorized('api/v1/links/1');
+        $this->getJsonAuthorized('api/v1/links/1')->assertOk()->assertJson(['url' => 'https://public-link.com']);
+        $this->getJsonAuthorized('api/v1/links/2')->assertOk()->assertJson(['url' => 'https://internal-link.com']);
+        $this->getJsonAuthorized('api/v1/links/3')->assertForbidden();
+    }
 
-        $response->assertOk()
-            ->assertJson([
-                'url' => $link->url,
-            ]);
+    public function testShowRequestBySystem(): void
+    {
+        $this->createSystemToken([ApiToken::ABILITY_LINKS_READ]);
+        $this->createTestLinks();
+
+        $this->getJsonAuthorized('api/v1/links/1', useSystemToken: true)
+            ->assertOk()->assertJson(['url' => 'https://public-link.com']);
+        $this->getJsonAuthorized('api/v1/links/2', useSystemToken: true)
+            ->assertOk()->assertJson(['url' => 'https://internal-link.com']);
+        $this->getJsonAuthorized('api/v1/links/3', useSystemToken: true)
+            ->assertForbidden();
+    }
+
+    public function testShowRequestBySystemWithPrivateAccess(): void
+    {
+        $this->createSystemToken([ApiToken::ABILITY_LINKS_READ, ApiToken::ABILITY_SYSTEM_ACCESS_PRIVATE]);
+        $this->createTestLinks();
+
+        $this->getJsonAuthorized('api/v1/links/1', useSystemToken: true)
+            ->assertOk()->assertJson(['url' => 'https://public-link.com']);
+        $this->getJsonAuthorized('api/v1/links/2', useSystemToken: true)
+            ->assertOk()->assertJson(['url' => 'https://internal-link.com']);
+        $this->getJsonAuthorized('api/v1/links/3', useSystemToken: true)
+            ->assertOk()->assertJson(['url' => 'https://private-link.com']);
     }
 
     public function testShowRequestWithRelations(): void
     {
-        $link = Link::factory()->create();
-        $list = LinkList::factory()->create();
-        $tag = Tag::factory()->create();
+        $this->setupLinkWithRelations();
 
-        $link->lists()->sync([$list->id]);
-        $link->tags()->sync([$tag->id]);
-
-        $response = $this->getJsonAuthorized('api/v1/links/1');
-
-        $response->assertOk()
+        $this->getJsonAuthorized('api/v1/links/1')
+            ->assertOk()
             ->assertJson([
-                'url' => $link->url,
+                'url' => 'https://example-link.com',
                 'lists' => [
-                    ['name' => $list->name],
+                    ['name' => 'publicList'],
                 ],
                 'tags' => [
-                    ['name' => $tag->name],
+                    ['name' => 'publicTag'],
+                ],
+            ])
+            ->assertJsonMissing([
+                'lists' => [
+                    ['name' => 'privateList'],
+                ],
+                'tags' => [
+                    ['name' => 'privateTag'],
+                ],
+            ]);
+    }
+
+    public function testShowRequestWithRelationsBySystem(): void
+    {
+        $this->createSystemToken([
+            ApiToken::ABILITY_LINKS_READ,
+            ApiToken::ABILITY_LISTS_READ,
+            ApiToken::ABILITY_TAGS_READ,
+        ]);
+
+        $this->setupLinkWithRelations();
+
+        $this->getJsonAuthorized('api/v1/links/1', useSystemToken: true)
+            ->assertOk()
+            ->assertJson([
+                'url' => 'https://example-link.com',
+                'lists' => [
+                    ['name' => 'publicList'],
+                ],
+                'tags' => [
+                    ['name' => 'publicTag'],
+                ],
+            ])
+            ->assertJsonMissing([
+                'lists' => [
+                    ['name' => 'privateList'],
+                ],
+                'tags' => [
+                    ['name' => 'privateTag'],
+                ],
+            ]);
+    }
+
+    public function testShowRequestWithRelationsBySystemWithPrivateAccess(): void
+    {
+        $this->createSystemToken([
+            ApiToken::ABILITY_LINKS_READ,
+            ApiToken::ABILITY_LISTS_READ,
+            ApiToken::ABILITY_TAGS_READ,
+            ApiToken::ABILITY_SYSTEM_ACCESS_PRIVATE,
+        ]);
+
+        $this->setupLinkWithRelations();
+
+        $this->getJsonAuthorized('api/v1/links/1', useSystemToken: true)
+            ->assertOk()
+            ->assertJson([
+                'url' => 'https://example-link.com',
+                'lists' => [
+                    ['name' => 'privateList'],
+                    ['name' => 'publicList'],
+                ],
+                'tags' => [
+                    ['name' => 'privateTag'],
+                    ['name' => 'publicTag'],
                 ],
             ]);
     }
 
     public function testShowRequestNotFound(): void
     {
-        $response = $this->getJsonAuthorized('api/v1/links/1');
-
-        $response->assertNotFound();
+        $this->getJsonAuthorized('api/v1/links/1')->assertNotFound();
     }
 
     public function testUpdateRequest(): void
     {
-        Link::factory()->create();
         $list = LinkList::factory()->create();
+        $this->createTestLinks();
 
-        $response = $this->patchJsonAuthorized('api/v1/links/1', [
-            'url' => 'http://example.com',
+        $this->patchJsonAuthorized('api/v1/links/1', [
+            'url' => 'https://new-public-link.com',
             'title' => 'Custom Title',
             'description' => 'Custom Description',
             'lists' => [$list->id],
             'is_private' => false,
             'check_disabled' => false,
-        ]);
+        ])->assertOk()->assertJson(['url' => 'https://new-public-link.com']);
 
-        $response->assertOk()
-            ->assertJson([
-                'url' => 'http://example.com',
-            ]);
+        $this->patchJsonAuthorized('api/v1/links/2', [
+            'url' => 'https://new-internal-link.com',
+            'title' => 'Custom Title',
+            'description' => 'Custom Description',
+            'lists' => [$list->id],
+            'is_private' => false,
+            'check_disabled' => false,
+        ])->assertOk()->assertJson(['url' => 'https://new-internal-link.com']);
 
-        $databaseLink = Link::first();
-
-        $this->assertEquals('http://example.com', $databaseLink->url);
+        $this->patchJsonAuthorized('api/v1/links/3', [
+            'url' => 'https://new-internal-link.com',
+            'title' => 'Custom Title',
+            'description' => 'Custom Description',
+            'lists' => [$list->id],
+            'is_private' => false,
+            'check_disabled' => false,
+        ])->assertForbidden();
     }
 
     public function testInvalidUpdateRequest(): void
     {
         Link::factory()->create();
 
-        $response = $this->patchJsonAuthorized('api/v1/links/1', [
+        $this->patchJsonAuthorized('api/v1/links/1', [
             'url' => null,
             'lists' => 'no array',
             'tags' => 123,
-            'is_private' => 'hello',
+            'visibility' => 'hello',
             'check_disabled' => 'bla',
-        ]);
-
-        $response->assertJsonValidationErrors([
+        ])->assertJsonValidationErrors([
             'url' => 'The url field is required.',
-            'is_private' => 'The is private field must be true or false.',
+            'visibility' => 'The Visibility must bei either 1 (public), 2 (internal) or 3 (private).',
             'check_disabled' => 'The check disabled field must be true or false.',
         ]);
     }
 
     public function testUpdateRequestNotFound(): void
     {
-        $response = $this->patchJsonAuthorized('api/v1/links/1', [
-            'url' => 'http://example.com',
+        $this->patchJsonAuthorized('api/v1/links/1', [
+            'url' => 'https://new-public-link.com',
             'title' => 'Custom Title',
             'description' => 'Custom Description',
             'lists' => [],
             'tags' => [],
             'is_private' => false,
             'check_disabled' => false,
-        ]);
-
-        $response->assertNotFound();
+        ])->assertNotFound();
     }
 
     public function testDeleteRequest(): void
     {
-        Link::factory()->create();
+        $this->createTestLinks();
 
-        $response = $this->deleteJsonAuthorized('api/v1/links/1');
+        $this->assertEquals(3, Link::count());
 
-        $response->assertOk();
+        $this->deleteJsonAuthorized('api/v1/links/1')->assertOk();
+        $this->deleteJsonAuthorized('api/v1/links/2')->assertForbidden();
+        $this->deleteJsonAuthorized('api/v1/links/3')->assertForbidden();
 
-        $this->assertEquals(0, Link::count());
+        $this->assertEquals(2, Link::count());
     }
 
     public function testDeleteRequestNotFound(): void
     {
-        $response = $this->deleteJsonAuthorized('api/v1/links/1');
+        $this->deleteJsonAuthorized('api/v1/links/1')->assertNotFound();
+    }
 
-        $response->assertNotFound();
+    protected function setupLinkWithRelations()
+    {
+        $link = Link::factory()->create(['url' => 'https://example-link.com']);
+
+        $list = LinkList::factory()->create(['name' => 'publicList']);
+        $privateList = LinkList::factory()->create([
+            'name' => 'privateList',
+            'user_id' => 5,
+            'visibility' => ModelAttribute::VISIBILITY_PRIVATE,
+        ]);
+
+        $tag = Tag::factory()->create(['name' => 'publicTag']);
+        $privateTag = Tag::factory()->create([
+            'name' => 'privateTag',
+            'user_id' => 5,
+            'visibility' => ModelAttribute::VISIBILITY_PRIVATE,
+        ]);
+
+        $link->lists()->sync([$list->id, $privateList->id]);
+        $link->tags()->sync([$tag->id, $privateTag->id]);
     }
 }

@@ -2,7 +2,9 @@
 
 namespace App\Providers;
 
+use App\Listeners\SavingSettingsListener;
 use Illuminate\Foundation\Support\Providers\EventServiceProvider as ServiceProvider;
+use Spatie\LaravelSettings\Events\SavingSettings;
 
 class EventServiceProvider extends ServiceProvider
 {
@@ -14,6 +16,9 @@ class EventServiceProvider extends ServiceProvider
     protected $listen = [
         'App\Events\Event' => [
             'App\Listeners\EventListener',
+        ],
+        SavingSettings::class => [
+            SavingSettingsListener::class,
         ],
     ];
 

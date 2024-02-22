@@ -8,6 +8,8 @@ RUN apt-get update && apt-get install -y \
     zip \
     git \
     mariadb-client \
+    postgresql-client \
+    sqlite3 \
     autoconf \
     build-essential \
     libpq-dev \

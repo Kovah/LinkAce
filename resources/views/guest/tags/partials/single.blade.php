@@ -1,7 +1,7 @@
 <tr>
     <td>
         <a href="{{ route('guest.tags.show', [$tag]) }}">
-            {{ $tag->name }}
+            <x-models.name-with-user :model="$tag"/>
         </a>
     </td>
     <td>

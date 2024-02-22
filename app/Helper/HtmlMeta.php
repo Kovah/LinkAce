@@ -8,28 +8,24 @@ use Kovah\HtmlMeta\Exceptions\UnreachableUrlException;
 
 class HtmlMeta
 {
-    /** @var string */
-    protected $url;
-
-    /** @var array */
-    protected $fallback;
-
-    /** @var array */
-    protected $meta;
+    protected string $url;
+    protected array $fallback;
+    protected array $meta;
 
     /**
-     * Get the title and description of an URL.
+     * Get the title and description of a URL.
      *
      * Returned array:
      * array [
      *   'success' => bool,
      *   'title' => string,
      *   'description' => string|null,
+     *   'thumbnail' => string|null,
      * ]
      *
      * @param string $url
      * @param bool   $flashAlerts
-     * @return array
+     * @return array{success: bool, title: string, description: string|null, thumbnail: string|null}
      */
     public function getFromUrl(string $url, bool $flashAlerts = false): array
     {
@@ -55,15 +51,10 @@ class HtmlMeta
         return $this->buildLinkMeta();
     }
 
-    /**
-     * Build a response array containing the link meta including a success flag.
-     *
-     * @return array
-     */
+    // Build a response array containing the link meta including a success flag.
     protected function buildLinkMeta(): array
     {
-        $this->meta['description'] = $this->meta['description']
-            ?? $this->meta['og:description']
+        $this->meta['description'] ??= $this->meta['og:description']
             ?? $this->meta['twitter:description']
             ?? null;
 
@@ -75,9 +66,7 @@ class HtmlMeta
         ];
     }
 
-    /**
-     * The fallback is used in case of errors while trying to get the link meta.
-     */
+    // The fallback is used in case of errors while trying to get the link meta.
     protected function buildFallback(): void
     {
         $this->fallback = [
@@ -89,8 +78,8 @@ class HtmlMeta
     }
 
     /**
-     * Try to get the thumbnail from the meta tags and handle specific cases where we know how to get a proper image
-     * from the website.
+     * Try to get the thumbnail from the meta tags and handle specific cases
+     * where we know how to get a proper image from the website.
      *
      * @return string|null
      */
@@ -108,7 +97,7 @@ class HtmlMeta
         }
 
         /*
-         * Edge case of Youtube only (because of Youtube EU cookie consent)
+         * Edge case of YouTube only (because of YouTube EU cookie consent)
          * Formula based on https://stackoverflow.com/a/2068371, returns Youtube image url
          * https://img.youtube.com/vi/[video-id]/mqdefault.jpg
          */

@@ -126,8 +126,8 @@
 
                 <div class="card-body btn-cloud">
                     @forelse($recent_lists as $list)
-                        <a href="{{ route('lists.show', [$list->id]) }}" class="btn btn-light btn-sm">
-                            {{ $list->name }}
+                        <a href="{{ route('lists.show', ['list' => $list]) }}" class="btn btn-light btn-sm m-1">
+                            <x-models.name-with-user :model="$list"/>
                         </a>
                     @empty
                         <div class="text-pale">
@@ -147,8 +147,8 @@
 
                 <div class="card-body btn-cloud">
                     @forelse($recent_tags as $tag)
-                        <a href="{{ route('tags.show', [$tag->id]) }}" class="btn btn-light btn-sm">
-                            {{ $tag->name }}
+                        <a href="{{ route('tags.show', ['tag' => $tag]) }}" class="btn btn-light btn-sm m-1">
+                            <x-models.name-with-user :model="$tag"/>
                         </a>
                     @empty
                         <div class="text-pale">

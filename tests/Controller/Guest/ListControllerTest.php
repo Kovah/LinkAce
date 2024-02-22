@@ -3,8 +3,9 @@
 namespace Tests\Controller\Guest;
 
 use App\Models\LinkList;
-use App\Models\Setting;
 use App\Models\User;
+use App\Settings\SettingsAudit;
+use App\Settings\SystemSettings;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Tests\TestCase;
 
@@ -16,9 +17,9 @@ class ListControllerTest extends TestCase
     {
         parent::setUp();
 
-        Setting::create([
-            'key' => 'system_guest_access',
-            'value' => '1',
+        SystemSettings::fake([
+            'guest_access_enabled' => true,
+            'setup_completed' => true,
         ]);
     }
 
@@ -28,11 +29,11 @@ class ListControllerTest extends TestCase
 
         LinkList::factory()->create([
             'name' => 'public list',
-            'is_private' => false,
+            'visibility' => 1,
         ]);
         LinkList::factory()->create([
             'name' => 'private list',
-            'is_private' => true,
+            'visibility' => 3,
         ]);
 
         $response = $this->get('guest/lists');
@@ -48,7 +49,7 @@ class ListControllerTest extends TestCase
 
         LinkList::factory()->create([
             'name' => 'test list name',
-            'is_private' => false,
+            'visibility' => 1,
         ]);
 
         $response = $this->get('guest/lists/1');
@@ -62,7 +63,7 @@ class ListControllerTest extends TestCase
 
         LinkList::factory()->create([
             'name' => 'test list name',
-            'is_private' => true,
+            'visibility' => 3,
         ]);
 
         $response = $this->get('guest/lists/1');

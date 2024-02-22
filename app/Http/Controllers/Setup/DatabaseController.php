@@ -18,11 +18,6 @@ class DatabaseController extends Controller
 {
     protected array $dbConfig;
 
-    /**
-     * Display the form for configuration of the database.
-     *
-     * @return View
-     */
     public function index(): View
     {
         return view('setup.database', [
@@ -30,15 +25,9 @@ class DatabaseController extends Controller
         ]);
     }
 
-    /**
-     * Handle the test and configuration of a new database connection.
-     *
-     * @param SetupDatabaseRequest $request
-     * @return RedirectResponse
-     */
     public function configure(SetupDatabaseRequest $request): RedirectResponse
     {
-        $this->createTempDatabaseConnection($request->all());
+        $this->createTempDatabaseConnection($request->validated());
 
         if ($this->databaseHasData() && !$request->has('overwrite_data')) {
             flash(trans('setup.database.data_present'), 'danger');
@@ -56,11 +45,6 @@ class DatabaseController extends Controller
         return redirect()->route('setup.account');
     }
 
-    /**
-     * Accepts new credentials for a database and sets them accordingly.
-     *
-     * @param array $credentials
-     */
     protected function createTempDatabaseConnection(array $credentials): void
     {
         $this->dbConfig = config('database.connections.mysql');
@@ -71,7 +55,7 @@ class DatabaseController extends Controller
         $this->dbConfig['username'] = $credentials['db_user'];
         $this->dbConfig['password'] = $credentials['db_password'];
 
-        Config::set('database.connections.setup', $this->dbConfig);
+        Config::set('database.connections.mysql', $this->dbConfig);
     }
 
     /**
@@ -86,7 +70,7 @@ class DatabaseController extends Controller
     {
         try {
             Artisan::call('migrate:fresh', [
-                '--database' => 'setup', // Specify the correct connection
+                '--database' => 'mysql', // Specify the correct connection
                 '--force' => true, // Needed for production
                 '--no-interaction' => true,
             ]);
@@ -137,14 +121,14 @@ class DatabaseController extends Controller
     protected function databaseHasData(): bool
     {
         try {
-            $present_tables = DB::connection('setup')
+            $presentTables = DB::connection('mysql')
                 ->getDoctrineSchemaManager()
                 ->listTableNames();
-        } catch (PDOException $e) {
+        } catch (PDOException|\Doctrine\DBAL\Exception $e) {
             Log::error($e->getMessage());
             return false;
         }
 
-        return count($present_tables) > 0;
+        return count($presentTables) > 0;
     }
 }

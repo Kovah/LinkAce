@@ -8,7 +8,7 @@
         </header>
         <div class="card-body">
 
-            <form action="{{ route('tags.update', [$tag->id]) }}" method="POST">
+            <form action="{{ route('tags.update', ['tag' => $tag]) }}" method="POST">
                 @method('PATCH')
                 @csrf
 
@@ -32,25 +32,8 @@
                         </div>
                     </div>
                     <div class="col-12 col-sm-6 col-md-5">
-                        <div class="mb-4">
-                            <label class="form-label" for="is_private">@lang('linkace.is_private')</label>
-
-                            <select id="is_private" name="is_private"
-                                class="form-select{{ $errors->has('is_private') ? ' is-invalid' : '' }}">
-                                <option value="0" @if($tag->is_private === 0) selected @endif>
-                                    @lang('linkace.no')
-                                </option>
-                                <option value="1" @if($tag->is_private === 1) selected @endif>
-                                    @lang('linkace.yes')
-                                </option>
-                            </select>
-
-                            @if ($errors->has('is_private'))
-                                <p class="invalid-feedback" role="alert">
-                                    {{ $errors->first('is_private') }}
-                                </p>
-                            @endif
-                        </div>
+                        <x-forms.visibility-toggle class="mb-4" :existing-value="$tag->visibility"
+                            visibility-setting="tags_default_visibility"/>
                     </div>
                 </div>
 
@@ -59,7 +42,7 @@
                     <div class="d-sm-inline-block mb-3 mb-sm-0 me-auto">
                         <button type="button" class="btn btn-sm btn-outline-danger"
                             onclick="window.deleteTag.submit()">
-                            <x-icon.trash class="me-2"/> @lang('tag.delete')
+                            <x-icon.trash class="me-2"/> @choice('tag.delete', 1)
                         </button>
                     </div>
 
@@ -74,7 +57,7 @@
         </div>
     </div>
 
-    <form action="{{ route('tags.destroy', [$tag->id]) }}" method="post" id="deleteTag">
+    <form action="{{ route('tags.destroy', ['tag' => $tag]) }}" method="post" id="deleteTag">
         @csrf
         @method('DELETE')
     </form>

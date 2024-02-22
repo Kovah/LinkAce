@@ -7,12 +7,11 @@ use App\Helper\LinkIconMapper;
 use App\Models\Link;
 use App\Models\LinkList;
 use App\Models\Tag;
-use DateTime;
 use Exception;
 use Illuminate\Support\Collection;
-use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Event;
 use Illuminate\Support\Facades\Log;
-use Venturecraft\Revisionable\Revisionable;
+use OwenIt\Auditing\Events\AuditCustom;
 
 class LinkRepository
 {
@@ -30,10 +29,10 @@ class LinkRepository
     {
         $linkMeta = (new HtmlMeta)->getFromUrl($data['url'], $flashAlerts);
 
-        $data['title'] = $data['title'] ?? $linkMeta['title'];
-        $data['description'] = $data['description'] ?? $linkMeta['description'];
+        $data['title'] ??= $linkMeta['title'];
+        $data['description'] ??= $linkMeta['description'];
         $data['user_id'] = auth()->user()->id;
-        $data['icon'] = LinkIconMapper::mapLink($data['url']);
+        $data['icon'] = LinkIconMapper::getIconForUrl($data['url']);
         $data['thumbnail'] = $linkMeta['thumbnail'];
 
         // If the meta helper was not successful, disable future checks and set the status to broken
@@ -60,7 +59,7 @@ class LinkRepository
      */
     public static function update(Link $link, array $data): Link
     {
-        $data['icon'] = LinkIconMapper::mapLink($data['url'] ?? $link->url);
+        $data['icon'] = LinkIconMapper::getIconForUrl($data['url'] ?? $link->url);
 
         $link->update($data);
 
@@ -96,8 +95,8 @@ class LinkRepository
             if ($link->tags()->count() > 0) {
                 self::createRelationshipRevision(
                     $link,
-                    Link::REV_TAGS_NAME,
-                    $link->tags->pluck('id')->join(','),
+                    Link::AUDIT_TAGS_NAME,
+                    $link->tags->pluck('id')->toArray(),
                     null
                 );
             }
@@ -112,8 +111,8 @@ class LinkRepository
             if ($link->lists()->count() > 0) {
                 self::createRelationshipRevision(
                     $link,
-                    Link::REV_LISTS_NAME,
-                    $link->lists->pluck('id')->join(','),
+                    Link::AUDIT_LISTS_NAME,
+                    $link->lists->pluck('id')->toArray(),
                     null
                 );
             }
@@ -132,24 +131,22 @@ class LinkRepository
      * @param Link         $link
      * @param array|string $tags
      */
-    protected static function updateTagsForLink(Link $link, $tags): void
+    protected static function updateTagsForLink(Link $link, array|string $tags): void
     {
         $oldTags = $link->tags->pluck('id');
 
-        if (!is_array($tags)) {
-            $tags = explode(',', $tags);
-        }
+        $tags = is_array($tags) ? $tags : explode(',', $tags);
 
         $newTags = self::processTaxonomy(Tag::class, $tags);
 
         $link->tags()->sync($newTags);
 
-        if ($oldTags->isEmpty() || $oldTags->diff($newTags)->isNotEmpty()) {
+        if ($oldTags->isEmpty() || $oldTags->diff($newTags)->isNotEmpty() || $newTags->diff($oldTags)->isNotEmpty()) {
             self::createRelationshipRevision(
                 $link,
-                Link::REV_TAGS_NAME,
-                $oldTags->join(','),
-                $newTags->join(',')
+                Link::AUDIT_TAGS_NAME,
+                $oldTags->toArray(),
+                $newTags->toArray()
             );
         }
     }
@@ -160,24 +157,23 @@ class LinkRepository
      * @param Link         $link
      * @param array|string $lists
      */
-    protected static function updateListsForLink(Link $link, $lists): void
+    protected static function updateListsForLink(Link $link, array|string $lists): void
     {
         $oldLists = $link->lists->pluck('id');
 
-        if (!is_array($lists)) {
-            $lists = explode(',', $lists);
-        }
+        $lists = is_array($lists) ? $lists : explode(',', $lists);
 
         $newLists = self::processTaxonomy(LinkList::class, $lists);
 
         $link->lists()->sync($newLists);
 
-        if ($oldLists->isEmpty() || $oldLists->diff($newLists)->isNotEmpty()) {
+        if ($oldLists->isEmpty()
+            || $oldLists->diff($newLists)->isNotEmpty() || $newLists->diff($oldLists)->isNotEmpty()) {
             self::createRelationshipRevision(
                 $link,
-                Link::REV_LISTS_NAME,
-                $oldLists->join(','),
-                $newLists->join(',')
+                Link::AUDIT_LISTS_NAME,
+                $oldLists->toArray(),
+                $newLists->toArray()
             );
         }
     }
@@ -185,7 +181,7 @@ class LinkRepository
     /**
      * Tags or lists are passed as comma-delimited strings or integers.
      * If integers are passed we assume that the tags or lists are referenced
-     * by their ID. n that case we try to retrieve the tag or list by the
+     * by their ID. In that case we try to retrieve the tag or list by the
      * provided ID.
      * If tags or lists are passed as strings, we create them and pass the new
      * entity to the taxonomy list.
@@ -204,8 +200,8 @@ class LinkRepository
         };
 
         foreach ($entries as $entry) {
-            if (is_int($entry)) {
-                $newEntry = Tag::find($entry);
+            if ((int)$entry > 0) {
+                $newEntry = $model::find($entry);
             } else {
                 $newEntry = $model::firstOrCreate([
                     'user_id' => auth()->id(),
@@ -230,26 +226,26 @@ class LinkRepository
      * have changed. Recorded are the IDs instead of names to make sure changes
      * of the corresponding models are taken into account.
      *
-     * @param Link   $link
-     * @param string $key
-     * @param mixed  $oldData
-     * @param mixed  $newData
+     * @param Link       $link
+     * @param string     $key
+     * @param array|null $oldData
+     * @param array|null $newData
      */
-    protected static function createRelationshipRevision(Link $link, string $key, $oldData, $newData): void
-    {
-        $revision = [
-            'revisionable_type' => $link->getMorphClass(),
-            'revisionable_id' => $link->getKey(),
-            'key' => $key,
-            'old_value' => $oldData,
-            'new_value' => $newData,
-            'user_id' => $link->getSystemUserId(),
-            'created_at' => new DateTime(),
-            'updated_at' => new DateTime(),
+    protected static function createRelationshipRevision(
+        Link $link,
+        string $key,
+        ?array $oldData,
+        ?array $newData
+    ): void {
+        $link->auditEvent = Link::AUDIT_RELATION_EVENT;
+        $link->isCustomEvent = true;
+        $link->auditCustomOld = [
+            $key => $oldData,
+        ];
+        $link->auditCustomNew = [
+            $key => $newData,
         ];
 
-        $revisionable = Revisionable::newModel();
-
-        DB::table($revisionable->getTable())->insert($revision);
+        Event::dispatch(AuditCustom::class, [$link]);
     }
 }

@@ -13,17 +13,14 @@ class SearchLinksTest extends ApiTestCase
 
     public function testUnauthorizedRequest(): void
     {
-        $response = $this->getJson('api/v1/search/links');
-
-        $response->assertUnauthorized();
+        $this->getJson('api/v1/search/links')->assertUnauthorized();
     }
 
     public function testWithoutQuery(): void
     {
-        $response = $this->getJsonAuthorized('api/v1/search/links');
         $msg = 'You must either enter a search query, or select a list, a tag or enable searching for broken links.';
-
-        $response->assertJsonValidationErrors([
+        $this->getJsonAuthorized('api/v1/search/links')
+            ->assertJsonValidationErrors([
             'query' => $msg,
             'only_lists' => $msg,
             'only_tags' => $msg,
@@ -50,9 +47,8 @@ class SearchLinksTest extends ApiTestCase
         ]);
 
         $url = sprintf('api/v1/search/links?query=%s', 'example');
-        $response = $this->getJsonAuthorized($url);
-
-        $response->assertOk()
+        $this->getJsonAuthorized($url)
+            ->assertOk()
             ->assertJsonFragment([
                 'current_page' => 1,
             ])
@@ -81,9 +77,8 @@ class SearchLinksTest extends ApiTestCase
         ]);
 
         $url = sprintf('api/v1/search/links?query=%s&search_title=1', 'Test');
-        $response = $this->getJsonAuthorized($url);
-
-        $response->assertOk()
+        $this->getJsonAuthorized($url)
+            ->assertOk()
             ->assertJsonFragment([
                 'url' => $link->url,
             ])
@@ -108,9 +103,8 @@ class SearchLinksTest extends ApiTestCase
         ]);
 
         $url = sprintf('api/v1/search/links?query=%s&search_description=1', 'Example');
-        $response = $this->getJsonAuthorized($url);
-
-        $response->assertOk()
+        $this->getJsonAuthorized($url)
+            ->assertOk()
             ->assertJsonFragment([
                 'url' => $link->url,
             ])
@@ -124,20 +118,19 @@ class SearchLinksTest extends ApiTestCase
         $link = Link::factory()->create([
             'user_id' => $this->user->id,
             'url' => 'https://test.com',
-            'is_private' => true,
+            'visibility' => 1,
         ]);
 
         // This link must not be present in the results
         $excludedLink = Link::factory()->create([
             'user_id' => $this->user->id,
             'url' => 'https://test.org',
-            'is_private' => false,
+            'visibility' => 3,
         ]);
 
-        $url = sprintf('api/v1/search/links?query=%s&private_only=1', 'test');
-        $response = $this->getJsonAuthorized($url);
-
-        $response->assertOk()
+        $url = sprintf('api/v1/search/links?query=%s&visibility=1', 'test');
+        $this->getJsonAuthorized($url)
+            ->assertOk()
             ->assertJsonFragment([
                 'url' => $link->url,
             ])
@@ -161,9 +154,8 @@ class SearchLinksTest extends ApiTestCase
         ]);
 
         $url = sprintf('api/v1/search/links?query=%s&broken_only=1', 'test');
-        $response = $this->getJsonAuthorized($url);
-
-        $response->assertOk()
+        $this->getJsonAuthorized($url)
+            ->assertOk()
             ->assertJsonFragment([
                 'url' => $link->url,
             ])
@@ -193,9 +185,8 @@ class SearchLinksTest extends ApiTestCase
         ]);
 
         $url = sprintf('api/v1/search/links?only_lists=%s', $list->id);
-        $response = $this->getJsonAuthorized($url);
-
-        $response->assertOk()
+        $this->getJsonAuthorized($url)
+            ->assertOk()
             ->assertJsonFragment([
                 'url' => $link->url,
             ])
@@ -225,9 +216,8 @@ class SearchLinksTest extends ApiTestCase
         ]);
 
         $url = sprintf('api/v1/search/links?only_tags=%s', $tag->id);
-        $response = $this->getJsonAuthorized($url);
-
-        $response->assertOk()
+        $this->getJsonAuthorized($url)
+            ->assertOk()
             ->assertJsonFragment([
                 'url' => $link->url,
             ])

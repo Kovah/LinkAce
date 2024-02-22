@@ -22,24 +22,16 @@ class TrashRepository
 
         switch ($model) {
             case 'links':
-                $entries = Link::onlyTrashed()
-                    ->byUser()
-                    ->get();
+                $entries = Link::onlyTrashed()->byUser()->get();
                 break;
             case 'lists':
-                $entries = LinkList::onlyTrashed()
-                    ->byUser()
-                    ->get();
+                $entries = LinkList::onlyTrashed()->byUser()->get();
                 break;
             case 'tags':
-                $entries = Tag::onlyTrashed()
-                    ->byUser()
-                    ->get();
+                $entries = Tag::onlyTrashed()->byUser()->get();
                 break;
             case 'notes':
-                $entries = Note::onlyTrashed()
-                    ->byUser()
-                    ->get();
+                $entries = Note::onlyTrashed()->byUser()->get();
                 break;
         }
 
@@ -59,24 +51,15 @@ class TrashRepository
      */
     public static function restore(string $model, int $id): bool
     {
-        switch ($model) {
-            case 'link':
-                $entry = Link::withTrashed()->findOrFail($id);
-                break;
-            case 'list':
-                $entry = LinkList::withTrashed()->findOrFail($id);
-                break;
-            case 'tag':
-                $entry = Tag::withTrashed()->findOrFail($id);
-                break;
-            case 'note':
-                $entry = Note::withTrashed()->findOrFail($id);
-                break;
-            default:
-                $entry = null;
-        }
+        $entry = match ($model) {
+            'link' => Link::withTrashed()->byUser()->findOrFail($id),
+            'list' => LinkList::withTrashed()->byUser()->findOrFail($id),
+            'tag' => Tag::withTrashed()->byUser()->findOrFail($id),
+            'note' => Note::withTrashed()->byUser()->findOrFail($id),
+            default => null,
+        };
 
-        $entry->restore();
+        $entry?->restore();
 
         return true;
     }

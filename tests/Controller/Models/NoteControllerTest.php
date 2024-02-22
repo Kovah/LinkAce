@@ -4,16 +4,18 @@ namespace Tests\Controller\Models;
 
 use App\Models\Link;
 use App\Models\Note;
-use App\Models\Setting;
 use App\Models\User;
+use App\Settings\UserSettings;
 use Illuminate\Foundation\Testing\RefreshDatabase;
+use Tests\Controller\Traits\PreparesTestData;
 use Tests\TestCase;
 
 class NoteControllerTest extends TestCase
 {
     use RefreshDatabase;
+    use PreparesTestData;
 
-    private $user;
+    private User $user;
 
     protected function setUp(): void
     {
@@ -26,171 +28,174 @@ class NoteControllerTest extends TestCase
 
     public function testMinimalStoreRequest(): void
     {
-        $link = Link::factory()->create();
+        $this->createTestLinks();
 
-        $response = $this->post('notes', [
-            'link_id' => $link->id,
-            'note' => 'Lorem ipsum dolor',
-            'is_private' => '0',
-        ]);
+        $this->post('notes', [
+            'link_id' => 1,
+            'note' => 'Some public test note',
+            'visibility' => 1,
+        ])->assertRedirect('links/1');
 
-        $response->assertRedirect('links/1');
+        $this->get('links/1')->assertSee('Some public test note');
 
-        $this->assertEquals('Lorem ipsum dolor', $link->notes()->first()->note);
+        $this->post('notes', [
+            'link_id' => 2,
+            'note' => 'Some internal test note',
+            'visibility' => 1,
+        ])->assertRedirect('links/2');
+
+        $this->get('links/2')->assertSee('Some internal test note');
+
+        $this->post('notes', [
+            'link_id' => 3,
+            'note' => 'Some private test note',
+            'visibility' => 1,
+        ])->assertForbidden();
     }
 
-    public function testStoreRequestWithPrivateDefault(): void
+    public function testInternalStoreRequest(): void
     {
-        Setting::create([
-            'user_id' => 1,
-            'key' => 'notes_private_default',
-            'value' => '1',
-        ]);
-
         $link = Link::factory()->create();
 
         $response = $this->post('notes', [
             'link_id' => $link->id,
-            'note' => 'Lorem ipsum dolor',
-            'is_private' => usersettings('notes_private_default'),
+            'note' => 'Some internal test Note',
+            'visibility' => 2,
         ]);
 
         $response->assertRedirect('links/1');
 
-        $this->assertTrue($link->notes()->first()->is_private);
+        $this->get('links/1')
+            ->assertSee('Some internal test Note')
+            ->assertSee('Internal Note');
+    }
+
+    public function testPrivateStoreRequest(): void
+    {
+        $link = Link::factory()->create();
+
+        $response = $this->post('notes', [
+            'link_id' => $link->id,
+            'note' => 'Some private test Note',
+            'visibility' => 3,
+        ]);
+
+        $response->assertRedirect('links/1');
+
+        $this->get('links/1')
+            ->assertSee('Some private test Note')
+            ->assertSee('Private Note');
     }
 
     public function testStoreRequestWithMarkdown(): void
     {
-        Setting::create([
-            'user_id' => 1,
-            'key' => 'markdown_for_text',
-            'value' => '1',
+        UserSettings::fake([
+            'markdown_for_text' => true,
         ]);
 
         $link = Link::factory()->create();
 
-        $response = $this->post('notes', [
+        $this->post('notes', [
             'link_id' => $link->id,
             'note' => 'Lorem _ipsum dolor_',
-            'is_private' => '0',
-        ]);
+            'visibility' => 1,
+        ])->assertRedirect('links/1');
 
-        $response->assertRedirect('links/1');
-
-        $response = $this->get('links/1');
-        $response->assertSee('Lorem <em>ipsum dolor</em>', false);
+        $this->get('links/1')->assertSee('Lorem <em>ipsum dolor</em>', false);
     }
 
     public function testValidationErrorForCreate(): void
     {
         $link = Link::factory()->create();
 
-        $response = $this->post('notes', [
+        $this->post('notes', [
             'link_id' => $link->id,
             'note' => null,
-            'is_private' => '0',
-        ]);
+            'visibility' => 1,
+        ])->assertSessionHasErrors(['note']);
+    }
 
-        $response->assertSessionHasErrors([
-            'note',
-        ]);
+    public function testStoreRequestForForeignPrivateLink(): void
+    {
+        $this->createTestLinks();
+
+        $this->post('notes', [
+            'link_id' => 3,
+            'note' => 'Lorem ipsum dolor',
+            'visibility' => 1,
+        ])->assertForbidden();
     }
 
     public function testStoreRequestForMissingLink(): void
     {
-        $response = $this->post('notes', [
+        $this->post('notes', [
             'link_id' => '1',
             'note' => 'Lorem ipsum dolor',
-            'is_private' => '0',
-        ]);
-
-        $response->assertNotFound();
+            'visibility' => 1,
+        ])->assertForbidden();
     }
 
     public function testEditView(): void
     {
-        Note::factory()->create();
+        $this->createTestNotes();
 
-        $response = $this->get('notes/1/edit');
-
-        $response->assertOk()
+        $this->get('notes/1/edit')
+            ->assertOk()
             ->assertSee('Edit Note');
     }
 
     public function testInvalidEditRequest(): void
     {
-        $response = $this->get('notes/1/edit');
-
-        $response->assertNotFound();
+        $this->get('notes/1/edit')->assertNotFound();
     }
 
     public function testUpdateResponse(): void
     {
-        $baseNote = Note::factory()->create();
+        $note = Note::factory()->create();
 
-        $response = $this->patch('notes/1', [
-            'link_id' => $baseNote->link_id,
+        $this->patch('notes/1', [
+            'link_id' => 1,
             'note' => 'Lorem ipsum dolor est updated',
-            'is_private' => '0',
-        ]);
+            'visibility' => 1,
+        ])->assertRedirect('links/1');
 
-        $response->assertRedirect('links/' . $baseNote->link_id);
-
-        $updatedLink = $baseNote->fresh();
-
-        $this->assertEquals('Lorem ipsum dolor est updated', $updatedLink->note);
+        $this->assertEquals('Lorem ipsum dolor est updated', $note->refresh()->note);
     }
 
     public function testMissingModelErrorForUpdate(): void
     {
-        $response = $this->patch('notes/1', [
-            'link_id' => '1',
+        $this->patch('notes/1', [
+            'link_id' => 1,
             'note' => 'Lorem ipsum dolor est updated',
-            'is_private' => '0',
-        ]);
-
-        $response->assertNotFound();
+            'visibility' => 1,
+        ])->assertNotFound();
     }
 
     public function testValidationErrorForUpdate(): void
     {
-        $baseNote = Note::factory()->create();
+        $this->createTestNotes();
 
-        $response = $this->patch('notes/1', [
-            'note_id' => $baseNote->id,
+        $this->patch('notes/1', [
             //'note' => 'Lorem ipsum dolor est updated',
-            'is_private' => '0',
-        ]);
-
-        $response->assertSessionHasErrors([
-            'note',
-        ]);
+            'visibility' => 1,
+        ])->assertSessionHasErrors(['note']);
     }
 
     public function testDeleteResponse(): void
     {
-        $link = Note::factory()->create([
-            'user_id' => $this->user->id,
-        ]);
+        $this->createTestNotes();
 
-        $note = Note::factory()->create([
-            'link_id' => $link->id,
-        ]);
+        $this->assertEquals(3, Note::count());
 
-        $response = $this->deleteJson('notes/1');
+        $this->deleteJson('notes/1')->assertRedirect('links/1');
+        $this->deleteJson('notes/2')->assertForbidden();
+        $this->deleteJson('notes/3')->assertForbidden();
 
-        $response->assertRedirect('links/' . $note->link_id);
-
-        $databaseNote = Note::withTrashed()->first();
-
-        $this->assertNotNull($databaseNote->deleted_at);
+        $this->assertEquals(2, Note::count());
     }
 
     public function testMissingModelErrorForDelete(): void
     {
-        $response = $this->deleteJson('notes/1');
-
-        $response->assertNotFound();
+        $this->deleteJson('notes/1')->assertNotFound();
     }
 }

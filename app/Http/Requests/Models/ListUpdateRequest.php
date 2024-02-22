@@ -2,26 +2,15 @@
 
 namespace App\Http\Requests\Models;
 
+use App\Rules\ModelVisibility;
 use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Http\Request;
 use Illuminate\Validation\Rule;
 
-/**
- * Class ListUpdateRequest
- *
- * @package App\Http\Requests\Models
- */
 class ListUpdateRequest extends FormRequest
 {
-    /** @var bool */
-    private $requireUniqueName = false;
+    private bool $requireUniqueName = false;
 
-    /**
-     * Determine if the user is authorized to make this request.
-     *
-     * @param Request $request
-     * @return bool
-     */
     public function authorize(Request $request): bool
     {
         if ($request->input('name') !== null) {
@@ -31,25 +20,21 @@ class ListUpdateRequest extends FormRequest
         return true;
     }
 
-    /**
-     * Get the validation rules that apply to the request.
-     *
-     * @return array
-     */
     public function rules(): array
     {
         $rules = [
             'name' => 'required|string',
             'description' => 'nullable|string',
-            'is_private' => 'sometimes|boolean',
+            'visibility' => [
+                'sometimes',
+                new ModelVisibility(),
+            ],
         ];
 
         if ($this->requireUniqueName) {
             $rules['name'] = [
                 'required',
-                Rule::unique('lists')->where(function ($query) {
-                    return $query->where('user_id', auth()->id());
-                }),
+                Rule::unique('lists')->where(fn($query) => $query->where('user_id', auth()->id())),
             ];
         }
 

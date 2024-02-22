@@ -1,29 +1,26 @@
 <tr>
     <td>
-        @if($tag->is_private)
-            <span>
-                <x-icon.lock class="me-1" title="@lang('tag.private')"/>
-                <span class="visually-hidden">@lang('tag.private')</span>
-            </span>
-        @endif
-        <a href="{{ route('tags.show', [$tag]) }}">
-            {{ $tag->name }}
+        <x-models.visibility-badge :model="$tag" class="d-inline-block me-1 small"/>
+        <a href="{{ route('tags.show', ['tag' => $tag]) }}">
+            <x-models.name-with-user :model="$tag"/>
         </a>
     </td>
     <td>
         {{ $tag->links_count }}
     </td>
-    <td class="py-1 text-end">
-        <div class="btn-group btn-group-sm">
-            <a href="{{ route('tags.edit', [$tag]) }}" class="btn btn-link">
-                <x-icon.edit class="fw"/>
-                <span class="visually-hidden">@lang('tag.edit')</span>
-            </a>
-            <button type="submit" form="tag-delete-{{ $tag->id }}" title="@lang('tag.delete')"
-                class="btn btn-link">
-                <x-icon.trash class="fw"/>
-                <span class="visually-hidden">@lang('tag.delete')</span>
-            </button>
+    <td class="py-1">
+        <div class="mt-1 d-flex align-items-center justify-content-end">
+            <div class="btn-group me-1">
+                <a href="{{ route('tags.edit', [$tag]) }}" class="btn btn-xs btn-link text-condensed">
+                    @lang('linkace.edit')
+                </a>
+                <button type="submit" form="tag-delete-{{ $tag->id }}" title="@choice('tag.delete', 1)"
+                    class="btn btn-xs btn-link text-condensed">
+                    @lang('linkace.delete')
+                </button>
+            </div>
+            <input type="checkbox" aria-label="@lang('tag.bulk_edit_add')" class="bulk-edit-model form-check"
+                data-id="{{ $tag->id }}">
         </div>
 
         <form id="tag-delete-{{ $tag->id }}" method="POST" style="display: none;"

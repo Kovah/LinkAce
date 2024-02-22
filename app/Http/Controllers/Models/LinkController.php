@@ -3,57 +3,59 @@
 namespace App\Http\Controllers\Models;
 
 use App\Http\Controllers\Controller;
+use App\Http\Controllers\Traits\ChecksOrdering;
+use App\Http\Controllers\Traits\ConfiguresLinkDisplay;
 use App\Http\Controllers\Traits\HandlesQueryOrder;
 use App\Http\Requests\Models\LinkStoreRequest;
-use App\Http\Requests\Models\LinkToggleCheckRequest;
 use App\Http\Requests\Models\LinkUpdateRequest;
+use App\Http\Requests\Models\ToggleLinkCheckRequest;
 use App\Models\Link;
 use App\Repositories\LinkRepository;
-use Exception;
 use Illuminate\Contracts\View\View;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 
 class LinkController extends Controller
 {
-    use HandlesQueryOrder;
+    use ChecksOrdering;
+    use ConfiguresLinkDisplay;
 
-    /**
-     * Display a listing of the resource.
-     *
-     * @param Request $request
-     * @return View
-     */
+    public function __construct()
+    {
+        $this->allowedOrderBy = Link::$allowOrderBy;
+        $this->authorizeResource(Link::class, 'link');
+    }
+
     public function index(Request $request): View
     {
-        $orderBy = $request->input('orderBy', session()->get('links.index.orderBy', 'created_at'));
-        $orderDir = $this->getOrderDirection($request, session()->get('links.index.orderDir', 'desc'));
+        $this->updateLinkDisplayForUser();
 
-        session()->put('links.index.orderBy', $orderBy);
-        session()->put('links.index.orderDir', $orderDir);
+        $this->orderBy = $request->input('orderBy', session()->get('links.index.orderBy', 'created_at'));
+        $this->orderDir = $request->input('orderDir', session()->get('links.index.orderDir', 'desc'));
+        $this->checkOrdering();
 
-        $links = Link::byUser()->with('tags');
+        session()->put('links.index.orderBy', $this->orderBy);
+        session()->put('links.index.orderDir', $this->orderDir);
 
-        if ($orderBy === 'random') {
+        $links = Link::query()
+            ->visibleForUser()
+            ->with('tags');
+
+        if ($this->orderBy === 'random') {
             $links->inRandomOrder();
         } else {
-            $links->orderBy($orderBy, $orderDir);
+            $links->orderBy($this->orderBy, $this->orderDir);
         }
 
         return view('models.links.index', [
             'pageTitle' => trans('link.links'),
             'links' => $links->paginate(getPaginationLimit()),
             'route' => $request->getBaseUrl(),
-            'orderBy' => $orderBy,
-            'orderDir' => $orderDir,
+            'orderBy' => $this->orderBy,
+            'orderDir' => $this->orderDir,
         ]);
     }
 
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @return View
-     */
     public function create(): View
     {
         // Reset the bookmarklet session identifier to prevent issues on regular pages
@@ -65,12 +67,6 @@ class LinkController extends Controller
         ]);
     }
 
-    /**
-     * Store a newly created resource in storage.
-     *
-     * @param LinkStoreRequest $request
-     * @return RedirectResponse
-     */
     public function store(LinkStoreRequest $request): RedirectResponse
     {
         $link = LinkRepository::create($request->all(), true);
@@ -84,7 +80,7 @@ class LinkController extends Controller
             foreach ($duplicates as $duplicateLink) {
                 $msg .= sprintf(
                     ' <a href="%s">%s</a>,',
-                    route('links.show', [$duplicateLink->id]),
+                    route('links.show', ['link' => $duplicateLink]),
                     $duplicateLink->shortUrl()
                 );
             }
@@ -95,8 +91,7 @@ class LinkController extends Controller
         $isBookmarklet = session('bookmarklet.create');
 
         if ($request->input('reload_view')) {
-            session()->flash('reload_view', true);
-            return redirect()->route($isBookmarklet ? 'bookmarklet-add' : 'links.create');
+            return redirect()->route($isBookmarklet ? 'bookmarklet-add' : 'links.create')->with('reload_view', true);
         }
 
         return $isBookmarklet
@@ -104,27 +99,23 @@ class LinkController extends Controller
             : redirect()->route('links.show', [$link->id]);
     }
 
-    /**
-     * Display the specified resource.
-     *
-     * @param Link $link
-     * @return View
-     */
     public function show(Link $link): View
     {
+        $link->load([
+            'lists' => function ($query) {
+                $query->visibleForUser();
+            },
+            'tags' => function ($query) {
+                $query->visibleForUser();
+            },
+        ]);
         return view('models.links.show', [
             'pageTitle' => trans('link.link') . ': ' . $link->shortTitle(),
             'link' => $link,
-            'history' => $link->revisionHistory()->latest()->get(),
+            'history' => $link->audits()->latest()->get(),
         ]);
     }
 
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param Link $link
-     * @return View
-     */
     public function edit(Link $link): View
     {
         return view('models.links.edit', [
@@ -134,13 +125,6 @@ class LinkController extends Controller
         ]);
     }
 
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param LinkUpdateRequest $request
-     * @param Link              $link
-     * @return RedirectResponse
-     */
     public function update(LinkUpdateRequest $request, Link $link): RedirectResponse
     {
         $link = LinkRepository::update($link, $request->input());
@@ -149,13 +133,6 @@ class LinkController extends Controller
         return redirect()->route('links.show', [$link->id]);
     }
 
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @param Link $link
-     * @return RedirectResponse
-     * @throws Exception
-     */
     public function destroy(Link $link): RedirectResponse
     {
         $deletionSuccessful = LinkRepository::delete($link);
@@ -170,32 +147,21 @@ class LinkController extends Controller
         return request()->has('redirect_back') ? redirect()->back() : redirect()->route('links.index');
     }
 
-    /**
-     * Toggles the setting of a link to be either checked or not.
-     *
-     * @param LinkToggleCheckRequest $request
-     * @param Link                   $link
-     * @return RedirectResponse
-     */
-    public function updateCheckToggle(LinkToggleCheckRequest $request, Link $link): RedirectResponse
+    public function updateCheckToggle(ToggleLinkCheckRequest $request, Link $link): RedirectResponse
     {
         $link->check_disabled = $request->input('toggle');
         $link->save();
 
-        return redirect()->route('links.show', [$link->id]);
+        return redirect()->route('links.show', ['link' => $link]);
     }
 
-    /**
-     * Mark the link as working manually.
-     *
-     * @param Link $link
-     * @return RedirectResponse
-     */
     public function markWorking(Link $link): RedirectResponse
     {
+        $this->authorize('update', $link);
+
         $link->status = Link::STATUS_OK;
         $link->save();
 
-        return redirect()->route('links.show', [$link->id]);
+        return redirect()->route('links.show', ['link' => $link]);
     }
 }

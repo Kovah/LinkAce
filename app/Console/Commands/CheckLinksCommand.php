@@ -7,6 +7,7 @@ use App\Models\User;
 use App\Notifications\LinkCheckNotification;
 use Exception;
 use Illuminate\Console\Command;
+use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Support\Facades\Cache;
 use Illuminate\Support\Facades\Http;
 use Illuminate\Support\Facades\Notification;
@@ -16,35 +17,26 @@ class CheckLinksCommand extends Command
     protected $signature = 'links:check {--limit=} {--noWait}';
     protected $description = 'This command checks the current status of a chunk of links. It is intended to be run on a schedule.';
 
-    /** @var int $limit Check a maximum of 100 links at once */
-    public $limit = 100;
+    // Check a maximum of 100 links at once
+    public int $limit = 100;
 
-    /** @var int */
-    protected $offset;
+    protected int $offset;
 
-    /** @var int */
-    protected $total;
+    protected int $total;
 
-    /** @var int */
-    protected $checkedLinkCount;
+    protected int $checkedLinkCount;
 
-    /** @var string */
-    protected $cacheKeyOffset = 'command_links:check_offset';
+    protected string $cacheKeyOffset = 'command_links:check_offset';
 
-    /** @var string */
-    protected $cacheKeySkipTimestamp = 'command_links:check_skip_timestamp';
+    protected string $cacheKeySkipTimestamp = 'command_links:check_skip_timestamp';
 
-    /** @var string */
-    protected $cacheKeyCheckedCount = 'command_links:check_checked_count';
+    protected string $cacheKeyCheckedCount = 'command_links:check_checked_count';
 
-    /** @var array */
-    protected $movedLinks = [];
+    protected array $movedLinks = [];
 
-    /** @var array */
-    protected $brokenLinks = [];
+    protected array $brokenLinks = [];
 
-    /** @var array */
-    protected $validUrlSchemes = ['http', 'https'];
+    protected array $validUrlSchemes = ['http', 'https'];
 
     public function handle(): void
     {
@@ -112,23 +104,23 @@ class CheckLinksCommand extends Command
      * Get links but limit the results to a fixed number of links.
      * If there is an offset saved, use this instead of beginning from the first entry.
      *
-     * @return \LaravelIdea\Helper\App\Models\_IH_Link_C|Link[]
+     * @return Collection
      */
-    protected function getLinks()
+    protected function getLinks(): Collection
     {
         // Get the total amount of remaining links
         $this->total = Link::count();
 
         // Get a portion of the remaining links based on the limit
         return Link::where('check_disabled', false)
-            ->orderBy('id', 'ASC')
+            ->oldest('id')
             ->offset($this->offset)
             ->limit($this->limit)
             ->get();
     }
 
     /**
-     * Check the URL of an link and set the status accordingly.
+     * Check the URL of a link and set the status accordingly.
      *
      * @param Link $link
      * @return void
@@ -144,11 +136,7 @@ class CheckLinksCommand extends Command
         }
 
         try {
-            $request = Http::timeout(20);
-            if (config('html-meta.user_agents', false)) {
-                $agents = config('html-meta.user_agents');
-                $request->withHeaders(['User-Agent' => $agents[array_rand($agents)]]);
-            }
+            $request = setupHttpRequest(20);
             $response = $request->head($link->url);
             $statusCode = $response->status();
         } catch (Exception $e) {
@@ -165,12 +153,6 @@ class CheckLinksCommand extends Command
         }
     }
 
-    /**
-     * Set the Link status to either moved or broken depending on the given
-     * status code.
-     *
-     * @param Link $link
-     */
     protected function processMovedLink(Link $link): void
     {
         $link->status = Link::STATUS_MOVED;
@@ -180,12 +162,6 @@ class CheckLinksCommand extends Command
         $this->movedLinks[] = $link;
     }
 
-    /**
-     * Set the Link status to either moved or broken depending on the given
-     * status code.
-     *
-     * @param Link $link
-     */
     protected function processBrokenLink(Link $link): void
     {
         $link->status = Link::STATUS_BROKEN;
@@ -195,13 +171,9 @@ class CheckLinksCommand extends Command
         $this->brokenLinks[] = $link;
     }
 
-    /**
-     * If the Link has not the "ok" status, set it to ok.
-     *
-     * @param Link $link
-     */
     protected function processWorkingLink(Link $link): void
     {
+        // If the Link has not the "ok" status yet, set it to ok
         if ($link->status !== Link::STATUS_OK) {
             $link->status = Link::STATUS_OK;
             $link->save();
@@ -210,11 +182,6 @@ class CheckLinksCommand extends Command
         $this->info('› Link looks okay.');
     }
 
-    /**
-     * Send notification to the main user if not running from the console.
-     *
-     * @return void
-     */
     protected function sendNotification(): void
     {
         if (empty($this->movedLinks) && empty($this->brokenLinks)) {
@@ -222,6 +189,7 @@ class CheckLinksCommand extends Command
             return;
         }
 
+        // @TODO The user should be defined elsewhere, maybe in the config
         Notification::send(
             User::find(1),
             new LinkCheckNotification($this->movedLinks, $this->brokenLinks)

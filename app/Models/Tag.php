@@ -2,8 +2,8 @@
 
 namespace App\Models;
 
+use App\Audits\Modifiers\VisibilityModifier;
 use App\Scopes\OrderNameScope;
-use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
@@ -11,6 +11,9 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 use Illuminate\Database\Eloquent\SoftDeletes;
+use Illuminate\Support\Carbon;
+use OwenIt\Auditing\Auditable as AuditableTrait;
+use OwenIt\Auditing\Contracts\Auditable;
 
 /**
  * Class Tag
@@ -19,7 +22,7 @@ use Illuminate\Database\Eloquent\SoftDeletes;
  * @property int                    $id
  * @property int                    $user_id
  * @property string                 $name
- * @property int                    $is_private
+ * @property int                    $visibility
  * @property Carbon|null            $created_at
  * @property Carbon|null            $updated_at
  * @property string|null            $deleted_at
@@ -27,112 +30,69 @@ use Illuminate\Database\Eloquent\SoftDeletes;
  * @property-read User              $user
  * @method static Builder|Tag byUser(int $user_id = null)
  * @method static Builder|Tag publicOnly()
+ * @method static Builder|Tag internalOnly()
  * @method static Builder|Tag privateOnly()
  */
-class Tag extends Model
+class Tag extends Model implements Auditable
 {
-    use SoftDeletes;
+    use AuditableTrait;
     use HasFactory;
-
-    public $table = 'tags';
+    use ScopesForUser;
+    use ScopesVisibility;
+    use SoftDeletes;
 
     public $fillable = [
         'user_id',
         'name',
-        'is_private',
+        'visibility',
     ];
 
     protected $casts = [
         'user_id' => 'integer',
-        'is_private' => 'boolean',
+        'visibility' => 'integer',
     ];
 
-    /**
-     * @param string|int $tagId
-     * @param string     $newName
-     * @return bool
-     */
-    public static function nameHasChanged($tagId, string $newName): bool
-    {
-        $oldName = self::find($tagId)->name ?? null;
-        return $oldName !== $newName;
-    }
+    public static array $allowOrderBy = [
+        'id',
+        'name',
+        'description',
+        'visibility',
+        'created_at',
+        'updated_at',
+        'random',
+    ];
 
-    /*
-     | ========================================================================
-     | SCOPES
-     */
+    public string $langBase = 'tag';
 
-    /**
-     * Add the OrderNameScope to the Tag model
-     */
     protected static function boot()
     {
         parent::boot();
 
+        // Add the OrderNameScope to the Tag model
         static::addGlobalScope(new OrderNameScope());
     }
 
-    /**
-     * Scope for the user relation
-     *
-     * @param Builder  $query
-     * @param int|null $user_id
-     * @return Builder
+    /*
+     * ========================================================================
+     * AUDIT SETTINGS
      */
-    public function scopeByUser(Builder $query, int $user_id = null): Builder
-    {
-        if (is_null($user_id) && auth()->check()) {
-            $user_id = auth()->id();
-        }
-        return $query->where('user_id', $user_id);
-    }
 
-    /**
-     * Scope for selecting private tags only
-     *
-     * @param Builder $query
-     * @return Builder
-     */
-    public function scopePrivateOnly(Builder $query): Builder
-    {
-        return $query->where('is_private', true);
-    }
+    public array $auditModifiers = [
+        'visibility' => VisibilityModifier::class,
+    ];
 
     /*
-     | ========================================================================
-     | RELATIONSHIPS
+     * ========================================================================
+     * RELATIONSHIPS
      */
 
-    /**
-     * Scope for selecting public tags only
-     *
-     * @param Builder $query
-     * @return Builder
-     */
-    public function scopePublicOnly(Builder $query): Builder
-    {
-        return $query->where('is_private', false);
-    }
-
-    /**
-     * @return BelongsTo
-     */
     public function user(): BelongsTo
     {
-        return $this->belongsTo('App\Models\User', 'user_id');
+        return $this->belongsTo(User::class, 'user_id')->withTrashed();
     }
 
-    /*
-     | ========================================================================
-     | METHODS
-     */
-
-    /**
-     * @return BelongsToMany
-     */
     public function links(): BelongsToMany
     {
-        return $this->belongsToMany('App\Models\Link', 'link_tags', 'tag_id', 'link_id');
+        return $this->belongsToMany(Link::class, 'link_tags', 'tag_id', 'link_id');
     }
 }

@@ -9,21 +9,18 @@ use Illuminate\Http\Request;
 
 class LinkCheckController extends Controller
 {
-    /**
-     * Search for a link based on a given url.
-     *
-     * @param Request $request
-     * @return JsonResponse
-     */
     public function __invoke(Request $request): JsonResponse
     {
         $searchedUrl = $request->input('url', false);
+
+        $this->authorize('viewAny', Link::class);
 
         if (!$searchedUrl) {
             return response()->json(['linksFound' => false]);
         }
 
-        $linkCount = Link::byUser($request->user()->id)
+        $linkCount = Link::query()
+            ->visibleForUser()
             ->where('url', trim($searchedUrl))
             ->count();
 

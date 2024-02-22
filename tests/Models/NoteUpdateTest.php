@@ -14,10 +14,9 @@ class NoteUpdateTest extends TestCase
     use DatabaseMigrations;
     use DatabaseTransactions;
 
-    /** @var User */
-    private $user;
+    private User $user;
 
-    public function setUp(): void
+    protected function setUp(): void
     {
         parent::setUp();
 

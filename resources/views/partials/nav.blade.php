@@ -6,44 +6,34 @@
         @auth
             <ul class="navbar-nav">
                 <li class="nav-item">
-                    <a href="{{ route('links.create') }}" class="nav-link">
-                        @lang('link.add')
+                    <a href="{{ route('links.index') }}" class="nav-link ps-3 ps-md-2">
+                        @lang('link.links')
                     </a>
                 </li>
                 <li class="nav-item">
-                    <a href="{{ route('links.index') }}" class="nav-link ps-3 ps-md-2">
-                        @lang('link.all_links')
+                    <a href="{{ route('links.create') }}" class="nav-link ps-0" title="@lang('link.add')">
+                        <x-icon.plus/>
                     </a>
                 </li>
-                <li class="nav-item dropdown">
-                    <a class="nav-link dropdown-toggle" href="#" id="navbar-lists-dd" role="button"
-                        data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                <li class="nav-item">
+                    <a href="{{ route('lists.index') }}" class="nav-link ps-3 ps-md-2">
                         @lang('list.lists')
-                        <x-icon.caret-down class="fw"/>
                     </a>
-                    <div class="dropdown-menu" aria-labelledby="navbar-lists-dd">
-                        <a href="{{ route('lists.index') }}" class="dropdown-item">
-                            @lang('list.all_lists')
-                        </a>
-                        <a href="{{ route('lists.create') }}" class="dropdown-item">
-                            @lang('list.add')
-                        </a>
-                    </div>
                 </li>
-                <li class="nav-item dropdown">
-                    <a class="nav-link dropdown-toggle" href="#" id="navbar-tags-dd" role="button"
-                        data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                        @lang('tag.tags')
-                        <x-icon.caret-down class="fw"/>
+                <li class="nav-item">
+                    <a href="{{ route('lists.create') }}" class="nav-link ps-0" title="@lang('list.add')">
+                        <x-icon.plus/>
                     </a>
-                    <div class="dropdown-menu" aria-labelledby="navbar-tags-dd">
-                        <a href="{{ route('tags.index') }}" class="dropdown-item">
-                            @lang('tag.all_tags')
-                        </a>
-                        <a href="{{ route('tags.create') }}" class="dropdown-item">
-                            @lang('tag.add')
-                        </a>
-                    </div>
+                </li>
+                <li class="nav-item">
+                    <a href="{{ route('tags.index') }}" class="nav-link ps-3 ps-md-2">
+                        @lang('tag.tags')
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a href="{{ route('tags.create') }}" class="nav-link ps-0" title="@lang('tag.add')">
+                        <x-icon.plus/>
+                    </a>
                 </li>
             </ul>
 

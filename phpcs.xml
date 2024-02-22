@@ -9,13 +9,11 @@
   <file>./tests</file>
 
   <!-- Enable the PSR-2 Code Standard rules -->
-  <rule ref="PSR2"/>
+  <rule ref="PSR2">
+    <exclude name="Generic.Files.LineLength"/>
+  </rule>
 
-  <!-- Prevent warnings for lines that contain more than 80 characters -->
-  <rule ref="Generic.Files.LineLength">
-    <properties>
-      <property name="lineLimit" value="120"/>
-      <property name="absoluteLineLimit" value="0"/>
-    </properties>
+  <rule ref="Internal.NoCodeFound">
+    <severity>0</severity>
   </rule>
 </ruleset>

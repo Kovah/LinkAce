@@ -2,16 +2,30 @@
 
 namespace App\Console;
 
+use App\Console\Commands\CheckLinksCommand;
+use App\Console\Commands\CompleteSetupCommand;
+use App\Console\Commands\ImportCommand;
+use App\Console\Commands\ListUsersCommand;
+use App\Console\Commands\RegisterUserCommand;
+use App\Console\Commands\ResetPasswordCommand;
+use App\Console\Commands\UpdateLinkThumbnails;
+use App\Console\Commands\ViewRecoveryCodesCommand;
 use Illuminate\Console\Scheduling\Schedule;
 use Illuminate\Foundation\Console\Kernel as ConsoleKernel;
 
 class Kernel extends ConsoleKernel
 {
-    /**
-     * Define the application's command schedule.
-     *
-     * @param Schedule $schedule
-     */
+    protected $commands = [
+        CheckLinksCommand::class,
+        CompleteSetupCommand::class,
+        ImportCommand::class,
+        RegisterUserCommand::class,
+        ResetPasswordCommand::class,
+        UpdateLinkThumbnails::class,
+        ListUsersCommand::class,
+        ViewRecoveryCodesCommand::class,
+    ];
+
     protected function schedule(Schedule $schedule): void
     {
         $schedule->command('links:check')->hourly();
@@ -25,9 +39,6 @@ class Kernel extends ConsoleKernel
         }
     }
 
-    /**
-     * Register the commands for the application.
-     */
     protected function commands(): void
     {
         $this->load(__DIR__ . '/Commands');

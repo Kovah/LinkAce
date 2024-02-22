@@ -4,39 +4,43 @@ namespace Tests\Controller\API;
 
 use App\Models\Tag;
 use Illuminate\Foundation\Testing\RefreshDatabase;
+use Tests\Controller\Traits\PreparesTestData;
 
 class TagApiTest extends ApiTestCase
 {
+    use PreparesTestData;
     use RefreshDatabase;
 
     public function testUnauthorizedRequest(): void
     {
-        $response = $this->getJson('api/v1/tags');
-
-        $response->assertUnauthorized();
+        $this->getJson('api/v1/tags')->assertUnauthorized();
     }
 
     public function testIndexRequest(): void
     {
-        $tag = Tag::factory()->create();
+        $this->createTestTags();
 
-        $response = $this->getJsonAuthorized('api/v1/tags');
-
-        $response->assertOk()
+        $this->getJsonAuthorized('api/v1/tags')
+            ->assertOk()
             ->assertJson([
                 'data' => [
-                    ['name' => $tag->name],
+                    ['name' => 'Internal Tag'],
+                    ['name' => 'Public Tag'],
+                ],
+            ])
+            ->assertJsonMissing([
+                'data' => [
+                    ['name' => 'Private Tag'],
                 ],
             ]);
     }
 
     public function testMinimalCreateRequest(): void
     {
-        $response = $this->postJsonAuthorized('api/v1/tags', [
+        $this->postJsonAuthorized('api/v1/tags', [
             'name' => 'Test Tag',
-        ]);
-
-        $response->assertOk()
+        ])
+            ->assertOk()
             ->assertJson([
                 'name' => 'Test Tag',
             ]);
@@ -48,12 +52,11 @@ class TagApiTest extends ApiTestCase
 
     public function testFullCreateRequest(): void
     {
-        $response = $this->postJsonAuthorized('api/v1/tags', [
+        $this->postJsonAuthorized('api/v1/tags', [
             'name' => 'Test Tag',
             'is_private' => false,
-        ]);
-
-        $response->assertOk()
+        ])
+            ->assertOk()
             ->assertJson([
                 'name' => 'Test Tag',
             ]);
@@ -65,95 +68,110 @@ class TagApiTest extends ApiTestCase
 
     public function testInvalidCreateRequest(): void
     {
-        $response = $this->postJsonAuthorized('api/v1/tags', [
+        $this->postJsonAuthorized('api/v1/tags', [
             'name' => null,
-            'is_private' => 'hello',
-        ]);
-
-        $response->assertJsonValidationErrors([
+            'visibility' => 'hello',
+        ])->assertJsonValidationErrors([
             'name' => 'The name field is required.',
-            'is_private' => 'The is private field must be true or false.',
+            'visibility' => 'The Visibility must bei either 1 (public), 2 (internal) or 3 (private).',
         ]);
     }
 
     public function testShowRequest(): void
     {
-        $tag = Tag::factory()->create();
+        $this->createTestTags();
 
-        $response = $this->getJsonAuthorized('api/v1/tags/1');
-
-        $response->assertOk()
+        $this->getJsonAuthorized('api/v1/tags/1')
+            ->assertOk()
             ->assertJson([
-                'name' => $tag->name,
+                'name' => 'Public Tag',
             ]);
+
+        $this->getJsonAuthorized('api/v1/tags/2')
+            ->assertOk()
+            ->assertJson([
+                'name' => 'Internal Tag',
+            ]);
+
+        $this->getJsonAuthorized('api/v1/tags/3')
+            ->assertForbidden();
     }
 
     public function testShowRequestNotFound(): void
     {
-        $response = $this->getJsonAuthorized('api/v1/tags/1');
-
-        $response->assertNotFound();
+        $this->getJsonAuthorized('api/v1/tags/1')->assertNotFound();
     }
 
     public function testUpdateRequest(): void
     {
-        Tag::factory()->create();
+        $this->createTestTags();
 
-        $response = $this->patchJsonAuthorized('api/v1/tags/1', [
-            'name' => 'Updated Tag Title',
-            'is_private' => false,
-        ]);
-
-        $response->assertOk()
+        $this->patchJsonAuthorized('api/v1/tags/1', [
+            'name' => 'Updated Public Tag',
+            'visibility' => 1,
+        ])
+            ->assertOk()
             ->assertJson([
-                'name' => 'Updated Tag Title',
+                'name' => 'Updated Public Tag',
             ]);
 
-        $databaseList = Tag::first();
+        $databaseList = Tag::find(1);
 
-        $this->assertEquals('Updated Tag Title', $databaseList->name);
+        $this->assertEquals('Updated Public Tag', $databaseList->name);
+
+        // Test other tags
+        $this->patchJsonAuthorized('api/v1/tags/2', [
+            'name' => 'Updated Internal Tag',
+            'visibility' => 1,
+        ])
+            ->assertOk()
+            ->assertJson([
+                'name' => 'Updated Internal Tag',
+            ]);
+
+        $this->patchJsonAuthorized('api/v1/tags/3', [
+            'name' => 'Updated Private Tag',
+            'visibility' => 1,
+        ])
+            ->assertForbidden();
     }
 
     public function testInvalidUpdateRequest(): void
     {
         Tag::factory()->create();
 
-        $response = $this->patchJsonAuthorized('api/v1/tags/1', [
+        $this->patchJsonAuthorized('api/v1/tags/1', [
             'name' => null,
-            'is_private' => 'hello',
-        ]);
-
-        $response->assertJsonValidationErrors([
+            'visibility' => 'hello',
+        ])->assertJsonValidationErrors([
             'name' => 'The name field is required.',
-            'is_private' => 'The is private field must be true or false.',
+            'visibility' => 'The Visibility must bei either 1 (public), 2 (internal) or 3 (private).',
         ]);
     }
 
     public function testUpdateRequestNotFound(): void
     {
-        $response = $this->patchJsonAuthorized('api/v1/tags/1', [
+        $this->patchJsonAuthorized('api/v1/tags/1', [
             'name' => 'Updated Tag Title',
             'is_private' => false,
-        ]);
-
-        $response->assertNotFound();
+        ])->assertNotFound();
     }
 
     public function testDeleteRequest(): void
     {
-        Tag::factory()->create();
+        $this->createTestTags();
 
-        $response = $this->deleteJsonAuthorized('api/v1/tags/1');
+        $this->assertEquals(3, Tag::count());
 
-        $response->assertOk();
+        $this->deleteJsonAuthorized('api/v1/tags/1')->assertOk();
+        $this->deleteJsonAuthorized('api/v1/tags/2')->assertForbidden();
+        $this->deleteJsonAuthorized('api/v1/tags/3')->assertForbidden();
 
-        $this->assertEquals(0, Tag::count());
+        $this->assertEquals(2, Tag::count());
     }
 
     public function testDeleteRequestNotFound(): void
     {
-        $response = $this->deleteJsonAuthorized('api/v1/tags/1');
-
-        $response->assertNotFound();
+        $this->deleteJsonAuthorized('api/v1/tags/1')->assertNotFound();
     }
 }

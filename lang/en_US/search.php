@@ -8,7 +8,7 @@ return [
     'query' => 'Search for...',
     'search_title' => 'Search Title',
     'search_description' => 'Search Description',
-    'private_only' => 'Private Links only',
+    'visibility' => 'Search by visibility...',
     'broken_links' => 'Broken Links only',
     'empty_tags' => 'without Tags',
     'empty_lists' => 'without Lists',

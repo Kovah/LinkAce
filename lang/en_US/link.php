@@ -4,6 +4,7 @@ return [
     'links' => 'Links',
     'all_links' => 'All Links',
     'recent_links' => 'Recent Links',
+    'update_links' => 'Update Links',
     'no_links' => 'No Links',
 
     'add' => 'Add Link',
@@ -12,14 +13,12 @@ return [
     'details' => 'Link Details',
     'edit' => 'Edit Link',
     'update' => 'Update Link',
-    'delete' => 'Delete Link',
+    'delete' => 'Delete Link|Delete Links',
 
+    'public' => 'Public Link',
+    'internal' => 'Internal Link',
     'private' => 'Private Link',
 
-    'history' => 'History',
-    'history_added' => 'Added <code>:newvalue</code> to :fieldname.',
-    'history_changed' => 'Changed :fieldname from <code>:oldvalue</code> to <code>:newvalue</code>',
-    'history_removed' => 'Removed <code>:oldvalue</code> from :fieldname.',
     'history_deleted' => 'Link was deleted',
     'history_restored' => 'Link was restored',
     'history_created' => 'Link was created',
@@ -29,7 +28,7 @@ return [
     'description' => 'Description',
     'revtags' => 'Tags',
     'revlists' => 'Lists',
-    'is_private' => 'Private Status',
+    'visibility' => 'Visibility Status',
 
     'status' => 'Status',
     'stati' => [
@@ -50,6 +49,11 @@ return [
 
     'status_is_broken' => 'Link is marked as broken',
     'status_mark_working' => 'Mark as working',
+
+    'bulk_title' => 'You want to edit :count Link.|You want to edit :count Links.',
+    'bulk_edit_add' => 'Add Link to bulk edit',
+    'bulk_edit_success' => 'Successfully updated :success Links out of :selected selected ones.',
+    'bulk_delete_success' => 'Successfully moved :success Links out of :selected selected ones to the trash.',
 
     'added_successfully' => 'Link added successfully.',
     'added_connection_error' => 'The Link was added but a connection error occurred when trying to access the URL. Details can be found in the logs.',

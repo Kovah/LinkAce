@@ -16,18 +16,17 @@
                         @endif
                         <div class="d-sm-inline-block mt-1 mb-2 mb-sm-0">
                             {!! $link->getIcon('me-1 me-sm-2') !!}
-                            @if($link->is_private)
-                                <x-icon.lock class="fw me-1 me-sm-2" title="@lang('link.private')"/>
-                            @endif
+                            <x-models.visibility-badge :model="$link" class="me-1 me-sm-2 d-inline-block"/>
                         </div>
                         <h3 class="d-inline-block mb-0">
-                            <a href="{{ $link->url }}" {!! linkTarget() !!}
-                                >{{ $link->title }}</a>
+                            <a href="{{ $link->url }}" {!! linkTarget() !!}>{{ $link->title }}</a>
                         </h3>
                     </div>
 
                     <div class="text-pale small mt-1 mb-3">
                         <a href="{{ $link->url }}" {!! linkTarget() !!}>{{ $link->url }}</a>
+                        <br>
+                        @lang('linkace.added_by'): <x-models.author :model="$link"/>
                     </div>
 
                     @if($link->description)
@@ -60,21 +59,21 @@
                     <x-icon.edit class="me-2"/>
                     <span class="d-none d-sm-inline">@lang('linkace.edit')</span>
                 </a>
-                <a onclick="event.preventDefault();document.getElementById('link-delete-{{ $link->id }}').submit();"
-                    class="btn btn-sm btn-outline-danger cursor-pointer" aria-label="@lang('link.delete')">
+                <button type="submit" form="link-delete-{{ $link->id }}" aria-label="@choice('link.delete', 1)"
+                    class="btn btn-sm btn-outline-danger cursor-pointer">
                     <x-icon.trash class="me-2"/>
                     <span class="d-none d-sm-inline">@lang('linkace.delete')</span>
-                </a>
+                </button>
             </div>
             <form id="link-delete-{{ $link->id }}" method="POST" style="display: none;"
-                action="{{ route('links.destroy', [$link->id]) }}">
+                action="{{ route('links.destroy', ['link' => $link]) }}">
                 @method('DELETE')
                 @csrf
-                <input type="hidden" name="link_id" value="{{ $link->id }}">
             </form>
 
             <div class="mb-3">
-                <a href="{{ waybackLink($link) }}" class="btn btn-sm w-100 btn-outline-info" target="_blank">
+                <a href="{{ \App\Helper\WaybackMachine::getArchiveLink($link->url) }}"
+                    class="btn btn-sm w-100 btn-outline-info" target="_blank">
                     @lang('link.wayback')
                 </a>
             </div>
@@ -121,8 +120,8 @@
                 <div class="card-body py-2">
                     @if(!$link->lists->isEmpty())
                         @foreach($link->lists as $list)
-                            <a href="{{ route('lists.show', [$list->id]) }}" class="btn btn-sm btn-light">
-                                {{ $list->name }}
+                            <a href="{{ route('lists.show', ['list' => $list]) }}" class="btn btn-sm btn-light m-1">
+                                <x-models.name-with-user :model="$list"/>
                             </a>
                         @endforeach
                     @else
@@ -139,8 +138,8 @@
                 <div class="card-body py-2">
                     @if(!$link->tags->isEmpty())
                         @foreach($link->tags as $tag)
-                            <a href="{{ route('tags.show', [$tag->id]) }}" class="btn btn-sm btn-light">
-                                {{ $tag->name }}
+                            <a href="{{ route('tags.show', ['tag' => $tag]) }}" class="btn btn-sm btn-light m-1">
+                                <x-models.name-with-user :model="$tag"/>
                             </a>
                         @endforeach
                     @else
@@ -168,7 +167,7 @@
     <div class="link-history mt-5">
         <h3 class="h6 mb-2">@lang('link.history')</h3>
 
-        <div class="small text-pale">
+        <div class="history small text-pale">
             @foreach($history as $entry)
                 @if($loop->index === 5 && $loop->count >= 10)
                     <a data-bs-toggle="collapse" href="#link-history" role="button" class="d-inline-block mb-1"
@@ -177,13 +176,13 @@
                         <x-icon.caret-down class="fw"/>
                     </a>
                     <div id="link-history" class="collapse">
-                        @endif
-                        <x-links.history-entry :entry="$entry"/>
-                        @endforeach
-                        <div>{{ formatDateTime($link->created_at) }}: @lang('link.history_created')</div>
-                        @if(count($history) >= 10)
-                    </div>
                 @endif
+                <x-history.link-entry :entry="$entry"/>
+            @endforeach
+            <div>{{ formatDateTime($link->created_at) }}: @lang('link.history_created')</div>
+            @if(count($history) >= 10)
+                </div>
+            @endif
         </div>
     </div>
 

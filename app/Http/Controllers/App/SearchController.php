@@ -11,11 +11,6 @@ class SearchController extends Controller
 {
     use SearchesLinks;
 
-    /**
-     * Display the initial search form.
-     *
-     * @return View
-     */
     public function getSearch(): View
     {
         return view('app.search.search', [
@@ -27,7 +22,7 @@ class SearchController extends Controller
                 'old_query' => null,
                 'search_title' => true,
                 'search_description' => true,
-                'private_only' => false,
+                'visibility' => null,
                 'broken_only' => false,
                 'empty_tags' => false,
                 'empty_lists' => false,
@@ -38,12 +33,6 @@ class SearchController extends Controller
             ]);
     }
 
-    /**
-     * Handle the search query and display the view with all results.
-     *
-     * @param SearchRequest $request
-     * @return View
-     */
     public function doSearch(SearchRequest $request): View
     {
         $search = $this->buildDatabaseQuery($request);
@@ -58,7 +47,7 @@ class SearchController extends Controller
                 'old_query' => $this->searchQuery,
                 'search_title' => $this->searchTitle,
                 'search_description' => $this->searchDescription,
-                'private_only' => $this->searchPrivateOnly,
+                'visibility' => $this->searchVisibility,
                 'broken_only' => $this->searchBrokenOnly,
                 'only_lists' => $this->searchLists,
                 'only_tags' => $this->searchTags,

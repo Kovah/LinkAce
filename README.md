@@ -1,3 +1,5 @@
+<p align="center"><b>:warning: CAUTION! THIS IS A DEVELOPMENT VERSION OF LINKACE! DO NOT USE IT NOW! :warning:</b></p>
+
 <p align="center">
   <img src="https://www.linkace.org/images/linkace-social.jpg" title="Linkace">
 </p>

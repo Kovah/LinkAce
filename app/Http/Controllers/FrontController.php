@@ -11,12 +11,12 @@ class FrontController extends Controller
      * The front controller checks if the user is authenticated and the guest
      * access is enabled, and redirects the request accordingly.
      *
-     * @return RedirectResponse|View
+     * @return RedirectResponse
      */
     public function __invoke()
     {
         if (!auth()->check()) {
-            if (systemsettings('system_guest_access')) {
+            if (systemsettings('guest_access_enabled')) {
                 return redirect()->route('guest.links.index');
             }
 

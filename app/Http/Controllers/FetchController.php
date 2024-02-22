@@ -8,18 +8,10 @@ use App\Models\LinkList;
 use App\Models\Tag;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
-use Illuminate\Http\Response;
-use Illuminate\Support\Facades\Http;
 use Masterminds\HTML5;
 
 class FetchController extends Controller
 {
-    /**
-     * Returns all tags that match a given query, preformatted for Selectize.
-     *
-     * @param Request $request
-     * @return JsonResponse
-     */
     public function getTags(Request $request): JsonResponse
     {
         $query = $request->input('query', false);
@@ -28,30 +20,16 @@ class FetchController extends Controller
             return response()->json([]);
         }
 
-        $tags = Tag::byUser()
+        $tags = Tag::query()
+            ->visibleForUser()
             ->where('name', 'like', '%' . escapeSearchQuery($query) . '%')
-            ->orderBy('name')
+            ->with('user:id,name')
+            ->oldest('name')
             ->get();
-
-        if (!$tags->isEmpty()) {
-            // Properly format the results to be used by Selectize
-            $tags = $tags->map(function ($item) {
-                return [
-                    'value' => $item->name,
-                    'text' => $item->name,
-                ];
-            });
-        }
 
         return response()->json($tags);
     }
 
-    /**
-     * Returns all lists that match a given query, preformatted for Selectize.
-     *
-     * @param Request $request
-     * @return JsonResponse
-     */
     public function getLists(Request $request): JsonResponse
     {
         $query = $request->input('query', false);
@@ -60,20 +38,12 @@ class FetchController extends Controller
             return response()->json([]);
         }
 
-        $tags = LinkList::byUser()
+        $tags = LinkList::query()
+            ->visibleForUser()
             ->where('name', 'like', '%' . escapeSearchQuery($query) . '%')
-            ->orderBy('name')
+            ->with('user:id,name')
+            ->oldest('name')
             ->get();
-
-        if (!$tags->isEmpty()) {
-            // Properly format the results to be used by Selectize
-            $tags = $tags->map(function ($item) {
-                return [
-                    'value' => $item->name,
-                    'text' => $item->name,
-                ];
-            });
-        }
 
         return response()->json($tags);
     }
@@ -93,7 +63,8 @@ class FetchController extends Controller
             return response()->json([]);
         }
 
-        $link = Link::byUser()
+        $link = Link::query()
+            ->visibleForUser()
             ->where('url', trim($query))
             ->where('id', '!=', $request->input('ignore_id', 0))
             ->first();
@@ -104,12 +75,6 @@ class FetchController extends Controller
         ]);
     }
 
-    /**
-     * Simple endpoint for the system settings page which runs an update check
-     * and returns the result to the frontend.
-     *
-     * @return JsonResponse
-     */
     public static function checkForUpdates(): JsonResponse
     {
         $updateCheck = UpdateHelper::checkForUpdates(true);
@@ -131,11 +96,7 @@ class FetchController extends Controller
         ]);
 
         $url = $request->input('url');
-        $newRequest = Http::timeout(3);
-        if (config('html-meta.user_agents', false)) {
-            $agents = config('html-meta.user_agents');
-            $newRequest->withHeaders(['User-Agent' => $agents[array_rand($agents)]]);
-        }
+        $newRequest = setupHttpRequest(3);
         $response = $newRequest->get($url);
 
         if ($response->successful()) {

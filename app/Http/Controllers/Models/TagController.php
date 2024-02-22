@@ -3,9 +3,12 @@
 namespace App\Http\Controllers\Models;
 
 use App\Http\Controllers\Controller;
+use App\Http\Controllers\Traits\ChecksOrdering;
+use App\Http\Controllers\Traits\ConfiguresLinkDisplay;
 use App\Http\Controllers\Traits\HandlesQueryOrder;
 use App\Http\Requests\Models\TagStoreRequest;
 use App\Http\Requests\Models\TagUpdateRequest;
+use App\Models\Link;
 use App\Models\Tag;
 use App\Repositories\TagRepository;
 use Exception;
@@ -15,25 +18,28 @@ use Illuminate\Http\Request;
 
 class TagController extends Controller
 {
-    use HandlesQueryOrder;
+    use ChecksOrdering;
+    use ConfiguresLinkDisplay;
 
-    /**
-     * Display a listing of the resource.
-     *
-     * @param Request $request
-     * @return View
-     */
+    public function __construct()
+    {
+        $this->allowedOrderBy = Tag::$allowOrderBy;
+        $this->authorizeResource(Tag::class, 'tag');
+    }
+
     public function index(Request $request): View
     {
-        $orderBy = $request->input('orderBy', session()->get('tags.index.orderBy', 'name'));
-        $orderDir = $this->getOrderDirection($request, session()->get('tags.index.orderDir', 'asc'));
+        $this->orderBy = $request->input('orderBy', session()->get('tags.index.orderBy', 'name'));
+        $this->orderDir = $request->input('orderDir', session()->get('tags.index.orderDir', 'asc'));
+        $this->checkOrdering();
 
-        session()->put('tags.index.orderBy', $orderBy);
-        session()->put('tags.index.orderDir', $orderDir);
+        session()->put('tags.index.orderBy', $this->orderBy);
+        session()->put('tags.index.orderDir', $this->orderDir);
 
-        $tags = Tag::byUser()
+        $tags = Tag::query()
+            ->visibleForUser()
             ->withCount('links')
-            ->orderBy($orderBy, $orderDir);
+            ->orderBy($this->orderBy, $this->orderDir);
 
         if ($request->input('filter')) {
             $tags = $tags->where('name', 'like', '%' . $request->input('filter') . '%');
@@ -45,17 +51,12 @@ class TagController extends Controller
             'pageTitle' => trans('tag.tags'),
             'tags' => $tags,
             'route' => $request->getBaseUrl(),
-            'orderBy' => $orderBy,
-            'orderDir' => $orderDir,
+            'orderBy' => $this->orderBy,
+            'orderDir' => $this->orderDir,
             'filter' => $request->input('filter'),
         ]);
     }
 
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @return View
-     */
     public function create(): View
     {
         return view('models.tags.create', [
@@ -63,60 +64,44 @@ class TagController extends Controller
         ]);
     }
 
-    /**
-     * Store a newly created resource in storage.
-     *
-     * @param TagStoreRequest $request
-     * @return RedirectResponse
-     */
     public function store(TagStoreRequest $request): RedirectResponse
     {
-        $data = $request->except(['reload_view']);
-
-        $tag = TagRepository::create($data);
+        $tag = TagRepository::create($request->validated());
 
         flash(trans('tag.added_successfully'), 'success');
 
         if ($request->input('reload_view')) {
-            session()->flash('reload_view', true);
-            return redirect()->route('tags.create');
+            return redirect()->route('tags.create')->with('reload_view', true);
         }
 
-        return redirect()->route('tags.show', [$tag->id]);
+        return redirect()->route('tags.show', ['tag' => $tag]);
     }
 
-    /**
-     * Display the specified resource.
-     *
-     * @param Request $request
-     * @param Tag     $tag
-     * @return View
-     */
     public function show(Request $request, Tag $tag): View
     {
-        $links = $tag->links()->byUser()
-            ->orderBy(
-                $request->input('orderBy', 'created_at'),
-                $this->getOrderDirection($request),
-            )
+        $this->updateLinkDisplayForUser();
+
+        $this->allowedOrderBy = Link::$allowOrderBy;
+        $this->orderBy = $request->input('orderBy', 'created_at');
+        $this->orderDir = $request->input('orderBy', 'desc');
+        $this->checkOrdering();
+
+        $links = $tag->links()
+            ->visibleForUser()
+            ->orderBy($this->orderBy, $this->orderDir)
             ->paginate(getPaginationLimit());
 
         return view('models.tags.show', [
             'pageTitle' => trans('tag.tag') . ': ' . $tag->name,
             'tag' => $tag,
-            'tagLinks' => $links,
+            'history' => $tag->audits()->latest()->get(),
+            'links' => $links,
             'route' => $request->getBaseUrl(),
-            'orderBy' => $request->input('orderBy', 'created_at'),
-            'orderDir' => $this->getOrderDirection($request),
+            'orderBy' => $this->orderBy,
+            'orderDir' => $this->orderDir,
         ]);
     }
 
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param Tag $tag
-     * @return View
-     */
     public function edit(Tag $tag): View
     {
         return view('models.tags.edit', [
@@ -125,28 +110,14 @@ class TagController extends Controller
         ]);
     }
 
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param TagUpdateRequest $request
-     * @param Tag              $tag
-     * @return RedirectResponse
-     */
     public function update(TagUpdateRequest $request, Tag $tag): RedirectResponse
     {
-        $tag = TagRepository::update($tag, $request->input());
+        $tag = TagRepository::update($tag, $request->validated());
 
         flash(trans('tag.updated_successfully'), 'success');
-        return redirect()->route('tags.show', [$tag->id]);
+        return redirect()->route('tags.show', ['tag' => $tag]);
     }
 
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @param Tag $tag
-     * @return RedirectResponse
-     * @throws Exception
-     */
     public function destroy(Tag $tag): RedirectResponse
     {
         $deletionSuccessful = TagRepository::delete($tag);
@@ -157,7 +128,6 @@ class TagController extends Controller
         }
 
         flash(trans('tag.deleted_successfully'), 'warning');
-
         return request()->has('redirect_back') ? redirect()->back() : redirect()->route('tags.index');
     }
 }

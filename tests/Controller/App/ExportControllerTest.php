@@ -13,13 +13,13 @@ class ExportControllerTest extends TestCase
 
     private $user;
 
-    public function setUp(): void
+    protected function setUp(): void
     {
         parent::setUp();
 
         $this->seed('ExampleSeeder');
 
-        $this->user = User::first();
+        $this->user = User::notSystem()->first();
         $this->actingAs($this->user);
     }
 

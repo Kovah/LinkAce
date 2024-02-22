@@ -24,17 +24,33 @@
         </div>
     </div>
 
-    <div class="card my-3">
-        <div class="card-header">
-            @lang('link.links')
-        </div>
-        <div class="card-table">
+    <section class="my-4">
+        @if($links->isNotEmpty())
+            <div class="d-flex align-items-center mb-4">
+                <x-models.link-display-toggles class="ms-auto"/>
+                <x-models.link-order-dropdown class="ms-3"/>
+            </div>
+            <div class="link-wrapper">
+                @if(session('link_display_mode') === Link::DISPLAY_CARDS)
+                    @include('guest.links.partials.list-cards')
+                @elseif(session('link_display_mode') === Link::DISPLAY_LIST_SIMPLE)
+                    @include('guest.links.partials.list-simple')
+                @else
+                    @include('guest.links.partials.list-detailed')
+                @endif
+            </div>
 
-            @include('guest.links.partials.table', ['links' => $listLinks])
+        @else
 
-        </div>
-    </div>
+            <div class="alert alert-info">
+                @lang('linkace.no_results_found', ['model' => trans('link.links')])
+            </div>
 
-    {!! $listLinks->onEachSide(1)->withQueryString()->links() !!}
+        @endif
+    </section>
+
+    @if($links->isNotEmpty())
+        {!! $links->onEachSide(1)->withQueryString()->links() !!}
+    @endif
 
 @endsection

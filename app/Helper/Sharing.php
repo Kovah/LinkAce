@@ -6,9 +6,9 @@ use App\Models\Link;
 
 class Sharing
 {
-    public static $linkClasses = 'share-link btn btn-light';
+    public static string $linkClasses = 'share-link btn btn-sm btn-light';
 
-    public static $placeholders = [
+    public static array $placeholders = [
         '#URL#',
         '#E-URL#',
         '#SUBJECT#',
@@ -17,11 +17,6 @@ class Sharing
         '#E-SHARETEXT#',
     ];
 
-    /**
-     * @param string $service
-     * @param Link   $link
-     * @return string
-     */
     public static function getShareLink(string $service, Link $link): string
     {
         $serviceDetails = config('sharing.services.' . $service);
@@ -39,36 +34,25 @@ class Sharing
         ]);
     }
 
-    /**
-     * Prepare all needed raw or encoded values for the share link
-     *
-     * @param Link $link
-     * @return array
-     */
     protected static function generateLinkData(Link $link): array
     {
         $subject = $link->title ?: trans(config('sharing.defaults.subject'));
-        $sharetext = trans(config('sharing.defaults.sharetext'));
+        $shareText = trans(config('sharing.defaults.sharetext'));
 
-        $sharetext = str_replace('#URL#', $link->url, $sharetext);
+        $shareText = str_replace('#URL#', $link->url, $shareText);
 
         return [
             $link->url, // URL
-            self::encode($link->url), // endoced URL
+            self::encode($link->url), // encoded URL
             $subject, // subject
             self::encode($subject), // encoded subject
-            $sharetext, // sharetext
-            self::encode($sharetext), // encoded sharetext
+            $shareText, // share text
+            self::encode($shareText), // encoded share text
         ];
     }
 
-    /**
-     * Encode a string with the basic rawurlencode function
-     * "Hello this is text!" becomes Hello%20this%20is%20text%21%
-     *
-     * @param string $string
-     * @return string
-     */
+    // Encode a string with the basic rawurlencode function
+    // "Hello this is text!" becomes Hello%20this%20is%20text%21%
     protected static function encode(string $string): string
     {
         return rawurlencode($string);

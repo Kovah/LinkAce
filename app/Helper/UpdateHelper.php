@@ -15,9 +15,9 @@ class UpdateHelper
     /**
      * Get the current version from the package.json file and cache it for a day.
      *
-     * @return mixed
+     * @return string|null
      */
-    public static function currentVersion()
+    public static function currentVersion(): ?string
     {
         return Cache::remember('current-version', 86400, function () {
             try {
@@ -39,7 +39,7 @@ class UpdateHelper
      * @param bool $cacheResult
      * @return bool|string
      */
-    public static function checkForUpdates(bool $cacheResult = false)
+    public static function checkForUpdates(bool $cacheResult = false): bool|string
     {
         return Cache::remember('updatecheck', $cacheResult ? 86400 : 0, function () {
             $currentVersion = self::currentVersion();
@@ -66,11 +66,7 @@ class UpdateHelper
      */
     protected static function getCurrentVersionFromAPI(): ?string
     {
-        $request = Http::timeout(5);
-        if (config('html-meta.user_agents', false)) {
-            $agents = config('html-meta.user_agents');
-            $request->withHeaders(['User-Agent' => $agents[array_rand($agents)]]);
-        }
+        $request = setupHttpRequest(5);
         $response = $request->get(self::RELEASE_API_URL);
 
         return $response->successful() ? $response->body() : null;

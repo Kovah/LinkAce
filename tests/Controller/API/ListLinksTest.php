@@ -5,48 +5,66 @@ namespace Tests\Controller\API;
 use App\Models\Link;
 use App\Models\LinkList;
 use Illuminate\Foundation\Testing\RefreshDatabase;
+use Tests\Controller\Traits\PreparesTestData;
 
 class ListLinksTest extends ApiTestCase
 {
+    use PreparesTestData;
     use RefreshDatabase;
 
     public function testLinksRequest(): void
     {
-        $link = Link::factory()->create();
-        $list = LinkList::factory()->create();
+        $this->createTestLists();
+        [$link, $link2, $link3] = $this->createTestLinks();
+        $link->lists()->sync([1, 2]);
+        $link2->lists()->sync([1, 2]);
+        $link3->lists()->sync([1, 2]);
 
-        $link->lists()->sync([$list->id]);
-
-        $response = $this->getJsonAuthorized('api/v1/lists/1/links');
-
-        $response->assertOk()
+        $this->getJsonAuthorized('api/v1/lists/1/links')
+            ->assertOk()
             ->assertJson([
                 'data' => [
                     ['url' => $link->url],
+                    ['url' => $link2->url],
+                ],
+            ])
+            ->assertJsonMissing([
+                'data' => [
+                    ['url' => $link3->url],
                 ],
             ]);
+
+        $this->getJsonAuthorized('api/v1/lists/2/links')
+            ->assertOk()
+            ->assertJson([
+                'data' => [
+                    ['url' => $link->url],
+                    ['url' => $link2->url],
+                ],
+            ])
+            ->assertJsonMissing([
+                'data' => [
+                    ['url' => $link3->url],
+                ],
+            ]);
+
+        $this->getJsonAuthorized('api/v1/lists/3/links')
+            ->assertForbidden();
     }
 
     public function testLinksRequestWithoutLinks(): void
     {
         LinkList::factory()->create();
 
-        $response = $this->getJsonAuthorized('api/v1/lists/1/links');
-
-        $response->assertOk()
+        $this->getJsonAuthorized('api/v1/lists/1/links')
+            ->assertOk()
             ->assertJson([
                 'data' => [],
             ]);
-
-        $responseBody = json_decode($response->content());
-
-        $this->assertEmpty($responseBody->data);
     }
 
     public function testShowRequestNotFound(): void
     {
-        $response = $this->getJsonAuthorized('api/v1/lists/1/links');
-
-        $response->assertNotFound();
+        $this->getJsonAuthorized('api/v1/lists/1/links')->assertNotFound();
     }
 }

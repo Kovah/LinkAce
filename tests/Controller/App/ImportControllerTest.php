@@ -2,8 +2,9 @@
 
 namespace Tests\Controller\App;
 
-use App\Models\Setting;
+use App\Enums\ModelAttribute;
 use App\Models\User;
+use App\Settings\UserSettings;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Http\UploadedFile;
 use Illuminate\Support\Carbon;
@@ -15,14 +16,12 @@ class ImportControllerTest extends TestCase
 {
     use RefreshDatabase;
 
-    private $user;
-
     protected function setUp(): void
     {
         parent::setUp();
 
-        $this->user = User::factory()->create();
-        $this->actingAs($this->user);
+        $user = User::factory()->create();
+        $this->actingAs($user);
     }
 
     public function testValidImportResponse(): void
@@ -34,6 +33,13 @@ class ImportControllerTest extends TestCase
 
     public function testValidImportActionResponse(): void
     {
+        $this->travelTo(Carbon::create(2024, 2, 20, 13, 16));
+
+        UserSettings::fake([
+            'links_default_visibility' => ModelAttribute::VISIBILITY_INTERNAL,
+            'tags_default_visibility' => ModelAttribute::VISIBILITY_INTERNAL,
+        ]);
+
         $response = $this->importBookmarks();
 
         $response->assertOk()
@@ -42,12 +48,29 @@ class ImportControllerTest extends TestCase
             ]);
 
         $this->assertDatabaseCount('links', 5);
-        $this->assertDatabaseCount('tags', 18);
+        $this->assertDatabaseCount('tags', 19);
+
+        $this->assertDatabaseHas('links', [
+            'url' => 'https://adele.uxpin.com/',
+            'visibility' => ModelAttribute::VISIBILITY_PRIVATE,
+        ]);
+        $this->assertDatabaseHas('links', [
+            'url' => 'https://loader.io/',
+            'visibility' => ModelAttribute::VISIBILITY_PUBLIC,
+        ]);
+        $this->assertDatabaseHas('links', [
+            'url' => 'https://astralapp.com/',
+            'visibility' => ModelAttribute::VISIBILITY_INTERNAL,
+        ]);
+
+        $this->assertDatabaseHas('tags', [
+            'name' => 'import-20240220131600',
+        ]);
     }
 
     public function testDatelessImportActionResponse(): void
     {
-        $this->travelTo(Carbon::create(2024, 2, 20));
+        $this->travelTo(Carbon::create(2024, 2, 20, 13, 16));
 
         $response = $this->importBookmarks('/data/import_example_dateless.html');
 
@@ -57,17 +80,19 @@ class ImportControllerTest extends TestCase
             ]);
 
         $this->assertDatabaseCount('links', 5);
-        $this->assertDatabaseCount('tags', 18);
+        $this->assertDatabaseCount('tags', 19);
         $this->assertDatabaseHas('links', [
             'url' => 'https://loader.io/',
-            'created_at' => '2024-02-20 00:00:00'
+            'created_at' => '2024-02-20 13:16:00'
         ]);
     }
 
     public function testImportWithPrivateDefaults(): void
     {
-        Setting::create(['user_id' => 1, 'key' => 'links_private_default', 'value' => '1']);
-        Setting::create(['user_id' => 1, 'key' => 'tags_private_default', 'value' => '1']);
+        UserSettings::fake([
+            'links_default_visibility' => ModelAttribute::VISIBILITY_PRIVATE,
+            'tags_default_visibility' => ModelAttribute::VISIBILITY_PRIVATE,
+        ]);
 
         $response = $this->importBookmarks();
 
@@ -79,13 +104,13 @@ class ImportControllerTest extends TestCase
         $this->assertDatabaseCount('links', 5);
 
         $this->assertDatabaseHas('links', [
-            'url' => 'https://loader.io/',
-            'is_private' => true,
+            'url' => 'https://astralapp.com/',
+            'visibility' => ModelAttribute::VISIBILITY_PRIVATE,
         ]);
 
         $this->assertDatabaseHas('tags', [
             'name' => 'article',
-            'is_private' => '1',
+            'visibility' => ModelAttribute::VISIBILITY_PRIVATE,
         ]);
     }
 

@@ -2,8 +2,13 @@
 
 namespace App\Models;
 
+use App\Audits\Modifiers\BooleanModifier;
+use App\Audits\Modifiers\LinkStatusModifier;
+use App\Audits\Modifiers\ListRelationModifier;
+use App\Audits\Modifiers\TagRelationModifier;
+use App\Audits\Modifiers\VisibilityModifier;
+use App\Enums\ModelAttribute;
 use App\Jobs\SaveLinkToWaybackmachine;
-use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
@@ -13,162 +18,141 @@ use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\Relations\MorphMany;
 use Illuminate\Database\Eloquent\SoftDeletes;
+use Illuminate\Support\Carbon;
 use Illuminate\Support\Str;
-use Venturecraft\Revisionable\Revision;
-use Venturecraft\Revisionable\RevisionableTrait;
+use OwenIt\Auditing\Auditable as AuditableTrait;
+use OwenIt\Auditing\Contracts\Auditable;
 
 /**
  * Class Link
  *
  * @package App\Models
- * @property int                   $id
- * @property int                   $user_id
- * @property string                $url
- * @property string                $title
- * @property string|null           $description
- * @property string|null           $icon
- * @property boolean               $is_private
- * @property int                   $status
- * @property boolean               $check_disabled
- * @property Carbon|null           $created_at
- * @property Carbon|null           $updated_at
- * @property string|null           $deleted_at
- * @property Collection|Tag[]      $lists
- * @property Collection|Note[]     $notes
- * @property Collection|Revision[] $revisionHistory
- * @property Collection|Tag[]      $tags
- * @property User                  $user
- * @method static Builder|Link  byUser($user_id = null)
+ * @property int           $id
+ * @property int           $user_id
+ * @property string        $url
+ * @property string        $title
+ * @property string|null   $description
+ * @property string|null   $icon
+ * @property int           $visibility
+ * @property int           $status
+ * @property boolean       $check_disabled
+ * @property Carbon        $created_at
+ * @property Carbon        $updated_at
+ * @property string|null   $deleted_at
+ * @property MorphMany     $audits
+ * @property BelongsToMany $lists
+ * @property HasMany       $notes
+ * @property BelongsToMany $tags
+ * @property BelongsTo     $user
+ * @method static Builder|Link  byUser(int $user_id = null)
  * @method static Builder|Link  privateOnly()
+ * @method static Builder|Link  internalOnly()
  * @method static Builder|Link  publicOnly()
- * @method static MorphMany     revisionHistory()
  */
-class Link extends Model
+class Link extends Model implements Auditable
 {
-    use SoftDeletes;
-    use RevisionableTrait;
+    use AuditableTrait;
     use HasFactory;
+    use ProvidesTaxonomyOutput;
+    use ScopesForUser;
+    use ScopesVisibility;
+    use SoftDeletes;
 
-    public const STATUS_OK = 1;
-    public const STATUS_MOVED = 2;
-    public const STATUS_BROKEN = 3;
-    public const DISPLAY_CARDS = 1;
-    public const DISPLAY_CARDS_DETAILED = 3;
-    public const DISPLAY_LIST_SIMPLE = 2;
-    public const DISPLAY_LIST_DETAILED = 0;
-    public const REV_TAGS_NAME = 'revtags';
-    public const REV_LISTS_NAME = 'revlists';
-    public $table = 'links';
-
-    // Revisions settings
     public $fillable = [
         'user_id',
         'url',
         'title',
         'description',
         'icon',
-        'is_private',
+        'visibility',
         'status',
         'check_disabled',
         'thumbnail',
     ];
+
     protected $casts = [
         'user_id' => 'integer',
-        'is_private' => 'boolean',
+        'visibility' => 'integer',
         'status' => 'integer',
         'check_disabled' => 'boolean',
     ];
-    protected $revisionCleanup = true;
-    protected $historyLimit = 50;
-    protected $dontKeepRevisionOf = ['icon'];
 
+    public static array $allowOrderBy = [
+        'id',
+        'url',
+        'title',
+        'description',
+        'visibility',
+        'status',
+        'check_disabled',
+        'created_at',
+        'updated_at',
+        'random',
+    ];
 
-    /*
-     | ========================================================================
-     | SCOPES
-     */
+    public string $langBase = 'link';
 
-    /**
-     * Scope for the user relation
-     *
-     * @param Builder  $query
-     * @param int|null $user_id
-     * @return Builder
-     */
-    public function scopeByUser(Builder $query, int $user_id = null): Builder
-    {
-        if (is_null($user_id) && auth()->check()) {
-            $user_id = auth()->id();
-        }
-        return $query->where('user_id', $user_id);
-    }
+    public const STATUS_OK = 1;
+    public const STATUS_MOVED = 2;
+    public const STATUS_BROKEN = 3;
 
-    /**
-     * Scope for the user relation
-     *
-     * @param Builder $query
-     * @return Builder
-     */
-    public function scopePrivateOnly(Builder $query): Builder
-    {
-        return $query->where('is_private', true);
-    }
-
-    /**
-     * Scope for the user relation
-     *
-     * @param Builder $query
-     * @return Builder
-     */
-    public function scopePublicOnly(Builder $query): Builder
-    {
-        return $query->where('is_private', false);
-    }
+    public const DISPLAY_CARDS = 1;
+    public const DISPLAY_LIST_SIMPLE = 2;
+    public const DISPLAY_LIST_DETAILED = 3;
 
     /*
-     | ========================================================================
-     | RELATIONSHIPS
+     * ========================================================================
+     * AUDIT SETTINGS
      */
 
-    /**
-     * @return BelongsTo
+    public const AUDIT_RELATION_EVENT = 'relatedModels';
+    public const AUDIT_TAGS_NAME = 'revtags';
+    public const AUDIT_LISTS_NAME = 'revlists';
+
+    protected array $auditExclude = [
+        'icon',
+    ];
+
+    public array $auditModifiers = [
+        'visibility' => VisibilityModifier::class,
+        'check_disabled' => BooleanModifier::class,
+        'status' => LinkStatusModifier::class,
+        self::AUDIT_TAGS_NAME => TagRelationModifier::class,
+        self::AUDIT_LISTS_NAME => ListRelationModifier::class,
+    ];
+
+    /*
+     * ========================================================================
+     * RELATIONSHIPS
      */
+
     public function user(): BelongsTo
     {
-        return $this->belongsTo(User::class, 'user_id');
+        return $this->belongsTo(User::class, 'user_id')->withTrashed();
     }
 
-    /**
-     * @return BelongsToMany
-     */
     public function lists(): BelongsToMany
     {
         return $this->belongsToMany(LinkList::class, 'link_lists', 'link_id', 'list_id');
     }
 
-    /**
-     * @return BelongsToMany
-     */
     public function tags(): BelongsToMany
     {
         return $this->belongsToMany(Tag::class, 'link_tags', 'link_id', 'tag_id');
     }
 
-    /**
-     * @return HasMany
-     */
     public function notes(): HasMany
     {
         return $this->hasMany(Note::class, 'link_id');
     }
 
     /*
-     | ========================================================================
-     | METHODS
+     * ========================================================================
+     * METHODS
      */
 
     /**
-     * Get the formatted description of the link
+     * Get the Markdown formatted description of the link
      *
      * @return string
      */
@@ -178,7 +162,7 @@ class Link extends Model
             return '';
         }
 
-        if (usersettings('markdown_for_text') !== '1') {
+        if (usersettings('markdown_for_text') === false) {
             return htmlentities($this->description);
         }
 
@@ -186,60 +170,26 @@ class Link extends Model
     }
 
     /**
-     * Get the title shortened to max 50 characters
+     * Get the URL with https:// removed.
+     * Other protocols like magnet://, ftp:// and so on will be kept to make
+     * those protocols more obvious for the user.
      *
-     * @param int $maxLength
      * @return string
      */
+    public function shortUrl(): string
+    {
+        return preg_replace('/http(s)?:\/\//', '', trim($this->url, '/'));
+    }
+
     public function shortTitle(int $maxLength = 50): string
     {
         return Str::limit($this->title, $maxLength);
     }
 
-    /**
-     * Get the domain of the URL
-     *
-     * @return string
-     */
     public function domainOfURL(): string
     {
         $urlDetails = parse_url($this->url);
-        return $urlDetails['host'] ?? $this->shortUrl(20);
-    }
-
-    /**
-     * Get the URL shortened to max 50 characters and with https:// removed.
-     * Other protocols like magnet://, ftp:// and so on will be kept to make
-     * those protocols more obvious for the user.
-     *
-     * @param int $maxLength
-     * @return string
-     */
-    public function shortUrl(int $maxLength = 50): string
-    {
-        return preg_replace('/http(s)?:\/\//', '', Str::limit(trim($this->url, '/'), $maxLength));
-    }
-
-    public function tagsForInput(): ?string
-    {
-        $tags = $this->tags;
-
-        if ($tags->isEmpty()) {
-            return null;
-        }
-
-        return $tags->implode('name', ',');
-    }
-
-    public function listsForInput(): ?string
-    {
-        $lists = $this->lists;
-
-        if ($lists->isEmpty()) {
-            return null;
-        }
-
-        return $lists->implode('name', ',');
+        return $urlDetails['host'] ?? $this->shortUrl();
     }
 
     public function getIcon(string $additionalClasses = ''): string
@@ -275,11 +225,6 @@ class Link extends Model
         ]);
     }
 
-    /**
-     * Output a relative time inside a span with real time information
-     *
-     * @return string
-     */
     public function addedAt(): string
     {
         $output = '<time-ago class="cursor-help"';
@@ -291,7 +236,7 @@ class Link extends Model
         return $output;
     }
 
-    /*
+    /**
      * Dispatch the SaveLinkToWaybackmachine job, if Internet Archive backups
      * are enabled.
      * If the link is private, private Internet Archive backups must be enabled
@@ -299,11 +244,13 @@ class Link extends Model
      */
     public function initiateInternetArchiveBackup(): void
     {
-        if (usersettings('archive_backups_enabled') === '0') {
+        if (usersettings('archive_backups_enabled') === false) {
             return;
         }
 
-        if ($this->is_private && usersettings('archive_private_backups_enabled') === '0') {
+        if ($this->visibility === ModelAttribute::VISIBILITY_PRIVATE
+            && usersettings('archive_private_backups_enabled') === false
+        ) {
             return;
         }
 

@@ -8,11 +8,6 @@ use Illuminate\Support\Facades\File;
 
 class RequirementsController extends Controller
 {
-    /**
-     * Display all requirements that must be fulfilled to run the setup.
-     *
-     * @return View
-     */
     public function index(): View
     {
         [$success, $results] = $this->checkRequirements();

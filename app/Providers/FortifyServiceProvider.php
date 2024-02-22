@@ -33,34 +33,14 @@ class FortifyServiceProvider extends ServiceProvider
         Fortify::updateUserPasswordsUsing(UpdateUserPassword::class);
         Fortify::resetUserPasswordsUsing(ResetUserPassword::class);
 
-        Fortify::loginView(function () {
-            return view('auth.login', [
-                'pageTitle' => trans('linkace.login'),
-            ]);
-        });
+        Fortify::loginView(fn() => view('auth.login', ['pageTitle' => trans('linkace.login')]));
 
-        Fortify::requestPasswordResetLinkView(function () {
-            return view('auth.passwords.email', [
-                'pageTitle' => trans('linkace.reset_password'),
-            ]);
-        });
+        Fortify::requestPasswordResetLinkView(fn() => view('auth.passwords.email', ['pageTitle' => trans('linkace.login')]));
 
-        Fortify::resetPasswordView(function () {
-            return view('auth.passwords.reset', [
-                'pageTitle' => trans('linkace.reset_password'),
-            ]);
-        });
+        Fortify::resetPasswordView(fn() => view('auth.passwords.reset', ['pageTitle' => trans('linkace.login')]));
 
-        Fortify::confirmPasswordView(function () {
-            return view('auth.confirm-password', [
-                'pageTitle' => trans('linkace.password_confirm'),
-            ]);
-        });
+        Fortify::confirmPasswordView(fn() => view('auth.confirm-password', ['pageTitle' => trans('linkace.login')]));
 
-        Fortify::twoFactorChallengeView(function () {
-            return view('auth.two-factor-challenge', [
-                'pageTitle' => trans('auth.two_factor'),
-            ]);
-        });
+        Fortify::twoFactorChallengeView(fn() => view('auth.two-factor-challenge', ['pageTitle' => trans('linkace.login')]));
     }
 }

@@ -2,8 +2,10 @@
 
 namespace Tests;
 
-use App\Models\Setting;
+use App\Settings\SystemSettings;
 use Illuminate\Foundation\Testing\TestCase as BaseTestCase;
+use Illuminate\Support\Facades\Http;
+use Illuminate\Support\Facades\Schema;
 
 abstract class TestCase extends BaseTestCase
 {
@@ -12,10 +14,12 @@ abstract class TestCase extends BaseTestCase
     protected function setUp(): void
     {
         parent::setUp();
+        Http::preventStrayRequests();
 
-        Setting::updateOrCreate(
-            ['key' => 'system_setup_completed'],
-            ['key' => 'system_setup_completed', 'value' => true]
-        );
+        if (Schema::hasTable('settings')) {
+            SystemSettings::fake([
+                'setup_completed' => true,
+            ]);
+        }
     }
 }

@@ -5,35 +5,35 @@ namespace Tests\Controller\Models;
 use App\Jobs\SaveLinkToWaybackmachine;
 use App\Models\Link;
 use App\Models\LinkList;
-use App\Models\Setting;
 use App\Models\Tag;
 use App\Models\User;
+use App\Settings\UserSettings;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Support\Facades\Http;
 use Illuminate\Support\Facades\Queue;
+use Tests\Controller\Traits\PreparesTestData;
 use Tests\TestCase;
 
 class LinkControllerTest extends TestCase
 {
     use RefreshDatabase;
-
-    /** @var User */
-    private $user;
+    use PreparesTestData;
 
     protected function setUp(): void
     {
         parent::setUp();
 
-        $this->user = User::factory()->create();
-        $this->actingAs($this->user);
+        $user = User::factory()->create();
+        $this->actingAs($user);
 
-        $testHtml = '<!DOCTYPE html><head>' .
+        $basicTestHtml = '<!DOCTYPE html><head>' .
             '<title>Example Title</title>' .
             '<meta name="description" content="This an example description">' .
             '</head></html>';
 
+        Http::preventStrayRequests();
         Http::fake([
-            'example.com' => Http::response($testHtml, 200),
+            'example.com' => Http::response($basicTestHtml),
         ]);
 
         Queue::fake();
@@ -41,48 +41,42 @@ class LinkControllerTest extends TestCase
 
     public function testIndexView(): void
     {
-        Link::factory()->create(['url' => 'https://linkace.example.com/test', 'created_at' => now()->subDay()]);
-        Link::factory()->create(['url' => 'https://the-new-linkace.com']);
+        $this->createTestLinks();
 
-        $this->get('links')
-            ->assertOk()
-            ->assertSeeInOrder([
-                'https://the-new-linkace.com',
-                'https://linkace.example.com/test',
-            ]);
+        $response = $this->get('links');
+
+        $response->assertOk()
+            ->assertSee('https://public-link.com')
+            ->assertSee('https://internal-link.com')
+            ->assertDontSee('https://private-link.com');
 
         $this->flushSession();
-        $this->get('links?orderBy=created_at&orderDir=asc')
+        $this->get('links?orderBy=created_at&orderDir=desc')
             ->assertOk()
             ->assertSeeInOrder([
-                'https://linkace.example.com/test',
-                'https://the-new-linkace.com',
+                'https://internal-link.com',
+                'https://public-link.com',
             ]);
 
         $this->flushSession();
         $this->get('links?orderBy=created_at&orderDir=wrong-asc')
             ->assertOk()
             ->assertSeeInOrder([
-                'https://the-new-linkace.com',
-                'https://linkace.example.com/test',
+                'https://public-link.com',
+                'https://internal-link.com',
             ]);
     }
 
     public function testCreateView(): void
     {
-        $response = $this->get('links/create');
-
-        $response->assertOk()
-            ->assertSee('Add Link');
+        $this->get('links/create')->assertOk()->assertSee('Add Link');
     }
 
     public function testMinimalStoreRequest(): void
     {
-        $response = $this->post('links', [
+        $this->post('links', [
             'url' => 'https://example.com',
-        ]);
-
-        $response->assertRedirect('links/1');
+        ])->assertRedirect('links/1');
 
         $databaseLink = Link::first();
 
@@ -95,16 +89,14 @@ class LinkControllerTest extends TestCase
         $tag = Tag::factory()->create();
         $list = LinkList::factory()->create();
 
-        $response = $this->post('links', [
+        $this->post('links', [
             'url' => 'https://example.com',
             'title' => 'My custom title',
             'description' => 'My custom description',
             'lists' => $list->name,
             'tags' => $tag->name,
-            'is_private' => '1',
-        ]);
-
-        $response->assertRedirect('links/1');
+            'visibility' => 1,
+        ])->assertRedirect('links/1');
 
         $databaseLink = Link::first();
 
@@ -115,75 +107,45 @@ class LinkControllerTest extends TestCase
         $this->assertEquals($tag->name, $databaseLink->tags->first()->name);
     }
 
-    public function testStoreRequestWithPrivateDefault(): void
-    {
-        Setting::create([
-            'user_id' => 1,
-            'key' => 'links_private_default',
-            'value' => '1',
-        ]);
-
-        Setting::create([
-            'user_id' => 1,
-            'key' => 'tags_private_default',
-            'value' => '1',
-        ]);
-
-        Setting::create([
-            'user_id' => 1,
-            'key' => 'lists_private_default',
-            'value' => '1',
-        ]);
-
-        $response = $this->post('links', [
-            'url' => 'https://example.com',
-            'title' => null,
-            'description' => null,
-            'lists' => 'myList',
-            'tags' => 'new-tag',
-            'is_private' => usersettings('links_private_default'),
-        ]);
-
-        $response->assertRedirect('links/1');
-
-        $this->assertDatabaseHas('links', [
-            'id' => 1,
-            'url' => 'https://example.com',
-            'is_private' => 1,
-        ]);
-
-        $this->assertDatabaseHas('lists', [
-            'id' => 1,
-            'name' => 'myList',
-            'is_private' => 1,
-        ]);
-
-        $this->assertDatabaseHas('tags', [
-            'id' => 1,
-            'name' => 'new-tag',
-            'is_private' => 1,
-        ]);
-    }
-
     public function testStoreRequestWithDuplicate(): void
     {
         Link::factory()->create([
             'url' => 'https://example.com/',
         ]);
 
-        $response = $this->post('links', [
+        $this->post('links', [
             'url' => 'https://example.com',
             'title' => null,
             'description' => null,
             'lists' => null,
             'tags' => null,
-            'is_private' => '0',
-        ]);
-
-        $response->assertRedirect('links/2');
+            'visibility' => 1,
+        ])->assertRedirect('links/2');
 
         $flashMessages = session('flash_notification', collect());
         $flashMessages->contains('message', trans('link.duplicates_found'));
+    }
+
+    public function testStoreRequestWithExistingPrivateLink(): void
+    {
+        Link::factory()->create(['url' => 'https://example.com', 'user_id' => 2, 'visibility' => 3]);
+
+        $this->post('links', [
+            'url' => 'https://example.com',
+            'visibility' => 1,
+        ])->assertRedirect('links/2');
+
+        $this->assertDatabaseHas('links', [
+            'url' => 'https://example.com',
+            'user_id' => 2,
+            'visibility' => 3,
+        ]);
+
+        $this->assertDatabaseHas('links', [
+            'url' => 'https://example.com',
+            'user_id' => 1,
+            'visibility' => 1,
+        ]);
     }
 
     public function testStoreRequestWithBrokenUrl(): void
@@ -192,16 +154,14 @@ class LinkControllerTest extends TestCase
             'example.com' => Http::response('', 500),
         ]);
 
-        $response = $this->post('links', [
+        $this->post('links', [
             'url' => 'example.com',
             'title' => null,
             'description' => null,
             'lists' => null,
             'tags' => null,
-            'is_private' => '0',
-        ]);
-
-        $response->assertRedirect('links/1');
+            'visibility' => 1,
+        ])->assertRedirect('links/1');
 
         $databaseLink = Link::first();
 
@@ -212,7 +172,7 @@ class LinkControllerTest extends TestCase
 
     public function testStoreRequestWithHugeThumbnail(): void
     {
-        $img = 'https://assets.imgix.net/unsplash/unsplash006.jpg?w=640&h=400&usm=20&fit=crop&blend-mode=normal&blend-alpha=80&blend-x=30&blend-y=20&blend=https%3A%2F%2Fassets.imgix.net%2F~text%3Ftxt-color%3D9fb64d%26txt-font%3DAvenir%2BNext%2BHeavy%26txt-shad%3D20%26txt-size%3D32%26w%3D580%26txt%3Di%2Bthank%2Byou%2Bgod%2Bfor%2Bmost%2Bthis%2Bamazing%2Bday%3Afor%2Bthe%2Bleaping%2Bgreenly%2Bspirits%2Bof%2Btrees%2B-e.e.%2Bcummings';
+        $img = 'https://picsum.photos/1000/500';
 
         $testHtml = '<!DOCTYPE html><head>' .
             '<title>Example Title</title>' .
@@ -221,11 +181,9 @@ class LinkControllerTest extends TestCase
 
         Http::fake(['huge-thumbnail.com' => Http::response($testHtml)]);
 
-        $response = $this->post('links', [
+        $this->post('links', [
             'url' => 'https://huge-thumbnail.com',
-        ]);
-
-        $response->assertRedirect('links/1');
+        ])->assertRedirect('links/1');
 
         $databaseLink = Link::first();
 
@@ -234,12 +192,10 @@ class LinkControllerTest extends TestCase
 
     public function testStoreRequestWithContinue(): void
     {
-        $response = $this->post('links', [
+        $this->post('links', [
             'url' => 'https://example.com',
             'reload_view' => '1',
-        ]);
-
-        $response->assertRedirect('links/create');
+        ])->assertRedirect('links/create');
 
         $databaseLink = Link::first();
 
@@ -248,10 +204,8 @@ class LinkControllerTest extends TestCase
 
     public function testStoreRequestWithoutArchiveBackup(): void
     {
-        Setting::create([
-            'user_id' => 1,
-            'key' => 'archive_backups_enabled',
-            'value' => '0',
+        UserSettings::fake([
+            'archive_backups_enabled' => false,
         ]);
 
         $this->post('links', [
@@ -260,7 +214,7 @@ class LinkControllerTest extends TestCase
             'description' => null,
             'lists' => null,
             'tags' => null,
-            'is_private' => '0',
+            'visibility' => 1,
         ]);
 
         Queue::assertNotPushed(SaveLinkToWaybackmachine::class);
@@ -268,16 +222,9 @@ class LinkControllerTest extends TestCase
 
     public function testStoreRequestWithoutPrivateArchiveBackup(): void
     {
-        Setting::create([
-            'user_id' => 1,
-            'key' => 'archive_backups_enabled',
-            'value' => '1',
-        ]);
-
-        Setting::create([
-            'user_id' => 1,
-            'key' => 'archive_private_backups_enabled',
-            'value' => '0',
+        UserSettings::fake([
+            'archive_backups_enabled' => true,
+            'archive_private_backups_enabled' => false,
         ]);
 
         $this->post('links', [
@@ -286,7 +233,7 @@ class LinkControllerTest extends TestCase
             'description' => null,
             'lists' => null,
             'tags' => null,
-            'is_private' => '1',
+            'visibility' => 3,
         ]);
 
         Queue::assertNotPushed(SaveLinkToWaybackmachine::class);
@@ -294,77 +241,111 @@ class LinkControllerTest extends TestCase
 
     public function testValidationErrorForCreate(): void
     {
-        $response = $this->post('links', [
+        $this->post('links', [
             'url' => null,
-        ]);
-
-        $response->assertSessionHasErrors([
+        ])->assertSessionHasErrors([
             'url',
         ]);
     }
 
     public function testDetailView(): void
     {
-        $link = Link::factory()->create();
+        $this->createTestLinks();
 
-        $response = $this->get('links/1');
+        $this->get('links/1')->assertOk()->assertSee('https://public-link.com');
+        $this->get('links/2')->assertOk()->assertSee('https://internal-link.com');
+        $this->get('links/3')->assertForbidden();
+    }
 
-        $response->assertOk()
-            ->assertSee($link->url);
+    public function testInternalDetailView(): void
+    {
+        Link::factory()->create(['url' => 'https://public-link.com', 'visibility' => 2]);
+
+        $this->get('links/1')
+            ->assertOk()
+            ->assertSee('Internal Link')
+            ->assertSee('https://public-link.com');
+    }
+
+    public function testPrivateDetailView(): void
+    {
+        Link::factory()->create(['url' => 'https://public-link.com', 'visibility' => 3]);
+
+        $this->get('links/1')
+            ->assertOk()
+            ->assertSee('Private Link')
+            ->assertSee('https://public-link.com');
     }
 
     public function testEditView(): void
     {
-        Link::factory()->create();
+        $this->createTestLinks();
 
-        $response = $this->get('links/1/edit');
-
-        $response->assertOk()
-            ->assertSee('Edit Link');
+        $this->get('links/1/edit')->assertOk()->assertSee('https://public-link.com');
+        $this->get('links/2/edit')->assertOk()->assertSee('https://internal-link.com');
+        $this->get('links/3/edit')->assertForbidden();
     }
 
     public function testUpdateResponse(): void
     {
-        $baseLink = Link::factory()->create();
+        $this->createTestLinks();
 
-        $response = $this->patch('links/1', [
-            'url' => 'https://new-example.com',
+        $this->patch('links/1', [
+            'url' => 'https://new-public-link.com',
             'title' => 'New Title',
             'description' => 'New Description',
             'lists' => null,
             'tags' => null,
-            'is_private' => '0',
+            'visibility' => 1,
             'check_disabled' => '0',
-        ]);
+        ])->assertRedirect('links/1');
 
-        $response->assertRedirect('links/1');
+        // Check first link update
+        $link = Link::first();
 
-        $updatedLink = $baseLink->fresh();
+        $this->assertEquals('https://new-public-link.com', $link->url);
+        $this->assertEquals('New Title', $link->title);
+        $this->assertEquals('New Description', $link->description);
 
-        $this->assertEquals('https://new-example.com', $updatedLink->url);
-        $this->assertEquals('New Title', $updatedLink->title);
-        $this->assertEquals('New Description', $updatedLink->description);
+        $historyData = $link->audits()->first()->getModified();
 
-        $historyEntry = $updatedLink->revisionHistory()->first();
+        $this->assertArrayHasKey('url', $historyData);
+        $this->assertEquals('https://public-link.com', $historyData['url']['old']);
+        $this->assertEquals($link->url, $historyData['url']['new']);
 
-        $this->assertEquals('url', $historyEntry->fieldName());
-        $this->assertEquals($baseLink->url, $historyEntry->oldValue());
-        $this->assertEquals($updatedLink->url, $historyEntry->newValue());
+        // Check update for other links
+        $this->patch('links/2', [
+            'url' => 'https://internal-link.com',
+            'title' => 'New Title',
+            'description' => 'New Description',
+            'lists' => null,
+            'tags' => null,
+            'visibility' => 1,
+            'check_disabled' => '0',
+        ])->assertRedirect('links/2');
+
+        $this->patch('links/3', [
+            'url' => 'https://private-link.com',
+            'title' => 'New Title',
+            'description' => 'New Description',
+            'lists' => null,
+            'tags' => null,
+            'visibility' => 1,
+            'check_disabled' => '0',
+        ])->assertForbidden();
     }
 
     public function testMissingModelErrorForUpdate(): void
     {
-        $response = $this->patch('links/1', [
+        $this->patch('links/1', [
             'link_id' => '1',
             'url' => 'https://new-example.com',
             'title' => 'New Title',
             'description' => 'New Description',
             'lists' => null,
             'tags' => null,
-            'is_private' => '0',
-        ]);
-
-        $response->assertNotFound();
+            'visibility' => 1,
+        ])->assertNotFound();
     }
 
     public function testUniquePropertyValidation(): void
@@ -372,17 +353,15 @@ class LinkControllerTest extends TestCase
         Link::factory()->create(['url' => 'https://old-example.com']);
         $baseLink = Link::factory()->create();
 
-        $response = $this->patch('links/2', [
+        $this->patch('links/2', [
             'link_id' => $baseLink->id,
             'url' => 'https://old-example.com',
             'title' => 'New Title',
             'description' => 'New Description',
             'lists' => null,
             'tags' => null,
-            'is_private' => '0',
-        ]);
-
-        $response->assertSessionHasErrors([
+            'visibility' => 1,
+        ])->assertSessionHasErrors([
             'url',
         ]);
     }
@@ -391,79 +370,95 @@ class LinkControllerTest extends TestCase
     {
         $baseLink = Link::factory()->create();
 
-        $response = $this->patch('links/1', [
+        $this->patch('links/1', [
             'link_id' => $baseLink->id,
             //'url' => 'https://new-example.com',
             'title' => 'New Title',
             'description' => 'New Description',
             'lists' => null,
             'tags' => null,
-            'is_private' => '0',
-        ]);
-
-        $response->assertSessionHasErrors([
+            'visibility' => 1,
+        ])->assertSessionHasErrors([
             'url',
         ]);
     }
 
     public function testDeleteResponse(): void
     {
-        Link::factory()->create();
+        $this->createTestLinks();
 
-        $response = $this->delete('links/1');
-
-        $response->assertRedirect();
+        $this->delete('links/1')->assertRedirect();
 
         $databaseLink = Link::withTrashed()->first();
-
         $this->assertNotNull($databaseLink->deleted_at);
+
+        $this->delete('links/2')->assertForbidden();
+        $this->delete('links/3')->assertForbidden();
     }
 
     public function testMissingModelErrorForDelete(): void
     {
-        $response = $this->delete('links/1');
-
-        $response->assertNotFound();
+        $this->delete('links/1')->assertNotFound();
     }
 
     public function testCheckToggleRequest(): void
     {
-        $link = Link::factory()->create();
+        $this->createTestLinks();
+        $link = Link::first();
 
-        $response = $this->post('links/toggle-check/1', [
+        $this->post('links/toggle-check/1', [
             'toggle' => '1',
-        ]);
+        ])->assertRedirect('links/1');
 
-        $response->assertRedirect('links/1');
+        $this->assertEquals(true, $link->refresh()->check_disabled);
 
-        $updatedLink = $link->fresh();
+        // Check other links
+        $this->post('links/toggle-check/2', [
+            'toggle' => '1',
+        ])->assertRedirect('links/2');
 
-        $this->assertEquals(true, $updatedLink->check_disabled);
+        $this->post('links/toggle-check/3', ['toggle' => '1'])->assertForbidden();
     }
 
     public function testInvalidCheckToggleRequest(): void
     {
         Link::factory()->create();
 
-        $response = $this->post('links/toggle-check/1', [
+        $this->post('links/toggle-check/1', [
             'toggle' => 'blabla',
-        ]);
-
-        $response->assertSessionHasErrors([
+        ])->assertSessionHasErrors([
             'toggle',
         ]);
     }
 
     public function testMarkWorkingRequest(): void
     {
-        $link = Link::factory()->create();
+        $this->createTestLinks();
+        $link = Link::first();
 
-        $response = $this->post('links/mark-working/1');
+        $this->post('links/mark-working/1')->assertRedirect('links/1');
+        $this->post('links/mark-working/2')->assertRedirect('links/2');
+        $this->post('links/mark-working/3')->assertForbidden();
 
-        $response->assertRedirect('links/1');
+        $this->assertEquals(Link::STATUS_OK, $link->refresh()->status);
+    }
 
-        $updatedLink = $link->fresh();
+    public function testLinkDisplayToggle(): void
+    {
+        $this->createTestLinks();
 
-        $this->assertEquals(Link::STATUS_OK, $updatedLink->status);
+        $userSettings = app(UserSettings::class);
+        $userSettings->link_display_mode = Link::DISPLAY_LIST_DETAILED;
+        $userSettings->save();
+
+        $this->get('links')->assertSee('link-detailed');
+
+        $this->get('links?link-display=1')->assertSee('link-card');
+        $userSettings = app(UserSettings::class);
+        $this->assertSame($userSettings->link_display_mode, Link::DISPLAY_CARDS);
+
+        $this->get('links?link-display=2')->assertSee('link-simple');
+        $userSettings = app(UserSettings::class);
+        $this->assertSame($userSettings->link_display_mode, Link::DISPLAY_LIST_SIMPLE);
     }
 }

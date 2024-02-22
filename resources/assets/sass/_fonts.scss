@@ -10,8 +10,26 @@
 @font-face {
   font-family: 'IBM Plex Sans';
   src: local('IBM Plex Sans'), local('IBMPlexSans'),
-  url('../../fonts/IBMPlexSans.woff2') format('woff2'),
-  url('../../fonts/IBMPlexSans.woff') format('woff');
+  url('../../fonts/IBMPlexSans-Regular.woff2') format('woff2'),
+  url('../../fonts/IBMPlexSans-Regular.woff') format('woff');
+  font-weight: normal;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: 'IBM Plex Sans Condensed';
+  src: local('IBM Plex Sans Cond Bold'), local('IBMPlexSansCond-Bold'),
+  url('../../fonts/IBMPlexSansCondensed-Bold.woff2') format('woff2'),
+  url('../../fonts/IBMPlexSansCondensed-Bold.woff') format('woff');
+  font-weight: bold;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: 'IBM Plex Sans Condensed';
+  src: local('IBM Plex Sans Cond'), local('IBMPlexSansCond'),
+  url('../../fonts/IBMPlexSansCondensed-Regular.woff2') format('woff2'),
+  url('../../fonts/IBMPlexSansCondensed-Regular.woff') format('woff');
   font-weight: normal;
   font-style: normal;
 }

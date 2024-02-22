@@ -3,64 +3,63 @@
 namespace App\Http\Controllers\Guest;
 
 use App\Http\Controllers\Controller;
-use App\Http\Controllers\Traits\HandlesQueryOrder;
+use App\Http\Controllers\Traits\ChecksOrdering;
+use App\Http\Controllers\Traits\ConfiguresLinkDisplay;
 use App\Models\LinkList;
 use Illuminate\Contracts\View\View;
 use Illuminate\Http\Request;
 
 class ListController extends Controller
 {
-    use HandlesQueryOrder;
+    use ChecksOrdering;
+    use ConfiguresLinkDisplay;
 
-    /**
-     * Display an overview of all lists.
-     *
-     * @param Request $request
-     * @return View
-     */
+    public function __construct()
+    {
+        $this->allowedOrderBy = LinkList::$allowOrderBy;
+    }
+
     public function index(Request $request): View
     {
+        $this->orderBy = $request->input('orderBy', 'created_at');
+        $this->orderDir = $request->input('orderBy', 'desc');
+        $this->checkOrdering();
+
         $lists = LinkList::publicOnly()
-            ->withCount('links')
-            ->orderBy(
-                $request->input('orderBy', 'name'),
-                $this->getOrderDirection($request, 'asc')
-            )
+            ->withCount(['links' => fn($query) => $query->publicOnly()])
+            ->orderBy($this->orderBy, $this->orderDir)
             ->paginate(getPaginationLimit());
 
         return view('guest.lists.index', [
             'pageTitle' => trans('list.lists'),
             'lists' => $lists,
-            'orderBy' => $request->input('orderBy', 'name'),
-            'orderDir' => $this->getOrderDirection($request, 'asc'),
+            'orderBy' => $this->orderBy,
+            'orderDir' => $this->orderDir,
         ]);
     }
 
-    /**
-     * Display the specified resource.
-     *
-     * @param Request $request
-     * @param int     $listID
-     * @return View
-     */
     public function show(Request $request, int $listID): View
     {
+        $this->updateLinkDisplayForGuest();
+
         $list = LinkList::publicOnly()->findOrFail($listID);
+
+        $this->orderBy = $request->input('orderBy', 'created_at');
+        $this->orderDir = $request->input('orderBy', 'desc');
+        $this->checkOrdering();
 
         $links = $list->links()
             ->publicOnly()
-            ->orderBy(
-                $request->input('orderBy', 'title'),
-                $this->getOrderDirection($request, 'asc')
-            )->paginate(getPaginationLimit());
+            ->orderBy($this->orderBy, $this->orderDir)
+            ->paginate(getPaginationLimit());
 
         return view('guest.lists.show', [
             'pageTitle' => trans('list.list') . ': ' . $list->name,
             'list' => $list,
-            'listLinks' => $links,
+            'links' => $links,
             'route' => $request->getBaseUrl(),
-            'orderBy' => $request->input('orderBy', 'title'),
-            'orderDir' => $this->getOrderDirection($request, 'asc'),
+            'orderBy' => $this->orderBy,
+            'orderDir' => $this->orderDir,
         ]);
     }
 }
