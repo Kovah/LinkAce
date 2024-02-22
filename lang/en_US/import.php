@@ -10,5 +10,5 @@ return [
     'import_networkerror' => 'Something went wrong while trying to import the bookmarks. Please check your browser console for details or consult the application logs.',
     'import_error' => 'Something went wrong while trying to import the bookmarks. Please consult the application logs.',
     'import_empty' => 'Could not import any bookmarks. Either the uploaded file is corrupt or empty.',
-    'import_successfully' => ':imported links imported successfully, :skipped skipped.',
+    'import_successfully' => ':imported links imported successfully, :skipped skipped. All imported links have been assigned the tag :taglink.',
 ];

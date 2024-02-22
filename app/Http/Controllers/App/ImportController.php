@@ -41,11 +41,13 @@ class ImportController extends Controller
             ]);
         }
 
+        $tag = $importer->getImportTag();
         return response()->json([
             'success' => true,
             'message' => trans('import.import_successfully', [
                 'imported' => $importer->getImportCount(),
                 'skipped' => $importer->getSkippedCount(),
+                'taglink' => sprintf('<a href="%s">%s</a>', route('tags.show', [$tag]), $tag->name),
             ]),
         ]);
     }

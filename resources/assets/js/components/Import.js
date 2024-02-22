@@ -45,10 +45,10 @@ export default class Import {
       }
 
       if (result.success) {
-        this.$alertSuccess.innerText = result.message;
+        this.$alertSuccess.innerHTML = result.message;
         this.$alertSuccess.classList.remove('d-none');
       } else {
-        this.$alertWarning.innerText = result.message;
+        this.$alertWarning.innerHTML = result.message;
         this.$alertWarning.classList.remove('d-none');
       }
 

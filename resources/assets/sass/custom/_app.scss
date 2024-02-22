@@ -163,13 +163,11 @@ code {
   animation: icon-spin 4s infinite linear;
 }
 
-@-webkit-keyframes icon-spin {
+@keyframes icon-spin {
   0% {
-    -webkit-transform: rotate(0deg);
     transform: rotate(0deg);
   }
   100% {
-    -webkit-transform: rotate(360deg);
     transform: rotate(360deg);
   }
 }
