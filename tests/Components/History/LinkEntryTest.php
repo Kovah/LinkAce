@@ -77,6 +77,7 @@ class LinkEntryTest extends TestCase
         $link = Link::factory()->create();
 
         $link->delete();
+        $this->travel(10)->seconds();
         $link->restore();
 
         $historyEntries = $link->audits()->get();

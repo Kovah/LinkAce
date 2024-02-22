@@ -33,20 +33,20 @@ class UserEntryTest extends TestCase
     public function testModelDeletion(): void
     {
         $user = User::factory()->create(['name' => 'TestUser']);
-
+        $this->travel(10)->seconds();
         $user->delete();
+        $this->travel(10)->seconds();
+        $user->restore();
 
         $historyEntries = $user->audits()->latest()->get();
+        $output = (new UserEntry($historyEntries[0]))->render();
+        $this->assertStringContainsString('User <code>TestUser</code> was restored', $output);
 
         $output = (new UserEntry($historyEntries[1]))->render();
         $this->assertStringContainsString('User <code>TestUser</code> was deleted', $output);
 
-        $user->restore();
-
-        $historyEntries = $user->audits()->latest()->get();
-
         $output = (new UserEntry($historyEntries[2]))->render();
-        $this->assertStringContainsString('User <code>TestUser</code> was restored', $output);
+        $this->assertStringContainsString('User <code>TestUser</code> was created', $output);
     }
 
     public function testModelBlocking(): void
@@ -56,19 +56,20 @@ class UserEntryTest extends TestCase
         $this->actingAs($admin);
 
         $user = User::factory()->create(['name' => 'TestUser']);
-
+        $this->travel(10)->seconds();
         $this->patch('system/users/2/block');
-
-        $historyEntries = $user->audits()->latest()->get();
-
-        $output = (new UserEntry($historyEntries[1]))->render();
-        $this->assertStringContainsString('User <code>TestUser</code> was blocked', $output);
-
+        $this->travel(10)->seconds();
         $this->patch('system/users/2/unblock');
 
         $historyEntries = $user->audits()->latest()->get();
 
-        $output = (new UserEntry($historyEntries[2]))->render();
+        $output = (new UserEntry($historyEntries[0]))->render();
         $this->assertStringContainsString('User <code>TestUser</code> was unblocked', $output);
+
+        $output = (new UserEntry($historyEntries[1]))->render();
+        $this->assertStringContainsString('User <code>TestUser</code> was blocked', $output);
+
+        $output = (new UserEntry($historyEntries[2]))->render();
+        $this->assertStringContainsString('User <code>TestUser</code> was created', $output);
     }
 }

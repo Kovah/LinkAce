@@ -45,6 +45,7 @@ class TagEntryTest extends TestCase
         $tag = Tag::factory()->create();
 
         $tag->delete();
+        $this->travel(10)->seconds();
         $tag->restore();
 
         $historyEntries = $tag->audits()->get();

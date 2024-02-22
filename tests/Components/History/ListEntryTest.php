@@ -73,6 +73,7 @@ class ListEntryTest extends TestCase
         $list = LinkList::factory()->create();
 
         $list->delete();
+        $this->travel(10)->seconds();
         $list->restore();
 
         $historyEntries = $list->audits()->get();
