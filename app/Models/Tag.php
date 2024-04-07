@@ -58,6 +58,30 @@ class Tag extends Model
         return $oldName !== $newName;
     }
 
+    /**
+     * Override inherited function such that it finds existing tags case-insensitively, but creates them with the right casing
+     *
+     * @param array $attributes
+     * @param array $values
+     * @return Builder
+     */
+    public static function firstOrCreate(array $attributes = [], array $values = []): self
+    {
+        if (isset($attributes['name'])) {
+            // SQL lower() function is checked to be supported by MariaDB, SQLite, PostgreSQL, and MSSQL
+            $existing = self::whereRaw('lower(name) = lower(?)', [$attributes['name']])->first();
+            if (!is_null($existing)) {
+                return $existing;
+            }
+        }
+
+        if (!is_null($instance = self::where($attributes)->first())) {
+            return $instance;
+        }
+
+        return self::createOrFirst($attributes, $values);
+    }
+
     /*
      | ========================================================================
      | SCOPES
