@@ -24,12 +24,13 @@ starting to code.
 
 ### Minimum Requirements
 
-* [Docker](https://www.docker.com/products/docker-desktop) _or_ PHP 7.4
+* [Docker](https://www.docker.com/products/docker-desktop)/[Podman](https://podman.io/docs/installation) _or_ a [currently-supported PHP version](https://www.php.net/supported-versions.php)
+  * For Podman, you also need to `apt`, `dnf`, or otherwise install [`podman-compose`](https://github.com/containers/podman-compose)
 * [Node](https://nodejs.org/en/) (16 LTS)
 
 ### 1. Basic Setup
 
-The following steps assume that you are using Docker for development, which I highly encourage. If you use other ways to work with PHP projects you must adapt the commands to your system. Clone the repository to your machine and run the following commands to start the Docker container system:
+The following steps assume that you are using Docker or Podman for development, which I highly encourage. If you use other ways to work with PHP projects you must adapt the commands to your system. If you want to use Podman, simply replace the word `docker` with `podman` in each command. Clone the repository to your machine and run the following commands to start the Docker container system:
 
 ```bash
 cp .env.docker .env

@@ -2,7 +2,7 @@
 
 # ================================
 # PHP Dependency Setup
-FROM linkace/base-image:php-8.3-alpine AS builder
+FROM docker.io/library/linkace/base-image:php-8.3-alpine AS builder
 WORKDIR /app
 
 # Pull composer and install required packages
