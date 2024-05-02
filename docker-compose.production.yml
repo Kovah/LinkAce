@@ -4,7 +4,7 @@ services:
 
   # --- MariaDB
   db:
-    image: mariadb:11.2
+    image: docker.io/library/mariadb:11.2
     restart: unless-stopped
     command: mariadbd --character-set-server=utf8mb4 --collation-server=utf8mb4_bin
     environment:
@@ -17,7 +17,7 @@ services:
 
   # --- LinkAce Image with PHP
   app:
-    image: linkace/linkace:latest
+    image: docker.io/library/linkace/linkace:latest
     restart: unless-stopped
     depends_on:
       - db
@@ -29,7 +29,7 @@ services:
 
   # --- nginx
   nginx:
-    image: bitnami/nginx:1.24
+    image: docker.io/bitnami/nginx:1.24
     restart: unless-stopped
     ports:
       - "0.0.0.0:80:8080"
@@ -45,7 +45,7 @@ services:
 
   # --- Redis
   redis:
-    image: bitnami/redis:7.2
+    image: docker.io/bitnami/redis:7.2
     restart: unless-stopped
     environment:
       - REDIS_PASSWORD=${REDIS_PASSWORD}

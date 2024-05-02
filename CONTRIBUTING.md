@@ -24,24 +24,25 @@ starting to code.
 
 ### Minimum Requirements
 
-* [Docker](https://www.docker.com/products/docker-desktop) _or_ PHP 7.4
+* [Docker](https://www.docker.com/products/docker-desktop)/[Podman](https://podman.io/docs/installation) _or_ a [currently-supported PHP version](https://www.php.net/supported-versions.php)
+  * For Podman, you also need to `apt`, `dnf`, or otherwise install [`podman-compose`](https://github.com/containers/podman-compose)
 * [Node](https://nodejs.org/en/) (16 LTS)
 
 ### 1. Basic Setup
 
-The following steps assume that you are using Docker for development, which I highly encourage. If you use other ways to work with PHP projects you must adapt the commands to your system. Clone the repository to your machine and run the following commands to start the Docker container system:
+The following steps assume that you are using Docker or Podman for development, which I highly encourage. If you use other ways to work with PHP projects you must adapt the commands to your system. If you want to use Podman, simply replace the word `docker` with `podman` in each command. Clone the repository to your machine and run the following commands to start the Docker container system:
 
 ```bash
 cp .env.docker .env
-docker-compose up -d --build
+docker compose up -d --build
 ```
 
 Now, install all dependencies from inside the PHP container:
 
 ```bash
-docker exec -it linkace-php composer install
+docker compose exec -it php composer install
 
-docker exec -it linkace-php php artisan key:generate
+docker compose exec -it php php artisan key:generate
 ```
 
 Last step: compile all assets. Node 16 LTS is the minimum version required and recommended to use. You may use either NPM or Yarn for installing the asset dependencies.
@@ -57,7 +58,7 @@ npm run dev
 I recommend using the Artisan command line tool in the PHP container only, to make sure that the same environment is  used. To do so, use the following example command:
 
 ```bash
-docker exec -it linkace-php php artisan migrate
+docker compose exec -it php php artisan migrate
 ```
 
 #### 3. Registering a new user
@@ -65,7 +66,7 @@ docker exec -it linkace-php php artisan migrate
 Currently, you can do this by using the command line:
 
 ```bash
-docker exec -it linkace-php php artisan registeruser [user name] [user email]
+docker compose exec -it php php artisan registeruser [user name] [user email]
 ```
 
 
@@ -74,8 +75,8 @@ docker exec -it linkace-php php artisan registeruser [user name] [user email]
 You can run existing tests with the following command:
 
 ```bash
-docker exec -it linkace-php composer run lint
-docker exec -it linkace-php composer run test
+docker compose exec -it php composer run lint
+docker compose exec -it php composer run test
 ```
 
 

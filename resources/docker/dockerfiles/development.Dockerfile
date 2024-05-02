@@ -1,7 +1,7 @@
 # DOCKERFILE DEVELOPMENT
 # Installs MySQL Client for database exports, xDebug with PCov and Composer
 
-FROM php:8.1.10-fpm
+FROM docker.io/library/php:8.1.10-fpm
 WORKDIR /app
 
 RUN apt-get update && apt-get install -y \
