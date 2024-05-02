@@ -205,7 +205,7 @@ class LinkRepository
 
         foreach ($entries as $entry) {
             if (is_int($entry)) {
-                $newEntry = Tag::find($entry);
+                $newEntry = $model::find($entry);
             } else {
                 $newEntry = $model::firstOrCreate([
                     'user_id' => auth()->id(),
