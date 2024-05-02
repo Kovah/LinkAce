@@ -34,15 +34,15 @@ The following steps assume that you are using Docker or Podman for development, 
 
 ```bash
 cp .env.docker .env
-docker-compose up -d --build
+docker compose up -d --build
 ```
 
 Now, install all dependencies from inside the PHP container:
 
 ```bash
-docker exec -it linkace-php composer install
+docker compose exec -it php composer install
 
-docker exec -it linkace-php php artisan key:generate
+docker compose exec -it php php artisan key:generate
 ```
 
 Last step: compile all assets. Node 16 LTS is the minimum version required and recommended to use. You may use either NPM or Yarn for installing the asset dependencies.
@@ -58,7 +58,7 @@ npm run dev
 I recommend using the Artisan command line tool in the PHP container only, to make sure that the same environment is  used. To do so, use the following example command:
 
 ```bash
-docker exec -it linkace-php php artisan migrate
+docker compose exec -it php php artisan migrate
 ```
 
 #### 3. Registering a new user
@@ -66,7 +66,7 @@ docker exec -it linkace-php php artisan migrate
 Currently, you can do this by using the command line:
 
 ```bash
-docker exec -it linkace-php php artisan registeruser [user name] [user email]
+docker compose exec -it php php artisan registeruser [user name] [user email]
 ```
 
 
@@ -75,8 +75,8 @@ docker exec -it linkace-php php artisan registeruser [user name] [user email]
 You can run existing tests with the following command:
 
 ```bash
-docker exec -it linkace-php composer run lint
-docker exec -it linkace-php composer run test
+docker compose exec -it php composer run lint
+docker compose exec -it php composer run test
 ```
 
 

@@ -30,7 +30,6 @@ services:
 
   # --- PHP
   php:
-    container_name: linkace-php
     build:
       context: .
       dockerfile: ./resources/docker/dockerfiles/development.Dockerfile
