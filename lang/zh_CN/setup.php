@@ -43,7 +43,7 @@ return [
     'account_setup.name' => '输入您的名称',
     'account_setup.email' => '输入您电子邮箱',
     'account_setup.password' => '输入较强的密码。',
-    'account_setup.password_requirements' => '最小长度：10 个字符',
+    'account_setup.password_requirements' => '最小长度：8 个字符',
     'account_setup.password_confirmed' => '确认您的密码',
     'account_setup.create' => '创建帐户',
 

@@ -44,7 +44,7 @@ return [
     'account_setup.name' => 'Bitte geben Sie Ihren Namen ein',
     'account_setup.email' => 'Geben Sie Ihre E-Mail-Adresse ein',
     'account_setup.password' => 'Ein starkes Passwort eingeben',
-    'account_setup.password_requirements' => 'Mindestlänge: 10 Zeichen',
+    'account_setup.password_requirements' => 'Mindestlänge: 8 Zeichen',
     'account_setup.password_confirmed' => 'Passwort bestätigen',
     'account_setup.create' => 'Konto erstellen',
 

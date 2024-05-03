@@ -44,7 +44,7 @@ return [
     'account_setup.name' => 'Introdu-ți numele',
     'account_setup.email' => 'Introdu-ți adresa de poștă electronică',
     'account_setup.password' => 'Introdu o parolă puternică',
-    'account_setup.password_requirements' => 'Lungime minimă: 10 caractere',
+    'account_setup.password_requirements' => 'Lungime minimă: 8 caractere',
     'account_setup.password_confirmed' => 'Confirmă-ți parola',
     'account_setup.create' => 'Creare cont',
 
