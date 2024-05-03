@@ -43,7 +43,7 @@ return [
     'account_setup.name' => 'Oppgi ditt navn',
     'account_setup.email' => 'Oppgi din e-postadresse',
     'account_setup.password' => 'Angi et sterkt passord',
-    'account_setup.password_requirements' => 'Minimumslengde: 10 tegn',
+    'account_setup.password_requirements' => 'Minimumslengde: 8 tegn',
     'account_setup.password_confirmed' => 'Bekreft passordet',
     'account_setup.create' => 'Opprett konto',
 
