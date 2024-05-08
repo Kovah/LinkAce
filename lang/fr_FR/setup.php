@@ -43,7 +43,7 @@ return [
     'account_setup.name' => 'Entrez votre nom',
     'account_setup.email' => 'Entrez votre adresse e-mail',
     'account_setup.password' => 'Entrez un mot de passe fort',
-    'account_setup.password_requirements' => 'Longueur minimale : 8 caractères',
+    'account_setup.password_requirements' => 'Longueur minimale : 10 caractères',
     'account_setup.password_confirmed' => 'Confirmez votre mot de passe',
     'account_setup.create' => 'Créer un compte',
 

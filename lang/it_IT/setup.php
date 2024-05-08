@@ -43,7 +43,7 @@ return [
     'account_setup.name' => 'Inserisci il tuo nome',
     'account_setup.email' => 'Inserisci il tuo indirizzo email',
     'account_setup.password' => 'Inserisci una password robusta',
-    'account_setup.password_requirements' => 'Lunghezza minima: 8 caratteri',
+    'account_setup.password_requirements' => 'Lunghezza minima: 10 caratteri',
     'account_setup.password_confirmed' => 'Conferma la tua password',
     'account_setup.create' => 'Crea account',
 
