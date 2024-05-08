@@ -43,7 +43,7 @@ return [
     'account_setup.name' => 'Adja meg a nevét',
     'account_setup.email' => 'Adja meg az e-mail-címét',
     'account_setup.password' => 'Adjon meg egy erős jelszót',
-    'account_setup.password_requirements' => 'Minimális hossz: 8 karakter',
+    'account_setup.password_requirements' => 'Minimális hossz: 10 karakter',
     'account_setup.password_confirmed' => 'Jelszó megerősítése',
     'account_setup.create' => 'Fiók létrehozása',
 
