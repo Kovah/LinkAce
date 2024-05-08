@@ -43,7 +43,7 @@ return [
     'account_setup.name' => 'Nhập tên của bạn',
     'account_setup.email' => 'Nhập địa chỉ email của bạn',
     'account_setup.password' => 'Nhập 1 mật khẩu mạnh',
-    'account_setup.password_requirements' => 'Dài tối thiểu: 8 ký tự',
+    'account_setup.password_requirements' => 'Dài tối thiểu: 10 ký tự',
     'account_setup.password_confirmed' => 'Xác nhận mật khẩu của bạn',
     'account_setup.create' => 'Tạo tài khoản',
 
