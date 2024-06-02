@@ -5,4 +5,6 @@ RUN apk add --no-cache mariadb-client postgresql postgresql-dev sqlite zip libzi
 	docker-php-ext-configure zip; \
 	docker-php-ext-install bcmath pdo_mysql pdo_pgsql zip ftp; \
 	mkdir /ssl-certs; \
-  docker-php-source delete
+	docker-php-source delete; \
+	rm -f /usr/src/php.tar.xz /usr/src/php.tar.xz.asc; \
+	apk del --no-cache postgresql-dev libzip-dev
