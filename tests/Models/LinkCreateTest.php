@@ -65,4 +65,41 @@ class LinkCreateTest extends TestCase
 
         $this->assertDatabaseHas('links', $assertedData);
     }
+
+    public function testCaseInsensitiveTagAssignation(): void
+    {
+        $this->be($this->user);
+
+        $tag = 'CERN';
+        $tagVariant = ucfirst(strtolower($tag));
+
+        $this->assertNotEquals($tag, $tagVariant);
+
+        $link1Data = [
+            'title' => 'Link1Name',
+            'url' => 'https://cern.int/science/physics/antimatter',
+            'tags' => $tag,
+        ];
+        $link2Data = [
+            'title' => 'Link2Name',
+            'url' => 'https://cern.int/science/accelerators/large-hadron-collider/safety-lhc',
+            'tags' => $tagVariant,
+        ];
+
+        $link1 = LinkRepository::create($link1Data);
+        $link2 = LinkRepository::create($link2Data);
+
+        // Ensure that the casing in $tag is preserved
+        $this->assertEquals($link1->tags->first()->name, $tag);
+
+        // Ensure that $tag was identified as a duplicate of $tagVariant and used instead of the variant
+        $this->assertEquals($link2->tags->first()->name, $tag);
+        $this->assertEquals($link1->tags->first()->id, $link2->tags->first()->id);
+
+        // Ensure that only the correct variant exists
+        $negativeTagData = [
+            'name' => $tagVariant,
+        ];
+        $this->assertDatabaseMissing('tags', $negativeTagData);
+    }
 }
