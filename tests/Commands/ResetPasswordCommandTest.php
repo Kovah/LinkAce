@@ -20,7 +20,7 @@ class ResetPasswordCommandTest extends TestCase
             ->expectsOutput('A user with this email address could not be found!')
             ->expectsQuestion('Please enter the user email address', 'test@linkace.org')
             ->expectsQuestion('Please enter a new password for this user', 'test')
-            ->expectsOutput('The password must be at least 10 characters.')
+            ->expectsOutput('The password must be at least 8 characters.')
             ->expectsQuestion('Please enter a new password for this user', 'longtestpassword')
             ->expectsOutput('Password successfully changed. You can now login.')
             ->assertExitCode(0);

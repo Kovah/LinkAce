@@ -11,6 +11,7 @@ return [
     'logout' => 'Logg av',
     'remember_me' => 'Husk meg',
     'go_to_dashboard' => 'Gå til dashbord',
+    'dashboard' => 'Instrumentbord',
     'system_logs' => 'Systemlogg',
 
     'reset_password' => 'Tilbakestill passord',

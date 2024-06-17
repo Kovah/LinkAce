@@ -25,6 +25,7 @@ return [
     'order_by.random' => 'Tilfeldig',
 
     'no_results' => 'Ingen resultater.',
+    'results_for' => 'Søkeresultater for',
 
     'validation_query_missing' => 'Du må enten skrive inn et søk, eller velge en liste, en etikket eller aktivere søk etter ødelagte lenker.',
 ];
