@@ -11,6 +11,7 @@ return [
     'intro.step2' => 'Opprett en database og kontroller om tilkoblingen er vellykket.',
     'intro.step3' => 'Opprett din brukerkonto.',
 
+    'setup_requirements' => 'Oppsettskrav',
     'check_requirements' => 'Kontroller kravene',
     'requirements.php_version' => 'PHP versjon >= 7.4.0',
     'requirements.extension_bcmath' => 'PHP utvidelse: BCMath',

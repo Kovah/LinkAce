@@ -11,6 +11,7 @@ return [
     'intro.step2' => 'Configurez une base de données et vérifiez si la connexion est réussie.',
     'intro.step3' => 'Créez votre compte utilisateur.',
 
+    'setup_requirements' => 'Configuration requise',
     'check_requirements' => 'Vérifier Prérequis',
     'requirements.php_version' => 'Version de PHP >= 7.4.0',
     'requirements.extension_bcmath' => 'Module PHP : BCMath',
@@ -18,7 +19,7 @@ return [
     'requirements.extension_json' => 'Module PHP : JSON',
     'requirements.extension_mbstring' => 'Module PHP : Mbstring',
     'requirements.extension_openssl' => 'Module PHP : OpenSSL',
-    'requirements.extension_pdo_mysql' => 'Module PHP : PDO MySQL',
+    'requirements.extension_pdo_mysql' => 'Extension PHP : PDO MySQL',
     'requirements.extension_tokenizer' => 'Module PHP : Tokenizer',
     'requirements.extension_xml' => 'Module PHP : XML',
     'requirements.env_writable' => 'Le fichier .env est présent et accessible en écriture',
