@@ -15,7 +15,7 @@
   "devDependencies": {
     "laravel-mix": "^6.0.31",
     "postcss": "^8.4.35",
-    "sass": "^1.71.1",
+    "sass": "^1.77.5",
     "sass-loader": "^14.1.0"
   },
   "dependencies": {
