@@ -25,6 +25,7 @@ return [
     'order_by.random' => 'Aléatoire',
 
     'no_results' => 'Aucun résultat trouvé.',
+    'results_for' => 'Résultats de la recherche pour',
 
     'validation_query_missing' => 'Vous devez soit entrer une requête de recherche, soit sélectionner une liste, une étiquette ou activer la recherche de liens cassés.',
 ];
