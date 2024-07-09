@@ -11,6 +11,7 @@ return [
     'logout' => 'Se déconnecter',
     'remember_me' => 'Se rappeler de moi',
     'go_to_dashboard' => 'Aller au Tableau de bord',
+    'dashboard' => 'Accueil',
     'system_logs' => 'Journaux Système',
 
     'reset_password' => 'Réinitialiser le Mot de passe',
