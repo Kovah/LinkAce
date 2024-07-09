@@ -17,7 +17,7 @@ services:
 
   # --- LinkAce Image with PHP
   app:
-    image: docker.io/library/linkace/linkace:latest
+    image: docker.io/linkace/linkace:latest
     restart: unless-stopped
     depends_on:
       - db

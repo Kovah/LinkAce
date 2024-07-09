@@ -17,7 +17,7 @@ services:
 
   # --- LinkAce Image with PHP and nginx
   app:
-    image: docker.io/library/linkace/linkace:simple
+    image: docker.io/linkace/linkace:simple
     restart: unless-stopped
     depends_on:
       - db
