@@ -52,13 +52,16 @@ jobs:
       - name: Remove .env file
         run: rm .env
 
+      - uses: thedoctor0/zip-release@master
+        with:
+          filename: linkace.zip
+          exclusions: '*.git*'
+
       - uses: actions/upload-artifact@v3
         with:
           name: linkace-package
           retention-days: 7
-          path: |
-            .
-            !.git
+          path: linkace.zip
 
   build-package-docker:
     name: Build final dist package for Docker setup
