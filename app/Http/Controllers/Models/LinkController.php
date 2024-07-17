@@ -10,6 +10,8 @@ use App\Http\Requests\Models\LinkStoreRequest;
 use App\Http\Requests\Models\LinkUpdateRequest;
 use App\Http\Requests\Models\ToggleLinkCheckRequest;
 use App\Models\Link;
+use App\Models\LinkList;
+use App\Models\Tag;
 use App\Repositories\LinkRepository;
 use Illuminate\Contracts\View\View;
 use Illuminate\Http\RedirectResponse;
@@ -64,6 +66,8 @@ class LinkController extends Controller
         return view('models.links.create', [
             'pageTitle' => trans('link.add'),
             'existing_link' => null,
+            'all_tags' => Tag::visibleForUser()->get(['name', 'id']),
+            'all_lists' => LinkList::visibleForUser()->get(['name', 'id']),
         ]);
     }
 

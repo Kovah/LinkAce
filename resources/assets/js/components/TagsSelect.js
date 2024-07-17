@@ -30,13 +30,10 @@ export default class TagsSelect {
       valueField: 'id',
       labelField: 'name',
       searchField: 'name',
-      maxOptions: null,
+      maxOptions: 100000,
       onItemAdd: function () {
         this.setTextboxValue('');
         this.refreshOptions();
-      },
-      load: (query, callback) => {
-        this.handleTagLoading(query, callback);
       },
       render: {
         option: function (item, escape) {
@@ -48,9 +45,12 @@ export default class TagsSelect {
       }
     };
 
+    if (this.$el.dataset.tagData) {
+      this.config['options'] = JSON.parse(this.$el.dataset.tagData);
+    }
+
     if (typeof this.$el.dataset.value !== 'undefined' && this.$el.dataset.value !== '') {
-      this.config['options'] = JSON.parse(this.$el.dataset.value);
-      this.config['items'] = this.config['options'].map((item) => item.id);
+      this.config['items'] = JSON.parse(this.$el.dataset.value).map((item) => item.id);
     }
 
     this.select = new TomSelect(this.$el, this.config);
@@ -63,32 +63,6 @@ export default class TagsSelect {
 
   selectAllowsCreation () {
     return typeof this.$el.dataset.allowCreation !== 'undefined';
-  }
-
-  handleTagLoading (query, callback) {
-    if (!query.length) return callback();
-
-    fetch(this.getFetchUrl(), {
-      method: 'POST',
-      credentials: 'same-origin',
-      headers: {'Content-Type': 'application/json'},
-      body: JSON.stringify({
-        _token: window.appData.user.token,
-        query: query
-      })
-    }).then((response) => {
-      return response.json();
-    }).then((results) => {
-      callback(results);
-    }).catch(() => {
-      callback();
-    });
-  }
-
-  getFetchUrl () {
-    return this.type === 'tags'
-      ? window.appData.routes.fetch.searchTags
-      : window.appData.routes.fetch.searchLists;
   }
 
   displayNewSuggestions (tags) {

@@ -4,6 +4,8 @@ namespace App\Http\Controllers\App;
 
 use App\Http\Controllers\Controller;
 use App\Models\Link;
+use App\Models\LinkList;
+use App\Models\Tag;
 use Illuminate\Contracts\View\View;
 use Illuminate\Http\Request;
 use Illuminate\Support\Arr;
@@ -41,6 +43,8 @@ class BookmarkletController extends Controller
             'bookmark_description' => $newDescription,
             'bookmark_tags' => $this->prepareTaxonomyEntries($newTags),
             'bookmark_lists' => $this->prepareTaxonomyEntries($newLists),
+            'all_tags' => Tag::visibleForUser()->get(['name', 'id']),
+            'all_lists' => LinkList::visibleForUser()->get(['name', 'id']),
         ]);
     }
 
