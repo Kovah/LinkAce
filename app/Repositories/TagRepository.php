@@ -25,6 +25,23 @@ class TagRepository
         return $tag;
     }
 
+    public static function bulkUpdate(array $models, array $data): \Illuminate\Support\Collection
+    {
+        $tags = Tag::whereIn('id', $models)->get();
+
+        return $tags->map(function (Tag $tag) use ($data) {
+            if (!auth()->user()->can('update', $tag)) {
+                Log::warning('Could not update tag ' . $tag->id . ' during bulk update: Permission denied!');
+                return null;
+            }
+
+            $tagData = $tag->toArray();
+            $tagData['visibility'] = $data['visibility'] ?: $tagData['visibility'];
+
+            return TagRepository::update($tag, $tagData);
+        });
+    }
+
     public static function delete(Tag $tag): bool
     {
         try {

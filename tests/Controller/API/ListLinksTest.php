@@ -20,7 +20,7 @@ class ListLinksTest extends ApiTestCase
         $link2->lists()->sync([1, 2]);
         $link3->lists()->sync([1, 2]);
 
-        $this->getJsonAuthorized('api/v1/lists/1/links')
+        $this->getJsonAuthorized('api/v2/lists/1/links')
             ->assertOk()
             ->assertJson([
                 'data' => [
@@ -34,7 +34,7 @@ class ListLinksTest extends ApiTestCase
                 ],
             ]);
 
-        $this->getJsonAuthorized('api/v1/lists/2/links')
+        $this->getJsonAuthorized('api/v2/lists/2/links')
             ->assertOk()
             ->assertJson([
                 'data' => [
@@ -48,7 +48,7 @@ class ListLinksTest extends ApiTestCase
                 ],
             ]);
 
-        $this->getJsonAuthorized('api/v1/lists/3/links')
+        $this->getJsonAuthorized('api/v2/lists/3/links')
             ->assertForbidden();
     }
 
@@ -56,7 +56,7 @@ class ListLinksTest extends ApiTestCase
     {
         LinkList::factory()->create();
 
-        $this->getJsonAuthorized('api/v1/lists/1/links')
+        $this->getJsonAuthorized('api/v2/lists/1/links')
             ->assertOk()
             ->assertJson([
                 'data' => [],
@@ -65,6 +65,6 @@ class ListLinksTest extends ApiTestCase
 
     public function testShowRequestNotFound(): void
     {
-        $this->getJsonAuthorized('api/v1/lists/1/links')->assertNotFound();
+        $this->getJsonAuthorized('api/v2/lists/1/links')->assertNotFound();
     }
 }

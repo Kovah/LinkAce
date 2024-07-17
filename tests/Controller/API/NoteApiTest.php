@@ -15,7 +15,7 @@ class NoteApiTest extends ApiTestCase
     {
         $this->createTestLinks();
 
-        $this->postJsonAuthorized('api/v1/notes', [
+        $this->postJsonAuthorized('api/v2/notes', [
             'link_id' => 1,
             'note' => 'Quae vero auctorem tractata ab fiducia dicuntur.',
             'visibility' => 1,
@@ -30,7 +30,7 @@ class NoteApiTest extends ApiTestCase
         $this->assertEquals('Quae vero auctorem tractata ab fiducia dicuntur.', $databaseNote->note);
 
         // Test notes for other links
-        $this->postJsonAuthorized('api/v1/notes', [
+        $this->postJsonAuthorized('api/v2/notes', [
             'link_id' => 2,
             'note' => 'Quae vero auctorem tractata ab fiducia dicuntur.',
             'visibility' => 1,
@@ -41,7 +41,7 @@ class NoteApiTest extends ApiTestCase
                 'visibility' => 1,
             ]);
 
-        $this->postJsonAuthorized('api/v1/notes', [
+        $this->postJsonAuthorized('api/v2/notes', [
             'link_id' => 3,
             'note' => 'Quae vero auctorem tractata ab fiducia dicuntur.',
             'visibility' => 1,
@@ -50,7 +50,7 @@ class NoteApiTest extends ApiTestCase
 
     public function testInvalidCreateRequest(): void
     {
-        $this->postJsonAuthorized('api/v1/notes', [
+        $this->postJsonAuthorized('api/v2/notes', [
             'link_id' => null,
             'note' => null,
         ])->assertForbidden(); // A valid link cannot be determined, thus it's unauthorized
@@ -63,7 +63,7 @@ class NoteApiTest extends ApiTestCase
         Note::factory()->create(['link_id' => 2]); // Note for internal link of other user
         Note::factory()->create(['link_id' => 3]); // Note for private link of other user
 
-        $this->patchJsonAuthorized('api/v1/notes/1', [
+        $this->patchJsonAuthorized('api/v2/notes/1', [
             'note' => 'Gallia est omnis divisa in partes tres, quarum.',
             'visibility' => 1,
         ])
@@ -76,7 +76,7 @@ class NoteApiTest extends ApiTestCase
         $this->assertEquals('Gallia est omnis divisa in partes tres, quarum.', $databaseNote->note);
 
         // Test for other links
-        $this->patchJsonAuthorized('api/v1/notes/2', [
+        $this->patchJsonAuthorized('api/v2/notes/2', [
             'note' => 'Gallia est omnis divisa in partes tres, quarum.',
             'visibility' => 1,
         ])
@@ -85,7 +85,7 @@ class NoteApiTest extends ApiTestCase
                 'note' => 'Gallia est omnis divisa in partes tres, quarum.',
             ]);
 
-        $this->patchJsonAuthorized('api/v1/notes/3', [
+        $this->patchJsonAuthorized('api/v2/notes/3', [
             'note' => 'Gallia est omnis divisa in partes tres, quarum.',
             'visibility' => 1,
         ])->assertForbidden();
@@ -95,7 +95,7 @@ class NoteApiTest extends ApiTestCase
     {
         Note::factory()->create();
 
-        $this->patchJsonAuthorized('api/v1/notes/1', [
+        $this->patchJsonAuthorized('api/v2/notes/1', [
             //
         ])->assertJsonValidationErrors([
             'note' => 'The note field is required.',
@@ -104,7 +104,7 @@ class NoteApiTest extends ApiTestCase
 
     public function testUpdateRequestNotFound(): void
     {
-        $this->patchJsonAuthorized('api/v1/notes/1', [
+        $this->patchJsonAuthorized('api/v2/notes/1', [
             'note' => 'Sed haec quis possit intrepidus aestimare tellus.',
             'is_private' => false,
         ])->assertNotFound();
@@ -116,15 +116,15 @@ class NoteApiTest extends ApiTestCase
 
         $this->assertEquals(3, Note::count());
 
-        $this->deleteJsonAuthorized('api/v1/notes/1')->assertOk();
-        $this->deleteJsonAuthorized('api/v1/notes/2')->assertForbidden();
-        $this->deleteJsonAuthorized('api/v1/notes/3')->assertForbidden();
+        $this->deleteJsonAuthorized('api/v2/notes/1')->assertOk();
+        $this->deleteJsonAuthorized('api/v2/notes/2')->assertForbidden();
+        $this->deleteJsonAuthorized('api/v2/notes/3')->assertForbidden();
 
         $this->assertEquals(2, Note::count());
     }
 
     public function testDeleteRequestNotFound(): void
     {
-        $this->deleteJsonAuthorized('api/v1/notes/1')->assertNotFound();
+        $this->deleteJsonAuthorized('api/v2/notes/1')->assertNotFound();
     }
 }

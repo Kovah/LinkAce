@@ -13,13 +13,13 @@ class SearchLinksTest extends ApiTestCase
 
     public function testUnauthorizedRequest(): void
     {
-        $this->getJson('api/v1/search/links')->assertUnauthorized();
+        $this->getJson('api/v2/search/links')->assertUnauthorized();
     }
 
     public function testWithoutQuery(): void
     {
         $msg = 'You must either enter a search query, or select a list, a tag or enable searching for broken links.';
-        $this->getJsonAuthorized('api/v1/search/links')
+        $this->getJsonAuthorized('api/v2/search/links')
             ->assertJsonValidationErrors([
             'query' => $msg,
             'only_lists' => $msg,
@@ -46,7 +46,7 @@ class SearchLinksTest extends ApiTestCase
             'url' => 'https://test.com',
         ]);
 
-        $url = sprintf('api/v1/search/links?query=%s', 'example');
+        $url = sprintf('api/v2/search/links?query=%s', 'example');
         $this->getJsonAuthorized($url)
             ->assertOk()
             ->assertJsonFragment([
@@ -76,7 +76,7 @@ class SearchLinksTest extends ApiTestCase
             'title' => 'Nobody cares',
         ]);
 
-        $url = sprintf('api/v1/search/links?query=%s&search_title=1', 'Test');
+        $url = sprintf('api/v2/search/links?query=%s&search_title=1', 'Test');
         $this->getJsonAuthorized($url)
             ->assertOk()
             ->assertJsonFragment([
@@ -102,7 +102,7 @@ class SearchLinksTest extends ApiTestCase
             'description' => 'Lorem Ipsum',
         ]);
 
-        $url = sprintf('api/v1/search/links?query=%s&search_description=1', 'Example');
+        $url = sprintf('api/v2/search/links?query=%s&search_description=1', 'Example');
         $this->getJsonAuthorized($url)
             ->assertOk()
             ->assertJsonFragment([
@@ -128,7 +128,7 @@ class SearchLinksTest extends ApiTestCase
             'visibility' => 3,
         ]);
 
-        $url = sprintf('api/v1/search/links?query=%s&visibility=1', 'test');
+        $url = sprintf('api/v2/search/links?query=%s&visibility=1', 'test');
         $this->getJsonAuthorized($url)
             ->assertOk()
             ->assertJsonFragment([
@@ -153,7 +153,7 @@ class SearchLinksTest extends ApiTestCase
             'url' => 'https://test.org',
         ]);
 
-        $url = sprintf('api/v1/search/links?query=%s&broken_only=1', 'test');
+        $url = sprintf('api/v2/search/links?query=%s&broken_only=1', 'test');
         $this->getJsonAuthorized($url)
             ->assertOk()
             ->assertJsonFragment([
@@ -184,7 +184,7 @@ class SearchLinksTest extends ApiTestCase
             'url' => 'https://test.org',
         ]);
 
-        $url = sprintf('api/v1/search/links?only_lists=%s', $list->id);
+        $url = sprintf('api/v2/search/links?only_lists=%s', $list->id);
         $this->getJsonAuthorized($url)
             ->assertOk()
             ->assertJsonFragment([
@@ -215,7 +215,7 @@ class SearchLinksTest extends ApiTestCase
             'url' => 'https://test.org',
         ]);
 
-        $url = sprintf('api/v1/search/links?only_tags=%s', $tag->id);
+        $url = sprintf('api/v2/search/links?only_tags=%s', $tag->id);
         $this->getJsonAuthorized($url)
             ->assertOk()
             ->assertJsonFragment([

@@ -1,14 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <phpunit xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-         xsi:noNamespaceSchemaLocation="./vendor/phpunit/phpunit/phpunit.xsd"
+         xsi:noNamespaceSchemaLocation="vendor/phpunit/phpunit/phpunit.xsd"
          bootstrap="vendor/autoload.php"
          colors="true">
-
-  <coverage processUncoveredFiles="true">
-    <include>
-      <directory suffix=".php">./app</directory>
-    </include>
-  </coverage>
 
   <testsuites>
     <testsuite name="Commands">
@@ -34,9 +28,11 @@
     </testsuite>
   </testsuites>
 
-  <extensions>
-    <extension class="Tests\Bootstrap"/>
-  </extensions>
+  <source>
+    <include>
+      <directory suffix=".php">./app</directory>
+    </include>
+  </source>
 
   <php>
     <server name="APP_ENV" value="testing"/>

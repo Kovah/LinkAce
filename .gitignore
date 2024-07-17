@@ -11,6 +11,7 @@
 /.tmp
 /.vscode
 /.vagrant
+/.phpunit.cache
 Homestead.json
 Homestead.yaml
 npm-debug.log

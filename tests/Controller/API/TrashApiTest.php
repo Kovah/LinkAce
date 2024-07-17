@@ -23,12 +23,12 @@ class TrashApiTest extends ApiTestCase
 
     public function testUnauthorizedRequest(): void
     {
-        $this->getJson('api/v1/trash/links')->assertUnauthorized();
+        $this->getJson('api/v2/trash/links')->assertUnauthorized();
     }
 
     public function testGetLinks(): void
     {
-        $response = $this->getJsonAuthorized('api/v1/trash/links');
+        $response = $this->getJsonAuthorized('api/v2/trash/links');
         $response->assertOk();
 
         $result = json_decode($response->content());
@@ -37,7 +37,7 @@ class TrashApiTest extends ApiTestCase
 
     public function testGetLists(): void
     {
-        $response = $this->getJsonAuthorized('api/v1/trash/lists');
+        $response = $this->getJsonAuthorized('api/v2/trash/lists');
         $response->assertOk();
 
         $result = json_decode($response->content());
@@ -46,7 +46,7 @@ class TrashApiTest extends ApiTestCase
 
     public function testGetTags(): void
     {
-        $response = $this->getJsonAuthorized('api/v1/trash/tags');
+        $response = $this->getJsonAuthorized('api/v2/trash/tags');
         $response->assertOk();
 
         $result = json_decode($response->content());
@@ -55,7 +55,7 @@ class TrashApiTest extends ApiTestCase
 
     public function testGetNotes(): void
     {
-        $response = $this->getJsonAuthorized('api/v1/trash/notes');
+        $response = $this->getJsonAuthorized('api/v2/trash/notes');
         $response->assertOk();
 
         $result = json_decode($response->content());
@@ -70,7 +70,7 @@ class TrashApiTest extends ApiTestCase
     {
         $this->setupTrashTestData();
 
-        $this->deleteJsonAuthorized('api/v1/trash/clear', [
+        $this->deleteJsonAuthorized('api/v2/trash/clear', [
             'model' => 'links',
         ])->assertOk();
 
@@ -81,7 +81,7 @@ class TrashApiTest extends ApiTestCase
     {
         $this->setupTrashTestData();
 
-        $this->deleteJsonAuthorized('api/v1/trash/clear', [
+        $this->deleteJsonAuthorized('api/v2/trash/clear', [
             'model' => 'tags',
         ])->assertOk();
 
@@ -92,7 +92,7 @@ class TrashApiTest extends ApiTestCase
     {
         $this->setupTrashTestData();
 
-        $this->deleteJsonAuthorized('api/v1/trash/clear', [
+        $this->deleteJsonAuthorized('api/v2/trash/clear', [
             'model' => 'lists',
         ])->assertOk();
 
@@ -103,7 +103,7 @@ class TrashApiTest extends ApiTestCase
     {
         $this->setupTrashTestData();
 
-        $this->deleteJsonAuthorized('api/v1/trash/clear', [
+        $this->deleteJsonAuthorized('api/v2/trash/clear', [
             'model' => 'notes',
         ])->assertOk();
 
@@ -114,7 +114,7 @@ class TrashApiTest extends ApiTestCase
     {
         $this->setupTrashTestData();
 
-        $this->deleteJsonAuthorized('api/v1/trash/clear', [
+        $this->deleteJsonAuthorized('api/v2/trash/clear', [
             //'model' => 'links',
         ])->assertJsonValidationErrors([
             'model' => 'The model field is required.',
@@ -125,7 +125,7 @@ class TrashApiTest extends ApiTestCase
     {
         $this->setupTrashTestData();
 
-        $this->deleteJsonAuthorized('api/v1/trash/clear', [
+        $this->deleteJsonAuthorized('api/v2/trash/clear', [
             'model' => 'shoes',
         ])->assertJsonValidationErrors([
             'model' => 'The selected model is invalid.',
@@ -140,7 +140,7 @@ class TrashApiTest extends ApiTestCase
     {
         $this->setupTrashTestData();
 
-        $this->patchJsonAuthorized('api/v1/trash/restore', [
+        $this->patchJsonAuthorized('api/v2/trash/restore', [
             'model' => 'link',
             'id' => '1',
         ])->assertOk();
@@ -152,7 +152,7 @@ class TrashApiTest extends ApiTestCase
     {
         $this->setupTrashTestData();
 
-        $this->patchJsonAuthorized('api/v1/trash/restore', [
+        $this->patchJsonAuthorized('api/v2/trash/restore', [
             'model' => 'tag',
             'id' => '1',
         ])->assertOk();
@@ -164,7 +164,7 @@ class TrashApiTest extends ApiTestCase
     {
         $this->setupTrashTestData();
 
-        $this->patchJsonAuthorized('api/v1/trash/restore', [
+        $this->patchJsonAuthorized('api/v2/trash/restore', [
             'model' => 'list',
             'id' => '1',
         ])->assertOk();
@@ -176,7 +176,7 @@ class TrashApiTest extends ApiTestCase
     {
         $this->setupTrashTestData();
 
-        $this->patchJsonAuthorized('api/v1/trash/restore', [
+        $this->patchJsonAuthorized('api/v2/trash/restore', [
             'model' => 'note',
             'id' => '1',
         ])->assertOk();
@@ -188,7 +188,7 @@ class TrashApiTest extends ApiTestCase
     {
         $this->setupTrashTestData();
 
-        $this->patchJsonAuthorized('api/v1/trash/restore', [
+        $this->patchJsonAuthorized('api/v2/trash/restore', [
             //'model' => 'link',
             //'id' => '1',
         ])->assertJsonValidationErrors([
@@ -201,7 +201,7 @@ class TrashApiTest extends ApiTestCase
     {
         $this->setupTrashTestData();
 
-        $this->patchJsonAuthorized('api/v1/trash/restore', [
+        $this->patchJsonAuthorized('api/v2/trash/restore', [
             'model' => 'link',
             'id' => '1345235',
         ])->assertNotFound();

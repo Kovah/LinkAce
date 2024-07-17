@@ -13,14 +13,14 @@ class TagApiTest extends ApiTestCase
 
     public function testUnauthorizedRequest(): void
     {
-        $this->getJson('api/v1/tags')->assertUnauthorized();
+        $this->getJson('api/v2/tags')->assertUnauthorized();
     }
 
     public function testIndexRequest(): void
     {
         $this->createTestTags();
 
-        $this->getJsonAuthorized('api/v1/tags')
+        $this->getJsonAuthorized('api/v2/tags')
             ->assertOk()
             ->assertJson([
                 'data' => [
@@ -37,7 +37,7 @@ class TagApiTest extends ApiTestCase
 
     public function testMinimalCreateRequest(): void
     {
-        $this->postJsonAuthorized('api/v1/tags', [
+        $this->postJsonAuthorized('api/v2/tags', [
             'name' => 'Test Tag',
         ])
             ->assertOk()
@@ -52,7 +52,7 @@ class TagApiTest extends ApiTestCase
 
     public function testFullCreateRequest(): void
     {
-        $this->postJsonAuthorized('api/v1/tags', [
+        $this->postJsonAuthorized('api/v2/tags', [
             'name' => 'Test Tag',
             'is_private' => false,
         ])
@@ -68,7 +68,7 @@ class TagApiTest extends ApiTestCase
 
     public function testInvalidCreateRequest(): void
     {
-        $this->postJsonAuthorized('api/v1/tags', [
+        $this->postJsonAuthorized('api/v2/tags', [
             'name' => null,
             'visibility' => 'hello',
         ])->assertJsonValidationErrors([
@@ -81,32 +81,32 @@ class TagApiTest extends ApiTestCase
     {
         $this->createTestTags();
 
-        $this->getJsonAuthorized('api/v1/tags/1')
+        $this->getJsonAuthorized('api/v2/tags/1')
             ->assertOk()
             ->assertJson([
                 'name' => 'Public Tag',
             ]);
 
-        $this->getJsonAuthorized('api/v1/tags/2')
+        $this->getJsonAuthorized('api/v2/tags/2')
             ->assertOk()
             ->assertJson([
                 'name' => 'Internal Tag',
             ]);
 
-        $this->getJsonAuthorized('api/v1/tags/3')
+        $this->getJsonAuthorized('api/v2/tags/3')
             ->assertForbidden();
     }
 
     public function testShowRequestNotFound(): void
     {
-        $this->getJsonAuthorized('api/v1/tags/1')->assertNotFound();
+        $this->getJsonAuthorized('api/v2/tags/1')->assertNotFound();
     }
 
     public function testUpdateRequest(): void
     {
         $this->createTestTags();
 
-        $this->patchJsonAuthorized('api/v1/tags/1', [
+        $this->patchJsonAuthorized('api/v2/tags/1', [
             'name' => 'Updated Public Tag',
             'visibility' => 1,
         ])
@@ -120,7 +120,7 @@ class TagApiTest extends ApiTestCase
         $this->assertEquals('Updated Public Tag', $databaseList->name);
 
         // Test other tags
-        $this->patchJsonAuthorized('api/v1/tags/2', [
+        $this->patchJsonAuthorized('api/v2/tags/2', [
             'name' => 'Updated Internal Tag',
             'visibility' => 1,
         ])
@@ -129,7 +129,7 @@ class TagApiTest extends ApiTestCase
                 'name' => 'Updated Internal Tag',
             ]);
 
-        $this->patchJsonAuthorized('api/v1/tags/3', [
+        $this->patchJsonAuthorized('api/v2/tags/3', [
             'name' => 'Updated Private Tag',
             'visibility' => 1,
         ])
@@ -140,7 +140,7 @@ class TagApiTest extends ApiTestCase
     {
         Tag::factory()->create();
 
-        $this->patchJsonAuthorized('api/v1/tags/1', [
+        $this->patchJsonAuthorized('api/v2/tags/1', [
             'name' => null,
             'visibility' => 'hello',
         ])->assertJsonValidationErrors([
@@ -151,7 +151,7 @@ class TagApiTest extends ApiTestCase
 
     public function testUpdateRequestNotFound(): void
     {
-        $this->patchJsonAuthorized('api/v1/tags/1', [
+        $this->patchJsonAuthorized('api/v2/tags/1', [
             'name' => 'Updated Tag Title',
             'is_private' => false,
         ])->assertNotFound();
@@ -163,15 +163,15 @@ class TagApiTest extends ApiTestCase
 
         $this->assertEquals(3, Tag::count());
 
-        $this->deleteJsonAuthorized('api/v1/tags/1')->assertOk();
-        $this->deleteJsonAuthorized('api/v1/tags/2')->assertForbidden();
-        $this->deleteJsonAuthorized('api/v1/tags/3')->assertForbidden();
+        $this->deleteJsonAuthorized('api/v2/tags/1')->assertOk();
+        $this->deleteJsonAuthorized('api/v2/tags/2')->assertForbidden();
+        $this->deleteJsonAuthorized('api/v2/tags/3')->assertForbidden();
 
         $this->assertEquals(2, Tag::count());
     }
 
     public function testDeleteRequestNotFound(): void
     {
-        $this->deleteJsonAuthorized('api/v1/tags/1')->assertNotFound();
+        $this->deleteJsonAuthorized('api/v2/tags/1')->assertNotFound();
     }
 }

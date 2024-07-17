@@ -16,7 +16,7 @@ class LinkNotesTest extends ApiTestCase
         $this->createTestLinks();
         $this->createTestNotes(Link::find(2));
 
-        $this->getJsonAuthorized('api/v1/links/1/notes')
+        $this->getJsonAuthorized('api/v2/links/1/notes')
             ->assertOk()
             ->assertJson([
                 'data' => [
@@ -24,7 +24,7 @@ class LinkNotesTest extends ApiTestCase
                 ],
             ]);
 
-        $this->getJsonAuthorized('api/v1/links/2/notes')
+        $this->getJsonAuthorized('api/v2/links/2/notes')
             ->assertOk()
             ->assertJson([
                 'data' => [
@@ -37,7 +37,7 @@ class LinkNotesTest extends ApiTestCase
                 ],
             ]);
 
-        $this->getJsonAuthorized('api/v1/links/3/notes')
+        $this->getJsonAuthorized('api/v2/links/3/notes')
             ->assertForbidden();
     }
 
@@ -45,7 +45,7 @@ class LinkNotesTest extends ApiTestCase
     {
         Link::factory()->create();
 
-        $this->getJsonAuthorized('api/v1/links/1/notes')
+        $this->getJsonAuthorized('api/v2/links/1/notes')
             ->assertOk()
             ->assertJson([
                 'data' => [],
@@ -54,6 +54,6 @@ class LinkNotesTest extends ApiTestCase
 
     public function testShowRequestNotFound(): void
     {
-        $this->getJsonAuthorized('api/v1/links/1/notes')->assertNotFound();
+        $this->getJsonAuthorized('api/v2/links/1/notes')->assertNotFound();
     }
 }

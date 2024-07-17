@@ -34,81 +34,36 @@ class BulkEditController extends Controller
     public function updateLinks(BulkEditLinksRequest $request)
     {
         $models = explode(',', $request->input('models'));
-        $links = Link::whereIn('id', $models)->with([
-            'tags:id',
-            'lists:id',
-        ])->get();
 
-        $results = $links->map(function (Link $link) use ($request) {
-            if (!auth()->user()->can('update', $link)) {
-                Log::warning('Could not update ' . $link->id . ' during bulk update: Permission denied!');
-                return null;
-            }
-
-            $newTags = explode(',', $request->input('tags'));
-            $newLists = explode(',', $request->input('lists'));
-
-            $linkData = $link->toArray();
-            $linkData['tags'] = $request->input('tags_mode') === 'replace'
-                ? $newTags
-                : array_merge($link->tags->pluck('id')->toArray(), $newTags);
-            $linkData['lists'] = $request->input('lists_mode') === 'replace'
-                ? $newLists
-                : array_merge($link->lists->pluck('id')->toArray(), $newLists);
-            $linkData['visibility'] = $request->input('visibility') ?: $linkData['visibility'];
-
-            return LinkRepository::update($link, $linkData);
-        });
+        $results = LinkRepository::bulkUpdate($models, $request->input());
 
         $successCount = $results->filter(fn($e) => $e !== null)->count();
 
-        flash(trans('link.bulk_edit_success', ['success' => $successCount, 'selected' => $links->count()]));
+        flash(trans('link.bulk_edit_success', ['success' => $successCount, 'selected' => count($models)]));
         return redirect()->route('links.index');
     }
 
     public function updateLists(BulkEditListsRequest $request)
     {
         $models = explode(',', $request->input('models'));
-        $lists = LinkList::whereIn('id', $models)->get();
 
-        $results = $lists->map(function (LinkList $list) use ($request) {
-            if (!auth()->user()->can('update', $list)) {
-                Log::warning('Could not update list ' . $list->id . ' during bulk update: Permission denied!');
-                return null;
-            }
-
-            $listData = $list->toArray();
-            $listData['visibility'] = $request->input('visibility') ?: $listData['visibility'];
-
-            return ListRepository::update($list, $listData);
-        });
+        $results = ListRepository::bulkUpdate($models, $request->input());
 
         $successCount = $results->filter(fn($e) => $e !== null)->count();
 
-        flash(trans('list.bulk_edit_success', ['success' => $successCount, 'selected' => $lists->count()]));
+        flash(trans('list.bulk_edit_success', ['success' => $successCount, 'selected' => count($models)]));
         return redirect()->route('lists.index');
     }
 
     public function updateTags(BulkEditTagsRequest $request)
     {
         $models = explode(',', $request->input('models'));
-        $tags = Tag::whereIn('id', $models)->get();
 
-        $results = $tags->map(function (Tag $tag) use ($request) {
-            if (!auth()->user()->can('update', $tag)) {
-                Log::warning('Could not update tag ' . $tag->id . ' during bulk update: Permission denied!');
-                return null;
-            }
-
-            $tagData = $tag->toArray();
-            $tagData['visibility'] = $request->input('visibility') ?: $tagData['visibility'];
-
-            return TagRepository::update($tag, $tagData);
-        });
+        $results = TagRepository::bulkUpdate($models, $request->input());
 
         $successCount = $results->filter(fn($e) => $e !== null)->count();
 
-        flash(trans('tag.bulk_edit_success', ['success' => $successCount, 'selected' => $tags->count()]));
+        flash(trans('tag.bulk_edit_success', ['success' => $successCount, 'selected' => count($models)]));
         return redirect()->route('tags.index');
     }
 

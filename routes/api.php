@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\API\BulkEditController;
 use App\Http\Controllers\API\LinkCheckController;
 use App\Http\Controllers\API\LinkController;
 use App\Http\Controllers\API\LinkNotesController;
@@ -22,7 +23,7 @@ use App\Http\Controllers\API\TrashController;
 |
 */
 
-Route::prefix('v1')->middleware(['auth:sanctum'])->group(function () {
+Route::prefix('v2')->middleware(['auth:sanctum'])->group(function () {
 
     Route::get('links/check', LinkCheckController::class)
         ->name('api.links.check');
@@ -70,6 +71,11 @@ Route::prefix('v1')->middleware(['auth:sanctum'])->group(function () {
             'destroy' => 'api.notes.destroy',
         ])
         ->except(['index', 'show']);
+
+    Route::patch('bulk/links', [BulkEditController::class, 'updateLinks'])->name('api.bulk.links');
+    Route::patch('bulk/lists', [BulkEditController::class, 'updateLists'])->name('api.bulk.lists');
+    Route::patch('bulk/tags', [BulkEditController::class, 'updateTags'])->name('api.bulk.tags');
+    Route::delete('bulk/delete', [BulkEditController::class, 'delete'])->name('api.bulk.delete');
 
     Route::get('search/links', [SearchController::class, 'searchLinks'])
         ->name('api.search.links');

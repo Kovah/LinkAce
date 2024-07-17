@@ -8,6 +8,7 @@ use App\Models\Link;
 use App\Models\LinkList;
 use App\Models\Tag;
 use Exception;
+use Illuminate\Support\Arr;
 use Illuminate\Support\Collection;
 use Illuminate\Support\Facades\Event;
 use Illuminate\Support\Facades\Log;
@@ -66,6 +67,35 @@ class LinkRepository
         self::processLinkTaxonomies($link, $data);
 
         return $link;
+    }
+
+    public static function bulkUpdate(array $models, array $data): Collection
+    {
+        $links = Link::whereIn('id', $models)->with([
+            'tags:id',
+            'lists:id',
+        ])->get();
+
+        $newTags = is_array($data['tags']) ? $data['tags'] : explode(',', $data['tags']);
+        $newLists = is_array($data['lists']) ? $data['lists'] : explode(',', $data['lists']);
+
+        return $links->map(function (Link $link) use ($data, $newTags, $newLists) {
+            if (!auth()->user()->can('update', $link)) {
+                Log::warning('Could not update ' . $link->id . ' during bulk update: Permission denied!');
+                return null;
+            }
+
+            $linkData = $link->toArray();
+            $linkData['tags'] = $data['tags_mode'] === 'replace'
+                ? $newTags
+                : array_merge($link->tags->pluck('id')->toArray(), $newTags);
+            $linkData['lists'] = $data['lists_mode'] === 'replace'
+                ? $newLists
+                : array_merge($link->lists->pluck('id')->toArray(), $newLists);
+            $linkData['visibility'] = $data['visibility'] ?: $linkData['visibility'];
+
+            return LinkRepository::update($link, $linkData);
+        });
     }
 
     /**

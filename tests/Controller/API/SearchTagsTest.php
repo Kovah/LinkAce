@@ -11,12 +11,12 @@ class SearchTagsTest extends ApiTestCase
 
     public function testUnauthorizedRequest(): void
     {
-        $this->getJson('api/v1/search/tags')->assertUnauthorized();
+        $this->getJson('api/v2/search/tags')->assertUnauthorized();
     }
 
     public function testWithoutQuery(): void
     {
-        $this->getJsonAuthorized('api/v1/search/tags')
+        $this->getJsonAuthorized('api/v2/search/tags')
             ->assertOk()
             ->assertExactJson([]);
     }
@@ -29,7 +29,7 @@ class SearchTagsTest extends ApiTestCase
             'name' => 'artificial-intelligence',
         ]);
 
-        $this->getJsonAuthorized('api/v1/search/tags?query=')
+        $this->getJsonAuthorized('api/v2/search/tags?query=')
             ->assertOk()
             ->assertExactJson([]);
     }
@@ -57,7 +57,7 @@ class SearchTagsTest extends ApiTestCase
             'name' => 'learning',
         ]);
 
-        $url = sprintf('api/v1/search/tags?query=%s', 'programming');
+        $url = sprintf('api/v2/search/tags?query=%s', 'programming');
         $this->getJsonAuthorized($url)
             ->assertOk()
             ->assertExactJson([
@@ -85,7 +85,7 @@ class SearchTagsTest extends ApiTestCase
             'name' => 'learning',
         ]);
 
-        $url = sprintf('api/v1/search/tags?query=%s', 'p');
+        $url = sprintf('api/v2/search/tags?query=%s', 'p');
         $this->getJsonAuthorized($url)
             ->assertOk()
             ->assertExactJson([

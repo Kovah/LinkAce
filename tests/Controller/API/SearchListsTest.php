@@ -11,12 +11,12 @@ class SearchListsTest extends ApiTestCase
 
     public function testUnauthorizedRequest(): void
     {
-        $this->getJson('api/v1/search/lists')->assertUnauthorized();
+        $this->getJson('api/v2/search/lists')->assertUnauthorized();
     }
 
     public function testWithoutQuery(): void
     {
-        $this->getJsonAuthorized('api/v1/search/lists')
+        $this->getJsonAuthorized('api/v2/search/lists')
             ->assertOk()
             ->assertExactJson([]);
     }
@@ -29,7 +29,7 @@ class SearchListsTest extends ApiTestCase
             'name' => 'Scientific Articles',
         ]);
 
-        $this->getJsonAuthorized('api/v1/search/lists?query=')
+        $this->getJsonAuthorized('api/v2/search/lists?query=')
             ->assertOk()
             ->assertExactJson([]);
     }
@@ -52,7 +52,7 @@ class SearchListsTest extends ApiTestCase
             'name' => 'Learning Theory Resources',
         ]);
 
-        $url = sprintf('api/v1/search/lists?query=%s', 'articles');
+        $url = sprintf('api/v2/search/lists?query=%s', 'articles');
         $this->getJsonAuthorized($url)
             ->assertOk()
             ->assertExactJson([
@@ -79,7 +79,7 @@ class SearchListsTest extends ApiTestCase
             'name' => 'Quantum Theories',
         ]);
 
-        $url = sprintf('api/v1/search/lists?query=%s', 'ar');
+        $url = sprintf('api/v2/search/lists?query=%s', 'ar');
         $this->getJsonAuthorized($url)
             ->assertOk()
             ->assertExactJson([

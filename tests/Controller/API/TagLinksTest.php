@@ -19,7 +19,7 @@ class TagLinksTest extends ApiTestCase
         $link2->tags()->sync([1, 2]);
         $link3->tags()->sync([1, 2]);
 
-        $this->getJsonAuthorized('api/v1/tags/1/links')
+        $this->getJsonAuthorized('api/v2/tags/1/links')
             ->assertOk()
             ->assertJson([
                 'data' => [
@@ -33,7 +33,7 @@ class TagLinksTest extends ApiTestCase
                 ],
             ]);
 
-        $this->getJsonAuthorized('api/v1/tags/2/links')
+        $this->getJsonAuthorized('api/v2/tags/2/links')
             ->assertOk()
             ->assertJson([
                 'data' => [
@@ -47,7 +47,7 @@ class TagLinksTest extends ApiTestCase
                 ],
             ]);
 
-        $this->getJsonAuthorized('api/v1/tags/3/links')
+        $this->getJsonAuthorized('api/v2/tags/3/links')
             ->assertForbidden();
     }
 
@@ -55,7 +55,7 @@ class TagLinksTest extends ApiTestCase
     {
         Tag::factory()->create();
 
-        $this->getJsonAuthorized('api/v1/tags/1/links')
+        $this->getJsonAuthorized('api/v2/tags/1/links')
             ->assertOk()
             ->assertJson([
                 'data' => [],
@@ -64,6 +64,6 @@ class TagLinksTest extends ApiTestCase
 
     public function testShowRequestNotFound(): void
     {
-        $this->getJsonAuthorized('api/v1/tags/1/links')->assertNotFound();
+        $this->getJsonAuthorized('api/v2/tags/1/links')->assertNotFound();
     }
 }
