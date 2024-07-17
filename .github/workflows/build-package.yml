@@ -21,6 +21,7 @@ jobs:
         run: |
           npm ci
           npm run production
+          rm -rf node_modules
 
       - uses: shivammathur/setup-php@v2
         with:
