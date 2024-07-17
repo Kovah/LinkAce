@@ -18,7 +18,7 @@ services:
       - linkace-db:/var/lib/mysql
 
   pg-db:
-    image: docker.io/library/postgres:14
+    image: docker.io/library/postgres:16
     environment:
       - POSTGRES_PASSWORD=${DB_PASSWORD}
       - POSTGRES_USER=${DB_USERNAME}
