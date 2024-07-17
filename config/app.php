@@ -95,6 +95,7 @@ return [
         'fr_FR' => 'Français',
         'hu_HU' => 'Magyar',
         'it_IT' => 'Italiano',
+        'ja_JP' => '日本語',
         'no_NO' => 'Norsk',
         'pl_PL' => 'Polski',
         'ro_RO' => 'Română',

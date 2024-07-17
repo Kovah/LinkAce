@@ -150,6 +150,62 @@ class LinkApiTest extends ApiTestCase
             ]);
     }
 
+    public function testCreateRequestWithList(): void
+    {
+        $list = LinkList::factory()->create(['name' => 'Test List 1']);
+
+        $response = $this->postJsonAuthorized('api/v1/links', [
+            'url' => 'http://example.com',
+            'title' => 'Search the Web',
+            'description' => 'There could be a description here',
+            'lists' => [$list->id],
+            'tags' => [],
+            'is_private' => false,
+            'check_disabled' => false,
+        ]);
+
+        $response->assertOk()
+            ->assertJson([
+                'url' => 'http://example.com',
+                'lists' => [
+                    ['name' => 'Test List 1'],
+                ],
+            ]);
+
+        $this->assertDatabaseHas('link_lists', [
+            'list_id' => 1,
+            'link_id' => 1,
+        ]);
+    }
+
+    public function testCreateRequestWithTag(): void
+    {
+        $tag = Tag::factory()->create(['name' => 'a test 1']);
+
+        $response = $this->postJsonAuthorized('api/v1/links', [
+            'url' => 'http://example.com',
+            'title' => 'Search the Web',
+            'description' => 'There could be a description here',
+            'lists' => [],
+            'tags' => [$tag->id],
+            'is_private' => false,
+            'check_disabled' => false,
+        ]);
+
+        $response->assertOk()
+            ->assertJson([
+                'url' => 'http://example.com',
+                'tags' => [
+                    ['name' => 'a test 1'],
+                ],
+            ]);
+
+        $this->assertDatabaseHas('link_tags', [
+            'tag_id' => 1,
+            'link_id' => 1,
+        ]);
+    }
+
     public function testCreateRequestWithTagsAsString(): void
     {
         $this->postJsonAuthorized('api/v1/links', [

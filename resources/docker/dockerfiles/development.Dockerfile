@@ -1,23 +1,18 @@
 # DOCKERFILE DEVELOPMENT
-# Installs MySQL Client for database exports, xDebug with PCov and Composer
+# Installs database clients for database exports, xDebug with PCov and Composer
 
-FROM php:8.1.10-fpm
+FROM docker.io/library/php:8.1-fpm-alpine
 WORKDIR /app
 
-RUN apt-get update && apt-get install -y \
-    zip \
-    git \
-    mariadb-client \
-    postgresql-client \
-    sqlite3 \
-    autoconf \
-    build-essential \
-    libpq-dev \
-    libzip-dev
-
-RUN pecl install xdebug pcov
-RUN docker-php-ext-install bcmath pdo_mysql pdo_pgsql zip
-RUN docker-php-ext-enable xdebug pcov
+# Install package and PHP dependencies
+RUN apk add --no-cache zip git mariadb-client postgresql-client postgresql-dev sqlite3 zip libzip-dev; \
+	docker-php-ext-configure zip; \
+	docker-php-ext-install bcmath pdo_mysql pdo_pgsql zip ftp; \
+  docker-php-ext-enable xdebug pcov; \
+	mkdir /ssl-certs; \
+	docker-php-source delete; \
+	rm -f /usr/src/php.tar.xz /usr/src/php.tar.xz.asc; \
+	apk del --no-cache postgresql-dev
 
 RUN curl -sS https://getcomposer.org/installer | php -- --install-dir=/usr/local/bin --filename=composer
 

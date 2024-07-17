@@ -7,8 +7,8 @@
 <p align="center"><b>Your self-hosted bookmark archive.</b></p>
 
 <p align="center">
-  <a href="https://twitter.com/LinkAceApp"><img src="https://img.shields.io/twitter/url?label=%40LinkAceApp&style=social&url=https%3A%2F%2Ftwitter.com%2FLinkAceApp" alt="Follow LinkAce on Twitter"></a>
-  <a href="https://hub.docker.com/r/linkace/linkace"><img src="https://img.shields.io/badge/Docker-linkace%2Flinkace-2596EC.svg" alt="Docker Repository"></a>
+  <a href="https://twitter.com/LinkAceApp"><img src="https://img.shields.io/badge/X.com%2FLinkAceApp-black" alt="Follow LinkAce on X.com"></a>
+  <a href="https://mastodon.social/@linkace"><img src="https://img.shields.io/badge/%40linkace%40mastodon.social-6364ff" alt="Follow LinkAce on Mastodon"></a>
   <a href="https://github.com/Kovah/LinkAce/releases"><img src="https://img.shields.io/github/v/release/kovah/linkace?label=Latest%20Release" alt="Latest Release"></a>
   <a href="https://opensource.org/licenses/GPL-3.0"><img src="https://img.shields.io/github/license/kovah/linkace.svg" alt="License"></a>
 </p>
@@ -40,7 +40,7 @@ It provides a long-term archive to store links to websites, media files or anyth
 
 * Save links with automatic title and description generation.
 * Automated link monitoring informs you when any links become unavailable or were moved.
-* Automated backups of saved sites via the [Internet Archive](https://web.archive.org/).
+* Automated archiving of saved sites via the [Internet Archive](https://web.archive.org/).
 * Organize bookmarks with the help of lists and tags.
 * A full REST API offers access to all features of LinkAce from other apps and services.
 * LinkAce is also [available on Zapier](https://zapier.com/apps/linkace/integrations) and integrates with over 2500+ applications.
@@ -74,7 +74,7 @@ LinkAce provides multiple ways of installing it on your server. The complete doc
 
 I built LinkAce to solve my own problem, and I now offer my solution and code without charging any money. I spent a lot of my free time building this application, so I won't offer any *free* personal support, customization or installation help. If you need help please visit the [community discussions](https://github.com/Kovah/LinkAce/discussions) and post your issue there.
 
-You can get personal and dedicated support by **becoming a supporter on [Open Collective](https://opencollective.com/linkace), [Patreon](https://www.patreon.com/Kovah) or [Github](https://github.com/sponsors/Kovah)**. :star:
+:star: You can get personal and dedicated support by **becoming a supporter on [Open Collective](https://opencollective.com/linkace), [Patreon](https://www.patreon.com/Kovah) or [Github](https://github.com/sponsors/Kovah)**.
 
 #### Our Supporters on Open Collective
 

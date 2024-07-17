@@ -26,8 +26,8 @@ jobs:
           username: ${{ secrets.DOCKER_HUB_USERNAME }}
           password: ${{ secrets.DOCKER_HUB_TOKEN }}
 
-      - name: Login to DockerHub
-        uses: docker/login-action@v2
+      - name: Login to GitHub Registry
+        uses: docker/login-action@v3
         with:
           registry: ghcr.io
           username: ${{ github.actor }}
@@ -37,16 +37,36 @@ jobs:
         id: prep
         run: |
           DOCKER_IMAGE=linkace/linkace
-          DOCKER_IMAGE_GITUHB=ghcr.io/kovah/linkace
+          DOCKER_IMAGE_GITHUB=ghcr.io/kovah/linkace
+          MAJOR_VERSION=1.x
           VERSION=${GITHUB_REF#refs/tags/}
-          TAGS="${DOCKER_IMAGE}:${VERSION},${DOCKER_IMAGE_GITUHB}:${VERSION}"
+          TAGS="${DOCKER_IMAGE}:${VERSION},${DOCKER_IMAGE}:${MAJOR_VERSION},${DOCKER_IMAGE}:latest,${DOCKER_IMAGE_GITHUB}:${VERSION},${DOCKER_IMAGE_GITHUB}:${MAJOR_VERSION},${DOCKER_IMAGE_GITHUB}:latest"
           echo "tags=${TAGS}" >> $GITHUB_OUTPUT
 
-      - name: Build and push Docker image
-        uses: docker/build-push-action@v5
+      - name: Build and push advanced image
+        uses: docker/build-push-action@v6
         with:
           context: .
           file: ./resources/docker/dockerfiles/release-multiplatform.Dockerfile
           platforms: linux/amd64,linux/arm64,linux/arm/v7
           push: true
           tags: ${{ steps.prep.outputs.tags }}
+
+      - name: Prepare simple tags
+        id: prep-simple
+        run: |
+          DOCKER_IMAGE=linkace/linkace
+          DOCKER_IMAGE_GITHUB=ghcr.io/kovah/linkace
+          VERSION=${GITHUB_REF#refs/tags/}
+          MAJOR_VERSION=1.x
+          TAGS="${DOCKER_IMAGE}:${VERSION}-php-nginx,${DOCKER_IMAGE}:${MAJOR_VERSION}-php-nginx,${DOCKER_IMAGE}:php-nginx,${DOCKER_IMAGE}:${VERSION}-simple,${DOCKER_IMAGE}:${MAJOR_VERSION}-simple,${DOCKER_IMAGE}:simple,${DOCKER_IMAGE_GITHUB}:${VERSION}-php-nginx,${DOCKER_IMAGE_GITHUB}:${MAJOR_VERSION}-php-nginx,${DOCKER_IMAGE_GITHUB}:php-nginx,${DOCKER_IMAGE_GITHUB}:${VERSION}-simple,${DOCKER_IMAGE_GITHUB}:${MAJOR_VERSION}-simple,${DOCKER_IMAGE_GITHUB}:simple"
+          echo "tags=${TAGS}" >> $GITHUB_OUTPUT
+
+      - name: Build and push simple image
+        uses: docker/build-push-action@v6
+        with:
+          context: .
+          file: ./resources/docker/dockerfiles/release-multiplatform-simple.Dockerfile
+          platforms: linux/amd64,linux/arm64,linux/arm/v7
+          push: true
+          tags: ${{ steps.prep-simple.outputs.tags }}

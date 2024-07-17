@@ -26,7 +26,7 @@ class ResetPasswordCommand extends Command
             $newPassword = $this->secret('Please enter a new password for this user');
 
             $validator = Validator::make(['password' => $newPassword], [
-                'password' => 'required|string|min:10',
+                'password' => 'required|string|min:8',
             ]);
 
             if ($validator->invalid()) {

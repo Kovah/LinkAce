@@ -2,7 +2,7 @@
 
 # ================================
 # PHP Dependency Setup
-FROM linkace/base-image:php-8.3-caddy AS builder
+FROM docker.io/linkace/base-image:php-8.3-caddy AS builder
 WORKDIR /app
 
 # Pull composer and install required packages
@@ -38,7 +38,7 @@ RUN mv vendor/spatie/laravel-backup/resources/lang/de vendor/spatie/laravel-back
 
 # ================================
 # Compile all assets
-FROM node:20 AS npm_builder
+FROM docker.io/library/node:20 AS npm_builder
 WORKDIR /srv
 
 COPY ./resources/assets ./resources/assets
@@ -49,7 +49,7 @@ RUN npm run production
 
 # ================================
 # Prepare the final image
-FROM linkace/base-image:php-8.3-caddy
+FROM docker.io/linkace/base-image:php-8.3-caddy
 WORKDIR /app
 USER www-data
 
