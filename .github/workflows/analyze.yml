@@ -3,7 +3,7 @@ name: Analyze
 on:
   push:
     branches:
-      - main
+      - 2.x
 
 jobs:
 

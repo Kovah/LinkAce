@@ -2,7 +2,7 @@ version: 2
 updates:
   - package-ecosystem: "npm"
     directory: "/"
-    target-branch: "dev"
+    target-branch: "2.x"
     schedule:
       interval: "weekly"
     groups:
@@ -16,7 +16,7 @@ updates:
 
   - package-ecosystem: "composer"
     directory: "/"
-    target-branch: "dev"
+    target-branch: "2.x"
     schedule:
       interval: "weekly"
     groups:
@@ -30,7 +30,7 @@ updates:
 
   - package-ecosystem: "docker"
     directory: "/"
-    target-branch: "dev"
+    target-branch: "2.x"
     schedule:
       interval: "weekly"
     groups:
@@ -40,7 +40,7 @@ updates:
 
   - package-ecosystem: "github-actions"
     directory: "/"
-    target-branch: "dev"
+    target-branch: "2.x"
     schedule:
       interval: "weekly"
     groups:

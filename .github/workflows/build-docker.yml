@@ -1,10 +1,10 @@
 ---
-name: Build the LinkAce Docker image
+name: Build the v2 LinkAce Docker image
 
 on:
   push:
     tags:
-      - "*"
+      - "v2.*"
 
 jobs:
   build_regular_docker:
@@ -38,9 +38,9 @@ jobs:
         run: |
           DOCKER_IMAGE=linkace/linkace
           DOCKER_IMAGE_GITHUB=ghcr.io/kovah/linkace
-          MAJOR_VERSION=1.x
+          MAJOR_VERSION=2.x
           VERSION=${GITHUB_REF#refs/tags/}
-          TAGS="${DOCKER_IMAGE}:${VERSION},${DOCKER_IMAGE}:${MAJOR_VERSION},${DOCKER_IMAGE}:latest,${DOCKER_IMAGE_GITHUB}:${VERSION},${DOCKER_IMAGE_GITHUB}:${MAJOR_VERSION},${DOCKER_IMAGE_GITHUB}:latest"
+          TAGS="${DOCKER_IMAGE}:${VERSION},${DOCKER_IMAGE}:${MAJOR_VERSION},${DOCKER_IMAGE_GITHUB}:${VERSION},${DOCKER_IMAGE_GITHUB}:${MAJOR_VERSION}"
           echo "tags=${TAGS}" >> $GITHUB_OUTPUT
 
       - name: Build and push advanced image
@@ -51,22 +51,3 @@ jobs:
           platforms: linux/amd64,linux/arm64,linux/arm/v7
           push: true
           tags: ${{ steps.prep.outputs.tags }}
-
-      - name: Prepare simple tags
-        id: prep-simple
-        run: |
-          DOCKER_IMAGE=linkace/linkace
-          DOCKER_IMAGE_GITHUB=ghcr.io/kovah/linkace
-          VERSION=${GITHUB_REF#refs/tags/}
-          MAJOR_VERSION=1.x
-          TAGS="${DOCKER_IMAGE}:${VERSION}-php-nginx,${DOCKER_IMAGE}:${MAJOR_VERSION}-php-nginx,${DOCKER_IMAGE}:php-nginx,${DOCKER_IMAGE}:${VERSION}-simple,${DOCKER_IMAGE}:${MAJOR_VERSION}-simple,${DOCKER_IMAGE}:simple,${DOCKER_IMAGE_GITHUB}:${VERSION}-php-nginx,${DOCKER_IMAGE_GITHUB}:${MAJOR_VERSION}-php-nginx,${DOCKER_IMAGE_GITHUB}:php-nginx,${DOCKER_IMAGE_GITHUB}:${VERSION}-simple,${DOCKER_IMAGE_GITHUB}:${MAJOR_VERSION}-simple,${DOCKER_IMAGE_GITHUB}:simple"
-          echo "tags=${TAGS}" >> $GITHUB_OUTPUT
-
-      - name: Build and push simple image
-        uses: docker/build-push-action@v6
-        with:
-          context: .
-          file: ./resources/docker/dockerfiles/release-multiplatform-simple.Dockerfile
-          platforms: linux/amd64,linux/arm64,linux/arm/v7
-          push: true
-          tags: ${{ steps.prep-simple.outputs.tags }}
