@@ -21,13 +21,13 @@ class UserEntryTest extends TestCase
         $historyEntries = $user->audits()->latest()->get();
 
         $output = (new UserEntry($historyEntries[0]))->render();
-        $this->assertStringContainsString('User <code>TestUser</code> was created', $output);
-
-        $output = (new UserEntry($historyEntries[1]))->render();
         $this->assertStringContainsString(
             'User 1: Changed Username from <code>TestUser</code> to <code>UserTest</code>',
             $output
         );
+
+        $output = (new UserEntry($historyEntries[1]))->render();
+        $this->assertStringContainsString('User <code>TestUser</code> was created', $output);
     }
 
     public function testModelDeletion(): void
