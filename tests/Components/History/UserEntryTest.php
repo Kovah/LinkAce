@@ -15,7 +15,7 @@ class UserEntryTest extends TestCase
     public function testRegularChange(): void
     {
         $user = User::factory()->create(['name' => 'TestUser']);
-
+        $this->travel(10)->seconds();
         $user->update(['name' => 'UserTest']);
 
         $historyEntries = $user->audits()->latest()->get();
