@@ -3,7 +3,7 @@ name: Build Release Package
 on:
   push:
     branches:
-      - main
+      - 1.x
 
 jobs:
 

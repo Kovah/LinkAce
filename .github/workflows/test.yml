@@ -2,6 +2,9 @@ name: Testing
 
 on:
   pull_request:
+  push:
+    branches:
+      - 1.x
 
 jobs:
 
