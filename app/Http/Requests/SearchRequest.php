@@ -24,10 +24,10 @@ class SearchRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'query' => 'required_without_all:only_lists,only_tags,broken_only',
-            'only_lists' => 'required_without_all:query,only_tags,broken_only',
-            'only_tags' => 'required_without_all:query,only_lists,broken_only',
-            'broken_only' => 'required_without_all:query,only_lists,only_tags',
+            'query' => 'required_without_all:only_lists,only_tags,broken_only,empty_tags,empty_lists',
+            'only_lists' => 'required_without_all:query,only_tags,broken_only,empty_tags,empty_lists',
+            'only_tags' => 'required_without_all:query,only_lists,broken_only,empty_tags,empty_lists',
+            'broken_only' => 'required_without_all:query,only_lists,only_tags,empty_tags,empty_lists',
         ];
     }
 
