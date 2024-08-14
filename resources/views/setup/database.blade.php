@@ -15,10 +15,41 @@
 
                     @include('partials.alerts')
 
-                    <form action="{{ route('setup.save-database') }}" method="POST">
+                    <form action="{{ route('setup.save-database') }}" method="POST" class="database-setup">
                         @csrf
 
                         <div class="mb-3">
+                            <label for="connection">
+                                @lang('setup.database.connection')
+                            </label>
+                            <select name="connection" id="connection"
+                                class="form-select{{ $errors->has('connection') ? ' is-invalid' : '' }}">
+                                <option value="mysql" @selected(old('connection') === 'mysql')>MySQL / MariaDB</option>
+                                <option value="sqlite" @selected(old('connection') === 'sqlite')>SQLite</option>
+                                <option value="pgsql" @selected(old('connection') === 'pgsql')>PostgreSQL</option>
+                            </select>
+                            @if ($errors->has('connection'))
+                                <p class="invalid-feedback" role="alert">
+                                    {{ $errors->first('connection') }}
+                                </p>
+                            @endif
+                        </div>
+
+                        <div class="mb-3 db-path">
+                            <label for="db_path">
+                                @lang('setup.database.db_path')
+                            </label>
+                            <input type="text" name="db_path" id="db_path" required
+                                class="form-control{{ $errors->has('db_path') ? ' is-invalid' : '' }}"
+                                placeholder="localhost" value="{{ old('db_path') ?: database_path('database.sqlite') }}">
+                            @if ($errors->has('db_path'))
+                                <p class="invalid-feedback" role="alert">
+                                    {{ $errors->first('db_path') }}
+                                </p>
+                            @endif
+                        </div>
+
+                        <div class="mb-3 db-host">
                             <label for="db_host">
                                 @lang('setup.database.db_host')
                             </label>
@@ -32,7 +63,7 @@
                             @endif
                         </div>
 
-                        <div class="mb-3">
+                        <div class="mb-3 db-port">
                             <label for="db_port">
                                 @lang('setup.database.db_port')
                             </label>
@@ -46,7 +77,7 @@
                             @endif
                         </div>
 
-                        <div class="mb-3">
+                        <div class="mb-3 db-name">
                             <label for="db_name">
                                 @lang('setup.database.db_name')
                             </label>
@@ -60,7 +91,7 @@
                             @endif
                         </div>
 
-                        <div class="mb-3">
+                        <div class="mb-3 db-user">
                             <label for="db_user">
                                 @lang('setup.database.db_user')
                             </label>
@@ -74,7 +105,7 @@
                             @endif
                         </div>
 
-                        <div class="mb-3">
+                        <div class="mb-3 db-password">
                             <label for="db_password">
                                 @lang('setup.database.db_password')
                             </label>
@@ -102,7 +133,7 @@
                             </div>
                         @endif
 
-                        <button type="submit" class="btn btn-primary">
+                        <button type="submit" class="btn btn-primary db-submit">
                             @if($errors->any())
                                 @lang('setup.try_again')
                             @else

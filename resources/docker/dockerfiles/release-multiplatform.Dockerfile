@@ -80,7 +80,10 @@ COPY --from=npm_builder --chown=www-data:www-data /srv/public/assets/dist/css /a
 COPY --from=npm_builder --chown=www-data:www-data /srv/public/mix-manifest.json /app/public/mix-manifest.json
 
 # Create a SQLite database file ready to be used
-RUN touch ./database/database.sqlite
+RUN touch ./database/database.sqlite \
+    && chown www-data:www-data ./database/database.sqlite \
+    && chmod +w ./database/database.sqlite \
+    && chmod +r ./database
 
 # Configure Supervisor for PHP + Caddy
 ENV PORT=80

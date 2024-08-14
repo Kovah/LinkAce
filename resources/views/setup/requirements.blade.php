@@ -17,6 +17,8 @@
                                 @lang('setup.requirements.' . $key)
                                 @if($successful)
                                     <x-icon.check class="text-success"/>
+                                @elseif(str_contains($key, 'pdo'))
+                                    <x-icon.warning class="text-warning"/>
                                 @else
                                     <x-icon.ban class="text-danger"/>
                                 @endif

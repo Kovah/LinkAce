@@ -16,6 +16,7 @@ use PDOException;
 
 class DatabaseController extends Controller
 {
+    protected string $connection;
     protected array $dbConfig;
 
     public function index(): View
@@ -45,17 +46,22 @@ class DatabaseController extends Controller
         return redirect()->route('setup.account');
     }
 
-    protected function createTempDatabaseConnection(array $credentials): void
+    protected function createTempDatabaseConnection(array $configuration): void
     {
-        $this->dbConfig = config('database.connections.mysql');
+        $this->connection = $configuration['connection'];
+        $this->dbConfig = config('database.connections.' . $this->connection);
 
-        $this->dbConfig['host'] = $credentials['db_host'];
-        $this->dbConfig['port'] = $credentials['db_port'];
-        $this->dbConfig['database'] = $credentials['db_name'];
-        $this->dbConfig['username'] = $credentials['db_user'];
-        $this->dbConfig['password'] = $credentials['db_password'];
+        if ($this->connection === 'sqlite') {
+            $this->dbConfig['database'] = $configuration['db_path'];
+        } else {
+            $this->dbConfig['host'] = $configuration['db_host'];
+            $this->dbConfig['port'] = $configuration['db_port'];
+            $this->dbConfig['database'] = $configuration['db_name'];
+            $this->dbConfig['username'] = $configuration['db_user'];
+            $this->dbConfig['password'] = $configuration['db_password'];
+        }
 
-        Config::set('database.connections.mysql', $this->dbConfig);
+        Config::set('database.connections.' . $this->connection, $this->dbConfig);
     }
 
     /**
@@ -70,7 +76,7 @@ class DatabaseController extends Controller
     {
         try {
             Artisan::call('migrate:fresh', [
-                '--database' => 'mysql', // Specify the correct connection
+                '--database' => $this->connection, // Specify the correct connection
                 '--force' => true, // Needed for production
                 '--no-interaction' => true,
             ]);
@@ -93,17 +99,19 @@ class DatabaseController extends Controller
         $envContent = File::get(base_path('.env'));
 
         $envContent = preg_replace([
+            '/DB_CONNECTION=(.*)\S/',
             '/DB_HOST=(.*)\S/',
             '/DB_PORT=(.*)\S/',
             '/DB_DATABASE=(.*)\S/',
             '/DB_USERNAME=(.*)\S/',
             '/DB_PASSWORD=(.*)\S/',
         ], [
-            'DB_HOST=' . $this->dbConfig['host'],
-            'DB_PORT=' . $this->dbConfig['port'],
-            'DB_DATABASE=' . $this->dbConfig['database'],
-            'DB_USERNAME=' . $this->dbConfig['username'],
-            'DB_PASSWORD=' . $this->dbConfig['password'],
+            'DB_CONNECTION=' . $this->connection,
+            'DB_HOST=' . ($this->dbConfig['host'] ?? ''),
+            'DB_PORT=' . ($this->dbConfig['port'] ?? ''),
+            'DB_DATABASE=' . ($this->dbConfig['database'] ?? ''),
+            'DB_USERNAME=' . ($this->dbConfig['username'] ?? ''),
+            'DB_PASSWORD=' . ($this->dbConfig['password'] ?? ''),
         ], $envContent);
 
         if ($envContent !== null) {
@@ -121,7 +129,7 @@ class DatabaseController extends Controller
     protected function databaseHasData(): bool
     {
         try {
-            $presentTables = DB::connection('mysql')
+            $presentTables = DB::connection($this->connection)
                 ->getDoctrineSchemaManager()
                 ->listTableNames();
         } catch (PDOException|\Doctrine\DBAL\Exception $e) {

@@ -7,8 +7,10 @@ export default class Base {
 
   initAppData () {
     // Load data passed by the backend to the JS
-    let data = document.querySelector('meta[property="la-app-data"]').getAttribute('content');
-    window.appData = JSON.parse(data);
+    let data = document.querySelector('meta[property="la-app-data"]')?.getAttribute('content');
+    if (data) {
+      window.appData = JSON.parse(data);
+    }
   }
 
   initBootstrapTooltips () {

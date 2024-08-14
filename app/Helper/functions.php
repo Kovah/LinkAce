@@ -22,7 +22,6 @@ function setupCompleted(): ?bool
     try {
         return systemsettings('setup_completed');
     } catch (PDOException $e) {
-        Log::error($e->getMessage());
         return false;
     }
 }

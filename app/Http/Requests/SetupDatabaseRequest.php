@@ -9,18 +9,25 @@ class SetupDatabaseRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'db_host' => [
+            'connection' => [
                 'required',
+                'in:sqlite,mysql,pgsql',
+            ],
+            'db_path' => [
+                'required_if:connection,sqlite',
+            ],
+            'db_host' => [
+                'required_unless:connection,sqlite',
             ],
             'db_port' => [
-                'required',
+                'required_unless:connection,sqlite',
                 'numeric',
             ],
             'db_name' => [
-                'required',
+                'required_unless:connection,sqlite',
             ],
             'db_user' => [
-                'required',
+                'required_unless:connection,sqlite',
             ],
             'db_password' => [
                 'nullable',
