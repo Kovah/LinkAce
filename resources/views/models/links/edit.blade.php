@@ -65,8 +65,9 @@
                         <div class="mb-4">
                             <label class="form-label" for="lists">@lang('list.lists')</label>
                             <input name="lists" id="lists" type="text" placeholder="@lang('placeholder.list_select')"
-                                class="tag-select" data-value="{{ $link->oldTaxonomyOutput('lists') }}"
-                                data-allow-creation="true" data-tag-type="lists">
+                                class="tag-select" data-tag-data="{{ $all_lists->toJson() }}"
+                                data-value="{{ $link->oldTaxonomyOutput('lists') }}"
+                                data-allow-creation="1" data-tag-type="lists">
 
                             @if ($errors->has('lists'))
                                 <p class="invalid-feedback" role="alert">
@@ -78,8 +79,9 @@
                         <div class="mb-4">
                             <label class="form-label" for="tags">@lang('tag.tags')</label>
                             <input name="tags" id="tags" type="text" placeholder="@lang('placeholder.tags_select')"
-                                class="tag-select" data-value="{{ $link->oldTaxonomyOutput('tags') }}"
-                                data-allow-creation="true" data-tag-type="tags">
+                                class="tag-select" data-tag-data="{{ $all_tags->toJson() }}"
+                                data-value="{{ $link->oldTaxonomyOutput('tags') }}"
+                                data-allow-creation="1" data-tag-type="tags">
 
                             @if ($errors->has('tags'))
                                 <p class="invalid-feedback" role="alert">

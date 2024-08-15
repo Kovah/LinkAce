@@ -126,6 +126,8 @@ class LinkController extends Controller
             'pageTitle' => trans('link.edit') . ': ' . $link->shortTitle(),
             'link' => $link,
             'existing_link' => null,
+            'all_tags' => Tag::visibleForUser()->get(['name', 'id']),
+            'all_lists' => LinkList::visibleForUser()->get(['name', 'id']),
         ]);
     }
 
