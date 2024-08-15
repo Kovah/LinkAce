@@ -59,11 +59,11 @@ class BulkEditControllerTest extends TestCase
 
         array_walk($links, fn($link) => $link->refresh());
 
-        $this->assertEqualsCanonicalizing([1, 3], $links[0]->lists()->pluck('id')->sort()->toArray());
-        $this->assertEqualsCanonicalizing([1, 2, 3], $links[1]->lists()->pluck('id')->sort()->toArray());
-        $this->assertEqualsCanonicalizing([3], $links[2]->lists()->pluck('id')->sort()->toArray());
+        $this->assertEqualsCanonicalizing([3, 1], $links[0]->lists()->pluck('id')->toArray());
+        $this->assertEqualsCanonicalizing([1, 2, 3], $links[1]->lists()->pluck('id')->toArray());
+        $this->assertEqualsCanonicalizing([3], $links[2]->lists()->pluck('id')->toArray());
 
-        $this->assertEqualsCanonicalizing([1, 3], $links[0]->tags()->pluck('id')->toArray());
+        $this->assertEqualsCanonicalizing([3, 1], $links[0]->tags()->pluck('id')->toArray());
         $this->assertEqualsCanonicalizing([1, 2, 3], $links[1]->tags()->pluck('id')->toArray());
         $this->assertEqualsCanonicalizing([3], $links[2]->tags()->pluck('id')->toArray());
 
