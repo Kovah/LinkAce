@@ -26,7 +26,7 @@ starting to code.
 
 * [Docker](https://www.docker.com/products/docker-desktop)/[Podman](https://podman.io/docs/installation) _or_ a [currently-supported PHP version](https://www.php.net/supported-versions.php)
   * For Podman, you also need to `apt`, `dnf`, or otherwise install [`podman-compose`](https://github.com/containers/podman-compose)
-* [Node](https://nodejs.org/en/) (20 LTS)
+* [Node](https://nodejs.org/en/) (currently 20 LTS)
 
 ### 1. Basic Setup
 
@@ -92,5 +92,5 @@ the release images. This step is not needed by any developer working on LinkAce 
 maintainers.
 
 ```bash
-docker buildx build --push --platform "linux/amd64,linux/arm64,linux/arm/v7" -t linkace/base-image:php-8.3-alpine -f resources/docker/dockerfiles/release-base.Dockerfile .
+docker buildx build --push --platform "linux/amd64,linux/arm64,linux/arm/v7" -t linkace/base-image:2.x-php-8.3 -f resources/docker/dockerfiles/release-base.Dockerfile .
 ```

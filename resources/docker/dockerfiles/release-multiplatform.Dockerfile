@@ -2,7 +2,7 @@
 
 # ================================
 # PHP Dependency Setup
-FROM docker.io/linkace/base-image:php-8.3-caddy AS builder
+FROM docker.io/linkace/base-image:2.x-php-8.3 AS builder
 WORKDIR /app
 
 # Pull composer and install required packages
@@ -49,7 +49,7 @@ RUN npm run production
 
 # ================================
 # Prepare the final image
-FROM docker.io/linkace/base-image:php-8.3-caddy
+FROM docker.io/linkace/base-image:2.x-php-8.3
 WORKDIR /app
 USER www-data
 
@@ -92,6 +92,5 @@ COPY ./resources/docker/php/php.ini /usr/local/etc/php/conf.d/app.ini
 COPY ./resources/docker/supervisord.ini /etc/supervisor.d/supervisord.ini
 COPY ./resources/docker/Caddyfile /etc/caddy/Caddyfile
 
-USER root
 EXPOSE 80 443
 CMD ["/usr/bin/supervisord", "-c", "/etc/supervisor.d/supervisord.ini"]
