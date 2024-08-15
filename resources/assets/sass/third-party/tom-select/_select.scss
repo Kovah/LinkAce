@@ -5,3 +5,9 @@
     color: $input-placeholder-color;
   }
 }
+
+.#{$select-ns}-dropdown,
+.#{$select-ns}-dropdown.form-control,
+.#{$select-ns}-dropdown.form-select {
+  border: 1px solid $select-color-dropdown-border-top;
+}
