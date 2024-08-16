@@ -2,7 +2,7 @@
 
 @section('content')
 
-    <form action="{{ route('bulk-edit.update-lists') }}" method="POST" class="card">
+    <form action="{{ route('bulk-edit.update-lists') }}" method="POST" class="card bulk-form lists-form">
         @csrf
         <input type="hidden" name="models" value="{{ old('models', implode(',', $models)) }}">
         <header class="card-header">@choice('list.bulk_title', $modelCount, ['count' => $modelCount])</header>

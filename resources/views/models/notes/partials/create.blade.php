@@ -4,7 +4,7 @@
     </div>
     <div class="card-body p-2">
 
-        <form action="{{ route('notes.store') }}" method="post">
+        <form action="{{ route('notes.store') }}" method="post" class="create-form note-form">
             @csrf
 
             <input type="hidden" name="link_id" value="{{ $link->id }}">

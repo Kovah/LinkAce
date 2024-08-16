@@ -8,7 +8,7 @@
         </header>
         <div class="card-body">
 
-            <form action="{{ route('tags.store') }}" method="POST">
+            <form action="{{ route('tags.store') }}" method="POST" class="create-form tag-form">
                 @csrf
 
                 <div class="row">

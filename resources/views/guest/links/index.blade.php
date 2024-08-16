@@ -6,7 +6,7 @@
 
 @section('content')
 
-    <header class="d-flex align-items-center">
+    <header class="links-header d-flex align-items-center">
         <h3 class="mb-0 me-3">
             @lang('link.links')
         </h3>
@@ -18,7 +18,7 @@
         <x-models.link-order-dropdown class="ms-1"/>
     </header>
 
-    <section class="my-4">
+    <section class="link-listing my-4">
         @if($links->isNotEmpty())
 
             <div class="link-wrapper">

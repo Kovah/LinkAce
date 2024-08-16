@@ -11,7 +11,7 @@
 
     @include('partials.favicon')
 </head>
-<body>
+<body class="errors">
 <div id="app">
 
     <main class="main container">

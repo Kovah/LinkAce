@@ -2,7 +2,7 @@
 
 @section('content')
 
-    <header class="d-flex align-items-center">
+    <header class="lists-header d-flex align-items-center">
         <h3 class="mb-0 me-3">
             @lang('list.lists')
         </h3>
@@ -35,7 +35,7 @@
 
     @if($lists->isNotEmpty())
 
-        <div class="bulk-edit" data-type="lists">
+        <div class="list-listing bulk-edit" data-type="lists">
             <form class="bulk-edit-form visually-hidden text-end" action="{{ route('bulk-edit.form') }}" method="POST">
                 @csrf()
                 <input type="hidden" name="type">

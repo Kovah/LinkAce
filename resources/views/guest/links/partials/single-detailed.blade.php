@@ -1,7 +1,7 @@
 @php
     $shareLinks = getShareLinks($link);
 @endphp
-<div class="link-detailed list-group-item py-3">
+<div class="single-link link-detailed list-group-item py-3">
     <div class="d-flex w-100">
         <div class="me-2 me-lg-3">
             {!! $link->getIcon() !!}

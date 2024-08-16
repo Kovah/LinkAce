@@ -1,7 +1,7 @@
 @php
     $shareLinks = getShareLinks($link);
 @endphp
-<li class="link-simple list-group-item">
+<li class="single-link link-simple list-group-item">
     <div class="d-sm-flex align-items-center">
         <div class="me-4 one-line-sm">
             <a href="{{ $link->url }}" title="{{ $link->url }}" {!! linkTarget() !!}>

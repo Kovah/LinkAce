@@ -3,7 +3,7 @@
         @lang('linkace.login')
     </div>
     <div class="card-body">
-        <form method="POST" action="{{ route('login') }}" aria-label="@lang('linkace.login')">
+        <form method="POST" action="{{ route('login') }}" aria-label="@lang('linkace.login')" class="login-form">
             @csrf
 
             <div class="mb-4">

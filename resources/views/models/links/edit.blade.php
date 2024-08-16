@@ -8,7 +8,8 @@
         </header>
         <div class="card-body">
 
-            <form action="{{ route('links.update', [$link->id]) }}" method="POST" id="link-edit">
+            <form action="{{ route('links.update', [$link->id]) }}" method="POST" id="link-edit"
+                class="edit-form link-form">
                 @method('PATCH')
                 @csrf
 

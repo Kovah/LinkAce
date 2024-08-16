@@ -1,7 +1,7 @@
 @php
     $shareLinks = getShareLinks($link);
 @endphp
-<div class="link-card col-12 col-md-6 col-lg-4">
+<div class="single-link link-card col-12 col-md-6 col-lg-4">
     <div class="h-100 card">
         <div class="link-thumbnail-list-holder-detailed">
             <a href="{{ $link->url }}" {!! linkTarget() !!} class="link-thumbnail-list-detailed">
@@ -19,14 +19,14 @@
         </div>
 
         <div class="card-body h-100 border-bottom-0">
-            <a href="{{ $link->url }}" {!! linkTarget() !!} class="two-lines">{{ $link->title }}</a>
-            <div class="mt-1 small text-pale w-100 one-line">
+            <a href="{{ $link->url }}" {!! linkTarget() !!} class="title two-lines">{{ $link->title }}</a>
+            <div class="url mt-1 small text-pale w-100 one-line">
                 {{ $link->url }}
             </div>
         </div>
 
         @if($link->tags->count() > 0)
-            <div class="px-3 mb-3">
+            <div class="link-tags px-3 mb-3">
                 @foreach($link->tags as $tag)
                     <a href="{{ route('tags.show', [$tag]) }}" class="btn btn-light btn-xs text-condensed">
                         {{ $tag->name }}
@@ -35,7 +35,7 @@
             </div>
         @endif
 
-        <div class="d-flex align-items-center my-1">
+        <div class="meta d-flex align-items-center my-1">
             <div class="text-pale text-xs me-3 ps-3 text-condensed">
                 @lang('linkace.added') {!! $link->addedAt() !!}
             </div>

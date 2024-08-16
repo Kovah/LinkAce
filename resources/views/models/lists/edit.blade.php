@@ -8,7 +8,7 @@
         </header>
         <div class="card-body">
 
-            <form action="{{ route('lists.update', ['list' => $list]) }}" method="POST">
+            <form action="{{ route('lists.update', ['list' => $list]) }}" method="POST" class="edit-form list-form">
                 @method('PATCH')
                 @csrf
 

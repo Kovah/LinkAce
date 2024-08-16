@@ -227,7 +227,7 @@ class Link extends Model implements Auditable
 
     public function addedAt(): string
     {
-        $output = '<time-ago class="cursor-help"';
+        $output = '<time-ago class="date cursor-help"';
         $output .= ' datetime="' . $this->created_at->toIso8601String() . '"';
         $output .= ' title="' . formatDateTime($this->created_at) . '">';
         $output .= formatDateTime($this->created_at, true);

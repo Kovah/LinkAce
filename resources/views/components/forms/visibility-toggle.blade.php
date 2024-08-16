@@ -1,4 +1,4 @@
-<div {{ $attributes }}>
+<div {{ $attributes->merge(['class' => 'visibility-toggle']) }}>
     <label class="form-label {{ $labelClasses }}" for="visibility">@lang('linkace.visibility')</label>
     <select id="visibility" name="visibility" class="form-select {{ $inputClasses }}{{ $errors->has('visibility') ? ' is-invalid' : '' }}">
         @if($unchangedOption)

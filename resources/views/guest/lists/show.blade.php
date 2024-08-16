@@ -2,7 +2,7 @@
 
 @section('content')
 
-    <div class="card">
+    <div class="list-details card">
         <header class="card-header d-flex align-items-center">
 
             <span class="me-3">@lang('list.list')</span>
@@ -15,16 +15,16 @@
         </header>
         <div class="card-body">
 
-            <h2 class="mb-0">{{ $list->name }}</h2>
+            <h2 class="title mb-0">{{ $list->name }}</h2>
 
             @if($list->description)
-                <p class="mt-2 mb-0">{{ $list->description }}</p>
+                <p class="description mt-2 mb-0">{{ $list->description }}</p>
             @endif
 
         </div>
     </div>
 
-    <section class="my-4">
+    <section class="list-links my-4">
         @if($links->isNotEmpty())
             <div class="d-flex align-items-center mb-4">
                 <x-models.link-display-toggles class="ms-auto"/>

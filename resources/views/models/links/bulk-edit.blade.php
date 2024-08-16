@@ -1,7 +1,7 @@
 @extends('layouts.app')
 
 @section('content')
-    <form action="{{ route('bulk-edit.update-links') }}" method="POST" class="card">
+    <form action="{{ route('bulk-edit.update-links') }}" method="POST" class="card bulk-form link-form">
         @csrf
         <input type="hidden" name="models" value="{{ old('models', implode(',', $models)) }}">
         <header class="card-header">@choice('link.bulk_title', $modelCount, ['count' => $modelCount])</header>

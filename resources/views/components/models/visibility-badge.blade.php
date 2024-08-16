@@ -1,6 +1,6 @@
 @props(['model', 'iconClass' => ''])
 @if($model->visibility !== \App\Enums\ModelAttribute::VISIBILITY_PUBLIC)
-    <div {{ $attributes->merge(['class' => '']) }}>
+    <div {{ $attributes->merge(['class' => 'visibility']) }}>
         @if($model->visibility === \App\Enums\ModelAttribute::VISIBILITY_PRIVATE)
             <x-icon.lock title="@lang($model->langBase . '.private')" :class="$iconClass"/>
             <span class="visually-hidden">@lang($model->langBase . '.private')</span>

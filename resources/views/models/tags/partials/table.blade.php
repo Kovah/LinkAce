@@ -1,4 +1,4 @@
-<div class="bulk-edit table-responsive" data-type="tags">
+<div class="bulk-edit tags-table table-responsive" data-type="tags">
     <table class="table mb-0">
         <thead>
         <tr>

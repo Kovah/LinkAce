@@ -2,7 +2,7 @@
 
 @section('content')
 
-    <header class="d-flex align-items-center">
+    <header class="links-header d-flex align-items-center">
         <h3 class="mb-0">
             @lang('link.links')
         </h3>
@@ -17,7 +17,7 @@
         </div>
     </header>
 
-    <section class="mb-4">
+    <section class="link-listing mb-4">
         @if($links->isNotEmpty())
 
             <div class="link-wrapper">

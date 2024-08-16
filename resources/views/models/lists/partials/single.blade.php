@@ -1,18 +1,18 @@
-<div class="col-12 col-sm-6 col-md-4 mb-4">
+<div class="single-list col-12 col-sm-6 col-md-4 mb-4">
     <div class="h-100 card">
         <div class="card-body">
             <div class="d-flex">
                 <x-models.visibility-badge :model="$list" class="d-inline-block me-2"/>
-                <a href="{{ route('lists.show', ['list' => $list]) }}">
+                <a href="{{ route('lists.show', ['list' => $list]) }}" class="title">
                     <x-models.name-with-user :model="$list"/>
                 </a>
             </div>
             @if($list->description)
-                <div class="small mt-2">{{ $list->description }}</div>
+                <div class="description small mt-2">{{ $list->description }}</div>
             @endif
         </div>
 
-        <div class="d-flex align-items-center">
+        <div class="meta d-flex align-items-center">
             <div class="text-xs text-pale me-3 ps-3 text-condensed">
                 @if($list->links_count > 0)
                     {{ trans_choice('list.number_links', $list->links_count, ['number' => $list->links_count]) }}

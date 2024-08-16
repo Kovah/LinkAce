@@ -8,7 +8,7 @@
         </header>
         <div class="card-body">
 
-            <form action="{{ route('notes.update', [$note->id]) }}" method="POST">
+            <form action="{{ route('notes.update', [$note->id]) }}" method="POST" class="edit-form note-form">
                 @method('PATCH')
                 @csrf
 

@@ -6,7 +6,7 @@
 
 @section('content')
 
-    <header class="d-flex align-items-center">
+    <header class="list-header d-flex align-items-center">
         <h3 class="mb-0 me-3">
             @lang('list.lists')
         </h3>
@@ -21,7 +21,7 @@
 
     @if(!$lists->isEmpty())
 
-        <div class="row my-3">
+        <div class="list-listing row my-3">
             @foreach($lists as $list)
                 @include('guest.lists.partials.single')
             @endforeach

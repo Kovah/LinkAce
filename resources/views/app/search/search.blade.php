@@ -5,13 +5,13 @@ use App\Enums\ModelAttribute;
 
 @section('content')
 
-    <div class="card">
+    <div class="search card">
         <div class="card-header">
             @lang('search.search')
         </div>
         <div class="card-body">
 
-            <form action="{{ route('do-search') }}" method="POST">
+            <form action="{{ route('do-search') }}" method="POST" class="search-form">
                 @csrf
 
                 <div class="mb-4">

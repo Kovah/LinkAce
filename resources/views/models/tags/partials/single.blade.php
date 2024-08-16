@@ -1,14 +1,14 @@
-<tr>
+<tr class="single-tag">
     <td>
         <x-models.visibility-badge :model="$tag" class="d-inline-block me-1 small"/>
-        <a href="{{ route('tags.show', ['tag' => $tag]) }}">
+        <a href="{{ route('tags.show', ['tag' => $tag]) }}" class="title">
             <x-models.name-with-user :model="$tag"/>
         </a>
     </td>
     <td>
         {{ $tag->links_count }}
     </td>
-    <td class="py-1">
+    <td class="meta py-1">
         <div class="mt-1 d-flex align-items-center justify-content-end">
             <div class="btn-group me-1">
                 <a href="{{ route('tags.edit', [$tag]) }}" class="btn btn-xs btn-link text-condensed">

@@ -1,4 +1,4 @@
-<div class="bulk-edit" data-type="links">
+<div class="bulk-edit links-cards" data-type="links">
     <form class="bulk-edit-form visually-hidden text-end" action="{{ route('bulk-edit.form') }}" method="POST">
         @csrf()
         <input type="hidden" name="type">

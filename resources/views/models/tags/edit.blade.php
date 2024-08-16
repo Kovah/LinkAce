@@ -8,7 +8,7 @@
         </header>
         <div class="card-body">
 
-            <form action="{{ route('tags.update', ['tag' => $tag]) }}" method="POST">
+            <form action="{{ route('tags.update', ['tag' => $tag]) }}" method="POST" class="edit-form tag-form">
                 @method('PATCH')
                 @csrf
 

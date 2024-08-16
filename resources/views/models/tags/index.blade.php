@@ -2,7 +2,7 @@
 
 @section('content')
 
-    <header class="d-flex align-items-center">
+    <header class="tags-header d-flex align-items-center">
         <h3 class="mb-0 me-3">
             @lang('tag.tags')
         </h3>
@@ -33,7 +33,7 @@
 
     </header>
 
-    <div class="card my-3">
+    <div class="tags-listing card my-3">
         <div class="card-table">
 
             @if($tags->isNotEmpty())

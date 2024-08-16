@@ -4,7 +4,7 @@
     </header>
     <div class="card-body">
 
-        <form action="{{ route('links.store') }}" method="POST">
+        <form action="{{ route('links.store') }}" method="POST" class="create-form link-form">
             @csrf
 
             <div class="mb-4">

@@ -1,4 +1,4 @@
-<div class="table-responsive">
+<div class="tags-table table-responsive">
     <table class="table table-sm mb-0">
         <thead>
         <tr>

@@ -1,4 +1,4 @@
-<div class="bulk-edit table-responsive" data-type="links">
+<div class="bulk-edit search-table table-responsive" data-type="links">
     <table class="table mb-0">
         <thead>
         <tr>
@@ -18,11 +18,11 @@
             </th>
         </tr>
         </thead>
-        <tbody>
+        <tbody class="link-listing">
         @foreach($results as $link)
             <tr>
                 <td>
-                    <a href="{{ route('links.show', [$link->id]) }}">
+                    <a href="{{ route('links.show', [$link->id]) }}" class="title">
                         {{ $link->title }}
                     </a>
                     @if($link->tags->count() > 0)
@@ -35,12 +35,12 @@
                         </div>
                     @endif
                 </td>
-                <td class="text-condensed">
+                <td class="meta text-condensed">
                     <a href="{{ $link->url }}" {!! linkTarget() !!} class="small short-text">
                         {{ $link->shortUrl() }}
                     </a>
                 </td>
-                <td class="text-pale small text-condensed">{!! $link->addedAt() !!}</td>
+                <td class="meta text-pale small text-condensed">{!! $link->addedAt() !!}</td>
                 <td class="text-end">
                     <input type="checkbox" aria-label="@lang('')" class="bulk-edit-model form-check d-inline-block"
                         data-id="{{ $link->id }}">

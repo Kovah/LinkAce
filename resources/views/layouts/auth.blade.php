@@ -3,7 +3,7 @@
 <head>
     @include('partials.header')
 </head>
-<body>
+<body class="auth">
 <div id="app">
 
     @include('partials.nav')

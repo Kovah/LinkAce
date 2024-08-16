@@ -8,7 +8,7 @@
         </header>
         <div class="card-body">
 
-            <form action="{{ route('lists.store') }}" method="POST">
+            <form action="{{ route('lists.store') }}" method="POST" class="create-form list-form">
                 @csrf
 
                 <div class="mb-4">

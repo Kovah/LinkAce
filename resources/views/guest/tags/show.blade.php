@@ -2,7 +2,7 @@
 
 @section('content')
 
-    <div class="card">
+    <div class="tag-details card">
         <header class="card-header d-flex align-items-center">
 
             <span class="me-3">@lang('tag.tag')</span>
@@ -14,11 +14,11 @@
 
         </header>
         <div class="card-body">
-            <h2 class="mb-0">{{ $tag->name }}</h2>
+            <h2 class="title mb-0">{{ $tag->name }}</h2>
         </div>
     </div>
 
-    <section class="my-4">
+    <section class="tag-links my-4">
         @if($links->isNotEmpty())
             <div class="d-flex align-items-center mb-4">
                 <x-models.link-display-toggles class="ms-auto"/>
