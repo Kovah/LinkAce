@@ -89,9 +89,8 @@ export default class TagsSelect {
     const value = $tag.innerText;
 
     this.select.addOption({value: value, text: value});
-    this.select.addItem(value);
+    this.select.createItem(value);
 
-    $tag.onclick = null;
     $tag.classList.remove('cursor-pointer');
     $tag.classList.add('text-success');
   }
