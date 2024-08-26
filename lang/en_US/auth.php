@@ -41,7 +41,7 @@ return [
     'api_tokens_system' => 'System API Tokens',
     'api_tokens.generate_help_system' => 'API tokens are used to access the LinkAce API from other applications or scripts. By default, only public or internal data is accessible, but tokens can be granted additional access to private data if needed.',
     'api_tokens.private_access' => 'Token can access private data',
-    'api_tokens.private_access_help' => 'The token access and change private links, lists, tags and notes of any user based on the specified abilities.',
+    'api_tokens.private_access_help' => 'The token can access and change private links, lists, tags and notes of any user based on the specified abilities.',
     'api_tokens.abilities' => 'Token abilities',
     'api_tokens.abilities_select' => 'Select token abilities...',
     'api_tokens.abilities_help' => 'Select all abilities a token can have. Abilities cannot be changed later.',
