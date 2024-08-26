@@ -8,7 +8,7 @@ return [
     'query' => '検索…',
     'search_title' => 'タイトルを検索',
     'search_description' => '概要を検索',
-    'private_only' => '非公開リンクのみ',
+    'visibility' => '公開範囲で検索',
     'broken_links' => '破損リンクのみ',
     'empty_tags' => 'タグを含めない',
     'empty_lists' => 'リストを含めない',

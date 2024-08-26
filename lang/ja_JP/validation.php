@@ -125,8 +125,11 @@ return [
     */
 
     'custom' => [
-        'attribute-name' => [
-            'rule-name' => 'カスタムメッセージ',
+        'visibility' => [
+            'visibility' => '公開範囲は1(公開)、2(内部)、または3(プライベート)のいずれかでなければなりません。',
+        ],
+        'api_token_ability' => [
+            'api_token_ability' => 'APIトークンは、少なくとも定義済みのトークン権限から1つの権限を持つ必要があります。',
         ],
     ],
 

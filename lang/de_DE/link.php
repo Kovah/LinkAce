@@ -4,6 +4,7 @@ return [
     'links' => 'Links',
     'all_links' => 'Alle Links',
     'recent_links' => 'Letzte Links',
+    'update_links' => 'Links aktualisieren',
     'no_links' => 'Keine Links',
 
     'add' => 'Link hinzufügen',
@@ -12,14 +13,12 @@ return [
     'details' => 'Link-Details',
     'edit' => 'Link bearbeiten',
     'update' => 'Link aktualisieren',
-    'delete' => 'Link löschen',
+    'delete' => 'Link löschen|Links löschen',
 
+    'public' => 'Öffentlicher Link',
+    'internal' => 'Interner Link',
     'private' => 'Privater Link',
 
-    'history' => 'Verlauf',
-    'history_added' => '<code>:newvalue</code> zu :fieldname hinzugefügt.',
-    'history_changed' => ':fieldname von <code>:oldvalue</code> zu <code>:newvalue geändert</code>',
-    'history_removed' => '<code>:oldvalue</code> von :fieldname entfernt.',
     'history_deleted' => 'Link wurde gelöscht',
     'history_restored' => 'Link wurde wiederhergestellt',
     'history_created' => 'Link wurde erstellt',
@@ -29,7 +28,7 @@ return [
     'description' => 'Beschreibung',
     'revtags' => 'Tags',
     'revlists' => 'Listen',
-    'is_private' => 'Privater Status',
+    'visibility' => 'Sichtbarkeit',
 
     'status' => 'Status',
     'stati' => [
@@ -50,6 +49,11 @@ return [
 
     'status_is_broken' => 'Link ist als defekt markiert',
     'status_mark_working' => 'Als funktionierend markieren',
+
+    'bulk_title' => 'Sie möchten :count Link bearbeiten.|Sie möchten :count Links bearbeiten.',
+    'bulk_edit_add' => 'Link zur Bulk-Bearbeitung hinzufügen',
+    'bulk_edit_success' => ':success Links von :selected wurden erfolgreich aktualisiert.',
+    'bulk_delete_success' => 'Von :selected ausgewählten Links wurden :success in den Papierkorb verschoben.',
 
     'added_successfully' => 'Link erfolgreich hinzugefügt.',
     'added_connection_error' => 'Der Link wurde hinzugefügt, aber beim Zugriff auf die URL ist ein Verbindungsfehler aufgetreten. Details finden Sie in den Logs.',

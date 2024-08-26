@@ -20,8 +20,16 @@ return [
 
     'added' => 'Ajouté',
     'added_at' => 'Ajouté le',
+    'added_by' => 'Ajouté par',
+    'created' => 'Créé',
+    'created_at' => 'Créé le',
     'updated_at' => 'Mis à jour le',
     'last_update' => 'Dernière Mise à jour',
+    'last_used' => 'Dernière utilisation',
+    'never_used' => 'Jamais utilisé',
+    'blocked' => 'Bloqué',
+    'blocked_at' => 'Bloqué le',
+    'deleted' => 'Supprimé',
     'deleted_at' => 'Supprimé le',
 
     'add' => 'Ajouter',
@@ -29,6 +37,11 @@ return [
     'edit' => 'Éditer',
     'update' => 'Mettre à jour',
     'delete' => 'Supprimer',
+    'restore' => 'Restaurer',
+    'block' => 'Bloquer',
+    'unblock' => 'Débloquer',
+    'unblocked' => 'Débloqué',
+    'details' => 'Détails',
 
     'menu' => 'Menu',
     'entries' => 'Entrées',
@@ -36,8 +49,14 @@ return [
 
     'continue_adding' => 'Continuer l\'Ajout',
 
-    'private' => 'Privé',
-    'is_private' => 'Est privé',
+    'visibility' => 'Visibilité',
+    'change_visibility' => 'Modifier la visibilité',
+    'dont_change_visibility' => 'Ne pas modifier la visibilité',
+
+    'history' => 'Historique',
+    'history_added' => 'Ajouté <code>:newvalue</code> à :fieldname.',
+    'history_changed' => 'Changé :fieldname de <code>:oldvalue</code> à <code>:newvalue</code>',
+    'history_removed' => 'Supprimé <code>:oldvalue</code> de :fieldname.',
 
     'yes' => 'Oui',
     'no' => 'Non',

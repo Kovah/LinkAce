@@ -11,7 +11,7 @@ return [
     'logout' => 'Abmelden',
     'remember_me' => 'Angemeldet bleiben',
     'go_to_dashboard' => 'Zur Übersicht gehen',
-    'dashboard' => 'Übersicht',
+    'dashboard' => '',
     'system_logs' => 'System Logs',
 
     'reset_password' => 'Passwort zurücksetzen',
@@ -20,8 +20,16 @@ return [
 
     'added' => 'Hinzugefügt',
     'added_at' => 'Hinzugefügt am',
+    'added_by' => 'Hinzugefügt von',
+    'created' => 'Erstellt',
+    'created_at' => 'Erstellt am',
     'updated_at' => 'Aktualisiert am',
     'last_update' => 'Letzte Aktualisierung',
+    'last_used' => 'Zuletzt verwendet',
+    'never_used' => 'Nie verwendet',
+    'blocked' => 'Blockiert',
+    'blocked_at' => 'Blockiert am',
+    'deleted' => 'Gelöscht',
     'deleted_at' => 'Gelöscht am',
 
     'add' => 'Hinzufügen',
@@ -29,6 +37,11 @@ return [
     'edit' => 'Bearbeiten',
     'update' => 'Aktualisieren',
     'delete' => 'Löschen',
+    'restore' => 'Wiederherstellen',
+    'block' => 'Blockieren',
+    'unblock' => 'Blockierung aufheben',
+    'unblocked' => 'Blockierung aufgehoben',
+    'details' => 'Details',
 
     'menu' => 'Menü',
     'entries' => 'Einträge',
@@ -36,8 +49,14 @@ return [
 
     'continue_adding' => 'Weiter hinzufügen',
 
-    'private' => 'Privat',
-    'is_private' => 'ist privat',
+    'visibility' => 'Sichtbarkeit',
+    'change_visibility' => 'Sichtbarkeit ändern',
+    'dont_change_visibility' => 'Sichtbarkeit nicht ändern',
+
+    'history' => 'Verlauf',
+    'history_added' => '<code>:newvalue</code> zu :fieldname hinzugefügt.',
+    'history_changed' => ':fieldname von <code>:oldvalue</code> zu <code>:newvalue geändert</code>',
+    'history_removed' => '<code>:oldvalue</code> von :fieldname entfernt.',
 
     'yes' => 'Ja',
     'no' => 'Nein',

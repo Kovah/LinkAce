@@ -9,6 +9,8 @@ return [
     'update' => 'Mettre à jour Note',
     'delete' => 'Supprimer Note',
 
+    'public' => 'Note publique',
+    'internal' => 'Note interne',
     'private' => 'Note Privée',
 
     'note_content' => 'Contenu Note',

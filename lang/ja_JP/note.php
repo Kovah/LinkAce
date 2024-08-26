@@ -9,6 +9,8 @@ return [
     'update' => 'ノートを更新',
     'delete' => 'ノートを削除',
 
+    'public' => '公開ノート',
+    'internal' => '内部ノート',
     'private' => '非公開ノート',
 
     'note_content' => 'ノートコンテンツ',

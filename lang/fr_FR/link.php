@@ -4,6 +4,7 @@ return [
     'links' => 'Liens',
     'all_links' => 'Tous les Liens',
     'recent_links' => 'Liens Récents',
+    'update_links' => 'Mettre à jour les liens',
     'no_links' => 'Aucun Lien',
 
     'add' => 'Ajouter Lien',
@@ -12,14 +13,12 @@ return [
     'details' => 'Détails Lien',
     'edit' => 'Éditer Lien',
     'update' => 'Mettre à jour Lien',
-    'delete' => 'Supprimer Lien',
+    'delete' => 'Supprimer le lien|Supprimer les liens',
 
+    'public' => 'Lien public',
+    'internal' => 'Lien interne',
     'private' => 'Lien Privé',
 
-    'history' => 'Historique',
-    'history_added' => '<code>:newvalue</code> ajouté à :fieldname.',
-    'history_changed' => ':fieldname modifié de <code>:oldvalue</code> en <code>:newvalue</code>',
-    'history_removed' => '<code>:oldvalue</code> supprimé de :fieldname.',
     'history_deleted' => 'Le lien a été supprimé',
     'history_restored' => 'Le lien a été restauré',
     'history_created' => 'Le lien a été créé',
@@ -29,7 +28,7 @@ return [
     'description' => 'Description',
     'revtags' => 'Étiquettes',
     'revlists' => 'Listes',
-    'is_private' => 'Statut privé',
+    'visibility' => 'Statut de la visibilité',
 
     'status' => 'Status',
     'stati' => [
@@ -50,6 +49,11 @@ return [
 
     'status_is_broken' => 'Le lien est marqué comme cassé',
     'status_mark_working' => 'Marquer comme fonctionnant',
+
+    'bulk_title' => 'Vous voulez modifier :count lien.|Vous voulez modifier :count liens.',
+    'bulk_edit_add' => 'Ajouter un lien vers l\'édition en masse',
+    'bulk_edit_success' => 'Les liens :success ont été mis à jour avec succès parmi les liens sélectionnés.',
+    'bulk_delete_success' => 'Les liens :success sélectionnés :selected ont été correctement déplacés vers la poubelle.',
 
     'added_successfully' => 'Lien ajouté avec succès.',
     'added_connection_error' => 'Le lien a été ajouté mais une erreur de connexion s\'est produite lors de la tentative d\'accès à l\'URL. Des détails peuvent être trouvés dans les journaux.',

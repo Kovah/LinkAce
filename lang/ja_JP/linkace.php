@@ -20,8 +20,16 @@ return [
 
     'added' => '追加',
     'added_at' => '追加日時',
+    'added_by' => '追加',
+    'created' => '作成',
+    'created_at' => '作成日時',
     'updated_at' => '更新日時',
     'last_update' => '最終更新',
+    'last_used' => '最終使用日時',
+    'never_used' => '未使用',
+    'blocked' => 'ブロック',
+    'blocked_at' => 'ブロック日時',
+    'deleted' => '削除',
     'deleted_at' => '削除日時',
 
     'add' => '追加',
@@ -29,6 +37,11 @@ return [
     'edit' => '編集',
     'update' => '更新',
     'delete' => '削除',
+    'restore' => '復元',
+    'block' => 'ブロック',
+    'unblock' => 'ブロック解除',
+    'unblocked' => 'ブロック解除',
+    'details' => '詳細',
 
     'menu' => 'メニュー',
     'entries' => '項目',
@@ -36,8 +49,14 @@ return [
 
     'continue_adding' => '編集を継続',
 
-    'private' => '非公開',
-    'is_private' => '非公開',
+    'visibility' => '公開範囲',
+    'change_visibility' => '公開範囲を変更',
+    'dont_change_visibility' => '公開範囲を変更しない',
+
+    'history' => '履歴',
+    'history_added' => ':fieldname に <code>:newvalue</code> を追加しました。',
+    'history_changed' => ':fieldname を <code>:oldvalue</code> から <code>:newvalue</code> に変更しました。',
+    'history_removed' => ':fieldname から <code>:oldvalue</code> を削除しました。',
 
     'yes' => 'はい',
     'no' => 'いいえ',

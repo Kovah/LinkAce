@@ -125,8 +125,11 @@ return [
     */
 
     'custom' => [
-        'attribute-name' => [
-            'rule-name' => 'benutzerdefinierte Nachricht',
+        'visibility' => [
+            'visibility' => 'Die Sichtbarkeit muss entweder 1 (öffentlich), 2 (intern) oder 3 (privat) sein.',
+        ],
+        'api_token_ability' => [
+            'api_token_ability' => 'Der API Token muss mindestens eine der vordefinierten Berechtigungen haben.',
         ],
     ],
 

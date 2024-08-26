@@ -10,5 +10,5 @@ return [
     'import_networkerror' => 'Une erreur s\'est produite lors de l\'importation des signets. Veuillez vérifier la console de votre navigateur pour plus de détails ou consulter les journaux de l\'application.',
     'import_error' => 'Une erreur s\'est produite lors de l\'importation des signets. Veuillez consulter les journaux de l\'application.',
     'import_empty' => 'Impossible d\'importer des signets. Soit le fichier téléversé est corrompu soit il est vide.',
-    'import_successfully' => ':imported liens importés avec succès, :skipped ignoré.',
+    'import_successfully' => 'Le Jeton API doit avoir au moins une capacité parmi les capacités prédéfinies du Jeton.',
 ];

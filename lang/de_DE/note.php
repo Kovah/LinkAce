@@ -9,6 +9,8 @@ return [
     'update' => 'Notiz aktualisieren',
     'delete' => 'Notiz löschen',
 
+    'public' => 'Öffentliche Notiz',
+    'internal' => 'Interne Notiz',
     'private' => 'Private Notiz',
 
     'note_content' => 'Notiz Inhalt',

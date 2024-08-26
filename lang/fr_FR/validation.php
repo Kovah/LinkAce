@@ -125,8 +125,11 @@ return [
     */
 
     'custom' => [
-        'attribute-name' => [
-            'rule-name' => 'message personnalisé',
+        'visibility' => [
+            'visibility' => 'La visibilité doit être au choix 1 (publique), 2 (interne) ou 3 (privée).',
+        ],
+        'api_token_ability' => [
+            'api_token_ability' => 'Le Jeton API doit avoir au moins une capacité parmi les capacités Jeton prédéfinies.',
         ],
     ],
 

@@ -10,5 +10,5 @@ return [
     'import_networkerror' => 'Beim Importieren der Lesezeichen ist ein Fehler aufgetreten. Bitte überprüfen Sie die Konsole des Browsers oder die Logs der Anwendung für Details.',
     'import_error' => 'Beim Importieren der Lesezeichen ist ein Fehler aufgetreten. Bitte prüfen Sie die Logs der Anwendung.',
     'import_empty' => 'Konnte keine Lesezeichen importieren. Entweder ist die hochgeladene Datei beschädigt oder leer.',
-    'import_successfully' => ':imported Links erfolgreich importiert, :skipped übersprungen.',
+    'import_successfully' => ':importierte Links erfolgreich importiert, :übersprungen. Alle importierten Links wurden dem Tag :taglink zugeordnet.',
 ];
