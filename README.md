@@ -1,10 +1,10 @@
-<p align="center"><b>:warning: CAUTION! THIS IS A DEVELOPMENT VERSION OF LINKACE! DO NOT USE IT NOW! :warning:</b></p>
+<p align="center"><b>:warning: CAUTION! THIS IS A DEVELOPMENT VERSION OF LINKACE! :warning:</b></p>
 
 <p align="center">
   <img src="https://www.linkace.org/images/linkace-social.jpg" title="Linkace">
 </p>
 
-<p align="center"><b>Your self-hosted bookmark archive.</b></p>
+<p align="center"><b>Your self-hosted tool for effortlessly archiving, organizing, and sharing your favorite web links.</b></p>
 
 <p align="center">
   <a href="https://twitter.com/LinkAceApp"><img src="https://img.shields.io/badge/X.com%2FLinkAceApp-black" alt="Follow LinkAce on X.com"></a>
@@ -30,8 +30,7 @@
 
 ![Preview Screenshot](https://www.linkace.org/images/preview/linkace_dashboard.png)
 
-LinkAce is a self-hosted archive to collect links of your favorite websites. Save articles to read them later, tools to use them in your next project, or historic content to archive it for the long term. LinkAce comes with a lot of features while keeping a clean and minimal interface.  
-It provides a long-term archive to store links to websites, media files or anything else with a valid URL. The user is able to categorize the added links to be able to find them later, and share lists of links with friends, family or coworkers. However, LinkAce should not provide a solution to sync your browser bookmarks.
+LinkAce ia a powerful, self-hosted solution for managing your personal link archive. Save articles for later reading, bookmark useful tools, and preserve important web content long-term – all in one place. With a clean, user-friendly interface, you can easily categorize and retrieve your links, and even share collections with friends, family, or coworkers. LinkAce isn't meant to replace your browser bookmarks, but rather to provide you with a robust, personalized database for curating and managing your online discoveries. Whether you're a professional, a researcher or simply an avid internet user, you'll find this tool invaluable for organizing your web resources efficiently and effectively.
 
 👉 [**Try the Demo**](https://demo.linkace.org)
 
@@ -92,7 +91,7 @@ Additionally, you may visit the [community discussions](https://github.com/Kovah
 
 ### :construction: Contribution
 
-[![Translations](https://img.shields.io/badge/Translations-Crowdin-2b303d)](https://crowdin.com/project/linkace) [![Code Climate maintainability](https://img.shields.io/codeclimate/maintainability/Kovah/LinkAce) ![Code Climate coverage](https://img.shields.io/codeclimate/coverage/Kovah/LinkAce)](https://codeclimate.com/github/Kovah/LinkAce) [![GitHub Build Status](https://img.shields.io/github/workflow/status/Kovah/LinkAce/Testing/dev?label=Dev%20Build)](https://github.com/Kovah/LinkAce/actions?query=workflow%3ATesting+branch%3Adev)
+[![Translations](https://img.shields.io/badge/Translations-Crowdin-2b303d)](https://crowdin.com/project/linkace) ![GitHub branch check runs](https://img.shields.io/github/check-runs/kovah/linkace/2.x?label=Checks)
 
 Please consult the [**contribution guidelines**](CONTRIBUTING.md) to start working on LinkAce.
 
