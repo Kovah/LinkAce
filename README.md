@@ -91,7 +91,7 @@ Additionally, you may visit the [community discussions](https://github.com/Kovah
 
 ### :construction: Contribution
 
-[![Translations](https://img.shields.io/badge/Translations-Crowdin-2b303d)](https://crowdin.com/project/linkace) ![GitHub branch check runs](https://img.shields.io/github/check-runs/kovah/linkace/2.x?label=Checks)
+[![Translations](https://img.shields.io/badge/Translations-Crowdin-2b303d)](https://crowdin.com/project/linkace) [![Codacy Badge](https://app.codacy.com/project/badge/Grade/c32c698ee97b4af2b04d7b7f45f39bae)](https://app.codacy.com/gh/Kovah/LinkAce/dashboard?utm_source=gh&utm_medium=referral&utm_content=&utm_campaign=Badge_grade) ![GitHub branch check runs](https://img.shields.io/github/check-runs/kovah/linkace/2.x?label=Checks)
 
 Please consult the [**contribution guidelines**](CONTRIBUTING.md) to start working on LinkAce.
 
