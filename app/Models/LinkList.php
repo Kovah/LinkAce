@@ -10,6 +10,7 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
+use Illuminate\Database\Eloquent\Relations\MorphMany;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Support\Carbon;
 use Illuminate\Support\Str;
@@ -91,20 +92,19 @@ class LinkList extends Model implements Auditable
      * RELATIONSHIPS
      */
 
-    /**
-     * @return BelongsTo
-     */
     public function user(): BelongsTo
     {
         return $this->belongsTo(User::class, 'user_id')->withTrashed();
     }
 
-    /**
-     * @return BelongsToMany
-     */
     public function links(): BelongsToMany
     {
         return $this->belongsToMany(Link::class, 'link_lists', 'list_id', 'link_id');
+    }
+
+    public function privateShare(): MorphMany
+    {
+        return $this->morphMany(PrivateShare::class, 'entity');
     }
 
     /*

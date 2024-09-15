@@ -19,6 +19,7 @@ use App\Http\Controllers\FrontController;
 use App\Http\Controllers\Guest\FeedController as GuestFeedController;
 use App\Http\Controllers\Guest\LinkController as GuestLinkController;
 use App\Http\Controllers\Guest\ListController as GuestListController;
+use App\Http\Controllers\Guest\PrivateShareController;
 use App\Http\Controllers\Guest\TagController as GuestTagController;
 use App\Http\Controllers\Guest\UserController as GuestUserController;
 use App\Http\Controllers\Models\BulkEditController;
@@ -199,6 +200,8 @@ Route::group(['middleware' => ['auth', 'role:admin']], function () {
 });
 
 // Guest access routes
+Route::get('guest/share/{private_share}', PrivateShareController::class)->name('guest.private-share');
+
 Route::prefix('guest')->middleware(['guestaccess'])->group(function () {
 
     Route::get('links/feed', [GuestFeedController::class, 'links'])->name('guest.links.feed');

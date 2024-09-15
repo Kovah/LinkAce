@@ -9,6 +9,7 @@ use App\Models\Api\ApiTag;
 use App\Models\Link;
 use App\Models\LinkList;
 use App\Models\Note;
+use App\Models\PrivateShare;
 use App\Models\Tag;
 use App\Policies\Api\ApiLinkPolicy;
 use App\Policies\Api\LinkListApiPolicy;
@@ -18,6 +19,7 @@ use App\Policies\ApiTokenPolicy;
 use App\Policies\LinkListPolicy;
 use App\Policies\LinkPolicy;
 use App\Policies\NotePolicy;
+use App\Policies\PrivateSharePolicy;
 use App\Policies\TagPolicy;
 use Illuminate\Foundation\Support\Providers\AuthServiceProvider as ServiceProvider;
 use Laravel\Sanctum\PersonalAccessToken;
@@ -39,6 +41,7 @@ class AuthServiceProvider extends ServiceProvider
         ApiLinkList::class => LinkListApiPolicy::class,
         ApiNote::class => NoteApiPolicy::class,
         ApiTag::class => TagApiPolicy::class,
+        PrivateShare::class => PrivateSharePolicy::class,
     ];
 
     /**

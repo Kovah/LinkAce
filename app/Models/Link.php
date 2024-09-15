@@ -146,6 +146,11 @@ class Link extends Model implements Auditable
         return $this->hasMany(Note::class, 'link_id');
     }
 
+    public function privateShare(): MorphMany
+    {
+        return $this->morphMany(PrivateShare::class, 'entity');
+    }
+
     /*
      * ========================================================================
      * METHODS
