@@ -13,6 +13,8 @@ use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\Relations\MorphMany;
 use Illuminate\Database\Eloquent\SoftDeletes;
+use Illuminate\Support\Facades\Http;
+use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Str;
 use Venturecraft\Revisionable\Revision;
 use Venturecraft\Revisionable\RevisionableTrait;
@@ -268,12 +270,28 @@ class Link extends Model
             return "<!-- Icon icon.$icon could not be found! -->";
         }
 
-        return view('models.links.partials.link-icon', [
+		if ($this->hasFavicon()) $icon = 'favicon';
+		return view('models.links.partials.link-icon', [
             'icon' => 'icon.' . $icon,
             'class' => $additionalClasses . ' fw',
-            'title' => $title,
+			'title' => $title,
+			'faviconUrl' => $this->url . 'favicon.ico'
         ]);
+	}
+
+	public function hasFavicon()
+    {
+		$faviconUrl = $this->url . 'favicon.ico';
+		try {
+			$response = Http::head(($faviconUrl));
+			return $response->successful();
+		} catch (\Exception $e) {
+			Log::error('Check for favicon failed: ' . $e->getMessage());
+			return false;
+		}
+
     }
+
 
     /**
      * Output a relative time inside a span with real time information
