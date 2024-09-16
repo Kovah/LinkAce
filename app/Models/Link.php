@@ -292,7 +292,6 @@ class Link extends Model
 
     }
 
-
     /**
      * Output a relative time inside a span with real time information
      *
