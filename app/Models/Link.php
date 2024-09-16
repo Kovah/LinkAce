@@ -289,7 +289,6 @@ class Link extends Model
 			Log::error('Check for favicon failed: ' . $e->getMessage());
 			return false;
 		}
-
     }
 
     /**
