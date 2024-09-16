@@ -270,7 +270,10 @@ class Link extends Model
             return "<!-- Icon icon.$icon could not be found! -->";
         }
 
-        if ($this->hasFavicon()) $icon = 'favicon';
+        if ($this->hasFavicon()) {
+            $icon = 'favicon';
+        }
+        
         return view('models.links.partials.link-icon', [
             'icon' => 'icon.' . $icon,
             'class' => $additionalClasses . ' fw',
