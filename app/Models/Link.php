@@ -270,25 +270,25 @@ class Link extends Model
             return "<!-- Icon icon.$icon could not be found! -->";
         }
 
-		if ($this->hasFavicon()) $icon = 'favicon';
-		return view('models.links.partials.link-icon', [
+        if ($this->hasFavicon()) $icon = 'favicon';
+        return view('models.links.partials.link-icon', [
             'icon' => 'icon.' . $icon,
             'class' => $additionalClasses . ' fw',
-			'title' => $title,
-			'faviconUrl' => $this->url . 'favicon.ico'
+            'title' => $title,
+            'faviconUrl' => $this->url . 'favicon.ico'
         ]);
-	}
+    }
 
-	public function hasFavicon()
+    public function hasFavicon()
     {
-		$faviconUrl = $this->url . 'favicon.ico';
-		try {
-			$response = Http::head(($faviconUrl));
-			return $response->successful();
-		} catch (\Exception $e) {
-			Log::error('Check for favicon failed: ' . $e->getMessage());
-			return false;
-		}
+        $faviconUrl = $this->url . 'favicon.ico';
+        try {
+            $response = Http::head(($faviconUrl));
+            return $response->successful();
+        } catch (\Exception $e) {
+            Log::error('Check for favicon failed: ' . $e->getMessage());
+            return false;
+        }
     }
 
     /**
