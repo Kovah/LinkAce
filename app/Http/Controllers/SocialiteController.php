@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Actions\Settings\SetDefaultSettingsForUser;
 use App\Models\User;
 use Illuminate\Support\Facades\Auth;
 use Laravel\Socialite\Facades\Socialite;
@@ -12,9 +13,7 @@ class SocialiteController extends Controller
     {
         $this->authorizeOauthRequest($provider);
 
-        return Socialite::driver($provider)->redirect()->setTargetUrl(
-            route('auth.oauth.callback', ['provider' => $provider])
-        );
+        return Socialite::driver($provider)->redirect();
     }
 
     public function callback(string $provider)
@@ -28,6 +27,7 @@ class SocialiteController extends Controller
         if (User::where('email', $authUser->getEmail())->exists()) {
             $user = User::where('email', $authUser->getEmail())->first();
             $user->update([
+                'name' => $authUser->getNickname(),
                 'oauth_id' => $authUser->id,
                 'oauth_provider' => $provider,
                 'oauth_token' => $authUser->token ?? null,
@@ -49,6 +49,10 @@ class SocialiteController extends Controller
                 'oauth_token_secret' => $authUser->tokenSecret ?? null,
                 'oauth_refresh_token' => $authUser->refreshToken ?? null,
             ]);
+
+            if ($user->wasRecentlyCreated) {
+                (new SetDefaultSettingsForUser($user))->up();
+            }
         }
 
         Auth::login($user);

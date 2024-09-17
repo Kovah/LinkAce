@@ -40,7 +40,8 @@
     "spatie/laravel-permission": "^6.3.0",
     "spatie/laravel-settings": "^3.2.3",
     "symfony/http-client": "^6.0",
-    "symfony/mailgun-mailer": "^6.0"
+    "symfony/mailgun-mailer": "^6.0",
+    "kovah/laravel-socialite-oidc": "dev-main"
   },
   "require-dev": {
     "barryvdh/laravel-debugbar": "^3.2",
@@ -58,6 +59,10 @@
     {
       "type": "git",
       "url": "https://github.com/Kovah/netscape-bookmark-parser"
+    },
+    {
+      "type": "git",
+      "url": "https://github.com/Kovah/laravel-socialite-oidc"
     }
   ],
   "autoload": {

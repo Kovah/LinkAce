@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "b6189b53cf142ded12f56ea8042bb896",
+    "content-hash": "641cd472a27cd7ab4a6138d87bc1ae45",
     "packages": [
         {
             "name": "aws/aws-crt-php",
@@ -1925,6 +1925,63 @@
                 }
             ],
             "time": "2023-03-01T21:17:16+00:00"
+        },
+        {
+            "name": "kovah/laravel-socialite-oidc",
+            "version": "dev-main",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/Kovah/laravel-socialite-oidc",
+                "reference": "5bb9f107ec742505d15f09fafd519b4ce2512bc6"
+            },
+            "require": {
+                "ext-json": "*",
+                "illuminate/http": "^9.0 | ^10.0 | ^11.0",
+                "illuminate/support": "^9.0 | ^10.0 | ^11.0",
+                "php": "^8.1",
+                "socialiteproviders/manager": "^4.0"
+            },
+            "conflict": {
+                "jp-gauthier/socialiteproviders-oidc": "*"
+            },
+            "default-branch": true,
+            "type": "library",
+            "autoload": {
+                "psr-4": {
+                    "SocialiteProviders\\OIDC\\": "src"
+                }
+            },
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "JPG Dev",
+                    "homepage": "https://jpgdev.com"
+                },
+                {
+                    "name": "Kevin Woblick",
+                    "email": "mail@kovah.de",
+                    "homepage": "https://kovah.de",
+                    "role": "Developer"
+                }
+            ],
+            "description": "OpenID Connect OAuth2 Provider for Laravel Socialite",
+            "homepage": "https://github.com/kovah/laravel-socialite-oidc",
+            "keywords": [
+                "laravel",
+                "oauth",
+                "oidc",
+                "provider",
+                "socialite"
+            ],
+            "funding": [
+                {
+                    "type": "github",
+                    "url": "https://github.com/sponsors/kovah"
+                }
+            ],
+            "time": "2024-09-17T22:50:54+00:00"
         },
         {
             "name": "laracasts/flash",
@@ -13346,6 +13403,7 @@
     "minimum-stability": "dev",
     "stability-flags": {
         "shaarli/netscape-bookmark-parser": 20,
+        "kovah/laravel-socialite-oidc": 20,
         "roave/security-advisories": 20
     },
     "prefer-stable": true,

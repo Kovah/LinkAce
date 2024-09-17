@@ -68,7 +68,6 @@ return [
         'logout_uri' => env('OAUTH_COGNITO_SIGN_OUT_URL'),
     ],
 
-
     'fusionauth' => [
         'enabled' => env('OAUTH_FUSIONAUTH_ENABLED', false),
         'base_url' => env('OAUTH_FUSIONAUTH_BASE_URL'),
@@ -105,6 +104,15 @@ return [
         'client_secret' => env('OAUTH_KEYCLOAK_CLIENT_SECRET'),
         'realms' => env('OAUTH_KEYCLOAK_REALM'),
         'redirect' => '/auth/oauth/keycloak/callback',
+    ],
+
+    'oidc' => [
+        'enabled' => env('OAUTH_OIDC_ENABLED', false),
+        'base_url' => env('OAUTH_OIDC_BASE_URL'),
+        'client_id' => env('OAUTH_OIDC_CLIENT_ID'),
+        'client_secret' => env('OAUTH_OIDC_CLIENT_SECRET'),
+        'scopes' => env('OAUTH_OIDC_SCOPES'),
+        'redirect' => '/auth/oauth/oidc/callback',
     ],
 
     'okta' => [

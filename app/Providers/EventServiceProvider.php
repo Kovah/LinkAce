@@ -28,8 +28,9 @@ class EventServiceProvider extends ServiceProvider
             \SocialiteProviders\Cognito\CognitoExtendSocialite::class . '@handle',
             \SocialiteProviders\FusionAuth\FusionAuthExtendSocialite::class . '@handle',
             \SocialiteProviders\Keycloak\KeycloakExtendSocialite::class . '@handle',
+            \SocialiteProviders\OIDC\OIDCExtendSocialite::class.'@handle',
             \SocialiteProviders\Okta\OktaExtendSocialite::class . '@handle',
-            //\SocialiteProviders\Zitadel\ZitadelExtendSocialite::class . '@handle',
+            //\SocialiteProviders\Zitadel\ZitadelExtendSocialite::class . '@handle', // @TODO enabling this leads to SocialiteProviders\Zitadel\ZitadelExtendSocialite does not exist exception
         ],
     ];
 

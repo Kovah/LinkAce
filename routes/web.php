@@ -72,7 +72,7 @@ Route::post('auth/register', [RegistrationController::class, 'register'])
     ->name('auth.register');
 
 Route::get('/auth/oauth/{provider}/redirect', [SocialiteController::class, 'redirect'])->name('auth.oauth.redirect');
-Route::get('/auth/oauth/{provider}/callback', [SocialiteController::class, 'callback'])->name('auth.oauth.callback');
+Route::any('/auth/oauth/{provider}/callback', [SocialiteController::class, 'callback'])->name('auth.oauth.callback');
 
 Route::group(['middleware' => 'auth:sanctum'], function () {
     Route::get('links/feed', [FeedController::class, 'links'])->name('links.feed');

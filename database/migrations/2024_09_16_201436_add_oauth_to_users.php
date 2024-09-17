@@ -11,9 +11,9 @@ return new class extends Migration {
             $table->after('remember_token', function (Blueprint $table) {
                 $table->string('oauth_id')->nullable();
                 $table->string('oauth_provider')->nullable();
-                $table->string('oauth_token')->nullable();
-                $table->string('oauth_token_secret')->nullable();
-                $table->string('oauth_refresh_token')->nullable();
+                $table->text('oauth_token')->nullable();
+                $table->text('oauth_token_secret')->nullable();
+                $table->text('oauth_refresh_token')->nullable();
             });
 
             $table->string('password')->nullable()->change();

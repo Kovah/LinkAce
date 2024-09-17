@@ -37,6 +37,7 @@ return [
             'github',
             'gitlab',
             'keycloak',
+            'oidc',
             'okta',
             'zitadel',
         ],
