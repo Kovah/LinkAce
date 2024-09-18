@@ -71,8 +71,8 @@ Route::get('auth/accept-invite', [RegistrationController::class, 'acceptInvitati
 Route::post('auth/register', [RegistrationController::class, 'register'])
     ->name('auth.register');
 
-Route::get('/auth/oauth/{provider}/redirect', [SocialiteController::class, 'redirect'])->name('auth.oauth.redirect');
-Route::any('/auth/oauth/{provider}/callback', [SocialiteController::class, 'callback'])->name('auth.oauth.callback');
+Route::get('/auth/sso/{provider}/redirect', [SocialiteController::class, 'redirect'])->name('auth.sso.redirect');
+Route::any('/auth/sso/{provider}/callback', [SocialiteController::class, 'callback'])->name('auth.sso.callback');
 
 Route::group(['middleware' => 'auth:sanctum'], function () {
     Route::get('links/feed', [FeedController::class, 'links'])->name('links.feed');

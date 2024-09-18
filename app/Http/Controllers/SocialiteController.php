@@ -24,10 +24,10 @@ class SocialiteController extends Controller
 
         // If a user with the provided email address already exists, register the oauth login
         if ($user = User::where('email', $authUser->getEmail())->first()) {
-            if ($user->sso_provider !== $provider) {
+            if ($user->sso_provider !== null && $user->sso_provider !== $provider) {
                 abort(403, trans('auth.sso_wrong_provider', [
-                    'currentProvider' => $provider,
-                    'userProvider' => $user->sso_provider,
+                    'currentProvider' => trans('auth.sso.' . $provider),
+                    'userProvider' => trans('auth.sso.' . $user->sso_provider),
                 ]));
             }
 
@@ -67,8 +67,12 @@ class SocialiteController extends Controller
 
     protected function authorizeOauthRequest(string $provider): void
     {
-        if (config('auth.oauth.enabled') !== true || !in_array($provider, config('auth.oauth.providers'))) {
-            abort(403, 'Login unauthorized');
+        if (config('auth.sso.enabled') !== true || !in_array($provider, config('auth.sso.providers'))) {
+            abort(403, trans('auth.unauthorized'));
+        }
+
+        if (config('services.' . $provider . '.enabled') !== true) {
+            abort(403, trans('auth.sso_provider_disabled'));
         }
     }
 }

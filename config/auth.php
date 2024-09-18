@@ -20,12 +20,12 @@ return [
 
     /*
     |--------------------------------------------------------------------------
-    | OAuth Settings
+    | Single Sign On Settings
     |--------------------------------------------------------------------------
     */
 
-    'oauth' => [
-        'enabled' => env('OAUTH_ENABLED', false),
+    'sso' => [
+        'enabled' => env('SSO_ENABLED', false),
         'regular_login_disabled' => env('REGULAR_LOGIN_DISABLED', false),
         'providers' => [
             'auth0',
