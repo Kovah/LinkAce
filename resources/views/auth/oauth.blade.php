@@ -5,7 +5,7 @@
             @foreach(config('auth.oauth.providers') as $provider)
                 @if(config('services.'.$provider.'.enabled') === true)
                     <a href="{{ route('auth.oauth.redirect', ['provider' => $provider]) }}" class="btn btn-outline-primary">
-                        <x-dynamic-component :component="'icon.brand.'.$provider" class="me-1"/> {{ ucwords($provider) }}
+                        <x-dynamic-component :component="'icon.brand.'.$provider" class="me-1"/> @lang('auth.sso.'.$provider)
                     </a>
                 @endif
             @endforeach

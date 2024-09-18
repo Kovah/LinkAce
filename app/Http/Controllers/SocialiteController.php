@@ -23,31 +23,36 @@ class SocialiteController extends Controller
         $authUser = Socialite::driver($provider)->user();
 
         // If a user with the provided email address already exists, register the oauth login
-        // @TODO what about users who try to login to a different OAuth provider?
-        if (User::where('email', $authUser->getEmail())->exists()) {
-            $user = User::where('email', $authUser->getEmail())->first();
+        if ($user = User::where('email', $authUser->getEmail())->first()) {
+            if ($user->sso_provider !== $provider) {
+                abort(403, trans('auth.sso_wrong_provider', [
+                    'currentProvider' => $provider,
+                    'userProvider' => $user->sso_provider,
+                ]));
+            }
+
             $user->update([
                 'name' => $authUser->getNickname(),
-                'oauth_id' => $authUser->id,
-                'oauth_provider' => $provider,
-                'oauth_token' => $authUser->token ?? null,
-                'oauth_token_secret' => $authUser->tokenSecret ?? null,
-                'oauth_refresh_token' => $authUser->refreshToken ?? null,
+                'sso_id' => $authUser->id,
+                'sso_provider' => $provider,
+                'sso_token' => $authUser->token ?? null,
+                'sso_token_secret' => $authUser->tokenSecret ?? null,
+                'sso_refresh_token' => $authUser->refreshToken ?? null,
             ]);
         } else {
             // otherwise, either update an existing oauth user or register a new user
             $user = User::updateOrCreate([
                 'email' => $authUser->getEmail(),
-                'oauth_id' => $authUser->getId(),
-                'oauth_provider' => $provider,
+                'sso_id' => $authUser->getId(),
+                'sso_provider' => $provider,
             ], [
                 'name' => $authUser->getNickname(),
                 'email' => $authUser->getEmail(),
-                'oauth_id' => $authUser->getId(),
-                'oauth_provider' => $provider,
-                'oauth_token' => $authUser->token ?? null,
-                'oauth_token_secret' => $authUser->tokenSecret ?? null,
-                'oauth_refresh_token' => $authUser->refreshToken ?? null,
+                'sso_id' => $authUser->getId(),
+                'sso_provider' => $provider,
+                'sso_token' => $authUser->token ?? null,
+                'sso_token_secret' => $authUser->tokenSecret ?? null,
+                'sso_refresh_token' => $authUser->refreshToken ?? null,
             ]);
 
             if ($user->wasRecentlyCreated) {

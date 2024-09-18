@@ -51,4 +51,20 @@ return [
     'api_tokens.revoke_confirm' => 'Do you really want to revoke this token? This step cannot be undone and the token cannot be recovered.',
     'api_tokens.revoke_successful' => 'The token was revoked successfully.',
 
+    'sso_wrong_provider' => 'Unable to login with :currentProvider. Please use :userProvider to login, or contact your administrator for help.',
+
+    'sso' => [
+        'auth0' => 'Auth0',
+        'authentik' => 'Authentik',
+        'azure' => 'Azure',
+        'cognito' => 'Cognito',
+        'fusionauth' => 'FusionAuth',
+        'google' => 'Google',
+        'github' => 'GitHub',
+        'gitlab' => 'GitLab',
+        'keycloak' => 'Keycloak',
+        'oidc' => 'OIDC',
+        'okta' => 'Okta',
+        'zitadel' => 'Zitadel',
+    ],
 ];
