@@ -23,6 +23,11 @@ use Spatie\Permission\Traits\HasRoles;
  * @property string      $email
  * @property string      $password
  * @property string|null $remember_token
+ * @property string|null $sso_id
+ * @property string|null $sso_provider
+ * @property string|null $sso_token
+ * @property string|null $sso_token_secret
+ * @property string|null $sso_refresh_token
  * @property string|null $two_factor_recovery_codes
  * @property string|null $two_factor_secret
  * @property Carbon|null $created_at
@@ -43,11 +48,19 @@ class User extends Authenticatable implements Auditable
         'email',
         'password',
         'blocked_at',
+        'sso_id',
+        'sso_provider',
+        'sso_token',
+        'sso_token_secret',
+        'sso_refresh_token',
     ];
 
     protected $hidden = [
         'password',
         'remember_token',
+        'sso_token',
+        'sso_token_secret',
+        'sso_refresh_token',
     ];
 
     protected $casts = [
@@ -111,5 +124,10 @@ class User extends Authenticatable implements Auditable
     public function isSystemUser(): bool
     {
         return $this->id === 0;
+    }
+
+    public function isSsoUser(): bool
+    {
+        return $this->sso_id !== null;
     }
 }

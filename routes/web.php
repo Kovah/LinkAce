@@ -32,6 +32,7 @@ use App\Http\Controllers\Setup\AccountController;
 use App\Http\Controllers\Setup\DatabaseController;
 use App\Http\Controllers\Setup\MetaController;
 use App\Http\Controllers\Setup\RequirementsController;
+use App\Http\Controllers\SocialiteController;
 use Illuminate\Support\Facades\Route;
 use Rap2hpoutre\LaravelLogViewer\LogViewerController;
 
@@ -69,6 +70,9 @@ Route::get('auth/accept-invite', [RegistrationController::class, 'acceptInvitati
     ->name('auth.accept-invite');
 Route::post('auth/register', [RegistrationController::class, 'register'])
     ->name('auth.register');
+
+Route::get('/auth/sso/{provider}/redirect', [SocialiteController::class, 'redirect'])->name('auth.sso.redirect');
+Route::any('/auth/sso/{provider}/callback', [SocialiteController::class, 'callback'])->name('auth.sso.callback');
 
 Route::group(['middleware' => 'auth:sanctum'], function () {
     Route::get('links/feed', [FeedController::class, 'links'])->name('links.feed');

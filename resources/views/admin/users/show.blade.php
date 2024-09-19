@@ -16,6 +16,12 @@
             <div>{{ $user->email }}</div>
             <div class="mt-3 small text-muted">@lang('linkace.created_at') {{ $user->created_at }}</div>
         </div>
+        @if($user->isSsoUser())
+            <div class="card-body">
+                <div>@lang('auth.sso_account_provider'): @lang('auth.sso_provider.' . $user->sso_provider)</div>
+                <div>@lang('auth.sso_account_id'): {{ $user->sso_id }}</div>
+            </div>
+        @endif
         <div class="card-footer">
 
             @if($user->isBlocked())
@@ -41,26 +47,26 @@
                 </button>
             @endif
             <form action="{{ route('system.users.block', ['user' => $user]) }}"
-                id="block-user-{{ $user->id }}"
-                method="post" class="d-none" data-confirmation="@lang('user.block_confirmation')">
+                    id="block-user-{{ $user->id }}"
+                    method="post" class="d-none" data-confirmation="@lang('user.block_confirmation')">
                 @csrf
                 @method('PATCH')
             </form>
             <form action="{{ route('system.users.unblock', ['user' => $user]) }}"
-                id="unblock-user-{{ $user->id }}"
-                method="post" class="d-none" data-confirmation="@lang('user.unblock_confirmation')">
+                    id="unblock-user-{{ $user->id }}"
+                    method="post" class="d-none" data-confirmation="@lang('user.unblock_confirmation')">
                 @csrf
                 @method('PATCH')
             </form>
             <form action="{{ route('system.users.delete', ['user' => $user]) }}"
-                id="delete-user-{{ $user->id }}"
-                method="post" class="d-none" data-confirmation="@lang('user.delete_confirmation')">
+                    id="delete-user-{{ $user->id }}"
+                    method="post" class="d-none" data-confirmation="@lang('user.delete_confirmation')">
                 @csrf
                 @method('DELETE')
             </form>
             <form action="{{ route('system.users.restore', ['user' => $user]) }}"
-                id="restore-user-{{ $user->id }}"
-                method="post" class="d-none" data-confirmation="@lang('user.restore_confirmation')">
+                    id="restore-user-{{ $user->id }}"
+                    method="post" class="d-none" data-confirmation="@lang('user.restore_confirmation')">
                 @csrf
                 @method('PATCH')
             </form>

@@ -96,6 +96,7 @@ return [
         'hu_HU' => 'Magyar',
         'it_IT' => 'Italiano',
         'ja_JP' => '日本語',
+        'nl_NL' => 'Dutch',
         'no_NO' => 'Norsk',
         'pl_PL' => 'Polski',
         'ro_RO' => 'Română',
@@ -231,6 +232,7 @@ return [
         /*
          * Package Service Providers...
          */
+        \SocialiteProviders\Manager\ServiceProvider::class,
 
         /*
          * Application Service Providers...

@@ -18,6 +18,7 @@ return [
 
     'failed' => 'Diese Zugangsdaten stimmen nicht mit unseren Datensätzen überein.',
     'throttle' => 'Zu viele fehlgeschlagene Anmeldeversuche. Bitte versuche es erneut in :seconds Sekunden.',
+    'unauthorized' => 'Login nicht autorisiert. Bitte kontaktieren Sie Ihren Administrator.',
 
     'confirm_title' => 'Bestätigung erforderlich',
     'confirm' => 'Bitte bestätige diese Aktion mit dem aktuellen Passwort.',
@@ -51,4 +52,24 @@ return [
     'api_tokens.revoke_confirm' => 'Wollen Sie diesen Token wirklich widerrufen? Dieser Schritt kann nicht rückgängig gemacht werden und der Token kann nicht wiederhergestellt werden.',
     'api_tokens.revoke_successful' => 'Der Token wurde erfolgreich widerrufen.',
 
+    'sso' => 'SSO',
+    'sso_account_provider' => 'SSO-Anbieter',
+    'sso_account_id' => 'SSO-ID',
+    'sso_provider_disabled' => 'Der ausgewählte SSO-Anbieter ist nicht verfügbar. Bitte wählen Sie einen anderen.',
+    'sso_wrong_provider' => 'Anmeldung mit :currentProvider nicht möglich. Bitte verwenden Sie :userProvider um sich anzumelden, oder kontaktieren Sie Ihren Administrator für Hilfe.',
+
+    'sso_provider' => [
+        'auth0' => '',
+        'authentik' => '',
+        'azure' => '',
+        'cognito' => '',
+        'fusionauth' => '',
+        'google' => '',
+        'github' => '',
+        'gitlab' => '',
+        'keycloak' => '',
+        'oidc' => '',
+        'okta' => '',
+        'zitadel' => '',
+    ],
 ];

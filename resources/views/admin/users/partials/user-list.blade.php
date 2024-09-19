@@ -9,6 +9,9 @@
                 <div class="list-group-item d-md-flex justify-content-between">
                     <div>
                         {{ $user->name }} <span class="ms-2 text-muted">{{ $user->email }}</span>
+                        @if($user->isSsoUser())
+                            <span class="badge bg-secondary">@lang('auth.sso')</span>
+                        @endif
                         @if($user->isBlocked())
                             <span class="badge bg-warning">@lang('linkace.blocked')</span>
                         @endif

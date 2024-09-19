@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Setup;
 
 use App\Actions\Fortify\CreateNewUser;
+use App\Enums\Role;
 use App\Http\Controllers\Controller;
 use Illuminate\Contracts\View\View;
 use Illuminate\Http\RedirectResponse;
@@ -27,6 +28,7 @@ class AccountController extends Controller
     protected function register(Request $request): RedirectResponse
     {
         $user = (new CreateNewUser())->create($request->input());
+        $user->assignRole(Role::ADMIN);
 
         Auth::login($user, true);
 

@@ -20,6 +20,31 @@ return [
 
     /*
     |--------------------------------------------------------------------------
+    | Single Sign On Settings
+    |--------------------------------------------------------------------------
+    */
+
+    'sso' => [
+        'enabled' => env('SSO_ENABLED', false),
+        'regular_login_disabled' => env('REGULAR_LOGIN_DISABLED', false),
+        'providers' => [
+            'auth0',
+            'authentik',
+            'azure',
+            'cognito',
+            'fusionauth',
+            'google',
+            'github',
+            'gitlab',
+            'keycloak',
+            'oidc',
+            'okta',
+            'zitadel',
+        ],
+    ],
+
+    /*
+    |--------------------------------------------------------------------------
     | Authentication Guards
     |--------------------------------------------------------------------------
     |

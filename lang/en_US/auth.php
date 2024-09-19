@@ -18,6 +18,7 @@ return [
 
     'failed' => 'These credentials do not match our records.',
     'throttle' => 'Too many login attempts. Please try again in :seconds seconds.',
+    'unauthorized' => 'Login unauthorized. Please contact your administrator.',
 
     'confirm_title' => 'Confirmation required',
     'confirm' => 'Please confirm this action using your current password.',
@@ -51,4 +52,24 @@ return [
     'api_tokens.revoke_confirm' => 'Do you really want to revoke this token? This step cannot be undone and the token cannot be recovered.',
     'api_tokens.revoke_successful' => 'The token was revoked successfully.',
 
+    'sso' => 'SSO',
+    'sso_account_provider' => 'SSO Provider',
+    'sso_account_id' => 'SSO ID',
+    'sso_provider_disabled' => 'The selected SSO provider is not available. Please choose another one.',
+    'sso_wrong_provider' => 'Unable to login with :currentProvider. Please use :userProvider to login, or contact your administrator for help.',
+
+    'sso_provider' => [
+        'auth0' => 'Auth0',
+        'authentik' => 'Authentik',
+        'azure' => 'Azure',
+        'cognito' => 'Cognito',
+        'fusionauth' => 'FusionAuth',
+        'google' => 'Google',
+        'github' => 'GitHub',
+        'gitlab' => 'GitLab',
+        'keycloak' => 'Keycloak',
+        'oidc' => 'OIDC',
+        'okta' => 'Okta',
+        'zitadel' => 'Zitadel',
+    ],
 ];

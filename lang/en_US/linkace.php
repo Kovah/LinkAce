@@ -8,6 +8,7 @@ return [
     'password' => 'Password',
     'password_confirm' => 'Confirm the Password',
     'login' => 'Login',
+    'login_with' => 'Login with',
     'logout' => 'Logout',
     'remember_me' => 'Remember me',
     'go_to_dashboard' => 'Go to the Dashboard',
