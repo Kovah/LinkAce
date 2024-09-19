@@ -1,4 +1,4 @@
-<p align="center"><b>:warning: CAUTION! THIS IS A DEVELOPMENT VERSION OF LINKACE! :warning:</b></p>
+<p align="center"><b>:warning: CAUTION! THIS IS A BETA VERSION OF LINKACE! :warning:</b></p>
 
 <p align="center">
   <img src="https://www.linkace.org/images/linkace-social.jpg" title="Linkace">
@@ -37,20 +37,21 @@ LinkAce ia a powerful, self-hosted solution for managing your personal link arch
 
 #### Feature Highlights
 
+* Multi-user support
 * Save links with automatic title and description generation.
 * Automated link monitoring informs you when any links become unavailable or were moved.
 * Automated archiving of saved sites via the [Internet Archive](https://web.archive.org/).
 * Organize bookmarks with the help of lists and tags.
 * A full REST API offers access to all features of LinkAce from other apps and services.
 * LinkAce is also [available on Zapier](https://zapier.com/apps/linkace/integrations) and integrates with over 2500+ applications.
+* OAuth and OIDC are supported for SSO login to LinkAce.
 * LinkAce ships with a light and dark theme, that can be toggled or changes automatically.
+* An advanced search including different filters and ordering.
 * A bookmarklet to quickly save links from any browser.
 * Links can be private or public, so friends or internet strangers may see your collection.
 * Both private and public links are accessible via RSS feeds.
-* Add notes to links to add thoughts or other relevant information.
-* An advanced search including different filters and ordering.
-* Import and export of bookmarks from HTML.
-* Support for complete database and application backups to any AWS S3 storage.
+* Import and export of bookmarks from and to HTML.
+* Support for complete database and application backups to any AWS S3-compatible storage.
 
 More screenshots of the app and further details about the features can be found on the [LinkAce Website](https://www.linkace.org/).
 
@@ -60,10 +61,10 @@ More screenshots of the app and further details about the features can be found 
 
 ### :gear: Setup
 
-LinkAce provides multiple ways of installing it on your server. The complete documentation for all installation methods can be found [**in the wiki**](https://www.linkace.org/docs/v1/setup/).
+LinkAce provides multiple ways of installing it on your server. The complete documentation for all installation methods can be found [**in the wiki**](https://www.linkace.org/docs/v2/setup/).
 
-* [Setup with Docker](https://www.linkace.org/docs/v1/setup/setup-with-docker/) (_recommended_)
-* [Setup without Docker](https://www.linkace.org/docs/v1/setup/setup-without-docker/)
+* [Setup with Docker](https://www.linkace.org/docs/v2/setup/setup-with-docker/) (_recommended_)
+* [Setup without Docker](https://www.linkace.org/docs/v2/setup/setup-without-docker/)
 
 
 &nbsp;

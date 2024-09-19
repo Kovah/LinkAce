@@ -56,7 +56,7 @@ body:
     id: linkace-version
     attributes:
       label: LinkAce version
-      placeholder: v1.10.1
+      placeholder: v2.0.2
     validations:
       required: true
   - type: dropdown

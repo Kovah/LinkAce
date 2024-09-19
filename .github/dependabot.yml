@@ -29,8 +29,10 @@ updates:
           - "patch"
 
   - package-ecosystem: "docker"
-    directory: "/"
+    directory: "/resources/docker/dockerfiles"
     target-branch: "2.x"
+    ignore:
+      - dependency-name: "node"
     schedule:
       interval: "weekly"
     groups:

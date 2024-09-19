@@ -48,7 +48,7 @@ docker compose exec -it php composer install
 docker compose exec -it php php artisan key:generate
 ```
 
-Last step: compile all assets. Node 16 LTS is the minimum version required and recommended to use. You may use either
+Last step: compile all assets. Node 20 LTS is the minimum version required and recommended to use. You may use either
 NPM or Yarn for installing the asset dependencies.
 
 ```bash

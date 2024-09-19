@@ -1,11 +1,9 @@
 ---
-version: "3"
-
 services:
 
   # --- MariaDB
   db:
-    image: docker.io/library/mariadb:11.2
+    image: docker.io/library/mariadb:11.5
     command: mariadbd --character-set-server=utf8mb4 --collation-server=utf8mb4_bin
     environment:
       - MYSQL_ROOT_PASSWORD=${DB_PASSWORD}
@@ -52,7 +50,7 @@ services:
 
   # --- Redis
   redis:
-    image: docker.io/bitnami/redis:7.2
+    image: docker.io/bitnami/redis:7.4
     environment:
       - REDIS_PASSWORD=${REDIS_PASSWORD}
     ports:
