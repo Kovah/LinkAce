@@ -50,7 +50,8 @@ export default class GenerateCronToken {
     if (typeof response.new_token !== 'undefined') {
       debounce(() => {
         this.$input.value = response.new_token;
-        this.$cronUrl.innerHTML = this.buildCronURl(response.new_token);
+        this.$cronUrl.innerText = this.buildCronURl(response.new_token);
+        this.$cronUrl.parentElement.classList.remove('d-none');
       }, 1000);
 
       window.setTimeout(() => {

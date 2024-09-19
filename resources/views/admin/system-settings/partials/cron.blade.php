@@ -23,13 +23,11 @@
 
         <p class="small text-warning">@lang('settings.cron_token_generate_info')</p>
 
-        @if(systemsettings('cron_token'))
-            <p>
-                @lang('settings.cron_token_url', [
-                    'route' => route('cron', ['token' => systemsettings('cron_token') ?: ''])
-                ])
-            </p>
-        @endif
+        <p class="{{ systemsettings('cron_token') ? '' : 'd-none' }}">
+            @lang('settings.cron_token_url', [
+                'route' => route('cron', ['token' => systemsettings('cron_token') ?: 'no-token-configured'])
+            ])
+        </p>
 
     </div>
 </div>
