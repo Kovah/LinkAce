@@ -52,10 +52,13 @@ return [
     'api_tokens.revoke_confirm' => 'Do you really want to revoke this token? This step cannot be undone and the token cannot be recovered.',
     'api_tokens.revoke_successful' => 'The token was revoked successfully.',
 
+    'sso' => 'SSO',
+    'sso_account_provider' => 'SSO Provider',
+    'sso_account_id' => 'SSO ID',
     'sso_provider_disabled' => 'The selected SSO provider is not available. Please choose another one.',
     'sso_wrong_provider' => 'Unable to login with :currentProvider. Please use :userProvider to login, or contact your administrator for help.',
 
-    'sso' => [
+    'sso_provider' => [
         'auth0' => 'Auth0',
         'authentik' => 'Authentik',
         'azure' => 'Azure',

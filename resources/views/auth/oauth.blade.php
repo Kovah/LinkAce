@@ -5,7 +5,7 @@
             @foreach(config('auth.sso.providers') as $provider)
                 @if(config('services.'.$provider.'.enabled') === true)
                     <a href="{{ route('auth.sso.redirect', ['provider' => $provider]) }}" class="btn btn-outline-primary">
-                        <x-dynamic-component :component="'icon.brand.'.$provider" class="me-1"/> @lang('auth.sso.'.$provider)
+                        <x-dynamic-component :component="'icon.brand.'.$provider" class="me-1"/> @lang('auth.sso_provider.'.$provider)
                     </a>
                 @endif
             @endforeach

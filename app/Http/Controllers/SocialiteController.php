@@ -26,8 +26,8 @@ class SocialiteController extends Controller
         if ($user = User::where('email', $authUser->getEmail())->first()) {
             if ($user->sso_provider !== null && $user->sso_provider !== $provider) {
                 abort(403, trans('auth.sso_wrong_provider', [
-                    'currentProvider' => trans('auth.sso.' . $provider),
-                    'userProvider' => trans('auth.sso.' . $user->sso_provider),
+                    'currentProvider' => trans('auth.sso_provider.' . $provider),
+                    'userProvider' => trans('auth.sso_provider.' . $user->sso_provider),
                 ]));
             }
 

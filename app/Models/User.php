@@ -125,4 +125,9 @@ class User extends Authenticatable implements Auditable
     {
         return $this->id === 0;
     }
+
+    public function isSsoUser(): bool
+    {
+        return $this->sso_id !== null;
+    }
 }
