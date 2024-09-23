@@ -134,12 +134,14 @@ class LinkApiTest extends ApiTestCase
             'description' => 'There could be a description here',
             'lists' => [$list->id],
             'tags' => [$tag->id, $tag2->id],
-            'is_private' => false,
+            'visibility' => 1,
             'check_disabled' => false,
         ])
             ->assertOk()
             ->assertJson([
                 'url' => 'https://example.com',
+                'visibility' => 1,
+                'check_disabled' => false,
                 'lists' => [
                     ['name' => 'Test List 1'],
                 ],

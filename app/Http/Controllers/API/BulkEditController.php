@@ -7,17 +7,19 @@ use App\Http\Requests\Models\Api\BulkDeleteRequest;
 use App\Http\Requests\Models\Api\BulkEditLinksRequest;
 use App\Http\Requests\Models\Api\BulkEditListsRequest;
 use App\Http\Requests\Models\Api\BulkEditTagsRequest;
+use App\Models\Api\ApiLink;
 use App\Models\Link;
 use App\Models\LinkList;
 use App\Models\Tag;
 use App\Repositories\LinkRepository;
 use App\Repositories\ListRepository;
 use App\Repositories\TagRepository;
+use Illuminate\Http\JsonResponse;
 use Illuminate\Support\Facades\Log;
 
 class BulkEditController extends Controller
 {
-    public function updateLinks(BulkEditLinksRequest $request)
+    public function updateLinks(BulkEditLinksRequest $request): JsonResponse
     {
         $models = $request->input('models');
 
@@ -26,7 +28,7 @@ class BulkEditController extends Controller
         return response()->json($results);
     }
 
-    public function updateLists(BulkEditListsRequest $request)
+    public function updateLists(BulkEditListsRequest $request): JsonResponse
     {
         $models = $request->input('models');
 
@@ -35,7 +37,7 @@ class BulkEditController extends Controller
         return response()->json($results);
     }
 
-    public function updateTags(BulkEditTagsRequest $request)
+    public function updateTags(BulkEditTagsRequest $request): JsonResponse
     {
         $models = $request->input('models');
 
@@ -44,7 +46,7 @@ class BulkEditController extends Controller
         return response()->json($results);
     }
 
-    public function delete(BulkDeleteRequest $request)
+    public function delete(BulkDeleteRequest $request): JsonResponse
     {
         $type = $request->input('type');
         $formModels = $request->input('models');

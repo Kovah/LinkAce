@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\API\BulkEditController;
+use App\Http\Controllers\API\BulkStoreController;
 use App\Http\Controllers\API\LinkCheckController;
 use App\Http\Controllers\API\LinkController;
 use App\Http\Controllers\API\LinkNotesController;
@@ -72,9 +73,13 @@ Route::prefix('v2')->middleware(['auth:sanctum'])->group(function () {
         ])
         ->except(['index', 'show']);
 
-    Route::patch('bulk/links', [BulkEditController::class, 'updateLinks'])->name('api.bulk.links');
-    Route::patch('bulk/lists', [BulkEditController::class, 'updateLists'])->name('api.bulk.lists');
-    Route::patch('bulk/tags', [BulkEditController::class, 'updateTags'])->name('api.bulk.tags');
+    Route::post('bulk/links', [BulkStoreController::class, 'storeLinks'])->name('api.bulk.links.store');
+    Route::post('bulk/lists', [BulkStoreController::class, 'storeLists'])->name('api.bulk.lists.store');
+    Route::post('bulk/tags', [BulkStoreController::class, 'storeTags'])->name('api.bulk.tags.store');
+
+    Route::patch('bulk/links', [BulkEditController::class, 'updateLinks'])->name('api.bulk.links.update');
+    Route::patch('bulk/lists', [BulkEditController::class, 'updateLists'])->name('api.bulk.lists.update');
+    Route::patch('bulk/tags', [BulkEditController::class, 'updateTags'])->name('api.bulk.tags.update');
     Route::delete('bulk/delete', [BulkEditController::class, 'delete'])->name('api.bulk.delete');
 
     Route::get('search/links', [SearchController::class, 'searchLinks'])
