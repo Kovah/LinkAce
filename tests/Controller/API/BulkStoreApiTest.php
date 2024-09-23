@@ -12,9 +12,15 @@ class BulkStoreApiTest extends TestCase
 {
     use RefreshDatabase;
 
+    private User $user;
+
     protected function setUp(): void
     {
         parent::setUp();
+
+        $this->user = User::factory()->create();
+        $this->actingAs($this->user);
+
         Queue::fake();
     }
 
@@ -30,7 +36,7 @@ class BulkStoreApiTest extends TestCase
             'duckduckgo.com' => Http::response($testHtml),
         ]);
 
-        $response = $this->post('api/v2/bulk/links', [
+        $response = $this->postJson('api/v2/bulk/links', [
             'models' => [
                 [
                     'url' => 'https://example.com',
@@ -72,7 +78,7 @@ class BulkStoreApiTest extends TestCase
 
     public function testStoreLists(): void
     {
-        $response = $this->post('api/v2/bulk/lists', [
+        $response = $this->postJson('api/v2/bulk/lists', [
             'models' => [
                 [
                     'name' => 'Example List',
@@ -108,7 +114,7 @@ class BulkStoreApiTest extends TestCase
 
     public function testStoreTags(): void
     {
-        $response = $this->post('api/v2/bulk/tags', [
+        $response = $this->postJson('api/v2/bulk/tags', [
             'models' => [
                 [
                     'name' => 'tag-a',
