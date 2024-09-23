@@ -1,6 +1,4 @@
 ---
-version: "3"
-
 services:
 
   # --- MariaDB
@@ -18,7 +16,7 @@ services:
       - linkace-db:/var/lib/mysql
 
   pg-db:
-    image: docker.io/library/postgres:16
+    image: docker.io/library/postgres:14
     environment:
       - POSTGRES_PASSWORD=${DB_PASSWORD}
       - POSTGRES_USER=${DB_USERNAME}
