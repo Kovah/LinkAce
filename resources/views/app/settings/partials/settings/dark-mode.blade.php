@@ -17,7 +17,7 @@
                 <option value="1" @selected(usersettings('darkmode_setting') === 1)>
                     @lang('settings.darkmode_permanent')
                 </option>
-                <option value="2" @selected(usersettings('darkmode_setting') === 3)>
+                <option value="2" @selected(usersettings('darkmode_setting') === 2)>
                     @lang('settings.darkmode_auto')
                 </option>
             </select>
