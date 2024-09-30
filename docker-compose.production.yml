@@ -1,20 +1,6 @@
 ---
 services:
-
-  # --- MariaDB
-  db:
-    image: docker.io/library/mariadb:11.5
-    restart: unless-stopped
-    command: mariadbd --character-set-server=utf8mb4 --collation-server=utf8mb4_bin
-    environment:
-      - MYSQL_ROOT_PASSWORD=${DB_PASSWORD}
-      - MYSQL_USER=${DB_USERNAME}
-      - MYSQL_PASSWORD=${DB_PASSWORD}
-      - MYSQL_DATABASE=${DB_DATABASE}
-    volumes:
-      - db:/var/lib/mysql
-
-  # --- LinkAce Image with PHP
+  # --- LinkAce
   app:
     image: docker.io/linkace/linkace:latest
     restart: unless-stopped
@@ -27,13 +13,24 @@ services:
     volumes:
       - ./.env:/app/.env
       - ./backups:/app/storage/app/backups
-      - linkace_app:/app
-      - linkace_logs:/app/storage/logs
       # Remove the hash of the following line if you want to use HTTPS for this container
       #- ./Caddyfile:/etc/caddy/Caddyfile:ro
       #- ./caddy-data:/data/caddy
 
-  # --- Redis
+  # --- Database
+  db:
+    image: docker.io/library/mariadb:11.5
+    restart: unless-stopped
+    command: mariadbd --character-set-server=utf8mb4 --collation-server=utf8mb4_bin
+    environment:
+      - MYSQL_ROOT_PASSWORD=${DB_PASSWORD}
+      - MYSQL_USER=${DB_USERNAME}
+      - MYSQL_PASSWORD=${DB_PASSWORD}
+      - MYSQL_DATABASE=${DB_DATABASE}
+    volumes:
+      - db:/var/lib/mysql
+
+  # --- Cache
   redis:
     image: docker.io/bitnami/redis:7.4
     restart: unless-stopped
@@ -41,7 +38,4 @@ services:
       - REDIS_PASSWORD=${REDIS_PASSWORD}
 
 volumes:
-  linkace_app:
-  linkace_logs:
   db:
-    driver: local
