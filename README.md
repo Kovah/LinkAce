@@ -1,9 +1,9 @@
-<p align="center">
+<h1 align="center">
   <picture>
     <source media="(prefers-color-scheme: dark)" srcset="https://www.linkace.org/images/linkace-social-dark-transparent.png">
     <img src="https://www.linkace.org/images/linkace-social.jpg" alt="Linkace">
   </picture>
-</p>
+</h1>
 
 <p align="center"><b>Your self-hosted tool for effortlessly archiving, organizing, and sharing your favorite web links.</b></p>
 
