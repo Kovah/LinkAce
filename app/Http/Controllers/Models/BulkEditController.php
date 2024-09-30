@@ -28,6 +28,8 @@ class BulkEditController extends Controller
         return view($view, [
             'models' => $models,
             'modelCount' => count($models),
+            'all_tags' => Tag::visibleForUser()->with('user:id,name')->get(['name', 'id', 'user_id']),
+            'all_lists' => LinkList::visibleForUser()->with('user:id,name')->get(['name', 'id', 'user_id']),
         ]);
     }
 

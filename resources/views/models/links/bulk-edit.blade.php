@@ -10,7 +10,7 @@
                 <div>
                     <label class="form-label" for="tags">@lang('tag.update_tags')</label>
                     <input name="tags" id="tags" type="text" placeholder="@lang('placeholder.tags_select')"
-                        class="tag-select"
+                        class="tag-select" data-tag-data="{{ $all_tags->toJson() }}"
                         data-value="{{ Link::oldTaxonomyOutputWithoutLink('tags', []) }}"
                         data-allow-creation="1" data-tag-type="tags">
                     @if ($errors->has('tags'))
@@ -36,7 +36,7 @@
                 <div>
                     <label class="form-label" for="lists">@lang('list.update_lists')</label>
                     <input name="lists" id="lists" type="text" placeholder="@lang('placeholder.list_select')"
-                        class="tag-select"
+                        class="tag-select" data-tag-data="{{ $all_lists->toJson() }}"
                         data-value="{{ Link::oldTaxonomyOutputWithoutLink('lists', []) }}"
                         data-allow-creation="1" data-tag-type="lists">
                     @if ($errors->has('lists'))
