@@ -5,8 +5,7 @@ FROM docker.io/library/php:8.1-fpm-alpine
 WORKDIR /app
 
 # Install package and PHP dependencies
-RUN apk add --no-cache zip git mariadb-client postgresql-client postgresql-dev sqlite3 zip libzip-dev; \
-	docker-php-ext-configure zip; \
+RUN apk add --no-cache zip git mariadb-client postgresql-client postgresql-dev sqlite zip libzip-dev; \
 	docker-php-ext-install bcmath pdo_mysql pdo_pgsql zip ftp; \
   docker-php-ext-enable xdebug pcov; \
 	mkdir /ssl-certs; \
