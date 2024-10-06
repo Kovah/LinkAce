@@ -3,12 +3,13 @@
 namespace App\Console\Commands;
 
 use App\Actions\Fortify\CreateNewUser;
+use App\Enums\Role;
 use Illuminate\Console\Command;
 use Illuminate\Validation\ValidationException;
 
 class RegisterUserCommand extends Command
 {
-    protected $signature = 'registeruser {name? : Username} {email? : User email address}';
+    protected $signature = 'registeruser {name? : Username} {email? : User email address} {--admin}';
     protected $description = 'Register a new user with a given user name and an email address.';
 
     private ?string $userName;
@@ -25,7 +26,7 @@ class RegisterUserCommand extends Command
             $this->askForUserDetails();
 
             try {
-                (new CreateNewUser)->create([
+                $newUser = (new CreateNewUser)->create([
                     'name' => $this->userName,
                     'email' => $this->userEmail,
                     'password' => $this->userPassword,
@@ -40,6 +41,10 @@ class RegisterUserCommand extends Command
                 }
             }
         } while ($this->validationFailed);
+
+        if ($this->option('admin')) {
+            $newUser->assignRole(Role::ADMIN);
+        }
 
         $this->info('User ' . $this->userName . ' registered.');
     }

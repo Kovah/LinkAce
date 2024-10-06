@@ -21,8 +21,11 @@
                 @lang('linkace.logout')
             </a>
             <div class="dropdown-divider"></div>
-            <a href="{{ route('get-import') }}" class="dropdown-item">
+            <a href="{{ route('import-form') }}" class="dropdown-item">
                 @lang('import.import')
+            </a>
+            <a href="{{ route('import-queue') }}" class="dropdown-item">
+                @lang('import.import_queue')
             </a>
             <a href="{{ route('get-export') }}" class="dropdown-item">
                 @lang('export.export')

@@ -116,8 +116,10 @@ Route::group(['middleware' => ['auth']], function () {
     Route::post('search', [SearchController::class, 'doSearch'])
         ->name('do-search');
 
-    Route::get('import', [ImportController::class, 'getImport'])
-        ->name('get-import');
+    Route::get('import', [ImportController::class, 'form'])
+        ->name('import-form');
+    Route::get('import/queue', [ImportController::class, 'queue'])
+        ->name('import-queue');
     Route::post('import', [ImportController::class, 'doImport'])
         ->name('do-import');
 

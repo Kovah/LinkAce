@@ -3,17 +3,15 @@
 namespace App\Actions;
 
 use App\Enums\ModelAttribute;
-use App\Helper\HtmlMeta;
-use App\Helper\LinkIconMapper;
+use App\Jobs\ImportLinkJob;
 use App\Models\Link;
 use App\Models\Tag;
-use Illuminate\Support\Carbon;
 use Illuminate\Support\Facades\Log;
 use Shaarli\NetscapeBookmarkParser\NetscapeBookmarkParser;
 
 class ImportHtmlBookmarks
 {
-    protected int $imported = 0;
+    protected int $queued = 0;
     protected int $skipped = 0;
     protected ?Tag $importTag = null;
 
@@ -34,63 +32,23 @@ class ImportHtmlBookmarks
             'visibility' => ModelAttribute::VISIBILITY_PRIVATE,
         ]);
 
-        foreach ($links as $link) {
+        foreach ($links as $i => $link) {
             if (Link::whereUrl($link['url'])->first()) {
                 $this->skipped++;
                 continue;
             }
 
-            if ($generateMeta) {
-                $linkMeta = (new HtmlMeta)->getFromUrl($link['url']);
-                $title = $link['name'] ?: $linkMeta['title'];
-                $description = $link['description'] ?: $linkMeta['description'];
-            } else {
-                $title = $link['name'];
-                $description = $link['description'];
-            }
+            dispatch(new ImportLinkJob($userId, $link, $this->importTag, $generateMeta))->delay($i * 10);
 
-            if (isset($link['public'])) {
-                $visibility = $link['public'] ? ModelAttribute::VISIBILITY_PUBLIC : ModelAttribute::VISIBILITY_PRIVATE;
-            } else {
-                $visibility = usersettings('links_default_visibility');
-            }
-            $newLink = new Link([
-                'user_id' => $userId,
-                'url' => $link['url'],
-                'title' => $title,
-                'description' => $description,
-                'icon' => LinkIconMapper::getIconForUrl($link['url']),
-                'visibility' => $visibility,
-            ]);
-            $newLink->created_at = $link['dateCreated']
-                ? Carbon::createFromTimestamp($link['dateCreated'])
-                : Carbon::now();
-            $newLink->updated_at = Carbon::now();
-            $newLink->timestamps = false;
-            $newLink->save();
-
-            $newTags = [$this->importTag->id];
-            if (!empty($link['tags'])) {
-                foreach ($link['tags'] as $tag) {
-                    $newTag = Tag::firstOrCreate([
-                        'user_id' => $userId,
-                        'name' => $tag,
-                        'visibility' => usersettings('tags_default_visibility'),
-                    ]);
-                    $newTags[] = $newTag->id;
-                }
-            }
-            $newLink->tags()->sync($newTags);
-
-            $this->imported++;
+            $this->queued++;
         }
 
         return true;
     }
 
-    public function getImportCount(): int
+    public function getQueuedCount(): int
     {
-        return $this->imported;
+        return $this->queued;
     }
 
     public function getSkippedCount(): int

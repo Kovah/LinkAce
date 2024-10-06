@@ -13,18 +13,17 @@ class ImportCommand extends Command
 
     protected $signature = 'links:import
                         {filepath : Bookmarks file to import, use absolute paths if stored outside of LinkAce}
-                        {--skip-meta-generation : Whether the automatic generation of titles should be skipped.}
-                        {--skip-check : Whether the links checking should be skipped afterwards}';
+                        {--skip-meta-generation : Whether the automatic generation of titles should be skipped.}';
 
     protected $description = 'Import links from a bookmarks file which is stored locally in your file system.';
 
     public function handle(): void
     {
-        $lookupMeta = true;
+        $generateMeta = true;
 
         if ($this->option('skip-meta-generation')) {
             $this->info('Skipping automatic meta generation.');
-            $lookupMeta = false;
+            $generateMeta = false;
         }
 
         $this->info('You will be asked to select a user who will be the owner of the imported bookmarks now.');
@@ -40,24 +39,19 @@ class ImportCommand extends Command
         }
 
         $importer = new ImportHtmlBookmarks;
-        $result = $importer->run($data, $this->user->id, $lookupMeta);
+        $result = $importer->run($data, $this->user->id, $generateMeta);
 
         if ($result === false) {
             $this->error('Error while importing bookmarks. Please check the application logs.');
             return;
         }
 
-        if ($this->option('skip-check')) {
-            $this->info('Skipping link check.');
-        } elseif (config('mail.host') !== null) {
-            Artisan::queue('links:check');
-        } else {
-            $this->warn('Links are configured to be checked, but email is not configured!');
-        }
-
+        $tag = $importer->getImportTag();
         $this->info(trans('import.import_successfully', [
-            'imported' => $importer->getImportCount(),
+            'queued' => $importer->getQueuedCount(),
             'skipped' => $importer->getSkippedCount(),
+
+            'taglink' => sprintf('<a href="%s">%s</a>', route('tags.show', ['tag' => $tag]), $tag->name),
         ]));
     }
 }

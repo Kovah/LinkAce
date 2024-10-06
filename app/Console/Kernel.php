@@ -15,23 +15,11 @@ use Illuminate\Foundation\Console\Kernel as ConsoleKernel;
 
 class Kernel extends ConsoleKernel
 {
-    protected $commands = [
-        CheckLinksCommand::class,
-        CompleteSetupCommand::class,
-        ImportCommand::class,
-        RegisterUserCommand::class,
-        ResetPasswordCommand::class,
-        UpdateLinkThumbnails::class,
-        ListUsersCommand::class,
-        ViewRecoveryCodesCommand::class,
-    ];
-
     protected function schedule(Schedule $schedule): void
     {
-        $schedule->command('links:check')->hourly();
+        $schedule->command('queue:work --queue=default,import')->withoutOverlapping();
 
-        $schedule->command('queue:work --daemon --once')
-            ->withoutOverlapping();
+        $schedule->command('links:check')->hourly();
 
         if (config('backup.backup.enabled')) {
             $schedule->command('backup:clean')->daily()->at('01:00');
