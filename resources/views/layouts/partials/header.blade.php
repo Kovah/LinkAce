@@ -5,8 +5,8 @@
 <title>@isset($pageTitle){{$pageTitle}} - @endisset{{ systemsettings('page_title') ?: config('app.name', 'LinkAce') }}</title>
 
 @stack('html-header')
-@include('partials.favicon')
-@include('partials.social-meta')
+@include('layouts.partials.favicon')
+@include('layouts.partials.social-meta')
 
 @include('partials.configure-darkmode')
 

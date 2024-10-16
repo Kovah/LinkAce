@@ -29,7 +29,7 @@
 
 ### About LinkAce
 
-![Preview Screenshot](https://www.linkace.org/images/preview/linkace_dashboard.png)
+![Preview Screenshot](https://www.linkace.org/images/preview/dashboard-preview_2.0.jpg)
 
 LinkAce ia a powerful, self-hosted solution for managing your personal link archive. Save articles for later reading, bookmark useful tools, and preserve important web content long-term – all in one place. With a clean, user-friendly interface, you can easily categorize and retrieve your links, and even share collections with friends, family, or coworkers. LinkAce isn't meant to replace your browser bookmarks, but rather to provide you with a robust, personalized database for curating and managing your online discoveries. Whether you're a professional, a researcher or simply an avid internet user, you'll find this tool invaluable for organizing your web resources efficiently and effectively.
 

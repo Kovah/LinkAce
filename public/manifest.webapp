@@ -1,0 +1,24 @@
+{
+  "version": "2.0.0",
+  "name": "LinkAce",
+  "launch_path": "/",
+  "description": "LinkAce is a self-hosted tool for effortlessly archiving, organizing, and sharing your favorite web links",
+  "icons": {
+    "128": "/android-chrome-192x192.png"
+  },
+  "developer": {
+    "name": "Kevin Woblick",
+    "url": "https://www.linkace.org/"
+  },
+  "installs_allowed_from": [
+    "*"
+  ],
+  "default_locale": "en",
+  "permissions": {},
+  "locales": {
+    "en": {
+      "name": "LinkAce",
+      "description": "LinkAce is a self-hosted tool for effortlessly archiving, organizing, and sharing your favorite web links"
+    }
+  }
+}

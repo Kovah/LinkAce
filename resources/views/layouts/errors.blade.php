@@ -9,7 +9,7 @@
 
     <link href="{{ mix('assets/dist/css/app.css') }}" rel="stylesheet">
 
-    @include('partials.favicon')
+    @include('layouts.partials.favicon')
 </head>
 <body class="errors">
 <div id="app">
