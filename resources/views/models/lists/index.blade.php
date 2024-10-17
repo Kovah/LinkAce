@@ -54,7 +54,7 @@
 
     @else
 
-        <div class="alert alert-info m-3">
+        <div class="alert alert-info mt-4">
             @lang('linkace.no_results_found', ['model' => trans('list.lists')])
         </div>
 

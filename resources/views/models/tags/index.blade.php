@@ -39,7 +39,7 @@
             @if($tags->isNotEmpty())
                 @include('models.tags.partials.table')
             @else
-                <div class="alert alert-info m-3">
+                <div class="alert alert-info mt-4">
                     @lang('linkace.no_results_found', ['model' => trans('tag.tags')])
                 </div>
             @endif

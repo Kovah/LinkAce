@@ -32,7 +32,7 @@
 
         @else
 
-            <div class="alert alert-info">
+            <div class="alert alert-info mt-4">
                 @lang('linkace.no_results_found', ['model' => trans('link.links')])
             </div>
 
