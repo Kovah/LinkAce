@@ -22,7 +22,7 @@ return [
     'description' => 'Listenbeschreibung',
     'visibility' => 'Sichtbarkeit',
 
-    'history_deleted' => 'Liste wurde gelöscht',
+    'history_deleted' => 'Liste wurde in den Papierkorb verschoben',
     'history_restored' => 'Liste wurde wiederhergestellt',
     'history_created' => 'Liste wurde erstellt',
 
@@ -41,6 +41,6 @@ return [
 
     'added_successfully' => 'Liste erfolgreich hinzugefügt.',
     'updated_successfully' => 'Liste erfolgreich aktualisiert.',
-    'deleted_successfully' => 'Liste erfolgreich gelöscht.',
-    'deletion_error' => 'Liste konnte nicht gelöscht werden.',
+    'deleted_successfully' => 'Liste erfolgreich in den Papierkorb verschoben.',
+    'deletion_error' => 'Liste konnte nicht in den Papierkorb verschoben werden.',
 ];

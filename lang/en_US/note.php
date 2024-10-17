@@ -17,6 +17,6 @@ return [
 
     'added_successfully' => 'Note added successfully.',
     'updated_successfully' => 'Note updated successfully.',
-    'deleted_successfully' => 'Note deleted successfully.',
-    'deletion_error' => 'Note could not be deleted.',
+    'deleted_successfully' => 'Note successfully moved to the trash.',
+    'deletion_error' => 'Note could not be moved to the trash.',
 ];

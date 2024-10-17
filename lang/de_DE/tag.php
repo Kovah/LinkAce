@@ -21,7 +21,7 @@ return [
     'name' => 'Name das Tags',
     'visibility' => 'Sichtbarkeit',
 
-    'history_deleted' => 'Tag wurde gelöscht',
+    'history_deleted' => 'Tag wurde in den Papierkorb verschoben',
     'history_restored' => 'Tag wurde wiederhergestellt',
     'history_created' => 'Tag wurde erstellt',
 
@@ -38,6 +38,6 @@ return [
 
     'added_successfully' => 'Tag erfolgreich hinzugefügt.',
     'updated_successfully' => 'Tag erfolgreich aktualisiert.',
-    'deleted_successfully' => 'Tag erfolgreich gelöscht.',
-    'deletion_error' => 'Tag konnte nicht gelöscht werden.',
+    'deleted_successfully' => 'Tag erfolgreich in den Papierkorb verschoben.',
+    'deletion_error' => 'Tag konnte nicht in den Papierkorb verschoben werden.',
 ];

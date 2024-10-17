@@ -21,7 +21,7 @@ return [
     'name' => 'Tag Name',
     'visibility' => 'Visibility Status',
 
-    'history_deleted' => 'Tag was deleted',
+    'history_deleted' => 'Tag was moved to the trash',
     'history_restored' => 'Tag was restored',
     'history_created' => 'Tag was created',
 
@@ -38,6 +38,6 @@ return [
 
     'added_successfully' => 'Tag added successfully.',
     'updated_successfully' => 'Tag updated successfully.',
-    'deleted_successfully' => 'Tag deleted successfully.',
-    'deletion_error' => 'Tag could not be deleted.',
+    'deleted_successfully' => 'Tag successfully moved to the trash.',
+    'deletion_error' => 'Tag could not be moved to the trash.',
 ];

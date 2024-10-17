@@ -17,6 +17,6 @@ return [
 
     'added_successfully' => 'Notiz erfolgreich hinzugefügt.',
     'updated_successfully' => 'Notiz erfolgreich aktualisiert.',
-    'deleted_successfully' => 'Notiz erfolgreich gelöscht.',
-    'deletion_error' => 'Notiz konnte nicht gelöscht werden.',
+    'deleted_successfully' => 'Notiz erfolgreich in den Papierkorb verschoben.',
+    'deletion_error' => 'Notiz konnte nicht in den Papierkorb verschoben werden.',
 ];

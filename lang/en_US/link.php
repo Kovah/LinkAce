@@ -19,7 +19,7 @@ return [
     'internal' => 'Internal Link',
     'private' => 'Private Link',
 
-    'history_deleted' => 'Link was deleted',
+    'history_deleted' => 'Link was moved to the trash',
     'history_restored' => 'Link was restored',
     'history_created' => 'Link was created',
 
@@ -60,7 +60,7 @@ return [
     'added_request_error' => 'The Link was added but an error occurred when trying to request the URL, for example an invalid certificate. Details can be found in the logs.',
     'updated_successfully' => 'Link updated successfully.',
     'deleted_successfully' => 'Link successfully moved to the trash.',
-    'deletion_error' => 'Link could not be deleted.',
+    'deletion_error' => 'Link could not be moved to the trash.',
 
     'duplicates_found' => 'LinkAce found possible duplicates of the submitted URL:',
     'existing_found' => 'A Link with that URL already exists.',

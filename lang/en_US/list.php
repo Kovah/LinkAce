@@ -22,7 +22,7 @@ return [
     'description' => 'List Description',
     'visibility' => 'Visibility Status',
 
-    'history_deleted' => 'List was deleted',
+    'history_deleted' => 'List was moved to the trash',
     'history_restored' => 'List was restored',
     'history_created' => 'List was created',
 
@@ -41,6 +41,6 @@ return [
 
     'added_successfully' => 'List added successfully.',
     'updated_successfully' => 'List updated successfully.',
-    'deleted_successfully' => 'List deleted successfully.',
-    'deletion_error' => 'List could not be deleted.',
+    'deleted_successfully' => 'List successfully moved to the trash.',
+    'deletion_error' => 'List could not be moved to the trash.',
 ];

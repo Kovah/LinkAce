@@ -19,7 +19,7 @@ return [
     'internal' => 'Interner Link',
     'private' => 'Privater Link',
 
-    'history_deleted' => 'Link wurde gelöscht',
+    'history_deleted' => 'Link wurde in den Papierkorb verschoben',
     'history_restored' => 'Link wurde wiederhergestellt',
     'history_created' => 'Link wurde erstellt',
 
@@ -59,8 +59,8 @@ return [
     'added_connection_error' => 'Der Link wurde hinzugefügt, aber beim Zugriff auf die URL ist ein Verbindungsfehler aufgetreten. Details finden Sie in den Logs.',
     'added_request_error' => 'Der Link wurde hinzugefügt, aber ein Fehler trat auf, wenn versucht wurde, die URL anzufordern, zum Beispiel ein ungültiges Zertifikat. Details finden Sie in den Logs.',
     'updated_successfully' => 'Link erfolgreich aktualisiert.',
-    'deleted_successfully' => 'Link erfolgreich gelöscht.',
-    'deletion_error' => 'Link konnte nicht gelöscht werden.',
+    'deleted_successfully' => 'Link erfolgreich in den Papierkorb verschoben.',
+    'deletion_error' => 'Link konnte nicht in den Papierkorb verschoben werden.',
 
     'duplicates_found' => 'LinkAce hat mögliche Duplikate der URL gefunden:',
     'existing_found' => 'Ein Link mit dieser URL existiert bereits.',
