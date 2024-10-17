@@ -24,9 +24,18 @@
                             </label>
                             <select name="connection" id="connection"
                                 class="form-select{{ $errors->has('connection') ? ' is-invalid' : '' }}">
-                                <option value="mysql" @selected(old('connection') === 'mysql')>MySQL / MariaDB</option>
-                                <option value="sqlite" @selected(old('connection') === 'sqlite')>SQLite</option>
-                                <option value="pgsql" @selected(old('connection') === 'pgsql')>PostgreSQL</option>
+                                <option
+                                    value="sqlite" @selected(old('connection', config('database.default')) === 'sqlite')>
+                                    SQLite
+                                </option>
+                                <option
+                                    value="mysql" @selected(old('connection', config('database.default')) === 'mysql')>
+                                    MySQL / MariaDB
+                                </option>
+                                <option
+                                    value="pgsql" @selected(old('connection', config('database.default')) === 'pgsql')>
+                                    PostgreSQL
+                                </option>
                             </select>
                             @if ($errors->has('connection'))
                                 <p class="invalid-feedback" role="alert">
@@ -41,7 +50,8 @@
                             </label>
                             <input type="text" name="db_path" id="db_path" required
                                 class="form-control{{ $errors->has('db_path') ? ' is-invalid' : '' }}"
-                                placeholder="localhost" value="{{ old('db_path') ?: database_path('database.sqlite') }}">
+                                placeholder="localhost"
+                                value="{{ old('db_path') ?: database_path('database.sqlite') }}">
                             @if ($errors->has('db_path'))
                                 <p class="invalid-feedback" role="alert">
                                     {{ $errors->first('db_path') }}

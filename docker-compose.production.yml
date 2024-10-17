@@ -13,9 +13,9 @@ services:
     volumes:
       - ./.env:/app/.env
       - ./backups:/app/storage/app/backups
-      # Remove the hash of the following line if you want to use HTTPS for this container
-      #- ./Caddyfile:/etc/caddy/Caddyfile:ro
-      #- ./caddy-data:/data/caddy
+      # Remove the hash of the following lines if you want to use HTTPS for this container
+      #- ./caddy-data:/home/www-data/.local/share/caddy
+      #- ./ssl.Caddyfile:/etc/caddy/Caddyfile
 
   # --- Database
   db:

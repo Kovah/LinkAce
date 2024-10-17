@@ -20,7 +20,7 @@ COPY ./routes /app/routes
 COPY ./tests /app/tests
 
 COPY ["./artisan", "./composer.json", "./composer.lock", "/app/"]
-COPY ./.env.example /app/.env
+#COPY ./.env.example /app/.env
 
 # Install dependencies using Composer
 RUN composer install -n --prefer-dist --no-dev
@@ -65,7 +65,6 @@ COPY --chown=www-data:www-data ./routes /app/routes
 COPY --chown=www-data:www-data ./storage /app/storage
 
 COPY --chown=www-data:www-data ["./artisan", "./composer.json", "./composer.lock", "./README.md", "./LICENSE.md", "./package.json", "/app/"]
-COPY --chown=www-data:www-data ./.env.example /app/.env
 
 # Copy files from the composer build
 COPY --from=builder --chown=www-data:www-data /app/vendor /app/vendor
@@ -84,6 +83,8 @@ RUN touch ./database/database.sqlite \
     && chown www-data:www-data ./database/database.sqlite \
     && chmod +w ./database/database.sqlite \
     && chmod +r ./database
+
+COPY --chown=www-data:www-data ./.env.example /app/.env
 
 # Configure Supervisor for PHP + Caddy
 ENV PORT=80
