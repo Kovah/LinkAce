@@ -119,7 +119,7 @@ class SearchControllerTest extends TestCase
     public function testValidTagSearchResult(): void
     {
         $response = $this->post('search', [
-            'only_tags' => 'Examples',
+            'only_tags' => '1',
         ]);
 
         $response->assertOk()
@@ -127,14 +127,36 @@ class SearchControllerTest extends TestCase
             ->assertDontSee('https://test.com');
     }
 
+    public function testValidTagSearchResultWithoutResult(): void
+    {
+        $response = $this->post('search', [
+            'only_tags' => '5',
+        ]);
+
+        $response->assertOk()
+            ->assertDontSee('https://example.com')
+            ->assertDontSee('https://test.com');
+    }
+
     public function testValidListSearchResult(): void
     {
         $response = $this->post('search', [
-            'only_lists' => 'A Tests List',
+            'only_lists' => '1',
         ]);
 
         $response->assertOk()
             ->assertSee('https://test.com')
+            ->assertDontSee('https://example.com');
+    }
+
+    public function testValidListSearchResultWithoutResults(): void
+    {
+        $response = $this->post('search', [
+            'only_lists' => '5',
+        ]);
+
+        $response->assertOk()
+            ->assertDontSee('https://test.com')
             ->assertDontSee('https://example.com');
     }
 

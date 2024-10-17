@@ -50,7 +50,7 @@ export default class TagsSelect {
     }
 
     if (typeof this.$el.dataset.value !== 'undefined' && this.$el.dataset.value !== '') {
-      this.config['items'] = JSON.parse(this.$el.dataset.value).map((item) => item.id);
+      this.config['items'] = JSON.parse(this.$el.dataset.value).map((item) => item.id ?? item);
     }
 
     this.select = new TomSelect(this.$el, this.config);

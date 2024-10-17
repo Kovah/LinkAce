@@ -114,16 +114,20 @@ use App\Enums\ModelAttribute;
                         <label for="only_lists" class="d-none" aria-hidden="true">
                             @lang('search.filter_by_list')
                         </label>
-                        <input name="only_lists" id="only_lists" type="text" class="tag-select" data-tag-type="lists"
-                            placeholder="@lang('search.filter_by_list')" value="{{ $query_settings['only_lists'] }}">
+                        <input name="only_lists" id="only_lists" type="text" placeholder="@lang('search.filter_by_list')"
+                            class="tag-select" data-tag-data="{{ $all_lists->toJson() }}"
+                            data-value="{{ json_encode($query_settings['only_lists']) }}"
+                            data-allow-creation="1" data-tag-type="lists">
                     </div>
 
                     <div class="col-md mb-3 mb-md-0">
                         <label for="only_tags" class="d-none" aria-hidden="true">
                             @lang('search.filter_by_tag')
                         </label>
-                        <input name="only_tags" id="only_tags" type="text" class="tag-select" data-tag-type="tags"
-                            placeholder="@lang('search.filter_by_tag')" value="{{ $query_settings['only_tags'] }}">
+                        <input name="only_tags" id="only_tags" type="text" placeholder="@lang('search.filter_by_tag')"
+                            class="tag-select" data-tag-data="{{ $all_tags->toJson() }}"
+                            data-value="{{ json_encode($query_settings['only_tags']) }}"
+                            data-allow-creation="1" data-tag-type="tags">
                     </div>
 
                     <div class="col-md">

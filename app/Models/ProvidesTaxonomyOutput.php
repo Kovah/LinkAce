@@ -18,7 +18,7 @@ trait ProvidesTaxonomyOutput
         return json_encode($this->prepareExistingTaxonomy($this->$taxonomy));
     }
 
-    public static function oldTaxonomyOutputWithoutLink(string $taxonomy, mixed $default = null): bool|string
+    public static function oldTaxonomyOutputWithoutLink(string $taxonomy, mixed $default = []): bool|string
     {
         $old = self::getOldTaxonomyItems($taxonomy);
 
@@ -44,8 +44,8 @@ trait ProvidesTaxonomyOutput
     public static function getOldTaxonomyItems(string $taxonomy): Collection
     {
         $model = match ($taxonomy) {
-            'tags' => Tag::class,
-            'lists' => LinkList::class,
+            'tags', 'only_tags' => Tag::class,
+            'lists', 'only_lists' => LinkList::class,
         };
 
         $data = collect();

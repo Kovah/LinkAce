@@ -13,8 +13,8 @@ trait SearchesLinks
     protected bool $searchDescription = false;
     protected ?int $searchVisibility = null;
     protected bool $searchBrokenOnly = false;
-    protected string|null $searchLists = null;
-    protected string|null $searchTags = null;
+    protected array $searchLists = [];
+    protected array $searchTags = [];
     protected bool $emptyLists = false;
     protected bool $emptyTags = false;
     protected string|null $searchOrderBy = null;
@@ -68,23 +68,25 @@ trait SearchesLinks
             $search->where('status', '>', 1);
         }
 
+        //dd($request->input('only_lists'), $request->input('only_tags'));
+
         // Show by specific list only if applicable
         if ($this->emptyLists = (bool)$request->input('empty_lists', false)) {
             $search->doesntHave('lists');
-        } elseif ($this->searchLists = $request->input('only_lists')) {
-            $search->whereHas('lists', function ($query) use ($request) {
-                $field = $request->isJson() ? 'id' : 'name';
-                $query->whereIn($field, explode(',', $this->searchLists));
+        } elseif ($request->input('only_lists')) {
+            $this->searchLists = array_map('intval', explode(',', $request->input('only_lists', '')));
+            $search->whereHas('lists', function ($query) {
+                $query->whereIn('id', $this->searchLists);
             });
         }
 
         // Show by specific tag only if applicable
         if ($this->emptyTags = (bool)$request->input('empty_tags', false)) {
             $search->doesntHave('tags');
-        } elseif ($this->searchTags = $request->input('only_tags')) {
-            $search->whereHas('tags', function ($query) use ($request) {
-                $field = $request->isJson() ? 'id' : 'name';
-                $query->whereIn($field, explode(',', $this->searchTags));
+        } elseif ($request->input('only_tags')) {
+            $this->searchTags = array_map('intval', explode(',', $request->input('only_tags')));
+            $search->whereHas('tags', function ($query) {
+                $query->whereIn('id', $this->searchTags);
             });
         }
 
@@ -94,7 +96,8 @@ trait SearchesLinks
                 $search->inRandomOrder();
             } else {
                 $this->searchOrderBy = in_array($this->searchOrderBy, $this->orderByOptions)
-                    ? $this->searchOrderBy : $this->orderByOptions[0];
+                    ? $this->searchOrderBy
+                    : $this->orderByOptions[0];
             }
             $search->orderBy(...explode(':', $this->searchOrderBy));
         }
