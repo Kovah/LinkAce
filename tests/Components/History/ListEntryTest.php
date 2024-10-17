@@ -79,7 +79,7 @@ class ListEntryTest extends TestCase
         $historyEntries = $list->audits()->get();
 
         $output = (new ListEntry($historyEntries[0]))->render();
-        $this->assertStringContainsString('List was deleted', $output);
+        $this->assertStringContainsString('List was moved to the trash', $output);
 
         $output = (new ListEntry($historyEntries[1]))->render();
         $this->assertStringContainsString('List was restored', $output);

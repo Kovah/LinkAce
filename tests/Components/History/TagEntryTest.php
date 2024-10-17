@@ -51,7 +51,7 @@ class TagEntryTest extends TestCase
         $historyEntries = $tag->audits()->get();
 
         $output = (new TagEntry($historyEntries[0]))->render();
-        $this->assertStringContainsString('Tag was deleted', $output);
+        $this->assertStringContainsString('Tag was moved to the trash', $output);
 
         $output = (new TagEntry($historyEntries[1]))->render();
         $this->assertStringContainsString('Tag was restored', $output);

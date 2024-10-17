@@ -83,7 +83,7 @@ class LinkEntryTest extends TestCase
         $historyEntries = $link->audits()->get();
 
         $output = (new LinkEntry($historyEntries[0]))->render();
-        $this->assertStringContainsString('Link was deleted', $output);
+        $this->assertStringContainsString('Link was moved to the trash', $output);
 
         $output = (new LinkEntry($historyEntries[1]))->render();
         $this->assertStringContainsString('Link was restored', $output);
