@@ -20,6 +20,7 @@ yarn-error.log
 .env.*
 !.env.docker
 !.env.docker.production
+!.env.sqlite.production
 !.env.example
 .phpunit.result.cache
 _ide_helper.php

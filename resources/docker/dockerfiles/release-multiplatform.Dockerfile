@@ -84,7 +84,7 @@ RUN touch ./database/database.sqlite \
     && chmod +w ./database/database.sqlite \
     && chmod +r ./database
 
-COPY --chown=www-data:www-data ./.env.example /app/.env
+COPY --chown=www-data:www-data ./.env.sqlite.production /app/.env
 
 # Configure Supervisor for PHP + Caddy
 ENV PORT=80
