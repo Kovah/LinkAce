@@ -66,7 +66,7 @@
                 action="{{ route('links.destroy', [$link->id]) }}">
                 @method('DELETE')
                 @csrf
-                <input type="hidden" name="link_id" value="{{ $link->id }}">
+                <input type="hidden" name="redirect_back" value="true">
             </form>
         </div>
         @if($shareLinks !== '')

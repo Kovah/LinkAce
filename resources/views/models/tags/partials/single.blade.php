@@ -24,11 +24,10 @@
         </div>
 
         <form id="tag-delete-{{ $tag->id }}" method="POST" style="display: none;"
-            action="{{ route('tags.destroy', [$tag]) }}">
+            action="{{ route('tags.destroy', ['tag' => $tag]) }}">
             @method('DELETE')
             @csrf
             <input type="hidden" name="redirect_back" value="1">
-            <input type="hidden" name="tag_id" value="{{ $tag->id }}">
         </form>
     </td>
 </tr>

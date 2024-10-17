@@ -59,7 +59,7 @@ return [
     'added_connection_error' => 'The Link was added but a connection error occurred when trying to access the URL. Details can be found in the logs.',
     'added_request_error' => 'The Link was added but an error occurred when trying to request the URL, for example an invalid certificate. Details can be found in the logs.',
     'updated_successfully' => 'Link updated successfully.',
-    'deleted_successfully' => 'Link deleted successfully.',
+    'deleted_successfully' => 'Link successfully moved to the trash.',
     'deletion_error' => 'Link could not be deleted.',
 
     'duplicates_found' => 'LinkAce found possible duplicates of the submitted URL:',

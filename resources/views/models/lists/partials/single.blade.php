@@ -35,8 +35,7 @@
                 action="{{ route('lists.destroy', ['list' => $list]) }}">
                 @method('DELETE')
                 @csrf
-                <input type="hidden" name="redirect_back" value="1">
-                <input type="hidden" name="list_id" value="{{ $list->id }}">
+                <input type="hidden" name="redirect_back" value="true">
             </form>
         </div>
     </div>
