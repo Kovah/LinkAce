@@ -133,19 +133,6 @@ return [
 
     /*
     |--------------------------------------------------------------------------
-    | Guest Access
-    |--------------------------------------------------------------------------
-    |
-    | If enabled, guest will have access to all links, categories and tags.
-    | However, they will not see private links and any notes and - obviously -
-    | can't edit any of the entries.
-    |
-    */
-
-    'guest_access' => (bool)env('GUEST_ACCESS', false),
-
-    /*
-    |--------------------------------------------------------------------------
     | Trusted Proxies
     |--------------------------------------------------------------------------
     |
@@ -156,6 +143,21 @@ return [
     */
 
     'trusted_proxies' => env('TRUSTED_PROXIES', '*'),
+
+    /*
+    |--------------------------------------------------------------------------
+    | API Rate Limiting
+    |--------------------------------------------------------------------------
+    |
+    | By default, the LinkAce API is rate limited: 60 requests per minute.
+    | Use the API_RATE_LIMIT setting in your .env file to configure this.
+    | the first number defines the number of requests, the second the time
+    | frame for the requests.
+    | 60,1 is the default which means: 60 requests per 1 minute
+    |
+    */
+
+    'api_rate_limit' => env('API_RATE_LIMIT', '60,1'),
 
     /*
     |--------------------------------------------------------------------------

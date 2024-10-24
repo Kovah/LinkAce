@@ -41,7 +41,7 @@ class Kernel extends HttpKernel
         ],
 
         'api' => [
-            'throttle:60,1',
+            // Throttling is configured in routes/api.php
             \Illuminate\Routing\Middleware\SubstituteBindings::class,
         ],
     ];
