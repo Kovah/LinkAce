@@ -7,9 +7,9 @@
         <x-update-check/>
     </div>
     <div class="card-body text-success">
-        <x-icon.info class="me-1"/> <strong>The LinkAce 2 Beta is available!</strong> Please help testing. <a href="https://github.com/Kovah/LinkAce/discussions/categories/announcements">Find out more</a>
+        <x-icon.info class="me-1"/> <strong>LinkAce 2 is available!</strong> <a href="https://www.linkace.org/docs/v2/upgrade/from-v1/">Upgrade now</a>
     </div>
     <div class="card-body text-danger">
-        <x-icon.info class="me-1"/> Please note that the LinkAce Docker image will be renamed with the release of LinkAce 2! <a href="https://github.com/Kovah/LinkAce/issues/502">Read more</a>
+        <x-icon.info class="me-1"/> Please note that LinkAce 1 is now deprecated and will only receive security-related patches until the end of 2025.
     </div>
 </div>
