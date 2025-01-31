@@ -8,15 +8,15 @@ use Tests\TestCase;
 
 class ContentTypeHeaderValidationMiddlewareTest extends TestCase
 {
-    public function testMissingContentTypeHeader(): void {
+    public function testMissingContentTypeHeader(): void
+    {
         $request = Request::create('/api/v1/links', 'POST');
-
 
         $middleware = new ContentTypeHeaderValidationMiddleware();
 
-        $response = $middleware->handle($request, function () {});
+        $response = $middleware->handle($request, function () {
+        });
 
         $this->assertEquals(415, $response->getStatusCode());
     }
-
 }
