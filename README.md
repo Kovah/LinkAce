@@ -12,6 +12,10 @@
 </p>
 <p>&nbsp;</p>
 
+> [!CAUTION]
+> LinkAce 1.x is deprecated and will only receive security-related patches until the end of 2025. Please upgrade to [LinkAce 2](https://github.com/Kovah/LinkAce/tree/2.x).
+
+<p>&nbsp;</p>
 
 ### Contents
 

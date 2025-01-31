@@ -15,10 +15,11 @@ to loss of data or data being rendered inaccurate or losses sustained by you or 
 program to operate with any other programs), even if such holder or other party has been advised of the possibility 
 of such damages.
 
-| Version | Supported          |
-| ------- | ------------------ |
-| 0.x     | :x:                |
-| 1.x     | :white_check_mark: |
+| Version | Supported                                  |
+|---------|--------------------------------------------|
+| 0.x     | :x:                                        |
+| 1.x     | :warning: (security patches until Q4 2025) |
+| 2.x     | :white_check_mark:                         |
 
 
 ### Support for PHP versions
