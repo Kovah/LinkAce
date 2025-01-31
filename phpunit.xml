@@ -20,6 +20,9 @@
     <testsuite name="Helper">
       <directory suffix="Test.php">./tests/Helper</directory>
     </testsuite>
+    <testsuite name="Middleware">
+      <directory suffix="Test.php">./tests/Middleware</directory>
+    </testsuite>
     <testsuite name="Models">
       <directory suffix="Test.php">./tests/Models</directory>
     </testsuite>
