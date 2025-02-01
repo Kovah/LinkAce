@@ -97,15 +97,3 @@ jobs:
         with:
           project-token: ${{ secrets.CODACY_PROJECT_TOKEN }}
           coverage-reports: ./test-coverage.xml
-
-      - uses: actions/upload-artifact@v4
-        if: failure()
-        with:
-          name: application-logs
-          path: storage/logs
-
-      - uses: actions/upload-artifact@v4
-        if: failure()
-        with:
-          name: application-public
-          path: public
