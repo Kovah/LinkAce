@@ -40,7 +40,7 @@ jobs:
           DOCKER_IMAGE_GITHUB=ghcr.io/kovah/linkace
           MAJOR_VERSION=2.x
           VERSION=${GITHUB_REF#refs/tags/}
-          TAGS="${DOCKER_IMAGE}:${VERSION},${DOCKER_IMAGE}:${MAJOR_VERSION},${DOCKER_IMAGE_GITHUB}:${VERSION},${DOCKER_IMAGE_GITHUB}:${MAJOR_VERSION}"
+          TAGS="${DOCKER_IMAGE}:${VERSION},${DOCKER_IMAGE}:${MAJOR_VERSION},${DOCKER_IMAGE}:latest,${DOCKER_IMAGE_GITHUB}:${VERSION},${DOCKER_IMAGE_GITHUB}:${MAJOR_VERSION},${DOCKER_IMAGE_GITHUB}:latest"
           echo "tags=${TAGS}" >> $GITHUB_OUTPUT
 
       - name: Build and push advanced image
