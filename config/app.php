@@ -60,6 +60,19 @@ return [
 
     /*
     |--------------------------------------------------------------------------
+    | API Version
+    |--------------------------------------------------------------------------
+    |
+    | Returns the current version of the API via /api/version to that clients
+    | or other third party applications can properly determine which version
+    | is currently supported.
+    |
+    */
+
+    'api_version' => 'v1',
+
+    /*
+    |--------------------------------------------------------------------------
     | Application Timezone
     |--------------------------------------------------------------------------
     |
