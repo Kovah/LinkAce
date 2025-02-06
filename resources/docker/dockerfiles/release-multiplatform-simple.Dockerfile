@@ -1,5 +1,5 @@
 # DOCKERFILE RELEASE
-FROM docker.io/linkace/linkace:latest
+FROM docker.io/linkace/linkace:1.x
 
 # Install nginx and supervisor
 RUN apk add --no-cache nginx supervisor
