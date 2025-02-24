@@ -16,7 +16,7 @@
     "laravel-mix": "^6.0.31",
     "postcss": "^8.4.35",
     "sass": "^1.85.0",
-    "sass-loader": "^14.1.0"
+    "sass-loader": "^16.0.5"
   },
   "dependencies": {
     "bootstrap": "^5.3.3",
