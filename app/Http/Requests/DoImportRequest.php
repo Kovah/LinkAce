@@ -12,7 +12,7 @@ class DoImportRequest extends FormRequest
             'import-file' => [
                 'required',
                 'file',
-                'mimes:html,htm',
+                'mimes:html,htm,csv',
             ],
         ];
     }
