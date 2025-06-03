@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\App;
 
 use App\Actions\ImportHtmlBookmarks;
+use App\Actions\ImportCsvBookmarks;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\DoImportRequest;
 use App\Jobs\ImportLinkJob;
@@ -43,9 +44,13 @@ class ImportController extends Controller
      */
     public function doImport(DoImportRequest $request): JsonResponse
     {
-        $data = $request->file('import-file')->get();
+        if ($request->file('import-file')->getMimeType() === 'text/csv') {
+            $importer = new ImportCsvBookmarks;
+        } else {
+            $importer = new ImportHtmlBookmarks;
+        }
 
-        $importer = new ImportHtmlBookmarks;
+        $data = $request->file('import-file')->get();
         $result = $importer->run($data, auth()->id());
 
         if ($result === false) {

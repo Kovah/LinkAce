@@ -49,12 +49,44 @@ class ImportControllerTest extends TestCase
         Queue::assertPushed(ImportLinkJob::class, 5);
     }
 
+    public function test_valid_import_action_response_csv(): void
+    {
+        Queue::fake();
+
+        $exampleData = file_get_contents(__DIR__ . '/data/import_example.csv');
+        $file = UploadedFile::fake()->createWithContent('import_example.csv', $exampleData);
+
+        $response = $this->post('import', ['import-file' => $file], ['Accept' => 'text/csv']);
+
+        $response->assertOk()->assertJson(['success' => true]);
+
+        Queue::assertPushed(ImportLinkJob::class, 5);
+    }
+
     public function test_queue_page(): void
     {
         $exampleData = file_get_contents(__DIR__ . '/data/import_example.html');
         $file = UploadedFile::fake()->createWithContent('import_example.html', $exampleData);
 
         $response = $this->post('import', ['import-file' => $file], ['Accept' => 'application/json']);
+        $response->assertOk()->assertJson(['success' => true]);
+
+        $this->get('import/queue')->assertSeeInOrder([
+            'https://medium.com/accelerated-intelligence',
+            'https://adele.uxpin.com',
+            'https://color.adobe.com/create/color-wheel',
+            'https://loader.io',
+            'https://astralapp.com',
+        ]);
+    }
+
+
+    public function test_queue_page_csv(): void
+    {
+        $exampleData = file_get_contents(__DIR__ . '/data/import_example.csv');
+        $file = UploadedFile::fake()->createWithContent('import_example.csv', $exampleData);
+
+        $response = $this->post('import', ['import-file' => $file], ['Accept' => 'text/csv']);
         $response->assertOk()->assertJson(['success' => true]);
 
         $this->get('import/queue')->assertSeeInOrder([
