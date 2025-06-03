@@ -8,7 +8,7 @@ return [
     'import_running' => 'Import läuft...',
     'import_file' => 'Datei für den Import',
 
-    'import_help' => 'Sie können hier Ihre vorhandenen Lesezeichen importieren. Normalerweise werden Lesezeichen von Ihrem Browser in eine .html Datei exportiert. Wählen Sie die Datei hier aus und starten Sie den Import. Bitte beachten Sie, dass ein Cron konfiguriert sein muss, damit der Import funktioniert.',
+    'import_help' => 'Sie können hier Ihre vorhandenen Lesezeichen importieren. Dies kann entweder eine HTML-Datei mit allen Lesezeichen sein, wie Sie sie aus Ihrem Browser exportieren können. Oder es kann eine CSV-Datei sein, wie sie von Diensten wie Pocket als Export bereitgestellt wird. Wählen Sie die Datei hier aus und starten Sie den Import. Bitte beachten Sie, dass ein Cron konfiguriert sein muss, damit der Import funktioniert.',
 
     'import_networkerror' => 'Beim Importieren der Lesezeichen ist ein Fehler aufgetreten. Bitte überprüfen Sie die Konsole des Browsers oder die Logs der Anwendung für Details.',
     'import_error' => 'Beim Importieren der Lesezeichen ist ein Fehler aufgetreten. Bitte prüfen Sie die Logs der Anwendung.',

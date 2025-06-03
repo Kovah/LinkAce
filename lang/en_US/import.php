@@ -8,7 +8,7 @@ return [
     'import_running' => 'Import running...',
     'import_file' => 'File for Import',
 
-    'import_help' => 'You can import your existing browser bookmarks here. Usually, bookmarks are exported into an .html file by your browser. Select the file here and start the import. Please note that a cron must be configured for the import to work.',
+    'import_help' => 'You can import your existing bookmarks here. This can either be an .html file including your bookmarks that you exported from your browser. Or it can be an .csv file containing your bookmarks as services like Pocket provide as export. Select the file here and start the import. Please note that a cron must be configured for the import to work.',
 
     'import_networkerror' => 'Something went wrong while trying to import the bookmarks. Please check your browser console for details or consult the application logs.',
     'import_error' => 'Something went wrong while trying to import the bookmarks. Please consult the application logs.',
