@@ -4,6 +4,8 @@ namespace Tests\Controller\App;
 
 use App\Models\User;
 use Illuminate\Foundation\Testing\RefreshDatabase;
+use Illuminate\Support\Facades\Cache;
+use Illuminate\Support\Facades\Config;
 use Tests\TestCase;
 
 class SystemSettingsControllerTest extends TestCase
@@ -32,16 +34,13 @@ class SystemSettingsControllerTest extends TestCase
 
     public function testValidSettingsUpdateResponse(): void
     {
-        $response = $this->get('dashboard');
-        $response->assertDontSee('Begin of custom header scripts');
+        $this->get('dashboard')->assertDontSee('Begin of custom header scripts');
 
-        $response = $this->post('settings/system', [
+        $this->post('settings/system', [
             'system_page_title' => 'New Title',
             'system_guest_access' => '1',
             'system_custom_header_content' => '<script>console.log(\'scripts work\')</script>',
-        ]);
-
-        $response->assertRedirect('settings/system');
+        ])->assertRedirect('settings/system')->assertSessionHasNoErrors();
 
         $this->assertDatabaseHas('settings', [
             'user_id' => null,

@@ -66,8 +66,8 @@ class ImportControllerTest extends TestCase
 
     public function testImportWithPrivateDefaults(): void
     {
-        Setting::create(['user_id' => 1, 'key' => 'links_private_default', 'value' => '1']);
-        Setting::create(['user_id' => 1, 'key' => 'tags_private_default', 'value' => '1']);
+        Setting::updateOrCreate(['user_id' => 1, 'key' => 'links_private_default'], ['value' => '1']);
+        Setting::updateOrCreate(['user_id' => 1, 'key' => 'tags_private_default'], ['value' => '1']);
 
         $response = $this->importBookmarks();
 
