@@ -38,7 +38,7 @@ RUN mv vendor/spatie/laravel-backup/resources/lang/de vendor/spatie/laravel-back
 
 # ================================
 # Compile all assets
-FROM docker.io/library/node:22 AS npm_builder
+FROM docker.io/library/node:24 AS npm_builder
 WORKDIR /srv
 
 COPY ./resources/assets ./resources/assets
