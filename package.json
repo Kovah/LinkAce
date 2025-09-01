@@ -15,11 +15,11 @@
   "devDependencies": {
     "laravel-mix": "^6.0.31",
     "postcss": "^8.4.35",
-    "sass": "^1.90.0",
+    "sass": "^1.91.0",
     "sass-loader": "^16.0.5"
   },
   "dependencies": {
-    "bootstrap": "^5.3.3",
+    "bootstrap": "^5.3.8",
     "tom-select": "^2.4.3"
   },
   "scripts": {
