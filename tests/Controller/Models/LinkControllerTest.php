@@ -2,7 +2,9 @@
 
 namespace Tests\Controller\Models;
 
-use App\Jobs\SaveLinkToWaybackmachine;
+use App\Events\LinkCreated;
+use App\Events\LinkDeleted;
+use App\Events\LinkUpdated;
 use App\Models\Link;
 use App\Models\LinkList;
 use App\Models\Tag;
@@ -10,9 +12,9 @@ use App\Models\User;
 use App\Settings\UserSettings;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Http\Client\ConnectionException;
+use Illuminate\Support\Facades\Event;
 use Illuminate\Support\Facades\Http;
 use Illuminate\Support\Facades\Queue;
-use Spatie\LaravelSettings\Settings;
 use Tests\Controller\Traits\PreparesTestData;
 use Tests\TestCase;
 
@@ -233,12 +235,9 @@ class LinkControllerTest extends TestCase
         $this->assertEquals('https://example.com', $databaseLink->url);
     }
 
-    public function test_store_request_without_archive_backup(): void
+    public function test_store_request_fires_store_event(): void
     {
-        UserSettings::fake([
-            'archive_backups_enabled' => false,
-        ]);
-
+        Event::fake();
         $this->post('links', [
             'url' => 'https://example.com',
             'title' => null,
@@ -247,27 +246,7 @@ class LinkControllerTest extends TestCase
             'tags' => null,
             'visibility' => 1,
         ]);
-
-        Queue::assertNotPushed(SaveLinkToWaybackmachine::class);
-    }
-
-    public function test_store_request_without_private_archive_backup(): void
-    {
-        UserSettings::fake([
-            'archive_backups_enabled' => true,
-            'archive_private_backups_enabled' => false,
-        ]);
-
-        $this->post('links', [
-            'url' => 'https://example.com',
-            'title' => null,
-            'description' => null,
-            'lists' => null,
-            'tags' => null,
-            'visibility' => 3,
-        ]);
-
-        Queue::assertNotPushed(SaveLinkToWaybackmachine::class);
+        Event::assertDispatched(LinkCreated::class);
     }
 
     public function test_validation_error_for_create(): void
@@ -436,6 +415,24 @@ class LinkControllerTest extends TestCase
         ]);
     }
 
+    public function test_update_request_fires_update_event(): void
+    {
+        Event::fake();
+
+        $baseLink = Link::factory()->create();
+
+        $this->patch('links/1', [
+            'link_id' => $baseLink->id,
+            'url' => 'https://new-example.com',
+            'title' => 'New Title',
+            'description' => 'New Description',
+            'lists' => null,
+            'tags' => null,
+            'visibility' => 1,
+        ]);
+        Event::assertDispatched(LinkUpdated::class);
+    }
+
     public function test_delete_response(): void
     {
         $this->createTestLinks();
@@ -447,6 +444,17 @@ class LinkControllerTest extends TestCase
 
         $this->delete('links/2')->assertForbidden();
         $this->delete('links/3')->assertForbidden();
+    }
+
+    public function test_delete_request_fires_event(): void
+    {
+        Event::fake();
+
+        $this->createTestLinks();
+
+        $this->delete('links/1');
+
+        Event::assertDispatched(LinkDeleted::class);
     }
 
     public function test_missing_model_error_for_delete(): void
