@@ -1,19 +1,19 @@
 <?php
 return [
     'username' => 'adamnowak',
-    'email' => 'adam.nowak@przykład.pl',
+    'email' => 'adam.nowak@przyklad.pl',
     'password' => 'Hasło',
-    'password_confirmed' => 'Hasło potwierdzono',
+    'password_confirmed' => 'Potwierdzenie hasła',
 
     'link_url' => 'https://github.com/Kovah/LinkAce',
     'link_title' => 'Tytuł strony internetowej',
 
     'list_select' => 'Wybierz listę',
-    'tags_select' => 'Wybierz jakieś tagi.',
+    'tags_select' => 'Wybierz tagi',
 
-    'list_name' => 'Rzeczywista nazwa listy',
-    'tag_name' => 'Rzeczywista nazwa tagu',
+    'list_name' => 'Faktyczna nazwa listy',
+    'tag_name' => 'Faktyczna nazwa tagu',
 
-    'two_factor_otp' => 'Jednorazowe hasło',
+    'two_factor_otp' => 'Hasło jednorazowe',
     'two_factor_recovery_code' => 'Kod odzyskiwania',
 ];

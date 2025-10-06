@@ -9,23 +9,23 @@ return [
     'deleted_tags' => 'Usunięte tagi',
     'deleted_notes' => 'Usunięte notatki',
 
-    'restore' => 'Przywróć wpis',
+    'restore' => 'Przywróć element',
 
-    'clear_trash' => 'Wyczyść kosz',
-    'delete_warning' => 'Trwale usunięte wpisy nie mogą zostać przywrócone!',
-    'delete_no_entries' => 'Brak wpisów do usunięcia.',
+    'clear_trash' => 'Opróżnij kosz',
+    'delete_warning' => 'Trwale usuniętych elementów nie można przywrócić!',
+    'delete_no_entries' => 'Brak elementów do usunięcia.',
 
-    'delete_success.links' => 'Trwale usunięto wszystkie linki.',
-    'delete_success.lists' => 'Trwale usunięto wszystkie listy.',
-    'delete_success.tags' => 'Trwale usunięto wszystkie tagi.',
-    'delete_success.notes' => 'Trwale usunięto wszystkie notatki.',
+    'delete_success.links' => 'Wszystkie linki zostały trwale usunięte.',
+    'delete_success.lists' => 'Wszystkie listy zostały trwale usunięte.',
+    'delete_success.tags' => 'Wszystkie tagi zostały trwale usunięte.',
+    'delete_success.notes' => 'Wszystkie notatki zostały trwale usunięte.',
 
-    'restore.link' => 'Przywrócono link z kosza.',
-    'restore.list' => 'Przywrócono listę z kosza.',
-    'restore.tag' => 'Przywrócono tag z kosza.',
-    'restore.note' => 'Przywrócono notatkę z kosza.',
+    'restore.link' => 'Link został przywrócony z kosza.',
+    'restore.list' => 'Lista została przywrócona z kosza.',
+    'restore.tag' => 'Tag został przywrócony z kosza.',
+    'restore.note' => 'Notatka została przywrócona z kosza.',
 
-    'restore.not_found' => 'Nie znaleziono elementu, który ma zostać przywrócony.',
-    'restore.not_allowed' => 'Nie masz uprawnień, aby przywrócić ten przedmiot.',
+    'restore.not_found' => 'Nie znaleziono elementu do przywrócenia.',
+    'restore.not_allowed' => 'Nie masz uprawnień do przywrócenia tego elementu.',
 
 ];

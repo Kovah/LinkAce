@@ -6,17 +6,17 @@ return [
     'add' => 'Dodaj notatkę',
     'show' => 'Pokaż notatkę',
     'edit' => 'Edytuj notatkę',
-    'update' => 'Aktualizuj notatkę',
+    'update' => 'Zaktualizuj notatkę',
     'delete' => 'Usuń notatkę',
 
-    'public' => 'Uwaga publiczna',
-    'internal' => 'Uwaga wewnętrzna',
+    'public' => 'Notatka publiczna',
+    'internal' => 'Notatka wewnętrzna',
     'private' => 'Notatka prywatna',
 
     'note_content' => 'Treść notatki',
 
-    'added_successfully' => 'Notatka dodana pomyślnie.',
-    'updated_successfully' => 'Notatka została zaktualizowana.',
+    'added_successfully' => 'Notatka została pomyślnie dodana.',
+    'updated_successfully' => 'Notatka została pomyślnie zaktualizowana.',
     'deleted_successfully' => 'Notatka została pomyślnie przeniesiona do kosza.',
-    'deletion_error' => 'Notatka nie mogła zostać przeniesiona do kosza.',
+    'deletion_error' => 'Nie udało się przenieść notatki do kosza.',
 ];

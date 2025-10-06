@@ -4,43 +4,43 @@ return [
     'lists' => 'Listy',
     'all_lists' => 'Wszystkie listy',
     'recent_lists' => 'Najnowsze listy',
-    'update_lists' => 'Aktualizuj listy',
+    'update_lists' => 'Zaktualizuj listy',
 
     'add' => 'Dodaj listę',
     'show' => 'Pokaż listę',
     'edit' => 'Edytuj listę',
-    'update' => 'Aktualizuj listę',
-    'delete' => 'Usuń listę|Usuń listę',
+    'update' => 'Zaktualizuj listę',
+    'delete' => 'Usuń listę|Usuń listy',
 
-    'filter_lists' => 'Listy filtrów...',
+    'filter_lists' => 'Filtruj listy...',
 
     'public' => 'Lista publiczna',
     'internal' => 'Lista wewnętrzna',
-    'private' => 'Prywatna lista',
+    'private' => 'Lista prywatna',
 
-    'name' => 'Nazwy listy',
+    'name' => 'Nazwa listy',
     'description' => 'Opis listy',
-    'visibility' => 'Status widoczności',
+    'visibility' => 'Widoczność',
 
-    'history_deleted' => 'Lista została przeniesiona do kosza',
-    'history_restored' => 'Lista została przywrócona',
-    'history_created' => 'Lista została utworzona',
+    'history_deleted' => 'Lista została przeniesiona do kosza.',
+    'history_restored' => 'Lista została przywrócona.',
+    'history_created' => 'Lista została utworzona.',
 
-    'author' => 'przez :user',
+    'author' => 'autor: :user',
 
     'no_lists' => 'Brak list',
 
-    'bulk_title' => 'Chcesz edytować :count List.|Chcesz edytować :count Lists.',
+    'bulk_title' => 'Chcesz edytować :count listę.|Chcesz edytować :count listy.',
     'bulk_edit_add' => 'Dodaj listę do edycji zbiorczej',
-    'bulk_edit_success' => 'Pomyślnie zaktualizowano :success Listy z :selected wybranych.',
-    'bulk_delete_success' => 'Pomyślnie przeniesiono :success Lists z :selected wybranych do kosza.',
+    'bulk_edit_success' => 'Pomyślnie zaktualizowano :success list z :selected wybranych.',
+    'bulk_delete_success' => 'Pomyślnie przeniesiono :success list z :selected wybranych do kosza.',
     'bulk_mode_append' => 'Dołącz nowe listy do istniejących',
     'bulk_mode_replace' => 'Zastąp istniejące listy nowymi',
 
-    'number_links' => ':number Link na tej liście|:number Linków na tej liście',
+    'number_links' => ':number link na tej liście|:number linków na tej liście',
 
-    'added_successfully' => 'Lista dodana pomyślnie.',
-    'updated_successfully' => 'Lista zaktualizowana pomyślnie.',
+    'added_successfully' => 'Lista została pomyślnie dodana.',
+    'updated_successfully' => 'Lista została pomyślnie zaktualizowana.',
     'deleted_successfully' => 'Lista została pomyślnie przeniesiona do kosza.',
-    'deletion_error' => 'Lista nie mogła zostać przeniesiona do kosza.',
+    'deletion_error' => 'Nie udało się przenieść listy do kosza.',
 ];
