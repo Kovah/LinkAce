@@ -28,8 +28,13 @@ class TagController extends Controller
 
         $tags = Tag::publicOnly()
             ->withCount(['links' => fn($query) => $query->publicOnly()])
-            ->orderBy($this->orderBy, $this->orderDir)
-            ->paginate(getPaginationLimit());
+            ->orderBy($this->orderBy, $this->orderDir);
+
+        if ($request->input('filter')) {
+            $tags = $tags->where('name', 'like', '%' . $request->input('filter') . '%');
+        }
+
+        $tags = $tags->paginate(getPaginationLimit());
 
         return view('guest.tags.index', [
             'pageTitle' => trans('tag.tags'),
