@@ -67,4 +67,22 @@ class TagControllerTest extends TestCase
         $this->get('guest/tags/1')->assertNotFound();
         $this->get('guest/tags/myTag')->assertNotFound();
     }
+
+    public function test_tag_search(): void
+    {
+        User::factory()->create();
+        Tag::factory()->create([
+            'name' => 'testTag1',
+            'visibility' => 1,
+        ]);
+        Tag::factory()->create([
+            'name' => 'testTag2',
+            'visibility' => 1,
+        ]);
+        $this->get('guest/tags?filter=testTag1')->assertSee('testTag1')
+            ->assertDontSee('testTag2');
+
+        $this->get('guest/tags?filter=testTag2')->assertSee('testTag2')
+            ->assertDontSee('testTag1');
+    }
 }
