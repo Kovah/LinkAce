@@ -20,6 +20,12 @@ starting to code.
 
 ---
 
+## Translations
+
+Translations are managed via our [Crowdin project](https://crowdin.com/project/linkace).
+Please do not create pull requests for any language files, but submit your suggestions via Crowdin.
+
+
 ## Development
 
 ### Minimum Requirements
