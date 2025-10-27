@@ -14,7 +14,7 @@ jobs:
       - uses: actions/checkout@v5
 
       - name: Use Node.js
-        uses: actions/setup-node@v5
+        uses: actions/setup-node@v6
         with:
           node-version: 20
 
@@ -60,7 +60,7 @@ jobs:
           filename: linkace.zip
           exclusions: '*.git*'
 
-      - uses: actions/upload-artifact@v4
+      - uses: actions/upload-artifact@v5
         with:
           name: linkace-package
           retention-days: 7
@@ -78,7 +78,7 @@ jobs:
           chmod 0666 .env
           mv docker-compose.production.yml docker-compose.yml
 
-      - uses: actions/upload-artifact@v4
+      - uses: actions/upload-artifact@v5
         with:
           name: linkace-docker
           retention-days: 7

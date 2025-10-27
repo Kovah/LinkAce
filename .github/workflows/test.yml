@@ -16,7 +16,7 @@ jobs:
       - uses: actions/checkout@v5
 
       - name: Use Node.js
-        uses: actions/setup-node@v5
+        uses: actions/setup-node@v6
         with:
           node-version: 22
 
@@ -26,13 +26,13 @@ jobs:
           npm run production
 
       - name: Upload built assets
-        uses: actions/upload-artifact@v4
+        uses: actions/upload-artifact@v5
         with:
           name: assets
           path: public/assets/dist
 
       - name: Upload mix manifest
-        uses: actions/upload-artifact@v4
+        uses: actions/upload-artifact@v5
         with:
           name: mix-manifest
           path: public/mix-manifest.json
@@ -50,12 +50,12 @@ jobs:
     steps:
       - uses: actions/checkout@v5
 
-      - uses: actions/download-artifact@v5
+      - uses: actions/download-artifact@v6
         with:
           name: assets
           path: public/assets/dist
 
-      - uses: actions/download-artifact@v5
+      - uses: actions/download-artifact@v6
         with:
           name: mix-manifest
           path: public
@@ -101,7 +101,7 @@ jobs:
 
       - name: Upload Laravel logs on failure
         if: ${{ failure() }}
-        uses: actions/upload-artifact@v4
+        uses: actions/upload-artifact@v5
         with:
           name: logs-test-php-${{ matrix.php-versions }}
           path: storage/logs/**
