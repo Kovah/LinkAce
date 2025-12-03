@@ -2,6 +2,7 @@
 
 namespace App\Helper;
 
+use App\Plugins\NewLinkToWaybackMachine;
 use Illuminate\Support\Facades\Config;
 use Illuminate\Support\Facades\Event;
 use Illuminate\Support\Facades\Log;
@@ -12,7 +13,7 @@ class PluginManager
 {
     public function registerPlugins()
     {
-        $plugins = Config::get('linkace.plugins');
+        $plugins = Config::get('linkace.plugins', [NewLinkToWaybackMachine::class]);
         foreach ($plugins as $plugin) {
             $parameterTypes = $this->getParameterTypesFor($plugin);
             foreach ($parameterTypes as $event) {
