@@ -112,11 +112,11 @@ class LinkRepository
             $link->tags()->detach();
             $link->lists()->detach();
             $link->delete();
+            LinkDeleted::dispatch($id);
         } catch (Exception $e) {
             Log::error($e);
             return false;
         }
-        LinkDeleted::dispatch($id);
         return true;
     }
 
