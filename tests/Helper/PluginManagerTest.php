@@ -49,5 +49,4 @@ class PluginManagerTest extends TestCase
         Event::assertListening(LinkCreated::class, NewLinkToWaybackMachine::class);
         Event::assertListening(LinkUpdated::class, SamplePlugin::class);
     }
-
 }
