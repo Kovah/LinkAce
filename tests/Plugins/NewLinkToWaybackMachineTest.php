@@ -25,7 +25,7 @@ class NewLinkToWaybackMachineTest extends TestCase
         ]);
 
         Queue::fake();
-        Config::set('plugins', [\App\Plugins\NewLinkToWaybackMachine::class]);
+        Config::set('linkace.plugins', [\App\Plugins\NewLinkToWaybackMachine::class]);
     }
 
     public function test_store_request_archives_links(): void
