@@ -27,7 +27,7 @@ class PluginManager
         $reflectionMethod = $reflectionClass->getMethod('handle');
         $parameters = $reflectionMethod->getParameters();
         if (count($parameters) !== 1) {
-            throw new \Exception('Plugins should have exactly 1 parameter');
+            throw new \Exception("Plugin {$pluginClass} should have exactly 1 parameter in its handle method");
         }
         return Reflector::getParameterClassNames($parameters[0]);
     }
