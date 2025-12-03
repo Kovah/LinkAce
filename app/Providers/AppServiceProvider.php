@@ -2,10 +2,8 @@
 
 namespace App\Providers;
 
-use App\Events\LinkCreated;
-use App\Plugins\NewLinkToWaybackMachine;
+use Facades\App\Helper\PluginManager;
 use Illuminate\Pagination\Paginator;
-use Illuminate\Support\Facades\Event;
 use Illuminate\Support\Facades\Schema;
 use Illuminate\Support\ServiceProvider;
 
@@ -22,7 +20,7 @@ class AppServiceProvider extends ServiceProvider
 
         Paginator::useBootstrap();
 
-        Event::listen(LinkCreated::class, NewLinkToWaybackMachine::class);
+        PluginManager::registerPlugins();
     }
 
     /**
