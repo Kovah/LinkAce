@@ -2,14 +2,18 @@
 
 namespace App\Helper;
 
+use App\Exceptions\PluginException;
 use App\Plugins\NewLinkToWaybackMachine;
 use Illuminate\Support\Facades\Config;
-use Illuminate\Support\Facades/Event;
+use Illuminate\Support\Facades\Event;
 use Illuminate\Support\Reflector;
 use ReflectionClass;
 
 class PluginManager
 {
+    /**
+     * @throws PluginException
+     */
     public function registerPlugins(): void
     {
         $plugins = Config::get('linkace.plugins', [NewLinkToWaybackMachine::class]);
@@ -21,13 +25,27 @@ class PluginManager
         }
     }
 
-    private function getParameterTypesFor(string $pluginClass): array
+    /**
+     * @throws PluginException
+     */
+    private function getParameterTypesFor(object|string $pluginClass): array
     {
-        $reflectionClass = new ReflectionClass($pluginClass);
-        $reflectionMethod = $reflectionClass->getMethod('handle');
+        try {
+            $reflectionClass = new ReflectionClass($pluginClass);
+        } catch (\ReflectionException $exception) {
+            throw PluginException::pluginClassNotFound($pluginClass);
+        }
+        try {
+            $reflectionMethod = $reflectionClass->getMethod('handle');
+        } catch (\ReflectionException $re) {
+            throw PluginException::noHandleFunction($pluginClass);
+        }
         $parameters = $reflectionMethod->getParameters();
-        if (count($parameters) !== 1) {
-            throw new \Exception("Plugin {$pluginClass} should have exactly 1 parameter in its handle method");
+        if (count($parameters) > 1) {
+            throw PluginException::tooManyParameters($pluginClass);
+        }
+        if (count($parameters) < 1) {
+            throw PluginException::noParameters($pluginClass);
         }
         return Reflector::getParameterClassNames($parameters[0]);
     }
