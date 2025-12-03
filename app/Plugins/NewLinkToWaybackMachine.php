@@ -8,7 +8,6 @@ use App\Jobs\SaveLinkToWaybackmachine;
 
 class NewLinkToWaybackMachine
 {
-    public static array $events = [LinkCreated::class];
     /**
      * Dispatch the SaveLinkToWaybackmachine job, if Internet Archive backups
      * are enabled.

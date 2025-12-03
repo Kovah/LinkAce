@@ -2,13 +2,12 @@
 
 namespace Tests\Plugins;
 
+use App\Events\LinkCreated;
 use App\Events\LinkUpdated;
 
 class SamplePlugin
 {
-    public static array $events = [LinkUpdated::class];
-
-    public function handle(LinkUpdated $event) : void
+    public function handle(LinkCreated|LinkUpdated $event) : void
     {
         // do nothing
     }
