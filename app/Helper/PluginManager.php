@@ -4,8 +4,7 @@ namespace App\Helper;
 
 use App\Plugins\NewLinkToWaybackMachine;
 use Illuminate\Support\Facades\Config;
-use Illuminate\Support\Facades\Event;
-use Illuminate\Support\Facades\Log;
+use Illuminate\Support\Facades/Event;
 use Illuminate\Support\Reflector;
 use ReflectionClass;
 
