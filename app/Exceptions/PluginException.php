@@ -2,27 +2,29 @@
 
 namespace App\Exceptions;
 
-class PluginException extends \Exception
+use Exception;
+
+class PluginException extends Exception
 {
-    public static function tooManyParameters(object|string $class)
+    public static function tooManyParameters(object|string $class): self
     {
         $className = self::resolveClassName($class);
         return new static("{$className}->handle() should contain exactly 1 parameter");
     }
 
-    public static function noParameters(object|string $class)
+    public static function noParameters(object|string $class): self
     {
         $className = self::resolveClassName($class);
         return new static("{$className}->handle() does not specify any events to listen for");
     }
 
-    public static function noHandleFunction(object|string $class)
+    public static function noHandleFunction(object|string $class): self
     {
         $className = self::resolveClassName($class);
         return new static("required function {$className}->handle() does not exist");
     }
 
-    public static function pluginClassNotFound(object|string $class)
+    public static function pluginClassNotFound(object|string $class): self
     {
         $className = self::resolveClassName($class);
         return new static("plugin {$className} not found");
@@ -32,6 +34,4 @@ class PluginException extends \Exception
     {
         return (is_object($class)) ? $class->getName() : $class;
     }
-
-
 }

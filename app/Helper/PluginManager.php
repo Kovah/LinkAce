@@ -8,6 +8,7 @@ use Illuminate\Support\Facades\Config;
 use Illuminate\Support\Facades\Event;
 use Illuminate\Support\Reflector;
 use ReflectionClass;
+use ReflectionException;
 
 class PluginManager
 {
@@ -16,7 +17,7 @@ class PluginManager
      */
     public function registerPlugins(): void
     {
-        $plugins = Config::get('linkace.plugins', [NewLinkToWaybackMachine::class]);
+        $plugins = Config::get('linkace.plugins', [NewLinkToWaybackMachine::class::class]);
         foreach ($plugins as $plugin) {
             $parameterTypes = $this->getParameterTypesFor($plugin);
             foreach ($parameterTypes as $event) {
@@ -32,12 +33,12 @@ class PluginManager
     {
         try {
             $reflectionClass = new ReflectionClass($pluginClass);
-        } catch (\ReflectionException $exception) {
+        } catch (ReflectionException) {
             throw PluginException::pluginClassNotFound($pluginClass);
         }
         try {
             $reflectionMethod = $reflectionClass->getMethod('handle');
-        } catch (\ReflectionException $re) {
+        } catch (ReflectionException) {
             throw PluginException::noHandleFunction($pluginClass);
         }
         $parameters = $reflectionMethod->getParameters();
