@@ -11,6 +11,5 @@ class LinkDeleted
 
     public function __construct(public int $link_id)
     {
-        // no op constructor
     }
 }

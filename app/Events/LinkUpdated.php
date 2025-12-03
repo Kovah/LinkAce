@@ -12,7 +12,5 @@ class LinkUpdated
 
     public function __construct(public Link $link)
     {
-        // no op constructor
     }
-
 }

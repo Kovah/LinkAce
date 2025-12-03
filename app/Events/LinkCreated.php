@@ -12,6 +12,5 @@ class LinkCreated
 
     public function __construct(public Link $link)
     {
-        // no op constructor
     }
 }
