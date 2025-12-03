@@ -37,4 +37,7 @@ return [
             'g:i A',
         ],
     ],
+    'plugins' => [
+        \App\Plugins\NewLinkToWaybackMachine::class,
+    ],
 ];

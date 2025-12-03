@@ -3,7 +3,7 @@
 namespace App\Providers;
 
 use App\Events\LinkCreated;
-use App\Listeners\ArchiveNewLinks;
+use App\Plugins\NewLinkToWaybackMachine;
 use Illuminate\Pagination\Paginator;
 use Illuminate\Support\Facades\Event;
 use Illuminate\Support\Facades\Schema;
@@ -22,7 +22,7 @@ class AppServiceProvider extends ServiceProvider
 
         Paginator::useBootstrap();
 
-        Event::listen(LinkCreated::class, ArchiveNewLinks::class);
+        Event::listen(LinkCreated::class, NewLinkToWaybackMachine::class);
     }
 
     /**

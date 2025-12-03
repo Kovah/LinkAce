@@ -1,15 +1,15 @@
 <?php
 
-namespace Tests\Listeners;
+namespace Tests\Plugins;
 
 use App\Jobs\SaveLinkToWaybackmachine;
 use App\Settings\UserSettings;
 use Illuminate\Support\Facades\Queue;
 use Tests\TestCase;
 
-class ArchiveNewLinksTest extends TestCase
+class NewLinkToWaybackMachineTest extends TestCase
 {
-    public function test_store_request_without_archive_backup(): void
+    public function test_store_request_doesnt_archive_without_being_enabled(): void
     {
         UserSettings::fake([
             'archive_backups_enabled' => false,
@@ -27,7 +27,7 @@ class ArchiveNewLinksTest extends TestCase
         Queue::assertNotPushed(SaveLinkToWaybackmachine::class);
     }
 
-    public function test_store_request_without_private_archive_backup(): void
+    public function test_store_request_doesnt_archive_private_links(): void
     {
         UserSettings::fake([
             'archive_backups_enabled' => true,

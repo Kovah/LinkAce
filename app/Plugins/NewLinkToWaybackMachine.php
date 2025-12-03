@@ -1,12 +1,12 @@
 <?php
 
-namespace App\Listeners;
+namespace App\Plugins;
 
 use App\Enums\ModelAttribute;
 use App\Events\LinkCreated;
 use App\Jobs\SaveLinkToWaybackmachine;
 
-class ArchiveNewLinks
+class NewLinkToWaybackMachine
 {
     /**
      * Dispatch the SaveLinkToWaybackmachine job, if Internet Archive backups
