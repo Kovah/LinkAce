@@ -21,7 +21,7 @@ class PluginManager
         }
     }
 
-    private function getParameterTypesFor(string $pluginClass)
+    private function getParameterTypesFor(string $pluginClass): array
     {
         $reflectionClass = new ReflectionClass($pluginClass);
         $reflectionMethod = $reflectionClass->getMethod('handle');
