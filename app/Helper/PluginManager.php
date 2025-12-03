@@ -10,7 +10,7 @@ use ReflectionClass;
 
 class PluginManager
 {
-    public function registerPlugins()
+    public function registerPlugins(): void
     {
         $plugins = Config::get('linkace.plugins', [NewLinkToWaybackMachine::class]);
         foreach ($plugins as $plugin) {
