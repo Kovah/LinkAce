@@ -17,7 +17,7 @@ class PluginManager
      */
     public function registerPlugins(): void
     {
-        $plugins = Config::get('linkace.plugins', [NewLinkToWaybackMachine::class::class]);
+        $plugins = Config::get('linkace.plugins', [NewLinkToWaybackMachine::class]);
         foreach ($plugins as $plugin) {
             $parameterTypes = $this->getParameterTypesFor($plugin);
             foreach ($parameterTypes as $event) {

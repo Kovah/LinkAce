@@ -13,7 +13,6 @@ use Tests\Mocks\NoParameterPlugin;
 use Tests\Mocks\SimplePlugin;
 use Tests\Mocks\TooManyParametersPlugin;
 use Tests\Mocks\UnionPlugin;
-use Tests\Plugins\SamplePlugin;
 use Tests\TestCase;
 
 class PluginManagerTest extends TestCase
