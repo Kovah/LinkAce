@@ -52,6 +52,36 @@ class TagControllerTest extends TestCase
             ]);
     }
 
+    public function test_index_view_with_sorting(): void
+    {
+        $tag1 = Tag::factory()->create([
+            'name' => 'Test Tag',
+            'user_id' => $this->user->id,
+        ]);
+        $tag2 = Tag::factory()->create([
+            'name' => 'Example Tag',
+            'user_id' => $this->user->id,
+        ]);
+
+        $linksGroups = Link::factory()->count(5)->create()->split(2);
+        $linksGroups[0]->each(fn($link) => $link->tags()->attach([$tag1->id]));
+        $linksGroups[1]->each(fn($link) => $link->tags()->attach([$tag2->id]));
+
+        $this->get('tags?orderBy=links_count&orderDir=desc')
+            ->assertOk()
+            ->assertSeeInOrder([
+                'Test Tag',
+                'Example Tag',
+            ]);
+
+        $this->get('tags?orderBy=links_count&orderDir=asc')
+            ->assertOk()
+            ->assertSeeInOrder([
+                'Example Tag',
+                'Test Tag',
+            ]);
+    }
+
     public function test_index_view_with_valid_filter_result(): void
     {
         Tag::factory()->create([

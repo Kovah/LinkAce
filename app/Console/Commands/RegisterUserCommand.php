@@ -10,7 +10,7 @@ use Illuminate\Validation\ValidationException;
 
 class RegisterUserCommand extends Command
 {
-    protected $signature = 'registeruser {name? : Username} {email? : User email address} {--admin}';
+    protected $signature = 'registeruser {name? : Username} {email? : User email address} {password? : Password for the user} {--admin}';
     protected $description = 'Register a new user with a given user name and an email address.';
 
     private ?string $userName;
@@ -27,6 +27,7 @@ class RegisterUserCommand extends Command
 
         $this->userName = $this->argument('name');
         $this->userEmail = $this->argument('email');
+        $this->userPassword = $this->argument('password');
 
         do {
             $this->askForUserDetails();
@@ -68,6 +69,8 @@ class RegisterUserCommand extends Command
             $this->userEmail = $this->ask('Please enter the user email address', $this->userEmail);
         }
 
-        $this->userPassword = $this->secret('Please enter a password for ' . $this->userName);
+        if (empty($this->userPassword) || $this->validationFailed) {
+            $this->userPassword = $this->ask('Please enter a password for ' . $this->userName, $this->userPassword);
+        }
     }
 }
