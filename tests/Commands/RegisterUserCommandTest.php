@@ -28,6 +28,25 @@ class RegisterUserCommandTest extends TestCase
         $this->assertEquals('test@linkace.org', $databaseUser->email);
     }
 
+    public function test_command_with_input_including_password(): void
+    {
+        User::factory()->create(); // Create admin dummy user
+
+        $this->artisan('registeruser', [
+            'name' => 'Test',
+            'email' => 'test@linkace.org',
+            'password' => 'testpassword',
+        ])
+            ->doesntExpectOutput('Please enter a password for Test')
+            ->expectsOutput('User Test registered.')
+            ->assertExitCode(0);
+
+        $databaseUser = User::latest('id')->first();
+
+        $this->assertEquals('Test', $databaseUser->name);
+        $this->assertEquals('test@linkace.org', $databaseUser->email);
+    }
+
     public function test_command_without_input(): void
     {
         User::factory()->create(); // Create admin dummy user
@@ -60,7 +79,6 @@ class RegisterUserCommandTest extends TestCase
             ->expectsQuestion('Please enter the user email address', 'test2@linkace.org')
             ->expectsQuestion('Please enter a password for Test2', 'testpassword')
             ->expectsOutput('User Test2 registered.')
-            ->assertExitCode(0)
-        ;
+            ->assertExitCode(0);
     }
 }
