@@ -11,10 +11,10 @@ jobs:
     name: Build final dist package
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v5
+      - uses: actions/checkout@v6
 
       - name: Use Node.js
-        uses: actions/setup-node@v5
+        uses: actions/setup-node@v6
         with:
           node-version: 24
 
@@ -32,7 +32,7 @@ jobs:
       - id: composer-cache
         run: echo "::set-output name=dir::$(composer config cache-files-dir)"
 
-      - uses: actions/cache@v4
+      - uses: actions/cache@v5
         with:
           path: ${{ steps.composer-cache.outputs.dir }}
           key: ${{ runner.os }}-composer-${{ hashFiles('**/composer.lock') }}
@@ -60,7 +60,7 @@ jobs:
           filename: linkace.zip
           exclusions: '*.git*'
 
-      - uses: actions/upload-artifact@v4
+      - uses: actions/upload-artifact@v6
         with:
           name: linkace-package
           retention-days: 7
@@ -70,7 +70,7 @@ jobs:
     name: Build final dist package for Docker setup
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v5
+      - uses: actions/checkout@v6
 
       - name: Rename files
         run: |
@@ -78,7 +78,7 @@ jobs:
           chmod 0666 .env
           mv docker-compose.production.yml docker-compose.yml
 
-      - uses: actions/upload-artifact@v4
+      - uses: actions/upload-artifact@v6
         with:
           name: linkace-docker
           retention-days: 7
