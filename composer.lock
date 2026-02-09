@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "eabd98cbb17ac454ff5648259f2be19c",
+    "content-hash": "5f04ed829dc15f716c59fdd8f3c1e17f",
     "packages": [
         {
             "name": "aws/aws-crt-php",
@@ -1096,16 +1096,16 @@
         },
         {
             "name": "firebase/php-jwt",
-            "version": "v6.11.1",
+            "version": "v7.0.2",
             "source": {
                 "type": "git",
                 "url": "https://github.com/firebase/php-jwt.git",
-                "reference": "d1e91ecf8c598d073d0995afa8cd5c75c6e19e66"
+                "reference": "5645b43af647b6947daac1d0f659dd1fbe8d3b65"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/firebase/php-jwt/zipball/d1e91ecf8c598d073d0995afa8cd5c75c6e19e66",
-                "reference": "d1e91ecf8c598d073d0995afa8cd5c75c6e19e66",
+                "url": "https://api.github.com/repos/firebase/php-jwt/zipball/5645b43af647b6947daac1d0f659dd1fbe8d3b65",
+                "reference": "5645b43af647b6947daac1d0f659dd1fbe8d3b65",
                 "shasum": ""
             },
             "require": {
@@ -1153,9 +1153,9 @@
             ],
             "support": {
                 "issues": "https://github.com/firebase/php-jwt/issues",
-                "source": "https://github.com/firebase/php-jwt/tree/v6.11.1"
+                "source": "https://github.com/firebase/php-jwt/tree/v7.0.2"
             },
-            "time": "2025-04-09T20:32:01+00:00"
+            "time": "2025-12-16T22:17:28+00:00"
         },
         {
             "name": "fruitcake/php-cors",
@@ -1837,21 +1837,21 @@
         },
         {
             "name": "kovah/laravel-socialite-oidc",
-            "version": "v0.5.0",
+            "version": "v0.6.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/Kovah/laravel-socialite-oidc.git",
-                "reference": "b3e14d9b797b12ff3c8526ece43020dc8af2ecdf"
+                "reference": "cc668336f60f4457efc2ebec512d2f519f4ca9ce"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/Kovah/laravel-socialite-oidc/zipball/b3e14d9b797b12ff3c8526ece43020dc8af2ecdf",
-                "reference": "b3e14d9b797b12ff3c8526ece43020dc8af2ecdf",
+                "url": "https://api.github.com/repos/Kovah/laravel-socialite-oidc/zipball/cc668336f60f4457efc2ebec512d2f519f4ca9ce",
+                "reference": "cc668336f60f4457efc2ebec512d2f519f4ca9ce",
                 "shasum": ""
             },
             "require": {
                 "ext-json": "*",
-                "firebase/php-jwt": "^6.11.1",
+                "firebase/php-jwt": "^6.4|^7.0",
                 "illuminate/http": "^9.0 | ^10.0 | ^11.0 | ^12.0",
                 "illuminate/support": "^9.0 | ^10.0 | ^11.0 | ^12.0",
                 "php": "^8.1",
@@ -1877,7 +1877,7 @@
                 },
                 {
                     "name": "Kevin Woblick",
-                    "email": "mail@woblick.dev",
+                    "email": "contact@woblick.dev",
                     "homepage": "https://woblick.dev",
                     "role": "Developer"
                 }
@@ -1893,7 +1893,7 @@
             ],
             "support": {
                 "issues": "https://github.com/Kovah/laravel-socialite-oidc/issues",
-                "source": "https://github.com/Kovah/laravel-socialite-oidc/tree/v0.5.0"
+                "source": "https://github.com/Kovah/laravel-socialite-oidc/tree/v0.6.0"
             },
             "funding": [
                 {
@@ -1901,7 +1901,7 @@
                     "type": "github"
                 }
             ],
-            "time": "2025-08-31T18:41:24+00:00"
+            "time": "2026-01-16T19:15:26+00:00"
         },
         {
             "name": "laracasts/flash",
@@ -14821,5 +14821,5 @@
         "ext-pdo": "*"
     },
     "platform-dev": {},
-    "plugin-api-version": "2.9.0"
+    "plugin-api-version": "2.6.0"
 }
