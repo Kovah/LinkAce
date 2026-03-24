@@ -34,14 +34,25 @@ class FeedControllerTest extends TestCase
 
     public function test_links_feed(): void
     {
-        $link = Link::factory()->create();
+        $link = Link::factory()->create([
+            'description' => ']]><svg xmlns="http://www.w3.org/2000/svg" onload="alert(document.documentURI)"/><![CDATA[',
+        ]);
 
         $otherUser = User::factory()->create();
         $otherLink = Link::factory()->for($otherUser)->create(['visibility' => ModelAttribute::VISIBILITY_PRIVATE]);
 
-        $response = $this->getAuthorized('links/feed');
-
-        $response->assertOk()->assertSee($link->url)->assertDontSee($otherLink->url);
+        $this->getAuthorized('links/feed')
+            ->assertOk()
+            ->assertSee($link->url)
+            ->assertSee(
+                '&amp;lt;svg xmlns=&amp;quot;http://www.w3.org/2000/svg&amp;quot; onload=&amp;quot;alert(document.documentURI)&amp;quot;/&amp;gt;',
+                false
+            )
+            ->assertDontSee(
+                ']]><svg xmlns="http://www.w3.org/2000/svg" onload="alert(document.documentURI)"/><![CDATA[',
+                false
+            )
+            ->assertDontSee($otherLink->url);
     }
 
     public function test_links_feed_with_auth_as_query_param(): void
@@ -59,14 +70,25 @@ class FeedControllerTest extends TestCase
 
     public function test_lists_feed(): void
     {
-        $list = LinkList::factory()->create();
+        $list = LinkList::factory()->create([
+            'description' => ']]><svg xmlns="http://www.w3.org/2000/svg" onload="alert(document.documentURI)"/><![CDATA[',
+        ]);
 
         $otherUser = User::factory()->create();
         $otherTList = LinkList::factory()->for($otherUser)->create(['visibility' => ModelAttribute::VISIBILITY_PRIVATE]);
 
-        $response = $this->getAuthorized('lists/feed');
-
-        $response->assertOk()->assertSee($list->name)->assertDontSee($otherTList->name);
+        $this->getAuthorized('lists/feed')
+            ->assertOk()
+            ->assertSee($list->name)
+            ->assertSee(
+                '&amp;lt;svg xmlns=&amp;quot;http://www.w3.org/2000/svg&amp;quot; onload=&amp;quot;alert(document.documentURI)&amp;quot;/&amp;gt;',
+                false
+            )
+            ->assertDontSee(
+                ']]><svg xmlns="http://www.w3.org/2000/svg" onload="alert(document.documentURI)"/><![CDATA[',
+                false
+            )
+            ->assertDontSee($otherTList->name);
     }
 
     public function test_list_link_feed(): void

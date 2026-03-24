@@ -128,6 +128,6 @@ class UserManagementController extends Controller
             'blocked_at' => $newValue,
         ];
 
-        Event::dispatch(AuditCustom::class, [$user]);
+        Event::dispatch(new AuditCustom($user));
     }
 }

@@ -1,7 +1,7 @@
 # DOCKERFILE DEVELOPMENT
 # Installs database clients for database exports, xDebug with PCov and Composer
 
-FROM docker.io/library/php:8.1-fpm-alpine
+FROM docker.io/library/php:8.2-fpm-alpine
 WORKDIR /app
 
 # Install package and PHP dependencies

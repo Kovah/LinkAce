@@ -5,16 +5,21 @@ namespace Tests\Controller\Models;
 use App\Events\LinkCreated;
 use App\Events\LinkDeleted;
 use App\Events\LinkUpdated;
+use App\Enums\ModelAttribute;
+use App\Jobs\SaveLinkToWaybackmachine;
 use App\Models\Link;
 use App\Models\LinkList;
 use App\Models\Tag;
 use App\Models\User;
 use App\Settings\UserSettings;
+use Illuminate\Database\Eloquent\Model;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Http\Client\ConnectionException;
 use Illuminate\Support\Facades\Event;
 use Illuminate\Support\Facades\Http;
 use Illuminate\Support\Facades\Queue;
+use Kovah\HtmlMeta\Facades\HtmlMeta;
+use Kovah\HtmlMeta\HtmlMetaResult;
 use Tests\Controller\Traits\PreparesTestData;
 use Tests\TestCase;
 
@@ -23,6 +28,8 @@ class LinkControllerTest extends TestCase
     use RefreshDatabase;
     use PreparesTestData;
 
+    private string $basicTestHtml;
+
     protected function setUp(): void
     {
         parent::setUp();
@@ -30,14 +37,14 @@ class LinkControllerTest extends TestCase
         $user = User::factory()->create();
         $this->actingAs($user);
 
-        $basicTestHtml = '<!DOCTYPE html><head>' .
+        $this->basicTestHtml = '<!DOCTYPE html><head>' .
             '<title>Example Title</title>' .
             '<meta name="description" content="This an example description">' .
             '</head></html>';
 
         Http::preventStrayRequests();
         Http::fake([
-            'example.com' => Http::response($basicTestHtml),
+            'example.com' => Http::response($this->basicTestHtml),
         ]);
 
         Queue::fake();
@@ -203,6 +210,7 @@ class LinkControllerTest extends TestCase
 
         $this->assertDatabaseCount('links', 0);
     }
+
     public function test_store_request_with_huge_thumbnail(): void
     {
         $img = 'https://picsum.photos/1000/500';
@@ -249,6 +257,62 @@ class LinkControllerTest extends TestCase
         Event::assertDispatched(LinkCreated::class);
     }
 
+    public function test_store_request_with_foreign_private_tag(): void
+    {
+        $otherUser = User::factory()->create();
+        $tag = Tag::factory()->for($otherUser)->create([
+            'visibility' => ModelAttribute::VISIBILITY_PRIVATE,
+        ]);
+
+        $this->post('links', [
+            'url' => 'https://example.com',
+            'title' => null,
+            'description' => null,
+            'lists' => null,
+            'tags' => json_encode([$tag->id]),
+            'visibility' => 1,
+        ]);
+
+        // Existing tag should not be added to link
+        $this->assertDatabaseCount('link_tags', 0);
+    }
+
+    public function test_store_request_for_private_ip(): void
+    {
+        $this->post('links', [
+            'url' => 'http://192.168.0.100/admin',
+            'title' => null,
+            'description' => null,
+            'lists' => null,
+            'tags' => null,
+            'visibility' => 1,
+        ])->assertRedirect('links/1');
+
+        config()->set('html-meta.block_private_ips', false);
+
+        HtmlMeta::shouldReceive('forUrl')
+            ->once()
+            ->with('http://192.168.0.200/dashboard')
+            ->andReturn(new HtmlMetaResult([
+                'title' => 'Example Title',
+                'description' => 'This an example description',
+            ]));
+
+        $this->post('links', [
+            'url' => 'http://192.168.0.200/dashboard',
+            'title' => null,
+            'description' => null,
+            'lists' => null,
+            'tags' => null,
+            'visibility' => 1,
+        ])->assertRedirect('links/2');
+
+        $this->assertDatabaseHas('links', [
+           'id' => 2,
+           'title' => 'Example Title',
+        ]);
+    }
+
     public function test_validation_error_for_create(): void
     {
         $this->post('links', [
@@ -260,9 +324,16 @@ class LinkControllerTest extends TestCase
 
     public function test_detail_view(): void
     {
-        $this->createTestLinks();
+        /** @var Link $link */
+        [$link, $link2, $link3, $otherUser] = $this->createTestLinks();
 
-        $this->get('links/1')->assertOk()->assertSee('https://public-link.com');
+        $link->notes()->create([
+            'user_id' => $otherUser->id,
+            'note' => 'My private Example Note',
+            'visibility' => ModelAttribute::VISIBILITY_PRIVATE,
+        ]);
+
+        $this->get('links/1')->assertOk()->assertSee('https://public-link.com')->assertDontSee('My private Example Note');
         $this->get('links/2')->assertOk()->assertSee('https://internal-link.com')
             ->assertSee('<strong>Markdown</strong> test', false);
         $this->get('links/3')->assertForbidden();
@@ -363,7 +434,7 @@ class LinkControllerTest extends TestCase
             'visibility' => 1,
             'check_disabled' => '0',
         ])->assertSessionHasErrors([
-            'url' => 'The url format is invalid.'
+            'url' => 'The url format is invalid.',
         ]);
     }
 

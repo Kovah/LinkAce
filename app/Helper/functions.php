@@ -227,6 +227,17 @@ function escapeSearchQuery(string $query): string
 }
 
 /**
+ * Properly escape HTML and CDATA blocks for usage in XML
+ *
+ * @param string|null $text
+ * @return string
+ */
+function escapeXmlString(string|null $text): string
+{
+    return e(str_replace(['<![CDATA[', ']]>',], '', $text ?? ''));
+}
+
+/**
  * Set up an HTTP request with a random user agent.
  *
  * @param int $timeout

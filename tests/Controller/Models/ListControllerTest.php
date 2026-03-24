@@ -53,6 +53,36 @@ class ListControllerTest extends TestCase
             ]);
     }
 
+    public function test_index_view_with_sorting(): void
+    {
+        $list1 = LinkList::factory()->create([
+            'name' => 'Test List',
+            'user_id' => $this->user->id,
+        ]);
+        $list2 = LinkList::factory()->create([
+            'name' => 'Example List',
+            'user_id' => $this->user->id,
+        ]);
+
+        $linksGroups = Link::factory()->count(5)->create()->split(2);
+        $linksGroups[0]->each(fn($link) => $link->lists()->attach([$list1->id]));
+        $linksGroups[1]->each(fn($link) => $link->lists()->attach([$list2->id]));
+
+        $this->get('lists?orderBy=links_count&orderDir=desc')
+            ->assertOk()
+            ->assertSeeInOrder([
+                'Test List',
+                'Example List',
+            ]);
+
+        $this->get('lists?orderBy=links_count&orderDir=asc')
+            ->assertOk()
+            ->assertSeeInOrder([
+                'Example List',
+                'Test List',
+            ]);
+    }
+
     public function test_index_view_with_valid_filter_result(): void
     {
         LinkList::factory()->create([

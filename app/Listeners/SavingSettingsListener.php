@@ -29,7 +29,7 @@ class SavingSettingsListener
                 'payload' => $change,
             ];
 
-            Event::dispatch(AuditCustom::class, [$setting]);
+            Event::dispatch(new AuditCustom($setting));
         }
     }
 }

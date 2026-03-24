@@ -6,10 +6,13 @@ use App\Helper\UpdateHelper;
 use App\Models\Link;
 use App\Models\LinkList;
 use App\Models\Tag;
-use App\Rules\NoPrivateIpRule;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 use Masterminds\HTML5;
+use Kovah\HtmlMeta\Exceptions\DisallowedIpException;
+use Kovah\HtmlMeta\Exceptions\InvalidUrlException;
+use Kovah\HtmlMeta\Exceptions\UnreachableUrlException;
+use Kovah\HtmlMeta\Facades\HtmlMeta as HtmlMetaFacade;
 
 class FetchController extends Controller
 {
@@ -96,28 +99,44 @@ class FetchController extends Controller
     public function htmlKeywordsFromUrl(Request $request): JsonResponse
     {
         $request->validate([
-            'url' => ['url', new NoPrivateIpRule],
+            'url' => ['url'],
         ]);
 
         $url = $request->input('url');
-        $newRequest = setupHttpRequest(3);
-        $response = $newRequest->get($url);
 
-        if ($response->successful()) {
-            $html5 = new HTML5();
-            $dom = $html5->loadHTML($response->body());
-            $keywords = [];
-            /** @var \DOMElement $metaTag */
-            foreach ($dom->getElementsByTagName('meta') as $metaTag) {
-                if (strtolower($metaTag->getAttribute('name')) === 'keywords') {
-                    $keywords = explode(',', $metaTag->getAttributeNode('content')?->value);
-                    $keywords = array_map(fn($keyword) => trim(e($keyword)), $keywords);
-                    array_push($keywords, ...$keywords);
-                }
-            }
-            return response()->json(['keywords' => $keywords]);
+        try {
+            $response = HtmlMetaFacade::forUrl($url)->getResponse();
+        } catch (DisallowedIpException|InvalidUrlException|UnreachableUrlException) {
+            return response()->json(['keywords' => null]);
         }
 
-        return response()->json(['keywords' => null]);
+        if (!$response?->successful()) {
+            return response()->json(['keywords' => null]);
+        }
+
+        return response()->json(['keywords' => $this->extractKeywords($response->body())]);
+    }
+
+    /**
+     * @return array<int, string>
+     */
+    protected function extractKeywords(string $html): array
+    {
+        $html5 = new HTML5();
+        $dom = $html5->loadHTML($html);
+        $keywords = [];
+
+        /** @var \DOMElement $metaTag */
+        foreach ($dom->getElementsByTagName('meta') as $metaTag) {
+            if (strtolower($metaTag->getAttribute('name')) !== 'keywords') {
+                continue;
+            }
+
+            $keywords = explode(',', $metaTag->getAttributeNode('content')?->value);
+            $keywords = array_map(fn($keyword) => trim(e($keyword)), $keywords);
+            array_push($keywords, ...$keywords);
+        }
+
+        return $keywords;
     }
 }

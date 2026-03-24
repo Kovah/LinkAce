@@ -17,6 +17,7 @@ return new class extends Migration {
     public function down(): void
     {
         Schema::table('failed_jobs', function (Blueprint $table) {
+            $table->dropUnique('failed_jobs_uuid_unique');
             $table->dropColumn(['uuid']);
             $table->text('payload')->change();
             $table->text('exception')->change();

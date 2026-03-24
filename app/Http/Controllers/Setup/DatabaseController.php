@@ -10,6 +10,7 @@ use Illuminate\Http\RedirectResponse;
 use Illuminate\Support\Facades\Artisan;
 use Illuminate\Support\Facades\Config;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Schema;
 use Illuminate\Support\Facades\File;
 use Illuminate\Support\Facades\Log;
 use PDOException;
@@ -129,10 +130,9 @@ class DatabaseController extends Controller
     protected function databaseHasData(): bool
     {
         try {
-            $presentTables = DB::connection($this->connection)
-                ->getDoctrineSchemaManager()
-                ->listTableNames();
-        } catch (PDOException|\Doctrine\DBAL\Exception $e) {
+            $presentTables = Schema::connection($this->connection)
+                ->getTableListing();
+        } catch (PDOException $e) {
             Log::error($e->getMessage());
             return false;
         }

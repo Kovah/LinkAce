@@ -7,10 +7,10 @@
     @foreach($tags as $tag)
         <entry>
             <id>{{ route('tags.show', ['tag' => $tag]) }}</id>
-            <title><![CDATA[{{ $tag->name }}]]></title>
+            <title><![CDATA[{{ escapeXmlString($tag->name) }}]]></title>
             <link rel="alternate" href="{{ route('tags.show', ['tag' => $tag]) }}" />
             <author>
-                <name> <![CDATA[{{ $tag->user->name }}]]></name>
+                <name><![CDATA[{{ $tag->user->name }}]]></name>
             </author>
             <updated>{{ $tag->updated_at->toRfc3339String() }}</updated>
         </entry>

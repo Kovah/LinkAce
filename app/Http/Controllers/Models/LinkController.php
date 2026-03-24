@@ -117,6 +117,9 @@ class LinkController extends Controller
             'tags' => function ($query) {
                 $query->visibleForUser();
             },
+            'notes' => function ($query) {
+                $query->visibleForUser();
+            },
         ]);
         return view('models.links.show', [
             'pageTitle' => trans('link.link') . ': ' . $link->shortTitle(),

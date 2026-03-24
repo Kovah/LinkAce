@@ -2,7 +2,7 @@
 
 # ================================
 # PHP Dependency Setup
-FROM docker.io/linkace/base-image:2.x-php-8.4 AS builder
+FROM docker.io/linkace/base-image:2.x-php-8.5 AS builder
 WORKDIR /app
 
 # Pull composer and install required packages
@@ -38,6 +38,7 @@ RUN mv vendor/spatie/laravel-backup/resources/lang/de vendor/spatie/laravel-back
 
 # ================================
 # Compile all assets
+# Node 22 is still used to support ARMv7
 FROM docker.io/library/node:22 AS npm_builder
 WORKDIR /srv
 
@@ -49,7 +50,7 @@ RUN npm run production
 
 # ================================
 # Prepare the final image
-FROM docker.io/linkace/base-image:2.x-php-8.4
+FROM docker.io/linkace/base-image:2.x-php-8.5
 
 LABEL org.opencontainers.image.title="LinkAce"
 LABEL org.opencontainers.image.authors="Kevin Woblick <mail@woblick.dev>"

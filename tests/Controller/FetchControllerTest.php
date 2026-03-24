@@ -8,6 +8,8 @@ use App\Models\Tag;
 use App\Models\User;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Support\Facades\Http;
+use Kovah\HtmlMeta\Exceptions\DisallowedIpException;
+use Kovah\HtmlMeta\Facades\HtmlMeta;
 use Tests\TestCase;
 
 class FetchControllerTest extends TestCase
@@ -121,7 +123,21 @@ class FetchControllerTest extends TestCase
             'url' => 'http://192.168.0.126/admin',
         ]);
 
-        $response->assertSessionHasErrors(['url' => 'The given URL must not contain a private IP address.']);
+        $response->assertOk()->assertJson(['keywords' => null]);
+    }
+
+    public function test_get_keywords_for_hostname_resolving_to_private_ip_url(): void
+    {
+        HtmlMeta::shouldReceive('forUrl')
+            ->once()
+            ->with('http://internal-service')
+            ->andThrow(new DisallowedIpException('http://internal-service resolves to a non-public IP address.'));
+
+        $response = $this->post('fetch/keywords-for-url', [
+            'url' => 'http://internal-service',
+        ]);
+
+        $response->assertOk()->assertJson(['keywords' => null]);
     }
 
     public function test_get_keywords_for_public_ip_url(): void

@@ -3,6 +3,7 @@
 namespace App\Helper;
 
 use Illuminate\Support\Facades\Log;
+use Kovah\HtmlMeta\Exceptions\DisallowedIpException;
 use Kovah\HtmlMeta\Exceptions\InvalidUrlException;
 use Kovah\HtmlMeta\Exceptions\UnreachableUrlException;
 
@@ -40,7 +41,8 @@ class HtmlMeta
                 flash(trans('link.added_connection_error'), 'warning');
             }
             return $this->fallback;
-        } catch (UnreachableUrlException $e) {
+        } catch (DisallowedIpException|UnreachableUrlException $e) {
+            // DisallowedIpException catches all private and loopback IPs as well as hostnames resolving to those IPs
             Log::warning($url . ': ' . $e->getMessage());
             if ($flashAlerts) {
                 flash(trans('link.added_request_error'), 'warning');
