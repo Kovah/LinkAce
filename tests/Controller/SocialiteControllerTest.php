@@ -31,6 +31,10 @@ class SocialiteControllerTest extends TestCase
         // SSO and corresponding driver enabled
         config()->set('services.auth0.enabled', true);
         $this->get('auth/sso/auth0/redirect')->assertRedirect('https://sso-provider.com/auth');
+
+        // Proxy auth takes precedence and disables SSO
+        config()->set('auth.proxy.enabled', true);
+        $this->get('auth/sso/auth0/redirect')->assertStatus(403)->assertSee('Login unauthorized');
     }
 
     public function test_regular_sso_login(): void

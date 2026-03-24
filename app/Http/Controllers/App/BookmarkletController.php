@@ -60,6 +60,10 @@ class BookmarkletController extends Controller
     // Return a special version of the login form made for the Bookmarklet.
     public function getLoginForm(): View
     {
+        if (authProxyEnabled()) {
+            abort(403, trans('auth.proxy_missing_identity'));
+        }
+
         return view('app.bookmarklet.login');
     }
 

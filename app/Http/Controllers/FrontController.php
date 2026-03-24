@@ -20,6 +20,10 @@ class FrontController extends Controller
                 return redirect()->route('guest.links.index');
             }
 
+            if (config('auth.proxy.enabled') === true) {
+                abort(403, trans('auth.proxy_missing_identity'));
+            }
+
             return redirect()->route('login');
         }
 

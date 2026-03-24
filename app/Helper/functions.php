@@ -280,3 +280,27 @@ function guestRoutes(): array
 {
     return ['guest/*', 'login', 'forgot-password', 'reset-password/*', 'two-factor-challenge', 'email/verify'];
 }
+
+/**
+ * Check if reverse proxy authentication is enabled.
+ */
+function authProxyEnabled(): bool
+{
+    return config('auth.proxy.enabled') === true;
+}
+
+/**
+ * Check if SSO is the active login method.
+ */
+function ssoLoginEnabled(): bool
+{
+    return !authProxyEnabled() && config('auth.sso.enabled') === true;
+}
+
+/**
+ * Check if local database authentication is the active login method.
+ */
+function databaseLoginEnabled(): bool
+{
+    return !authProxyEnabled() && config('auth.sso.enabled') !== true;
+}

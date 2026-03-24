@@ -1,4 +1,4 @@
-<div class="card {{ config('auth.sso.regular_login_disabled') ? '' : 'mt-4' }}">
+<div class="card {{ databaseLoginEnabled() ? 'mt-4' : '' }}">
     <div class="card-body">
         <h2 class="h6">@lang('linkace.login_with')</h2>
         <div class="d-flex flex-wrap gap-2">

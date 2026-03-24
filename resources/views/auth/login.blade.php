@@ -8,10 +8,10 @@
                 <div class="alert alert-info small">@lang('linkace.demo_login_hint')</div>
             @endif
             @include('partials.alerts')
-            @if(config('auth.sso.regular_login_disabled') !== true)
+            @if(databaseLoginEnabled())
                 @include('auth.login-form')
             @endif
-            @if(config('auth.sso.enabled') === true)
+            @if(ssoLoginEnabled())
                 @include('auth.oauth')
             @endif
         </div>

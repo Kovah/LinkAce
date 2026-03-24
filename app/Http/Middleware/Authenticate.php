@@ -3,6 +3,7 @@
 namespace App\Http\Middleware;
 
 use Closure;
+use Illuminate\Auth\AuthenticationException;
 use Illuminate\Auth\Middleware\Authenticate as IlluminateAuthenticate;
 
 class Authenticate extends IlluminateAuthenticate
@@ -13,7 +14,15 @@ class Authenticate extends IlluminateAuthenticate
             $request->headers->set('Authorization', 'Bearer ' . $request->api_token);
         }
 
-        $this->authenticate($request, $guards);
+        try {
+            $this->authenticate($request, $guards);
+        } catch (AuthenticationException $exception) {
+            if (config('auth.proxy.enabled') === true && !$request->is('api/*')) {
+                abort(403, trans('auth.proxy_missing_identity'));
+            }
+
+            throw $exception;
+        }
 
         if (!$request->is('api/*') && $request->user()->isSystemUser()) {
             abort(403, trans('user.system_user_locked'));

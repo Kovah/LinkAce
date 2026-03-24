@@ -79,7 +79,7 @@ class SocialiteController extends Controller
 
     protected function authorizeOauthRequest(string $provider): void
     {
-        if (config('auth.sso.enabled') !== true || !in_array($provider, config('auth.sso.providers'))) {
+        if (!ssoLoginEnabled() || !in_array($provider, config('auth.sso.providers'))) {
             abort(403, trans('auth.unauthorized'));
         }
 

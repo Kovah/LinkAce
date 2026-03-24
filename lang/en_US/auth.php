@@ -19,6 +19,8 @@ return [
     'failed' => 'These credentials do not match our records.',
     'throttle' => 'Too many login attempts. Please try again in :seconds seconds.',
     'unauthorized' => 'Login unauthorized. Please contact your administrator.',
+    'login_disabled' => 'This login method is disabled by the current authentication configuration.',
+    'proxy_missing_identity' => 'Authentication is handled by a reverse proxy, but no trusted user identity was provided with this request.',
 
     'confirm_title' => 'Confirmation required',
     'confirm' => 'Please confirm this action using your current password.',

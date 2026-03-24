@@ -46,6 +46,30 @@ return [
 
     /*
     |--------------------------------------------------------------------------
+    | Authentication Proxy Settings
+    |--------------------------------------------------------------------------
+    */
+
+    'proxy' => [
+        'enabled' => env('AUTH_PROXY_ENABLED', false),
+        'auto_create_users' => env('AUTH_PROXY_AUTO_CREATE_USERS', false),
+        'update_user_details' => env('AUTH_PROXY_UPDATE_USER_DETAILS', true),
+        'id_headers' => array_filter(array_map('trim', explode(',', env(
+            'AUTH_PROXY_ID_HEADERS',
+            'X-Auth-Request-Preferred-Username,X-Auth-Request-User,Remote-User',
+        )))),
+        'email_headers' => array_filter(array_map('trim', explode(',', env(
+            'AUTH_PROXY_EMAIL_HEADERS',
+            'X-Auth-Request-Email,Remote-Email',
+        )))),
+        'name_headers' => array_filter(array_map('trim', explode(',', env(
+            'AUTH_PROXY_NAME_HEADERS',
+            'X-Auth-Request-User,Remote-Name,Remote-User',
+        )))),
+    ],
+
+    /*
+    |--------------------------------------------------------------------------
     | Authentication Guards
     |--------------------------------------------------------------------------
     |
