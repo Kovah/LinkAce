@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "a2c2c815406195084cc22c92b7c388ee",
+    "content-hash": "6556faca969dac5d4f7bbd54518d3bde",
     "packages": [
         {
             "name": "aws/aws-crt-php",
@@ -1764,28 +1764,28 @@
         },
         {
             "name": "kovah/laravel-html-meta",
-            "version": "v4.3.0",
+            "version": "v5.0.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/Kovah/laravel-html-meta.git",
-                "reference": "02e920428563345363766d20a8e0f26a90f42a71"
+                "reference": "f5957c226a848cb9708b71af23634e80011abd62"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/Kovah/laravel-html-meta/zipball/02e920428563345363766d20a8e0f26a90f42a71",
-                "reference": "02e920428563345363766d20a8e0f26a90f42a71",
+                "url": "https://api.github.com/repos/Kovah/laravel-html-meta/zipball/f5957c226a848cb9708b71af23634e80011abd62",
+                "reference": "f5957c226a848cb9708b71af23634e80011abd62",
                 "shasum": ""
             },
             "require": {
                 "ext-iconv": "*",
                 "guzzlehttp/guzzle": "^7.2",
-                "illuminate/http": "^9.0 | ^10.0 | ^11.0 | ^12.0 | ^13.0",
-                "illuminate/support": "^9.0 | ^10.0 | ^11.0 | ^12.0 | ^13.0",
-                "php": "^8.0"
+                "illuminate/http": "^11.0 | ^12.0 | ^13.0",
+                "illuminate/support": "^11.0 | ^12.0 | ^13.0",
+                "php": "^8.2"
             },
             "require-dev": {
                 "mockery/mockery": "^1.4.2",
-                "orchestra/testbench": "^7.0 | ^v8.0 | ^9.0 | ^10.0 | ^11.0",
+                "orchestra/testbench": "^9.0 | ^10.0 | ^11.0",
                 "phpunit/phpunit": "^9.0 | ^10.0 | ^11.0 | ^12.5.12"
             },
             "type": "library",
@@ -1826,7 +1826,7 @@
             ],
             "support": {
                 "issues": "https://github.com/Kovah/laravel-html-meta/issues",
-                "source": "https://github.com/Kovah/laravel-html-meta/tree/v4.3.0"
+                "source": "https://github.com/Kovah/laravel-html-meta/tree/v5.0.0"
             },
             "funding": [
                 {
@@ -1834,7 +1834,7 @@
                     "type": "github"
                 }
             ],
-            "time": "2026-03-24T15:02:53+00:00"
+            "time": "2026-03-24T15:14:30+00:00"
         },
         {
             "name": "kovah/laravel-socialite-oidc",
@@ -2026,16 +2026,16 @@
         },
         {
             "name": "laravel/framework",
-            "version": "v11.50.0",
+            "version": "v11.51.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/laravel/framework.git",
-                "reference": "c761f591209b45f56c1317ecbff0b04c89cf7ba2"
+                "reference": "c8f9a04594b7044a189a3194cfb3594251eb74e5"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/laravel/framework/zipball/c761f591209b45f56c1317ecbff0b04c89cf7ba2",
-                "reference": "c761f591209b45f56c1317ecbff0b04c89cf7ba2",
+                "url": "https://api.github.com/repos/laravel/framework/zipball/c8f9a04594b7044a189a3194cfb3594251eb74e5",
+                "reference": "c8f9a04594b7044a189a3194cfb3594251eb74e5",
                 "shasum": ""
             },
             "require": {
@@ -2237,20 +2237,20 @@
                 "issues": "https://github.com/laravel/framework/issues",
                 "source": "https://github.com/laravel/framework"
             },
-            "time": "2026-03-17T19:35:22+00:00"
+            "time": "2026-03-26T14:54:53+00:00"
         },
         {
             "name": "laravel/prompts",
-            "version": "v0.3.15",
+            "version": "v0.3.16",
             "source": {
                 "type": "git",
                 "url": "https://github.com/laravel/prompts.git",
-                "reference": "4bb8107ec97651fd3f17f897d6489dbc4d8fb999"
+                "reference": "11e7d5f93803a2190b00e145142cb00a33d17ad2"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/laravel/prompts/zipball/4bb8107ec97651fd3f17f897d6489dbc4d8fb999",
-                "reference": "4bb8107ec97651fd3f17f897d6489dbc4d8fb999",
+                "url": "https://api.github.com/repos/laravel/prompts/zipball/11e7d5f93803a2190b00e145142cb00a33d17ad2",
+                "reference": "11e7d5f93803a2190b00e145142cb00a33d17ad2",
                 "shasum": ""
             },
             "require": {
@@ -2294,9 +2294,9 @@
             "description": "Add beautiful and user-friendly forms to your command-line applications.",
             "support": {
                 "issues": "https://github.com/laravel/prompts/issues",
-                "source": "https://github.com/laravel/prompts/tree/v0.3.15"
+                "source": "https://github.com/laravel/prompts/tree/v0.3.16"
             },
-            "time": "2026-03-17T13:45:17+00:00"
+            "time": "2026-03-23T14:35:33+00:00"
         },
         {
             "name": "laravel/sanctum",
@@ -2776,16 +2776,16 @@
         },
         {
             "name": "league/flysystem",
-            "version": "3.32.0",
+            "version": "3.33.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/thephpleague/flysystem.git",
-                "reference": "254b1595b16b22dbddaaef9ed6ca9fdac4956725"
+                "reference": "570b8871e0ce693764434b29154c54b434905350"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/thephpleague/flysystem/zipball/254b1595b16b22dbddaaef9ed6ca9fdac4956725",
-                "reference": "254b1595b16b22dbddaaef9ed6ca9fdac4956725",
+                "url": "https://api.github.com/repos/thephpleague/flysystem/zipball/570b8871e0ce693764434b29154c54b434905350",
+                "reference": "570b8871e0ce693764434b29154c54b434905350",
                 "shasum": ""
             },
             "require": {
@@ -2853,9 +2853,9 @@
             ],
             "support": {
                 "issues": "https://github.com/thephpleague/flysystem/issues",
-                "source": "https://github.com/thephpleague/flysystem/tree/3.32.0"
+                "source": "https://github.com/thephpleague/flysystem/tree/3.33.0"
             },
-            "time": "2026-02-25T17:01:41+00:00"
+            "time": "2026-03-25T07:59:30+00:00"
         },
         {
             "name": "league/flysystem-aws-s3-v3",
@@ -10461,33 +10461,33 @@
         },
         {
             "name": "laravel/tinker",
-            "version": "v2.11.1",
+            "version": "v3.0.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/laravel/tinker.git",
-                "reference": "c9f80cc835649b5c1842898fb043f8cc098dd741"
+                "reference": "cc74081282ba2e3dae1f0068ccb330370d24634e"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/laravel/tinker/zipball/c9f80cc835649b5c1842898fb043f8cc098dd741",
-                "reference": "c9f80cc835649b5c1842898fb043f8cc098dd741",
+                "url": "https://api.github.com/repos/laravel/tinker/zipball/cc74081282ba2e3dae1f0068ccb330370d24634e",
+                "reference": "cc74081282ba2e3dae1f0068ccb330370d24634e",
                 "shasum": ""
             },
             "require": {
-                "illuminate/console": "^6.0|^7.0|^8.0|^9.0|^10.0|^11.0|^12.0",
-                "illuminate/contracts": "^6.0|^7.0|^8.0|^9.0|^10.0|^11.0|^12.0",
-                "illuminate/support": "^6.0|^7.0|^8.0|^9.0|^10.0|^11.0|^12.0",
-                "php": "^7.2.5|^8.0",
-                "psy/psysh": "^0.11.1|^0.12.0",
-                "symfony/var-dumper": "^4.3.4|^5.0|^6.0|^7.0|^8.0"
+                "illuminate/console": "^8.0|^9.0|^10.0|^11.0|^12.0|^13.0",
+                "illuminate/contracts": "^8.0|^9.0|^10.0|^11.0|^12.0|^13.0",
+                "illuminate/support": "^8.0|^9.0|^10.0|^11.0|^12.0|^13.0",
+                "php": "^8.1",
+                "psy/psysh": "^0.12.0",
+                "symfony/var-dumper": "^5.4|^6.0|^7.0|^8.0"
             },
             "require-dev": {
                 "mockery/mockery": "~1.3.3|^1.4.2",
                 "phpstan/phpstan": "^1.10",
-                "phpunit/phpunit": "^8.5.8|^9.3.3|^10.0"
+                "phpunit/phpunit": "^10.5|^11.5"
             },
             "suggest": {
-                "illuminate/database": "The Illuminate Database package (^6.0|^7.0|^8.0|^9.0|^10.0|^11.0|^12.0)."
+                "illuminate/database": "The Illuminate Database package (^8.0|^9.0|^10.0|^11.0|^12.0|^13.0)."
             },
             "type": "library",
             "extra": {
@@ -10495,6 +10495,9 @@
                     "providers": [
                         "Laravel\\Tinker\\TinkerServiceProvider"
                     ]
+                },
+                "branch-alias": {
+                    "dev-master": "3.x-dev"
                 }
             },
             "autoload": {
@@ -10521,9 +10524,9 @@
             ],
             "support": {
                 "issues": "https://github.com/laravel/tinker/issues",
-                "source": "https://github.com/laravel/tinker/tree/v2.11.1"
+                "source": "https://github.com/laravel/tinker/tree/v3.0.0"
             },
-            "time": "2026-02-06T14:12:35+00:00"
+            "time": "2026-03-17T14:53:17+00:00"
         },
         {
             "name": "mockery/mockery",
