@@ -151,9 +151,10 @@ return [
     | Trusted Proxies
     |--------------------------------------------------------------------------
     |
-    | Specify which proxies should be trusted by default. As it's unknown which
-    | proxy ist used in front of LinkAce, all are allowed by default.
-    | Also see App\Http\Middleware\TrustProxies
+    | Specify which reverse proxies should be trusted. Leave null (the default)
+    | if LinkAce is accessed directly without a reverse proxy. Set to the proxy
+    | IP, a comma-separated list of IPs, or '*' to trust the immediate upstream
+    | connection. Also see App\Http\Middleware\TrustProxies
     |
     */
 
