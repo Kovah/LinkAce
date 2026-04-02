@@ -89,6 +89,44 @@ class CheckLinksCommandTest extends TestCase
         );
     }
 
+    public function test_check_skips_private_ip_links(): void
+    {
+        Http::fake();
+        Notification::fake();
+
+        $user = User::factory()->create();
+        Link::factory()->for($user)->create(['url' => 'http://192.168.1.1/']);
+        Link::factory()->for($user)->create(['url' => 'http://127.0.0.1/']);
+        Link::factory()->for($user)->create(['url' => 'http://169.254.169.254/latest/meta-data/']);
+        Link::factory()->for($user)->create(['url' => 'http://[::1]/']);
+
+        config(['html-meta.block_private_ips' => true]);
+
+        $this->artisan('links:check --noWait');
+
+        Http::assertNothingSent();
+        Notification::assertNothingSent();
+
+        // Status and last_checked_at should remain untouched
+        $this->assertDatabaseMissing('links', ['status' => Link::STATUS_BROKEN]);
+        $this->assertDatabaseMissing('links', ['last_checked_at' => now()]);
+    }
+
+    public function test_check_allows_private_ip_links_when_config_disabled(): void
+    {
+        Http::fake(['*' => Http::response()]);
+        Notification::fake();
+
+        $user = User::factory()->create();
+        Link::factory()->for($user)->create(['url' => 'http://192.168.1.1/']);
+
+        config(['html-meta.block_private_ips' => false]);
+
+        $this->artisan('links:check --noWait');
+
+        Http::assertSentCount(1);
+    }
+
     public function test_check_without_links(): void
     {
         Notification::fake();
