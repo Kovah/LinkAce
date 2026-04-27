@@ -5,8 +5,7 @@ namespace App\Http\Controllers\API;
 use App\Http\Controllers\Controller;
 use App\Http\Controllers\Traits\SearchesLinks;
 use App\Http\Requests\SearchRequest;
-use App\Models\LinkList;
-use App\Models\Tag;
+use App\Search\DatabaseSearchBackend;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 
@@ -30,8 +29,7 @@ class SearchController extends Controller
      */
     public function searchLinks(SearchRequest $request): JsonResponse
     {
-        $search = $this->buildDatabaseQuery($request);
-        $links = $search->paginate(getPaginationLimit());
+        $links = $this->searchLinkResults($request);
 
         return response()->json($links);
     }
@@ -46,16 +44,7 @@ class SearchController extends Controller
      */
     public function searchByTags(Request $request): JsonResponse
     {
-        $query = $request->input('query', false);
-
-        if (!$query) {
-            return response()->json([]);
-        }
-
-        $tags = Tag::byUser($request->user()->id)
-            ->where('name', 'like', '%' . $query . '%')
-            ->oldest('name')
-            ->pluck('name', 'id');
+        $tags = app(DatabaseSearchBackend::class)->searchTags($request);
 
         return response()->json($tags);
     }
@@ -70,16 +59,7 @@ class SearchController extends Controller
      */
     public function searchByLists(Request $request): JsonResponse
     {
-        $query = $request->input('query', false);
-
-        if (!$query) {
-            return response()->json([]);
-        }
-
-        $tags = LinkList::byUser($request->user()->id)
-            ->where('name', 'like', '%' . $query . '%')
-            ->oldest('name')
-            ->pluck('name', 'id');
+        $tags = app(DatabaseSearchBackend::class)->searchLists($request);
 
         return response()->json($tags);
     }

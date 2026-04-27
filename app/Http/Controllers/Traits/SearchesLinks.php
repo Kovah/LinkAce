@@ -4,11 +4,14 @@ namespace App\Http\Controllers\Traits;
 
 use App\Http\Requests\SearchRequest;
 use App\Models\Link;
+use App\Search\DatabaseSearchBackend;
+use App\Search\SearchQuery;
 use Illuminate\Database\Eloquent\Builder;
+use Illuminate\Pagination\LengthAwarePaginator;
 
 trait SearchesLinks
 {
-    protected string|null $searchQuery;
+    protected string|null $searchQuery = null;
     protected bool $searchTitle = false;
     protected bool $searchDescription = false;
     protected ?int $searchVisibility = null;
@@ -28,6 +31,28 @@ trait SearchesLinks
         'created_at:desc',
     ];
 
+    protected function searchLinkResults(SearchRequest $request): LengthAwarePaginator
+    {
+        $query = SearchQuery::fromRequest($request);
+        $this->applySearchState($query);
+
+        return app(DatabaseSearchBackend::class)->searchLinks($query);
+    }
+
+    protected function applySearchState(SearchQuery $query): void
+    {
+        $this->searchQuery = $query->query;
+        $this->searchTitle = $query->searchTitle;
+        $this->searchDescription = $query->searchDescription;
+        $this->searchVisibility = $query->visibility;
+        $this->searchBrokenOnly = $query->brokenOnly;
+        $this->searchLists = $query->lists;
+        $this->searchTags = $query->tags;
+        $this->emptyLists = $query->emptyLists;
+        $this->emptyTags = $query->emptyTags;
+        $this->searchOrderBy = $query->orderBy;
+    }
+
     /**
      * The starting point of the search query. Override this in a controller
      * to scope the search to a different visibility (e.g. public only for guests).
@@ -39,78 +64,56 @@ trait SearchesLinks
 
     /**
      * This method takes a HTTP request containing various search fields and
-     * create a database query builder for the Link model based on that fields.
-     *
-     * @param SearchRequest $request
-     * @return Builder
+     * creates a database query builder for the Link model based on those fields.
      */
     protected function buildDatabaseQuery(SearchRequest $request): Builder
     {
+        $query = SearchQuery::fromRequest($request);
+        $this->applySearchState($query);
+
         $search = $this->baseQuery();
 
-        // Search for the URL
-        if ($this->searchQuery = $request->input('query')) {
-            $query = '%' . escapeSearchQuery($this->searchQuery) . '%';
-            $search->where(function ($search) use ($request, $query) {
-                $search->where('url', 'like', $query);
+        if ($query->hasTextQuery()) {
+            $escapedQuery = '%' . escapeSearchQuery($query->query) . '%';
+            $search->where(function (Builder $search) use ($query, $escapedQuery) {
+                $search->where('url', 'like', $escapedQuery);
 
-                // Also search for the title if applicable
-                if ($this->searchTitle = (bool)$request->input('search_title', false)) {
-                    $search->orWhere('title', 'like', $query);
+                if ($query->searchTitle) {
+                    $search->orWhere('title', 'like', $escapedQuery);
                 }
 
-                // Also search for the description if applicable
-                if ($this->searchDescription = (bool)$request->input('search_description', false)) {
-                    $search->orWhere('description', 'like', $query);
+                if ($query->searchDescription) {
+                    $search->orWhere('description', 'like', $escapedQuery);
                 }
             });
         }
 
-        // Show private only if applicable
-        if ($this->searchVisibility = $request->input('visibility')) {
-            $search->where('visibility', $this->searchVisibility);
+        if ($query->visibility !== null) {
+            $search->where('visibility', $query->visibility);
         }
 
-        // Show broken only if applicable
-        if ($this->searchBrokenOnly = (bool)$request->input('broken_only', false)) {
+        if ($query->brokenOnly) {
             $search->where('status', '>', 1);
         }
 
-        // Show by specific list only if applicable
-        if ($this->emptyLists = (bool)$request->input('empty_lists', false)) {
+        if ($query->emptyLists) {
             $search->doesntHave('lists');
-        } elseif ($request->input('only_lists')) {
-            $lists = $request->input('only_lists', '[]');
-            $this->searchLists = preg_match('/\[.*\]/', $lists) > 0 ? json_decode($lists) : explode(',', $lists);
-            if (!empty($this->searchLists)) {
-                $this->filterByLists($search, $this->searchLists);
-            }
+        } elseif ($query->lists !== []) {
+            $this->filterByLists($search, $query->lists);
         }
 
-        // Show by specific tag only if applicable
-        if ($this->emptyTags = (bool)$request->input('empty_tags', false)) {
+        if ($query->emptyTags) {
             $search->doesntHave('tags');
-        } elseif ($request->input('only_tags')) {
-            $tags = $request->input('only_tags', '[]');
-            $this->searchTags = preg_match('/\[.*\]/', $tags) > 0 ? json_decode($tags) : explode(',', $tags);
-            if (!empty($this->searchTags)) {
-                $this->filterByTags($search, $this->searchTags);
-            }
+        } elseif ($query->tags !== []) {
+            $this->filterByTags($search, $query->tags);
         }
 
-        // Order the results if applicable and only allow predefined ordering
-        if ($this->searchOrderBy = $request->input('order_by')) {
-            if ($this->searchOrderBy === 'random') {
-                $search->inRandomOrder();
-            } else {
-                $this->searchOrderBy = in_array($this->searchOrderBy, $this->orderByOptions)
-                    ? $this->searchOrderBy
-                    : $this->orderByOptions[0];
-            }
-            $search->orderBy(...explode(':', $this->searchOrderBy));
+        if ($query->orderBy === 'random') {
+            $search->inRandomOrder();
+        } elseif ($query->orderBy !== null) {
+            $search->orderBy(...explode(':', $query->orderBy));
         }
 
-        // Return the query builder itself
         return $search;
     }
 
@@ -120,7 +123,7 @@ trait SearchesLinks
      */
     protected function filterByLists(Builder $search, array $listIds): void
     {
-        $search->whereHas('lists', function ($query) use ($listIds) {
+        $search->whereHas('lists', function (Builder $query) use ($listIds) {
             $query->whereIn('id', $listIds);
         });
     }
@@ -131,7 +134,7 @@ trait SearchesLinks
      */
     protected function filterByTags(Builder $search, array $tagIds): void
     {
-        $search->whereHas('tags', function ($query) use ($tagIds) {
+        $search->whereHas('tags', function (Builder $query) use ($tagIds) {
             $query->whereIn('id', $tagIds);
         });
     }

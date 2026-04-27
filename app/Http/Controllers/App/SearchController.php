@@ -39,8 +39,7 @@ class SearchController extends Controller
 
     public function doSearch(SearchRequest $request): View
     {
-        $search = $this->buildDatabaseQuery($request);
-        $results = $search->paginate(getPaginationLimit());
+        $results = $this->searchLinkResults($request);
 
         return view('app.search.search', [
             'pageTitle' => trans('search.results_for') . ' ' . $this->searchQuery,
