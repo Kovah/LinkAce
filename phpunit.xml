@@ -29,6 +29,9 @@
     <testsuite name="Models">
       <directory suffix="Test.php">./tests/Models</directory>
     </testsuite>
+    <testsuite name="Search">
+      <directory suffix="Test.php">./tests/Search</directory>
+    </testsuite>
   </testsuites>
 
   <source>

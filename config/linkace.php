@@ -12,6 +12,12 @@ return [
         'broken_recheck_interval_weeks' => (int) env('BROKEN_LINK_RECHECK_INTERVAL_WEEKS', 2),
     ],
 
+    'search' => [
+        'driver' => env('APP_SEARCH_DRIVER', 'database'),
+        'supported_drivers' => ['database', 'meilisearch', 'typesense'],
+        'external_drivers' => ['meilisearch', 'typesense'],
+    ],
+
     'listitem_count_values' => [
         12,
         24,
