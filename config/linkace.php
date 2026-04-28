@@ -13,7 +13,7 @@ return [
     ],
 
     'search' => [
-        'driver' => env('APP_SEARCH_DRIVER', 'database'),
+        'driver' => env('APP_SEARCH_DRIVER', env('SCOUT_DRIVER', 'database')),
         'supported_drivers' => ['database', 'meilisearch', 'typesense'],
         'external_drivers' => ['meilisearch', 'typesense'],
     ],

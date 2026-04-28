@@ -16,7 +16,7 @@ return [
     |
     */
 
-    'driver' => env('SCOUT_DRIVER', 'collection'),
+    'driver' => env('APP_SEARCH_DRIVER', env('SCOUT_DRIVER', 'database')),
 
     /*
     |--------------------------------------------------------------------------
@@ -140,9 +140,29 @@ return [
         'host' => env('MEILISEARCH_HOST', 'http://localhost:7700'),
         'key' => env('MEILISEARCH_KEY'),
         'index-settings' => [
-            // 'users' => [
-            //     'filterableAttributes'=> ['id', 'name', 'email'],
-            // ],
+            'linkace_links' => [
+                'searchableAttributes' => ['url', 'title', 'description'],
+                'filterableAttributes' => [
+                    'user_id',
+                    'visibility',
+                    'status',
+                    'tag_ids',
+                    'list_ids',
+                    'tags_count',
+                    'lists_count',
+                ],
+                'sortableAttributes' => ['title', 'url', 'created_at'],
+            ],
+            'linkace_tags' => [
+                'searchableAttributes' => ['name'],
+                'filterableAttributes' => ['user_id', 'visibility'],
+                'sortableAttributes' => ['name', 'created_at'],
+            ],
+            'linkace_lists' => [
+                'searchableAttributes' => ['name', 'description'],
+                'filterableAttributes' => ['user_id', 'visibility'],
+                'sortableAttributes' => ['name', 'created_at'],
+            ],
         ],
     ],
 
@@ -181,28 +201,68 @@ return [
         ],
         // 'max_total_results' => env('TYPESENSE_MAX_TOTAL_RESULTS', 1000),
         'model-settings' => [
-            // User::class => [
-            //     'collection-schema' => [
-            //         'fields' => [
-            //             [
-            //                 'name' => 'id',
-            //                 'type' => 'string',
-            //             ],
-            //             [
-            //                 'name' => 'name',
-            //                 'type' => 'string',
-            //             ],
-            //             [
-            //                 'name' => 'created_at',
-            //                 'type' => 'int64',
-            //             ],
-            //         ],
-            //         'default_sorting_field' => 'created_at',
-            //     ],
-            //     'search-parameters' => [
-            //         'query_by' => 'name'
-            //     ],
-            // ],
+            App\Models\Link::class => [
+                'collection-schema' => [
+                    'fields' => [
+                        ['name' => 'id', 'type' => 'string'],
+                        ['name' => 'user_id', 'type' => 'int64', 'facet' => true],
+                        ['name' => 'url', 'type' => 'string'],
+                        ['name' => 'title', 'type' => 'string', 'sort' => true],
+                        ['name' => 'description', 'type' => 'string'],
+                        ['name' => 'visibility', 'type' => 'int32', 'facet' => true],
+                        ['name' => 'status', 'type' => 'int32', 'facet' => true],
+                        ['name' => 'tag_ids', 'type' => 'int64[]', 'facet' => true],
+                        ['name' => 'list_ids', 'type' => 'int64[]', 'facet' => true],
+                        ['name' => 'tags_count', 'type' => 'int32', 'facet' => true],
+                        ['name' => 'lists_count', 'type' => 'int32', 'facet' => true],
+                        ['name' => 'created_at', 'type' => 'int64', 'optional' => true],
+                        ['name' => 'updated_at', 'type' => 'int64', 'optional' => true],
+                    ],
+                    'default_sorting_field' => 'created_at',
+                ],
+                'search-parameters' => [
+                    'query_by' => 'url,title,description',
+                    'split_join_tokens' => 'fallback',
+                    'drop_tokens_threshold' => 0,
+                ],
+            ],
+            App\Models\Tag::class => [
+                'collection-schema' => [
+                    'fields' => [
+                        ['name' => 'id', 'type' => 'string'],
+                        ['name' => 'user_id', 'type' => 'int64', 'facet' => true],
+                        ['name' => 'name', 'type' => 'string', 'sort' => true],
+                        ['name' => 'visibility', 'type' => 'int32', 'facet' => true],
+                        ['name' => 'created_at', 'type' => 'int64', 'optional' => true],
+                        ['name' => 'updated_at', 'type' => 'int64', 'optional' => true],
+                    ],
+                    'default_sorting_field' => 'created_at',
+                ],
+                'search-parameters' => [
+                    'query_by' => 'name',
+                    'split_join_tokens' => 'fallback',
+                    'drop_tokens_threshold' => 0,
+                ],
+            ],
+            App\Models\LinkList::class => [
+                'collection-schema' => [
+                    'fields' => [
+                        ['name' => 'id', 'type' => 'string'],
+                        ['name' => 'user_id', 'type' => 'int64', 'facet' => true],
+                        ['name' => 'name', 'type' => 'string', 'sort' => true],
+                        ['name' => 'description', 'type' => 'string'],
+                        ['name' => 'visibility', 'type' => 'int32', 'facet' => true],
+                        ['name' => 'created_at', 'type' => 'int64', 'optional' => true],
+                        ['name' => 'updated_at', 'type' => 'int64', 'optional' => true],
+                    ],
+                    'default_sorting_field' => 'created_at',
+                ],
+                'search-parameters' => [
+                    'query_by' => 'name,description',
+                    'split_join_tokens' => 'fallback',
+                    'drop_tokens_threshold' => 0,
+                ],
+            ],
         ],
         'import_action' => env('TYPESENSE_IMPORT_ACTION', 'upsert'),
     ],

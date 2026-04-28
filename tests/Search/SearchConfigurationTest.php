@@ -24,4 +24,9 @@ class SearchConfigurationTest extends TestCase
             'typesense',
         ], config('linkace.search.external_drivers'));
     }
+
+    public function test_scout_uses_the_linkace_search_driver(): void
+    {
+        $this->assertSame(config('linkace.search.driver'), config('scout.driver'));
+    }
 }
