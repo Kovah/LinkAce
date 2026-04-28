@@ -13,6 +13,7 @@ use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Support\Carbon;
 use Illuminate\Support\Str;
+use Laravel\Scout\Searchable;
 use OwenIt\Auditing\Auditable as AuditableTrait;
 use OwenIt\Auditing\Contracts\Auditable;
 
@@ -39,6 +40,7 @@ class LinkList extends Model implements Auditable
 {
     use AuditableTrait;
     use HasFactory;
+    use Searchable;
     use ScopesForUser;
     use ScopesVisibility;
     use SoftDeletes;
@@ -124,5 +126,32 @@ class LinkList extends Model implements Auditable
         }
 
         return Str::markdown($this->description, ['html_input' => 'escape']);
+    }
+
+    public function searchableAs(): string
+    {
+        return 'linkace_lists';
+    }
+
+    public function toSearchableArray(): array
+    {
+        return [
+            'id' => (string) $this->id,
+            'user_id' => (int) $this->user_id,
+            'name' => (string) $this->name,
+            'description' => (string) ($this->description ?? ''),
+            'visibility' => (int) $this->visibility,
+            'created_at' => optional($this->created_at)->timestamp,
+            'updated_at' => optional($this->updated_at)->timestamp,
+        ];
+    }
+
+    public function shouldBeSearchable(): bool
+    {
+        return in_array(
+            config('linkace.search.driver'),
+            config('linkace.search.external_drivers', []),
+            true
+        );
     }
 }

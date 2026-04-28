@@ -4,7 +4,7 @@ namespace App\Http\Controllers\Traits;
 
 use App\Http\Requests\SearchRequest;
 use App\Models\Link;
-use App\Search\DatabaseSearchBackend;
+use App\Search\SearchBackendManager;
 use App\Search\SearchQuery;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Pagination\LengthAwarePaginator;
@@ -36,7 +36,7 @@ trait SearchesLinks
         $query = SearchQuery::fromRequest($request);
         $this->applySearchState($query);
 
-        return app(DatabaseSearchBackend::class)->searchLinks($query);
+        return app(SearchBackendManager::class)->backend()->searchLinks($query);
     }
 
     protected function applySearchState(SearchQuery $query): void

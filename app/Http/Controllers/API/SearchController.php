@@ -5,7 +5,7 @@ namespace App\Http\Controllers\API;
 use App\Http\Controllers\Controller;
 use App\Http\Controllers\Traits\SearchesLinks;
 use App\Http\Requests\SearchRequest;
-use App\Search\DatabaseSearchBackend;
+use App\Search\SearchBackendManager;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 
@@ -44,7 +44,7 @@ class SearchController extends Controller
      */
     public function searchByTags(Request $request): JsonResponse
     {
-        $tags = app(DatabaseSearchBackend::class)->searchTags($request);
+        $tags = app(SearchBackendManager::class)->backend()->searchTags($request);
 
         return response()->json($tags);
     }
@@ -59,7 +59,7 @@ class SearchController extends Controller
      */
     public function searchByLists(Request $request): JsonResponse
     {
-        $tags = app(DatabaseSearchBackend::class)->searchLists($request);
+        $tags = app(SearchBackendManager::class)->backend()->searchLists($request);
 
         return response()->json($tags);
     }

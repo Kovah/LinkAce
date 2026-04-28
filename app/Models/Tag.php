@@ -12,6 +12,7 @@ use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Support\Carbon;
+use Laravel\Scout\Searchable;
 use OwenIt\Auditing\Auditable as AuditableTrait;
 use OwenIt\Auditing\Contracts\Auditable;
 
@@ -37,6 +38,7 @@ class Tag extends Model implements Auditable
 {
     use AuditableTrait;
     use HasFactory;
+    use Searchable;
     use ScopesForUser;
     use ScopesVisibility;
     use SoftDeletes;
@@ -95,5 +97,31 @@ class Tag extends Model implements Auditable
     public function links(): BelongsToMany
     {
         return $this->belongsToMany(Link::class, 'link_tags', 'tag_id', 'link_id');
+    }
+
+    public function searchableAs(): string
+    {
+        return 'linkace_tags';
+    }
+
+    public function toSearchableArray(): array
+    {
+        return [
+            'id' => (string) $this->id,
+            'user_id' => (int) $this->user_id,
+            'name' => (string) $this->name,
+            'visibility' => (int) $this->visibility,
+            'created_at' => optional($this->created_at)->timestamp,
+            'updated_at' => optional($this->updated_at)->timestamp,
+        ];
+    }
+
+    public function shouldBeSearchable(): bool
+    {
+        return in_array(
+            config('linkace.search.driver'),
+            config('linkace.search.external_drivers', []),
+            true
+        );
     }
 }

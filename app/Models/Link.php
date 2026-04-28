@@ -20,6 +20,7 @@ use Illuminate\Database\Eloquent\Relations\MorphMany;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Support\Carbon;
 use Illuminate\Support\Str;
+use Laravel\Scout\Searchable;
 use OwenIt\Auditing\Auditable as AuditableTrait;
 use OwenIt\Auditing\Contracts\Auditable;
 
@@ -54,6 +55,7 @@ class Link extends Model implements Auditable
     use AuditableTrait;
     use HasFactory;
     use ProvidesTaxonomyOutput;
+    use Searchable;
     use ScopesForUser;
     use ScopesVisibility;
     use SoftDeletes;
@@ -291,5 +293,45 @@ class Link extends Model implements Auditable
             ->where('id', '<>', $this->id)
             ->where('url', 'like', '%' . trim($uri, '/') . '%')
             ->get();
+    }
+
+    public function searchableAs(): string
+    {
+        return 'linkace_links';
+    }
+
+    public function toSearchableArray(): array
+    {
+        $this->loadMissing(['tags:id', 'lists:id']);
+
+        return [
+            'id' => (string) $this->id,
+            'user_id' => (int) $this->user_id,
+            'url' => (string) $this->url,
+            'title' => (string) $this->title,
+            'description' => (string) ($this->description ?? ''),
+            'visibility' => (int) $this->visibility,
+            'status' => (int) $this->status,
+            'tag_ids' => $this->tags->pluck('id')->map(fn ($id) => (int) $id)->values()->all(),
+            'list_ids' => $this->lists->pluck('id')->map(fn ($id) => (int) $id)->values()->all(),
+            'tags_count' => $this->tags->count(),
+            'lists_count' => $this->lists->count(),
+            'created_at' => optional($this->created_at)->timestamp,
+            'updated_at' => optional($this->updated_at)->timestamp,
+        ];
+    }
+
+    public function shouldBeSearchable(): bool
+    {
+        return in_array(
+            config('linkace.search.driver'),
+            config('linkace.search.external_drivers', []),
+            true
+        );
+    }
+
+    protected function makeAllSearchableUsing(Builder $query): Builder
+    {
+        return $query->with(['tags:id', 'lists:id']);
     }
 }
