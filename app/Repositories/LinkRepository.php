@@ -41,9 +41,10 @@ class LinkRepository
             $data['status'] = Link::STATUS_BROKEN;
         }
 
-        $link = Link::create($data);
+        $link = Link::withoutSyncingToSearch(fn () => Link::create($data));
 
         self::processLinkTaxonomies($link, $data);
+        self::syncLinkToSearch($link);
 
         $link->initiateInternetArchiveBackup();
 
@@ -67,9 +68,10 @@ class LinkRepository
             $data['last_checked_at'] = null;
         }
 
-        $link->update($data);
+        Link::withoutSyncingToSearch(fn () => $link->update($data));
 
         self::processLinkTaxonomies($link, $data);
+        self::syncLinkToSearch($link);
 
         return $link;
     }
@@ -111,13 +113,42 @@ class LinkRepository
         try {
             $link->tags()->detach();
             $link->lists()->detach();
-            $link->delete();
+            Link::withoutSyncingToSearch(fn () => $link->delete());
+            self::removeLinkFromSearch($link);
         } catch (Exception $e) {
             Log::error($e);
             return false;
         }
 
         return true;
+    }
+
+    protected static function syncLinkToSearch(Link $link): void
+    {
+        if (!self::searchIndexingEnabled()) {
+            return;
+        }
+
+        $link->load(['tags:id', 'lists:id']);
+        $link->searchable();
+    }
+
+    protected static function removeLinkFromSearch(Link $link): void
+    {
+        if (!self::searchIndexingEnabled()) {
+            return;
+        }
+
+        $link->unsearchable();
+    }
+
+    protected static function searchIndexingEnabled(): bool
+    {
+        return in_array(
+            config('linkace.search.driver'),
+            config('linkace.search.external_drivers', []),
+            true
+        );
     }
 
     protected static function processLinkTaxonomies(Link $link, array $data): void
