@@ -83,9 +83,7 @@ trait SearchesLinks
             $lists = $request->input('only_lists', '[]');
             $this->searchLists = preg_match('/\[.*\]/', $lists) > 0 ? json_decode($lists) : explode(',', $lists);
             if (!empty($this->searchLists)) {
-                $search->whereHas('lists', function ($query) {
-                    $query->whereIn('id', $this->searchLists);
-                });
+                $this->filterByLists($search, $this->searchLists);
             }
         }
 
@@ -96,9 +94,7 @@ trait SearchesLinks
             $tags = $request->input('only_tags', '[]');
             $this->searchTags = preg_match('/\[.*\]/', $tags) > 0 ? json_decode($tags) : explode(',', $tags);
             if (!empty($this->searchTags)) {
-                $search->whereHas('tags', function ($query) {
-                    $query->whereIn('id', $this->searchTags);
-                });
+                $this->filterByTags($search, $this->searchTags);
             }
         }
 
@@ -116,5 +112,27 @@ trait SearchesLinks
 
         // Return the query builder itself
         return $search;
+    }
+
+    /**
+     * Restrict results to links attached to one of the given list IDs.
+     * Override to scope the relation to a different visibility.
+     */
+    protected function filterByLists(Builder $search, array $listIds): void
+    {
+        $search->whereHas('lists', function ($query) use ($listIds) {
+            $query->whereIn('id', $listIds);
+        });
+    }
+
+    /**
+     * Restrict results to links attached to one of the given tag IDs.
+     * Override to scope the relation to a different visibility.
+     */
+    protected function filterByTags(Builder $search, array $tagIds): void
+    {
+        $search->whereHas('tags', function ($query) use ($tagIds) {
+            $query->whereIn('id', $tagIds);
+        });
     }
 }

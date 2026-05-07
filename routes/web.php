@@ -211,10 +211,8 @@ Route::group(['middleware' => ['auth', 'role:admin']], function () {
 // Guest access routes
 Route::prefix('guest')->middleware(['guestaccess'])->group(function () {
 
-    Route::get('search', [GuestSearchController::class, 'getSearch'])
-        ->name('guest.get-search');
-    Route::post('search', [GuestSearchController::class, 'doSearch'])
-        ->name('guest.do-search');
+    Route::get('search', [GuestSearchController::class, 'search'])
+        ->name('guest.search');
 
     Route::get('links/feed', [GuestFeedController::class, 'links'])->name('guest.links.feed');
     Route::get('lists/feed', [GuestFeedController::class, 'lists'])->name('guest.lists.feed');
