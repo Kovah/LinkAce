@@ -20,46 +20,49 @@ class SearchController extends Controller
         return Link::publicOnly()->with(['tags' => fn ($query) => $query->publicOnly()]);
     }
 
-    public function getSearch(): View
+    protected function filterByLists(Builder $search, array $listIds): void
     {
-        return view('guest.search.search', [
-            'pageTitle' => trans('search.search'),
-            'all_tags' => Tag::publicOnly()->get(['name', 'id']),
-            'all_lists' => LinkList::publicOnly()->get(['name', 'id']),
-        ])
-            ->with('results', collect([]))
-            ->with('order_by_options', $this->orderByOptions)
-            ->with('query_settings', [
-                'old_query' => null,
-                'search_title' => true,
-                'search_description' => true,
-                'only_lists' => [],
-                'only_tags' => [],
-                'order_by' => $this->orderByOptions[0],
-                'performed_search' => false,
-            ]);
+        $search->whereHas('lists', function ($query) use ($listIds) {
+            $query->whereIn('id', $listIds)->publicOnly();
+        });
     }
 
-    public function doSearch(GuestSearchRequest $request): View
+    protected function filterByTags(Builder $search, array $tagIds): void
     {
-        $search = $this->buildDatabaseQuery($request);
-        $results = $search->paginate(getPaginationLimit());
+        $search->whereHas('tags', function ($query) use ($tagIds) {
+            $query->whereIn('id', $tagIds)->publicOnly();
+        });
+    }
+
+    public function search(GuestSearchRequest $request): View
+    {
+        $performedSearch = $request->filled('query')
+            || $request->filled('only_lists')
+            || $request->filled('only_tags');
+
+        if ($performedSearch) {
+            $results = $this->buildDatabaseQuery($request)->paginate(getPaginationLimit());
+        } else {
+            $results = collect([]);
+        }
 
         return view('guest.search.search', [
-            'pageTitle' => trans('search.results_for') . ' ' . $this->searchQuery,
+            'pageTitle' => $performedSearch
+                ? trans('search.results_for') . ' ' . $this->searchQuery
+                : trans('search.search'),
             'all_tags' => Tag::publicOnly()->get(['name', 'id']),
             'all_lists' => LinkList::publicOnly()->get(['name', 'id']),
         ])
             ->with('results', $results)
             ->with('order_by_options', $this->orderByOptions)
             ->with('query_settings', [
-                'old_query' => $this->searchQuery,
-                'search_title' => $this->searchTitle,
-                'search_description' => $this->searchDescription,
-                'only_lists' => $this->searchLists,
-                'only_tags' => $this->searchTags,
-                'order_by' => $this->searchOrderBy,
-                'performed_search' => true,
+                'old_query' => $performedSearch ? $this->searchQuery : null,
+                'search_title' => $performedSearch ? $this->searchTitle : true,
+                'search_description' => $performedSearch ? $this->searchDescription : true,
+                'only_lists' => $performedSearch ? $this->searchLists : [],
+                'only_tags' => $performedSearch ? $this->searchTags : [],
+                'order_by' => ($performedSearch && $this->searchOrderBy) ? $this->searchOrderBy : $this->orderByOptions[0],
+                'performed_search' => $performedSearch,
             ]);
     }
 }

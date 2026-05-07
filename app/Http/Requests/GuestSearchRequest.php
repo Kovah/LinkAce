@@ -7,15 +7,9 @@ class GuestSearchRequest extends SearchRequest
     public function rules(): array
     {
         return [
-            'query' => [
-                'required_without_all:only_lists,only_tags',
-            ],
-            'only_lists' => [
-                'required_without_all:query,only_tags',
-            ],
-            'only_tags' => [
-                'required_without_all:query,only_lists',
-            ],
+            'query' => ['nullable', 'string'],
+            'only_lists' => ['nullable', 'string'],
+            'only_tags' => ['nullable', 'string'],
             'visibility' => ['prohibited'],
             'broken_only' => ['prohibited'],
             'empty_tags' => ['prohibited'],
@@ -25,10 +19,6 @@ class GuestSearchRequest extends SearchRequest
 
     public function messages(): array
     {
-        return [
-            'query.required_without_all' => trans('search.validation_query_missing'),
-            'only_lists.required_without_all' => trans('search.validation_query_missing'),
-            'only_tags.required_without_all' => trans('search.validation_query_missing'),
-        ];
+        return [];
     }
 }

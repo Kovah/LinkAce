@@ -33,7 +33,7 @@
 
         <ul class="navbar-nav ms-auto">
             <li class="nav-item">
-                <a href="{{ route('guest.get-search') }}" class="nav-link" title="@lang('search.search')">
+                <a href="{{ route('guest.search') }}" class="nav-link" title="@lang('search.search')">
                     <x-icon.search class="fw"/>
                     <span class="visually-hidden">@lang('search.search')</span>
                 </a>

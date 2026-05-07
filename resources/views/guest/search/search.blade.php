@@ -8,8 +8,7 @@
         </div>
         <div class="card-body">
 
-            <form action="{{ route('guest.do-search') }}" method="POST" class="search-form">
-                @csrf
+            <form action="{{ route('guest.search') }}" method="GET" class="search-form">
 
                 <div class="mb-4">
                     <label for="query" class="visually-hidden">@lang('search.query')</label>
