@@ -20,6 +20,7 @@ use App\Http\Controllers\FrontController;
 use App\Http\Controllers\Guest\FeedController as GuestFeedController;
 use App\Http\Controllers\Guest\LinkController as GuestLinkController;
 use App\Http\Controllers\Guest\ListController as GuestListController;
+use App\Http\Controllers\Guest\SearchController as GuestSearchController;
 use App\Http\Controllers\Guest\TagController as GuestTagController;
 use App\Http\Controllers\Guest\UserController as GuestUserController;
 use App\Http\Controllers\Models\BulkEditController;
@@ -209,6 +210,11 @@ Route::group(['middleware' => ['auth', 'role:admin']], function () {
 
 // Guest access routes
 Route::prefix('guest')->middleware(['guestaccess'])->group(function () {
+
+    Route::get('search', [GuestSearchController::class, 'getSearch'])
+        ->name('guest.get-search');
+    Route::post('search', [GuestSearchController::class, 'doSearch'])
+        ->name('guest.do-search');
 
     Route::get('links/feed', [GuestFeedController::class, 'links'])->name('guest.links.feed');
     Route::get('lists/feed', [GuestFeedController::class, 'lists'])->name('guest.lists.feed');

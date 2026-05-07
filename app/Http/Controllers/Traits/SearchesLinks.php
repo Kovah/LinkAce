@@ -29,6 +29,15 @@ trait SearchesLinks
     ];
 
     /**
+     * The starting point of the search query. Override this in a controller
+     * to scope the search to a different visibility (e.g. public only for guests).
+     */
+    protected function baseQuery(): Builder
+    {
+        return Link::visibleForUser()->with(['tags']);
+    }
+
+    /**
      * This method takes a HTTP request containing various search fields and
      * create a database query builder for the Link model based on that fields.
      *
@@ -37,8 +46,7 @@ trait SearchesLinks
      */
     protected function buildDatabaseQuery(SearchRequest $request): Builder
     {
-        // Start building the search
-        $search = Link::visibleForUser()->with(['tags']);
+        $search = $this->baseQuery();
 
         // Search for the URL
         if ($this->searchQuery = $request->input('query')) {
