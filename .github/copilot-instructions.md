@@ -11,7 +11,7 @@ LinkAce is a self-hosted bookmark manager built with Laravel PHP framework. It s
 1. **Environment Setup (Required for all development):**
    ```bash
    # Copy environment file and set up basic configuration
-   cp .env.example .env
+   cp .env.dev .env
    
    # Modify .env for local development:
    # - Set APP_ENV=local
@@ -180,7 +180,7 @@ npm run production
 - `webpack.mix.js` - Asset compilation configuration
 - `phpunit.xml` - Test configuration
 - `phpcs.xml` - Code style configuration
-- `.env.example` - Environment configuration template
+- `.env.dev` - Environment configuration template
 - `CONTRIBUTING.md` - Development setup guide
 
 ## Environment Configuration
@@ -252,7 +252,7 @@ composer run test              # Test suite execution
 
 ## Setup Process Flow
 
-1. Fresh clone → Copy `.env.example` to `.env`
+1. Fresh clone → Copy `.env.dev` to `.env`
 2. Install Composer dependencies → `composer install`
 3. Generate app key → `php artisan key:generate`  
 4. Install Node dependencies → `npm install`
