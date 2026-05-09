@@ -5,6 +5,8 @@ namespace App\Providers;
 use Illuminate\Pagination\Paginator;
 use Illuminate\Support\Facades\Schema;
 use Illuminate\Support\ServiceProvider;
+use Laravel\Scout\Scout;
+use Meilisearch\Client as MeilisearchClient;
 
 class AppServiceProvider extends ServiceProvider
 {
@@ -27,6 +29,14 @@ class AppServiceProvider extends ServiceProvider
      */
     public function register(): void
     {
-        //
+        $this->app->singleton(MeilisearchClient::class, function ($app) {
+            $config = $app['config']->get('scout.meilisearch');
+
+            return new MeilisearchClient(
+                $config['host'],
+                $config['key'],
+                clientAgents: [sprintf('Meilisearch Laravel Scout (v%s)', Scout::VERSION)],
+            );
+        });
     }
 }

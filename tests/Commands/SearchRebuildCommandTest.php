@@ -6,13 +6,10 @@ use App\Models\Link;
 use App\Models\LinkList;
 use App\Models\Tag;
 use App\Models\User;
-use Illuminate\Database\Eloquent\Collection as EloquentCollection;
 use Illuminate\Foundation\Testing\RefreshDatabase;
-use Illuminate\Support\LazyCollection;
-use Laravel\Scout\Builder as ScoutBuilder;
-use Laravel\Scout\Contracts\UpdatesIndexSettings;
 use Laravel\Scout\EngineManager;
 use Laravel\Scout\Engines\Engine;
+use Tests\Fakes\RecordingRebuildEngine;
 use Tests\TestCase;
 
 class SearchRebuildCommandTest extends TestCase
@@ -70,76 +67,5 @@ class SearchRebuildCommandTest extends TestCase
             Tag::class,
             LinkList::class,
         ], $engine->updatedModels);
-    }
-}
-
-class RecordingRebuildEngine extends Engine implements UpdatesIndexSettings
-{
-    public array $updatedSettings = [];
-    public array $flushedModels = [];
-    public array $updatedModels = [];
-
-    public function update($models): void
-    {
-        $models->each(function ($model): void {
-            $this->updatedModels[] = $model::class;
-        });
-    }
-
-    public function flush($model): void
-    {
-        $this->flushedModels[] = $model::class;
-    }
-
-    public function delete($models): void
-    {
-    }
-
-    public function search(ScoutBuilder $builder): array
-    {
-        return ['hits' => []];
-    }
-
-    public function paginate(ScoutBuilder $builder, $perPage, $page): array
-    {
-        return ['hits' => [], 'total' => 0];
-    }
-
-    public function mapIds($results): \Illuminate\Support\Collection
-    {
-        return collect();
-    }
-
-    public function map(ScoutBuilder $builder, $results, $model): EloquentCollection
-    {
-        return $model->newCollection();
-    }
-
-    public function lazyMap(ScoutBuilder $builder, $results, $model): LazyCollection
-    {
-        return LazyCollection::empty();
-    }
-
-    public function getTotalCount($results): int
-    {
-        return 0;
-    }
-
-    public function createIndex($name, array $options = []): void
-    {
-    }
-
-    public function deleteIndex($name): void
-    {
-    }
-
-    public function updateIndexSettings(string $name, array $settings = []): void
-    {
-        $this->updatedSettings[$name] = $settings;
-    }
-
-    public function configureSoftDeleteFilter(array $settings = []): array
-    {
-        return $settings;
     }
 }

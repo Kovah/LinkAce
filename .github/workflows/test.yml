@@ -36,6 +36,14 @@ jobs:
 
     runs-on: ${{ matrix.operating-system }}
     needs: test-js
+    services:
+      meilisearch:
+        image: getmeili/meilisearch:v1.16
+        env:
+          MEILI_ENV: development
+          MEILI_NO_ANALYTICS: true
+        ports:
+          - 7700:7700
     strategy:
       matrix:
         operating-system: [ ubuntu-latest ]
@@ -79,6 +87,8 @@ jobs:
         run: composer run lint
 
       - name: Run PHPunit
+        env:
+          MEILISEARCH_HOST: http://127.0.0.1:7700
         run: composer run test
 
       - name: Report coverage to Codacy

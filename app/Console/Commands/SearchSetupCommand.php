@@ -6,6 +6,7 @@ use App\Models\Link;
 use App\Models\LinkList;
 use App\Models\Tag;
 use Illuminate\Console\Command;
+use Illuminate\Support\Str;
 use Laravel\Scout\Contracts\UpdatesIndexSettings;
 use Laravel\Scout\EngineManager;
 
@@ -74,9 +75,16 @@ class SearchSetupCommand extends Command
         }
 
         foreach (config('scout.meilisearch.index-settings', []) as $index => $settings) {
-            $engine->updateIndexSettings($index, $engine->configureSoftDeleteFilter($settings));
+            $engine->updateIndexSettings($this->indexName($index), $engine->configureSoftDeleteFilter($settings));
         }
 
         return true;
+    }
+
+    private function indexName(string $index): string
+    {
+        $prefix = config('scout.prefix');
+
+        return ! Str::startsWith($index, $prefix) ? $prefix.$index : $index;
     }
 }

@@ -26,6 +26,17 @@ services:
     volumes:
       - linkace-pg-db:/var/lib/postgresql/data
 
+  # --- Meilisearch
+  meilisearch:
+    image: docker.io/getmeili/meilisearch:v1.16
+    environment:
+      - MEILI_ENV=development
+      - MEILI_NO_ANALYTICS=true
+    ports:
+      - "127.0.0.1:7700:7700"
+    volumes:
+      - linkace-meilisearch:/meili_data
+
   # --- PHP
   php:
     build:
@@ -33,6 +44,7 @@ services:
       dockerfile: ./resources/docker/dockerfiles/development.Dockerfile
     depends_on:
       - db
+      - meilisearch
     volumes:
       - .:/app:delegated
       - ./resources/docker/php/php-dev.ini:/usr/local/etc/php/conf.d/php.ini:ro
@@ -67,4 +79,6 @@ volumes:
   linkace-db:
     driver: local
   linkace-pg-db:
+    driver: local
+  linkace-meilisearch:
     driver: local

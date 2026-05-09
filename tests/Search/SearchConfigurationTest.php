@@ -2,6 +2,7 @@
 
 namespace Tests\Search;
 
+use Meilisearch\Client as MeilisearchClient;
 use Tests\TestCase;
 
 class SearchConfigurationTest extends TestCase
@@ -28,5 +29,15 @@ class SearchConfigurationTest extends TestCase
     public function test_scout_uses_the_linkace_search_driver(): void
     {
         $this->assertSame(config('linkace.search.driver'), config('scout.driver'));
+    }
+
+    public function test_meilisearch_client_can_be_resolved_from_scout_configuration(): void
+    {
+        config([
+            'scout.meilisearch.host' => 'http://search.example.test',
+            'scout.meilisearch.key' => 'test-key',
+        ]);
+
+        $this->assertInstanceOf(MeilisearchClient::class, app(MeilisearchClient::class));
     }
 }
