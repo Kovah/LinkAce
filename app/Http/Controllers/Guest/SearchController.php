@@ -5,33 +5,18 @@ namespace App\Http\Controllers\Guest;
 use App\Http\Controllers\Controller;
 use App\Http\Controllers\Traits\SearchesLinks;
 use App\Http\Requests\GuestSearchRequest;
-use App\Models\Link;
 use App\Models\LinkList;
 use App\Models\Tag;
+use App\Search\LinkSearchScope;
 use Illuminate\Contracts\View\View;
-use Illuminate\Database\Eloquent\Builder;
 
 class SearchController extends Controller
 {
     use SearchesLinks;
 
-    protected function baseQuery(): Builder
+    protected function linkSearchScope(): LinkSearchScope
     {
-        return Link::publicOnly()->with(['tags' => fn ($query) => $query->publicOnly()]);
-    }
-
-    protected function filterByLists(Builder $search, array $listIds): void
-    {
-        $search->whereHas('lists', function ($query) use ($listIds) {
-            $query->whereIn('id', $listIds)->publicOnly();
-        });
-    }
-
-    protected function filterByTags(Builder $search, array $tagIds): void
-    {
-        $search->whereHas('tags', function ($query) use ($tagIds) {
-            $query->whereIn('id', $tagIds)->publicOnly();
-        });
+        return LinkSearchScope::publicOnly();
     }
 
     public function search(GuestSearchRequest $request): View
@@ -41,7 +26,7 @@ class SearchController extends Controller
             || $request->filled('only_tags');
 
         if ($performedSearch) {
-            $results = $this->buildDatabaseQuery($request)->paginate(getPaginationLimit());
+            $results = $this->searchLinkResults($request);
         } else {
             $results = collect([]);
         }

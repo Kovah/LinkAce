@@ -8,7 +8,7 @@ use Illuminate\Support\Collection;
 
 interface SearchBackend
 {
-    public function searchLinks(SearchQuery $query): LengthAwarePaginator;
+    public function searchLinks(SearchQuery $query, ?LinkSearchScope $scope = null): LengthAwarePaginator;
 
     public function searchTags(Request $request): Collection;
 

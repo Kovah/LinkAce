@@ -12,9 +12,9 @@ use Illuminate\Support\Collection;
 
 class DatabaseSearchBackend implements SearchBackend
 {
-    public function searchLinks(SearchQuery $query): LengthAwarePaginator
+    public function searchLinks(SearchQuery $query, ?LinkSearchScope $scope = null): LengthAwarePaginator
     {
-        return $this->buildLinkQuery($query)->paginate(getPaginationLimit());
+        return $this->buildLinkQuery($query, $scope ?? LinkSearchScope::visibleForUser())->paginate(getPaginationLimit());
     }
 
     public function searchTags(Request $request): Collection
@@ -45,9 +45,9 @@ class DatabaseSearchBackend implements SearchBackend
             ->pluck('name', 'id');
     }
 
-    private function buildLinkQuery(SearchQuery $query): Builder
+    private function buildLinkQuery(SearchQuery $query, LinkSearchScope $scope): Builder
     {
-        $search = Link::visibleForUser()->with(['tags']);
+        $search = $scope->baseQuery();
 
         if ($query->hasTextQuery()) {
             $escapedQuery = '%' . escapeSearchQuery($query->query) . '%';
@@ -64,6 +64,19 @@ class DatabaseSearchBackend implements SearchBackend
             });
         }
 
+        $this->applyLinkFilters($search, $query, $scope);
+
+        if ($query->orderBy === 'random') {
+            $search->inRandomOrder();
+        } elseif ($query->orderBy !== null) {
+            $search->orderBy(...explode(':', $query->orderBy));
+        }
+
+        return $search;
+    }
+
+    public function applyLinkFilters(Builder $search, SearchQuery $query, LinkSearchScope $scope): Builder
+    {
         if ($query->visibility !== null) {
             $search->where('visibility', $query->visibility);
         }
@@ -75,23 +88,13 @@ class DatabaseSearchBackend implements SearchBackend
         if ($query->emptyLists) {
             $search->doesntHave('lists');
         } elseif ($query->lists !== []) {
-            $search->whereHas('lists', function (Builder $queryBuilder) use ($query) {
-                $queryBuilder->whereIn('id', $query->lists);
-            });
+            $scope->filterByLists($search, $query->lists);
         }
 
         if ($query->emptyTags) {
             $search->doesntHave('tags');
         } elseif ($query->tags !== []) {
-            $search->whereHas('tags', function (Builder $queryBuilder) use ($query) {
-                $queryBuilder->whereIn('id', $query->tags);
-            });
-        }
-
-        if ($query->orderBy === 'random') {
-            $search->inRandomOrder();
-        } elseif ($query->orderBy !== null) {
-            $search->orderBy(...explode(':', $query->orderBy));
+            $scope->filterByTags($search, $query->tags);
         }
 
         return $search;

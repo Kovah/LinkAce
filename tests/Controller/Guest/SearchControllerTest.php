@@ -9,6 +9,9 @@ use App\Models\Tag;
 use App\Models\User;
 use App\Settings\SystemSettings;
 use Illuminate\Foundation\Testing\RefreshDatabase;
+use Laravel\Scout\EngineManager;
+use Laravel\Scout\Engines\Engine;
+use Tests\Fakes\RecordingSearchEngine;
 use Tests\TestCase;
 
 class SearchControllerTest extends TestCase
@@ -64,6 +67,51 @@ class SearchControllerTest extends TestCase
             ->assertSee('https://public.example')
             ->assertDontSee('https://internal.example')
             ->assertDontSee('https://private.example');
+    }
+
+    public function test_search_uses_configured_backend_and_keeps_guest_results_public(): void
+    {
+        $engine = new RecordingSearchEngine();
+        $this->app->instance(EngineManager::class, new class ($engine) {
+            public function __construct(private readonly Engine $engine)
+            {
+            }
+
+            public function engine(): Engine
+            {
+                return $this->engine;
+            }
+        });
+        config(['linkace.search.driver' => 'meilisearch']);
+
+        $publicLink = Link::factory()->create([
+            'url' => 'https://public-engine.example',
+            'title' => 'Guest Engine Result',
+            'visibility' => ModelAttribute::VISIBILITY_PUBLIC,
+        ]);
+        $internalLink = Link::factory()->create([
+            'url' => 'https://internal-engine.example',
+            'title' => 'Guest Engine Result',
+            'visibility' => ModelAttribute::VISIBILITY_INTERNAL,
+        ]);
+        $privateLink = Link::factory()->create([
+            'url' => 'https://private-engine.example',
+            'title' => 'Guest Engine Result',
+            'visibility' => ModelAttribute::VISIBILITY_PRIVATE,
+        ]);
+        $engine->hitIds = [$publicLink->id, $internalLink->id, $privateLink->id];
+
+        $this->get('guest/search?query=Guest+Engine&search_title=on')
+            ->assertOk()
+            ->assertSee('https://public-engine.example')
+            ->assertDontSee('https://internal-engine.example')
+            ->assertDontSee('https://private-engine.example');
+
+        $this->assertNotNull($engine->lastPaginatedBuilder);
+        $this->assertContains(
+            ['field' => 'visibility', 'operator' => '=', 'value' => ModelAttribute::VISIBILITY_PUBLIC],
+            $engine->lastPaginatedBuilder->wheres
+        );
     }
 
     public function test_search_does_not_expose_private_tags_on_public_link(): void

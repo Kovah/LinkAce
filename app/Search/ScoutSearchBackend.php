@@ -19,18 +19,23 @@ class ScoutSearchBackend implements SearchBackend
     {
     }
 
-    public function searchLinks(SearchQuery $query): LengthAwarePaginator
+    public function searchLinks(SearchQuery $query, ?LinkSearchScope $scope = null): LengthAwarePaginator
     {
+        $scope ??= LinkSearchScope::visibleForUser();
+
         if ($query->orderBy === 'random' || ! $query->hasTextQuery()) {
-            return $this->databaseSearch->searchLinks($query);
+            return $this->databaseSearch->searchLinks($query, $scope);
         }
 
-        return $this->withExternalSearchErrors(function () use ($query) {
+        return $this->withExternalSearchErrors(function () use ($query, $scope) {
             $builder = Link::search($query->query)
                 ->options($this->searchOptions($query->searchableLinkAttributes()))
-                ->query(fn ($builder) => $builder->visibleForUser()->with(['tags']));
+                ->query(function ($builder) use ($query, $scope) {
+                    $scope->applyBaseConstraints($builder);
+                    $this->databaseSearch->applyLinkFilters($builder, $query, $scope);
+                });
 
-            $this->applyLinkFilters($builder, $query);
+            $this->applyLinkFilters($builder, $query, $scope);
             $this->applyLinkOrdering($builder, $query);
 
             return $builder->paginate(getPaginationLimit());
@@ -77,8 +82,10 @@ class ScoutSearchBackend implements SearchBackend
         }, ['query' => $query, 'model' => LinkList::class]);
     }
 
-    private function applyLinkFilters(ScoutBuilder $builder, SearchQuery $query): void
+    private function applyLinkFilters(ScoutBuilder $builder, SearchQuery $query, LinkSearchScope $scope): void
     {
+        $scope->applyEngineFilters($builder);
+
         if ($query->visibility !== null) {
             $builder->where('visibility', $query->visibility);
         }
