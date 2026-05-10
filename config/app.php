@@ -116,6 +116,7 @@ return [
         'ro_RO' => 'Română',
         'ru_RU' => 'Русский',
         'sv_SE' => 'Svenska',
+        'uk_UA' => 'Українська',
         'vi_VN' => 'Tiếng Việt',
         'zh_CN' => '简体中文',
     ],

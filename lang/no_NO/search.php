@@ -5,9 +5,9 @@ return [
 
     'filter_by_list' => 'Filtrer etter liste(r)',
     'filter_by_tag' => 'Filtrer etter etikett(er)',
-    'exclude_lists' => 'Exclude List(s)',
-    'exclude_tags' => 'Exclude Tag(s)',
-    'remove_exclusion' => 'remove exclusion',
+    'exclude_lists' => 'Ekskluder liste(r)',
+    'exclude_tags' => 'Ekskluder tagger',
+    'remove_exclusion' => 'fjerne tvungen utetid',
     'query' => 'Søk etter...',
     'search_title' => 'Søk i tittel',
     'search_description' => 'Søk i beskrivelse',

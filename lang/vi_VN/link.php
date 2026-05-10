@@ -4,6 +4,7 @@ return [
     'links' => 'Liên kết',
     'all_links' => 'Tất cả liên kết',
     'recent_links' => 'Liên kết gần đây',
+    'update_links' => 'Update Links',
     'no_links' => 'Không liên kết',
 
     'add' => 'Thêm liên kết',
@@ -12,15 +13,13 @@ return [
     'details' => 'Chi tiết liên kết',
     'edit' => 'Sửa liên kết',
     'update' => 'Cập nhật Liên kết',
-    'delete' => 'Xóa liên kết',
+    'delete' => 'Delete Link|Delete Links',
 
+    'public' => 'Public Link',
+    'internal' => 'Internal Link',
     'private' => 'Liên kết cá nhân',
 
-    'history' => 'Lịch sử',
-    'history_added' => 'Thêm <code>:newvalue</code> vào :fieldname.',
-    'history_changed' => 'Đã thay đổi :fieldname từ <code>:oldvalue</code> thành <code>:newvalue</code>',
-    'history_removed' => 'Đã xóa <code>:oldvalue</code> từ :fieldname.',
-    'history_deleted' => 'Liên kết đã bị xóa',
+    'history_deleted' => 'Link was moved to the trash',
     'history_restored' => 'Liên kết đã được khôi phục',
     'history_created' => 'Liên kết đã được tạo',
 
@@ -29,7 +28,7 @@ return [
     'description' => 'Mô tả',
     'revtags' => 'Thẻ',
     'revlists' => 'Danh sách',
-    'is_private' => 'Trạng thái thành công',
+    'visibility' => 'Visibility Status',
 
     'status' => 'Trạng thái',
     'stati' => [
@@ -42,6 +41,7 @@ return [
 
     'external_link' => 'Liên kết ngoài',
     'wayback' => 'Liên kết lưu trữ @ Wayback Machine',
+    'open_in_tabs' => 'Open Links in Tabs',
 
     'check_disable' => 'Tắt kiểm tra',
     'check_disabled' => 'Kiểm tra đã bị tắt',
@@ -51,12 +51,17 @@ return [
     'status_is_broken' => 'Liên kết được đánh dấu là hỏng',
     'status_mark_working' => 'Đánh dấu là hoạt động',
 
+    'bulk_title' => 'You want to edit :count Link.|You want to edit :count Links.',
+    'bulk_edit_add' => 'Add Link to bulk edit',
+    'bulk_edit_success' => 'Successfully updated :success Links out of :selected selected ones.',
+    'bulk_delete_success' => 'Successfully moved :success Links out of :selected selected ones to the trash.',
+
     'added_successfully' => 'Liên kết đã được thêm thành công.',
     'added_connection_error' => 'Liên kết được thêm nhưng kết nối đã có lỗi khi thử truy cập URL. Chi tiết có thể xem tại nhật ký hệ thống.',
     'added_request_error' => 'Liên kết đã được thêm nhưng xảy ra lỗi khi thử yêu cầu URL, ví dụ 1 chứng chỉ ssl không hợp lệ. Chi tiết có thể xem tại nhật ký hệ thống.',
     'updated_successfully' => 'Danh sách được cập nhật thành công.',
-    'deleted_successfully' => 'Liên kết đã được xóa thành công.',
-    'deletion_error' => 'Liên kết không thể xóa.',
+    'deleted_successfully' => 'Link successfully moved to the trash.',
+    'deletion_error' => 'Link could not be moved to the trash.',
 
     'duplicates_found' => 'Hệ thống đã tìm thấy liên kết trùng đã được gửi URL:',
     'existing_found' => 'Liên kết này đã tồn tại.',

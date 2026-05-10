@@ -5,9 +5,9 @@ return [
 
     'filter_by_list' => 'リストでフィルター',
     'filter_by_tag' => 'タグでフィルター',
-    'exclude_lists' => 'Exclude List(s)',
-    'exclude_tags' => 'Exclude Tag(s)',
-    'remove_exclusion' => 'remove exclusion',
+    'exclude_lists' => '除外リスト',
+    'exclude_tags' => 'タグを除く',
+    'remove_exclusion' => '排除',
     'query' => '検索…',
     'search_title' => 'タイトルを検索',
     'search_description' => '概要を検索',

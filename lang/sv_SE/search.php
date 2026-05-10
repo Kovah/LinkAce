@@ -5,9 +5,9 @@ return [
 
     'filter_by_list' => 'Filtrera på lista/listor',
     'filter_by_tag' => 'Filtrera på tagg/taggar',
-    'exclude_lists' => 'Exclude List(s)',
-    'exclude_tags' => 'Exclude Tag(s)',
-    'remove_exclusion' => 'remove exclusion',
+    'exclude_lists' => 'Exkludera listor',
+    'exclude_tags' => 'Exkludera tagg(ar)',
+    'remove_exclusion' => 'ta bort uteslutning',
     'query' => 'Sök efter...',
     'search_title' => 'Sök titel',
     'search_description' => 'Sök beskrivning',

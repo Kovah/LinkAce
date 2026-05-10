@@ -5,9 +5,9 @@ return [
 
     'filter_by_list' => 'Szűrés lista/listák szerint',
     'filter_by_tag' => 'Szűrés címke/címkék szerint',
-    'exclude_lists' => 'Exclude List(s)',
-    'exclude_tags' => 'Exclude Tag(s)',
-    'remove_exclusion' => 'remove exclusion',
+    'exclude_lists' => 'Kizáró lista(k)',
+    'exclude_tags' => 'Címke(k) kizárása',
+    'remove_exclusion' => 'kizárás megszüntetése',
     'query' => 'Keresés...',
     'search_title' => 'Cím keresése',
     'search_description' => 'Leírás keresése',

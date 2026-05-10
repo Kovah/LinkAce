@@ -5,9 +5,9 @@ return [
 
     'filter_by_list' => 'Filtrer par Liste(s)',
     'filter_by_tag' => 'Filtrer par Étiquette(s)',
-    'exclude_lists' => 'Exclude List(s)',
-    'exclude_tags' => 'Exclude Tag(s)',
-    'remove_exclusion' => 'remove exclusion',
+    'exclude_lists' => 'Liste(s) d\'exclusion',
+    'exclude_tags' => 'Exclure les étiquettes',
+    'remove_exclusion' => 'supprimer l\'exclusion',
     'query' => 'Chercher...',
     'search_title' => 'Titre Recherche',
     'search_description' => 'Description Recherche',
