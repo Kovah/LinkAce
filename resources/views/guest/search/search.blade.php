@@ -49,6 +49,10 @@
 
                 </div>
                 <div class="row mt-4">
+                    <input type="hidden" name="list_mode" id="list_mode"
+                        value="{{ old('list_mode', $query_settings['list_mode']) }}">
+                    <input type="hidden" name="tag_mode" id="tag_mode"
+                        value="{{ old('tag_mode', $query_settings['tag_mode']) }}">
 
                     <div class="col-md mb-3 mb-md-0">
                         <label for="only_lists" class="d-none" aria-hidden="true">
@@ -58,7 +62,22 @@
                             placeholder="@lang('search.filter_by_list')"
                             class="tag-select" data-tag-data="{{ $all_lists->toJson() }}"
                             data-value="{{ json_encode($query_settings['only_lists']) }}"
-                            data-tag-type="lists">
+                            data-tag-type="lists" data-filter-role="include">
+                        <div class="search-filter-exclusion mt-2 {{ $query_settings['exclude_lists'] === [] ? 'd-none' : '' }}"
+                            data-filter-exclude-wrapper="lists">
+                            <label for="exclude_lists" class="d-none" aria-hidden="true">
+                                @lang('search.exclude_lists')
+                            </label>
+                            <input name="exclude_lists" id="exclude_lists" type="text"
+                                placeholder="@lang('search.exclude_lists')"
+                                class="tag-select" data-tag-data="{{ $all_lists->toJson() }}"
+                                data-value="{{ json_encode($query_settings['exclude_lists']) }}"
+                                data-tag-type="lists" data-filter-role="exclude">
+                            <button type="button" class="btn btn-link btn-xs p-0 mt-1"
+                                data-filter-remove-exclusion="lists">
+                                @lang('search.remove_exclusion')
+                            </button>
+                        </div>
                     </div>
 
                     <div class="col-md mb-3 mb-md-0">
@@ -68,7 +87,22 @@
                         <input name="only_tags" id="only_tags" type="text" placeholder="@lang('search.filter_by_tag')"
                             class="tag-select" data-tag-data="{{ $all_tags->toJson() }}"
                             data-value="{{ json_encode($query_settings['only_tags']) }}"
-                            data-tag-type="tags">
+                            data-tag-type="tags" data-filter-role="include">
+                        <div class="search-filter-exclusion mt-2 {{ $query_settings['exclude_tags'] === [] ? 'd-none' : '' }}"
+                            data-filter-exclude-wrapper="tags">
+                            <label for="exclude_tags" class="d-none" aria-hidden="true">
+                                @lang('search.exclude_tags')
+                            </label>
+                            <input name="exclude_tags" id="exclude_tags" type="text"
+                                placeholder="@lang('search.exclude_tags')"
+                                class="tag-select" data-tag-data="{{ $all_tags->toJson() }}"
+                                data-value="{{ json_encode($query_settings['exclude_tags']) }}"
+                                data-tag-type="tags" data-filter-role="exclude">
+                            <button type="button" class="btn btn-link btn-xs p-0 mt-1"
+                                data-filter-remove-exclusion="tags">
+                                @lang('search.remove_exclusion')
+                            </button>
+                        </div>
                     </div>
 
                     <div class="col-md">

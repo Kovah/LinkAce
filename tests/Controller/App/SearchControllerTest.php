@@ -21,6 +21,10 @@ class SearchControllerTest extends TestCase
 
         $this->user = User::factory()->create();
         $this->actingAs($this->user);
+        config([
+            'linkace.search.driver' => 'database',
+            'scout.driver' => 'database',
+        ]);
 
         $this->setupTestData();
     }
@@ -29,7 +33,12 @@ class SearchControllerTest extends TestCase
     {
         $this->get('search')
             ->assertOk()
-            ->assertSee('Search');
+            ->assertSee('Search')
+            ->assertSee('name="tag_mode"', false)
+            ->assertSee('name="list_mode"', false)
+            ->assertSee('value="all"', false)
+            ->assertSee('name="exclude_tags"', false)
+            ->assertSee('name="exclude_lists"', false);
     }
 
     public function test_valid_search_result(): void

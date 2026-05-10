@@ -88,13 +88,21 @@ class DatabaseSearchBackend implements SearchBackend
         if ($query->emptyLists) {
             $search->doesntHave('lists');
         } elseif ($query->lists !== []) {
-            $scope->filterByLists($search, $query->lists);
+            $scope->filterByLists($search, $query->lists, $query->listMode);
+        }
+
+        if ($query->excludeLists !== []) {
+            $scope->excludeLists($search, $query->excludeLists);
         }
 
         if ($query->emptyTags) {
             $search->doesntHave('tags');
         } elseif ($query->tags !== []) {
-            $scope->filterByTags($search, $query->tags);
+            $scope->filterByTags($search, $query->tags, $query->tagMode);
+        }
+
+        if ($query->excludeTags !== []) {
+            $scope->excludeTags($search, $query->excludeTags);
         }
 
         return $search;

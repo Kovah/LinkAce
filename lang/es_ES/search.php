@@ -5,6 +5,9 @@ return [
 
     'filter_by_list' => 'Filtrar por lista(s)',
     'filter_by_tag' => 'Filtrar por etiqueta(s)',
+    'exclude_lists' => 'Exclude List(s)',
+    'exclude_tags' => 'Exclude Tag(s)',
+    'remove_exclusion' => 'remove exclusion',
     'query' => 'Buscar...',
     'search_title' => 'Buscar título',
     'search_description' => 'Buscar descripción',

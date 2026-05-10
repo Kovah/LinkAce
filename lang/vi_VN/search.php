@@ -5,6 +5,9 @@ return [
 
     'filter_by_list' => 'Lọc theo danh sách',
     'filter_by_tag' => 'Lọc theo thẻ',
+    'exclude_lists' => 'Exclude List(s)',
+    'exclude_tags' => 'Exclude Tag(s)',
+    'remove_exclusion' => 'remove exclusion',
     'query' => 'Tìm kiếm...',
     'search_title' => 'Tìm theo tiêu đề',
     'search_description' => 'Tìm theo mô tả',

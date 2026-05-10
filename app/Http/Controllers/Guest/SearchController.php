@@ -23,7 +23,9 @@ class SearchController extends Controller
     {
         $performedSearch = $request->filled('query')
             || $request->filled('only_lists')
-            || $request->filled('only_tags');
+            || $request->filled('only_tags')
+            || $request->filled('exclude_lists')
+            || $request->filled('exclude_tags');
 
         if ($performedSearch) {
             $results = $this->searchLinkResults($request);
@@ -46,6 +48,10 @@ class SearchController extends Controller
                 'search_description' => $performedSearch ? $this->searchDescription : true,
                 'only_lists' => $performedSearch ? $this->searchLists : [],
                 'only_tags' => $performedSearch ? $this->searchTags : [],
+                'list_mode' => $performedSearch ? $this->searchListMode : 'all',
+                'tag_mode' => $performedSearch ? $this->searchTagMode : 'all',
+                'exclude_lists' => $performedSearch ? $this->searchExcludeLists : [],
+                'exclude_tags' => $performedSearch ? $this->searchExcludeTags : [],
                 'order_by' => ($performedSearch && $this->searchOrderBy) ? $this->searchOrderBy : $this->orderByOptions[0],
                 'performed_search' => $performedSearch,
             ]);

@@ -26,6 +26,10 @@ class SearchControllerTest extends TestCase
             'guest_access_enabled' => true,
             'setup_completed' => true,
         ]);
+        config([
+            'linkace.search.driver' => 'database',
+            'scout.driver' => 'database',
+        ]);
 
         User::factory()->create();
     }
@@ -34,7 +38,12 @@ class SearchControllerTest extends TestCase
     {
         $this->get('guest/search')
             ->assertOk()
-            ->assertSee('Search');
+            ->assertSee('Search')
+            ->assertSee('name="tag_mode"', false)
+            ->assertSee('name="list_mode"', false)
+            ->assertSee('value="all"', false)
+            ->assertSee('name="exclude_tags"', false)
+            ->assertSee('name="exclude_lists"', false);
     }
 
     public function test_search_redirects_to_login_when_guest_access_disabled(): void
@@ -195,6 +204,37 @@ class SearchControllerTest extends TestCase
         $this->get('guest/search?only_lists=' . $privateList->id)
             ->assertOk()
             ->assertDontSee('https://leak-via-list.example');
+    }
+
+    public function test_search_supports_all_tag_mode_and_exclusions_for_public_links(): void
+    {
+        [$recipes, $vegetarian, $meat] = Tag::factory()
+            ->count(3)
+            ->create(['visibility' => ModelAttribute::VISIBILITY_PUBLIC]);
+
+        $matchingLink = Link::factory()->create([
+            'url' => 'https://vegetarian-recipes.example',
+            'visibility' => ModelAttribute::VISIBILITY_PUBLIC,
+        ]);
+        $matchingLink->tags()->sync([$recipes->id, $vegetarian->id]);
+
+        $missingTagLink = Link::factory()->create([
+            'url' => 'https://recipes-only.example',
+            'visibility' => ModelAttribute::VISIBILITY_PUBLIC,
+        ]);
+        $missingTagLink->tags()->sync([$recipes->id]);
+
+        $excludedTagLink = Link::factory()->create([
+            'url' => 'https://meat-recipes.example',
+            'visibility' => ModelAttribute::VISIBILITY_PUBLIC,
+        ]);
+        $excludedTagLink->tags()->sync([$recipes->id, $vegetarian->id, $meat->id]);
+
+        $this->get("guest/search?only_tags={$recipes->id},{$vegetarian->id}&tag_mode=all&exclude_tags={$meat->id}")
+            ->assertOk()
+            ->assertSee($matchingLink->url)
+            ->assertDontSee($missingTagLink->url)
+            ->assertDontSee($excludedTagLink->url);
     }
 
     public function test_search_rejects_admin_only_filters(): void

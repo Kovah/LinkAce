@@ -16,6 +16,7 @@ export default class TagsSelect {
 
     this.$el = $el;
     this.type = this.$el.dataset.tagType;
+    this.filterRole = this.$el.dataset.filterRole;
     this.select = null;
     const selectObject = this;
 
@@ -47,6 +48,7 @@ export default class TagsSelect {
           return option !== undefined ? option.id : item;
         });
         selectObject.$el.value = items.length > 0 ? JSON.stringify(items) : null;
+        selectObject.updateSearchFilterControls();
       },
       render: {
         option: function (item, escape) {
@@ -67,6 +69,7 @@ export default class TagsSelect {
     }
 
     this.select = new TomSelect(this.$el, this.config);
+    this.setupSearchFilterControls();
   }
 
   renderItem (item, escape) {
@@ -76,6 +79,80 @@ export default class TagsSelect {
 
   selectAllowsCreation () {
     return typeof this.$el.dataset.allowCreation !== 'undefined';
+  }
+
+  setupSearchFilterControls () {
+    if (this.filterRole !== 'include') {
+      return;
+    }
+
+    this.$form = this.$el.closest('form');
+    this.$modeInput = this.$form.querySelector(`#${this.type === 'tags' ? 'tag' : 'list'}_mode`);
+    this.$excludeWrapper = this.$form.querySelector(`[data-filter-exclude-wrapper="${this.type}"]`);
+
+    if (!this.$modeInput || !this.$excludeWrapper) {
+      return;
+    }
+
+    this.$hint = document.createElement('div');
+    this.$hint.className = 'search-filter-hint text-xs text-pale mt-1 d-none';
+    this.$hint.innerHTML = `
+      Links must match: <strong data-filter-mode-label></strong>
+      &middot;
+      <button type="button" class="btn btn-link btn-xs p-0 align-baseline" data-filter-toggle-mode></button>
+      &middot;
+      <button type="button" class="btn btn-link btn-xs p-0 align-baseline" data-filter-show-exclusion></button>
+    `;
+
+    this.$modeLabel = this.$hint.querySelector('[data-filter-mode-label]');
+    this.$modeToggle = this.$hint.querySelector('[data-filter-toggle-mode]');
+    this.$showExclusion = this.$hint.querySelector('[data-filter-show-exclusion]');
+    this.$removeExclusion = this.$form.querySelector(`[data-filter-remove-exclusion="${this.type}"]`);
+
+    this.$el.parentElement.appendChild(this.$hint);
+
+    this.$modeToggle.addEventListener('click', () => {
+      this.$modeInput.value = this.$modeInput.value === 'all' ? 'any' : 'all';
+      this.updateSearchFilterControls();
+    });
+
+    this.$showExclusion.addEventListener('click', () => {
+      this.$excludeWrapper.classList.remove('d-none');
+      this.updateSearchFilterControls();
+    });
+
+    this.$removeExclusion?.addEventListener('click', () => {
+      const excludeSelect = this.$excludeWrapper.querySelector('.tag-select')?.tomselect;
+      excludeSelect?.clear();
+      this.$excludeWrapper.classList.add('d-none');
+      this.updateSearchFilterControls();
+    });
+
+    this.updateSearchFilterControls();
+  }
+
+  updateSearchFilterControls () {
+    if (this.filterRole !== 'include' || !this.$hint) {
+      return;
+    }
+
+    const selectedCount = this.select?.items.length ?? 0;
+    const exclusionVisible = !this.$excludeWrapper.classList.contains('d-none');
+    const showControls = selectedCount >= 2 || exclusionVisible;
+    const mode = this.$modeInput.value === 'any' ? 'any' : 'all';
+    const noun = this.type === 'tags' ? 'tag' : 'list';
+
+    this.$hint.classList.toggle('d-none', !showControls);
+    this.$modeLabel.textContent = `${mode} ${this.type}`;
+    this.$modeToggle.textContent = `change to ${mode === 'all' ? 'any' : 'all'}`;
+    this.$showExclusion.textContent = `+ exclude ${this.type}`;
+    this.$showExclusion.classList.toggle('d-none', exclusionVisible);
+
+    if (!showControls) {
+      this.$modeInput.value = 'all';
+    }
+
+    this.$excludeWrapper.querySelector('input')?.setAttribute('aria-label', `Exclude ${noun}s`);
   }
 
   displayNewSuggestions (tags) {

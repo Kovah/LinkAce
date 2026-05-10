@@ -9,14 +9,13 @@ use App\Models\Tag;
 use App\Models\User;
 use App\Search\ScoutSearchBackend;
 use App\Search\SearchQuery;
-use Illuminate\Database\Eloquent\Collection as EloquentCollection;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Pagination\LengthAwarePaginator;
 use Illuminate\Support\Facades\Log;
-use Laravel\Scout\Builder as ScoutBuilder;
 use Laravel\Scout\EngineManager;
 use Laravel\Scout\Engines\Engine;
 use RuntimeException;
+use Tests\Fakes\RecordingSearchEngine;
 use Tests\TestCase;
 
 class ScoutSearchBackendTest extends TestCase
@@ -59,6 +58,8 @@ class ScoutSearchBackendTest extends TestCase
             emptyLists: false,
             emptyTags: false,
             orderBy: 'created_at:desc',
+            listMode: 'any',
+            tagMode: 'any',
         );
 
         app(ScoutSearchBackend::class)->searchLinks($query);
@@ -72,6 +73,35 @@ class ScoutSearchBackendTest extends TestCase
         $this->assertSame([10, 11], $builder->whereIns['list_ids']);
         $this->assertSame([12], $builder->whereIns['tag_ids']);
         $this->assertSame([['column' => 'created_at', 'direction' => 'desc']], $builder->orders);
+        $this->assertNotNull($builder->queryCallback);
+    }
+
+    public function test_link_search_only_applies_any_mode_taxonomy_filters_to_search_engine(): void
+    {
+        $this->actingAs(User::factory()->create());
+        config(['linkace.search.driver' => 'meilisearch']);
+
+        app(ScoutSearchBackend::class)->searchLinks(new SearchQuery(
+            query: 'flower',
+            searchTitle: false,
+            searchDescription: false,
+            visibility: null,
+            brokenOnly: false,
+            lists: [10, 11],
+            tags: [12, 13],
+            emptyLists: false,
+            emptyTags: false,
+            orderBy: null,
+            listMode: 'all',
+            tagMode: 'all',
+            excludeLists: [14],
+            excludeTags: [15],
+        ));
+
+        $builder = $this->engine->lastPaginatedBuilder;
+
+        $this->assertArrayNotHasKey('list_ids', $builder->whereIns);
+        $this->assertArrayNotHasKey('tag_ids', $builder->whereIns);
         $this->assertNotNull($builder->queryCallback);
     }
 
@@ -256,99 +286,5 @@ class ScoutSearchBackendTest extends TestCase
             emptyTags: false,
             orderBy: null,
         ));
-    }
-}
-
-class RecordingSearchEngine extends Engine
-{
-    public ?ScoutBuilder $lastPaginatedBuilder = null;
-    public ?ScoutBuilder $lastSearchBuilder = null;
-    public array $hitIds = [];
-    public ?RuntimeException $exception = null;
-
-    public function update($models): void
-    {
-    }
-
-    public function delete($models): void
-    {
-    }
-
-    public function search(ScoutBuilder $builder): array
-    {
-        if ($this->exception) {
-            throw $this->exception;
-        }
-
-        $this->lastSearchBuilder = $builder;
-
-        return ['hits' => $this->hits()];
-    }
-
-    public function paginate(ScoutBuilder $builder, $perPage, $page): array
-    {
-        if ($this->exception) {
-            throw $this->exception;
-        }
-
-        $this->lastPaginatedBuilder = $builder;
-
-        return [
-            'hits' => $this->hits(),
-            'total' => count($this->hitIds),
-        ];
-    }
-
-    public function mapIds($results): \Illuminate\Support\Collection
-    {
-        return collect($results['hits'])->pluck('id')->values();
-    }
-
-    public function map(ScoutBuilder $builder, $results, $model): EloquentCollection
-    {
-        $ids = collect($results['hits'])->pluck('id')->all();
-
-        if ($ids === []) {
-            return $model->newCollection();
-        }
-
-        $query = $model->newQuery()->whereIn($model->getKeyName(), $ids);
-
-        if ($builder->queryCallback) {
-            ($builder->queryCallback)($query);
-        }
-
-        return $query->get()
-            ->sortBy(fn ($model) => array_search($model->getKey(), $ids, true))
-            ->values();
-    }
-
-    public function lazyMap(ScoutBuilder $builder, $results, $model): \Illuminate\Support\LazyCollection
-    {
-        return $this->map($builder, $results, $model)->lazy();
-    }
-
-    public function getTotalCount($results): int
-    {
-        return $results['total'] ?? count($results['hits']);
-    }
-
-    public function flush($model): void
-    {
-    }
-
-    public function createIndex($name, array $options = []): void
-    {
-    }
-
-    public function deleteIndex($name): void
-    {
-    }
-
-    private function hits(): array
-    {
-        return collect($this->hitIds)
-            ->map(fn (int $id) => ['id' => $id])
-            ->all();
     }
 }

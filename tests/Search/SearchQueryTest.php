@@ -58,6 +58,35 @@ class SearchQueryTest extends TestCase
         $this->assertTrue($query->hasFiltersOnly());
     }
 
+    public function test_parses_taxonomy_modes_and_exclusions(): void
+    {
+        $query = SearchQuery::fromRequest(new Request([
+            'tag_mode' => 'all',
+            'list_mode' => 'all',
+            'exclude_tags' => '6,7',
+            'exclude_lists' => '[8,9]',
+        ]));
+
+        $this->assertSame('all', $query->tagMode);
+        $this->assertSame('all', $query->listMode);
+        $this->assertSame([6, 7], $query->excludeTags);
+        $this->assertSame([8, 9], $query->excludeLists);
+        $this->assertTrue($query->hasFiltersOnly());
+    }
+
+    public function test_defaults_taxonomy_modes_to_any_for_api_backward_compatibility(): void
+    {
+        $query = SearchQuery::fromRequest(new Request([
+            'only_lists' => '1,2',
+            'only_tags' => '3,4',
+        ]));
+
+        $this->assertSame('any', $query->tagMode);
+        $this->assertSame('any', $query->listMode);
+        $this->assertSame([], $query->excludeTags);
+        $this->assertSame([], $query->excludeLists);
+    }
+
     public function test_parses_json_list_and_tag_filters(): void
     {
         $query = SearchQuery::fromRequest(new Request([

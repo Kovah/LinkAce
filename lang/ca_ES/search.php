@@ -5,6 +5,9 @@ return [
 
     'filter_by_list' => 'Filtrar per llista(es)',
     'filter_by_tag' => 'Filtrar per Etiqueta(es)',
+    'exclude_lists' => 'Exclude List(s)',
+    'exclude_tags' => 'Exclude Tag(s)',
+    'remove_exclusion' => 'remove exclusion',
     'query' => 'Cerca per...',
     'search_title' => 'Cerca per títol',
     'search_description' => 'Cerca per Descripció',

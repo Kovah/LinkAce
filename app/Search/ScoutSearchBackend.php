@@ -94,11 +94,11 @@ class ScoutSearchBackend implements SearchBackend
             $builder->where('status', '>', 1);
         }
 
-        if ($query->lists !== []) {
+        if ($query->lists !== [] && $query->listMode === 'any') {
             $builder->whereIn('list_ids', $query->lists);
         }
 
-        if ($query->tags !== []) {
+        if ($query->tags !== [] && $query->tagMode === 'any') {
             $builder->whereIn('tag_ids', $query->tags);
         }
 

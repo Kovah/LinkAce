@@ -17,6 +17,10 @@ trait SearchesLinks
     protected bool $searchBrokenOnly = false;
     protected array $searchLists = [];
     protected array $searchTags = [];
+    protected string $searchListMode = 'any';
+    protected string $searchTagMode = 'any';
+    protected array $searchExcludeLists = [];
+    protected array $searchExcludeTags = [];
     protected bool $emptyLists = false;
     protected bool $emptyTags = false;
     protected string|null $searchOrderBy = null;
@@ -52,6 +56,10 @@ trait SearchesLinks
         $this->searchBrokenOnly = $query->brokenOnly;
         $this->searchLists = $query->lists;
         $this->searchTags = $query->tags;
+        $this->searchListMode = $query->listMode;
+        $this->searchTagMode = $query->tagMode;
+        $this->searchExcludeLists = $query->excludeLists;
+        $this->searchExcludeTags = $query->excludeTags;
         $this->emptyLists = $query->emptyLists;
         $this->emptyTags = $query->emptyTags;
         $this->searchOrderBy = $query->orderBy;

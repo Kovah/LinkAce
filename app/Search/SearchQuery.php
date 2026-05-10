@@ -28,6 +28,10 @@ class SearchQuery
         public readonly bool $emptyLists,
         public readonly bool $emptyTags,
         public readonly ?string $orderBy,
+        public readonly string $listMode = 'any',
+        public readonly string $tagMode = 'any',
+        public readonly array $excludeLists = [],
+        public readonly array $excludeTags = [],
     ) {
     }
 
@@ -44,6 +48,10 @@ class SearchQuery
             emptyLists: (bool) $request->input('empty_lists', false),
             emptyTags: (bool) $request->input('empty_tags', false),
             orderBy: self::parseOrderBy($request->input('order_by')),
+            listMode: self::parseTaxonomyMode($request->input('list_mode')),
+            tagMode: self::parseTaxonomyMode($request->input('tag_mode')),
+            excludeLists: self::parseTaxonomyFilter($request->input('exclude_lists')),
+            excludeTags: self::parseTaxonomyFilter($request->input('exclude_tags')),
         );
     }
 
@@ -77,6 +85,8 @@ class SearchQuery
             || $this->brokenOnly
             || $this->lists !== []
             || $this->tags !== []
+            || $this->excludeLists !== []
+            || $this->excludeTags !== []
             || $this->emptyLists
             || $this->emptyTags;
     }
@@ -117,6 +127,11 @@ class SearchQuery
         }
 
         return self::normalizeIds(explode(',', $value));
+    }
+
+    private static function parseTaxonomyMode(mixed $value): string
+    {
+        return $value === 'all' ? 'all' : 'any';
     }
 
     private static function normalizeIds(array $values): array

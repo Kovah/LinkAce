@@ -38,25 +38,63 @@ class LinkSearchScope
         return $query->visibleForUser()->with(['tags']);
     }
 
-    public function filterByLists(Builder $query, array $listIds): Builder
+    public function filterByLists(Builder $query, array $listIds, string $mode = 'any'): Builder
     {
+        if ($mode === 'all') {
+            foreach ($listIds as $listId) {
+                $query->whereHas('lists', function ($query) use ($listId) {
+                    $query->where('id', $listId);
+
+                    if ($this->publicOnly) {
+                        $query->publicOnly();
+                    }
+                });
+            }
+
+            return $query;
+        }
+
         return $query->whereHas('lists', function ($query) use ($listIds) {
             $query->whereIn('id', $listIds);
-
-            if ($this->publicOnly) {
-                $query->publicOnly();
-            }
+            $this->applyPublicOnlyConstraint($query);
         });
     }
 
-    public function filterByTags(Builder $query, array $tagIds): Builder
+    public function excludeLists(Builder $query, array $listIds): Builder
     {
+        return $query->whereDoesntHave('lists', function ($query) use ($listIds) {
+            $query->whereIn('id', $listIds);
+            $this->applyPublicOnlyConstraint($query);
+        });
+    }
+
+    public function filterByTags(Builder $query, array $tagIds, string $mode = 'any'): Builder
+    {
+        if ($mode === 'all') {
+            foreach ($tagIds as $tagId) {
+                $query->whereHas('tags', function ($query) use ($tagId) {
+                    $query->where('id', $tagId);
+
+                    if ($this->publicOnly) {
+                        $query->publicOnly();
+                    }
+                });
+            }
+
+            return $query;
+        }
+
         return $query->whereHas('tags', function ($query) use ($tagIds) {
             $query->whereIn('id', $tagIds);
+            $this->applyPublicOnlyConstraint($query);
+        });
+    }
 
-            if ($this->publicOnly) {
-                $query->publicOnly();
-            }
+    public function excludeTags(Builder $query, array $tagIds): Builder
+    {
+        return $query->whereDoesntHave('tags', function ($query) use ($tagIds) {
+            $query->whereIn('id', $tagIds);
+            $this->applyPublicOnlyConstraint($query);
         });
     }
 
@@ -64,6 +102,13 @@ class LinkSearchScope
     {
         if ($this->publicOnly) {
             $builder->where('visibility', ModelAttribute::VISIBILITY_PUBLIC);
+        }
+    }
+
+    private function applyPublicOnlyConstraint(Builder $query): void
+    {
+        if ($this->publicOnly) {
+            $query->publicOnly();
         }
     }
 }

@@ -5,6 +5,9 @@ return [
 
     'filter_by_list' => 'Filteren op lijst(en)',
     'filter_by_tag' => 'Filteren op tag(s)',
+    'exclude_lists' => 'Exclude List(s)',
+    'exclude_tags' => 'Exclude Tag(s)',
+    'remove_exclusion' => 'remove exclusion',
     'query' => 'Zoek naar...',
     'search_title' => 'Zoeken in titels',
     'search_description' => 'Zoeken in omschrijvingen',
