@@ -5,7 +5,7 @@
   </picture>
 </h1>
 
-<p align="center"><b>Your self-hosted tool for effortlessly archiving, organizing, and sharing your favorite web links.</b></p>
+<p align="center"><b>Your self-hosted app for effortlessly organizing, archiving, and sharing your favorite bookmarks.</b></p>
 
 <p align="center">
   <a href="https://mastodon.social/@linkace"><img src="https://img.shields.io/badge/%40linkace%40mastodon.social-6364ff" alt="Follow LinkAce on Mastodon"></a>
@@ -68,11 +68,8 @@ LinkAce provides multiple ways of installing it on your server. The complete doc
 * [Setup without Docker](https://www.linkace.org/docs/v2/setup/setup-with-php/)
 * [One-Click Deployment to the Cloud](https://www.linkace.org/docs/v2/setup/one-click-deploy/)
 * [Setup with Kubernetes](https://www.linkace.org/docs/v2/setup/setup-to-k8s/) (Beta)
-* [Official managed Hosting](https://hosting.linkace.org) (_Beta Waitlist_)
+* [Official managed Hosting](https://hosting.linkace.org) (_Beta_)
 
-&nbsp;
-
-> **LinkAce 2.0 was just released!** This is a big upgrade to the application. Please read the [upgrade guide](https://www.linkace.org/docs/v2/upgrade/from-v1/) if you are still using LinkAce 1 and want to use version 2.
 
 &nbsp;
 
@@ -83,15 +80,19 @@ I built LinkAce to solve my own problem, and I now offer my solution and code wi
 
 :star: You can get personal and dedicated support by **becoming a supporter on [Open Collective](https://opencollective.com/linkace), [Patreon](https://www.patreon.com/Kovah) or [Github](https://github.com/sponsors/Kovah)**.
 
-#### Our Supporters on Open Collective
 
-<a href="https://opencollective.com/linkace"><img src="https://opencollective.com/linkace/individuals.svg?width=890"></a>
+&nbsp;
 
 
 ### Documentation and Community
 
 Details about all features and advanced configuration can be found in the [**project documentation**](https://www.linkace.org/docs/v2).  
 Additionally, you may visit the [community discussions](https://github.com/Kovah/LinkAce/discussions) to share your ideas, talk with other users or find help for specific problems.
+
+
+#### Our Supporters on Open Collective
+
+<a href="https://opencollective.com/linkace"><img src="https://opencollective.com/linkace/individuals.svg?width=890"></a>
 
 
 &nbsp;
@@ -103,16 +104,12 @@ Additionally, you may visit the [community discussions](https://github.com/Kovah
 
 Please consult the [**contribution guidelines**](CONTRIBUTING.md) to start working on LinkAce.
 
-
 &nbsp;
-
 
 Thanks go to these wonderful people for their contributions:
 
 [![List of contributors](https://contrib.rocks/image?repo=kovah/linkace)](https://github.com/Kovah/LinkAce/graphs/contributors)
 
-
 &nbsp;
-
 
 LinkAce is a project by [Kevin Woblick](https://woblick.dev) and [Contributors](https://github.com/Kovah/LinkAce/graphs/contributors)
