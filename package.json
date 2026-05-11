@@ -20,7 +20,7 @@
   },
   "dependencies": {
     "bootstrap": "^5.3.3",
-    "tom-select": "^2.4.3"
+    "tom-select": "^2.6.0"
   },
   "scripts": {
     "dev": "vite",
