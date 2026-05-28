@@ -26,70 +26,116 @@ class ContentTypeHeaderValidationMiddlewareTest extends TestCase
             'example.com' => Http::response($testHtml),
         ]);
 
-        // content-type and accept are missing
-        $this->post('api/v2/links', ['url' => 'https://example.com'], ['Authorization' => 'Bearer ' . $accessToken])
-            ->assertUnsupportedMediaType()
+        // ❌ 1. content-type and accept are missing → 406
+        $this->post('api/v2/links', ['url' => 'https://example.com'], [
+            'Authorization' => 'Bearer ' . $accessToken,
+        ])
+            ->assertNotAcceptable()
             ->assertJson([
-                'error' => 'Invalid Content-Type header, LinkAce only supports JSON input',
+                'error' => '1. Invalid Accept header and Content-Type header, LinkAce only supports JSON input',
             ]);
 
-        // content-type is present, but not supported
+        // ❌ 2. content-type is present, but not supported; accept header is missing → 406
         $this->post('api/v2/links', ['url' => 'https://example.com'], [
             'Authorization' => 'Bearer ' . $accessToken,
             'Content-Type' => 'application/xml',
         ])
-            ->assertUnsupportedMediaType()
+            ->assertNotAcceptable()
             ->assertJson([
-                'error' => 'Invalid Content-Type header, LinkAce only supports JSON input',
+                'error' => '2. Invalid Accept header, LinkAce only supports JSON input',
             ]);
 
-        // accept header is missing
+        // ❌ 3. accept header is missing → 406
         $this->post('api/v2/links', ['url' => 'https://example.com'], [
             'Authorization' => 'Bearer ' . $accessToken,
             'Content-Type' => 'application/json',
         ])
-            ->assertUnsupportedMediaType()
+            ->assertNotAcceptable()
             ->assertJson([
-                'error' => 'Invalid Accept header, LinkAce only supports JSON output',
+                'error' => '3. Invalid Accept header, LinkAce only supports JSON output',
             ]);
 
-        // accept header is present, but not supported
+        // ❌ 4. accept header is present, but not supported → 406
         $this->post('api/v2/links', ['url' => 'https://example.com'], [
             'Authorization' => 'Bearer ' . $accessToken,
             'Content-Type' => 'application/json',
             'Accept' => 'application/xml',
         ])
-            ->assertUnsupportedMediaType()
+            ->assertNotAcceptable()
             ->assertJson([
-                'error' => 'Invalid Accept header, LinkAce only supports JSON output',
+                'error' => '4. Invalid Accept header, LinkAce only supports JSON output',
             ]);
 
-        // request headers are correct
+        // ❌ 5. accept header is present, but content-type not supported → 415
+        $this->post('api/v2/links', ['url' => 'https://example.com'], [
+            'Authorization' => 'Bearer ' . $accessToken,
+            'Content-Type' => 'application/xml',
+            'Accept' => 'application/json',
+        ])
+            ->assertUnsupportedMediaType()
+            ->assertJson([
+                'error' => '5. Invalid Content-Type header, LinkAce only supports JSON input',
+            ]);
+
+        // ✅ 6. request headers are correct
         $this->postJson('api/v2/links', ['url' => 'https://example.com'], [
             'Authorization' => 'Bearer ' . $accessToken,
             'Content-Type' => 'application/json',
             'Accept' => 'application/json',
         ])->assertOk();
 
-        // request headers are correct
+        // ✅ 7. request headers are correct
         $this->postJson('api/v2/links', ['url' => 'https://example.com'], [
             'Authorization' => 'Bearer ' . $accessToken,
             'Content-Type' => 'application/json; charset=utf-8',
             'Accept' => 'application/json',
         ])->assertOk();
 
-        // request headers are correct
+        // ✅ 8. request headers are correct
         $this->postJson('api/v2/links', ['url' => 'https://example.com'], [
             'Authorization' => 'Bearer ' . $accessToken,
             'Content-Type' => 'application/json',
             'Accept' => 'application/json;q=0.8',
         ])->assertOk();
 
-        // request headers are correct
+        // ✅ 9. request headers are correct
         $this->postJson('api/v2/links', ['url' => 'https://example.com'], [
             'Authorization' => 'Bearer ' . $accessToken,
             'Content-Type' => 'application/json',
             'Accept' => 'application/json;q=0.8, application/xml;q=0.2',
         ])->assertOk();
+
+        // ❌ 10. 1ccept wildcard */* → 406
+        $this->postJson('api/v2/links', ['url' => 'https://example.com'], [
+            'Authorization' => 'Bearer ' . $accessToken,
+            'Content-Type' => 'application/json',
+            'Accept' => '*/*',
+        ])
+            ->assertNotAcceptable()
+            ->assertJson([
+                'error' => '10. Invalid Accept header, LinkAce only supports JSON output',
+            ]);
+
+        // ❌ 11. accept wildcard application/* → 406
+        $this->postJson('api/v2/links', ['url' => 'https://example.com'], [
+            'Authorization' => 'Bearer ' . $accessToken,
+            'Content-Type' => 'application/json',
+            'Accept' => 'application/*',
+        ])
+            ->assertNotAcceptable()
+            ->assertJson([
+                'error' => '11. Invalid Accept header, LinkAce only supports JSON output',
+            ]);
+
+        // ❌ 12. accept header is present, but not supported → 406
+        $this->postJson('api/v2/links', ['url' => 'https://example.com'], [
+            'Authorization' => 'Bearer ' . $accessToken,
+            'Content-Type' => 'application/json',
+            'Accept' => 'text/plain, application/xml',
+        ])
+            ->assertNotAcceptable()
+            ->assertJson([
+                'error' => '12. Invalid Accept header, LinkAce only supports JSON output',
+            ]);
     }
 }

@@ -11,12 +11,11 @@ class ApiHeaderValidationMiddleware
     /**
      * Validate API headers for JSON requests.
      *
-     * POST, PUT, PATCH and DELETE requests must send JSON input. If an Accept header
-     * is provided, it must allow application/json or a wildcard.
-     *
-     * @param Request $request
-     * @param Closure $next
-     * @return Response
+     * POST, PUT, PATCH and DELETE requests must send JSON input.
+     * Accept header must be present and allow application/json for response content negotiation only.
+     * This middleware enforces strict adherence to API standards for content negotiation and media type validation.
+     * It ensures that clients correctly specify their expectations for both request payloads and response formats,
+     * improving interoperability and robustness of the API.
      */
 
     /**
@@ -132,7 +131,6 @@ class ApiHeaderValidationMiddleware
      * Implements RFC 9110:
      * - Supports multiple media types
      * - Supports quality values (q=)
-     * - Supports wildcard media ranges (e.g. "*/*" and "type/*") as defined in RFC 9110. Wildcard ranges are treated as less specific matches during negotiation.
      * - Response media types are fixed to application/json for this API
      *
      * @param Request $request
@@ -142,9 +140,9 @@ class ApiHeaderValidationMiddleware
     {
         $acceptHeader = $request->header('Accept');
 
-        // RFC: missing Accept implies "*/*"
+        // RFC: missing Accept
         if ($acceptHeader === null) {
-            return self::SUPPORTED_RESPONSE_TYPES[0];
+            return null;
         }
 
         $acceptedTypes = $this->parseAcceptHeader($acceptHeader);
@@ -182,13 +180,25 @@ class ApiHeaderValidationMiddleware
             $subParts = explode(';', trim($part));
 
             $mediaType = trim(array_shift($subParts));
+            if ($mediaType === '') {
+                continue;
+            }
+
             $q = 1.0;
 
             foreach ($subParts as $param) {
                 $param = trim($param);
                 if (str_starts_with($param, 'q=')) {
-                    $q = (float) substr($param, 2);
+                    $rawQ = trim(substr($param, 2));
+                    if (is_numeric($rawQ)) {
+                        $q = max(0.0, min(1.0, (float) $rawQ));
+                    } else {
+                        $q = 0.0;
+                    }
                 }
+            }
+            if ($q <= 0.0) {
+                continue;
             }
 
             $result[] = [
@@ -208,7 +218,6 @@ class ApiHeaderValidationMiddleware
      *
      * Supports:
      * - Exact matches (application/json)
-     * - Wildcards (*\/*, application/*)
      *
      * @param string $accepted
      * @param string $supported
@@ -216,18 +225,8 @@ class ApiHeaderValidationMiddleware
      */
     private function mediaTypeMatches(string $accepted, string $supported): bool
     {
-        if ($accepted === '*/*') {
-            return true;
-        }
-
         if ($accepted === $supported) {
             return true;
-        }
-
-        // subtype wildcard: application/*
-        if (str_contains($accepted, '/*')) {
-            [$type] = explode('/', $accepted);
-            return str_starts_with($supported, $type . '/');
         }
 
         return false;
