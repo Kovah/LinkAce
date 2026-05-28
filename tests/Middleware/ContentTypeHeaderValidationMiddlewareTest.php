@@ -70,5 +70,26 @@ class ContentTypeHeaderValidationMiddlewareTest extends TestCase
             'Content-Type' => 'application/json',
             'Accept' => 'application/json',
         ])->assertOk();
+
+        // request headers are correct
+        $this->postJson('api/v2/links', ['url' => 'https://example.com'], [
+            'Authorization' => 'Bearer ' . $accessToken,
+            'Content-Type' => 'application/json; charset=utf-8',
+            'Accept' => 'application/json',
+        ])->assertOk();
+
+        // request headers are correct
+        $this->postJson('api/v2/links', ['url' => 'https://example.com'], [
+            'Authorization' => 'Bearer ' . $accessToken,
+            'Content-Type' => 'application/json',
+            'Accept' => 'application/json;q=0.8',
+        ])->assertOk();
+
+        // request headers are correct
+        $this->postJson('api/v2/links', ['url' => 'https://example.com'], [
+            'Authorization' => 'Bearer ' . $accessToken,
+            'Content-Type' => 'application/json',
+            'Accept' => 'application/json;q=0.8, application/xml;q=0.2',
+        ])->assertOk();
     }
 }
