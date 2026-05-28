@@ -151,7 +151,6 @@ class ApiHeaderValidationMiddleware
 
         foreach ($acceptedTypes as $accepted) {
             foreach (self::SUPPORTED_RESPONSE_TYPES as $supported) {
-
                 if ($this->mediaTypeMatches($accepted['type'], $supported)) {
                     return $supported;
                 }
