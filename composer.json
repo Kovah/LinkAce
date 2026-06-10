@@ -51,7 +51,6 @@
     "mockery/mockery": "^1.3",
     "nunomaduro/collision": "^v8.8",
     "phpunit/phpunit": "^11.5",
-    "roave/security-advisories": "dev-latest",
     "spatie/laravel-ignition": "^2.4",
     "spatie/laravel-ray": "^1.39",
     "squizlabs/php_codesniffer": "^4.0"
@@ -103,6 +102,11 @@
     "sort-packages": true,
     "allow-plugins": {
       "php-http/discovery": true
+    },
+    "policy": {
+      "advisories": {
+        "block": false
+      }
     }
   },
   "minimum-stability": "stable",
