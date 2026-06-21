@@ -1,0 +1,84 @@
+<?php
+
+namespace Tests\Helper;
+
+use App\Events\LinkCreated;
+use App\Events\LinkUpdated;
+use App\Exceptions\PluginException;
+use Facades\App\Helper\PluginManager;
+use Illuminate\Support\Facades\Config;
+use Illuminate\Support\Facades\Event;
+use Tests\Mocks\NoHandlePlugin;
+use Tests\Mocks\NoParameterPlugin;
+use Tests\Mocks\SimplePlugin;
+use Tests\Mocks\TooManyParametersPlugin;
+use Tests\Mocks\UnionPlugin;
+use Tests\TestCase;
+
+class PluginManagerTest extends TestCase
+{
+    protected function setUp(): void
+    {
+        parent::setUp();
+        Event::fake();
+    }
+
+    public function test_plugin_manager_doesnt_bomb_with_no_plugins()
+    {
+        Config::set('linkace.plugins', []);
+        PluginManager::registerPlugins();
+        $this->assertTrue(true, 'no exception thrown');
+    }
+
+    public function test_plugin_manager_registers_single_listener()
+    {
+        Config::set('linkace.plugins', [SimplePlugin::class]);
+        PluginManager::registerPlugins();
+        Event::assertListening(LinkCreated::class, SimplePlugin::class);
+    }
+
+    public function test_plugin_manager_registers_all_events_for_union_types()
+    {
+        Config::set('linkace.plugins', [UnionPlugin::class]);
+        PluginManager::registerPlugins();
+        Event::assertListening(LinkCreated::class, UnionPlugin::class);
+        Event::assertListening(LinkUpdated::class, UnionPlugin::class);
+    }
+
+    public function test_plugin_manager_handles_multiple_plugins()
+    {
+        Config::set('linkace.plugins', [SimplePlugin::class, UnionPlugin::class]);
+        PluginManager::registerPlugins();
+        Event::assertListening(LinkCreated::class, SimplePlugin::class);
+        Event::assertListening(LinkCreated::class, UnionPlugin::class);
+        Event::assertListening(LinkUpdated::class, UnionPlugin::class);
+    }
+
+    public function test_plugin_manager_throws_plugin_exception_with_missing_plugin()
+    {
+        Config::set('linkace.plugins', ['noSuchPlugin']);
+        $this->expectException(PluginException::class);
+        PluginManager::registerPlugins();
+    }
+
+    public function test_plugin_manager_throws_plugin_exception_with_missing_handle_function()
+    {
+        Config::set('linkace.plugins', [NoHandlePlugin::class]);
+        $this->expectException(PluginException::class);
+        PluginManager::registerPlugins();
+    }
+
+    public function test_plugin_manager_throws_plugin_exception_with_too_many_parameters()
+    {
+        Config::set('linkace.plugins', [TooManyParametersPlugin::class]);
+        $this->expectException(PluginException::class);
+        PluginManager::registerPlugins();
+    }
+
+    public function test_plugin_manager_throws_plugin_exception_with_not_enough_parameters()
+    {
+        Config::set('linkace.plugins', [NoParameterPlugin::class]);
+        $this->expectException(PluginException::class);
+        PluginManager::registerPlugins();
+    }
+}

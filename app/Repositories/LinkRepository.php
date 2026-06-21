@@ -3,6 +3,9 @@
 namespace App\Repositories;
 
 use App\Enums\ModelAttribute;
+use App\Events\LinkCreated;
+use App\Events\LinkDeleted;
+use App\Events\LinkUpdated;
 use App\Helper\HtmlMeta;
 use App\Helper\LinkIconMapper;
 use App\Models\Link;
@@ -45,7 +48,7 @@ class LinkRepository
 
         self::processLinkTaxonomies($link, $data);
 
-        $link->initiateInternetArchiveBackup();
+        LinkCreated::dispatch($link);
 
         return $link;
     }
@@ -70,6 +73,7 @@ class LinkRepository
         $link->update($data);
 
         self::processLinkTaxonomies($link, $data);
+        LinkUpdated::dispatch($link);
 
         return $link;
     }
@@ -109,14 +113,15 @@ class LinkRepository
     public static function delete(Link $link): bool
     {
         try {
+            $id = $link->id;
             $link->tags()->detach();
             $link->lists()->detach();
             $link->delete();
+            LinkDeleted::dispatch($id);
         } catch (Exception $e) {
             Log::error($e);
             return false;
         }
-
         return true;
     }
 
