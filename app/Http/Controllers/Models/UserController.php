@@ -13,26 +13,29 @@ class UserController extends Controller
 {
     public function show(User $user)
     {
-        $links = Link::byUser($user->id)
+        $links = Link::visibleForUser()
+            ->where('user_id', $user->id)
             ->latest()
             ->take(10)
             ->paginate(pageName: 'link_page');
 
-        $lists = LinkList::byUser($user->id)
+        $lists = LinkList::visibleForUser()
+            ->where('user_id', $user->id)
             ->latest()
             ->take(10)
             ->paginate(pageName: 'link_page');
 
-        $tags = Tag::byUser($user->id)
+        $tags = Tag::visibleForUser()
+            ->where('user_id', $user->id)
             ->latest()
             ->take(10)
             ->paginate(pageName: 'link_page');
 
         $stats = [
-            'total_links' => Link::byUser($user->id)->count(),
-            'total_lists' => LinkList::byUser($user->id)->count(),
-            'total_tags' => Tag::byUser($user->id)->count(),
-            'total_notes' => Note::byUser($user->id)->count(),
+            'total_links' => Link::visibleForUser()->where('user_id', $user->id)->count(),
+            'total_lists' => LinkList::visibleForUser()->where('user_id', $user->id)->count(),
+            'total_tags' => Tag::visibleForUser()->where('user_id', $user->id)->count(),
+            'total_notes' => Note::visibleForUser()->where('user_id', $user->id)->count(),
         ];
 
         return view('models.users.show', [

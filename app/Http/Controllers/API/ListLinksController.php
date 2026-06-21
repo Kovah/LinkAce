@@ -15,7 +15,7 @@ class ListLinksController extends Controller
             return response()->json(status: 403);
         }
 
-        $links = $list->links()->paginate(getPaginationLimit());
+        $links = $list->links()->visibleForUser()->paginate(getPaginationLimit());
 
         return response()->json($links);
     }

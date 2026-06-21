@@ -36,7 +36,8 @@ class BookmarkletController extends Controller
 
         session(['bookmarklet.create' => true]);
 
-        $existingLink = Link::withTrashed()->whereUrl($newUrl)->first();
+        $existingLink = Link::withTrashed()->byUser()->whereUrl($newUrl)->first()
+            ?? Link::visibleForUser()->whereUrl($newUrl)->first();
 
         return view('app.bookmarklet.create', [
             'existing_link' => $existingLink ?: false,

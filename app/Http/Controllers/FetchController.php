@@ -67,12 +67,19 @@ class FetchController extends Controller
             return response()->json([]);
         }
 
-        $link = Link::query()
-            ->withTrashed()
-            ->visibleForUser()
+        $ignoreId = $request->input('ignore_id', 0);
+
+        // Check the current user's deleted links first so restore/edit actions stay owner-scoped.
+        // If no deleted match exists, fall back to visible active links for the current user.
+        $link = Link::withTrashed()
+            ->byUser()
             ->where('url', trim($query))
-            ->where('id', '!=', $request->input('ignore_id', 0))
-            ->first();
+            ->where('id', '!=', $ignoreId)
+            ->first()
+            ?? Link::visibleForUser()
+                ->where('url', trim($query))
+                ->where('id', '!=', $ignoreId)
+                ->first();
 
         return response()->json([
             'linkFound' => $link,

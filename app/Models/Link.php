@@ -287,7 +287,8 @@ class Link extends Model implements Auditable
         $uri .= isset($parsed['port']) ? ':' . $parsed['port'] : '';
         $uri .= $parsed['path'] ?? '';
 
-        return self::where('id', '<>', $this->id)
+        return self::visibleForUser($this->user_id)
+            ->where('id', '<>', $this->id)
             ->where('url', 'like', '%' . trim($uri, '/') . '%')
             ->get();
     }

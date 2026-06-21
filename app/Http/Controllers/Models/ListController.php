@@ -36,7 +36,7 @@ class ListController extends Controller
 
         $lists = LinkList::query()
             ->visibleForUser()
-            ->withCount('links')
+            ->withCount(['links' => fn($query) => $query->visibleForUser()])
             ->orderBy($this->orderBy, $this->orderDir);
 
         if ($request->input('filter')) {

@@ -2,6 +2,7 @@
 
 namespace Tests\Controller;
 
+use App\Enums\ModelAttribute;
 use App\Models\Link;
 use App\Models\LinkList;
 use App\Models\Tag;
@@ -82,6 +83,28 @@ class FetchControllerTest extends TestCase
         ]);
 
         $response->assertOk()->assertJson(['linkFound' => false]);
+    }
+
+    public function test_existing_url_search_does_not_find_deleted_public_link_of_another_user(): void
+    {
+        $otherUser = User::factory()->create();
+
+        $deletedLink = Link::factory()->create([
+            'user_id' => $otherUser->id,
+            'url' => 'https://duckduckgo.com/deleted',
+            'visibility' => ModelAttribute::VISIBILITY_PUBLIC,
+        ]);
+        $deletedLink->delete();
+
+        $response = $this->post('fetch/existing-links', [
+            'query' => 'https://duckduckgo.com/deleted',
+        ]);
+
+        $response->assertOk()
+            ->assertJson([
+                'linkFound' => null,
+                'linkDeleted' => null,
+            ]);
     }
 
     public function test_get_html_keywords_for_url(): void

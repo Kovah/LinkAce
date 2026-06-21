@@ -2,6 +2,7 @@
 
 namespace Tests\Controller\App;
 
+use App\Enums\ModelAttribute;
 use App\Models\Link;
 use App\Models\User;
 use Illuminate\Foundation\Testing\RefreshDatabase;
@@ -58,5 +59,46 @@ class BookmarkletControllerTest extends TestCase
             ->assertSee('some & tag')
             ->assertSee('a new list')
         ;
+    }
+
+    public function test_bookmarklet_does_not_show_private_link_of_another_user(): void
+    {
+        $otherUser = User::factory()->create();
+
+        Link::factory()->create([
+            'user_id' => $otherUser->id,
+            'url' => 'https://example.com/private',
+            'visibility' => ModelAttribute::VISIBILITY_PRIVATE,
+        ]);
+
+        $currentUser = User::factory()->create();
+        $this->actingAs($currentUser);
+
+        $response = $this->get('bookmarklet/add?u=https://example.com/private&t=Title');
+
+        $response->assertOk()
+            ->assertSee('/links/0/edit');
+    }
+
+    public function test_bookmarklet_does_not_show_deleted_public_link_of_another_user(): void
+    {
+        $otherUser = User::factory()->create();
+
+        $deletedLink = Link::factory()->create([
+            'user_id' => $otherUser->id,
+            'url' => 'https://example.com/deleted',
+            'visibility' => ModelAttribute::VISIBILITY_PUBLIC,
+        ]);
+        $deletedLink->delete();
+
+        $currentUser = User::factory()->create();
+        $this->actingAs($currentUser);
+
+        $response = $this->get('bookmarklet/add?u=https://example.com/deleted&t=Title');
+
+        $response->assertOk()
+            ->assertSee('/links/0/edit')
+            ->assertDontSee('/links/' . $deletedLink->id . '/edit')
+            ->assertDontSee('name="id" class="link-exists-restore-id" value="' . $deletedLink->id . '"', false);
     }
 }

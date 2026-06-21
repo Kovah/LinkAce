@@ -2,8 +2,10 @@
 
 namespace Tests\Controller\Models;
 
+use App\Enums\ModelAttribute;
 use App\Models\Link;
 use App\Models\LinkList;
+use App\Models\Note;
 use App\Models\Tag;
 use App\Models\User;
 use Illuminate\Foundation\Testing\RefreshDatabase;
@@ -50,5 +52,53 @@ class UserControllerTest extends TestCase
             ->assertSee('MrTestUser Link')
             ->assertSee('MrTestUser List')
             ->assertSee('MrTestUser Tag');
+    }
+
+    public function test_user_profile_excludes_private_items(): void
+    {
+        $profileUser = User::factory()->create(['name' => 'VictimUser']);
+
+        Link::factory()->create([
+            'user_id' => $profileUser->id,
+            'title' => 'Public Link',
+            'visibility' => ModelAttribute::VISIBILITY_PUBLIC,
+        ]);
+        Link::factory()->create([
+            'user_id' => $profileUser->id,
+            'title' => 'Private Link',
+            'visibility' => ModelAttribute::VISIBILITY_PRIVATE,
+        ]);
+
+        LinkList::factory()->create([
+            'user_id' => $profileUser->id,
+            'name' => 'Public List',
+            'visibility' => ModelAttribute::VISIBILITY_PUBLIC,
+        ]);
+        LinkList::factory()->create([
+            'user_id' => $profileUser->id,
+            'name' => 'Private List',
+            'visibility' => ModelAttribute::VISIBILITY_PRIVATE,
+        ]);
+
+        Tag::factory()->create([
+            'user_id' => $profileUser->id,
+            'name' => 'Public Tag',
+            'visibility' => ModelAttribute::VISIBILITY_PUBLIC,
+        ]);
+        Tag::factory()->create([
+            'user_id' => $profileUser->id,
+            'name' => 'Private Tag',
+            'visibility' => ModelAttribute::VISIBILITY_PRIVATE,
+        ]);
+
+        $response = $this->get('users/VictimUser');
+        $response->assertOk()
+            ->assertSee('VictimUser')
+            ->assertSee('Public Link')
+            ->assertSee('Public List')
+            ->assertSee('Public Tag')
+            ->assertDontSee('Private Link')
+            ->assertDontSee('Private List')
+            ->assertDontSee('Private Tag');
     }
 }

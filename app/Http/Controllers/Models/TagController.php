@@ -38,7 +38,7 @@ class TagController extends Controller
 
         $tags = Tag::query()
             ->visibleForUser()
-            ->withCount('links')
+            ->withCount(['links' => fn($query) => $query->visibleForUser()])
             ->orderBy($this->orderBy, $this->orderDir);
 
         if ($request->input('filter')) {

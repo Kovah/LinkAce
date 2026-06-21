@@ -4,6 +4,7 @@ namespace Tests\Controller\API;
 
 use App\Models\Link;
 use App\Models\LinkList;
+use App\Models\User;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Tests\Controller\Traits\PreparesTestData;
 
@@ -22,31 +23,17 @@ class ListLinksTest extends ApiTestCase
 
         $this->getJsonAuthorized('api/v2/lists/1/links')
             ->assertOk()
-            ->assertJson([
-                'data' => [
-                    ['url' => $link->url],
-                    ['url' => $link2->url],
-                ],
-            ])
-            ->assertJsonMissing([
-                'data' => [
-                    ['url' => $link3->url],
-                ],
-            ]);
+            ->assertJsonCount(2, 'data')
+            ->assertJsonFragment(['url' => $link->url])
+            ->assertJsonFragment(['url' => $link2->url])
+            ->assertJsonMissing(['url' => $link3->url]);
 
         $this->getJsonAuthorized('api/v2/lists/2/links')
             ->assertOk()
-            ->assertJson([
-                'data' => [
-                    ['url' => $link->url],
-                    ['url' => $link2->url],
-                ],
-            ])
-            ->assertJsonMissing([
-                'data' => [
-                    ['url' => $link3->url],
-                ],
-            ]);
+            ->assertJsonCount(2, 'data')
+            ->assertJsonFragment(['url' => $link->url])
+            ->assertJsonFragment(['url' => $link2->url])
+            ->assertJsonMissing(['url' => $link3->url]);
 
         $this->getJsonAuthorized('api/v2/lists/3/links')
             ->assertForbidden();
@@ -66,5 +53,34 @@ class ListLinksTest extends ApiTestCase
     public function test_show_request_not_found(): void
     {
         $this->getJsonAuthorized('api/v2/lists/1/links')->assertNotFound();
+    }
+
+    public function test_cannot_see_private_links_of_other_user_on_public_list(): void
+    {
+        $victim = User::factory()->create();
+
+        $list = LinkList::factory()->create([
+            'user_id' => $victim->id,
+            'visibility' => 1,
+        ]);
+
+        $publicLink = Link::factory()->create([
+            'user_id' => $victim->id,
+            'visibility' => 1,
+        ]);
+
+        $privateLink = Link::factory()->create([
+            'user_id' => $victim->id,
+            'visibility' => 3,
+        ]);
+
+        $publicLink->lists()->sync([$list->id]);
+        $privateLink->lists()->sync([$list->id]);
+
+        $this->getJsonAuthorized("api/v2/lists/{$list->id}/links")
+            ->assertOk()
+            ->assertJsonCount(1, 'data')
+            ->assertJsonFragment(['url' => $publicLink->url])
+            ->assertJsonMissing(['url' => $privateLink->url]);
     }
 }

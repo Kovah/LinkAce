@@ -302,4 +302,30 @@ class ListControllerTest extends TestCase
     {
         $this->delete('lists/1')->assertNotFound();
     }
+
+    public function test_index_view_links_count_respects_visibility(): void
+    {
+        $otherUser = User::factory()->create();
+
+        $list = LinkList::factory()->create([
+            'name' => 'Test List',
+            'user_id' => $this->user->id,
+        ]);
+
+        Link::factory()->create([
+            'user_id' => $otherUser->id,
+            'visibility' => ModelAttribute::VISIBILITY_PUBLIC,
+        ])->lists()->attach([$list->id]);
+
+        Link::factory()->create([
+            'user_id' => $otherUser->id,
+            'visibility' => ModelAttribute::VISIBILITY_PRIVATE,
+        ])->lists()->attach([$list->id]);
+
+        $this->get('lists')
+            ->assertOk()
+            ->assertSee('Test List')
+            ->assertSee('1 Link in this List')
+            ->assertDontSee('2 Links in this List');
+    }
 }

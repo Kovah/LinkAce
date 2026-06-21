@@ -297,4 +297,36 @@ class TagControllerTest extends TestCase
     {
         $this->delete('tags/1')->assertNotFound();
     }
+
+    public function test_index_view_links_count_respects_visibility(): void
+    {
+        $otherUser = User::factory()->create();
+
+        $tagA = Tag::factory()->create([
+            'name' => 'ATag',
+            'user_id' => $this->user->id,
+        ]);
+
+        $tagB = Tag::factory()->create([
+            'name' => 'BTag',
+            'user_id' => $this->user->id,
+        ]);
+
+        Link::factory()->count(3)->create([
+            'user_id' => $otherUser->id,
+            'visibility' => ModelAttribute::VISIBILITY_PRIVATE,
+        ])->each(fn($link) => $link->tags()->attach([$tagA->id]));
+
+        Link::factory()->create([
+            'user_id' => $otherUser->id,
+            'visibility' => ModelAttribute::VISIBILITY_PUBLIC,
+        ])->tags()->attach([$tagB->id]);
+
+        $this->get('tags?orderBy=links_count&orderDir=desc')
+            ->assertOk()
+            ->assertSeeInOrder([
+                'BTag',
+                'ATag',
+            ]);
+    }
 }

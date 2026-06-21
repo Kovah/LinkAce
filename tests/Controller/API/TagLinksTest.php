@@ -21,31 +21,17 @@ class TagLinksTest extends ApiTestCase
 
         $this->getJsonAuthorized('api/v2/tags/1/links')
             ->assertOk()
-            ->assertJson([
-                'data' => [
-                    ['url' => $link->url],
-                    ['url' => $link2->url],
-                ],
-            ])
-            ->assertJsonMissing([
-                'data' => [
-                    ['url' => $link3->url],
-                ],
-            ]);
+            ->assertJsonCount(2, 'data')
+            ->assertJsonFragment(['url' => $link->url])
+            ->assertJsonFragment(['url' => $link2->url])
+            ->assertJsonMissing(['url' => $link3->url]);
 
         $this->getJsonAuthorized('api/v2/tags/2/links')
             ->assertOk()
-            ->assertJson([
-                'data' => [
-                    ['url' => $link->url],
-                    ['url' => $link2->url],
-                ],
-            ])
-            ->assertJsonMissing([
-                'data' => [
-                    ['url' => $link3->url],
-                ],
-            ]);
+            ->assertJsonCount(2, 'data')
+            ->assertJsonFragment(['url' => $link->url])
+            ->assertJsonFragment(['url' => $link2->url])
+            ->assertJsonMissing(['url' => $link3->url]);
 
         $this->getJsonAuthorized('api/v2/tags/3/links')
             ->assertForbidden();
