@@ -11,7 +11,7 @@ jobs:
     name: Build final dist package
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v6
+      - uses: actions/checkout@v7
 
       - name: Use Node.js
         uses: actions/setup-node@v6
@@ -71,7 +71,7 @@ jobs:
     name: Build final dist package for Docker setup
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v6
+      - uses: actions/checkout@v7
 
       - name: Rename files
         run: |
