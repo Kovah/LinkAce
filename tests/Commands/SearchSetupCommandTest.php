@@ -17,7 +17,7 @@ class SearchSetupCommandTest extends TestCase
     {
         config(['linkace.search.driver' => 'database']);
 
-        $this->artisan('linkace:search:setup')
+        $this->artisan('search:setup')
             ->expectsOutput('Database search is active. No external search setup is required.')
             ->assertSuccessful();
     }
@@ -37,7 +37,7 @@ class SearchSetupCommandTest extends TestCase
         });
         config(['linkace.search.driver' => 'meilisearch']);
 
-        $this->artisan('linkace:search:setup')
+        $this->artisan('search:setup')
             ->expectsOutput('Syncing Meilisearch index settings...')
             ->expectsOutput('Meilisearch index settings synced.')
             ->assertSuccessful();
@@ -67,7 +67,7 @@ class SearchSetupCommandTest extends TestCase
             'scout.prefix' => 'test_prefix_',
         ]);
 
-        $this->artisan('linkace:search:setup')->assertSuccessful();
+        $this->artisan('search:setup')->assertSuccessful();
 
         $this->assertSame([
             'test_prefix_linkace_links',
@@ -91,7 +91,7 @@ class SearchSetupCommandTest extends TestCase
         });
         config(['linkace.search.driver' => 'meilisearch']);
 
-        $this->artisan('linkace:search:setup')
+        $this->artisan('search:setup')
             ->expectsOutput('Syncing Meilisearch index settings...')
             ->expectsOutput('The configured Meilisearch engine does not support index settings sync.')
             ->assertFailed();
@@ -101,9 +101,9 @@ class SearchSetupCommandTest extends TestCase
     {
         config(['linkace.search.driver' => 'typesense']);
 
-        $this->artisan('linkace:search:setup')
+        $this->artisan('search:setup')
             ->expectsOutput('Typesense collection schemas are configured for '.Link::class.', '.Tag::class.', '.LinkList::class.'.')
-            ->expectsOutput('Run linkace:search:rebuild to create or update Typesense collections during import.')
+            ->expectsOutput('Run search:rebuild to create or update Typesense collections during import.')
             ->assertSuccessful();
     }
 }

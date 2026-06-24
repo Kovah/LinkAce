@@ -76,7 +76,7 @@ class SystemSettingsController extends Controller
             return redirect()->route('get-systemsettings');
         }
 
-        $exitCode = Artisan::call('linkace:search:rebuild');
+        $exitCode = Artisan::call('search:rebuild');
 
         if ($exitCode === 0) {
             flash(trans('settings.search_reindex_successful'), 'success');

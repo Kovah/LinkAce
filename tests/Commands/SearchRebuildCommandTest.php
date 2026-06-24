@@ -20,7 +20,7 @@ class SearchRebuildCommandTest extends TestCase
     {
         config(['linkace.search.driver' => 'database']);
 
-        $this->artisan('linkace:search:rebuild')
+        $this->artisan('search:rebuild')
             ->expectsOutput('Database search is active. No external search index rebuild is required.')
             ->assertSuccessful();
     }
@@ -48,7 +48,7 @@ class SearchRebuildCommandTest extends TestCase
 
         config(['linkace.search.driver' => 'meilisearch']);
 
-        $this->artisan('linkace:search:rebuild')
+        $this->artisan('search:rebuild')
             ->expectsOutput('Syncing Meilisearch index settings...')
             ->expectsOutput('Flushing and importing '.Link::class.'...')
             ->expectsOutput('Flushing and importing '.Tag::class.'...')

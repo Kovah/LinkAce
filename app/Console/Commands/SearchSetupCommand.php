@@ -12,7 +12,7 @@ use Laravel\Scout\EngineManager;
 
 class SearchSetupCommand extends Command
 {
-    protected $signature = 'linkace:search:setup';
+    protected $signature = 'search:setup';
 
     protected $description = 'Prepare the configured external search engine for LinkAce search.';
 
@@ -47,7 +47,7 @@ class SearchSetupCommand extends Command
 
         $models = implode(', ', $this->searchableModels());
         $this->info('Typesense collection schemas are configured for '.$models.'.');
-        $this->info('Run linkace:search:rebuild to create or update Typesense collections during import.');
+        $this->info('Run search:rebuild to create or update Typesense collections during import.');
 
         return self::SUCCESS;
     }

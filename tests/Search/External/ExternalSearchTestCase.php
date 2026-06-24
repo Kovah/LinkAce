@@ -44,7 +44,7 @@ abstract class ExternalSearchTestCase extends TestCase
             ->createToken('external-search-test', [ApiToken::ABILITY_USER_ACCESS])
             ->plainTextToken;
 
-        $this->artisan('linkace:search:setup')->assertSuccessful();
+        $this->artisan('search:setup')->assertSuccessful();
     }
 
     protected function tearDown(): void
@@ -160,7 +160,7 @@ abstract class ExternalSearchTestCase extends TestCase
 
     protected function rebuildSearchIndex(): void
     {
-        $this->artisan('linkace:search:rebuild')->assertSuccessful();
+        $this->artisan('search:rebuild')->assertSuccessful();
     }
 
     protected function assertSearchContains(string $query, string $url, array $parameters = []): void

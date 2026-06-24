@@ -9,7 +9,7 @@ use Illuminate\Console\Command;
 
 class SearchRebuildCommand extends Command
 {
-    protected $signature = 'linkace:search:rebuild';
+    protected $signature = 'search:rebuild';
 
     protected $description = 'Flush and rebuild LinkAce external search indexes.';
 
@@ -25,7 +25,7 @@ class SearchRebuildCommand extends Command
 
         config(['scout.driver' => $driver]);
 
-        if ($this->call('linkace:search:setup') !== self::SUCCESS) {
+        if ($this->call('search:setup') !== self::SUCCESS) {
             return self::FAILURE;
         }
 
