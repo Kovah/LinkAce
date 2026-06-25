@@ -101,7 +101,7 @@ class Tag extends Model implements Auditable
 
     public function searchableAs(): string
     {
-        return 'linkace_tags';
+        return config('scout.prefix') . 'linkace_tags';
     }
 
     public function toSearchableArray(): array

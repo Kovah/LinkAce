@@ -102,7 +102,30 @@ class LinkSearchScope
     {
         if ($this->publicOnly) {
             $builder->where('visibility', ModelAttribute::VISIBILITY_PUBLIC);
+
+            return;
         }
+
+        $userId = auth()->id();
+
+        if ($userId === null) {
+            $builder->whereIn('visibility', [
+                ModelAttribute::VISIBILITY_PUBLIC,
+                ModelAttribute::VISIBILITY_INTERNAL,
+            ]);
+
+            return;
+        }
+
+        $builder->options = array_merge($builder->options, [
+            'filter' => sprintf(
+                'visibility = %d OR visibility = %d OR (visibility = %d AND user_id = %d)',
+                ModelAttribute::VISIBILITY_PUBLIC,
+                ModelAttribute::VISIBILITY_INTERNAL,
+                ModelAttribute::VISIBILITY_PRIVATE,
+                $userId,
+            ),
+        ]);
     }
 
     private function applyPublicOnlyConstraint(Builder $query): void

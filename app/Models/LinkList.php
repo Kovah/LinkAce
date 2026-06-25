@@ -130,7 +130,7 @@ class LinkList extends Model implements Auditable
 
     public function searchableAs(): string
     {
-        return 'linkace_lists';
+        return config('scout.prefix') . 'linkace_lists';
     }
 
     public function toSearchableArray(): array

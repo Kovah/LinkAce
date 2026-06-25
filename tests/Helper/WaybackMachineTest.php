@@ -20,7 +20,7 @@ class WaybackMachineTest extends TestCase
     public function test_valid_wayback_adding(): void
     {
         Http::fake([
-            'web.archive.org/*' => Http::response([], 200),
+            'https://web.archive.org/*' => Http::response([], 200),
         ]);
 
         $url = 'https://google.com';

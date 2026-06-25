@@ -297,7 +297,7 @@ class Link extends Model implements Auditable
 
     public function searchableAs(): string
     {
-        return 'linkace_links';
+        return config('scout.prefix') . 'linkace_links';
     }
 
     public function toSearchableArray(): array

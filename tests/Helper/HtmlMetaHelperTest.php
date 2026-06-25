@@ -132,6 +132,8 @@ class HtmlMetaHelperTest extends TestCase
      */
     public function test_title_from_url_without_protocol(): void
     {
+        Log::shouldReceive('warning')->once();
+
         $url = 'duckduckgo.com/about-us';
 
         Http::fake([
@@ -180,6 +182,8 @@ class HtmlMetaHelperTest extends TestCase
      */
     public function test_connection_error(): void
     {
+        Log::shouldReceive('warning')->once();
+
         $url = 'http://example.com:54623';
 
         Http::fake(function () {
