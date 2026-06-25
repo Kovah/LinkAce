@@ -121,6 +121,7 @@ class BulkEditControllerTest extends TestCase
 
     public function test_links_edit_skips_visible_links_owned_by_other_users(): void
     {
+        Log::shouldReceive('warning')->times(2);
         $otherUser = User::factory()->create();
         $otherPublicLink = Link::factory()->for($otherUser)->create([
             'url' => 'https://other-public-link.com',
@@ -205,6 +206,7 @@ class BulkEditControllerTest extends TestCase
 
     public function test_lists_edit_skips_visible_lists_owned_by_other_users(): void
     {
+        Log::shouldReceive('warning')->times(2);
         $otherUser = User::factory()->create();
         $otherPublicList = LinkList::factory()->for($otherUser)->create();
         $otherInternalList = LinkList::factory()->for($otherUser)->create([
@@ -270,6 +272,7 @@ class BulkEditControllerTest extends TestCase
 
     public function test_tags_edit_skips_visible_tags_owned_by_other_users(): void
     {
+        Log::shouldReceive('warning')->times(2);
         $otherUser = User::factory()->create();
         $otherPublicTag = Tag::factory()->for($otherUser)->create();
         $otherInternalTag = Tag::factory()->for($otherUser)->create([

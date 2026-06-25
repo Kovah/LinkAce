@@ -9,6 +9,7 @@ use Illuminate\Foundation\Testing\DatabaseMigrations;
 use Illuminate\Foundation\Testing\DatabaseTransactions;
 use Illuminate\Http\Client\ConnectionException;
 use Illuminate\Support\Facades\Http;
+use Illuminate\Support\Facades\Log;
 use Tests\TestCase;
 
 class LinkCreateTest extends TestCase
@@ -69,6 +70,8 @@ class LinkCreateTest extends TestCase
 
     public function test_failed_link_creation_does_not_disable_checks(): void
     {
+        Log::shouldReceive('warning')->once();
+
         $this->be($this->user);
 
         Http::fake(function () {

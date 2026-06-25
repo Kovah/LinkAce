@@ -8,6 +8,7 @@ use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Http\Client\ConnectionException;
 use Illuminate\Http\Client\Request;
 use Illuminate\Support\Facades\Http;
+use Illuminate\Support\Facades\Log;
 use Kovah\HtmlMeta\Exceptions\DisallowedIpException;
 use Kovah\HtmlMeta\Facades\HtmlMeta as HtmlMetaFacade;
 use Tests\TestCase;
@@ -113,6 +114,8 @@ class HtmlMetaHelperTest extends TestCase
      */
     public function test_title_from_invalid_url(): void
     {
+        Log::shouldReceive('warning')->once();
+
         $url = 'https://duckduckgogo.comcom/';
 
         Http::fake(['*' => Http::response('', 404)]);
@@ -147,6 +150,8 @@ class HtmlMetaHelperTest extends TestCase
      */
     public function test_request_error(): void
     {
+        Log::shouldReceive('warning')->once();
+
         $url = 'https://self-signed.badssl.com/';
 
         Http::fake(function (Request $request) {
@@ -198,6 +203,8 @@ class HtmlMetaHelperTest extends TestCase
 
     public function test_disallowed_ip_error(): void
     {
+        Log::shouldReceive('warning')->once();
+
         $url = 'http://internal-service';
 
         HtmlMetaFacade::shouldReceive('forUrl')

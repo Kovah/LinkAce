@@ -87,7 +87,7 @@ class LinkRepository
 
         return $links->map(function (Link $link) use ($data) {
             if (!auth()->user()->can('update', $link)) {
-                Log::warning('Could not update ' . $link->id . ' during bulk update: Permission denied!');
+                Log::warning('Could not update link ' . $link->id . ' during bulk update: Permission denied!');
                 return null;
             }
 
