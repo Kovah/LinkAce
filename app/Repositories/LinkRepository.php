@@ -129,7 +129,7 @@ class LinkRepository
             return;
         }
 
-        $link->load(['tags:id', 'lists:id']);
+        $link->load(['tags', 'lists']);
         $link->searchable();
     }
 

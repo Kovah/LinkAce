@@ -93,7 +93,7 @@ class ListRepository
         }
 
         $links->each(function (Link $link): void {
-            $link->load(['tags:id', 'lists:id']);
+            $link->load(['tags', 'lists']);
             $link->searchable();
         });
     }
