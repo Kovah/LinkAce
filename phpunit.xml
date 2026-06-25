@@ -46,6 +46,8 @@
     <server name="APP_DEMO" value="false"/>
     <server name="DB_CONNECTION" value="sqlite"/>
     <server name="DB_DATABASE" value="database/testing.sqlite"/>
+    <server name="APP_SEARCH_DRIVER" value="database"/>
+    <server name="MEILISEARCH_HOST" value="http://127.0.0.1:7700"/>
     <server name="BCRYPT_ROUNDS" value="4"/>
     <server name="CACHE_DRIVER" value="array"/>
     <server name="MAIL_DRIVER" value="array"/>
