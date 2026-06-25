@@ -42,7 +42,7 @@
 
   <php>
     <server name="APP_ENV" value="testing"/>
-    <server name="APP_KEY" value="base64:cQiwS51aa/3oti4KXHtj8mZLNyiDTA7BCAB5GIMvg5w="/>
+    <server name="APP_KEY" value="someRandomStringWith32Characters"/>
     <server name="APP_DEMO" value="false"/>
     <server name="DB_CONNECTION" value="sqlite"/>
     <server name="DB_DATABASE" value="database/testing.sqlite"/>
@@ -53,6 +53,7 @@
     <server name="MAIL_DRIVER" value="array"/>
     <server name="SESSION_DRIVER" value="array"/>
     <server name="AUDIT_CONSOLE_EVENTS" value="true"/>
+    <server name="LOG_CHANNEL" value="stderr"/>
     <server name="APP_CONFIG_CACHE" value="bootstrap/cache/config.phpunit.php"/>
     <server name="APP_SERVICES_CACHE" value="bootstrap/cache/services.phpunit.php"/>
     <server name="APP_PACKAGES_CACHE" value="bootstrap/cache/packages.phpunit.php"/>
