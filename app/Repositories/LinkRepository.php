@@ -68,7 +68,9 @@ class LinkRepository
             $data['last_checked_at'] = null;
         }
 
-        Link::withoutSyncingToSearch(fn () => $link->update($data));
+        $updateData = array_intersect_key($data, array_flip($link->getFillable()));
+
+        Link::withoutSyncingToSearch(fn () => $link->update($updateData));
 
         self::processLinkTaxonomies($link, $data);
         self::syncLinkToSearch($link);
@@ -89,14 +91,18 @@ class LinkRepository
                 return null;
             }
 
-            $linkData = $link->toArray();
-            $linkData['tags'] = $data['tags_mode'] === 'replace'
-                ? $data['tags']
-                : array_merge($link->tags->pluck('id')->toArray(), $data['tags']);
-            $linkData['lists'] = $data['lists_mode'] === 'replace'
-                ? $data['lists']
-                : array_merge($link->lists->pluck('id')->toArray(), $data['lists']);
-            $linkData['visibility'] = $data['visibility'] ?: $linkData['visibility'];
+            $linkData = [
+                'tags' => $data['tags_mode'] === 'replace'
+                    ? $data['tags']
+                    : array_merge($link->tags->pluck('id')->toArray(), $data['tags']),
+                'lists' => $data['lists_mode'] === 'replace'
+                    ? $data['lists']
+                    : array_merge($link->lists->pluck('id')->toArray(), $data['lists']),
+            ];
+
+            if (isset($data['visibility'])) {
+                $linkData['visibility'] = $data['visibility'];
+            }
 
             return self::update($link, $linkData);
         });

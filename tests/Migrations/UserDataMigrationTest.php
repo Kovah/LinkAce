@@ -38,6 +38,7 @@ class UserDataMigrationTest extends TestCase
             'user_id' => 1,
             'is_private' => false,
         ]);
+        Link::reguard();
 
         $this->artisan('migrate');
 
@@ -71,6 +72,7 @@ class UserDataMigrationTest extends TestCase
             'user_id' => 1,
             'is_private' => false,
         ]);
+        Link::reguard();
 
         $this->artisan('migrate');
 
@@ -100,6 +102,7 @@ class UserDataMigrationTest extends TestCase
             'user_id' => 1,
             'is_private' => false,
         ]);
+        LinkList::reguard();
 
         $this->artisan('migrate');
 
@@ -131,6 +134,7 @@ class UserDataMigrationTest extends TestCase
             'user_id' => 1,
             'is_private' => false,
         ]);
+        LinkList::reguard();
 
         $this->artisan('migrate');
 
@@ -160,6 +164,7 @@ class UserDataMigrationTest extends TestCase
             'user_id' => 1,
             'is_private' => false,
         ]);
+        Tag::reguard();
 
         $this->artisan('migrate');
 
@@ -191,6 +196,7 @@ class UserDataMigrationTest extends TestCase
             'user_id' => 1,
             'is_private' => false,
         ]);
+        Tag::reguard();
 
         $this->artisan('migrate');
 
@@ -222,6 +228,7 @@ class UserDataMigrationTest extends TestCase
             'note' => 'A public note',
             'is_private' => false,
         ]);
+        Note::reguard();
 
         $this->artisan('migrate');
 
@@ -255,6 +262,7 @@ class UserDataMigrationTest extends TestCase
             'note' => 'A public note',
             'is_private' => false,
         ]);
+        Note::reguard();
 
         $this->artisan('migrate');
 
