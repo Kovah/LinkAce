@@ -75,7 +75,7 @@ class SearchSetupCommand extends Command
         }
 
         foreach (config('scout.meilisearch.index-settings', []) as $index => $settings) {
-            $engine->updateIndexSettings($this->indexName($index), $engine->configureSoftDeleteFilter($settings));
+            $engine->updateIndexSettings($this->indexName($index), $settings);
         }
 
         return true;

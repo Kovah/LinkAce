@@ -161,31 +161,21 @@ abstract class ExternalSearchTestCase extends TestCase
     protected function rebuildSearchIndex(): void
     {
         $this->artisan('search:rebuild')->assertSuccessful();
+        $this->waitForIndexing();
     }
 
     protected function assertSearchContains(string $query, string $url, array $parameters = []): void
     {
-        $this->waitForSearch($query, $parameters, fn (array $urls) => in_array($url, $urls, true));
         $this->assertContains($url, $this->searchUrls($query, $parameters));
     }
 
     protected function assertSearchMissing(string $query, string $url, array $parameters = []): void
     {
-        $this->waitForSearch($query, $parameters, fn (array $urls) => ! in_array($url, $urls, true));
         $this->assertNotContains($url, $this->searchUrls($query, $parameters));
     }
 
-    protected function waitForSearch(string $query, array $parameters, callable $condition): void
+    protected function waitForIndexing(): void
     {
-        $deadline = microtime(true) + 5;
-
-        do {
-            if ($condition($this->searchUrls($query, $parameters))) {
-                return;
-            }
-
-            usleep(250_000);
-        } while (microtime(true) < $deadline);
     }
 
     protected function searchUrls(string $query, array $parameters = []): array

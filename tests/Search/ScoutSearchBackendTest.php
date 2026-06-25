@@ -67,7 +67,10 @@ class ScoutSearchBackendTest extends TestCase
         $builder = $this->engine->lastPaginatedBuilder;
 
         $this->assertSame('flower', $builder->query);
-        $this->assertSame(['attributesToSearchOn' => ['url', 'title', 'description']], $builder->options);
+        $this->assertSame([
+            'attributesToSearchOn' => ['url', 'title', 'description'],
+            'filter' => 'visibility = 1 OR visibility = 2 OR (visibility = 3 AND user_id = 1)',
+        ], $builder->options);
         $this->assertContains(['field' => 'visibility', 'operator' => '=', 'value' => 2], $builder->wheres);
         $this->assertContains(['field' => 'status', 'operator' => '>', 'value' => 1], $builder->wheres);
         $this->assertSame([10, 11], $builder->whereIns['list_ids']);
@@ -131,6 +134,7 @@ class ScoutSearchBackendTest extends TestCase
             'query_by' => 'url,description',
             'split_join_tokens' => 'fallback',
             'drop_tokens_threshold' => 0,
+            'filter' => 'visibility = 1 OR visibility = 2 OR (visibility = 3 AND user_id = 1)',
         ], $builder->options);
         $this->assertContains(['field' => 'lists_count', 'operator' => '=', 'value' => 0], $builder->wheres);
         $this->assertContains(['field' => 'tags_count', 'operator' => '=', 'value' => 0], $builder->wheres);
@@ -267,7 +271,7 @@ class ScoutSearchBackendTest extends TestCase
 
         Log::shouldReceive('error')
             ->once()
-            ->withArgs(fn (string $message, array $context) => $message === 'External search failed.'
+            ->withArgs(fn(string $message, array $context) => $message === 'External search failed.'
                 && $context['driver'] === 'meilisearch'
                 && $context['exception'] instanceof RuntimeException);
 
