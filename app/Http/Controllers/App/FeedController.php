@@ -45,6 +45,8 @@ class FeedController extends Controller
 
     public function listLinks(Request $request, LinkList $list): Response
     {
+        $this->authorize('view', $list);
+
         $links = $list->links()->visibleForUser()->with('user')->latest()->get();
         $meta = [
             'title' => $list->name,
@@ -77,6 +79,8 @@ class FeedController extends Controller
 
     public function tagLinks(Request $request, Tag $tag): Response
     {
+        $this->authorize('view', $tag);
+
         $links = $tag->links()->visibleForUser()->with('user')->latest()->get();
         $meta = [
             'title' => $tag->name,
