@@ -103,6 +103,7 @@ return [
         'en_US' => 'English',
 
         'ca_ES' => 'Català',
+        'cs_CZ' => 'Čeština',
         'de_DE' => 'Deutsch',
         'es_ES' => 'Español',
         'fr_FR' => 'Français',
