@@ -39,7 +39,7 @@ class ImportHtmlBookmarks
                 continue;
             }
 
-            if (Link::whereUrl($link['url'])->first()) {
+            if (Link::query()->byUser($userId)->whereUrl($link['url'])->first()) {
                 $this->skipped++;
                 continue;
             }
