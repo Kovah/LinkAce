@@ -10,6 +10,7 @@ return [
     'deleted_notes' => 'Usunięte notatki',
 
     'restore' => 'Przywróć wpis',
+    'restore_deleted_link' => 'Przywróć usunięty link',
 
     'clear_trash' => 'Wyczyść kosz',
     'delete_warning' => 'Trwale usunięte wpisy nie mogą zostać przywrócone!',
