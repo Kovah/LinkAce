@@ -33,7 +33,7 @@ class SocialiteController extends Controller
             }
 
             $user->update([
-                'name' => $authUser->getNickname() ?: Str::studly($authUser->getName()),
+                'name' => $authUser->getNickname() ?: (($authUser->getRaw() ?? [])['preferred_username'] ?? Str::studly($authUser->getName())),
                 'sso_id' => $authUser->id,
                 'sso_provider' => $provider,
                 'sso_token' => $authUser->token ?? null,
@@ -58,7 +58,7 @@ class SocialiteController extends Controller
                 'sso_id' => $authUser->getId(),
                 'sso_provider' => $provider,
             ], [
-                'name' => $authUser->getNickname() ?: Str::studly($authUser->getName()),
+                'name' => $authUser->getNickname() ?: (($authUser->getRaw() ?? [])['preferred_username'] ?? Str::studly($authUser->getName())),
                 'email' => $authUser->getEmail(),
                 'sso_id' => $authUser->getId(),
                 'sso_provider' => $provider,
