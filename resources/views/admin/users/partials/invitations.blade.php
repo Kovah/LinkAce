@@ -37,7 +37,7 @@
                                 @if($invite->isCompleted())
                                     @lang('admin.user_management.invite_accepted_by', ['user' => $invite->createdUser->name, 'id' => $invite->createdUser->id])
                                 @else
-                                    @lang('admin.user_management.invite_valid_until', ['datetime' => $invite->valid_until])
+                                    @lang('admin.user_management.invite_valid_until', ['datetime' => formatDateTime($invite->valid_until)])
                                 @endif
                             </div>
                         </div>

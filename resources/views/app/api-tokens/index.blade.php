@@ -30,7 +30,7 @@
                     @forelse($tokens as $token)
                         <tr>
                             <td>{{ $token->name }}</td>
-                            <td>{{ $token->created_at }}</td>
+                            <td>{{ formatDateTime($token->created_at) }}</td>
                             <td>{{ $token->last_used ?: trans('linkace.never_used') }}</td>
                             <td>
                                 <form action="{{ route('api-tokens.destroy', ['api_token' => $token]) }}" method="post"

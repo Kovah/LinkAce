@@ -10,6 +10,7 @@ use App\Settings\UserSettings;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Http\UploadedFile;
 use Illuminate\Support\Carbon;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Http;
 use Illuminate\Support\Facades\Queue;
 use Tests\TestCase;
@@ -246,6 +247,31 @@ class ImportControllerTest extends TestCase
             'url' => 'https://example.com/linkace-import.html',
             'visibility' => 2,
         ]);
+    }
+
+    public function test_queue_page_shows_timestamps_in_user_timezone(): void
+    {
+        UserSettings::fake([
+            'timezone' => 'Europe/Prague',
+            'date_format' => 'Y-m-d',
+            'time_format' => 'H:i',
+        ]);
+        config(['app.timezone' => 'Europe/Prague']);
+
+        $exampleData = file_get_contents(__DIR__ . '/data/import_example.html');
+        $file = UploadedFile::fake()->createWithContent('import_example.html', $exampleData);
+
+        $response = $this->post('import', ['import-file' => $file], ['Accept' => 'application/json']);
+        $response->assertOk()->assertJson(['success' => true]);
+
+        $job = DB::table('jobs')->first();
+        $this->assertNotNull($job);
+
+        $expectedTime = Carbon::createFromTimestamp($job->available_at)
+            ->setTimezone('Europe/Prague')
+            ->format('Y-m-d H:i');
+
+        $this->get('import/queue')->assertSee($expectedTime);
     }
 
     public function test_link_import_without_date(): void

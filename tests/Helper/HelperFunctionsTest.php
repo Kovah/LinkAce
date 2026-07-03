@@ -5,8 +5,9 @@ namespace Tests\Helper;
 use App\Enums\Role;
 use App\Models\Link;
 use App\Models\User;
+use App\Settings\UserSettings;
 use Illuminate\Foundation\Testing\RefreshDatabase;
-use Illuminate\Support\Facades\Storage;
+use Illuminate\Support\Carbon;
 use Tests\TestCase;
 
 class HelperFunctionsTest extends TestCase
@@ -85,6 +86,28 @@ class HelperFunctionsTest extends TestCase
         $carbonFormatted = $dateTime->format('d.m.Y H:i:s');
 
         $this->assertEquals($carbonFormatted, $appFormatted);
+    }
+
+    /**
+     * Test the formatDateTime() helper converts timezone correctly.
+     */
+    public function test_format_date_time_converts_to_user_timezone(): void
+    {
+        $this->actingAs($this->user);
+
+        UserSettings::fake([
+            'timezone' => 'Europe/Prague',
+            'date_format' => 'Y-m-d',
+            'time_format' => 'H:i',
+        ]);
+
+        config(['app.timezone' => 'Europe/Prague']);
+
+        $utcTime = Carbon::parse('2024-06-24 12:00:00', 'UTC');
+
+        $formatted = formatDateTime($utcTime);
+
+        $this->assertEquals('2024-06-24 14:00', $formatted);
     }
 
     /**

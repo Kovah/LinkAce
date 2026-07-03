@@ -14,7 +14,7 @@
         <div class="card-body">
             <h2>{{ $user->name }}</h2>
             <div>{{ $user->email }}</div>
-            <div class="mt-3 small text-muted">@lang('linkace.created_at') {{ $user->created_at }}</div>
+            <div class="mt-3 small text-muted">@lang('linkace.created_at') {{ formatDateTime($user->created_at) }}</div>
         </div>
         @if($user->isSsoUser())
             <div class="card-body">
