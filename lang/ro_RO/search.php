@@ -5,6 +5,9 @@ return [
 
     'filter_by_list' => 'Filtrare după listă(e)',
     'filter_by_tag' => 'Filtrare după etichetă(e)',
+    'exclude_lists' => 'Exclude lista',
+    'exclude_tags' => 'Exclude Etichet(e)',
+    'remove_exclusion' => 'eliminarea excluderii',
     'query' => 'Căutare după...',
     'search_title' => 'Căutare titlu',
     'search_description' => 'Căutare descriere',

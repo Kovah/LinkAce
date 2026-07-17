@@ -10,4 +10,6 @@
 
     @include('admin.system-settings.partials.guest-settings')
 
+    @include('admin.system-settings.partials.search-reindex')
+
 @endsection

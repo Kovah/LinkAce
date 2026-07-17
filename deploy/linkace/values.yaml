@@ -23,11 +23,20 @@ database:
   volumeSize: 1Gi
 
 redis:
-  # if you have an existing database, set enabled: false
+  # if you have an existing Redis instance, set enabled: false
   enabled: true
   port: 6379
   repository: docker.io/library/redis
   tag: "7.2"
+  pullPolicy: IfNotPresent
+  volumeSize: 1Gi
+
+meilisearch:
+  # if you have an existing Meilisearch instance, set enabled: false
+  enabled: true
+  port: 7700
+  repository: docker.io/getmeili/meilisearch
+  tag: "v1.16"
   pullPolicy: IfNotPresent
   volumeSize: 1Gi
 

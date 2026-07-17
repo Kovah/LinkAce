@@ -1,0 +1,43 @@
+<?php
+
+namespace Tests\Search;
+
+use Meilisearch\Client as MeilisearchClient;
+use Tests\TestCase;
+
+class SearchConfigurationTest extends TestCase
+{
+    public function test_search_driver_defaults_to_database(): void
+    {
+        $this->assertSame('database', config('linkace.search.driver'));
+    }
+
+    public function test_supported_search_drivers_are_declared(): void
+    {
+        $this->assertSame([
+            'database',
+            'meilisearch',
+            'typesense',
+        ], config('linkace.search.supported_drivers'));
+
+        $this->assertSame([
+            'meilisearch',
+            'typesense',
+        ], config('linkace.search.external_drivers'));
+    }
+
+    public function test_scout_uses_the_linkace_search_driver(): void
+    {
+        $this->assertSame(config('linkace.search.driver'), config('scout.driver'));
+    }
+
+    public function test_meilisearch_client_can_be_resolved_from_scout_configuration(): void
+    {
+        config([
+            'scout.meilisearch.host' => 'http://search.example.test',
+            'scout.meilisearch.key' => 'test-key',
+        ]);
+
+        $this->assertInstanceOf(MeilisearchClient::class, app(MeilisearchClient::class));
+    }
+}

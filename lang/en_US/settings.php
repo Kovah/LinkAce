@@ -106,5 +106,12 @@ return [
     'update_check_success' => 'No update found.',
     'update_check_failed' => 'Could not check for updates.',
 
+    'search_reindex' => 'Search Index',
+    'search_reindex_help' => 'If you use an external search engine like Meilisearch or Typesense, you can rebuild the search index here. This will flush all existing data from the search index and reimport all links, tags, and lists.',
+    'search_reindex_button' => 'Rebuild Search Index',
+    'search_reindex_successful' => 'Search index rebuilt successfully.',
+    'search_reindex_failed' => 'Search index rebuild failed. Please check the application logs for more information.',
+    'search_reindex_database' => 'Database search is active. No external search index rebuild is required.',
+
     'guest_settings_info' => 'The following settings will apply to guests visiting your site, if guest access is enabled.',
 ];

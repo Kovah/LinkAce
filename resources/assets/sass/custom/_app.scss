@@ -192,6 +192,14 @@ code {
   margin: 2px;
 }
 
+.search-filter-exclusion {
+
+  .ts-control {
+    border-style: dashed;
+    border-color: $danger;
+  }
+}
+
 .form-check.bulk-edit-model {
   width: 1rem;
   height: 1rem;

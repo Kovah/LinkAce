@@ -60,10 +60,10 @@ return [
             'engine' => env('DB_ENGINE', 'InnoDB'),
             'sslmode' => env('DB_SSL_MODE', 'prefer'),
             'options' => extension_loaded('pdo_mysql') ? array_filter([
-                PDO::MYSQL_ATTR_SSL_VERIFY_SERVER_CERT => env('MYSQL_VERIFY_SERVER_CERT', true),
-                PDO::MYSQL_ATTR_SSL_KEY => env('MYSQL_SSL_KEY'),
-                PDO::MYSQL_ATTR_SSL_CERT => env('MYSQL_SSL_CERT'),
-                PDO::MYSQL_ATTR_SSL_CA => env('MYSQL_SSL_CA'),
+                (defined('Pdo\Mysql::ATTR_SSL_CA') ? Pdo\Mysql::ATTR_SSL_CA : PDO::MYSQL_ATTR_SSL_CA) => env('MYSQL_SSL_CA'),
+                (defined('Pdo\Mysql::ATTR_SSL_VERIFY_SERVER_CERT') ? Pdo\Mysql::ATTR_SSL_VERIFY_SERVER_CERT : PDO::MYSQL_ATTR_SSL_VERIFY_SERVER_CERT) => env('MYSQL_SSL_VERIFY_SERVER_CERT'),
+                (defined('Pdo\Mysql::ATTR_SSL_KEY') ? Pdo\Mysql::ATTR_SSL_KEY : PDO::MYSQL_ATTR_SSL_KEY) => env('MYSQL_SSL_KEY'),
+                (defined('Pdo\Mysql::ATTR_SSL_CERT') ? Pdo\Mysql::ATTR_SSL_CERT : PDO::MYSQL_ATTR_SSL_CERT) => env('MYSQL_SSL_CERT'),
             ]) : [],
         ],
 
@@ -84,10 +84,10 @@ return [
             'engine' => env('DB_ENGINE', 'InnoDB'),
             'sslmode' => env('DB_SSL_MODE', 'prefer'),
             'options' => extension_loaded('pdo_mysql') ? array_filter([
-                PDO::MYSQL_ATTR_SSL_VERIFY_SERVER_CERT => env('MYSQL_VERIFY_SERVER_CERT', true),
-                PDO::MYSQL_ATTR_SSL_KEY => env('MYSQL_SSL_KEY'),
-                PDO::MYSQL_ATTR_SSL_CERT => env('MYSQL_SSL_CERT'),
-                PDO::MYSQL_ATTR_SSL_CA => env('MYSQL_SSL_CA'),
+                (defined('Pdo\Mysql::ATTR_SSL_CA') ? Pdo\Mysql::ATTR_SSL_CA : PDO::MYSQL_ATTR_SSL_CA) => env('MYSQL_SSL_CA'),
+                (defined('Pdo\Mysql::ATTR_SSL_VERIFY_SERVER_CERT') ? Pdo\Mysql::ATTR_SSL_VERIFY_SERVER_CERT : PDO::MYSQL_ATTR_SSL_VERIFY_SERVER_CERT) => env('MYSQL_SSL_VERIFY_SERVER_CERT'),
+                (defined('Pdo\Mysql::ATTR_SSL_KEY') ? Pdo\Mysql::ATTR_SSL_KEY : PDO::MYSQL_ATTR_SSL_KEY) => env('MYSQL_SSL_KEY'),
+                (defined('Pdo\Mysql::ATTR_SSL_CERT') ? Pdo\Mysql::ATTR_SSL_CERT : PDO::MYSQL_ATTR_SSL_CERT) => env('MYSQL_SSL_CERT'),
             ]) : [],
         ],
 

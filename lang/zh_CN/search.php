@@ -5,6 +5,9 @@ return [
 
     'filter_by_list' => '按列表筛选',
     'filter_by_tag' => '按标签筛选',
+    'exclude_lists' => '排除名单',
+    'exclude_tags' => '排除标签',
+    'remove_exclusion' => '排除',
     'query' => '搜索......',
     'search_title' => '搜索标题',
     'search_description' => '搜索描述',

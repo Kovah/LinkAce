@@ -11,6 +11,7 @@ use App\Settings\SystemSettings;
 use Illuminate\Contracts\View\View;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\RedirectResponse;
+use Illuminate\Support\Facades\Artisan;
 use Illuminate\Support\Str;
 
 class SystemSettingsController extends Controller
@@ -63,6 +64,26 @@ class SystemSettingsController extends Controller
         $guestSettings->save();
 
         flash(trans('settings.settings_saved'));
+        return redirect()->route('get-systemsettings');
+    }
+
+    public function reindexSearch(): RedirectResponse
+    {
+        $driver = config('linkace.search.driver');
+
+        if ($driver === 'database') {
+            flash(trans('settings.search_reindex_database'), 'warning');
+            return redirect()->route('get-systemsettings');
+        }
+
+        $exitCode = Artisan::call('search:rebuild');
+
+        if ($exitCode === 0) {
+            flash(trans('settings.search_reindex_successful'), 'success');
+        } else {
+            flash(trans('settings.search_reindex_failed'), 'danger');
+        }
+
         return redirect()->route('get-systemsettings');
     }
 

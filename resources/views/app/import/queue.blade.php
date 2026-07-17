@@ -26,7 +26,7 @@
                             <tr>
                                 <td class="text-condensed">{{ $job->id }}</td>
                                 <td class="text-condensed">{{ $data->link['url'] }}</td>
-                                <td class="text-condensed">{{ \Illuminate\Support\Carbon::parse($job->available_at) }}</td>
+                                <td class="text-condensed">{{ formatDateTime(\Illuminate\Support\Carbon::createFromTimestamp($job->available_at)) }}</td>
                             </tr>
                         @endforeach
                         </tbody>

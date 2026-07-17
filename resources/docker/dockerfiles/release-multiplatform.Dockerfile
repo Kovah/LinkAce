@@ -20,7 +20,6 @@ COPY ./routes /app/routes
 COPY ./tests /app/tests
 
 COPY ["./artisan", "./composer.json", "./composer.lock", "/app/"]
-#COPY ./.env.example /app/.env
 
 # Install dependencies using Composer
 RUN composer install -n --prefer-dist --no-dev

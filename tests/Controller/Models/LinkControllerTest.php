@@ -13,6 +13,7 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Http\Client\ConnectionException;
 use Illuminate\Support\Facades\Http;
+use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Queue;
 use Kovah\HtmlMeta\Facades\HtmlMeta;
 use Kovah\HtmlMeta\HtmlMetaResult;
@@ -168,6 +169,7 @@ class LinkControllerTest extends TestCase
 
     public function test_store_with_connection_exception(): void
     {
+        Log::shouldReceive('warning')->once();
         Http::fake([
             'https://bad-example.com' => function () {
                 throw new ConnectionException('Unable to reach bad-example.com');
@@ -245,6 +247,10 @@ class LinkControllerTest extends TestCase
             'archive_backups_enabled' => false,
         ]);
 
+        Http::fake([
+            'https://example.com' => Http::response('', 200),
+        ]);
+
         $this->post('links', [
             'url' => 'https://example.com',
             'title' => null,
@@ -298,6 +304,11 @@ class LinkControllerTest extends TestCase
 
     public function test_store_request_for_private_ip(): void
     {
+        Log::shouldReceive('warning')->once();
+        Http::fake([
+            'http://104.102.37.33/research/cold_fusion.html' => Http::response('', 200),
+        ]);
+
         $this->post('links', [
             'url' => 'http://192.168.0.100/admin',
             'title' => null,

@@ -52,3 +52,18 @@ spec:
     requests:
       storage: {{ .Values.redis.volumeSize }}
 {{- end }}
+
+{{- if .Values.meilisearch.enabled }}
+---
+# Meilisearch data volume
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: {{ .Release.Name }}-meilisearch-pvc
+spec:
+  accessModes:
+    - ReadWriteOnce
+  resources:
+    requests:
+      storage: {{ .Values.meilisearch.volumeSize }}
+{{- end }}

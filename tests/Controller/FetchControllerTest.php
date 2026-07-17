@@ -172,7 +172,7 @@ class FetchControllerTest extends TestCase
             '</head></html>';
 
         Http::fake([
-            '104.102.37.33' => Http::response($testHtml, 200),
+            'http://104.102.37.33/research/cold_fusion.html' => Http::response($testHtml, 200),
         ]);
 
         $response = $this->post('fetch/keywords-for-url', [

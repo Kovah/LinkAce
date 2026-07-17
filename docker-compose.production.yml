@@ -6,6 +6,7 @@ services:
     restart: unless-stopped
     depends_on:
       - db
+      - meilisearch
     ports:
       - "0.0.0.0:80:80"
       # Remove the hash of the following line if you want to use HTTPS for this container
@@ -29,6 +30,17 @@ services:
     volumes:
       - db:/var/lib/mysql
 
+  # --- Search Engine
+  meilisearch:
+    image: docker.io/getmeili/meilisearch:v1.16
+    restart: unless-stopped
+    environment:
+      - MEILI_ENV=production
+      - MEILI_NO_ANALYTICS=true
+      - MEILI_MASTER_KEY=${MEILISEARCH_KEY}
+    volumes:
+      - meilisearch:/meili_data
+
   # --- Cache
   redis:
     image: docker.io/library/redis:8.2
@@ -37,3 +49,4 @@ services:
 
 volumes:
   db:
+  meilisearch:

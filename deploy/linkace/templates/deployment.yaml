@@ -70,7 +70,7 @@ spec:
             - name: {{ .Release.Name }}-app-backups
               mountPath: "/app/storage/app/backups/LinkAce"
 
-{{- if or .Values.database.enabled .Values.redis.enabled }}
+{{- if or .Values.database.enabled .Values.redis.enabled .Values.meilisearch.enabled }}
 ---
 apiVersion: apps/v1
 kind: Deployment
@@ -115,6 +115,11 @@ spec:
         - name: redis-data
           persistentVolumeClaim:
             claimName: {{ .Release.Name }}-redis-pvc
+        {{- end }}
+        {{- if .Values.meilisearch.enabled }}
+        - name: meilisearch-data
+          persistentVolumeClaim:
+            claimName: {{ .Release.Name }}-meilisearch-pvc
         {{- end }}
 
       containers:
@@ -174,5 +179,27 @@ spec:
               mountPath: "/data"
         {{- end }}
 
-{{- end }}
+        {{- if .Values.meilisearch.enabled }}
+        # Meilisearch container
+        - name: meilisearch
+          image: {{ .Values.meilisearch.repository }}:{{ .Values.meilisearch.tag }}
+          imagePullPolicy: {{ .Values.meilisearch.pullPolicy }}
+          ports:
+            - name: meilisearch
+              containerPort: 7700
+          env:
+            - name: MEILI_ENV
+              value: production
+            - name: MEILI_NO_ANALYTICS
+              value: "true"
+            - name: MEILI_MASTER_KEY
+              valueFrom:
+                secretKeyRef:
+                  name: {{ .Release.Name }}-env
+                  key: MEILISEARCH_KEY
+          volumeMounts:
+            - name: meilisearch-data
+              mountPath: "/meili_data"
+        {{- end }}
 
+{{- end }}

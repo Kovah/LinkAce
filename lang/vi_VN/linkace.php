@@ -8,9 +8,11 @@ return [
     'password' => 'Mật khẩu',
     'password_confirm' => 'Xác nhận mật khẩu',
     'login' => 'Đăng nhập',
+    'login_with' => 'Login with',
     'logout' => 'Đăng xuất',
     'remember_me' => 'Lưu thông tin',
     'go_to_dashboard' => 'Đi đến bảng điều khiển',
+    'dashboard' => 'Dashboard',
     'system_logs' => 'Nhật ký hệ thống',
 
     'reset_password' => 'Đặt lại mật khẩu',
@@ -19,8 +21,16 @@ return [
 
     'added' => 'Đã thêm',
     'added_at' => 'Được thêm lúc',
+    'added_by' => 'Added by',
+    'created' => 'Created',
+    'created_at' => 'Created at',
     'updated_at' => 'Cập nhật lúc',
     'last_update' => 'Cập nhật gần nhất',
+    'last_used' => 'Last used',
+    'never_used' => 'Never used',
+    'blocked' => 'Blocked',
+    'blocked_at' => 'Blocked at',
+    'deleted' => 'Deleted',
     'deleted_at' => 'Đã xóa lúc',
 
     'add' => 'Thêm',
@@ -28,15 +38,27 @@ return [
     'edit' => 'Sửa',
     'update' => 'Cập nhật',
     'delete' => 'Xóa',
+    'restore' => 'Restore',
+    'block' => 'Block',
+    'unblock' => 'Unblock',
+    'unblocked' => 'Unblocked',
+    'details' => 'Details',
 
     'menu' => 'Trình đơn',
     'entries' => 'Mục',
     'feed' => 'Nguồn dữ liệu',
+    'contact' => 'Contact',
 
     'continue_adding' => 'Tiếp tục thêm',
 
-    'private' => 'Cá nhân',
-    'is_private' => 'Là riêng tư',
+    'visibility' => 'Visibility',
+    'change_visibility' => 'Change Visibility',
+    'dont_change_visibility' => 'Do not change Visibility',
+
+    'history' => 'Lịch sử',
+    'history_added' => 'Thêm <code>:newvalue</code> vào :fieldname.',
+    'history_changed' => 'Đã thay đổi :fieldname từ <code>:oldvalue</code> thành <code>:newvalue</code>',
+    'history_removed' => 'Đã xóa <code>:oldvalue</code> từ :fieldname.',
 
     'yes' => 'Có',
     'no' => 'Không',

@@ -20,8 +20,7 @@ yarn-error.log
 !.env.dev
 !.env.docker.production
 !.env.sqlite.production
-!.env.example
-!.env.k8s
+!.env.local.production
 .phpunit.result.cache
 _ide_helper.php
 _ide_helper_models.php

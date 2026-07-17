@@ -1,6 +1,17 @@
 <?php
 
 /*
+ * Temporarily mute the MYSQL_ATTR_SSL deprecation warnings because using an older Laravel version makes it impossible
+ * to fix this.
+ */
+set_error_handler(function ($level, $message) {
+    if ($level === E_DEPRECATED && str_contains($message, 'PDO::MYSQL_ATTR_SSL')) {
+        return true;
+    }
+    return false;
+});
+
+/*
 |--------------------------------------------------------------------------
 | Create The Application
 |--------------------------------------------------------------------------

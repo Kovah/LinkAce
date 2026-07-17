@@ -111,6 +111,20 @@ class FeedControllerTest extends TestCase
             ->assertDontSee($unrelatedLink->url);
     }
 
+    public function test_private_list_link_feed_from_other_user_is_forbidden(): void
+    {
+        $otherUser = User::factory()->create();
+        $privateList = LinkList::factory()->for($otherUser)->create([
+            'name' => 'secret list',
+            'visibility' => ModelAttribute::VISIBILITY_PRIVATE,
+        ]);
+
+        $response = $this->getAuthorized('lists/' . $privateList->id . '/feed');
+
+        $response->assertForbidden()
+            ->assertDontSee('secret list');
+    }
+
     public function test_tags_feed(): void
     {
         $tag = Tag::factory()->create();
@@ -141,6 +155,20 @@ class FeedControllerTest extends TestCase
             ->assertSee($tagLink->url)
             ->assertDontSee($otherLink->url)
             ->assertDontSee($unrelatedLink->url);
+    }
+
+    public function test_private_tag_link_feed_from_other_user_is_forbidden(): void
+    {
+        $otherUser = User::factory()->create();
+        $privateTag = Tag::factory()->for($otherUser)->create([
+            'name' => 'secret tag',
+            'visibility' => ModelAttribute::VISIBILITY_PRIVATE,
+        ]);
+
+        $response = $this->getAuthorized('tags/' . $privateTag->id . '/feed');
+
+        $response->assertForbidden()
+            ->assertDontSee('secret tag');
     }
 
     /**

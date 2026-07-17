@@ -5,6 +5,9 @@ return [
 
     'filter_by_list' => 'Фильтровать по списку(ам)',
     'filter_by_tag' => 'Фильтровать по тегу(ам)',
+    'exclude_lists' => 'Исключить список(и)',
+    'exclude_tags' => 'Исключить тег(и)',
+    'remove_exclusion' => 'Убрать исключение',
     'query' => 'Искать...',
     'search_title' => 'Поиск по названию',
     'search_description' => 'Искать в описании',

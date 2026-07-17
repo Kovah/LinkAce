@@ -5,10 +5,13 @@ return [
 
     'filter_by_list' => 'Lọc theo danh sách',
     'filter_by_tag' => 'Lọc theo thẻ',
+    'exclude_lists' => 'Danh sách loại trừ',
+    'exclude_tags' => 'Loại trừ thẻ',
+    'remove_exclusion' => 'bỏ loại trừ',
     'query' => 'Tìm kiếm...',
     'search_title' => 'Tìm theo tiêu đề',
     'search_description' => 'Tìm theo mô tả',
-    'private_only' => 'Chỉ liên kết bảo mật',
+    'visibility' => 'Tìm kiếm theo mức độ hiển thị...',
     'broken_links' => 'Chỉ liên kết hỏng',
     'empty_tags' => 'không có thẻ',
     'empty_lists' => 'không có danh sách',
@@ -25,6 +28,7 @@ return [
     'order_by.random' => 'Ngẫu Nhiên',
 
     'no_results' => 'Không tìm thấy kết quả nào.',
+    'results_for' => 'Search results for',
 
     'validation_query_missing' => 'Bạn phải nhập câu truy vấn tìm kiếm, hoặc chọn 1 danh sách, 1 thẻ hoặc bật chức năng tìm kiếm liên kết hỏng.',
 ];

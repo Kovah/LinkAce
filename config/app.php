@@ -103,6 +103,7 @@ return [
         'en_US' => 'English',
 
         'ca_ES' => 'Català',
+        'cs_CZ' => 'Čeština',
         'de_DE' => 'Deutsch',
         'es_ES' => 'Español',
         'fr_FR' => 'Français',
@@ -116,6 +117,7 @@ return [
         'ro_RO' => 'Română',
         'ru_RU' => 'Русский',
         'sv_SE' => 'Svenska',
+        'uk_UA' => 'Українська',
         'vi_VN' => 'Tiếng Việt',
         'zh_CN' => '简体中文',
     ],

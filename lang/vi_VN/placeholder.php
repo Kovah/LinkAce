@@ -16,5 +16,4 @@ return [
 
     'two_factor_otp' => 'Mật khẩu một lần',
     'two_factor_recovery_code' => 'Mã phục hồi',
-
 ];

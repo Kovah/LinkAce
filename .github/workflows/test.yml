@@ -13,7 +13,7 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-      - uses: actions/checkout@v6
+      - uses: actions/checkout@v7
 
       - name: Use Node.js
         uses: actions/setup-node@v6
@@ -36,13 +36,21 @@ jobs:
 
     runs-on: ${{ matrix.operating-system }}
     needs: test-js
+    services:
+      meilisearch:
+        image: getmeili/meilisearch:v1.16
+        env:
+          MEILI_ENV: development
+          MEILI_NO_ANALYTICS: true
+        ports:
+          - 7700:7700
     strategy:
       matrix:
         operating-system: [ ubuntu-latest ]
         php-versions: [ '8.2', '8.3', '8.4', '8.5' ]
 
     steps:
-      - uses: actions/checkout@v6
+      - uses: actions/checkout@v7
 
       - uses: actions/download-artifact@v8
         with:
@@ -60,14 +68,14 @@ jobs:
         run: echo "dir=$(composer config cache-files-dir)" >> $GITHUB_OUTPUT
 
       - name: Cache dependencies
-        uses: actions/cache@v5
+        uses: actions/cache@v6
         with:
           path: ${{ steps.composer-cache.outputs.dir }}
           key: ${{ runner.os }}-composer-${{ hashFiles('**/composer.lock') }}
           restore-keys: ${{ runner.os }}-composer-
 
       - name: Prepare the environment
-        run: cp .env.example .env && touch database/testing.sqlite
+        run: cp .env.sqlite.production .env && touch database/testing.sqlite
 
       - name: Validate composer.json and composer.lock
         run: composer validate
@@ -79,6 +87,8 @@ jobs:
         run: composer run lint
 
       - name: Run PHPunit
+        env:
+          MEILISEARCH_HOST: http://127.0.0.1:7700
         run: composer run test
 
       - name: Report coverage to Codacy

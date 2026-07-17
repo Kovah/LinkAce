@@ -1,0 +1,110 @@
+<?php
+return [
+    'settings' => 'Nastavení',
+    'user_settings' => 'Uživatelská nastavení',
+    'account_settings' => 'Nastavení účtu',
+    'app_settings' => 'Nastavení aplikace',
+    'system_settings' => 'Systémová nastavení',
+    'guest_settings' => 'Nastavení pro hosty',
+
+    'locale' => 'Jazyk',
+    'timezone' => 'Časové pásmo',
+    'date_format' => 'Formát data',
+    'time_format' => 'Formát času',
+    'listitem_count' => 'Počet položek v seznamech',
+
+    'links_new_tab' => 'Otevírat externí odkazy v nových záložkách',
+
+    'markdown_for_text' => 'Povolit Markdown pro popisy a poznámky',
+
+    'privacy' => 'Ochrana soukromí',
+    'profile_privacy' => 'Následující nastavení se vztahují na váš uživatelský profil, který je viditelný pro hosty.',
+    'profile_is_public' => 'Profil je veřejný',
+    'default_visibility_help' => 'Následující nastavení určují výchozí viditelnost odkazů, seznamů, poznámek a štítků při přidávání nových položek.',
+    'links_default_visibility' => 'Výchozí viditelnost odkazů',
+    'notes_default_visibility' => 'Výchozí viditelnost poznámek',
+    'lists_default_visibility' => 'Výchozí viditelnost seznamů',
+    'tags_default_visibility' => 'Výchozí viditelnost štítků',
+
+    'archive_backups' => 'Zálohy Wayback Machine',
+    'archive_backups_help' => 'Pokud je tato funkce povolena, LinkAce sdělí službě <a href="https://archive.org/">Wayback Machine</a>, aby zálohovala vaše odkazy. Wayback Machine je provozován neziskovou organizací Internet Archive. Zvažte prosím možnost <a href="https://archive.org/donate/">přispět organizaci Internet Archive</a>.',
+    'archive_backups_enabled' => 'Povolit zálohy',
+    'archive_backups_enabled_help' => 'Pokud je tato možnost povolena, budou odkazy, které nejsou soukromé, uloženy v Internet Archive.',
+    'archive_private_backups_enabled' => 'Povolit zálohy pro soukromé odkazy',
+    'archive_private_backups_enabled_help' => 'Pokud je tato možnost povolena, budou se ukládat i soukromé odkazy. Zálohování musí být povoleno.',
+
+    'link_display_mode' => 'Režim zobrazení odkazů',
+    'display_mode' => 'Zobrazit odkazy jako',
+    'display_mode_list_simple' => 'Zobrazit odkazy jako jednoduchý seznam',
+    'display_mode_list_detailed' => 'Zobrazit odkazy jako podrobný seznam',
+    'display_mode_cards' => 'Zobrazit odkazy jako karty',
+
+    'sharing' => 'Sdílení odkazů',
+    'guest_sharing' => 'Sdílení odkazů hosty',
+    'sharing_help' => 'Povolte všechny služby, které chcete zobrazit pro odkazy, abyste je mohli snadno sdílet jedním kliknutím.',
+    'sharing_toggle' => 'Zapnout/vypnout vše',
+
+    'darkmode_setting' => 'Tmavý režim',
+    'darkmode_help' => 'Podle nastavení zařízení můžete zvolit trvalé nebo automatické zapnutí.<small>( <a href="https://caniuse.com/#search=prefers-color-scheme">Zde</a> zkontrolujte, zda váš prohlížeč podporuje automatickou detekci</small>)',
+    'darkmode_disabled' => 'Zakázán',
+    'darkmode_auto' => 'Automaticky',
+    'darkmode_permanent' => 'Trvale',
+
+    'save_settings' => 'Uložit nastavení',
+    'settings_saved' => 'Nastavení bylo úspěšně aktualizováno!',
+
+    'bookmarklet' => 'Záložka',
+    'bookmarklet_button' => 'Přetáhněte ji do záložek nebo na ni klikněte pravým tlačítkem myši a uložte ji jako záložku',
+    'bookmarklet_help' => 'Přidáním této záložky do prohlížeče můžete rychle přidávat odkazy z navštívených stránek, aniž byste museli ručně otevírat aplikaci LinkAce.',
+
+    'change_password' => 'Změnit heslo',
+    'old_password' => 'Původní heslo',
+    'new_password' => 'Nové heslo',
+    'new_password2' => 'Zopakovat nové heslo',
+    'password_updated' => 'Heslo úspěšně změněno!',
+    'old_password_invalid' => 'Původní heslo není platné!',
+
+    'two_factor_auth' => 'Dvoufázové ověření',
+    'two_factor_enable' => 'Povolit dvoufázové ověření',
+    'two_factor_disable' => 'Zakázat dvoufázové ověření',
+    'two_factor_setup_app' => 'Dvoufázové ověřování je povoleno. Nakonfigurujte prosím vaše ověřovací zařízení naskenováním následujícího QR kódu.',
+    'two_factor_setup_url' => 'QR kód nefunguje? Můžete také použít přímo tuto adresu URL.',
+    'two_factor_recovery_codes' => 'Uložte tyto obnovovací kódy do zabezpečeného správce hesel. Mohou být použity k obnovení přístupu k vašemu účtu, pokud dojde ke ztrátě zařízení pro dvoufázové ověřování.',
+    'two_factor_recovery_codes_view' => 'Zobrazit obnovovací kódy',
+    'two_factor_regenerate_recovery_codes' => 'Vygenerovat nové obnovovací kódy',
+
+    'page_title' => 'Název stránky',
+    'logo_text' => 'Vlastní text loga',
+    'guest_access' => 'Povolení přístupu pro hosty',
+    'guest_access_help' => 'Pokud je tato možnost povolena, host bude moci vidět všechny odkazy, které nejsou soukromé.',
+    'custom_header_content' => 'Vlastní obsah záhlaví',
+    'custom_header_content_help' => 'Zde zadaný obsah bude umístěn před tag &lt;/head&gt; na všech stránkách LinkAce. Užitečné pro umístění analytických nebo přizpůsobovacích skriptů. Pozor: obsah není escapován a může způsobit rozbití stránky!',
+
+    'additional_footer_link' => 'Další odkaz v zápatí',
+    'additional_footer_link_url' => 'Přidat URL',
+    'additional_footer_link_text' => 'Přidat text',
+
+    'contact_page' => 'Kontakt/O stránce',
+    'contact_page_info' => 'Kontakt/o stránce lze použít k zobrazení dalších informací o vašich záložkách. Odkaz je viditelný v zápatí. Markdown je podporován.',
+    'contact_page_enabled' => 'Zapnout kontakt/informace o stránce',
+    'contact_page_title' => 'Vlastní název stránky',
+    'contact_page_content' => 'Obsah stránky',
+
+    'cron_token' => 'Token Cron',
+    'cron_token_generate' => 'Vygenerovat token',
+    'cron_token_generate_confirm' => 'Opravdu chcete vygenerovat nový token?',
+    'cron_token_help' => 'Cron token je potřebný ke spuštění služby cron, která kontroluje mrtvé odkazy nebo spuštěné zálohy.',
+    'cron_token_url' => 'Nasměrujte cron na následující adresu URL: <span class="cron-token-url">:route</span>',
+    'cron_token_generate_info' => 'Upozornění: Pokud již máte cron token, vygenerování nového tokenu naruší stávající úlohu cronu!',
+    'cron_token_generate_failure' => 'Nový cron token se nepodařilo vygenerovat. Pro více informací zkontrolujte konzolu prohlížeče a protokoly aplikace.',
+    'cron_token_auth_failure' => 'Zadaný cron token je neplatný',
+    'cron_execute_successful' => 'Cron úspěšně spuštěn',
+
+    'update_check' => 'Kontrola aktualizací',
+    'update_check_running' => 'Kontrola aktualizací...',
+    'update_check_version_found' => 'Nalezena aktualizace. Verze #VERSION# je k dispozici.',
+    'update_check_success' => 'Nebyla nalezena žádná aktualizace.',
+    'update_check_failed' => 'Nepodařilo se zkontrolovat aktualizace.',
+
+    'guest_settings_info' => 'Pokud je povolen přístup pro hosty, platí pro hosty navštěvující váš web následující nastavení.',
+];

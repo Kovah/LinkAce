@@ -41,9 +41,10 @@ class LinkRepository
             $data['status'] = Link::STATUS_BROKEN;
         }
 
-        $link = Link::create($data);
+        $link = Link::withoutSyncingToSearch(fn () => Link::create($data));
 
         self::processLinkTaxonomies($link, $data);
+        self::syncLinkToSearch($link);
 
         $link->initiateInternetArchiveBackup();
 
@@ -67,9 +68,12 @@ class LinkRepository
             $data['last_checked_at'] = null;
         }
 
-        $link->update($data);
+        $updateData = array_intersect_key($data, array_flip($link->getFillable()));
+
+        Link::withoutSyncingToSearch(fn () => $link->update($updateData));
 
         self::processLinkTaxonomies($link, $data);
+        self::syncLinkToSearch($link);
 
         return $link;
     }
@@ -83,18 +87,22 @@ class LinkRepository
 
         return $links->map(function (Link $link) use ($data) {
             if (!auth()->user()->can('update', $link)) {
-                Log::warning('Could not update ' . $link->id . ' during bulk update: Permission denied!');
+                Log::warning('Could not update link ' . $link->id . ' during bulk update: Permission denied!');
                 return null;
             }
 
-            $linkData = $link->toArray();
-            $linkData['tags'] = $data['tags_mode'] === 'replace'
-                ? $data['tags']
-                : array_merge($link->tags->pluck('id')->toArray(), $data['tags']);
-            $linkData['lists'] = $data['lists_mode'] === 'replace'
-                ? $data['lists']
-                : array_merge($link->lists->pluck('id')->toArray(), $data['lists']);
-            $linkData['visibility'] = $data['visibility'] ?: $linkData['visibility'];
+            $linkData = [
+                'tags' => $data['tags_mode'] === 'replace'
+                    ? $data['tags']
+                    : array_merge($link->tags->pluck('id')->toArray(), $data['tags']),
+                'lists' => $data['lists_mode'] === 'replace'
+                    ? $data['lists']
+                    : array_merge($link->lists->pluck('id')->toArray(), $data['lists']),
+            ];
+
+            if (isset($data['visibility'])) {
+                $linkData['visibility'] = $data['visibility'];
+            }
 
             return self::update($link, $linkData);
         });
@@ -111,13 +119,42 @@ class LinkRepository
         try {
             $link->tags()->detach();
             $link->lists()->detach();
-            $link->delete();
+            Link::withoutSyncingToSearch(fn () => $link->delete());
+            self::removeLinkFromSearch($link);
         } catch (Exception $e) {
             Log::error($e);
             return false;
         }
 
         return true;
+    }
+
+    protected static function syncLinkToSearch(Link $link): void
+    {
+        if (!self::searchIndexingEnabled()) {
+            return;
+        }
+
+        $link->load(['tags', 'lists']);
+        $link->searchable();
+    }
+
+    protected static function removeLinkFromSearch(Link $link): void
+    {
+        if (!self::searchIndexingEnabled()) {
+            return;
+        }
+
+        $link->unsearchable();
+    }
+
+    protected static function searchIndexingEnabled(): bool
+    {
+        return in_array(
+            config('linkace.search.driver'),
+            config('linkace.search.external_drivers', []),
+            true
+        );
     }
 
     protected static function processLinkTaxonomies(Link $link, array $data): void

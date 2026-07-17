@@ -19,7 +19,7 @@ class NoteController extends Controller
 
     public function store(NoteStoreRequest $request): JsonResponse
     {
-        $note = NoteRepository::create($request->all());
+        $note = NoteRepository::create($request->validated());
 
         return response()->json($note);
     }

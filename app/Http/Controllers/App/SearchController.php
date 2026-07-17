@@ -32,6 +32,10 @@ class SearchController extends Controller
                 'empty_lists' => false,
                 'only_lists' => [],
                 'only_tags' => [],
+                'list_mode' => 'all',
+                'tag_mode' => 'all',
+                'exclude_lists' => [],
+                'exclude_tags' => [],
                 'order_by' => $this->orderByOptions[0],
                 'performed_search' => false,
             ]);
@@ -39,8 +43,7 @@ class SearchController extends Controller
 
     public function doSearch(SearchRequest $request): View
     {
-        $search = $this->buildDatabaseQuery($request);
-        $results = $search->paginate(getPaginationLimit());
+        $results = $this->searchLinkResults($request);
 
         return view('app.search.search', [
             'pageTitle' => trans('search.results_for') . ' ' . $this->searchQuery,
@@ -57,6 +60,10 @@ class SearchController extends Controller
                 'broken_only' => $this->searchBrokenOnly,
                 'only_lists' => $this->searchLists,
                 'only_tags' => $this->searchTags,
+                'list_mode' => $this->searchListMode,
+                'tag_mode' => $this->searchTagMode,
+                'exclude_lists' => $this->searchExcludeLists,
+                'exclude_tags' => $this->searchExcludeTags,
                 'empty_tags' => $this->emptyTags,
                 'empty_lists' => $this->emptyLists,
                 'order_by' => $this->searchOrderBy,
