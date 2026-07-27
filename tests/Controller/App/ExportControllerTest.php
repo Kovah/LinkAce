@@ -4,6 +4,7 @@ namespace Tests\Controller\App;
 
 use App\Enums\ModelAttribute;
 use App\Models\Link;
+use App\Models\Tag;
 use App\Models\User;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Tests\TestCase;
@@ -47,6 +48,28 @@ class ExportControllerTest extends TestCase
             $content
         );
         $this->assertStringNotContainsString($otherLink->url, $content);
+    }
+
+    public function test_html_export_does_not_leak_private_tags_of_other_users(): void
+    {
+        // Simulates a pre-existing cross-user link_tags pivot association, e.g.
+        // created via import/sync, where the exporting user's link ends up
+        // tagged with another user's private tag.
+        $otherUser = User::factory()->create();
+        $privateTag = Tag::factory()->for($otherUser)->create([
+            'name' => 'other-users-private-tag',
+            'visibility' => ModelAttribute::VISIBILITY_PRIVATE,
+        ]);
+
+        $ownLink = Link::factory()->for($this->user)->create();
+        $ownLink->tags()->attach($privateTag->id);
+
+        $response = $this->post('export/html');
+        $response->assertOk();
+
+        $content = $response->streamedContent();
+
+        $this->assertStringNotContainsString($privateTag->name, $content);
     }
 
     public function test_valid_csv_export_generation(): void

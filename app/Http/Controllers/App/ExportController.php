@@ -32,7 +32,11 @@ class ExportController extends Controller
      */
     public function doHtmlExport(): StreamedResponse
     {
-        $links = Link::whereUserId(auth()->id())->oldest('title')->with('tags')->get();
+        $links = Link::whereUserId(auth()->id())->oldest('title')->get();
+
+        $links->each(function (Link $link) {
+            $link->setRelation('tags', $link->tags()->visibleForUser()->get());
+        });
 
         $fileContent = view()->make('app.export.html-export', ['links' => $links])->render();
         $fileName = config('app.name') . '_export.html';
