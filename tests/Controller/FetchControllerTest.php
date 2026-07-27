@@ -149,6 +149,19 @@ class FetchControllerTest extends TestCase
         $response->assertOk()->assertJson(['keywords' => null]);
     }
 
+    public function test_get_keywords_for_url_blocks_link_local_metadata_service(): void
+    {
+        // Regression test for GHSA-mf8j-5fhh-5cp3: cloud metadata services (e.g. AWS
+        // IMDS) live in the link-local range, which is a reserved range distinct from
+        // RFC1918 private ranges. Http::preventStrayRequests() ensures the request is
+        // never actually sent if the IP protection fails to block it beforehand.
+        $response = $this->post('fetch/keywords-for-url', [
+            'url' => 'http://169.254.169.254/latest/meta-data/',
+        ]);
+
+        $response->assertOk()->assertJson(['keywords' => null]);
+    }
+
     public function test_get_keywords_for_hostname_resolving_to_private_ip_url(): void
     {
         HtmlMeta::shouldReceive('forUrl')

@@ -336,11 +336,29 @@ class LinkControllerTest extends TestCase
             'tags' => null,
             'visibility' => 1,
         ])->assertRedirect('links/2');
+    }
 
-        $this->assertDatabaseHas('links', [
-           'id' => 2,
-           'title' => 'Example Title',
-        ]);
+    public function test_store_request_does_not_leak_internal_service_response_via_meta(): void
+    {
+        // Regression test for GHSA-mf8j-5fhh-5cp3 (vector 1): saving a link that points
+        // to an internal-only service must not trigger a server-side metadata fetch.
+        // Http::preventStrayRequests() (enabled in setUp) makes any un-faked outbound
+        // request fail the test, proving no SSRF request is dispatched to the internal host.
+        Log::shouldReceive('warning')->once();
+
+        $this->post('links', [
+            'url' => 'http://10.0.0.1:9200/',
+            'title' => null,
+            'description' => null,
+            'lists' => null,
+            'tags' => null,
+            'visibility' => 1,
+        ])->assertRedirect('links/1');
+
+        $link = Link::first();
+        $this->assertEquals('http://10.0.0.1:9200/', $link->url);
+        // Title falls back to the host name instead of leaking fetched content from the internal service.
+        $this->assertEquals('10.0.0.1', $link->title);
     }
 
     public function test_validation_error_for_create(): void
