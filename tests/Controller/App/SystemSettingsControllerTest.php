@@ -80,6 +80,25 @@ class SystemSettingsControllerTest extends TestCase
             ->assertSee('<strong>Example</strong> with <a href="https://woblick.dev">link</a>', false);
     }
 
+    public function test_contact_page_does_not_render_unsafe_markdown_links(): void
+    {
+        // Regression test for GHSA-pm4x-ww2f-xwvp: contact_page_content is rendered
+        // through Str::markdown() into raw Blade output on the public /contact page,
+        // so a `javascript:` Markdown link must not be rendered with a live `href`.
+        $this->post('settings/system', [
+            'page_title' => 'New HTML Title',
+            'logo_text' => 'Meine Bookmarks',
+            'contact_page_enabled' => '1',
+            'contact_page_title' => 'ContactPage',
+            'contact_page_content' => '[Open link](javascript:alert(document.cookie)) and [safe link](https://woblick.dev)',
+        ])->assertRedirect('settings/system');
+
+        $response = $this->get('contact');
+
+        $response->assertDontSee('href="javascript:', false);
+        $response->assertSee('<a href="https://woblick.dev">safe link</a>', false);
+    }
+
     public function test_valid_guest_settings_update_response(): void
     {
         $response = $this->get('dashboard');
