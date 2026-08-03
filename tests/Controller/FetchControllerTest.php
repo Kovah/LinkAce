@@ -207,4 +207,33 @@ class FetchControllerTest extends TestCase
 
         $response->assertOk()->assertJson(['keywords' => null]);
     }
+
+    /**
+     * Regression test for GHSA-x8w7-mhjm-xvj2. The block_private_ips validator
+     * resolves the host via dns_get_record(), falling back to
+     * gethostbynamel(). If both return no records, the request must now be
+     * rejected (fail closed) instead of allowed through unchecked.
+     */
+    public function test_get_keywords_fails_closed_when_dns_resolution_returns_no_records(): void
+    {
+        require_once __DIR__ . '/../Support/DnsInterceptStub.php';
+        \Tests\Support\FakeDns::reset();
+
+        $testHtml = '<!DOCTYPE html><head>' .
+            '<meta name="keywords" content="internal-marker">' .
+            '</head></html>';
+
+        Http::fake([
+            'unresolvable-internal.invalid' => Http::response($testHtml, 200),
+        ]);
+
+        $response = $this->post('fetch/keywords-for-url', [
+            'url' => 'http://unresolvable-internal.invalid',
+        ]);
+
+        // Mirrors test_get_keywords_for_hostname_resolving_to_private_ip_url:
+        // an unresolvable host must be rejected, not silently allowed through.
+        $response->assertOk();
+        $this->assertNull($response->json('keywords'), 'Expected the private-IP protection to block this request, but it failed open and the fake HTTP response was returned.');
+    }
 }

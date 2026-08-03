@@ -218,10 +218,14 @@ class LinkControllerTest extends TestCase
             '<meta property="og:image" content="' . $img . '">' .
             '</head></html>';
 
-        Http::fake(['huge-thumbnail.com' => Http::response($testHtml)]);
+        // example.com is used here (instead of a made-up domain) because it
+        // is reserved by RFC 2606 and always resolves via DNS;
+        // block_private_ips (enabled by default) now fails closed on hosts
+        // that cannot be resolved.
+        Http::fake(['example.com/huge-thumbnail' => Http::response($testHtml)]);
 
         $this->post('links', [
-            'url' => 'https://huge-thumbnail.com',
+            'url' => 'https://example.com/huge-thumbnail',
         ])->assertRedirect('links/1');
 
         $databaseLink = Link::first();

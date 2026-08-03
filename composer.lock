@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "8408ecac88d796920a4325f5def7206d",
+    "content-hash": "d322eb7669bae19693733bc97f900a8c",
     "packages": [
         {
             "name": "aws/aws-crt-php",
@@ -1896,16 +1896,16 @@
         },
         {
             "name": "kovah/laravel-html-meta",
-            "version": "v5.0.0",
+            "version": "v5.0.1",
             "source": {
                 "type": "git",
                 "url": "https://github.com/Kovah/laravel-html-meta.git",
-                "reference": "f5957c226a848cb9708b71af23634e80011abd62"
+                "reference": "1e4c40789ae794d83d851d8cd59d5bb6029f1cfe"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/Kovah/laravel-html-meta/zipball/f5957c226a848cb9708b71af23634e80011abd62",
-                "reference": "f5957c226a848cb9708b71af23634e80011abd62",
+                "url": "https://api.github.com/repos/Kovah/laravel-html-meta/zipball/1e4c40789ae794d83d851d8cd59d5bb6029f1cfe",
+                "reference": "1e4c40789ae794d83d851d8cd59d5bb6029f1cfe",
                 "shasum": ""
             },
             "require": {
@@ -1958,7 +1958,7 @@
             ],
             "support": {
                 "issues": "https://github.com/Kovah/laravel-html-meta/issues",
-                "source": "https://github.com/Kovah/laravel-html-meta/tree/v5.0.0"
+                "source": "https://github.com/Kovah/laravel-html-meta/tree/v5.0.1"
             },
             "funding": [
                 {
@@ -1966,7 +1966,7 @@
                     "type": "github"
                 }
             ],
-            "time": "2026-03-24T15:14:30+00:00"
+            "time": "2026-08-03T21:21:43+00:00"
         },
         {
             "name": "kovah/laravel-socialite-oidc",
