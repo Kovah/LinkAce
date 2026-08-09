@@ -171,7 +171,7 @@ class Link extends Model implements Auditable
             return htmlentities($this->description);
         }
 
-        return Str::markdown($this->description, ['html_input' => 'escape']);
+        return Str::markdown($this->description, ['html_input' => 'escape', 'allow_unsafe_links' => false]);
     }
 
     /**

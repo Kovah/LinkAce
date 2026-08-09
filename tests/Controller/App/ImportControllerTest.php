@@ -50,6 +50,27 @@ class ImportControllerTest extends TestCase
         Queue::assertPushed(ImportLinkJob::class, 5);
     }
 
+    public function test_import_rejects_javascript_url_scheme_bypass(): void
+    {
+        // Regression test for GHSA-7hg3-3jpp-gj7f: filter_var(FILTER_VALIDATE_URL)
+        // accepts "javascript://host/%0Apayload", unlike a naive "javascript:payload"
+        // URL, so it slips past the plain-scheme check that was previously in place.
+        Queue::fake();
+
+        $exampleData = file_get_contents(__DIR__ . '/data/import_xss_bypass.html');
+        $file = UploadedFile::fake()->createWithContent('import_xss_bypass.html', $exampleData);
+
+        $response = $this->post('import', ['import-file' => $file], ['Accept' => 'application/json']);
+
+        $response->assertOk()->assertJson(['success' => true]);
+
+        // Only the legitimate link may be queued; the javascript: URL must be skipped.
+        Queue::assertPushed(ImportLinkJob::class, 1);
+        Queue::assertPushed(ImportLinkJob::class, function (ImportLinkJob $job) {
+            return $job->link['url'] === 'https://astralapp.com/';
+        });
+    }
+
     public function test_queue_page(): void
     {
         $exampleData = file_get_contents(__DIR__ . '/data/import_example.html');

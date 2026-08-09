@@ -10,6 +10,8 @@ use Illuminate\Console\Command;
 use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Support\Facades\Notification;
 use Illuminate\Support\Sleep;
+use Kovah\HtmlMeta\Exceptions\DisallowedIpException;
+use Kovah\HtmlMeta\Facades\HtmlMeta as HtmlMetaFacade;
 
 class CheckLinksCommand extends Command
 {
@@ -88,15 +90,13 @@ class CheckLinksCommand extends Command
     {
         $this->output->write('Checking link ' . $link->url . ' ');
 
-        if (config('html-meta.block_private_ips', true) && $this->pointsToPrivateIp($link->url)) {
-            $this->line('› Skipped (private IP).');
-            return;
-        }
-
         try {
-            $request = setupHttpRequest(timeout: 20);
+            $request = HtmlMetaFacade::applyPrivateIpProtection(setupHttpRequest(timeout: 20));
             $response = $request->head($link->url);
             $statusCode = $response->status();
+        } catch (DisallowedIpException) {
+            $this->line('› Skipped (private IP).');
+            return;
         } catch (Exception $e) {
             // Set status code to null so the link will be marked as broken
             $statusCode = 999;
@@ -110,61 +110,6 @@ class CheckLinksCommand extends Command
         } else {
             $this->processWorkingLink($link);
         }
-    }
-
-    protected function pointsToPrivateIp(string $url): bool
-    {
-        $host = trim(parse_url($url, PHP_URL_HOST) ?? '', '[]');
-
-        if ($host === '') {
-            return false;
-        }
-
-        if (filter_var($host, FILTER_VALIDATE_IP) !== false) {
-            return !$this->isPublicIp($host);
-        }
-
-        foreach ($this->resolveHostIps($host) as $ip) {
-            if (!$this->isPublicIp($ip)) {
-                return true;
-            }
-        }
-
-        return false;
-    }
-
-    protected function isPublicIp(string $ip): bool
-    {
-        return filter_var($ip, FILTER_VALIDATE_IP, FILTER_FLAG_NO_PRIV_RANGE | FILTER_FLAG_NO_RES_RANGE) !== false;
-    }
-
-    /**
-     * @return array<int, string>
-     */
-    protected function resolveHostIps(string $host): array
-    {
-        $ips = [];
-        $records = @dns_get_record($host, DNS_A + DNS_AAAA);
-
-        if (is_array($records)) {
-            foreach ($records as $record) {
-                if (isset($record['ip'])) {
-                    $ips[] = $record['ip'];
-                }
-                if (isset($record['ipv6'])) {
-                    $ips[] = $record['ipv6'];
-                }
-            }
-        }
-
-        if (empty($ips)) {
-            $ipv4Addresses = @gethostbynamel($host);
-            if (is_array($ipv4Addresses)) {
-                $ips = $ipv4Addresses;
-            }
-        }
-
-        return array_values(array_unique($ips));
     }
 
     protected function processMovedLink(Link $link): void

@@ -81,7 +81,7 @@ class Note extends Model
             return htmlentities($this->note);
         }
 
-        return Str::markdown($this->note, ['html_input' => 'escape']);
+        return Str::markdown($this->note, ['html_input' => 'escape', 'allow_unsafe_links' => false]);
     }
 
     public function addedAt(): string

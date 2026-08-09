@@ -32,7 +32,11 @@ class ExportController extends Controller
      */
     public function doHtmlExport(): StreamedResponse
     {
-        $links = Link::whereUserId(auth()->id())->oldest('title')->with('tags')->get();
+        $links = Link::whereUserId(auth()->id())->oldest('title')->get();
+
+        $links->each(function (Link $link) {
+            $link->setRelation('tags', $link->tags()->visibleForUser()->get());
+        });
 
         $fileContent = view()->make('app.export.html-export', ['links' => $links])->render();
         $fileName = config('app.name') . '_export.html';
@@ -59,6 +63,11 @@ class ExportController extends Controller
             return $link;
         })->toArray();
 
+        $rows = array_map(
+            fn (array $row) => array_map($this->neutralizeCsvFormulaCell(...), $row),
+            $rows
+        );
+
         try {
             $csv = Writer::createFromString();
             $csv->insertOne(array_keys($rows[0]));
@@ -75,5 +84,29 @@ class ExportController extends Controller
         return response()->streamDownload(function () use ($csv) {
             echo $csv;
         }, $fileName);
+    }
+
+    /**
+     * Prevent CSV/formula injection (CWE-1236). Spreadsheet applications treat
+     * cells starting with =, +, -, or @ as formulas, which can be abused for
+     * remote command execution (legacy DDE) or data exfiltration (HYPERLINK,
+     * WEBSERVICE, IMPORTXML, ...) when a user opens an exported file. Leading
+     * whitespace is stripped before the check, since Excel evaluates formulas
+     * after trimming and a naive "starts with" check on the raw value could
+     * otherwise be bypassed by a leading space/tab.
+     */
+    private function neutralizeCsvFormulaCell(mixed $value): mixed
+    {
+        if (!is_string($value) || $value === '') {
+            return $value;
+        }
+
+        $trimmed = ltrim($value, " \t\r\n\0\x0B");
+
+        if ($trimmed !== '' && in_array($trimmed[0], ['=', '+', '-', '@'], true)) {
+            return "'" . $value;
+        }
+
+        return $value;
     }
 }

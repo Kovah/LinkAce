@@ -6,7 +6,7 @@
 
         <div class="card mt-4">
             <div class="card-body contact-content">
-                {!! \Illuminate\Support\Str::markdown($content) !!}
+                {!! \Illuminate\Support\Str::markdown($content, ['html_input' => 'escape', 'allow_unsafe_links' => false]) !!}
             </div>
         </div>
     </div>

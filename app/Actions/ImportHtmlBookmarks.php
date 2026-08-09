@@ -7,6 +7,7 @@ use App\Jobs\ImportLinkJob;
 use App\Models\Link;
 use App\Models\Tag;
 use Illuminate\Support\Facades\Log;
+use Illuminate\Support\Str;
 use Shaarli\NetscapeBookmarkParser\NetscapeBookmarkParser;
 
 class ImportHtmlBookmarks
@@ -33,8 +34,8 @@ class ImportHtmlBookmarks
         ]);
 
         foreach ($links as $i => $link) {
-            if (filter_var($link['url'], FILTER_VALIDATE_URL) === false) {
-                // skip any links that are not a valid URL
+            if (!Str::isUrl($link['url'], ['http', 'https'])) {
+                // skip any links that are not a valid http(s) URL
                 $this->skipped++;
                 continue;
             }

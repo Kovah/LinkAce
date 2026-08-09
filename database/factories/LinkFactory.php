@@ -19,7 +19,11 @@ class LinkFactory extends Factory
     {
         return [
             'user_id' => User::notSystem()->first()->id ?? User::factory(),
-            'url' => $this->faker->url(),
+            // A random Faker URL is not guaranteed to resolve via DNS, and
+            // block_private_ips (enabled by default) now fails closed on
+            // unresolvable hosts. example.com is reserved by RFC 2606 and
+            // always resolves, keeping tests independent of live DNS state.
+            'url' => 'https://example.com/' . $this->faker->slug(),
             'title' => $this->faker->boolean(70)
                 ? $this->faker->words(random_int(2, 5), true)
                 : $this->faker->domainName(),

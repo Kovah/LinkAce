@@ -33,7 +33,17 @@ class FortifyServiceProvider extends ServiceProvider
         Fortify::updateUserPasswordsUsing(UpdateUserPassword::class);
         Fortify::resetUserPasswordsUsing(ResetUserPassword::class);
 
-        Fortify::loginView(fn() => view('auth.login', ['pageTitle' => trans('linkace.login')]));
+        Fortify::loginView(function () {
+            if (config('auth.sso.enabled') && config('auth.sso.regular_login_disabled') && config('auth.sso.auto_redirect')) {
+                foreach (config('auth.sso.providers', []) as $provider) {
+                    if (config('services.' . $provider . '.enabled')) {
+                        return redirect()->route('auth.sso.redirect', ['provider' => $provider]);
+                    }
+                }
+            }
+
+            return view('auth.login', ['pageTitle' => trans('linkace.login')]);
+        });
 
         Fortify::requestPasswordResetLinkView(fn() => view('auth.passwords.email', ['pageTitle' => trans('linkace.login')]));
 

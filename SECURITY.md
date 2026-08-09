@@ -32,11 +32,14 @@ security fixes. You can check the currently supported versions on [php.net](http
 
 All dependencies are updated regularly, security fixes for those dependencies are released as fast as possible.
 
-If you discover a security vulnerability, please contact me directly via `contact [at] linkace [dot] org`. Those
-vulnerabilities are addressed as fast as possible.
+If you discover a security vulnerability, please report it directly through the Github Security Vulnerabilities form
+accessible via [this link](https://github.com/Kovah/LinkAce/security/advisories/new). Those vulnerabilities are addressed
+as fast as possible.
+
+Reportings to `contact [at] linkace [dot] org` are **no longer actively managed**.
 
 ### Bug Bounties
 
-The LinkAce project offers bug bounties for finding critical security vulnerabilities. Bounties are paid from the funds 
+The LinkAce project offers bug bounties for finding _critical_ security vulnerabilities. Bounties are paid from the funds 
 available in the [Open Collective account](https://opencollective.com/linkace). Please notice that the actual paid 
 amounts are subject to negotiation and depend on the severity of the vulnerability.

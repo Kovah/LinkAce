@@ -316,7 +316,11 @@ class HtmlMetaHelperTest extends TestCase
             ]),
         ]);
 
-        $url = 'https://encoding-test.com/';
+        // example.com is used here (instead of a made-up domain) because it
+        // is reserved by RFC 2606 and always resolves via DNS;
+        // block_private_ips (enabled by default) now fails closed on hosts
+        // that cannot be resolved.
+        $url = 'https://example.com/encoding-test';
 
         $result = (new HtmlMeta())->getFromUrl($url);
 
