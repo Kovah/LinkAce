@@ -1,7 +1,7 @@
 # LinkAce Helm Chart (BETA)
 
 This Helm chart can be used to deploy LinkAce to your Kubernetes cluster. Please note that this chart deploys the
-full application stack by default, including a MariaDB database, Redis for caching, and Meilisearch for search. It is possible to use existing
+full application stack by defdault, including a MariaDB database, Redis for caching, and Meilisearch for search. It is possible to use existing
 database, Redis, or Meilisearch services. Please see the values.yml file for details.
 
 This Helm Chart is currently a beta version. Please give feedback if you are using it.
