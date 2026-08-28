@@ -15,6 +15,7 @@ class SetupDatabaseRequest extends FormRequest
             ],
             'db_path' => [
                 'required_if:connection,sqlite',
+                'not_regex:/[\r\n]/',
             ],
             'db_host' => [
                 'required_unless:connection,sqlite',
