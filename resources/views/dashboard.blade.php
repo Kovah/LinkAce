@@ -33,8 +33,7 @@
                 </form>
             </div>
             <div class="quick-search col-12 col-md-5 mt-4 mt-md-0">
-                <form action="{{ route('do-search') }}" method="POST">
-                    @csrf
+                <form action="{{ route('get-search') }}" method="GET">
                     <input type="hidden" name="search_title" value="on">
                     <input type="hidden" name="search_description" value="on">
 
@@ -101,8 +100,7 @@
                         </li>
                         <li class="list-group-item d-flex justify-content-between align-items-center">
                             <span class="me-1">@lang('stats.total_broken_links')</span>
-                            <form action="{{ route('do-search') }}" method="post" class="d-inline-block">
-                                @csrf
+                            <form action="{{ route('get-search') }}" method="GET" class="d-inline-block">
                                 <input type="hidden" name="broken_only" value="on">
                                 <button type="submit"
                                     class="badge border-0 {{ $stats['total_broken_links'] > 0 ? 'bg-danger' : 'bg-secondary' }}">

@@ -13,8 +13,7 @@ use App\Enums\ModelAttribute;
         </div>
         <div class="card-body">
 
-            <form action="{{ route('do-search') }}" method="POST" class="search-form">
-                @csrf
+            <form action="{{ route('get-search') }}" method="GET" class="search-form">
 
                 <div class="mb-4">
                     <label for="query" class="visually-hidden">@lang('search.query')</label>
@@ -128,7 +127,8 @@ use App\Enums\ModelAttribute;
                             class="tag-select" data-tag-data="{{ $all_lists->toJson() }}"
                             data-value="{{ json_encode($query_settings['only_lists']) }}"
                             data-tag-type="lists" data-filter-role="include">
-                        <div class="search-filter-exclusion mt-2 {{ $query_settings['exclude_lists'] === [] ? 'd-none' : '' }}"
+                        <div
+                            class="search-filter-exclusion mt-2 {{ $query_settings['exclude_lists'] === [] ? 'd-none' : '' }}"
                             data-filter-exclude-wrapper="lists">
                             <label for="exclude_lists" class="d-none" aria-hidden="true">
                                 @lang('search.exclude_lists')
@@ -153,7 +153,8 @@ use App\Enums\ModelAttribute;
                             class="tag-select" data-tag-data="{{ $all_tags->toJson() }}"
                             data-value="{{ json_encode($query_settings['only_tags']) }}"
                             data-tag-type="tags" data-filter-role="include">
-                        <div class="search-filter-exclusion mt-2 {{ $query_settings['exclude_tags'] === [] ? 'd-none' : '' }}"
+                        <div
+                            class="search-filter-exclusion mt-2 {{ $query_settings['exclude_tags'] === [] ? 'd-none' : '' }}"
                             data-filter-exclude-wrapper="tags">
                             <label for="exclude_tags" class="d-none" aria-hidden="true">
                                 @lang('search.exclude_tags')
@@ -208,5 +209,11 @@ use App\Enums\ModelAttribute;
 
         </div>
     </div>
+
+    @if($results->isNotEmpty())
+        <div class="mt-4">
+            {!! $results->onEachSide(1)->withQueryString()->links() !!}
+        </div>
+    @endif
 
 @endsection

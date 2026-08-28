@@ -115,10 +115,8 @@ Route::group(['middleware' => ['auth']], function () {
     Route::post('links/mark-working/{link}', [LinkController::class, 'markWorking'])
         ->name('links.mark-working');
 
-    Route::get('search', [SearchController::class, 'getSearch'])
+    Route::get('search', [SearchController::class, 'search'])
         ->name('get-search');
-    Route::post('search', [SearchController::class, 'doSearch'])
-        ->name('do-search');
 
     Route::get('import', [ImportController::class, 'form'])
         ->name('import-form');
