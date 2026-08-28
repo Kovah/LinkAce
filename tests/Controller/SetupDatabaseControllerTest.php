@@ -29,4 +29,20 @@ class SetupDatabaseControllerTest extends TestCase
             ->assertRedirect('/setup/database')
             ->assertSessionHasErrors('db_password');
     }
+
+    public function test_database_setup_rejects_multiline_db_path(): void
+    {
+        SystemSettings::fake([
+            'setup_completed' => false,
+        ]);
+
+        $response = $this->from('/setup/database')->post('/setup/database', [
+            'connection' => 'sqlite',
+            'db_path' => "/tmp/linkace.db\nMAIL_MAILER=sendmail",
+        ]);
+
+        $response
+            ->assertRedirect('/setup/database')
+            ->assertSessionHasErrors('db_path');
+    }
 }

@@ -88,6 +88,30 @@ class ImportControllerTest extends TestCase
         ]);
     }
 
+    public function test_queue_page_does_not_leak_other_users_imports(): void
+    {
+        // Regression test for GHSA-wmp4-4f5v-rwh8: /import/queue read the shared
+        // jobs/failed_jobs tables without any per-user scoping, exposing every
+        // user's in-progress import URLs to any authenticated user.
+        $exampleData = file_get_contents(__DIR__ . '/data/import_example.html');
+        $file = UploadedFile::fake()->createWithContent('import_example.html', $exampleData);
+
+        $this->post('import', ['import-file' => $file], ['Accept' => 'application/json'])
+            ->assertOk()->assertJson(['success' => true]);
+
+        $otherUser = User::factory()->create();
+        $this->actingAs($otherUser);
+
+        $response = $this->get('import/queue');
+
+        $response->assertOk();
+        $response->assertDontSee('https://medium.com/accelerated-intelligence');
+        $response->assertDontSee('https://adele.uxpin.com');
+        $response->assertDontSee('https://color.adobe.com/create/color-wheel');
+        $response->assertDontSee('https://loader.io');
+        $response->assertDontSee('https://astralapp.com');
+    }
+
     public function test_link_import_job(): void
     {
         UserSettings::fake([

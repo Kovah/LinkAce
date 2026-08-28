@@ -43,9 +43,9 @@ class SearchControllerTest extends TestCase
 
     public function test_valid_search_result(): void
     {
-        $this->post('search', [
+        $this->get('search?' . http_build_query([
             'query' => 'example',
-        ])
+        ]))
             ->assertOk()
             ->assertSee('https://example.com')
             ->assertDontSee('https://test.com');
@@ -53,10 +53,10 @@ class SearchControllerTest extends TestCase
 
     public function test_valid_search_with_ordering(): void
     {
-        $response = $this->post('search', [
+        $response = $this->get('search?' . http_build_query([
             'query' => 'example',
             'order_by' => 'title:asc',
-        ]);
+        ]));
 
         $body = $response->content();
         $posLink1 = strpos($body, 'https://empty-test.com');
@@ -67,9 +67,9 @@ class SearchControllerTest extends TestCase
 
     public function test_valid_url_search_result(): void
     {
-        $response = $this->post('search', [
+        $response = $this->get('search?' . http_build_query([
             'query' => 'https://example.com',
-        ]);
+        ]));
 
         $response->assertOk()
             ->assertSee('https://example.com')
@@ -78,10 +78,10 @@ class SearchControllerTest extends TestCase
 
     public function test_valid_title_search_result(): void
     {
-        $response = $this->post('search', [
+        $response = $this->get('search?' . http_build_query([
             'query' => 'special',
             'search_title' => 'on',
-        ]);
+        ]));
 
         $response->assertOk()
             ->assertSee('https://example.com')
@@ -90,10 +90,10 @@ class SearchControllerTest extends TestCase
 
     public function test_valid_description_search_result(): void
     {
-        $response = $this->post('search', [
+        $response = $this->get('search?' . http_build_query([
             'query' => 'description',
             'search_description' => 'on',
-        ]);
+        ]));
 
         $response->assertOk()
             ->assertSee('https://example.com')
@@ -102,10 +102,10 @@ class SearchControllerTest extends TestCase
 
     public function test_valid_private_search_result(): void
     {
-        $response = $this->post('search', [
+        $response = $this->get('search?' . http_build_query([
             'query' => 'example',
             'private_only' => 'on',
-        ]);
+        ]));
 
         $response->assertOk()
             ->assertSee('https://example.com')
@@ -114,10 +114,10 @@ class SearchControllerTest extends TestCase
 
     public function test_valid_broken_search_result(): void
     {
-        $response = $this->post('search', [
+        $response = $this->get('search?' . http_build_query([
             'query' => 'broken',
             'broken_only' => 'on',
-        ]);
+        ]));
 
         $response->assertOk()
             ->assertSee('https://broken.com')
@@ -127,10 +127,10 @@ class SearchControllerTest extends TestCase
 
     public function test_valid_tag_search_result(): void
     {
-        $response = $this->post('search', [
+        $response = $this->get('search?' . http_build_query([
             'only_lists' => '[]',
             'only_tags' => json_encode([1]),
-        ]);
+        ]));
 
         $response->assertOk()
             ->assertSee('https://example.com')
@@ -139,10 +139,10 @@ class SearchControllerTest extends TestCase
 
     public function test_valid_tag_search_result_without_result(): void
     {
-        $response = $this->post('search', [
+        $response = $this->get('search?' . http_build_query([
             'only_lists' => '[]',
             'only_tags' => json_encode([5]),
-        ]);
+        ]));
 
         $response->assertOk()
             ->assertDontSee('https://example.com')
@@ -151,10 +151,10 @@ class SearchControllerTest extends TestCase
 
     public function test_valid_list_search_result(): void
     {
-        $response = $this->post('search', [
+        $response = $this->get('search?' . http_build_query([
             'only_lists' => json_encode([1]),
             'only_tags' => '[]',
-        ]);
+        ]));
 
         $response->assertOk()
             ->assertSee('https://test.com')
@@ -163,10 +163,10 @@ class SearchControllerTest extends TestCase
 
     public function test_valid_list_search_result_without_results(): void
     {
-        $response = $this->post('search', [
+        $response = $this->get('search?' . http_build_query([
             'only_lists' => json_encode([5]),
             'only_tags' => '[]',
-        ]);
+        ]));
 
         $response->assertOk()
             ->assertDontSee('https://test.com')
@@ -175,14 +175,36 @@ class SearchControllerTest extends TestCase
 
     public function test_empty_list_search_result(): void
     {
-        $response = $this->post('search', [
+        $response = $this->get('search?' . http_build_query([
             'query' => 'Test',
             'empty_lists' => 'on',
-        ]);
+        ]));
 
         $response->assertOk()
             ->assertSee('https://empty-test.com')
             ->assertDontSee('https://test.com');
+    }
+
+    public function test_pagination_preserves_search_query(): void
+    {
+        $perPage = getPaginationLimit();
+        for ($i = 0; $i < $perPage + 5; $i++) {
+            Link::create([
+                'user_id' => $this->user->id,
+                'url' => "https://paginated-{$i}.example",
+                'title' => "Findme Site {$i}",
+            ]);
+        }
+
+        $response = $this->get('search?' . http_build_query([
+            'query' => 'Findme',
+            'search_title' => 'on',
+        ]))
+            ->assertOk();
+
+        $response->assertSee('query=Findme', false);
+        $response->assertSee('search_title=on', false);
+        $response->assertSee('page=2', false);
     }
 
     protected function setupTestData(): void

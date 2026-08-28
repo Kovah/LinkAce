@@ -5,10 +5,12 @@ namespace App\Http\Controllers\App;
 use App\Actions\ImportHtmlBookmarks;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\DoImportRequest;
-use App\Jobs\ImportLinkJob;
 use Illuminate\Contracts\Filesystem\FileNotFoundException;
 use Illuminate\Contracts\View\View;
 use Illuminate\Http\JsonResponse;
+use Illuminate\Http\Request;
+use Illuminate\Pagination\LengthAwarePaginator;
+use Illuminate\Pagination\Paginator;
 use Illuminate\Support\Facades\DB;
 
 class ImportController extends Controller
@@ -20,16 +22,34 @@ class ImportController extends Controller
         ]);
     }
 
-    public function queue(): View
+    public function queue(Request $request): View
     {
-        $jobs = DB::table('jobs')->where('queue', 'import')->paginate(50);
-        $failedJobs = DB::table('failed_jobs')->where('queue', 'import')->paginate(50);
-
         return view('app.import.queue', [
             'pageTitle' => trans('import.import'),
-            'jobs' => $jobs,
-            'failed_jobs' => $failedJobs,
+            'jobs' => $this->userImportJobs('jobs', $request->user()->id),
+            'failed_jobs' => $this->userImportJobs('failed_jobs', $request->user()->id),
         ]);
+    }
+
+    /**
+     * The jobs and failed_jobs tables are shared across all users and have no
+     * user_id column, so ownership must be read from the serialized job payload.
+     */
+    private function userImportJobs(string $table, int $userId): LengthAwarePaginator
+    {
+        $jobs = DB::table($table)->where('queue', 'import')->get()
+            ->filter(fn ($job) => unserialize(json_decode($job->payload)->data->command)->userId === $userId)
+            ->values();
+
+        $page = Paginator::resolveCurrentPage();
+
+        return new LengthAwarePaginator(
+            $jobs->forPage($page, 50),
+            $jobs->count(),
+            50,
+            $page,
+            ['path' => Paginator::resolveCurrentPath()]
+        );
     }
 
     /**
