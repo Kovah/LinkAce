@@ -78,12 +78,12 @@ class HelperFunctionsTest extends TestCase
             'locale' => 'en_US',
             'timezone' => 'Europe/Berlin',
             'date_format' => 'd.m.Y',
-            'time_format' => 'H:i:s',
+            'time_format' => 'h:i A',
         ]);
 
         $dateTime = now();
         $appFormatted = formatDateTime($dateTime);
-        $carbonFormatted = $dateTime->format('d.m.Y H:i:s');
+        $carbonFormatted = $dateTime->format('d.m.Y h:i A');
 
         $this->assertEquals($carbonFormatted, $appFormatted);
     }
@@ -120,11 +120,11 @@ class HelperFunctionsTest extends TestCase
         $this->post('settings/app', [
             'locale' => 'en_US',
             'timezone' => 'Europe/Berlin',
-            'listitem_count' => '100',
+            'listitem_count' => '120',
         ]);
 
         $limit = getPaginationLimit();
 
-        $this->assertEquals('100', $limit);
+        $this->assertEquals('120', $limit);
     }
 }
