@@ -103,7 +103,10 @@ return [
     */
 
     'limiters' => [
+        // Keep this null so Fortify keeps its built-in login throttling
+        // (5 attempts per minute per email and IP address) in the pipeline
         'login' => null,
+        'two-factor' => 'two-factor',
     ],
 
     /*

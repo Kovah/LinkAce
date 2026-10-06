@@ -8,6 +8,9 @@ use App\Actions\Fortify\UpdateUserPassword;
 use App\Actions\Fortify\UpdateUserProfileInformation;
 use App\Models\User;
 use Illuminate\Auth\Notifications\ResetPassword;
+use Illuminate\Cache\RateLimiting\Limit;
+use Illuminate\Http\Request;
+use Illuminate\Support\Facades\RateLimiter;
 use Illuminate\Support\ServiceProvider;
 use Laravel\Fortify\Fortify;
 
@@ -30,6 +33,8 @@ class FortifyServiceProvider extends ServiceProvider
      */
     public function boot(): void
     {
+        $this->configureRateLimiting();
+
         Fortify::createUsersUsing(CreateNewUser::class);
         Fortify::updateUserProfileInformationUsing(UpdateUserProfileInformation::class);
         Fortify::updateUserPasswordsUsing(UpdateUserPassword::class);
@@ -66,5 +71,17 @@ class FortifyServiceProvider extends ServiceProvider
         Fortify::confirmPasswordView(fn() => view('auth.confirm-password', ['pageTitle' => trans('linkace.login')]));
 
         Fortify::twoFactorChallengeView(fn() => view('auth.two-factor-challenge', ['pageTitle' => trans('linkace.login')]));
+    }
+
+    /**
+     * The two factor challenge must be rate limited, as the six digit codes
+     * could otherwise be guessed. The limit is bound to the user attempting to
+     * log in instead of their IP address, which could be spoofed.
+     */
+    protected function configureRateLimiting(): void
+    {
+        RateLimiter::for('two-factor', function (Request $request) {
+            return Limit::perMinute(5)->by($request->session()->get('login.id') ?: $request->ip());
+        });
     }
 }
