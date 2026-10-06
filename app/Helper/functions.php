@@ -109,26 +109,36 @@ function formatDateTime(CarbonInterface $date, bool $use_relational = false): st
 
 /**
  * Get the correct pagination limit.
- *
- * @return mixed
+ * Authenticated users may request any page size, including per_page=0 to get
+ * all of their items at once. Requests for publicly visible data are capped
+ * to avoid exhausting the server's resources.
  */
-function getPaginationLimit(): mixed
+function getPaginationLimit(): int
 {
-    if (request()->has('per_page') && (int)request()->get('per_page') >= 0) {
-        return (int)request()->get('per_page') > 0 ? (int)request()->get('per_page') : 999999999;
-    }
+    $default = (int) config('linkace.default.pagination');
+    $isGuestRequest = !auth()->check() || request()->is('guest/*');
 
-    $default = config('linkace.default.pagination');
+    if (request()->has('per_page')) {
+        $perPage = request()->integer('per_page');
+
+        if ($isGuestRequest) {
+            if ($perPage > 0) {
+                return min($perPage, (int) config('linkace.max_pagination'));
+            }
+        } elseif (is_numeric(request()->input('per_page')) && $perPage >= 0) {
+            return $perPage > 0 ? $perPage : 999999999;
+        }
+    }
 
     if (auth()->id() === 0) {
         return $default;
     }
 
-    if (request()->is('guest/*')) {
-        return guestsettings('listitem_count') ?: $default;
+    if ($isGuestRequest) {
+        return (int) (guestsettings('listitem_count') ?: $default);
     }
 
-    return usersettings('listitem_count') ?: $default;
+    return (int) (usersettings('listitem_count') ?: $default);
 }
 
 /**

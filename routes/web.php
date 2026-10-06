@@ -209,7 +209,7 @@ Route::group(['middleware' => ['auth', 'role:admin']], function () {
 });
 
 // Guest access routes
-Route::prefix('guest')->middleware(['guestaccess'])->group(function () {
+Route::prefix('guest')->middleware(['guestaccess', 'throttle:guest'])->group(function () {
 
     Route::get('search', [GuestSearchController::class, 'search'])
         ->name('guest.search');
