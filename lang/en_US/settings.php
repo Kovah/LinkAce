@@ -72,6 +72,9 @@ return [
     'two_factor_recovery_codes' => 'Store these recovery codes in a secure password manager. They can be used to recover access to your account if your two factor authentication device is lost.',
     'two_factor_recovery_codes_view' => 'View Recovery Codes',
     'two_factor_regenerate_recovery_codes' => 'Generate new Recovery Codes',
+    'two_factor_recovery_codes_password' => 'Please enter your password to view the recovery codes.',
+    'two_factor_recovery_codes_failure' => 'The recovery codes could not be loaded. Please try again.',
+    'two_factor_not_enabled' => 'Two factor authentication is not enabled for your account.',
 
     'page_title' => 'Page Title',
     'logo_text' => 'Custom Logo Text',

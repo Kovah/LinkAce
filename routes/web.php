@@ -147,6 +147,9 @@ Route::group(['middleware' => ['auth']], function () {
         ->name('save-settings-app');
     Route::post('settings/change-password', [UserSettingsController::class, 'changeUserPassword'])
         ->name('change-user-password');
+    Route::post('settings/recovery-codes', [UserSettingsController::class, 'getRecoveryCodes'])
+        ->middleware('throttle:6,1')
+        ->name('get-recovery-codes');
 
     Route::resource('settings/api-tokens', ApiTokenController::class)
         ->only(['index', 'store', 'destroy']);

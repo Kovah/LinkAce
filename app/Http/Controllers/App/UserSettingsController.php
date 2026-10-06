@@ -6,6 +6,7 @@ use App\Actions\Fortify\UpdateUserPassword;
 use App\Actions\Fortify\UpdateUserProfileInformation;
 use App\Enums\ActivityLog;
 use App\Http\Controllers\Controller;
+use App\Http\Requests\RecoveryCodesRequest;
 use App\Http\Requests\UserSettingsUpdateRequest;
 use App\Settings\UserSettings;
 use Illuminate\Contracts\View\View;
@@ -24,6 +25,24 @@ class UserSettingsController extends Controller
             'user' => auth()->user(),
             'bookmarklet_code' => bookmarkletUrl(),
         ]);
+    }
+
+    /**
+     * Return the two factor recovery codes of the current user. The password
+     * must be provided for every single request, as the codes are a permanent
+     * way to bypass the two factor authentication.
+     */
+    public function getRecoveryCodes(RecoveryCodesRequest $request): JsonResponse
+    {
+        $user = $request->user();
+
+        if (!$user->two_factor_secret || !$user->two_factor_recovery_codes) {
+            throw ValidationException::withMessages([
+                'current_password' => trans('settings.two_factor_not_enabled'),
+            ]);
+        }
+
+        return response()->json(['codes' => $user->recoveryCodes()]);
     }
 
     public function saveAccountSettings(Request $request): RedirectResponse

@@ -46,13 +46,26 @@
                 <div class="mt-5 alert alert-warning">@lang('settings.two_factor_recovery_codes')</div>
 
                 <div class="row">
-                    <div class="col">
-                        <details>
-                            <summary>@lang('settings.two_factor_recovery_codes_view')</summary>
-                            @foreach (json_decode(decrypt($user->two_factor_recovery_codes), true) as $code)
-                                <code>{{ $code }}</code><br>
-                            @endforeach
-                        </details>
+                    <div class="col recovery-codes" data-failure-message="@lang('settings.two_factor_recovery_codes_failure')">
+                        <button type="button" class="btn btn-sm btn-outline-primary recovery-codes-show">
+                            @lang('settings.two_factor_recovery_codes_view')
+                        </button>
+
+                        <div class="recovery-codes-form d-none mt-3">
+                            <label class="form-label" for="recovery_codes_password">
+                                @lang('settings.two_factor_recovery_codes_password')
+                            </label>
+                            <div class="input-group">
+                                <input type="password" id="recovery_codes_password" autocomplete="current-password"
+                                    class="form-control recovery-codes-password">
+                                <button type="button" class="btn btn-primary recovery-codes-submit">
+                                    @lang('linkace.show')
+                                </button>
+                            </div>
+                            <p class="invalid-feedback d-block d-none recovery-codes-error" role="alert"></p>
+                        </div>
+
+                        <div class="recovery-codes-output d-none mt-3"></div>
                     </div>
 
                     <div class="col text-end">

@@ -62,6 +62,8 @@ class User extends Authenticatable implements Auditable
         'sso_token',
         'sso_token_secret',
         'sso_refresh_token',
+        'two_factor_secret',
+        'two_factor_recovery_codes',
     ];
 
     protected $casts = [
