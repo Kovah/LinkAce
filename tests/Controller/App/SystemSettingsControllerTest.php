@@ -119,6 +119,107 @@ class SystemSettingsControllerTest extends TestCase
         $response->assertSee('Listen');
     }
 
+    public function test_oversized_system_settings_are_rejected(): void
+    {
+        $response = $this->post('settings/system', [
+            'page_title' => str_repeat('a', 300),
+            'logo_text' => str_repeat('b', 50),
+        ]);
+
+        $response->assertSessionHasErrors(['page_title', 'logo_text']);
+
+        $this->assertNull(systemsettings('page_title'));
+        $this->assertNull(systemsettings('logo_text'));
+    }
+
+    public function test_unknown_system_settings_keys_are_not_saved(): void
+    {
+        $token = systemsettings('cron_token');
+
+        $this->post('settings/system', [
+            'page_title' => 'New HTML Title',
+            'cron_token' => 'attacker-controlled-token',
+            'setup_completed' => '0',
+        ])->assertSessionHasNoErrors();
+
+        $this->assertEquals('New HTML Title', systemsettings('page_title'));
+        $this->assertEquals($token, systemsettings('cron_token'));
+        $this->assertTrue(systemsettings('setup_completed'));
+    }
+
+    public function test_invalid_guest_locale_is_rejected(): void
+    {
+        $response = $this->post('settings/system/guest', [
+            'guest_access_enabled' => '1',
+            'locale' => '../../../../tmp/x',
+        ]);
+
+        $response->assertSessionHasErrors('locale');
+
+        $this->assertEquals('en_US', guestsettings('locale'));
+    }
+
+    public function test_unknown_guest_locale_is_rejected(): void
+    {
+        $response = $this->post('settings/system/guest', [
+            'guest_access_enabled' => '1',
+            'locale' => 'zz_ZZ',
+        ]);
+
+        $response->assertSessionHasErrors('locale');
+
+        $this->assertEquals('en_US', guestsettings('locale'));
+    }
+
+    public function test_invalid_guest_locale_does_not_break_guest_pages(): void
+    {
+        $this->post('settings/system/guest', [
+            'guest_access_enabled' => '1',
+            'locale' => '../../../../tmp/x',
+        ]);
+
+        auth()->logout();
+
+        $this->get('login')->assertOk();
+    }
+
+    public function test_invalid_guest_listitem_count_is_rejected(): void
+    {
+        $response = $this->post('settings/system/guest', [
+            'guest_access_enabled' => '1',
+            'locale' => 'en_US',
+            'listitem_count' => '999999',
+        ]);
+
+        $response->assertSessionHasErrors('listitem_count');
+
+        $this->assertEquals(24, guestsettings('listitem_count'));
+    }
+
+    public function test_invalid_guest_darkmode_setting_is_rejected(): void
+    {
+        $response = $this->post('settings/system/guest', [
+            'guest_access_enabled' => '1',
+            'locale' => 'en_US',
+            'darkmode_setting' => '99',
+        ]);
+
+        $response->assertSessionHasErrors('darkmode_setting');
+
+        $this->assertEquals(1, guestsettings('darkmode_setting'));
+    }
+
+    public function test_unknown_guest_settings_keys_are_not_saved(): void
+    {
+        $this->post('settings/system/guest', [
+            'guest_access_enabled' => '1',
+            'locale' => 'en_US',
+            'profile_is_public' => '1',
+        ])->assertSessionHasNoErrors();
+
+        $this->assertNull(guestsettings('profile_is_public'));
+    }
+
     public function test_valid_cron_generaton_response(): void
     {
         $response = $this->post('settings/generate-cron-token');

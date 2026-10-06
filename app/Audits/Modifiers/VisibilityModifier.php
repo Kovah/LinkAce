@@ -6,12 +6,17 @@ use App\Enums\ModelAttribute;
 
 class VisibilityModifier implements ModifierInterface
 {
-    public function modify($value): string
+    public function modify($value): ?string
     {
-        return match ($value) {
+        if ($value === null) {
+            return null;
+        }
+
+        return match ((int)$value) {
             ModelAttribute::VISIBILITY_PUBLIC => trans('attributes.visibility.' . ModelAttribute::VISIBILITY_PUBLIC),
             ModelAttribute::VISIBILITY_INTERNAL => trans('attributes.visibility.' . ModelAttribute::VISIBILITY_INTERNAL),
             ModelAttribute::VISIBILITY_PRIVATE => trans('attributes.visibility.' . ModelAttribute::VISIBILITY_PRIVATE),
+            default => (string) $value,
         };
     }
 }
