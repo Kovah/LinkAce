@@ -158,6 +158,12 @@ return [
     | IP, a comma-separated list of IPs, or '*' to trust the immediate upstream
     | connection. Also see App\Http\Middleware\TrustProxies
     |
+    | Note that '*' trusts the X-Forwarded-* headers of whoever connects to
+    | LinkAce. If the instance is reachable without a reverse proxy in front of
+    | it, clients can set X-Forwarded-For themselves, which means rate limits
+    | can no longer be enforced per IP address. Configure the actual proxy IPs
+    | if LinkAce is reachable directly.
+    |
     */
 
     'trusted_proxies' => env('TRUSTED_PROXIES', '*'),
