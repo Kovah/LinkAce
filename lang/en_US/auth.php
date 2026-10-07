@@ -58,6 +58,8 @@ return [
     'sso_provider_disabled' => 'The selected SSO provider is not available. Please choose another one.',
     'sso_registration_disabled' => 'No existing user found for this provider. Only registered users can sign in via SSO. Please contact your administrator to get an account.',
     'sso_wrong_provider' => 'Unable to login with :currentProvider. Please use :userProvider to login, or contact your administrator for help.',
+    'sso_account_already_linked' => 'An account with this email address is already linked to a different identity of this SSO provider. Please contact your administrator for help.',
+    'sso_email_unverified' => 'Your SSO provider did not confirm that it verified your email address. Please contact your administrator for help.',
 
     'sso_provider' => [
         'auth0' => 'Auth0',

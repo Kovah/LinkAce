@@ -27,6 +27,10 @@ return [
     'sso' => [
         'enabled' => env('SSO_ENABLED', false),
         'registration_enabled' => env('SSO_REGISTRATION_ENABLED', true),
+        // Require the provider to assert that it verified the email address before an
+        // existing account may be linked. Disabled by default, as Azure, GitHub and
+        // GitLab cannot supply the email_verified claim at all.
+        'require_verified_email' => env('SSO_REQUIRE_VERIFIED_EMAIL', false),
         'regular_login_disabled' => env('REGULAR_LOGIN_DISABLED', false),
         'auto_redirect' => env('SSO_AUTO_REDIRECT', false),
         'providers' => [
