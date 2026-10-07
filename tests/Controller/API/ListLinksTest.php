@@ -2,6 +2,7 @@
 
 namespace Tests\Controller\API;
 
+use App\Enums\ApiToken;
 use App\Models\Link;
 use App\Models\LinkList;
 use App\Models\User;
@@ -37,6 +38,29 @@ class ListLinksTest extends ApiTestCase
 
         $this->getJsonAuthorized('api/v2/lists/3/links')
             ->assertForbidden();
+    }
+
+    public function test_forbidden_links_request_from_system_without_links_read(): void
+    {
+        $this->createTestLists();
+        [$link] = $this->createTestLinks();
+        $link->lists()->sync([1]);
+        $this->createSystemToken([ApiToken::ABILITY_LISTS_READ]);
+
+        $this->getJsonAuthorized('api/v2/lists/1/links', useSystemToken: true)
+            ->assertForbidden();
+    }
+
+    public function test_links_request_from_system_with_links_read(): void
+    {
+        $this->createTestLists();
+        [$link] = $this->createTestLinks();
+        $link->lists()->sync([1]);
+        $this->createSystemToken([ApiToken::ABILITY_LISTS_READ, ApiToken::ABILITY_LINKS_READ]);
+
+        $this->getJsonAuthorized('api/v2/lists/1/links', useSystemToken: true)
+            ->assertOk()
+            ->assertJsonFragment(['url' => $link->url]);
     }
 
     public function test_links_request_without_links(): void

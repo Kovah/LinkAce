@@ -2,6 +2,7 @@
 
 namespace Tests\Controller\API;
 
+use App\Enums\ApiToken;
 use App\Models\Link;
 use App\Models\LinkList;
 use App\Models\Tag;
@@ -24,6 +25,29 @@ class SearchLinksTest extends ApiTestCase
     public function test_unauthorized_request(): void
     {
         $this->getJson('api/v2/search/links')->assertUnauthorized();
+    }
+
+    public function test_forbidden_search_from_system_without_links_read(): void
+    {
+        Link::factory()->create(['url' => 'https://example.com']);
+        $this->createSystemToken();
+
+        $this->getJsonAuthorized('api/v2/search/links?query=example', useSystemToken: true)
+            ->assertForbidden();
+    }
+
+    public function test_search_from_system_with_links_read(): void
+    {
+        Link::factory()->create(['url' => 'https://example.com']);
+        $this->createSystemToken([ApiToken::ABILITY_LINKS_READ]);
+
+        $this->getJsonAuthorized('api/v2/search/links?query=example', useSystemToken: true)
+            ->assertOk()
+            ->assertJson([
+                'data' => [
+                    ['url' => 'https://example.com'],
+                ],
+            ]);
     }
 
     public function test_without_query(): void
