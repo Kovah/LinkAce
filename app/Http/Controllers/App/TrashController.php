@@ -50,11 +50,29 @@ class TrashController extends Controller
                 'link' => redirect()->route('links.show', ['link' => $model]),
                 'list' => redirect()->route('lists.show', ['list' => $model]),
                 'tag' => redirect()->route('tags.show', ['tag' => $model]),
-                'note' => redirect()->route('links.show', ['note' => $model->link()->first()]),
+                'note' => $this->redirectToNoteLink($model),
                 default => redirect()->route('get-trash'),
             };
         }
 
         return redirect()->route('get-trash');
+    }
+
+    /**
+     * Redirect to the link a restored note belongs to. The link itself may still be
+     * in the trash, in which case there is nothing to redirect to.
+     *
+     * @param Note $note
+     * @return RedirectResponse
+     */
+    protected function redirectToNoteLink(Note $note): RedirectResponse
+    {
+        $link = $note->link()->first();
+
+        if ($link === null) {
+            return redirect()->route('get-trash');
+        }
+
+        return redirect()->route('links.show', ['link' => $link]);
     }
 }

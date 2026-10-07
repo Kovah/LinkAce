@@ -36,6 +36,36 @@ class TrashControllerTest extends TestCase
             ->assertSee('Search');
     }
 
+    public function test_trash_does_not_disclose_a_link_the_user_cannot_view(): void
+    {
+        $otherUser = User::factory()->create();
+        $privateLink = Link::factory()->for($otherUser)->create([
+            'url' => 'https://victim-private.example/secret',
+            'title' => 'VICTIM PRIVATE LINK',
+            'visibility' => 3,
+        ]);
+
+        // A note of the current user pointing at a link they must not see, as left
+        // behind by the note update flaw
+        $note = Note::factory()->for($this->user)->create(['link_id' => $privateLink->id]);
+        $note->delete();
+
+        $this->get('trash')
+            ->assertOk()
+            ->assertDontSee('https://victim-private.example/secret')
+            ->assertDontSee('VICTIM PRIVATE LINK');
+    }
+
+    public function test_trash_renders_notes_whose_link_was_deleted_too(): void
+    {
+        $link = Link::factory()->for($this->user)->create();
+        $note = Note::factory()->for($this->user)->create(['link_id' => $link->id]);
+        $note->delete();
+        $link->delete();
+
+        $this->get('trash')->assertOk();
+    }
+
     /*
      * Tests for clearing the trash
      */
@@ -150,6 +180,35 @@ class TrashControllerTest extends TestCase
         $response->assertRedirect('trash');
 
         $this->assertEquals(null, Note::find(1)->deleted_at);
+    }
+
+    public function test_valid_restore_note_response_with_redirect_to_model(): void
+    {
+        $link = Link::factory()->for($this->user)->create();
+        $note = Note::factory()->for($this->user)->create(['link_id' => $link->id]);
+        $note->delete();
+
+        $response = $this->post('trash/restore', [
+            'model' => 'note',
+            'id' => $note->id,
+            'redirect_to_model' => '1',
+        ]);
+
+        $response->assertRedirect('links/' . $link->id);
+    }
+
+    public function test_restore_note_with_redirect_to_model_falls_back_to_trash(): void
+    {
+        // The link of the note is still in the trash, so there is nothing to show
+        $this->setupTrashTestData();
+
+        $response = $this->post('trash/restore', [
+            'model' => 'note',
+            'id' => '1',
+            'redirect_to_model' => '1',
+        ]);
+
+        $response->assertRedirect('trash');
     }
 
     public function test_invalid_restore_response(): void

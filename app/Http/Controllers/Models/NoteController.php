@@ -41,7 +41,7 @@ class NoteController extends Controller
 
     public function update(NoteUpdateRequest $request, Note $note): RedirectResponse
     {
-        $note = NoteRepository::update($note, $request->except(['_token']));
+        $note = NoteRepository::update($note, $request->validated());
 
         flash(trans('note.updated_successfully'), 'success');
 

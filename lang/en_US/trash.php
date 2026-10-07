@@ -26,6 +26,8 @@ return [
     'restore.tag' => 'Restored the tag from trash.',
     'restore.note' => 'Restored the note from trash.',
 
+    'link_unavailable' => 'Link unavailable',
+
     'restore.not_found' => 'The item to be restored could not be found.',
     'restore.not_allowed' => 'You are not allowed to restore this item.',
 

@@ -192,6 +192,37 @@ class NoteControllerTest extends TestCase
         $this->assertEquals('Original internal note', $internalNote->refresh()->note);
     }
 
+    public function test_link_of_a_note_cannot_be_reassigned_through_an_update(): void
+    {
+        $this->createTestLinks();
+        $ownLink = Link::factory()->for($this->user)->create();
+        $note = Note::factory()->for($this->user)->create(['link_id' => $ownLink->id]);
+
+        // Link 3 is a private link of another user, which the update form never offers
+        $this->patch('notes/' . $note->id, [
+            'note' => 'Lorem ipsum dolor est updated',
+            'visibility' => 1,
+            'link_id' => 3,
+        ]);
+
+        $this->assertEquals($ownLink->id, $note->refresh()->link_id);
+    }
+
+    public function test_owner_of_a_note_cannot_be_reassigned_through_an_update(): void
+    {
+        $otherUser = User::factory()->create();
+        $ownLink = Link::factory()->for($this->user)->create();
+        $note = Note::factory()->for($this->user)->create(['link_id' => $ownLink->id]);
+
+        $this->patch('notes/' . $note->id, [
+            'note' => 'Lorem ipsum dolor est updated',
+            'visibility' => 1,
+            'user_id' => $otherUser->id,
+        ]);
+
+        $this->assertEquals($this->user->id, $note->refresh()->user_id);
+    }
+
     public function test_missing_model_error_for_update(): void
     {
         $this->patch('notes/1', [
