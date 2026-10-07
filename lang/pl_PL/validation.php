@@ -88,6 +88,7 @@ return [
         'string'  => ':attribute musi mieć co najmniej :min znaków.',
         'array'   => ':attribute musi mieć co najmniej :min elementów.',
     ],
+    'no_private_ip'        => 'Podany adres URL nie może zawierać prywatnego adresu IP.',
     'not_in'               => 'Wybrany :attribute jest nieprawidłowy.',
     'not_regex'            => 'Format :attribute jest nieprawidłowy.',
     'numeric'              => ':attribute musi być liczbą.',
