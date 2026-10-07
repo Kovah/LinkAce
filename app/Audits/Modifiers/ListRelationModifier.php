@@ -8,6 +8,8 @@ class ListRelationModifier implements ModifierInterface
 {
     public function modify($value): ?string
     {
-        return $value ? LinkList::whereIn('id', $value)->pluck('name')->join(', ') : null;
+        return $value
+            ? LinkList::visibleForUser()->whereIn('id', $value)->pluck('name')->join(', ')
+            : null;
     }
 }

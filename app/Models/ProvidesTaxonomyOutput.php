@@ -54,7 +54,14 @@ trait ProvidesTaxonomyOutput
 
             foreach ($items as $item) {
                 if (is_int($item) && $item > 0) {
-                    $item = $model::find($item)?->load('user:id,name');
+                    // Scoped so the redisplay cannot be used to resolve
+                    // arbitrary IDs to the names of other users' private
+                    // tags and lists (GHSA-538m-p86m-c8jg).
+                    $item = $model::visibleForUser()->find($item)?->load('user:id,name');
+
+                    if ($item === null) {
+                        continue;
+                    }
                 } else {
                     $item = [
                         'id' => $item,

@@ -8,7 +8,7 @@
     <p>
         @foreach($links as $link)
             <DT>
-                <A HREF="{{ $link->url }}" ADD_DATE="{{ $link->created_at->timestamp }}" PRIVATE="{{ $link->is_private ? 1 : 0 }}" @if($link->tags) TAGS="{{ implode(',', $link->tags->pluck('name')->all()) }}" @endif >{{ $link->title }}</A>
+                <A HREF="{{ $link->url }}" ADD_DATE="{{ $link->created_at->timestamp }}" PRIVATE="{{ $link->isPrivate() ? 1 : 0 }}" @if($link->tags) TAGS="{{ implode(',', $link->tags->pluck('name')->all()) }}" @endif >{{ $link->title }}</A>
             @if($link->description)
                 <DD>{{ $link->description }}
             @endif

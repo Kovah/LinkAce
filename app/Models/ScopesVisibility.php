@@ -42,4 +42,14 @@ trait ScopesVisibility
     {
         return $query->where('visibility', ModelAttribute::VISIBILITY_PUBLIC);
     }
+
+    public function isPublic(): bool
+    {
+        return $this->visibility === ModelAttribute::VISIBILITY_PUBLIC;
+    }
+
+    public function isPrivate(): bool
+    {
+        return $this->visibility === ModelAttribute::VISIBILITY_PRIVATE;
+    }
 }
