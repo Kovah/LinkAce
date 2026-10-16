@@ -35,12 +35,13 @@ use App\Http\Controllers\Setup\DatabaseController;
 use App\Http\Controllers\Setup\MetaController;
 use App\Http\Controllers\Setup\RequirementsController;
 use App\Http\Controllers\SocialiteController;
+use App\Http\Middleware\SettingsMiddleware;
 use Illuminate\Support\Facades\Route;
 use Rap2hpoutre\LaravelLogViewer\LogViewerController;
 
 // Frontpage
 Route::get('/', FrontController::class)->name('front');
-Route::get('/_health', fn() => 'Ok');
+Route::get('/_health', fn() => 'Ok')->withoutMiddleware(SettingsMiddleware::class);
 
 // Setup routes
 Route::prefix('setup')->group(function () {

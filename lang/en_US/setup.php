@@ -45,6 +45,7 @@ return [
     'database.db_name' => 'Database Name',
     'database.db_user' => 'Database User',
     'database.db_password' => 'Database Password',
+    'database.db_password_hint' => 'Leave empty to use the password that is already configured.',
     'database.complete_hint' => 'Saving the database configuration and preparing it for using the app may take a few seconds, please be patient.',
 
     'database.data_present' => 'Caution! We found data in the database you specified! Please make sure that you have a backup of that database and confirm the deletion of all data.',

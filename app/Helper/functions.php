@@ -9,6 +9,7 @@ use Carbon\CarbonInterface;
 use Illuminate\Http\Client\PendingRequest;
 use Illuminate\Support\Facades\Cache;
 use Illuminate\Support\Facades\Http;
+use Illuminate\Support\Facades\Schema;
 
 /**
  * Check if the setup was completed.
@@ -20,7 +21,13 @@ function setupCompleted(): ?bool
     try {
         return systemsettings('setup_completed');
     } catch (PDOException $e) {
-        return false;
+        // Only a reachable database without the settings table means the setup was not run yet.
+        // Any other error, e.g. an unreachable database, must not open the setup to anyone.
+        if (!Schema::hasTable('settings')) {
+            return false;
+        }
+
+        throw $e;
     }
 }
 

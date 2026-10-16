@@ -121,7 +121,8 @@
                             </label>
                             <input type="password" name="db_password" id="db_password"
                                 class="form-control{{ $errors->has('db_password') ? ' is-invalid' : '' }}"
-                                value="{{ old('db_password') ?: env('DB_PASSWORD') }}">
+                                value="{{ old('db_password') }}">
+                            <p class="form-text text-pale small">@lang('setup.database.db_password_hint')</p>
                             @if ($errors->has('db_password'))
                                 <p class="invalid-feedback" role="alert">
                                     {{ $errors->first('db_password') }}

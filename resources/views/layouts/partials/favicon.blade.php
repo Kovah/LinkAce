@@ -1,3 +1,4 @@
+@php($appName ??= systemsettings('page_title') ?: config('app.name', 'LinkAce'))
 <link rel="icon" type="image/svg+xml" href="{{ asset('favicon.svg') }}">
 <link rel="icon" type="image/png" sizes="32x32" href="{{ asset('favicon-32x32.png') }}">
 <link rel="icon" type="image/png" sizes="16x16" href="{{ asset('favicon-16x16.png') }}">
@@ -7,11 +8,11 @@
 
 <meta name="mobile-web-app-capable" content="yes">
 <meta name="theme-color" content="#44679F">
-<meta name="application-name" content="{{ systemsettings('page_title') ?: config('app.name', 'LinkAce') }}">
+<meta name="application-name" content="{{ $appName }}">
 
 <meta name="apple-mobile-web-app-capable" content="yes">
 <meta name="apple-mobile-web-app-status-bar-style" content="black">
-<meta name="apple-mobile-web-app-title" content="{{ systemsettings('page_title') ?: config('app.name', 'LinkAce') }}">
+<meta name="apple-mobile-web-app-title" content="{{ $appName }}">
 <link rel="apple-touch-icon" href="{{ asset('apple-touch-icon.png') }}">
 <link rel="mask-icon" href="{{ asset('safari-pinned-tab.svg') }}" color="#44679F">
 
