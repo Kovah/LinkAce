@@ -5,6 +5,7 @@ namespace App\Http\Controllers\API;
 use App\Http\Controllers\Controller;
 use App\Http\Controllers\Traits\SearchesLinks;
 use App\Http\Requests\SearchRequest;
+use App\Models\Api\ApiLink;
 use App\Search\SearchBackendManager;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
@@ -29,6 +30,8 @@ class SearchController extends Controller
      */
     public function searchLinks(SearchRequest $request): JsonResponse
     {
+        $this->authorize('viewAny', ApiLink::class);
+
         $links = $this->searchLinkResults($request);
 
         return response()->json($links);

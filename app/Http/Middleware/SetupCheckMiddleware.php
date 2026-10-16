@@ -31,11 +31,11 @@ class SetupCheckMiddleware
             return redirect()->refresh();
         }
 
-        $setupCompleted = setupCompleted();
-
         if ($request->is('_health')) {
             return $next($request);
         }
+
+        $setupCompleted = setupCompleted();
 
         if ($request->is('setup/*')) {
             if ($setupCompleted) {

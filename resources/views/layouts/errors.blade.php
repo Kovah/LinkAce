@@ -9,7 +9,8 @@
 
     <link href="{{ Vite::asset('resources/assets/sass/app.scss') }}" rel="stylesheet">
 
-    @include('layouts.partials.favicon')
+    {{-- Error pages must not depend on the database, as it might be the cause of the error --}}
+    @include('layouts.partials.favicon', ['appName' => config('app.name', 'LinkAce')])
 </head>
 <body class="errors">
 <div id="app">

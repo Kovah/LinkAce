@@ -13,9 +13,13 @@
         @foreach($notes as $note)
             <tr>
                 <td>
-                    <a href="{{ $note->link->url }}" title="{{ $note->link->title }}" target="_blank">
-                        {{ $note->link->title }}
-                    </a>
+                    @if($note->link && auth()->user()->can('view', $note->link))
+                        <a href="{{ $note->link->url }}" title="{{ $note->link->title }}" target="_blank">
+                            {{ $note->link->title }}
+                        </a>
+                    @else
+                        <span class="text-pale">@lang('trash.link_unavailable')</span>
+                    @endif
                 </td>
                 <td>
                     {{ $note->note }}

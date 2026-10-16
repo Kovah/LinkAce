@@ -2,6 +2,7 @@
 
 namespace Tests\Controller\API;
 
+use App\Enums\ApiToken;
 use App\Models\Tag;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Tests\Controller\Traits\PreparesTestData;
@@ -35,6 +36,29 @@ class TagLinksTest extends ApiTestCase
 
         $this->getJsonAuthorized('api/v2/tags/3/links')
             ->assertForbidden();
+    }
+
+    public function test_forbidden_links_request_from_system_without_links_read(): void
+    {
+        $this->createTestTags();
+        [$link] = $this->createTestLinks();
+        $link->tags()->sync([1]);
+        $this->createSystemToken([ApiToken::ABILITY_TAGS_READ]);
+
+        $this->getJsonAuthorized('api/v2/tags/1/links', useSystemToken: true)
+            ->assertForbidden();
+    }
+
+    public function test_links_request_from_system_with_links_read(): void
+    {
+        $this->createTestTags();
+        [$link] = $this->createTestLinks();
+        $link->tags()->sync([1]);
+        $this->createSystemToken([ApiToken::ABILITY_TAGS_READ, ApiToken::ABILITY_LINKS_READ]);
+
+        $this->getJsonAuthorized('api/v2/tags/1/links', useSystemToken: true)
+            ->assertOk()
+            ->assertJsonFragment(['url' => $link->url]);
     }
 
     public function test_links_request_without_links(): void

@@ -50,6 +50,33 @@ class ImportControllerTest extends TestCase
         Queue::assertPushed(ImportLinkJob::class, 5);
     }
 
+    public function test_import_accepts_html_file_that_is_detected_as_javascript(): void
+    {
+        // Regression test: libmagic may detect a browser bookmark export that
+        // contains a javascript: bookmarklet as "application/javascript". The
+        // old `mimes:html,htm` rule mapped that MIME to the "js" extension and
+        // rejected the upload. Validation must rely on the .html file name.
+        Queue::fake();
+
+        $exampleData = file_get_contents(__DIR__ . '/data/import_javascript_mime.html');
+        $file = UploadedFile::fake()
+            ->createWithContent('import_javascript_mime.html', $exampleData)
+            ->mimeType('application/javascript');
+
+        $this->post('import', ['import-file' => $file], ['Accept' => 'application/json'])
+            ->assertOk()
+            ->assertJson(['success' => true]);
+    }
+
+    public function test_import_rejects_files_without_html_extension(): void
+    {
+        $file = UploadedFile::fake()->create('bookmarks.txt', 1, 'text/plain');
+
+        $this->post('import', ['import-file' => $file], ['Accept' => 'application/json'])
+            ->assertStatus(422)
+            ->assertJsonValidationErrors('import-file');
+    }
+
     public function test_import_rejects_javascript_url_scheme_bypass(): void
     {
         // Regression test for GHSA-7hg3-3jpp-gj7f: filter_var(FILTER_VALIDATE_URL)

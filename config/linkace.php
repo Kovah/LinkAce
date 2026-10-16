@@ -7,6 +7,12 @@ return [
         'cache_duration' => 3600, // 60 minutes
     ],
 
+    // Maximum number of items a guest request may ask for via ?per_page=
+    'max_pagination' => 200,
+
+    // Requests per minute allowed on the public guest routes
+    'guest_rate_limit' => (int) env('GUEST_RATE_LIMIT', 60),
+
     'link_checks' => [
         // Number of weeks between re-checks of broken links
         'broken_recheck_interval_weeks' => (int) env('BROKEN_LINK_RECHECK_INTERVAL_WEEKS', 2),

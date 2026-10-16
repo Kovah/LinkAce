@@ -36,6 +36,50 @@ class PasswordResetTest extends TestCase
         Notification::assertSentTo($user, ResetPassword::class);
     }
 
+    public function test_reset_url_is_not_poisoned_by_forwarded_host(): void
+    {
+        Notification::fake();
+        config(['app.url' => 'https://linkace.example.com']);
+
+        $user = User::factory()->create([
+            'email' => 'reset@linkace.org',
+        ]);
+
+        $this->post('forgot-password', ['email' => 'reset@linkace.org'], [
+            'X-Forwarded-Host' => 'attacker.com',
+        ]);
+
+        $this->assertResetUrlPointsToTheApplication($user);
+    }
+
+    public function test_reset_url_is_not_poisoned_by_host_header(): void
+    {
+        Notification::fake();
+        config(['app.url' => 'https://linkace.example.com']);
+
+        $user = User::factory()->create([
+            'email' => 'reset@linkace.org',
+        ]);
+
+        $this->post('forgot-password', ['email' => 'reset@linkace.org'], [
+            'Host' => 'attacker.com',
+        ]);
+
+        $this->assertResetUrlPointsToTheApplication($user);
+    }
+
+    private function assertResetUrlPointsToTheApplication(User $user): void
+    {
+        Notification::assertSentTo($user, ResetPassword::class, function (ResetPassword $notification) use ($user) {
+            $url = $notification->toMail($user)->actionUrl;
+
+            $this->assertStringStartsWith('https://linkace.example.com/reset-password/', $url);
+            $this->assertStringNotContainsString('attacker.com', $url);
+
+            return true;
+        });
+    }
+
     public function test_password_reset_view(): void
     {
         $user = User::factory()->create([

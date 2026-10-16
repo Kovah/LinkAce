@@ -69,7 +69,7 @@ class ImportController extends Controller
         $result = $importer->run($data, auth()->id());
 
         if ($result === false) {
-            response()->json([
+            return response()->json([
                 'success' => false,
                 'message' => trans('import.import_error'),
             ]);

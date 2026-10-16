@@ -171,6 +171,35 @@ class FeedControllerTest extends TestCase
             ->assertDontSee('secret tag');
     }
 
+    public function test_feeds_are_forbidden_for_system_tokens(): void
+    {
+        $link = Link::factory()->create();
+        $list = LinkList::factory()->create();
+        $tag = Tag::factory()->create();
+        $link->lists()->sync([$list->id]);
+        $link->tags()->sync([$tag->id]);
+
+        // System tokens hold the links/lists/tags read abilities, but the feeds are
+        // web routes and the system user is locked out of those entirely.
+        $abilities = [
+            ApiToken::ABILITY_LINKS_READ,
+            ApiToken::ABILITY_LISTS_READ,
+            ApiToken::ABILITY_TAGS_READ,
+        ];
+
+        foreach ([
+            'links/feed',
+            'lists/feed',
+            'lists/' . $list->id . '/feed',
+            'tags/feed',
+            'tags/' . $tag->id . '/feed',
+        ] as $uri) {
+            $this->getAuthorizedAsSystem($uri, $abilities)
+                ->assertForbidden()
+                ->assertDontSee($link->url);
+        }
+    }
+
     /**
      * Send an authorized request for the GET method.
      *
@@ -183,5 +212,20 @@ class FeedControllerTest extends TestCase
         $token = $this->user->createToken('test', [ApiToken::ABILITY_USER_ACCESS])->plainTextToken;
         $headers['Authorization'] = 'Bearer ' . $token;
         return $this->get($uri, $headers);
+    }
+
+    /**
+     * Send a request authorized with a system token carrying the given abilities.
+     *
+     * @param string $uri
+     * @param array  $abilities
+     * @return TestResponse
+     */
+    public function getAuthorizedAsSystem(string $uri, array $abilities = []): TestResponse
+    {
+        $abilities[] = ApiToken::ABILITY_SYSTEM_ACCESS;
+        $token = User::getSystemUser()->createToken('test', $abilities)->plainTextToken;
+
+        return $this->get($uri, ['Authorization' => 'Bearer ' . $token]);
     }
 }

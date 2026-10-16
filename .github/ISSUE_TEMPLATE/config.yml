@@ -5,3 +5,9 @@ contact_links:
   - name: Help & Support
     url: https://github.com/Kovah/LinkAce/discussions/categories/support
     about: Need help with installation or usage of LinkAce? Please use the discussion forum.
+  # SECURITY.md asks that a vulnerability never be a public issue. Private
+  # vulnerability reporting is enabled, so the private route belongs in the
+  # issue chooser next to the other contact links.
+  - name: Report a security vulnerability
+    url: https://github.com/Kovah/LinkAce/security/advisories/new
+    about: Do not open a public issue. Report it privately here. See SECURITY.md.

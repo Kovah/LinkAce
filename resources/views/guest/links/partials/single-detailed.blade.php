@@ -22,7 +22,7 @@
             <div class="d-none d-sm-inline-block me-3 me-lg-4">&nbsp;</div>
             @if($link->tags->count() > 0)
                 @foreach($link->tags as $tag)
-                    @if(!$tag->is_private)
+                    @if($tag->isPublic())
                         <a href="{{ route('guest.tags.show', ['tag' => $tag]) }}"
                             class="btn btn-xs btn-light text-condensed">
                             {{ $tag->name }}

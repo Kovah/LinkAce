@@ -17,6 +17,7 @@ return [
 
         'invite_link_invalid' => 'The invitation is expired or the link is incorrect. Please contact your administrator.',
         'invite_token_invalid' => 'The invitation link is invalid or the invitation was deleted.',
+        'invite_email_mismatch' => 'The email address does not match the invitation.',
         'invite_expired' => 'The invitation is expired or was already used. Please contact your administrator to receive a new invitation.',
 
         'invite_valid_until' => 'Valid until :datetime',

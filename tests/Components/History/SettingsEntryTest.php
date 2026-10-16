@@ -2,6 +2,7 @@
 
 namespace Tests\Components\History;
 
+use App\Enums\ModelAttribute;
 use App\Models\User;
 use App\Settings\GuestSettings;
 use App\Settings\SettingsAudit;
@@ -81,6 +82,56 @@ class SettingsEntryTest extends TestCase
 
         $this->assertStringContainsString(
             'Changed Language for User 1 from <code>English</code> to <code>Deutsch</code>',
+            $output
+        );
+    }
+
+    public function test_poisoned_locale_settings_change_still_renders(): void
+    {
+        // An unknown locale may have been stored before it was validated.
+        // Audit rows cannot be deleted, so the log must still render.
+        $settings = app(UserSettings::class);
+        $settings->locale = 'zz_ZZ';
+        $settings->save();
+
+        $historyEntry = Audit::where('auditable_type', SettingsAudit::class)->with('auditable')->latest()->first();
+
+        $output = (new SettingsEntry($historyEntry))->render();
+
+        $this->assertStringContainsString(
+            'Changed Language for User 1 from <code>English</code> to <code>zz_ZZ</code>',
+            $output
+        );
+    }
+
+    public function test_poisoned_darkmode_settings_change_still_renders(): void
+    {
+        $settings = app(UserSettings::class);
+        $settings->darkmode_setting = 99;
+        $settings->save();
+
+        $historyEntry = Audit::where('auditable_type', SettingsAudit::class)->with('auditable')->latest()->first();
+
+        $output = (new SettingsEntry($historyEntry))->render();
+
+        $this->assertStringContainsString(
+            'Changed Darkmode for User 1 from <code>Automatically</code> to <code>99</code>',
+            $output
+        );
+    }
+
+    public function test_visibility_settings_change(): void
+    {
+        $settings = app(UserSettings::class);
+        $settings->links_default_visibility = ModelAttribute::VISIBILITY_PRIVATE;
+        $settings->save();
+
+        $historyEntry = Audit::where('auditable_type', SettingsAudit::class)->with('auditable')->latest()->first();
+
+        $output = (new SettingsEntry($historyEntry))->render();
+
+        $this->assertStringContainsString(
+            'Changed Default Links visibility for User 1 from <code>Public</code> to <code>Private</code>',
             $output
         );
     }

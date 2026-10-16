@@ -27,7 +27,17 @@ class SystemSettingsController extends Controller
     {
         $sysSettings = app(SystemSettings::class);
 
-        $settings = $request->except(['_token', 'guest_share']);
+        // Only save settings which belong to this form, never arbitrary keys
+        $settings = $request->safe()->only([
+            'page_title',
+            'logo_text',
+            'additional_footer_link_url',
+            'additional_footer_link_text',
+            'contact_page_enabled',
+            'contact_page_title',
+            'contact_page_content',
+            'custom_header_content',
+        ]);
 
         foreach ($settings as $key => $value) {
             $sysSettings->$key = $value;
@@ -44,9 +54,17 @@ class SystemSettingsController extends Controller
         $guestSettings = app(GuestSettings::class);
         $systemSettings = app(SystemSettings::class);
 
-        $systemSettings->guest_access_enabled = $request->input('guest_access_enabled');
+        if ($request->has('guest_access_enabled')) {
+            $systemSettings->guest_access_enabled = $request->boolean('guest_access_enabled');
+        }
 
-        $settings = $request->except(['_token', 'guest_share', 'guest_access_enabled']);
+        // Only save settings which belong to this form, never arbitrary keys
+        $settings = $request->safe()->only([
+            'locale',
+            'listitem_count',
+            'links_new_tab',
+            'darkmode_setting',
+        ]);
 
         foreach ($settings as $key => $value) {
             $guestSettings->$key = $value;

@@ -59,7 +59,8 @@ class DatabaseController extends Controller
             $this->dbConfig['port'] = $configuration['db_port'];
             $this->dbConfig['database'] = $configuration['db_name'];
             $this->dbConfig['username'] = $configuration['db_user'];
-            $this->dbConfig['password'] = $configuration['db_password'];
+            // The configured password is not shown in the form, so an empty field keeps it
+            $this->dbConfig['password'] = $configuration['db_password'] ?? $this->dbConfig['password'];
         }
 
         Config::set('database.connections.' . $this->connection, $this->dbConfig);

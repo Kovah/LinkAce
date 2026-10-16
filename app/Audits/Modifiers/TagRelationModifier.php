@@ -8,6 +8,8 @@ class TagRelationModifier implements ModifierInterface
 {
     public function modify($value): ?string
     {
-        return $value ? Tag::whereIn('id', $value)->pluck('name')->join(', ') : null;
+        return $value
+            ? Tag::visibleForUser()->whereIn('id', $value)->pluck('name')->join(', ')
+            : null;
     }
 }

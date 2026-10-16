@@ -83,7 +83,34 @@ class UserInvitation extends Model implements Auditable
 
     public function isValid(): bool
     {
-        return $this->valid_until->gt(now()) && $this->created_user_id === null;
+        return $this->valid_until->gt(now())
+            && $this->accepted_at === null
+            && $this->created_user_id === null;
+    }
+
+    /**
+     * Mark the invitation as used by the given user. The invitation is claimed
+     * with a single conditional update, so a concurrent request which already
+     * claimed it affects no rows and gets false in return.
+     */
+    public function consumeFor(User $user): bool
+    {
+        $claimed = static::whereKey($this->getKey())
+            ->whereNull('accepted_at')
+            ->whereNull('created_user_id')
+            ->update(['accepted_at' => now()]);
+
+        if ($claimed !== 1) {
+            return false;
+        }
+
+        // Save the created user through the model, so the change ends up in
+        // the audit log as well
+        $this->refresh();
+        $this->created_user_id = $user->id;
+        $this->save();
+
+        return true;
     }
 
     public function isCompleted(): bool

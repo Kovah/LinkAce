@@ -4,7 +4,10 @@ namespace App\Providers;
 
 use App\Models\Api\ApiLink;
 use App\Models\Link;
+use Illuminate\Cache\RateLimiting\Limit;
 use Illuminate\Foundation\Support\Providers\RouteServiceProvider as ServiceProvider;
+use Illuminate\Http\Request;
+use Illuminate\Support\Facades\RateLimiter;
 use Illuminate\Support\Facades\Route;
 use Laravel\Sanctum\PersonalAccessToken;
 
@@ -34,7 +37,20 @@ class RouteServiceProvider extends ServiceProvider
             return in_array('api', $route->middleware()) ? ApiLink::where('id', $value)->firstOrFail() : Link::where('id', $value)->firstOrFail();
         });
 
+        $this->configureRateLimiting();
+
         parent::boot();
+    }
+
+    /**
+     * The guest routes are publicly accessible, so they are rate limited per
+     * IP address to limit the impact of automated requests.
+     */
+    protected function configureRateLimiting(): void
+    {
+        RateLimiter::for('guest', function (Request $request) {
+            return Limit::perMinute(config('linkace.guest_rate_limit'))->by($request->ip());
+        });
     }
 
     /**

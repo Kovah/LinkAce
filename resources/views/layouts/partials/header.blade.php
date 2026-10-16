@@ -24,6 +24,7 @@
             'keywordsForUrl' => route('fetch-keywords-for-url'),
             'updateCheck' => route('fetch-update-check'),
             'generateCronToken' => route('generate-cron-token'),
+            'recoveryCodes' => route('get-recovery-codes'),
         ]
     ]
 ]) }}">

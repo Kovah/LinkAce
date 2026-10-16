@@ -35,7 +35,8 @@ class LinkSearchScope
                 ->with(['tags' => fn ($query) => $query->publicOnly()]);
         }
 
-        return $query->visibleForUser()->with(['tags']);
+        return $query->visibleForUser()
+            ->with(['tags' => fn ($query) => $query->visibleForUser()]);
     }
 
     public function filterByLists(Builder $query, array $listIds, string $mode = 'any'): Builder

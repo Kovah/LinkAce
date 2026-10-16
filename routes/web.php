@@ -35,12 +35,13 @@ use App\Http\Controllers\Setup\DatabaseController;
 use App\Http\Controllers\Setup\MetaController;
 use App\Http\Controllers\Setup\RequirementsController;
 use App\Http\Controllers\SocialiteController;
+use App\Http\Middleware\SettingsMiddleware;
 use Illuminate\Support\Facades\Route;
 use Rap2hpoutre\LaravelLogViewer\LogViewerController;
 
 // Frontpage
 Route::get('/', FrontController::class)->name('front');
-Route::get('/_health', fn() => 'Ok');
+Route::get('/_health', fn() => 'Ok')->withoutMiddleware(SettingsMiddleware::class);
 
 // Setup routes
 Route::prefix('setup')->group(function () {
@@ -147,6 +148,9 @@ Route::group(['middleware' => ['auth']], function () {
         ->name('save-settings-app');
     Route::post('settings/change-password', [UserSettingsController::class, 'changeUserPassword'])
         ->name('change-user-password');
+    Route::post('settings/recovery-codes', [UserSettingsController::class, 'getRecoveryCodes'])
+        ->middleware('throttle:6,1')
+        ->name('get-recovery-codes');
 
     Route::resource('settings/api-tokens', ApiTokenController::class)
         ->only(['index', 'store', 'destroy']);
@@ -209,7 +213,7 @@ Route::group(['middleware' => ['auth', 'role:admin']], function () {
 });
 
 // Guest access routes
-Route::prefix('guest')->middleware(['guestaccess'])->group(function () {
+Route::prefix('guest')->middleware(['guestaccess', 'throttle:guest'])->group(function () {
 
     Route::get('search', [GuestSearchController::class, 'search'])
         ->name('guest.search');

@@ -38,7 +38,8 @@ class LinkController extends Controller
         session()->put('links.index.orderBy', $this->orderBy);
         session()->put('links.index.orderDir', $this->orderDir);
 
-        $links = Link::query()->visibleForUser()->with('tags');
+        $links = Link::query()->visibleForUser()
+            ->with(['tags' => fn ($query) => $query->visibleForUser()]);
 
         if ($this->orderBy === 'random') {
             $links->inRandomOrder();

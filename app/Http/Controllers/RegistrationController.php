@@ -8,6 +8,8 @@ use App\Models\UserInvitation;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Str;
 
 class RegistrationController extends Controller
 {
@@ -45,12 +47,32 @@ class RegistrationController extends Controller
             abort(401, trans('admin.user_management.invite_expired'));
         }
 
-        $newUser = (new CreateNewUser())->create($request->input());
+        // The email is bound to the invitation and must not be chosen freely
+        if (!$this->emailMatchesInvitation($request->input('email'), $invitation)) {
+            abort(401, trans('admin.user_management.invite_email_mismatch'));
+        }
+
+        $newUser = DB::transaction(function () use ($request, $invitation) {
+            $user = (new CreateNewUser())->create(
+                array_merge($request->input(), ['email' => $invitation->email])
+            );
+
+            if (!$invitation->consumeFor($user)) {
+                // Another request consumed the invitation first, which also
+                // rolls back the user created above
+                abort(401, trans('admin.user_management.invite_expired'));
+            }
+
+            return $user;
+        });
+
         Auth::login($newUser, true);
 
-        $invitation->created_user_id = $newUser->id;
-        $invitation->save();
-
         return redirect()->route('dashboard');
+    }
+
+    private function emailMatchesInvitation(?string $email, UserInvitation $invitation): bool
+    {
+        return $email !== null && Str::lower($email) === Str::lower($invitation->email);
     }
 }
