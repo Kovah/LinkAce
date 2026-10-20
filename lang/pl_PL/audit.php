@@ -10,7 +10,7 @@ return [
 
     'no_logs_found' => 'Nie znaleziono dzienników',
 
-    'activity_entry_with_causer' => ':change by :causer',
+    'activity_entry_with_causer' => ':change przez :causer',
 
     'logs' => [
         'system' => [

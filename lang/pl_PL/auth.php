@@ -56,6 +56,7 @@ return [
     'sso_account_provider' => 'Dostawca SSO',
     'sso_account_id' => 'Identyfikator SSO',
     'sso_provider_disabled' => 'Wybrany dostawca SSO jest niedostępny. Wybierz innego.',
+    'sso_registration_disabled' => 'Nie znaleziono użytkownika dla tego dostawcy. Tylko zarejestrowani użytkownicy mogą logować się przez SSO. Skontaktuj się z administratorem, aby założyć konto.',
     'sso_wrong_provider' => 'Nie można zalogować się za pomocą :currentProvider. Użyj :userProvider, aby się zalogować, lub skontaktuj się z administratorem.',
 
     'sso_provider' => [
