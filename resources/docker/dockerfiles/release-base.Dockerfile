@@ -1,4 +1,4 @@
-FROM docker.io/library/php:8.5.12-fpm-alpine
+FROM docker.io/library/php:8.6.0RC3-fpm-alpine
 
 # Install package and PHP dependencies
 # $PHPIZE_DEPS provides the toolchain (gcc, make, autoconf, ...) needed to
