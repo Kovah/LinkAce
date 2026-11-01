@@ -82,7 +82,7 @@ class ListController extends Controller
 
         $this->allowedOrderBy = Link::$allowOrderBy;
         $this->orderBy = $request->input('orderBy', 'created_at');
-        $this->orderDir = $request->input('orderBy', 'desc');
+        $this->orderDir = $request->input('orderDir', 'desc');
         $this->checkOrdering();
 
         $links = $list->links()->visibleForUser();
