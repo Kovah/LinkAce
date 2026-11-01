@@ -524,6 +524,19 @@ class LinkControllerTest extends TestCase
         ]);
     }
 
+    public function test_empty_title_on_update_is_a_validation_error(): void
+    {
+        $this->createTestLinks();
+
+        $this->patch('links/1', [
+            'url' => 'https://public-link.com',
+            'title' => '',
+            'visibility' => 1,
+        ])->assertSessionHasErrors(['title']);
+
+        $this->assertNotEmpty(Link::first()->title);
+    }
+
     public function test_validation_error_for_update(): void
     {
         $baseLink = Link::factory()->create();
