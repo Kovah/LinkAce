@@ -2,6 +2,8 @@
 
 namespace Tests\Controller\Setup;
 
+use App\Enums\Role;
+use App\Models\User;
 use App\Settings\SettingsAudit;
 use App\Settings\SystemSettings;
 use Illuminate\Foundation\Testing\RefreshDatabase;
@@ -46,5 +48,33 @@ class MetaControllerTest extends TestCase
 
         $response->assertOk()
             ->assertSee('Welcome to the LinkAce setup');
+    }
+
+    public function test_setup_complete_without_admin_account(): void
+    {
+        SystemSettings::fake([
+            'setup_completed' => false,
+        ]);
+
+        $response = $this->get('setup/complete');
+
+        $response->assertRedirect('setup/account');
+
+        $this->assertFalse(app(SystemSettings::class)->setup_completed);
+    }
+
+    public function test_setup_complete_with_admin_account(): void
+    {
+        SystemSettings::fake([
+            'setup_completed' => false,
+        ]);
+
+        User::factory()->create()->assignRole(Role::ADMIN);
+
+        $response = $this->get('setup/complete');
+
+        $response->assertOk()->assertSee('Setup completed!');
+
+        $this->assertTrue(app(SystemSettings::class)->setup_completed);
     }
 }
