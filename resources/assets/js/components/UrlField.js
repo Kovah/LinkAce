@@ -8,14 +8,14 @@ export default class UrlField {
     this.$field = $el;
 
     this.$linkExistsWarning = document.querySelector('.link-exists');
-    this.$linkExistsEdit = this.$linkExistsWarning.querySelector('.link-exists-edit');
-    this.$linkExistsRestore = this.$linkExistsWarning.querySelector('.link-exists-restore');
-    this.$linkExistsRestoreId = document.querySelector('.link-exists-restore-id');
 
     if (!this.$linkExistsWarning) {
       return;
     }
 
+    this.$linkExistsEdit = this.$linkExistsWarning.querySelector('.link-exists-edit');
+    this.$linkExistsRestore = this.$linkExistsWarning.querySelector('.link-exists-restore');
+    this.$linkExistsRestoreId = document.querySelector('.link-exists-restore-id');
     this.$linkExistsLink = this.$linkExistsWarning.querySelector('a');
 
     const $tags = document.querySelector('#tags');
