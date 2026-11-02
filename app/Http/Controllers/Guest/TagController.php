@@ -23,7 +23,7 @@ class TagController extends Controller
     public function index(Request $request): View
     {
         $this->orderBy = $request->input('orderBy', 'created_at');
-        $this->orderDir = $request->input('orderBy', 'desc');
+        $this->orderDir = $request->input('orderDir', 'desc');
         $this->checkOrdering();
 
         $tags = Tag::publicOnly()
@@ -54,7 +54,7 @@ class TagController extends Controller
         $this->updateLinkDisplayForGuest();
 
         $this->orderBy = $request->input('orderBy', 'created_at');
-        $this->orderDir = $request->input('orderBy', 'desc');
+        $this->orderDir = $request->input('orderDir', 'desc');
         $this->checkOrdering();
 
         $links = $tag->links()->publicOnly();
