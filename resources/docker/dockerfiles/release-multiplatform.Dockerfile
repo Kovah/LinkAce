@@ -38,7 +38,7 @@ RUN mv vendor/spatie/laravel-backup/resources/lang/de vendor/spatie/laravel-back
 # ================================
 # Compile all assets
 # Node 22 is still used to support ARMv7
-FROM docker.io/library/node:22 AS npm_builder
+FROM docker.io/library/node:26 AS npm_builder
 WORKDIR /srv
 
 COPY ./resources/assets ./resources/assets
