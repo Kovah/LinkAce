@@ -98,6 +98,22 @@ class ImportControllerTest extends TestCase
         });
     }
 
+    public function test_import_decodes_html_entities(): void
+    {
+        Queue::fake();
+
+        $html = '<DL><p><DT><A HREF="https://example.com/watch?v=1&amp;list=2" ADD_DATE="1700000000">Tom &amp; Jerry</A></DL>';
+        $file = UploadedFile::fake()->createWithContent('bookmarks.html', $html);
+
+        $this->post('import', ['import-file' => $file], ['Accept' => 'application/json'])
+            ->assertOk()->assertJson(['success' => true]);
+
+        Queue::assertPushed(ImportLinkJob::class, function (ImportLinkJob $job) {
+            return $job->link['url'] === 'https://example.com/watch?v=1&list=2'
+                && $job->link['name'] === 'Tom & Jerry';
+        });
+    }
+
     public function test_queue_page(): void
     {
         $exampleData = file_get_contents(__DIR__ . '/data/import_example.html');
