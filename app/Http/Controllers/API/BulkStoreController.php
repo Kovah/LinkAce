@@ -8,6 +8,9 @@ use App\Http\Requests\Models\Api\BulkEditTagsRequest;
 use App\Http\Requests\Models\Api\BulkStoreLinksRequest;
 use App\Http\Requests\Models\Api\BulkStoreListsRequest;
 use App\Http\Requests\Models\Api\BulkStoreTagsRequest;
+use App\Models\Api\ApiLink;
+use App\Models\Api\ApiLinkList;
+use App\Models\Api\ApiTag;
 use App\Repositories\LinkRepository;
 use App\Repositories\ListRepository;
 use App\Repositories\TagRepository;
@@ -17,6 +20,8 @@ class BulkStoreController extends Controller
 {
     public function storeLinks(BulkStoreLinksRequest $request): JsonResponse
     {
+        $this->authorize('create', ApiLink::class);
+
         $models = $request->input('models');
 
         $results = [];
@@ -29,6 +34,8 @@ class BulkStoreController extends Controller
 
     public function storeLists(BulkStoreListsRequest $request): JsonResponse
     {
+        $this->authorize('create', ApiLinkList::class);
+
         $models = $request->input('models');
 
         $results = [];
@@ -41,6 +48,8 @@ class BulkStoreController extends Controller
 
     public function storeTags(BulkStoreTagsRequest $request): JsonResponse
     {
+        $this->authorize('create', ApiTag::class);
+
         $models = $request->input('models');
 
         $results = [];

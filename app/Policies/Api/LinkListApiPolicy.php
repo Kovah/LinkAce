@@ -31,7 +31,7 @@ class LinkListApiPolicy
 
     public function create(User $user): bool
     {
-        return true;
+        return !$user->isSystemUser();
     }
 
     public function update(User $user, ApiLinkList $list): bool

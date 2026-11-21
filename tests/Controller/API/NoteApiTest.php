@@ -185,4 +185,18 @@ class NoteApiTest extends ApiTestCase
 
         $this->assertEquals(0, Note::count());
     }
+
+    public function test_create_request_by_system(): void
+    {
+        $this->createTestLinks();
+        $this->createSystemToken([ApiToken::ABILITY_LINKS_READ, ApiToken::ABILITY_NOTES_READ]);
+
+        $this->postJsonAuthorized('api/v2/notes', [
+            'link_id' => 1,
+            'note' => 'Quae vero auctorem tractata ab fiducia dicuntur.',
+            'visibility' => 1,
+        ], useSystemToken: true)->assertForbidden();
+
+        $this->assertEquals(0, Note::count());
+    }
 }

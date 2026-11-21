@@ -262,6 +262,17 @@ class ListApiTest extends ApiTestCase
         $this->assertEquals(2, LinkList::count());
     }
 
+    public function test_create_request_by_system(): void
+    {
+        $this->createSystemToken([ApiToken::ABILITY_LISTS_READ, ApiToken::ABILITY_LISTS_UPDATE]);
+
+        $this->postJsonAuthorized('api/v2/lists', [
+            'name' => 'Test List',
+        ], useSystemToken: true)->assertForbidden();
+
+        $this->assertEquals(0, LinkList::count());
+    }
+
     public function test_show_private_system_list_by_system_without_private_access(): void
     {
         $list = LinkList::factory()->create([

@@ -258,6 +258,17 @@ class TagApiTest extends ApiTestCase
         $this->assertEquals(2, Tag::count());
     }
 
+    public function test_create_request_by_system(): void
+    {
+        $this->createSystemToken([ApiToken::ABILITY_TAGS_READ, ApiToken::ABILITY_TAGS_UPDATE]);
+
+        $this->postJsonAuthorized('api/v2/tags', [
+            'name' => 'Test Tag',
+        ], useSystemToken: true)->assertForbidden();
+
+        $this->assertEquals(0, Tag::count());
+    }
+
     public function test_show_private_system_tag_by_system_without_private_access(): void
     {
         $tag = Tag::factory()->create([
