@@ -2,6 +2,7 @@
 
 namespace Tests\Controller\Auth;
 
+use App\Actions\Fortify\ResetUserPassword;
 use App\Models\User;
 use Illuminate\Auth\Notifications\ResetPassword;
 use Illuminate\Foundation\Testing\RefreshDatabase;
@@ -115,5 +116,20 @@ class PasswordResetTest extends TestCase
         ]);
 
         self::assertTrue($loginAttempt);
+    }
+
+    public function test_password_reset_logs_out_existing_sessions(): void
+    {
+        $user = User::factory()->create();
+
+        $this->actingAs($user)->get('dashboard')->assertOk();
+
+        (new ResetUserPassword())->reset($user, [
+            'password' => 'newPassword',
+            'password_confirmation' => 'newPassword',
+        ]);
+
+        $this->get('dashboard')->assertRedirect('login');
+        $this->assertGuest();
     }
 }
