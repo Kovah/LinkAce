@@ -6,6 +6,7 @@ use App\Settings\GuestSettings;
 use App\Settings\SystemSettings;
 use App\Settings\UserSettings;
 use Carbon\CarbonInterface;
+use Illuminate\Http\Client\ConnectionException;
 use Illuminate\Http\Client\PendingRequest;
 use Illuminate\Support\Facades\Cache;
 use Illuminate\Support\Facades\Http;
@@ -267,6 +268,18 @@ function setupHttpRequest(int $timeout = 10): PendingRequest
         $agents = config('html-meta.user_agents');
         $request->withHeaders(['User-Agent' => $agents[array_rand($agents)]]);
     }
+
+    // Hosts without outbound IPv6 routing fail with cURL error 7 as soon as DNS returns an AAAA record.
+    // Retry once and force IPv4 for the retry. Failed HTTP responses are never retried.
+    $request->retry(2, 0, function ($exception, PendingRequest $request) {
+        if (!$exception instanceof ConnectionException || !str_contains($exception->getMessage(), 'cURL error 7')) {
+            return false;
+        }
+
+        $request->withOptions(['curl' => [CURLOPT_IPRESOLVE => CURL_IPRESOLVE_V4]]);
+
+        return true;
+    }, throw: false);
 
     return $request;
 }
