@@ -116,6 +116,24 @@ class BulkStoreApiTest extends TestCase
         $this->assertDatabaseCount('links', 0);
     }
 
+    public function test_store_links_rejects_javascript_url_with_authority(): void
+    {
+        // The authority part ("//x") is what lets this payload pass filter_var()
+        $response = $this->postJson('api/v2/bulk/links', [
+            'models' => [
+                [
+                    'url' => 'javascript://x/%0Aalert(document.domain)',
+                    'visibility' => 1,
+                ],
+            ],
+        ]);
+
+        $response->assertUnprocessable()
+            ->assertJsonValidationErrors(['models.0.url']);
+
+        $this->assertDatabaseCount('links', 0);
+    }
+
     public function test_store_links_by_system(): void
     {
         Http::fake(['example.com' => Http::response('<!DOCTYPE html><head><title>Example</title></head></html>')]);

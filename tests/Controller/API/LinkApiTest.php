@@ -114,6 +114,25 @@ class LinkApiTest extends ApiTestCase
             ]);
     }
 
+    public function test_create_request_with_javascript_url_with_authority(): void
+    {
+        // The authority part ("//x") is what lets this payload pass filter_var()
+        $this->postJsonAuthorized('api/v2/links', [
+            'url' => 'javascript://x/%0Aalert(document.domain)',
+        ])->assertUnprocessable()->assertJsonValidationErrors(['url']);
+
+        $this->assertDatabaseCount('links', 0);
+    }
+
+    public function test_update_request_with_javascript_url_with_authority(): void
+    {
+        $this->createTestLinks();
+
+        $this->patchJsonAuthorized('api/v2/links/1', [
+            'url' => 'javascript://x/%0Aalert(document.domain)',
+        ])->assertUnprocessable()->assertJsonValidationErrors(['url']);
+    }
+
     public function test_create_request_by_system(): void
     {
         $this->createSystemToken();
