@@ -14,7 +14,7 @@ class UpdateUserProfileInformation implements UpdatesUserProfileInformation
     public function update($user, array $input): void
     {
         Validator::make($input, [
-            'name' => ['required', 'string', 'max:20', 'alpha_dash'],
+            'name' => ['required', 'string', 'max:20', 'alpha_dash', Rule::unique('users')->ignore($user->id)],
 
             'email' => [
                 'required',

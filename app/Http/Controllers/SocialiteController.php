@@ -35,7 +35,7 @@ class SocialiteController extends Controller
 
         if ($user !== null) {
             $user->update([
-                'name' => $this->resolveName($authUser),
+                'name' => $this->resolveName($authUser, $user),
                 'sso_token' => $authUser->token ?? null,
                 'sso_token_secret' => $authUser->tokenSecret ?? null,
                 'sso_refresh_token' => $authUser->refreshToken ?? null,
@@ -57,7 +57,7 @@ class SocialiteController extends Controller
 
             $user = $existingUser;
             $user->update([
-                'name' => $this->resolveName($authUser),
+                'name' => $this->resolveName($authUser, $user),
                 'sso_id' => $authUser->getId(),
                 'sso_provider' => $provider,
                 'sso_token' => $authUser->token ?? null,
@@ -86,10 +86,37 @@ class SocialiteController extends Controller
         return redirect()->route('dashboard');
     }
 
-    protected function resolveName(SocialiteUser $authUser): string
+    /**
+     * Usernames are unique. If the name supplied by the provider is already taken,
+     * existing users keep their current name, and new users get a number appended.
+     *
+     * @param SocialiteUser $authUser
+     * @param User|null     $user
+     * @return string
+     */
+    protected function resolveName(SocialiteUser $authUser, ?User $user = null): string
     {
-        return $authUser->getNickname()
+        $name = $authUser->getNickname()
             ?: (($authUser->getRaw() ?? [])['preferred_username'] ?? Str::studly($authUser->getName()));
+
+        $nameTaken = User::where('name', $name)
+            ->when($user !== null, fn ($query) => $query->whereKeyNot($user->id))
+            ->exists();
+
+        if (!$nameTaken) {
+            return $name;
+        }
+
+        if ($user !== null) {
+            return $user->name;
+        }
+
+        $suffix = 2;
+        while (User::where('name', $name . $suffix)->exists()) {
+            $suffix++;
+        }
+
+        return $name . $suffix;
     }
 
     /**

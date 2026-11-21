@@ -53,6 +53,28 @@ class UserSettingsControllerTest extends TestCase
         $this->assertEquals('test@linkace.org', $updatedUser->email);
     }
 
+    public function test_update_account_settings_rejects_taken_username(): void
+    {
+        User::factory()->create(['name' => 'TakenName']);
+
+        $this->post('settings/account', [
+            'name' => 'TakenName',
+            'email' => $this->user->email,
+        ])->assertSessionHasErrorsIn('updateProfileInformation', ['name']);
+
+        $this->assertNotEquals('TakenName', $this->user->fresh()->name);
+    }
+
+    public function test_update_account_settings_keeps_own_username(): void
+    {
+        $this->post('settings/account', [
+            'name' => $this->user->name,
+            'email' => 'test@linkace.org',
+        ])->assertSessionHasNoErrors();
+
+        $this->assertEquals('test@linkace.org', $this->user->fresh()->email);
+    }
+
     public function test_valid_update_application_settings_response(): void
     {
         $response = $this->post('settings/app', [
