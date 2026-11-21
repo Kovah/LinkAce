@@ -37,16 +37,10 @@ export default class TagsSelect {
         this.refreshOptions();
       },
       onInitialize: function () {
-        if (!selectObject.$el.value.startsWith('[')) {
-          selectObject.$el.value = `[${selectObject.$el.value}]`;
-        }
+        selectObject.$el.value = JSON.stringify(selectObject.selectedIds(this));
       },
       onChange: function () {
-        const items = this.items.map((item) => {
-          item = (typeof item === 'string' && /^\d+$/.test(item)) ? Number(item) : item;
-          const option = Object.values(this.options).find((option) => option.id === item);
-          return option !== undefined ? option.id : item;
-        });
+        const items = selectObject.selectedIds(this);
         selectObject.$el.value = items.length > 0 ? JSON.stringify(items) : null;
         selectObject.updateSearchFilterControls();
       },
@@ -60,16 +54,30 @@ export default class TagsSelect {
       }
     };
 
-    if (this.$el.dataset.tagData) {
-      this.config['options'] = JSON.parse(this.$el.dataset.tagData);
-    }
+    this.config['options'] = this.$el.dataset.tagData ? JSON.parse(this.$el.dataset.tagData) : [];
 
     if (typeof this.$el.dataset.value !== 'undefined' && this.$el.dataset.value !== '') {
-      this.config['items'] = JSON.parse(this.$el.dataset.value).map((item) => item.id ?? item);
+      const values = JSON.parse(this.$el.dataset.value);
+      // Tags and lists created in a form that failed validation come back
+      // as {id: name, name}; they are not options yet, so add them.
+      values.forEach((item) => {
+        if (typeof item === 'object' && !this.config['options'].some((option) => option.id === item.id)) {
+          this.config['options'].push(item);
+        }
+      });
+      this.config['items'] = values.map((item) => item.id ?? item);
     }
 
     this.select = new TomSelect(this.$el, this.config);
     this.setupSearchFilterControls();
+  }
+
+  selectedIds (select) {
+    return select.items.map((item) => {
+      item = (typeof item === 'string' && /^\d+$/.test(item)) ? Number(item) : item;
+      const option = Object.values(select.options).find((option) => option.id === item);
+      return option !== undefined ? option.id : item;
+    });
   }
 
   renderItem (item, escape) {
