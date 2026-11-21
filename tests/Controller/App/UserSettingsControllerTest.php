@@ -2,6 +2,7 @@
 
 namespace Tests\Controller\App;
 
+use App\Actions\Fortify\UpdateUserPassword;
 use App\Enums\ModelAttribute;
 use App\Models\Link;
 use App\Models\Note;
@@ -205,6 +206,34 @@ class UserSettingsControllerTest extends TestCase
             'email' => $this->user->email,
             'password' => 'newuserpassword',
         ]));
+    }
+
+    public function test_password_change_keeps_the_current_session(): void
+    {
+        $this->get('dashboard')->assertOk();
+
+        $this->post('settings/change-password', [
+            'current_password' => 'secretpassword',
+            'password' => 'newuserpassword',
+            'password_confirmation' => 'newuserpassword',
+        ]);
+
+        $this->get('dashboard')->assertOk();
+    }
+
+    public function test_password_change_logs_out_other_sessions(): void
+    {
+        $this->get('dashboard')->assertOk();
+
+        // The password is changed from another session
+        (new UpdateUserPassword())->update($this->user, [
+            'current_password' => 'secretpassword',
+            'password' => 'newuserpassword',
+            'password_confirmation' => 'newuserpassword',
+        ]);
+
+        $this->get('dashboard')->assertRedirect('login');
+        $this->assertGuest();
     }
 
     /**

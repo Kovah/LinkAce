@@ -89,7 +89,7 @@ Route::group(['middleware' => 'auth:sanctum'], function () {
 });
 
 // Model routes
-Route::group(['middleware' => ['auth']], function () {
+Route::group(['middleware' => ['auth', 'auth.session']], function () {
     Route::get('dashboard', [DashboardController::class, 'index'])
         ->name('dashboard');
 
@@ -167,7 +167,7 @@ Route::group(['middleware' => ['auth']], function () {
         ->name('fetch-update-check');
 });
 
-Route::group(['middleware' => ['auth', 'role:admin']], function () {
+Route::group(['middleware' => ['auth', 'auth.session', 'role:admin']], function () {
     Route::get('settings/system', [SystemSettingsController::class, 'index'])
         ->name('get-systemsettings');
     Route::post('settings/system', [SystemSettingsController::class, 'update'])

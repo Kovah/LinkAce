@@ -31,7 +31,7 @@ class TagApiPolicy
 
     public function create(User $user): bool
     {
-        return true;
+        return !$user->isSystemUser();
     }
 
     public function update(User $user, Tag $tag): bool

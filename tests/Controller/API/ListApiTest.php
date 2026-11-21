@@ -3,7 +3,9 @@
 namespace Tests\Controller\API;
 
 use App\Enums\ApiToken;
+use App\Enums\ModelAttribute;
 use App\Models\LinkList;
+use App\Models\User;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Tests\Controller\Traits\PreparesTestData;
 
@@ -258,5 +260,71 @@ class ListApiTest extends ApiTestCase
         $this->deleteJsonAuthorized('api/v2/lists/' . $list->id, useSystemToken: true)->assertOk();
 
         $this->assertEquals(2, LinkList::count());
+    }
+
+    public function test_create_request_by_system(): void
+    {
+        $this->createSystemToken([ApiToken::ABILITY_LISTS_READ, ApiToken::ABILITY_LISTS_UPDATE]);
+
+        $this->postJsonAuthorized('api/v2/lists', [
+            'name' => 'Test List',
+        ], useSystemToken: true)->assertForbidden();
+
+        $this->assertEquals(0, LinkList::count());
+    }
+
+    public function test_show_private_system_list_by_system_without_private_access(): void
+    {
+        $list = LinkList::factory()->create([
+            'user_id' => User::getSystemUser()->id,
+            'visibility' => ModelAttribute::VISIBILITY_PRIVATE,
+        ]);
+        $this->createSystemToken([ApiToken::ABILITY_LISTS_READ]);
+
+        $this->getJsonAuthorized('api/v2/lists/' . $list->id, useSystemToken: true)->assertForbidden();
+    }
+
+    public function test_update_system_list_by_system_without_permission(): void
+    {
+        $list = LinkList::factory()->create([
+            'user_id' => User::getSystemUser()->id,
+            'name' => 'System List',
+            'visibility' => ModelAttribute::VISIBILITY_PUBLIC,
+        ]);
+        $this->createSystemToken([ApiToken::ABILITY_LISTS_READ]);
+
+        $this->patchJsonAuthorized('api/v2/lists/' . $list->id, [
+            'name' => 'Updated List',
+        ], useSystemToken: true)->assertForbidden();
+
+        $this->assertEquals('System List', $list->fresh()->name);
+    }
+
+    public function test_update_system_list_by_system_with_permission(): void
+    {
+        $list = LinkList::factory()->create([
+            'user_id' => User::getSystemUser()->id,
+            'visibility' => ModelAttribute::VISIBILITY_PUBLIC,
+        ]);
+        $this->createSystemToken([ApiToken::ABILITY_LISTS_READ, ApiToken::ABILITY_LISTS_UPDATE]);
+
+        $this->patchJsonAuthorized('api/v2/lists/' . $list->id, [
+            'name' => 'Updated List',
+        ], useSystemToken: true)->assertOk();
+
+        $this->assertEquals('Updated List', $list->fresh()->name);
+    }
+
+    public function test_delete_system_list_by_system_without_permission(): void
+    {
+        $list = LinkList::factory()->create([
+            'user_id' => User::getSystemUser()->id,
+            'visibility' => ModelAttribute::VISIBILITY_PUBLIC,
+        ]);
+        $this->createSystemToken([ApiToken::ABILITY_LISTS_READ]);
+
+        $this->deleteJsonAuthorized('api/v2/lists/' . $list->id, useSystemToken: true)->assertForbidden();
+
+        $this->assertFalse($list->fresh()->trashed());
     }
 }
