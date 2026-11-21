@@ -2,6 +2,7 @@
 
 namespace Tests\Controller\App;
 
+use App\Enums\ModelAttribute;
 use App\Models\Link;
 use App\Models\LinkList;
 use App\Models\Tag;
@@ -173,6 +174,44 @@ class SearchControllerTest extends TestCase
             ->assertDontSee('https://example.com');
     }
 
+    public function test_list_filter_ignores_private_lists_of_other_users(): void
+    {
+        $list = $this->createPrivateTaxonomyOfOtherUser(LinkList::class);
+
+        $this->get('search?' . http_build_query(['only_lists' => json_encode([$list->id])]))
+            ->assertOk()
+            ->assertDontSee('https://grouped.example')
+            ->assertDontSee('https://ungrouped.example');
+
+        $this->get('search?' . http_build_query(['only_lists' => json_encode([$list->id]), 'list_mode' => 'all']))
+            ->assertOk()
+            ->assertDontSee('https://grouped.example');
+
+        $this->get('search?' . http_build_query(['query' => 'example', 'exclude_lists' => json_encode([$list->id])]))
+            ->assertOk()
+            ->assertSee('https://grouped.example')
+            ->assertSee('https://ungrouped.example');
+    }
+
+    public function test_tag_filter_ignores_private_tags_of_other_users(): void
+    {
+        $tag = $this->createPrivateTaxonomyOfOtherUser(Tag::class);
+
+        $this->get('search?' . http_build_query(['only_tags' => json_encode([$tag->id])]))
+            ->assertOk()
+            ->assertDontSee('https://grouped.example')
+            ->assertDontSee('https://ungrouped.example');
+
+        $this->get('search?' . http_build_query(['only_tags' => json_encode([$tag->id]), 'tag_mode' => 'all']))
+            ->assertOk()
+            ->assertDontSee('https://grouped.example');
+
+        $this->get('search?' . http_build_query(['query' => 'example', 'exclude_tags' => json_encode([$tag->id])]))
+            ->assertOk()
+            ->assertSee('https://grouped.example')
+            ->assertSee('https://ungrouped.example');
+    }
+
     public function test_empty_list_search_result(): void
     {
         $response = $this->get('search?' . http_build_query([
@@ -255,5 +294,37 @@ class SearchControllerTest extends TestCase
             'description' => null,
             'is_private' => false,
         ]);
+    }
+
+    /**
+     * Creates a private list or tag of another user, which contains one of
+     * two internal links of that user.
+     */
+    protected function createPrivateTaxonomyOfOtherUser(string $model): LinkList|Tag
+    {
+        $otherUser = User::factory()->create();
+
+        $taxonomy = $model::factory()->create([
+            'user_id' => $otherUser->id,
+            'visibility' => ModelAttribute::VISIBILITY_PRIVATE,
+        ]);
+
+        $groupedLink = Link::factory()->create([
+            'user_id' => $otherUser->id,
+            'url' => 'https://grouped.example',
+            'visibility' => ModelAttribute::VISIBILITY_INTERNAL,
+        ]);
+
+        Link::factory()->create([
+            'user_id' => $otherUser->id,
+            'url' => 'https://ungrouped.example',
+            'visibility' => ModelAttribute::VISIBILITY_INTERNAL,
+        ]);
+
+        $model === LinkList::class
+            ? $groupedLink->lists()->attach($taxonomy->id)
+            : $groupedLink->tags()->attach($taxonomy->id);
+
+        return $taxonomy;
     }
 }

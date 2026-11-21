@@ -45,10 +45,7 @@ class LinkSearchScope
             foreach ($listIds as $listId) {
                 $query->whereHas('lists', function ($query) use ($listId) {
                     $query->where('id', $listId);
-
-                    if ($this->publicOnly) {
-                        $query->publicOnly();
-                    }
+                    $this->applyVisibilityConstraint($query);
                 });
             }
 
@@ -57,7 +54,7 @@ class LinkSearchScope
 
         return $query->whereHas('lists', function ($query) use ($listIds) {
             $query->whereIn('id', $listIds);
-            $this->applyPublicOnlyConstraint($query);
+            $this->applyVisibilityConstraint($query);
         });
     }
 
@@ -65,7 +62,7 @@ class LinkSearchScope
     {
         return $query->whereDoesntHave('lists', function ($query) use ($listIds) {
             $query->whereIn('id', $listIds);
-            $this->applyPublicOnlyConstraint($query);
+            $this->applyVisibilityConstraint($query);
         });
     }
 
@@ -75,10 +72,7 @@ class LinkSearchScope
             foreach ($tagIds as $tagId) {
                 $query->whereHas('tags', function ($query) use ($tagId) {
                     $query->where('id', $tagId);
-
-                    if ($this->publicOnly) {
-                        $query->publicOnly();
-                    }
+                    $this->applyVisibilityConstraint($query);
                 });
             }
 
@@ -87,7 +81,7 @@ class LinkSearchScope
 
         return $query->whereHas('tags', function ($query) use ($tagIds) {
             $query->whereIn('id', $tagIds);
-            $this->applyPublicOnlyConstraint($query);
+            $this->applyVisibilityConstraint($query);
         });
     }
 
@@ -95,7 +89,7 @@ class LinkSearchScope
     {
         return $query->whereDoesntHave('tags', function ($query) use ($tagIds) {
             $query->whereIn('id', $tagIds);
-            $this->applyPublicOnlyConstraint($query);
+            $this->applyVisibilityConstraint($query);
         });
     }
 
@@ -129,10 +123,14 @@ class LinkSearchScope
         ]);
     }
 
-    private function applyPublicOnlyConstraint(Builder $query): void
+    // Lists and tags used as filters must be visible, or the results would reveal their links
+    private function applyVisibilityConstraint(Builder $query): void
     {
         if ($this->publicOnly) {
             $query->publicOnly();
+            return;
         }
+
+        $query->visibleForUser();
     }
 }

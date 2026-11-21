@@ -3,9 +3,11 @@
 namespace Tests\Controller\API;
 
 use App\Enums\ApiToken;
+use App\Enums\ModelAttribute;
 use App\Models\Link;
 use App\Models\LinkList;
 use App\Models\Tag;
+use App\Models\User;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 
 class SearchLinksTest extends ApiTestCase
@@ -371,5 +373,24 @@ class SearchLinksTest extends ApiTestCase
             ->assertOk()
             ->assertJsonFragment(['url' => $matchingLink->url])
             ->assertJsonMissing(['url' => $articlesOnlyLink->url]);
+    }
+
+    public function test_list_filter_ignores_private_lists_of_other_users(): void
+    {
+        $otherUser = User::factory()->create();
+        $list = LinkList::factory()->create([
+            'user_id' => $otherUser->id,
+            'visibility' => ModelAttribute::VISIBILITY_PRIVATE,
+        ]);
+        $link = Link::factory()->create([
+            'user_id' => $otherUser->id,
+            'url' => 'https://grouped.example',
+            'visibility' => ModelAttribute::VISIBILITY_INTERNAL,
+        ]);
+        $link->lists()->attach($list->id);
+
+        $this->getJsonAuthorized('api/v2/search/links?only_lists=' . $list->id)
+            ->assertOk()
+            ->assertJsonMissing(['url' => 'https://grouped.example']);
     }
 }
