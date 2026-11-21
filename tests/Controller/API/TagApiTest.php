@@ -3,7 +3,9 @@
 namespace Tests\Controller\API;
 
 use App\Enums\ApiToken;
+use App\Enums\ModelAttribute;
 use App\Models\Tag;
+use App\Models\User;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Tests\Controller\Traits\PreparesTestData;
 
@@ -254,5 +256,60 @@ class TagApiTest extends ApiTestCase
         $this->deleteJsonAuthorized('api/v2/tags/' . $tag->id, useSystemToken: true)->assertOk();
 
         $this->assertEquals(2, Tag::count());
+    }
+
+    public function test_show_private_system_tag_by_system_without_private_access(): void
+    {
+        $tag = Tag::factory()->create([
+            'user_id' => User::getSystemUser()->id,
+            'visibility' => ModelAttribute::VISIBILITY_PRIVATE,
+        ]);
+        $this->createSystemToken([ApiToken::ABILITY_TAGS_READ]);
+
+        $this->getJsonAuthorized('api/v2/tags/' . $tag->id, useSystemToken: true)->assertForbidden();
+    }
+
+    public function test_update_system_tag_by_system_without_permission(): void
+    {
+        $tag = Tag::factory()->create([
+            'user_id' => User::getSystemUser()->id,
+            'name' => 'System Tag',
+            'visibility' => ModelAttribute::VISIBILITY_PUBLIC,
+        ]);
+        $this->createSystemToken([ApiToken::ABILITY_TAGS_READ]);
+
+        $this->patchJsonAuthorized('api/v2/tags/' . $tag->id, [
+            'name' => 'Updated Tag',
+        ], useSystemToken: true)->assertForbidden();
+
+        $this->assertEquals('System Tag', $tag->fresh()->name);
+    }
+
+    public function test_update_system_tag_by_system_with_permission(): void
+    {
+        $tag = Tag::factory()->create([
+            'user_id' => User::getSystemUser()->id,
+            'visibility' => ModelAttribute::VISIBILITY_PUBLIC,
+        ]);
+        $this->createSystemToken([ApiToken::ABILITY_TAGS_READ, ApiToken::ABILITY_TAGS_UPDATE]);
+
+        $this->patchJsonAuthorized('api/v2/tags/' . $tag->id, [
+            'name' => 'Updated Tag',
+        ], useSystemToken: true)->assertOk();
+
+        $this->assertEquals('Updated Tag', $tag->fresh()->name);
+    }
+
+    public function test_delete_system_tag_by_system_without_permission(): void
+    {
+        $tag = Tag::factory()->create([
+            'user_id' => User::getSystemUser()->id,
+            'visibility' => ModelAttribute::VISIBILITY_PUBLIC,
+        ]);
+        $this->createSystemToken([ApiToken::ABILITY_TAGS_READ]);
+
+        $this->deleteJsonAuthorized('api/v2/tags/' . $tag->id, useSystemToken: true)->assertForbidden();
+
+        $this->assertFalse($tag->fresh()->trashed());
     }
 }
