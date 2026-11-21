@@ -34,6 +34,13 @@ class ImportHtmlBookmarks
         ]);
 
         foreach ($links as $i => $link) {
+            // The parser keeps entities as written: browsers export `&` in URLs and titles as `&amp;`
+            foreach (['url', 'name', 'description'] as $field) {
+                if (is_string($link[$field] ?? null)) {
+                    $link[$field] = html_entity_decode($link[$field], ENT_QUOTES | ENT_HTML5, 'UTF-8');
+                }
+            }
+
             if (!Str::isUrl($link['url'], ['http', 'https'])) {
                 // skip any links that are not a valid http(s) URL
                 $this->skipped++;
