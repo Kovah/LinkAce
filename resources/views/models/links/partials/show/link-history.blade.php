@@ -1,5 +1,5 @@
 <div class="link-history mt-5">
-    <h3 class="h6 mb-2">@lang('link.history')</h3>
+    <h3 class="h6 mb-2">@lang('linkace.history')</h3>
 
     <div class="history small text-pale">
         @foreach($history as $entry)
