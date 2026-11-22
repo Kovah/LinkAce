@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "f0bd0ee6463383d6b992b9c0d055a25b",
+    "content-hash": "9fdbdcfccdcb27f66076b5ae44b27272",
     "packages": [
         {
             "name": "aws/aws-crt-php",
@@ -1833,29 +1833,29 @@
         },
         {
             "name": "kovah/laravel-html-meta",
-            "version": "v5.0.2",
+            "version": "v6.0.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/Kovah/laravel-html-meta.git",
-                "reference": "3186ddae3126dcdce6e49840c168ef823083c5fa"
+                "reference": "cf525f06eb1dea14b016bdb0e236a486b6b3e7f6"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/Kovah/laravel-html-meta/zipball/3186ddae3126dcdce6e49840c168ef823083c5fa",
-                "reference": "3186ddae3126dcdce6e49840c168ef823083c5fa",
+                "url": "https://api.github.com/repos/Kovah/laravel-html-meta/zipball/cf525f06eb1dea14b016bdb0e236a486b6b3e7f6",
+                "reference": "cf525f06eb1dea14b016bdb0e236a486b6b3e7f6",
                 "shasum": ""
             },
             "require": {
                 "ext-iconv": "*",
-                "guzzlehttp/guzzle": "^7.2",
-                "illuminate/http": "^11.0 | ^12.0 | ^13.0",
-                "illuminate/support": "^11.0 | ^12.0 | ^13.0",
-                "php": "^8.2"
+                "guzzlehttp/guzzle": "^7.2 | ^8.0",
+                "illuminate/http": "^12.0 | ^13.0",
+                "illuminate/support": "^12.0 | ^13.0",
+                "php": "^8.3"
             },
             "require-dev": {
                 "mockery/mockery": "^1.4.2",
-                "orchestra/testbench": "^9.0 | ^10.0 | ^11.0",
-                "phpunit/phpunit": "^9.0 | ^10.0 | ^11.0 | ^12.5.12"
+                "orchestra/testbench": "^10.0 | ^11.0",
+                "phpunit/phpunit": "^10.0 | ^11.0 | ^12.5.12"
             },
             "type": "library",
             "extra": {
@@ -1895,7 +1895,7 @@
             ],
             "support": {
                 "issues": "https://github.com/Kovah/laravel-html-meta/issues",
-                "source": "https://github.com/Kovah/laravel-html-meta/tree/v5.0.2"
+                "source": "https://github.com/Kovah/laravel-html-meta/tree/v6.0.0"
             },
             "funding": [
                 {
@@ -1903,8 +1903,8 @@
                     "type": "github"
                 }
             ],
-            "time": "2026-08-28T13:31:15+00:00",
-            "published-time": "2026-08-28T13:33:41+00:00"
+            "time": "2026-11-22T11:53:26+00:00",
+            "published-time": "2026-11-22T11:55:19+00:00"
         },
         {
             "name": "kovah/laravel-socialite-oidc",
