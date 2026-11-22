@@ -11,7 +11,6 @@ use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Support\Facades\Notification;
 use Illuminate\Support\Sleep;
 use Kovah\HtmlMeta\Exceptions\DisallowedIpException;
-use Kovah\HtmlMeta\Facades\HtmlMeta as HtmlMetaFacade;
 
 class CheckLinksCommand extends Command
 {
@@ -91,7 +90,7 @@ class CheckLinksCommand extends Command
         $this->output->write('Checking link ' . $link->url . ' ');
 
         try {
-            $request = HtmlMetaFacade::applyPrivateIpProtection(setupHttpRequest(timeout: 20));
+            $request = applyPinnedIpProtection(setupHttpRequest(timeout: 20));
             $response = $request->head($link->url);
             $statusCode = $response->status();
         } catch (DisallowedIpException) {
