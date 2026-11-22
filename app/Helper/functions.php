@@ -6,10 +6,14 @@ use App\Settings\GuestSettings;
 use App\Settings\SystemSettings;
 use App\Settings\UserSettings;
 use Carbon\CarbonInterface;
+use GuzzleHttp\Exception\ConnectException;
+use Illuminate\Http\Client\ConnectionException;
 use Illuminate\Http\Client\PendingRequest;
 use Illuminate\Support\Facades\Cache;
 use Illuminate\Support\Facades\Http;
 use Illuminate\Support\Facades\Schema;
+use Kovah\HtmlMeta\Facades\HtmlMeta;
+use Psr\Http\Message\RequestInterface;
 
 /**
  * Check if the setup was completed.
@@ -268,7 +272,58 @@ function setupHttpRequest(int $timeout = 10): PendingRequest
         $request->withHeaders(['User-Agent' => $agents[array_rand($agents)]]);
     }
 
+    // Hosts without outbound IPv6 routing fail with cURL error 7 as soon as DNS returns an AAAA record.
+    // Retry once and force IPv4 for the retry. Failed HTTP responses are never retried.
+    // A caller that chains its own ->retry() replaces this callback and the throw: false setting.
+    $request->retry(2, 0, function ($exception, PendingRequest $request) {
+        if (!$exception instanceof ConnectionException) {
+            return false;
+        }
+
+        $errno = $exception->getPrevious()?->getHandlerContext()['errno'] ?? null;
+        $host = $exception->getPrevious()?->getRequest()->getUri()->getHost() ?? '';
+
+        // Forcing IPv4 cannot help for an IPv6 literal such as [2001:db8::1] and would hide the real error.
+        if ($errno !== CURLE_COULDNT_CONNECT || str_starts_with($host, '[')) {
+            return false;
+        }
+
+        $request->withOptions(['curl' => [CURLOPT_IPRESOLVE => CURL_IPRESOLVE_V4]]);
+
+        return true;
+    }, throw: false);
+
     return $request;
+}
+
+/**
+ * Apply the private IP protection and make sure the IPv4 retry of setupHttpRequest() never connects to an
+ * address that was not validated: if the validated and pinned addresses are IPv6 only, forcing IPv4 would let
+ * cURL do an unpinned A lookup, so the attempt is refused.
+ *
+ * @param PendingRequest $request
+ * @return PendingRequest
+ */
+function applyPinnedIpProtection(PendingRequest $request): PendingRequest
+{
+    return HtmlMeta::applyPrivateIpProtection($request)->withMiddleware(
+        fn (callable $handler) => function (RequestInterface $psrRequest, array $options) use ($handler) {
+            $curl = $options['curl'] ?? [];
+            $pinned = $curl[CURLOPT_RESOLVE] ?? [];
+            $hasIpv4Pin = array_filter($pinned, fn (string $entry) => !str_ends_with($entry, ']'));
+
+            if (($curl[CURLOPT_IPRESOLVE] ?? null) === CURL_IPRESOLVE_V4 && $pinned !== [] && $hasIpv4Pin === []) {
+                throw new ConnectException(
+                    'cURL error 7: no validated IPv4 address to retry with',
+                    $psrRequest,
+                    null,
+                    ['errno' => CURLE_COULDNT_CONNECT]
+                );
+            }
+
+            return $handler($psrRequest, $options);
+        }
+    );
 }
 
 /**
