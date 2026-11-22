@@ -178,7 +178,8 @@ return [
         'notifiable' => \Spatie\Backup\Notifications\Notifiable::class,
 
         'mail' => [
-            'to' => env('BACKUP_NOTIFICATION_EMAIL'),
+            // An empty list skips mail notifications, as the backup package rejects an empty address
+            'to' => env('BACKUP_NOTIFICATION_EMAIL') ?: [],
 
             'from' => [
                 'address' => env('MAIL_FROM_ADDRESS', 'hello@example.com'),

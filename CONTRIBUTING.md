@@ -32,7 +32,7 @@ Please do not create pull requests for any language files, but submit your sugge
 
 * [Docker](https://www.docker.com/products/docker-desktop)/[Podman](https://podman.io/docs/installation) _or_ a [currently-supported PHP version](https://www.php.net/supported-versions.php)
   * For Podman, you also need to `apt`, `dnf`, or otherwise install [`podman-compose`](https://github.com/containers/podman-compose)
-* [Node](https://nodejs.org/en/) (currently 22 LTS)
+* [Node](https://nodejs.org/en/) (the version in `.nvmrc`)
 
 ### 1. Basic Setup
 
@@ -104,7 +104,7 @@ the release images. This step is not needed by any developer working on LinkAce 
 maintainers.
 
 ```bash
-docker buildx build --push --platform "linux/amd64,linux/arm64,linux/arm/v7" -t linkace/base-image:2.x-php-8.5 -f resources/docker/dockerfiles/release-base.Dockerfile .
+docker buildx build --push --platform "linux/amd64,linux/arm64" -t linkace/base-image:2.x-php-8.5 -f resources/docker/dockerfiles/release-base.Dockerfile .
 ```
 
 ## Testing the Docker release build
@@ -112,5 +112,5 @@ docker buildx build --push --platform "linux/amd64,linux/arm64,linux/arm/v7" -t 
 Run the following command locally to test if the release Docker image can successfully be built.
 
 ```bash
-docker buildx build --platform "linux/amd64,linux/arm64,linux/arm/v7" -t linkace/release-test -f resources/docker/dockerfiles/release-multiplatform.Dockerfile .
+docker buildx build --platform "linux/amd64,linux/arm64" -t linkace/release-test -f resources/docker/dockerfiles/release-multiplatform.Dockerfile .
 ```

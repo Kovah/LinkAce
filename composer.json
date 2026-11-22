@@ -4,19 +4,19 @@
   "license": "GPL-3.0-or-later",
   "type": "project",
   "require": {
-    "php": "^8.2",
+    "php": "^8.3",
     "ext-dom": "*",
     "ext-ftp": "*",
     "ext-pdo": "*",
     "composer/semver": "^3.3.1",
-    "doctrine/dbal": "^3.7",
+    "doctrine/dbal": "^4.6",
     "guzzlehttp/guzzle": "^7.0",
     "http-interop/http-factory-guzzle": "^1.2",
     "kovah/laravel-html-meta": "^5.0.2",
     "kovah/laravel-socialite-oidc": "^0.8",
     "laracasts/flash": "^3.1",
     "laravel/fortify": "^1.7",
-    "laravel/framework": "^v11.48",
+    "laravel/framework": "^13.43",
     "laravel/sanctum": "^v4.3",
     "laravel/scout": "^11.1",
     "laravel/socialite": "^5.16",
@@ -28,7 +28,7 @@
     "meilisearch/meilisearch-php": "^1.16",
     "owen-it/laravel-auditing": "^14.0",
     "predis/predis": "^3.0",
-    "rap2hpoutre/laravel-log-viewer": "^2.2",
+    "rap2hpoutre/laravel-log-viewer": "^3.1",
     "sentry/sentry-laravel": "^4.2.0",
     "shaarli/netscape-bookmark-parser": "dev-master",
     "socialiteproviders/auth0": "^4.2",
@@ -40,11 +40,11 @@
     "socialiteproviders/okta": "^4.4",
     "socialiteproviders/zitadel": "*",
     "spatie/laravel-activitylog": "^4.5",
-    "spatie/laravel-backup": "^8.1.2",
-    "spatie/laravel-permission": "^6.3.0",
+    "spatie/laravel-backup": "^10.3",
+    "spatie/laravel-permission": "^8.5",
     "spatie/laravel-settings": "^3.2.3",
-    "symfony/http-client": "^6.0",
-    "symfony/mailgun-mailer": "^6.0",
+    "symfony/http-client": "^7.4",
+    "symfony/mailgun-mailer": "^7.4",
     "typesense/typesense-php": "^6.0"
   },
   "require-dev": {
@@ -54,7 +54,7 @@
     "laravel/tinker": "^3.0",
     "mockery/mockery": "^1.3",
     "nunomaduro/collision": "^v8.8",
-    "phpunit/phpunit": "^11.5",
+    "phpunit/phpunit": "^12.5",
     "spatie/laravel-ignition": "^2.4",
     "spatie/laravel-ray": "^1.39",
     "squizlabs/php_codesniffer": "^4.0"
@@ -111,6 +111,9 @@
       "advisories": {
         "block": false
       }
+    },
+    "platform": {
+      "php": "8.3.0"
     }
   },
   "minimum-stability": "stable",

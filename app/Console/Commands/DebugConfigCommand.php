@@ -167,7 +167,7 @@ class DebugConfigCommand extends Command
         $ok = '<fg=green>✔ OK</>';
         $fail = '<fg=red>✘ FAIL</>';
 
-        $phpOk = PHP_VERSION_ID >= 80110;
+        $phpOk = PHP_VERSION_ID >= 80300;
 
         $extensions = [
             'bcmath', 'ctype', 'curl', 'dom', 'fileinfo',
@@ -177,7 +177,7 @@ class DebugConfigCommand extends Command
 
         $dbExtensions = ['pdo_mysql', 'pdo_pgsql', 'pdo_sqlite'];
 
-        $rows = [['PHP >= 8.1.10', $phpOk ? $ok : $fail . ' (found ' . PHP_VERSION . ')']];
+        $rows = [['PHP >= 8.3', $phpOk ? $ok : $fail . ' (found ' . PHP_VERSION . ')']];
 
         foreach ($extensions as $ext) {
             $rows[] = ['ext-' . $ext, extension_loaded($ext) ? $ok : $fail];

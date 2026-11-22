@@ -24,6 +24,6 @@ jobs:
       - name: Build and push base image
         run: >
           docker buildx build --push
-          --platform "linux/amd64,linux/arm64,linux/arm/v7"
+          --platform "linux/amd64,linux/arm64"
           -t linkace/base-image:2.x-php-8.5
           -f resources/docker/dockerfiles/release-base.Dockerfile .

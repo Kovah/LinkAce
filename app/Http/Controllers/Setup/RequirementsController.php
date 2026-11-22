@@ -22,7 +22,7 @@ class RequirementsController extends Controller
     protected function checkRequirements(): array
     {
         $results = [
-            'php_version' => PHP_VERSION_ID >= 80110,
+            'php_version' => PHP_VERSION_ID >= 80300,
             'extension_bcmath' => extension_loaded('bcmath'),
             'extension_ctype' => extension_loaded('ctype'),
             'extension_curl' => extension_loaded('curl'),

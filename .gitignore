@@ -1,5 +1,6 @@
 /node_modules
 /logs
+/docs/agent-suggestions.md
 /public/hot
 /public/build
 /public/storage

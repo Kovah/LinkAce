@@ -13,7 +13,7 @@ return [
 
     'setup_requirements' => 'Setup Requirements',
     'check_requirements' => 'Check Requirements',
-    'requirements.php_version' => 'PHP version >= 8.1',
+    'requirements.php_version' => 'PHP version >= 8.3',
     'requirements.extension_bcmath' => 'PHP Extension: BCMath',
     'requirements.extension_ctype' => 'PHP Extension: Ctype',
     'requirements.extension_curl' => 'PHP Extension: Curl',

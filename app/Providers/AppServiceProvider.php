@@ -2,7 +2,9 @@
 
 namespace App\Providers;
 
+use Illuminate\Auth\Middleware\Authenticate;
 use Illuminate\Pagination\Paginator;
+use Illuminate\Session\Middleware\AuthenticateSession;
 use Illuminate\Support\Facades\Schema;
 use Illuminate\Support\ServiceProvider;
 use Laravel\Scout\Scout;
@@ -20,6 +22,10 @@ class AppServiceProvider extends ServiceProvider
         Schema::defaultStringLength(191);
 
         Paginator::useBootstrap();
+
+        // Laravel no longer falls back to the login route for unauthenticated web requests
+        Authenticate::redirectUsing(fn () => route('login'));
+        AuthenticateSession::redirectUsing(fn () => route('login'));
     }
 
     /**
