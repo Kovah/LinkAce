@@ -33,17 +33,25 @@ class ImportHtmlBookmarks
             'visibility' => ModelAttribute::VISIBILITY_PRIVATE,
         ]);
 
+        $knownUrls = Link::query()->byUser($userId)->pluck('url')->flip()->all();
+
         foreach ($links as $i => $link) {
+            $rawUrl = $link['url'];
+            $link = $this->decodeEntities($link);
+
             if (!Str::isUrl($link['url'], ['http', 'https'])) {
                 // skip any links that are not a valid http(s) URL
                 $this->skipped++;
                 continue;
             }
 
-            if (Link::query()->byUser($userId)->whereUrl($link['url'])->first()) {
+            // Links imported before entities were decoded are stored with `&amp;` in the URL
+            if (isset($knownUrls[$link['url']]) || isset($knownUrls[$rawUrl])) {
                 $this->skipped++;
                 continue;
             }
+
+            $knownUrls[$link['url']] = true;
 
             dispatch(new ImportLinkJob($userId, $link, $this->importTag, $generateMeta))->delay($i * 10);
 
@@ -51,6 +59,23 @@ class ImportHtmlBookmarks
         }
 
         return true;
+    }
+
+    /**
+     * The parser keeps entities as written: browsers export `&` in URLs and titles as `&amp;`
+     */
+    protected function decodeEntities(array $link): array
+    {
+        $decode = fn (?string $value) => $value === null
+            ? null
+            : html_entity_decode($value, ENT_QUOTES | ENT_HTML5, 'UTF-8');
+
+        $link['url'] = $decode($link['url']);
+        $link['name'] = $decode($link['name']);
+        $link['description'] = $decode($link['description']);
+        $link['tags'] = array_map($decode, $link['tags']);
+
+        return $link;
     }
 
     public function getQueuedCount(): int
