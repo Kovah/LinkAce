@@ -81,8 +81,8 @@ return [
     'custom_header_content_help' => 'Zawartość wprowadzona tutaj zostanie umieszczona przed tagiem &lt;/head&gt; na wszystkich witrynach LinkAce. Przydatne do umieszczania skryptów analitycznych lub dostosowywania. Uwaga: zawartość nie została usunięta i może uszkodzić witrynę!',
 
     'additional_footer_link' => 'Dodatkowy link w stopce',
-    'additional_footer_link_url' => 'Link URL',
-    'additional_footer_link_text' => 'Link Text',
+    'additional_footer_link_url' => 'Adres URL linku',
+    'additional_footer_link_text' => 'Tekst linku',
 
     'contact_page' => 'Kontakt/Strona informacyjna',
     'contact_page_info' => 'Strona kontaktowa/informacyjna może być używana do wyświetlania dodatkowych informacji o Twoich zakładkach. Link jest widoczny w stopce. Markdown jest obsługiwany.',
@@ -107,4 +107,11 @@ return [
     'update_check_failed' => 'Nie można sprawdzić aktualizacji.',
 
     'guest_settings_info' => 'Następujące ustawienia będą miały zastosowanie do gości odwiedzających Twoją stronę, jeśli dostęp dla gości jest włączony.',
+
+    'search_reindex' => 'Indeks Wyszukiwania',
+    'search_reindex_help' => 'Jeśli używasz zewnętrznej wyszukiwarki, takiej jak Meilisearch lub Typesense, możesz tutaj przebudować indeks wyszukiwania. Spowoduje to usunięcie wszystkich istniejących danych z indeksu wyszukiwania i ponowne zaimportowanie wszystkich linków, tagów i list.',
+    'search_reindex_button' => 'Przebuduj indeks wyszukiwania',
+    'search_reindex_successful' => 'Indeks wyszukiwania został pomyślnie przebudowany.',
+    'search_reindex_failed' => 'Przebudowa indeksu wyszukiwania nie powiodła się. Sprawdź dzienniki aplikacji, aby uzyskać więcej informacji.',
+    'search_reindex_database' => 'Wyszukiwanie w bazie danych jest aktywne. Przebudowa zewnętrznego indeksu wyszukiwania nie jest wymagana.',
 ];
