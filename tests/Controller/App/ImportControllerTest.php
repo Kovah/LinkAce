@@ -4,6 +4,7 @@ namespace Tests\Controller\App;
 
 use App\Enums\ModelAttribute;
 use App\Jobs\ImportLinkJob;
+use App\Models\Link;
 use App\Models\Tag;
 use App\Models\User;
 use App\Settings\UserSettings;
@@ -102,7 +103,8 @@ class ImportControllerTest extends TestCase
     {
         Queue::fake();
 
-        $html = '<DL><p><DT><A HREF="https://example.com/watch?v=1&amp;list=2" ADD_DATE="1700000000">Tom &amp; Jerry</A></DL>';
+        $html = '<DL><p><DT><A HREF="https://example.com/watch?v=1&amp;list=2" ADD_DATE="1700000000" TAGS="r&amp;d">Tom &amp; Jerry</A>'
+            . "\n<DD>Cats &amp; mice</DL>";
         $file = UploadedFile::fake()->createWithContent('bookmarks.html', $html);
 
         $this->post('import', ['import-file' => $file], ['Accept' => 'application/json'])
@@ -110,8 +112,52 @@ class ImportControllerTest extends TestCase
 
         Queue::assertPushed(ImportLinkJob::class, function (ImportLinkJob $job) {
             return $job->link['url'] === 'https://example.com/watch?v=1&list=2'
-                && $job->link['name'] === 'Tom & Jerry';
+                && $job->link['name'] === 'Tom & Jerry'
+                && $job->link['description'] === 'Cats & mice'
+                && $job->link['tags'] === ['r&d'];
         });
+    }
+
+    public function test_import_skips_existing_link_with_decoded_url(): void
+    {
+        Queue::fake();
+        Link::factory()->create(['user_id' => $this->user->id, 'url' => 'https://example.com/watch?v=1&list=2']);
+
+        $html = '<DL><p><DT><A HREF="https://example.com/watch?v=1&amp;list=2" ADD_DATE="1700000000">Video</A></DL>';
+        $file = UploadedFile::fake()->createWithContent('bookmarks.html', $html);
+
+        $this->post('import', ['import-file' => $file], ['Accept' => 'application/json'])
+            ->assertOk()->assertJson(['success' => true]);
+
+        Queue::assertNothingPushed();
+    }
+
+    public function test_import_skips_existing_link_stored_with_entities(): void
+    {
+        Queue::fake();
+        Link::factory()->create(['user_id' => $this->user->id, 'url' => 'https://example.com/watch?v=1&amp;list=2']);
+
+        $html = '<DL><p><DT><A HREF="https://example.com/watch?v=1&amp;list=2" ADD_DATE="1700000000">Video</A></DL>';
+        $file = UploadedFile::fake()->createWithContent('bookmarks.html', $html);
+
+        $this->post('import', ['import-file' => $file], ['Accept' => 'application/json'])
+            ->assertOk()->assertJson(['success' => true]);
+
+        Queue::assertNothingPushed();
+    }
+
+    public function test_import_skips_duplicates_within_one_file(): void
+    {
+        Queue::fake();
+
+        $html = '<DL><p><DT><A HREF="https://example.com/?a=1&amp;b=2" ADD_DATE="1700000000">One</A>'
+            . "\n" . '<DT><A HREF="https://example.com/?a=1&b=2" ADD_DATE="1700000000">Two</A></DL>';
+        $file = UploadedFile::fake()->createWithContent('bookmarks.html', $html);
+
+        $this->post('import', ['import-file' => $file], ['Accept' => 'application/json'])
+            ->assertOk()->assertJson(['success' => true]);
+
+        Queue::assertPushed(ImportLinkJob::class, 1);
     }
 
     public function test_queue_page(): void
