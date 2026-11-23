@@ -7,6 +7,9 @@ import TomSelect_input_autogrow
 TomSelect.define('caret_position', TomSelect_caret_position);
 TomSelect.define('input_autogrow', TomSelect_input_autogrow);
 
+// New names get their own keys, so they cannot collide with the numeric IDs of existing entries
+const NEW_PREFIX = 'new:';
+
 export default class TagsSelect {
 
   constructor ($el) {
@@ -27,7 +30,9 @@ export default class TagsSelect {
       plugins: ['caret_position', 'input_autogrow'],
       delimiter: ',',
       persist: false,
-      create: this.selectAllowsCreation(),
+      create: this.selectAllowsCreation() ? (input) => this.newOption(input) : false,
+      // The default filter looks the input up as an option key, so "5" would match the tag with ID 5
+      createFilter: () => true,
       valueField: 'id',
       labelField: 'name',
       searchField: 'name',
@@ -37,11 +42,10 @@ export default class TagsSelect {
         this.refreshOptions();
       },
       onInitialize: function () {
-        selectObject.$el.value = JSON.stringify(selectObject.selectedIds(this));
+        selectObject.syncInput(this);
       },
       onChange: function () {
-        const items = selectObject.selectedIds(this);
-        selectObject.$el.value = items.length > 0 ? JSON.stringify(items) : null;
+        selectObject.syncInput(this);
         selectObject.updateSearchFilterControls();
       },
       render: {
@@ -55,29 +59,37 @@ export default class TagsSelect {
     };
 
     this.config['options'] = this.$el.dataset.tagData ? JSON.parse(this.$el.dataset.tagData) : [];
+    let newOptions = [];
 
     if (typeof this.$el.dataset.value !== 'undefined' && this.$el.dataset.value !== '') {
       const values = JSON.parse(this.$el.dataset.value);
-      // Tags and lists created in a form that failed validation come back
-      // as {id: name, name}; they are not options yet, so add them.
-      values.forEach((item) => {
-        if (typeof item === 'object' && !this.config['options'].some((option) => option.id === item.id)) {
-          this.config['options'].push(item);
-        }
-      });
-      this.config['items'] = values.map((item) => item.id ?? item);
+      // Names that are not saved yet come back as {id: name, name}: from a form
+      // that failed validation, or from the bookmarklet's ?tags= and ?lists=.
+      const isNew = (item) => typeof item.id === 'string';
+      newOptions = values.filter(isNew).map((item) => this.newOption(item.name));
+      this.config['options'].push(...newOptions);
+      this.config['items'] = values.map((item) => isNew(item) ? NEW_PREFIX + item.name : item.id ?? item);
     }
 
     this.select = new TomSelect(this.$el, this.config);
+    // Mark them as user-created, so persist: false drops them once they are removed
+    newOptions.forEach((option) => {
+      this.select.userOptions[option.id] = true;
+    });
     this.setupSearchFilterControls();
   }
 
-  selectedIds (select) {
-    return select.items.map((item) => {
-      item = (typeof item === 'string' && /^\d+$/.test(item)) ? Number(item) : item;
-      const option = Object.values(select.options).find((option) => option.id === item);
-      return option !== undefined ? option.id : item;
+  newOption (name) {
+    return {id: NEW_PREFIX + name, name: name};
+  }
+
+  // Existing entries are sent as numeric IDs, new ones by name
+  syncInput (select) {
+    const values = select.items.map((key) => {
+      const option = select.options[key];
+      return key.startsWith(NEW_PREFIX) ? option.name : option.id;
     });
+    this.$el.value = values.length > 0 ? JSON.stringify(values) : '';
   }
 
   renderItem (item, escape) {
