@@ -333,6 +333,61 @@ class SocialiteControllerTest extends TestCase
      * @param array $raw        Additional claims as returned by the provider
      * @return void
      */
+    public function test_sso_registration_does_not_take_an_existing_username(): void
+    {
+        LinkAceUser::factory()->create(['name' => 'SSOUser']);
+
+        $this->mockSsoUser(['id' => 'sso-user-sub-123', 'email' => 'sso-user@linkace.org', 'nickname' => 'SSOUser']);
+
+        $this->get('auth/sso/auth0/callback')->assertRedirect('dashboard');
+
+        $this->assertDatabaseHas('users', [
+            'name' => 'SSOUser2',
+            'email' => 'sso-user@linkace.org',
+        ]);
+        $this->assertEquals(1, LinkAceUser::where('name', 'SSOUser')->count());
+    }
+
+    public function test_sso_login_does_not_rename_a_user_to_an_existing_username(): void
+    {
+        LinkAceUser::factory()->create(['name' => 'SSOUser']);
+        LinkAceUser::factory()->create([
+            'name' => 'MrPurpleHat',
+            'email' => 'sso-user@linkace.org',
+            'sso_id' => 'sso-user-sub-123',
+            'sso_provider' => 'auth0',
+        ]);
+
+        $this->mockSsoUser(['id' => 'sso-user-sub-123', 'email' => 'sso-user@linkace.org', 'nickname' => 'SSOUser']);
+
+        $this->get('auth/sso/auth0/callback')->assertRedirect('dashboard');
+
+        $this->assertDatabaseHas('users', [
+            'name' => 'MrPurpleHat',
+            'email' => 'sso-user@linkace.org',
+        ]);
+        $this->assertEquals(1, LinkAceUser::where('name', 'SSOUser')->count());
+    }
+
+    public function test_sso_account_linking_does_not_rename_a_user_to_an_existing_username(): void
+    {
+        LinkAceUser::factory()->create(['name' => 'SSOUser']);
+        LinkAceUser::factory()->create([
+            'name' => 'MrPurpleHat',
+            'email' => 'sso-user@linkace.org',
+        ]);
+
+        $this->mockSsoUser(['id' => 'sso-user-sub-123', 'email' => 'sso-user@linkace.org', 'nickname' => 'SSOUser']);
+
+        $this->get('auth/sso/auth0/callback')->assertRedirect('dashboard');
+
+        $this->assertDatabaseHas('users', [
+            'name' => 'MrPurpleHat',
+            'email' => 'sso-user@linkace.org',
+            'sso_id' => 'sso-user-sub-123',
+        ]);
+    }
+
     protected function mockSsoUser(array $attributes, array $raw = []): void
     {
         $ssoUser = new User();

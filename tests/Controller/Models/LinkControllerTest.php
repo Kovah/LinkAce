@@ -209,6 +209,22 @@ class LinkControllerTest extends TestCase
         $this->assertDatabaseCount('links', 0);
     }
 
+    public function test_store_request_with_javascript_url_with_authority(): void
+    {
+        // The authority part ("//x") is what lets this payload pass filter_var()
+        $response = $this->post('links', [
+            'url' => 'javascript://x/%0Aalert(document.domain)',
+            'title' => null,
+            'description' => null,
+            'lists' => null,
+            'tags' => null,
+        ]);
+
+        $response->assertSessionHasErrors(['url' => 'The url format is invalid.']);
+
+        $this->assertDatabaseCount('links', 0);
+    }
+
     public function test_store_request_with_huge_thumbnail(): void
     {
         $img = 'https://picsum.photos/1000/500';
@@ -493,6 +509,25 @@ class LinkControllerTest extends TestCase
         ]);
     }
 
+    public function test_update_with_javascript_url_with_authority(): void
+    {
+        $this->createTestLinks();
+
+        $this->patch('links/1', [
+            'url' => 'javascript://x/%0Aalert(document.domain)',
+            'title' => 'New Title',
+            'description' => 'New Description',
+            'lists' => null,
+            'tags' => null,
+            'visibility' => 1,
+            'check_disabled' => '0',
+        ])->assertSessionHasErrors([
+            'url' => 'The url format is invalid.',
+        ]);
+
+        $this->assertStringStartsWith('https://', Link::find(1)->url);
+    }
+
     public function test_missing_model_error_for_update(): void
     {
         $this->patch('links/1', [
@@ -522,6 +557,19 @@ class LinkControllerTest extends TestCase
         ])->assertSessionHasErrors([
             'url',
         ]);
+    }
+
+    public function test_empty_title_on_update_is_a_validation_error(): void
+    {
+        $this->createTestLinks();
+
+        $this->patch('links/1', [
+            'url' => 'https://public-link.com',
+            'title' => '',
+            'visibility' => 1,
+        ])->assertSessionHasErrors(['title']);
+
+        $this->assertNotEmpty(Link::first()->title);
     }
 
     public function test_validation_error_for_update(): void

@@ -23,7 +23,7 @@ class ListController extends Controller
     public function index(Request $request): View
     {
         $this->orderBy = $request->input('orderBy', 'created_at');
-        $this->orderDir = $request->input('orderBy', 'desc');
+        $this->orderDir = $request->input('orderDir', 'desc');
         $this->checkOrdering();
 
         $lists = LinkList::publicOnly()
@@ -48,7 +48,7 @@ class ListController extends Controller
         }
 
         $this->orderBy = $request->input('orderBy', 'created_at');
-        $this->orderDir = $request->input('orderBy', 'desc');
+        $this->orderDir = $request->input('orderDir', 'desc');
         $this->checkOrdering();
 
         $links = $list->links()->publicOnly();

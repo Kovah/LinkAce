@@ -26,7 +26,7 @@ class LinkController extends Controller
         $links = Link::publicOnly()->with(['tags' => fn ($query) => $query->publicOnly()]);
 
         $this->orderBy = $request->input('orderBy', 'created_at');
-        $this->orderDir = $request->input('orderBy', 'desc');
+        $this->orderDir = $request->input('orderDir', 'desc');
         $this->checkOrdering();
 
         if ($this->orderBy === 'random') {

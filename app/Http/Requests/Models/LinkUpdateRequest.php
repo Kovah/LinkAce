@@ -28,7 +28,7 @@ class LinkUpdateRequest extends FormRequest
                 'url',
             ],
             'title' => [
-                'nullable',
+                'filled',
                 'string',
             ],
             'description' => [

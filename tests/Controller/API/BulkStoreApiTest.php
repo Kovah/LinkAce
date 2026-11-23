@@ -2,12 +2,14 @@
 
 namespace Tests\Controller\API;
 
+use App\Enums\ApiToken;
 use App\Models\LinkList;
 use App\Models\Tag;
 use App\Models\User;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Support\Facades\Http;
 use Illuminate\Support\Facades\Queue;
+use Laravel\Sanctum\Sanctum;
 use Tests\TestCase;
 
 class BulkStoreApiTest extends TestCase
@@ -112,6 +114,73 @@ class BulkStoreApiTest extends TestCase
             ->assertJsonValidationErrors(['models.0.url']);
 
         $this->assertDatabaseCount('links', 0);
+    }
+
+    public function test_store_links_rejects_javascript_url_with_authority(): void
+    {
+        // The authority part ("//x") is what lets this payload pass filter_var()
+        $response = $this->postJson('api/v2/bulk/links', [
+            'models' => [
+                [
+                    'url' => 'javascript://x/%0Aalert(document.domain)',
+                    'visibility' => 1,
+                ],
+            ],
+        ]);
+
+        $response->assertUnprocessable()
+            ->assertJsonValidationErrors(['models.0.url']);
+
+        $this->assertDatabaseCount('links', 0);
+    }
+
+    public function test_store_links_by_system(): void
+    {
+        Http::fake(['example.com' => Http::response('<!DOCTYPE html><head><title>Example</title></head></html>')]);
+        Sanctum::actingAs(User::getSystemUser(), [ApiToken::ABILITY_SYSTEM_ACCESS, ApiToken::ABILITY_LINKS_READ]);
+
+        $this->postJson('api/v2/bulk/links', [
+            'models' => [
+                [
+                    'url' => 'https://example.com',
+                    'visibility' => 1,
+                ],
+            ],
+        ])->assertForbidden();
+
+        $this->assertDatabaseCount('links', 0);
+    }
+
+    public function test_store_lists_by_system(): void
+    {
+        Sanctum::actingAs(User::getSystemUser(), [ApiToken::ABILITY_SYSTEM_ACCESS, ApiToken::ABILITY_LISTS_READ]);
+
+        $this->postJson('api/v2/bulk/lists', [
+            'models' => [
+                [
+                    'name' => 'Example List',
+                    'visibility' => 1,
+                ],
+            ],
+        ])->assertForbidden();
+
+        $this->assertDatabaseCount('lists', 0);
+    }
+
+    public function test_store_tags_by_system(): void
+    {
+        Sanctum::actingAs(User::getSystemUser(), [ApiToken::ABILITY_SYSTEM_ACCESS, ApiToken::ABILITY_TAGS_READ]);
+
+        $this->postJson('api/v2/bulk/tags', [
+            'models' => [
+                [
+                    'name' => 'tag-a',
+                    'visibility' => 1,
+                ],
+            ],
+        ])->assertForbidden();
+
+        $this->assertDatabaseCount('tags', 0);
     }
 
     public function test_store_lists(): void

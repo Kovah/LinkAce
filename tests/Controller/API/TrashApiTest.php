@@ -2,10 +2,13 @@
 
 namespace Tests\Controller\API;
 
+use App\Enums\ApiToken;
+use App\Enums\ModelAttribute;
 use App\Models\Link;
 use App\Models\LinkList;
 use App\Models\Note;
 use App\Models\Tag;
+use App\Models\User;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Support\Facades\DB;
 use Tests\Controller\Traits\PreparesTrash;
@@ -205,5 +208,93 @@ class TrashApiTest extends ApiTestCase
             'model' => 'link',
             'id' => '1345235',
         ])->assertNotFound();
+    }
+
+    /*
+     * Tests for system tokens
+     */
+
+    public function test_get_lists_by_system_without_permission(): void
+    {
+        $this->createTrashedSystemList();
+        $this->createSystemToken([ApiToken::ABILITY_LINKS_READ]);
+
+        $this->getJsonAuthorized('api/v2/trash/lists', useSystemToken: true)->assertForbidden();
+    }
+
+    public function test_get_lists_by_system_without_private_access(): void
+    {
+        $this->createTrashedSystemList('Public System List');
+        $this->createTrashedSystemList('Private System List', ModelAttribute::VISIBILITY_PRIVATE);
+        $this->createSystemToken([ApiToken::ABILITY_LISTS_READ]);
+
+        $this->getJsonAuthorized('api/v2/trash/lists', useSystemToken: true)
+            ->assertOk()
+            ->assertJsonFragment(['name' => 'Public System List'])
+            ->assertJsonMissing(['name' => 'Private System List']);
+    }
+
+    public function test_restore_by_system_without_permission(): void
+    {
+        $list = $this->createTrashedSystemList();
+        $this->createSystemToken([ApiToken::ABILITY_LISTS_READ]);
+
+        $this->patchJsonAuthorized('api/v2/trash/restore', [
+            'model' => 'list',
+            'id' => $list->id,
+        ], useSystemToken: true)->assertForbidden();
+
+        $this->assertTrue($list->fresh()->trashed());
+    }
+
+    public function test_restore_by_system_with_permission(): void
+    {
+        $list = $this->createTrashedSystemList();
+        $this->createSystemToken([ApiToken::ABILITY_LISTS_READ, ApiToken::ABILITY_LISTS_UPDATE]);
+
+        $this->patchJsonAuthorized('api/v2/trash/restore', [
+            'model' => 'list',
+            'id' => $list->id,
+        ], useSystemToken: true)->assertOk();
+
+        $this->assertFalse($list->fresh()->trashed());
+    }
+
+    public function test_clear_by_system_without_permission(): void
+    {
+        $list = $this->createTrashedSystemList();
+        $this->createSystemToken([ApiToken::ABILITY_LISTS_READ]);
+
+        $this->deleteJsonAuthorized('api/v2/trash/clear', [
+            'model' => 'lists',
+        ], useSystemToken: true)->assertForbidden();
+
+        $this->assertNotNull(LinkList::withTrashed()->find($list->id));
+    }
+
+    public function test_clear_by_system_with_permission(): void
+    {
+        $list = $this->createTrashedSystemList();
+        $this->createSystemToken([ApiToken::ABILITY_LISTS_READ, ApiToken::ABILITY_LISTS_DELETE]);
+
+        $this->deleteJsonAuthorized('api/v2/trash/clear', [
+            'model' => 'lists',
+        ], useSystemToken: true)->assertOk();
+
+        $this->assertNull(LinkList::withTrashed()->find($list->id));
+    }
+
+    protected function createTrashedSystemList(
+        string $name = 'System List',
+        int $visibility = ModelAttribute::VISIBILITY_PUBLIC
+    ): LinkList {
+        $list = LinkList::factory()->create([
+            'user_id' => User::getSystemUser()->id,
+            'name' => $name,
+            'visibility' => $visibility,
+        ]);
+        $list->delete();
+
+        return $list;
     }
 }

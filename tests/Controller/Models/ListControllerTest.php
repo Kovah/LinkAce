@@ -188,6 +188,11 @@ class ListControllerTest extends TestCase
             ->assertSee('InternalTestLink');
         $this->get('lists/2')->assertOk()->assertSee('Internal List')->assertSee('Internal List');
         $this->get('lists/3')->assertForbidden();
+
+        $this->get('lists/1?orderBy=title&orderDir=desc')->assertOk()
+            ->assertSeeInOrder(['InternalTestLink', 'FirstTestLink']);
+        $this->get('lists/1?orderBy=title&orderDir=asc')->assertOk()
+            ->assertSeeInOrder(['FirstTestLink', 'InternalTestLink']);
     }
 
     public function test_private_detail_view(): void

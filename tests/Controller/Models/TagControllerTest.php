@@ -162,6 +162,11 @@ class TagControllerTest extends TestCase
             ->assertSee('SecondTestLink');
         $this->get('tags/2')->assertOk()->assertSee('Internal Tag');
         $this->get('tags/3')->assertForbidden();
+
+        $this->get('tags/1?orderBy=title&orderDir=desc')->assertOk()
+            ->assertSeeInOrder(['SecondTestLink', 'FirstTestLink']);
+        $this->get('tags/1?orderBy=title&orderDir=asc')->assertOk()
+            ->assertSeeInOrder(['FirstTestLink', 'SecondTestLink']);
     }
 
     public function test_internal_detail_view(): void

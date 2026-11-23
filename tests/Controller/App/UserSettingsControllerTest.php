@@ -2,6 +2,7 @@
 
 namespace Tests\Controller\App;
 
+use App\Actions\Fortify\UpdateUserPassword;
 use App\Enums\ModelAttribute;
 use App\Models\Link;
 use App\Models\Note;
@@ -50,6 +51,28 @@ class UserSettingsControllerTest extends TestCase
 
         $this->assertEquals('NewName', $updatedUser->name);
         $this->assertEquals('test@linkace.org', $updatedUser->email);
+    }
+
+    public function test_update_account_settings_rejects_taken_username(): void
+    {
+        User::factory()->create(['name' => 'TakenName']);
+
+        $this->post('settings/account', [
+            'name' => 'TakenName',
+            'email' => $this->user->email,
+        ])->assertSessionHasErrorsIn('updateProfileInformation', ['name']);
+
+        $this->assertNotEquals('TakenName', $this->user->fresh()->name);
+    }
+
+    public function test_update_account_settings_keeps_own_username(): void
+    {
+        $this->post('settings/account', [
+            'name' => $this->user->name,
+            'email' => 'test@linkace.org',
+        ])->assertSessionHasNoErrors();
+
+        $this->assertEquals('test@linkace.org', $this->user->fresh()->email);
     }
 
     public function test_valid_update_application_settings_response(): void
@@ -205,6 +228,34 @@ class UserSettingsControllerTest extends TestCase
             'email' => $this->user->email,
             'password' => 'newuserpassword',
         ]));
+    }
+
+    public function test_password_change_keeps_the_current_session(): void
+    {
+        $this->get('dashboard')->assertOk();
+
+        $this->post('settings/change-password', [
+            'current_password' => 'secretpassword',
+            'password' => 'newuserpassword',
+            'password_confirmation' => 'newuserpassword',
+        ]);
+
+        $this->get('dashboard')->assertOk();
+    }
+
+    public function test_password_change_logs_out_other_sessions(): void
+    {
+        $this->get('dashboard')->assertOk();
+
+        // The password is changed from another session
+        (new UpdateUserPassword())->update($this->user, [
+            'current_password' => 'secretpassword',
+            'password' => 'newuserpassword',
+            'password_confirmation' => 'newuserpassword',
+        ]);
+
+        $this->get('dashboard')->assertRedirect('login');
+        $this->assertGuest();
     }
 
     /**

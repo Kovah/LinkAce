@@ -40,6 +40,23 @@ class LinkControllerTest extends TestCase
             ->assertDontSee('privateTag');
     }
 
+    public function test_link_overview_order_direction(): void
+    {
+        SystemSettings::fake([
+            'guest_access_enabled' => true,
+            'setup_completed' => true,
+        ]);
+
+        User::factory()->create();
+        Link::factory()->create(['title' => 'Alpha Link', 'visibility' => 1]);
+        Link::factory()->create(['title' => 'Beta Link', 'visibility' => 1]);
+
+        $this->get('guest/links?orderBy=title&orderDir=desc')->assertOk()
+            ->assertSeeInOrder(['Beta Link', 'Alpha Link']);
+        $this->get('guest/links?orderBy=title&orderDir=asc')->assertOk()
+            ->assertSeeInOrder(['Alpha Link', 'Beta Link']);
+    }
+
     public function test_link_display_toggle(): void
     {
         SystemSettings::fake([
